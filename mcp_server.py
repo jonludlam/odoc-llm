@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Initialize FastMCP server
-mcp = FastMCP("ocaml-search")
+mcp = FastMCP("ocaml-search", host="0.0.0.0")
 
 # Global search engine instances (lazy loaded)
 search_engine: Optional[SemanticSearch] = None
