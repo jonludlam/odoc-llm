@@ -10,6 +10,9 @@ import json
 import logging
 from pathlib import Path
 from typing import Dict, Any, Optional, List
+import aiohttp
+from bs4 import BeautifulSoup
+from urllib.parse import quote
 
 from mcp.server.fastmcp import FastMCP
 
@@ -213,9 +216,108 @@ async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8) 
         return {"error": error_msg}
 
 
-# Additional tool functions can be added here using the @mcp.tool() decorator
-#     # Implementation here
-#     pass
+@mcp.tool()
+async def sherlodoc(query: str) -> Dict[str, Any]:
+    """
+    Search OCaml documentation using Sherlodoc - particularly effective for type searches.
+    
+    Sherlodoc is specialized for finding types, functions, and modules across all OCaml packages.
+    It excels at type-based queries and can find exact matches for complex type signatures.
+    
+    Args:
+        query: Your search query. Can be:
+               - Type signatures: "int -> string -> bool"
+               - Module paths: "Base.List.t"
+               - Function names: "List.map"
+               - Type definitions: "result"
+               - Complex types: "('a -> 'b) -> 'a list -> 'b list"
+    
+    Returns:
+        Search results including type definitions, functions, and their documentation
+    """
+    try:
+        # URL encode the query
+        encoded_query = quote(query)
+        url = f"http://localhost:1234/api?q={encoded_query}"
+        
+        # Make async HTTP request
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                if response.status != 200:
+                    return {"error": f"Sherlodoc API returned status {response.status}"}
+                
+                html_content = await response.text()
+        
+        # Parse HTML response
+        soup = BeautifulSoup(html_content, 'html.parser')
+        
+        # Extract query info
+        query_div = soup.find('div', class_='query')
+        query_text = query_div.get_text(strip=True) if query_div else f"Results for {query}"
+        
+        # Extract search results
+        results = []
+        found_items = soup.find_all('li')
+        
+        for item in found_items[:20]:  # Limit to first 20 results
+            result = {}
+            
+            # Extract package info
+            pkg_div = item.find('div', class_='pkg')
+            if pkg_div and pkg_div.find('a'):
+                # Note: The HTML seems to have empty package info, we'll work with what we have
+                result['package'] = 'Unknown'  # Package info not provided in the HTML
+            
+            # Extract the main code/signature
+            pre_tag = item.find('pre')
+            if pre_tag:
+                # Get the full text including emphasized parts
+                signature_parts = []
+                for elem in pre_tag.descendants:
+                    if elem.name is None:  # Text node
+                        signature_parts.append(str(elem))
+                    elif elem.name == 'em':
+                        signature_parts.append(elem.get_text())
+                
+                result['signature'] = ''.join(signature_parts).strip()
+                
+                # Extract the link if available
+                link_tag = pre_tag.find('a')
+                if link_tag and link_tag.get('href'):
+                    result['url'] = link_tag['href']
+                    # Extract module path from the link text
+                    em_tag = link_tag.find('em')
+                    if em_tag:
+                        result['module_path'] = em_tag.get_text()
+            
+            # Extract documentation/comment
+            comment_div = item.find('div', class_='comment')
+            if comment_div:
+                # Extract text from all paragraphs
+                doc_parts = []
+                for p in comment_div.find_all('p'):
+                    doc_parts.append(p.get_text(strip=True))
+                if doc_parts:
+                    result['documentation'] = ' '.join(doc_parts)
+            
+            if result and 'signature' in result:
+                results.append(result)
+        
+        return {
+            "query": query,
+            "query_info": query_text,
+            "results": results,
+            "total_results": len(results)
+        }
+        
+    except aiohttp.ClientError as e:
+        error_msg = f"Failed to connect to Sherlodoc API: {str(e)}"
+        logger.error(error_msg)
+        return {"error": error_msg}
+    except Exception as e:
+        error_msg = f"Sherlodoc search failed: {str(e)}"
+        logger.error(error_msg)
+        return {"error": error_msg}
 
 
 def main():
@@ -242,6 +344,13 @@ def main():
                 print(f"Testing unified search query: {query}")
                 print(f"Packages: {packages}\n")
                 result = await search_ocaml_modules(query, packages)
+                print(json.dumps(result, indent=2))
+            elif "--sherlodoc" in sys.argv:
+                # Test sherlodoc functionality
+                sherlodoc_idx = sys.argv.index("--sherlodoc")
+                query = sys.argv[sherlodoc_idx + 1] if sherlodoc_idx + 1 < len(sys.argv) else "Base.List.t"
+                print(f"Testing sherlodoc query: {query}\n")
+                result = await sherlodoc(query)
                 print(json.dumps(result, indent=2))
             else:
                 # Test search functionality
