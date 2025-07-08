@@ -61,7 +61,7 @@ signal.signal(signal.SIGTERM, signal_handler)
 @dataclass
 class EmbeddingConfig:
     """Configuration for embedding generation."""
-    llm_url: str = "http://localhost:8000"
+    llm_url: str = "http://localhost:8080"
     model: str = "Qwen/Qwen3-Embedding-0.6B"
     workers: int = 12
     batch_size: int = 32
@@ -663,7 +663,7 @@ def create_global_metadata(config: EmbeddingConfig, packages: List[Path], result
 def main():
     """Main function."""
     parser = argparse.ArgumentParser(description="Generate embeddings for OCaml module descriptions")
-    parser.add_argument("--llm-url", default="http://localhost:8000", help="LLM API endpoint URL")
+    parser.add_argument("--llm-url", default="http://localhost:8080", help="LLM API endpoint URL")
     parser.add_argument("--model", default="Qwen/Qwen3-Embedding-0.6B", help="Embedding model name")
     parser.add_argument("--workers", type=int, default=12, help="Number of worker threads")
     parser.add_argument("--batch-size", type=int, default=32, help="Batch size for API requests")

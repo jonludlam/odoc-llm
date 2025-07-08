@@ -23,6 +23,13 @@ from transformers import AutoTokenizer, AutoModel
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+# Workaround for transformers 4.52.4 bug with ALL_PARALLEL_STYLES
+import transformers.modeling_utils
+if transformers.modeling_utils.ALL_PARALLEL_STYLES is None:
+    # Define expected parallel styles from transformers library
+    transformers.modeling_utils.ALL_PARALLEL_STYLES = ["colwise", "rowwise"]
+    logger.warning("Patched ALL_PARALLEL_STYLES bug in transformers library")
+
 
 class QueryEmbedder:
     """Handles embedding of user queries using Qwen3-Embedding-0.6B model."""
