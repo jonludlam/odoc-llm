@@ -33,6 +33,7 @@ unified_engine: Optional[UnifiedSearchEngine] = None
 embeddings_dir = Path("package-embeddings")
 package_descriptions_dir = Path("package-descriptions")
 indexes_dir = Path("module-indexes")
+module_descriptions_dir = Path("module-descriptions")
 
 @mcp.tool()
 async def find_ocaml_packages(functionality: str) -> Dict[str, Any]:
@@ -78,6 +79,7 @@ async def find_ocaml_packages(functionality: str) -> Dict[str, Any]:
             "packages": [
                 {
                     "package": result["package"],
+                    "library": result.get("library"),
                     "module": result["module_path"],
                     "description": result["description"]
                 }
@@ -193,6 +195,7 @@ async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8) 
             "semantic_results": [
                 {
                     "package": r["package"],
+                    "library": r.get("library"),
                     "module": r["module_name"],
                     "module_path": r["module_path"],
                     "description": r["description"]
@@ -202,6 +205,7 @@ async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8) 
             "keyword_results": [
                 {
                     "package": r["package"],
+                    "library": r.get("library"),
                     "module": r["module_name"],
                     "module_path": r["module_path"]
                 }

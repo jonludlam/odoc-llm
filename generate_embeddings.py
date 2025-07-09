@@ -402,15 +402,16 @@ def process_single_package(
             return {"success": False, "error": "Failed to load package data"}
         
         # Extract descriptions from the nested library structure
-        descriptions = {}
+        module_to_library = {}  # Map module paths to their library names
         libraries = package_data.get("libraries", {})
         
         # Collect all module descriptions from all libraries
         for library_name, library_data in libraries.items():
-            modules = library_data.get("modules", {})
-            descriptions.update(modules)
+            modules_in_lib = library_data.get("modules", {})
+            for module_path, description in modules_in_lib.items():
+                module_to_library[module_path] = (library_name, description)
         
-        if not descriptions:
+        if not module_to_library:
             logging.warning(f"No descriptions found in {package_name}")
             return {"success": False, "error": "No descriptions found"}
         
@@ -419,7 +420,7 @@ def process_single_package(
         texts = []
         filtered_count = 0
         
-        for module_path, description in descriptions.items():
+        for module_path, (library_name, description) in module_to_library.items():
             # Check if description is meaningful before processing
             if not is_meaningful_description(description):
                 filtered_count += 1
@@ -429,17 +430,18 @@ def process_single_package(
             if cleaned_text:
                 modules.append({
                     "module_path": module_path,
+                    "library": library_name,
                     "description": cleaned_text,
                     "description_length": len(cleaned_text)
                 })
                 texts.append(cleaned_text)
         
         if not texts:
-            total_modules = len(descriptions)
+            total_modules = len(module_to_library)
             return {"success": False, "error": f"No meaningful descriptions found ({filtered_count}/{total_modules} filtered as empty)"}
         
         # Log filtering statistics
-        total_modules = len(descriptions)
+        total_modules = len(module_to_library)
         meaningful_modules = len(texts)
         if filtered_count > 0:
             logging.info(f"Package {package_name}: {meaningful_modules}/{total_modules} modules meaningful, filtered {filtered_count} empty modules")

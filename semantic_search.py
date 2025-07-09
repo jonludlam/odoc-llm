@@ -177,6 +177,9 @@ class PackageEmbeddingLoader:
                         'description_length': module_info['description_length'],
                         'index_in_package': module_info['index']
                     }
+                    # Add library information if available
+                    if 'library' in module_info:
+                        module_metadata['library'] = module_info['library']
                     all_metadata.append(module_metadata)
                     
             except Exception as e:
@@ -238,6 +241,9 @@ class SemanticSearch:
                 'description': self.metadata[idx]['description'],
                 'description_length': self.metadata[idx]['description_length']
             }
+            # Include library information if available
+            if 'library' in self.metadata[idx]:
+                result['library'] = self.metadata[idx]['library']
             results.append(result)
             
         search_time = time.time() - start_time

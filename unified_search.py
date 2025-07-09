@@ -67,11 +67,15 @@ class UnifiedSearchEngine:
                 for i, module_info in enumerate(package_metadata['modules']):
                     full_path = f"{package}::{module_info['module_path']}"
                     self.embeddings[full_path] = package_embeddings[i]
-                    self.metadata[full_path] = {
+                    metadata_entry = {
                         'package': package,
                         'module_path': module_info['module_path'],
                         'description': module_info.get('description', '')
                     }
+                    # Include library information if available
+                    if 'library' in module_info:
+                        metadata_entry['library'] = module_info['library']
+                    self.metadata[full_path] = metadata_entry
             
             # Load BM25 index
             index_path = self.index_dir / package
