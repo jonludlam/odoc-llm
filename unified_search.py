@@ -13,23 +13,15 @@ from typing import Dict, List, Tuple
 import numpy as np
 import bm25s
 from tqdm import tqdm
-import torch
-import torch.nn.functional as F
-from torch import Tensor
-from transformers import AutoTokenizer, AutoModel
+import requests
 
 from popularity_scorer import PopularityScorer
-
-# Workaround for transformers 4.52.4 bug with ALL_PARALLEL_STYLES
-import transformers.modeling_utils
-if transformers.modeling_utils.ALL_PARALLEL_STYLES is None:
-    transformers.modeling_utils.ALL_PARALLEL_STYLES = ["colwise", "rowwise"]
 
 
 class UnifiedSearchEngine:
     def __init__(self, embedding_dir: str = "package-embeddings", 
                  index_dir: str = "module-indexes",
-                 model_name: str = 'Qwen/Qwen3-Embedding-0.6B',
+                 api_url: str = 'http://localhost:8080',
                  use_popularity: bool = True):
         self.embedding_dir = Path(embedding_dir)
         self.index_dir = Path(index_dir)
@@ -42,17 +34,18 @@ class UnifiedSearchEngine:
         self.use_popularity = use_popularity
         self.popularity_scorer = PopularityScorer() if use_popularity else None
         
-        # Initialize embedding model
-        print(f"Loading embedding model: {model_name}")
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side='left')
-        self.model = AutoModel.from_pretrained(model_name)
+        # Initialize embedding API
+        self.api_url = api_url
+        self.embedding_url = f"{api_url}/embedding"
+        print(f"Using embedding API at: {self.embedding_url}")
         
-        # Move to GPU if available
-        if torch.cuda.is_available():
-            self.model = self.model.cuda()
-            print("Model loaded on GPU")
-        else:
-            print("Model loaded on CPU")
+        # Test the API
+        try:
+            response = requests.get(api_url + "/health", timeout=5)
+            if response.status_code == 200:
+                print("API health check passed")
+        except:
+            print("API health check failed - continuing anyway")
             
         self.max_length = 8192
         
@@ -99,35 +92,47 @@ class UnifiedSearchEngine:
                 with open(index_path / "module_paths.json", 'r') as f:
                     self.module_paths[package] = json.load(f)
     
-    def last_token_pool(self, last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
-        """Pool the last token from the hidden states."""
-        left_padding = (attention_mask[:, -1].sum() == attention_mask.shape[0])
-        if left_padding:
-            return last_hidden_states[:, -1]
-        else:
-            sequence_lengths = attention_mask.sum(dim=1) - 1
-            batch_size = last_hidden_states.shape[0]
-            return last_hidden_states[torch.arange(batch_size, device=last_hidden_states.device), sequence_lengths]
     
     def get_query_embedding(self, query: str) -> np.ndarray:
-        """Get embedding for a query string using local model."""
-        # Tokenize the query
-        batch_dict = self.tokenizer([query], max_length=self.max_length, 
-                                   padding=True, truncation=True, return_tensors='pt')
-        
-        # Move to GPU if available
-        if torch.cuda.is_available():
-            batch_dict = {k: v.cuda() for k, v in batch_dict.items()}
-        
-        # Get embeddings
-        with torch.no_grad():
-            outputs = self.model(**batch_dict)
-            embeddings = self.last_token_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
+        """Get embedding for a query string using llama-server API."""
+        try:
+            payload = {"content": query}
             
-        # Normalize embeddings
-        embeddings = F.normalize(embeddings, p=2, dim=1)
-        
-        return embeddings[0].cpu().numpy()
+            response = requests.post(
+                self.embedding_url,
+                json=payload,
+                timeout=30.0
+            )
+            
+            if response.status_code != 200:
+                raise Exception(f"API returned status {response.status_code}: {response.text[:200]}")
+                
+            result = response.json()
+            
+            # Handle llama-server response format
+            if isinstance(result, list) and len(result) > 0:
+                if isinstance(result[0], dict) and 'embedding' in result[0]:
+                    # Extract the embedding (it's nested)
+                    embedding_data = result[0]['embedding']
+                    if isinstance(embedding_data, list) and len(embedding_data) > 0:
+                        embedding = np.array(embedding_data[0], dtype=np.float32)
+                    else:
+                        embedding = np.array(embedding_data, dtype=np.float32)
+                else:
+                    raise Exception(f"Unexpected response format: {result[:200]}")
+            else:
+                raise Exception(f"Unexpected response format: {result[:200]}")
+            
+            # Normalize
+            norm = np.linalg.norm(embedding)
+            if norm > 0:
+                embedding = embedding / norm
+                
+            return embedding
+            
+        except Exception as e:
+            print(f"Failed to generate embedding: {e}")
+            raise
     
     def embedding_search(self, query: str, top_k: int = 10) -> List[Tuple[str, float, Dict]]:
         """Perform embedding-based semantic search."""
@@ -274,6 +279,8 @@ def main():
                         help="Directory containing package embeddings")
     parser.add_argument("--index-dir", default="module-indexes",
                         help="Directory containing BM25 indexes")
+    parser.add_argument("--api-url", default="http://localhost:8080",
+                        help="llama-server API URL")
     parser.add_argument("--format", choices=["text", "json"], default="text",
                         help="Output format")
     parser.add_argument("--no-popularity", action="store_true",
@@ -287,6 +294,7 @@ def main():
     engine = UnifiedSearchEngine(
         embedding_dir=args.embedding_dir,
         index_dir=args.index_dir,
+        api_url=args.api_url,
         use_popularity=not args.no_popularity
     )
     
