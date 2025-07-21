@@ -17,8 +17,8 @@ from urllib.parse import quote
 from mcp.server.fastmcp import FastMCP
 
 # Import semantic search components
-from semantic_search import SemanticSearch
-from unified_search import UnifiedSearchEngine
+from semantic_search_fixed import SemanticSearchEngine
+from unified_search_all import UnifiedSearchEngine
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 mcp = FastMCP("ocaml-search", host="0.0.0.0")
 
 # Global search engine instances (lazy loaded)
-search_engine: Optional[SemanticSearch] = None
+search_engine: Optional[SemanticSearchEngine] = None
 unified_engine: Optional[UnifiedSearchEngine] = None
 embeddings_dir = Path("package-embeddings")
 package_descriptions_dir = Path("package-descriptions")
@@ -64,7 +64,11 @@ async def find_ocaml_packages(functionality: str, popularity_weight: float = 0.3
     if search_engine is None:
         logger.info("Initializing semantic search engine...")
         try:
-            search_engine = SemanticSearch(embeddings_dir)
+            search_engine = SemanticSearchEngine(
+                module_embeddings_dir=embeddings_dir,
+                package_embeddings_dir=Path("package-description-embeddings"),
+                api_url="http://localhost:8080"
+            )
         except Exception as e:
             error_msg = f"Failed to initialize search engine: {str(e)}"
             logger.error(error_msg)
@@ -140,14 +144,14 @@ async def get_package_summary(package_name: str) -> Dict[str, Any]:
 
 
 @mcp.tool()
-async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8, 
+async def search_ocaml_modules(query: str, packages: Optional[List[str]] = None, top_k: int = 8, 
                               popularity_weight: float = 0.3) -> Dict[str, Any]:
     """
-    Find OCaml modules that provide specific functionality within chosen packages.
+    Find OCaml modules that provide specific functionality across the OCaml ecosystem.
     
-    Provide a clear description of the functionality you need and specify which 
-    packages to search. The tool will find relevant modules using both conceptual 
-    understanding and exact keyword matching.
+    Provide a clear description of the functionality you need. The tool will search across
+    all OCaml packages by default, or within specific packages if you specify them.
+    Uses both conceptual understanding and exact keyword matching.
     
     Args:
         query: Specific functionality you're looking for. Be precise about what you need:
@@ -156,8 +160,9 @@ async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8,
                - "JSON parsing and serialization"
                - "list sorting operations"
                - "TCP socket server"
-        packages: List of OCaml package names to search within. You must specify
-                 which packages to search - common ones include:
+               - "date time parsing and formatting"
+        packages: Optional list of specific packages to search within. If not provided,
+                 searches all available packages. Common packages include:
                  ['base', 'core', 'lwt', 'async', 'cohttp', 'yojson', 'cmdliner']
         top_k: Maximum number of results to return (default: 8)
         popularity_weight: Weight for popularity in ranking (0.0-1.0, default: 0.3)
@@ -171,16 +176,14 @@ async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8,
     """
     global unified_engine
     
-    if not packages:
-        return {"error": "No packages specified. Please provide a list of package names to search."}
-    
     # Initialize unified search engine on first use (lazy loading)
     if unified_engine is None:
         logger.info("Initializing unified search engine...")
         try:
             unified_engine = UnifiedSearchEngine(
-                embedding_dir=str(embeddings_dir),
-                index_dir=str(indexes_dir)
+                embedding_dir=embeddings_dir,
+                index_dir=indexes_dir,
+                api_url="http://localhost:8080"
             )
         except Exception as e:
             error_msg = f"Failed to initialize unified search engine: {str(e)}"
@@ -188,35 +191,39 @@ async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8,
             return {"error": error_msg}
     
     try:
-        # Perform unified search - split top_k between the two methods
-        results_per_method = top_k // 2
-        results = unified_engine.unified_search(query, packages, results_per_method,
-                                              popularity_weight=popularity_weight)
+        # Load specified packages and perform search
+        if packages:
+            unified_engine.load_package_data(packages)
+        else:
+            unified_engine.load_package_data(None)  # Load all packages
+            
+        results = unified_engine.search(query, top_k)
         
         # Format results for MCP response
         return {
-            "query": results["query"],
-            "packages_searched": results["packages_searched"],
+            "query": query,
+            "packages_searched": packages if packages else "all",
             "semantic_results": [
                 {
                     "package": r["package"],
-                    "library": r.get("library"),
-                    "module": r["module_name"],
-                    "module_path": r["module_path"],
-                    "description": r["description"]
+                    "library": r.get("library", ""),
+                    "module": r["module_path"],
+                    "description": r["description"],
+                    "score": r["score"]
                 }
-                for r in results["embedding_results"]
+                for r in results["semantic"]
             ],
             "keyword_results": [
                 {
                     "package": r["package"],
-                    "library": r.get("library"),
-                    "module": r["module_name"],
-                    "module_path": r["module_path"]
+                    "library": r.get("library", ""),
+                    "module": r["module_path"],
+                    "description": r["description"],
+                    "score": r["score"]
                 }
-                for r in results["bm25_results"]
+                for r in results["keyword"]
             ],
-            "total_results": len(results["embedding_results"]) + len(results["bm25_results"])
+            "total_results": len(results["semantic"]) + len(results["keyword"])
         }
         
     except Exception as e:
