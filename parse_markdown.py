@@ -253,37 +253,59 @@ def extract_module_path(file_path: str) -> List[str]:
     # Special case: Module-Submodule-module-type-TypeName.md
     # Should return ['Module', 'Submodule', 'TypeName']
     
+    return extract_module_path_with_types(file_path)[0]
+
+def extract_module_path_with_types(file_path: str) -> tuple[List[str], Dict[int, str]]:
+    """Extract module path from file path and return type information.
+    
+    Returns:
+        tuple: (module_path, type_info) where type_info maps indices to type kinds
+               e.g. {1: 'module-type'} means position 1 in path is a module type
+    """
+    # Example: docs-md/package/version/doc/module/Module-Submodule.md
+    # Should return (['Module', 'Submodule'], {})
+    # Special case: Module-Submodule-module-type-TypeName-More.md
+    # Should return (['Module', 'Submodule', 'TypeName', 'More'], {2: 'module-type'})
+    
     parts = file_path.split('/')
     
     # Find the 'doc' directory
     try:
         doc_index = parts.index('doc')
     except ValueError:
-        return []
+        return ([], {})
     
     # Get the file name without extension
     if parts[-1].endswith('.md'):
         filename = parts[-1][:-3]  # Remove .md
     else:
-        return []
+        return ([], {})
     
     # If it's index.md, use the parent directory name
     if filename == 'index':
         if len(parts) > doc_index + 1:
-            return [parts[-2]]
-        return []
+            return ([parts[-2]], {})
+        return ([], {})
     
     # Check for module-type pattern and handle specially
     if '-module-type-' in filename:
-        # Split on '-module-type-' to separate the module path from the type name
-        module_part, type_name = filename.split('-module-type-', 1)
+        # Split on '-module-type-' to separate the module path from the type name and rest
+        module_part, rest = filename.split('-module-type-', 1)
         # Split the module part on '-' for nested modules
-        module_parts = module_part.split('-')
-        # Add the type name at the end
-        module_parts.append(type_name)
-        return module_parts
+        module_parts = module_part.split('-') if module_part else []
+        # The rest might contain the type name followed by more nested modules
+        # Split the rest on '-' and add all parts
+        rest_parts = rest.split('-') if rest else []
+        
+        # The first element in rest_parts is the module type
+        type_info = {}
+        if rest_parts:
+            type_info[len(module_parts)] = 'module-type'
+        
+        module_parts.extend(rest_parts)
+        return (module_parts, type_info)
     
     # Split on '-' for nested modules
     module_parts = filename.split('-')
     
-    return module_parts
+    return (module_parts, {})

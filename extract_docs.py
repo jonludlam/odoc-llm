@@ -14,7 +14,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from tqdm import tqdm
 
 from version_utils import find_latest_version
-from parse_markdown import parse_markdown_documentation, extract_module_path
+from parse_markdown import parse_markdown_documentation, extract_module_path_with_types
 
 def find_all_packages(docs_dir: Path) -> List[str]:
     """Find all package directories in the docs folder."""
@@ -160,14 +160,13 @@ def process_documentation_file(doc_file: Path, package_name: str, version: str, 
         parsed['file_path'] = str(doc_file.relative_to(version_dir))  # Relative to version dir
         parsed['library'] = library_name  # Will be None for non-library files
         
-        # Extract module path from file path
-        parsed['module_path'] = extract_module_path(str(doc_file))
+        # Extract module path and type information from file path
+        module_path, type_info = extract_module_path_with_types(str(doc_file))
+        parsed['module_path'] = module_path
+        parsed['module_type_info'] = type_info
         
-        # Determine if this is a module type based on file path
-        filename = doc_file.name
-        if filename.endswith('.md'):
-            filename = filename[:-3]
-        parsed['is_module_type'] = '-module-type-' in filename and filename.split('-module-type-')[-1] != ''
+        # Determine if this is a module type based on type information
+        parsed['is_module_type'] = len(type_info) > 0 and any(info == 'module-type' for info in type_info.values())
         
         return parsed
     except Exception as e:

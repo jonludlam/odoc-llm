@@ -1,0 +1,165 @@
+{
+  "package": "shared-block-ring",
+  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "embedding_dimension": 1024,
+  "total_modules": 18,
+  "creation_timestamp": "2025-07-15T23:09:30.812065",
+  "modules": [
+    {
+      "module_path": "Shared_block.Ring.Make.Producer",
+      "library": "shared-block-ring",
+      "description": "Implements a producer interface for a shared ring buffer on a block device, allowing variable-sized items to be pushed and exposed atomically. Works with block devices and structured items, handling errors like suspension, retry, and fatal conditions. Useful for coordinating data production between a single producer and consumer without built-in signaling.",
+      "description_length": 358,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Shared_block.Ring.Make.Consumer",
+      "library": "shared-block-ring",
+      "description": "This module implements a consumer interface for a shared ring buffer on a block device, allowing atomic consumption of variable-sized items. It provides operations to attach to a ring, pop items, advance consumed positions, and manage producer state via suspend/resume signals. Concrete use cases include coordinating data retrieval from a shared disk buffer in a polling-based system where the consumer must track progress and signal acknowledgment to a producer.",
+      "description_length": 464,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.Journal.Make",
+      "library": "shared-block-ring",
+      "description": "This module implements a durable journaling system that ensures at-least-once execution of operations written to a block device. It supports pushing operations with optional batching via a flush interval and guarantees ordered replay after crashes. Use cases include building fault-tolerant systems where operations must survive process or system restarts, such as transaction logging or distributed coordination services.",
+      "description_length": 422,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.Ring.Make",
+      "library": "shared-block-ring",
+      "description": "This module implements a coordinated producer-consumer system using a shared ring buffer on a block device, supporting atomic push and pop operations for variable-sized items. The producer interface allows exposing and committing data, while the consumer interface enables tracking progress, acknowledging consumption, and signaling suspension or resumption. Together, they enable efficient, synchronized data transfer between a single producer and consumer in polling-based systems without external signaling mechanisms. For example, a logging system can use the producer to write records to disk and the consumer to read and acknowledge them, ensuring consistent state across both sides.",
+      "description_length": 689,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Shared_block.S.CLOCK",
+      "library": "shared-block-ring",
+      "description": "This module provides access to a monotonic clock source, measuring elapsed time in nanoseconds and optionally reporting the clock's period. It works with 64-bit integers to represent time values, supporting precise timekeeping and interval measurements. Concrete use cases include profiling code execution, implementing timeouts, and synchronizing time-sensitive operations.",
+      "description_length": 374,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.EraseBlock.Make",
+      "library": "shared-block-ring",
+      "description": "This module implements block erasure functionality for storage devices modeled by the `B` module, providing the `erase` operation that securely clears data from a block using an optional pattern. It operates directly on block devices and is used in scenarios like disk sanitization or secure data deletion.",
+      "description_length": 306,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.S.PRODUCER",
+      "library": "shared-block-ring",
+      "description": "This module implements a shared ring buffer protocol for producers to write and manage variable-sized items on a block device. It supports operations to attach to and detach from a shared ring, push items, advance positions, and handle suspension or retry conditions during writes. The module works directly with block devices and ring buffer positions, providing explicit control for producers in distributed storage scenarios.",
+      "description_length": 428,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.S.CSTRUCTABLE",
+      "library": "shared-block-ring",
+      "description": "This module serializes and deserializes a custom data type `t` to and from `Cstruct.t` buffers. It supports direct conversion between in-memory structures and binary representations. Use this when working with low-level network protocols or disk formats requiring precise memory layout control.",
+      "description_length": 294,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.S.COMPARABLE",
+      "library": "shared-block-ring",
+      "description": "This module defines a comparable type `t` with a `compare` function that establishes a total order between values. It is used to implement data structures like sets and maps that require key ordering. Concrete use cases include sorting custom data types and enabling efficient lookups in ordered collections.",
+      "description_length": 308,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Shared_block.S.JOURNAL",
+      "library": "shared-block-ring",
+      "description": "This module implements a journaling system for durable, asynchronous processing of operations on a disk-backed structure. It provides functions to start and shut down a replay thread, append operations to the journal, and wait for their completion, ensuring at-least-once semantics. Use cases include logging state changes for recovery, batching disk writes for efficiency, and coordinating asynchronous tasks with guaranteed delivery.",
+      "description_length": 435,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.S.RING",
+      "library": "shared-block-ring",
+      "description": "This module implements a shared ring buffer abstraction for coordinating access to a sequence of items stored on a block device. It supports attaching to and detaching from a shared ring, querying its state, advancing positions, and handling errors like retries and suspension. The primary use case is managing concurrent producer-consumer access to a fixed-size buffer in a distributed or multi-process environment.",
+      "description_length": 416,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.S.LOG",
+      "library": "shared-block-ring",
+      "description": "This module provides logging functions for emitting debug, informational, and error messages, each accepting formatted string arguments and returning a value of the same type. It works with standard string formatting types and Lwt threads to support asynchronous logging. Concrete use cases include tracing the execution flow in asynchronous operations and recording errors during block processing.",
+      "description_length": 398,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.S.CONSUMER",
+      "library": "shared-block-ring",
+      "description": "This module implements a consumer interface for a shared ring buffer, allowing clients to attach to and process items from a block device. It supports operations like `pop` to retrieve items, `advance` to mark progress, and `suspend`/`resume` to control the producer, with explicit handling of retry logic and state transitions. The module works directly with block devices and typed items, enabling use cases such as streaming data processing and coordinated producer-consumer workflows over shared storage.",
+      "description_length": 508,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Shared_block.EraseBlock",
+      "library": "shared-block-ring",
+      "description": "This module organizes low-level memory and storage operations around a fixed block size, enabling efficient and secure erasure of data. It provides a parameterized implementation that works with raw memory or storage pages, centered on the core `erase` operation that clears blocks using an optional pattern. The child module extends this functionality to block devices modeled by `B`, applying the same erasure logic to real storage units for tasks like disk sanitization. Together, they support concrete use cases such as secure data deletion and low-level memory management.",
+      "description_length": 577,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Shared_block.Ring",
+      "library": "shared-block-ring",
+      "description": "This module implements a producer-consumer coordination system using a shared ring buffer on a block device, enabling atomic push and pop operations for variable-sized data. It defines producer actions for exposing and committing data, and consumer actions for tracking, acknowledging, and managing suspension. The system supports polling-based synchronization in environments lacking external signaling, such as a logging system where one side writes records and the other reads and confirms receipt.",
+      "description_length": 501,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.Journal",
+      "library": "shared-block-ring",
+      "description": "This module provides a durable journaling system for ensuring at-least-once execution of operations written to a block device. It supports ordered replay after crashes and allows batching through a configurable flush interval. Key operations include appending entries, flushing batches, and replaying logs, enabling use cases like transaction logging and fault-tolerant coordination services. For example, it can log database transactions to disk or synchronize distributed nodes after failure.",
+      "description_length": 494,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block.S",
+      "library": "shared-block-ring",
+      "description": "This module orchestrates tracing, logging, and serialization in a shared memory block system, combining timekeeping, ring buffer coordination, and journaling into a unified framework for distributed storage and processing. It defines core data types such as messages, traced operations, and comparable keys, with operations for S-expression conversion, binary serialization, and ordered collection management. You can use it to track producer-consumer interactions with precise timing, implement durable logging with asynchronous replay, and manage concurrent access to shared ring buffers on block devices. Submodules extend this foundation with clock-based profiling, structured logging, and typed consumer workflows that integrate directly with the system\u2019s persistence and synchronization mechanisms.",
+      "description_length": 804,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shared_block",
+      "library": "shared-block-ring",
+      "description": "This module coordinates low-level storage, synchronization, and logging through a unified system of block devices, ring buffers, and journals. It centers on fixed-size blocks, atomic data exchange, and durable logging, with core operations for erasure, coordinated push/pop, and ordered replay. You can use it to implement secure data deletion, producer-consumer logging systems, fault-tolerant transaction logs, and synchronized tracing with precise timing and structured serialization. Examples include disk sanitization, durable message queues, crash-safe databases, and distributed coordination with asynchronous replay.",
+      "description_length": 624,
+      "index": 17,
+      "embedding_norm": 1.0
+    }
+  ],
+  "filtering": {
+    "total_modules_in_package": 18,
+    "meaningful_modules": 18,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
+  },
+  "statistics": {
+    "max_description_length": 804,
+    "min_description_length": 294,
+    "avg_description_length": 466.6666666666667,
+    "embedding_file_size_mb": 0.0658426284790039
+  }
+}

@@ -36,7 +36,7 @@ indexes_dir = Path("module-indexes")
 module_descriptions_dir = Path("module-descriptions")
 
 @mcp.tool()
-async def find_ocaml_packages(functionality: str) -> Dict[str, Any]:
+async def find_ocaml_packages(functionality: str, popularity_weight: float = 0.3) -> Dict[str, Any]:
     """
     Discover OCaml packages across the entire ecosystem for specific functionality.
     
@@ -50,6 +50,7 @@ async def find_ocaml_packages(functionality: str) -> Dict[str, Any]:
                       - "CSV file parsing and writing"
                       - "OAuth2 authentication flow"
                       - "Image processing and filtering"
+        popularity_weight: Weight for popularity in ranking (0.0-1.0, default: 0.3)
     
     Returns:
         List of packages ranked by relevance, each with:
@@ -70,8 +71,9 @@ async def find_ocaml_packages(functionality: str) -> Dict[str, Any]:
             return {"error": error_msg}
     
     try:
-        # Perform semantic search
-        results = search_engine.search(functionality, top_k=5)
+        # Perform semantic search with popularity
+        results = search_engine.search(functionality, top_k=5, 
+                                     popularity_weight=popularity_weight)
         
         # Format results for MCP response
         return {
@@ -138,7 +140,8 @@ async def get_package_summary(package_name: str) -> Dict[str, Any]:
 
 
 @mcp.tool()
-async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8) -> Dict[str, Any]:
+async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8, 
+                              popularity_weight: float = 0.3) -> Dict[str, Any]:
     """
     Find OCaml modules that provide specific functionality within chosen packages.
     
@@ -157,6 +160,7 @@ async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8) 
                  which packages to search - common ones include:
                  ['base', 'core', 'lwt', 'async', 'cohttp', 'yojson', 'cmdliner']
         top_k: Maximum number of results to return (default: 8)
+        popularity_weight: Weight for popularity in ranking (0.0-1.0, default: 0.3)
     
     Returns:
         Two lists of matching modules:
@@ -186,7 +190,8 @@ async def search_ocaml_modules(query: str, packages: List[str], top_k: int = 8) 
     try:
         # Perform unified search - split top_k between the two methods
         results_per_method = top_k // 2
-        results = unified_engine.unified_search(query, packages, results_per_method)
+        results = unified_engine.unified_search(query, packages, results_per_method,
+                                              popularity_weight=popularity_weight)
         
         # Format results for MCP response
         return {

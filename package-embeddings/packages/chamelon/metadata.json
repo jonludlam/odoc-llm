@@ -1,0 +1,125 @@
+{
+  "package": "chamelon",
+  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "embedding_dimension": 1024,
+  "total_modules": 13,
+  "creation_timestamp": "2025-07-15T23:08:28.009611",
+  "modules": [
+    {
+      "module_path": "Chamelon.Tag.Magic",
+      "library": "chamelon",
+      "description": "This module defines integer constants representing specific tag values and bit flags used for managing structured data tags. It provides direct access to predefined tag identifiers and a list of invalid tag values for validation purposes. These constants are used in low-level data structure manipulation, particularly when encoding or decoding tagged binary formats.",
+      "description_length": 367,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.Block.IdSet",
+      "library": "chamelon",
+      "description": "This module provides a suite of operations for managing immutable integer sets with ordered semantics, supporting standard set manipulations like union, intersection, and difference, alongside transformations such as mapping and filtering. It works with immutable integer sets, ensuring efficient element ordering and comparison using a predefined comparator. Typical use cases include tracking unique identifiers, performing range-based queries, and converting between ordered integer sequences and sets for iterative or functional data processing pipelines.",
+      "description_length": 559,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.Entry",
+      "library": "chamelon",
+      "description": "This module handles structured binary data entries, including creation time entries, metadata links, and data links. It provides functions to compact entry lists by removing deletions, calculate storage requirements excluding hardtail entries, and serialize or deserialize entries to and from Cstruct buffers. Use cases include managing file system metadata and efficiently encoding tagged binary logs.",
+      "description_length": 402,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.Commit",
+      "library": "chamelon",
+      "description": "This module handles the creation, manipulation, and serialization of commit structures in a structured log or journaling system. It provides functions to construct commits from entry lists with CRC filtering, derive new commits from existing ones, and serialize/deserialize commits to and from binary buffers. The module works directly with commit objects containing cryptographic tags and entry lists, targeting use cases like durable logging, incremental state updates, and binary format parsing in storage systems.",
+      "description_length": 517,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.Block",
+      "library": "chamelon",
+      "description": "This module organizes block data structures that store versioned entries and commits, enabling operations like splitting, compaction, and binary conversion with size control. It maintains revision counts and inter-block links while leveraging an ordered integer set submodule for managing immutable identifier collections. You can split oversized blocks, merge revisions, or serialize blocks for storage while using ordered sets to track and manipulate unique identifiers efficiently. The combination supports structured versioned data workflows with precise control over both block layout and set-based queries.",
+      "description_length": 612,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.Superblock",
+      "library": "chamelon",
+      "description": "This module provides low-level binary parsing, validation, and serialization of filesystem superblock structures using `Cstruct.t` buffers. It handles operations like field-level access (magic numbers, version tuples, size limits), buffer conversion, hexdumping, and structural integrity checks. Designed for filesystem implementation and analysis tasks, it enables direct manipulation of binary superblock data while enforcing format constraints and supporting debugging workflows.",
+      "description_length": 482,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.Dir",
+      "library": "chamelon",
+      "description": "This module constructs and interprets directory entries and structures using block pairs. It provides functions to create name-to-id and directory structure entries, extract block pair information from entries, and inspect directory structures stored in Cstruct buffers. Use cases include building and navigating directory hierarchies in a disk-based filesystem representation.",
+      "description_length": 377,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.File",
+      "library": "chamelon",
+      "description": "This module handles low-level file structure and pointer manipulation for a custom binary format. It provides functions to create and parse file chunks, inline structures, and compressed tables of contents, working directly with `Cstruct.t` buffers and integer-based indices and sizes. Use cases include constructing indexed binary files with embedded metadata and efficiently reading or writing structured data at specific offsets.",
+      "description_length": 432,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.Content",
+      "library": "chamelon",
+      "description": "This module determines the size of content based on a tag and Cstruct data, returning either directory sizes (with file count and byte size), file size in bytes, or a skip signal. It works with `Chamelon.Tag.t` and `Cstruct.t` to classify and measure structured binary data. A concrete use case is analyzing archive or filesystem structures to calculate storage requirements for files or directories.",
+      "description_length": 400,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon.Tag",
+      "library": "chamelon",
+      "description": "This module defines an enumerated type for tag values used in structured binary formats, along with conversions to and from integers and strings. It provides functions to serialize and deserialize tag data to Cstruct buffers using XOR-based encoding, and includes helpers to inspect tag properties such as validity and structure. The child module complements this by exposing integer constants for predefined tags and invalid values, enabling precise tag validation and low-level manipulation in binary file or network protocol implementations. Together, they support tasks like constructing valid tag sequences, decoding binary streams, and ensuring data integrity during serialization.",
+      "description_length": 687,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamelon",
+      "library": "chamelon",
+      "description": "This module suite manages structured binary data across multiple layers, from low-level parsing and serialization to high-level directory and commit structures. Key data types include `Cstruct.t` buffers, tags, versioned blocks, and commit objects with cryptographic tags, supporting operations like compaction, splitting, CRC filtering, and field-level access. Examples include building durable logs with commit derivation, encoding directory hierarchies using block pairs, and calculating storage requirements based on tag-classified data. It enables precise manipulation of custom binary formats, filesystem metadata, and versioned data workflows.",
+      "description_length": 650,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kv.Make",
+      "library": "chamelon.kv",
+      "description": "This module implements a disk-backed key-value store with read-write operations for connecting to storage, retrieving and modifying values, listing hierarchical keys, and managing metadata like timestamps and digests. It operates on keys represented by `Mirage_kv.Key.t` and string values, leveraging the `Sectors` module for low-level disk sector management and `Clock` for time-based operations, with asynchronous I/O handled via Lwt. It is suited for MirageOS unikernels requiring persistent storage in virtualized or embedded environments, particularly for use cases like virtual machine configuration storage or lightweight filesystem abstractions.",
+      "description_length": 653,
+      "index": 11,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Kv",
+      "library": "chamelon.kv",
+      "description": "This module implements a disk-backed key-value store with read-write operations for persistent storage in virtualized or embedded environments. It uses `Mirage_kv.Key.t` for hierarchical keys, string values, and integrates with `Sectors` and `Clock` for disk and time operations. Operations include connecting to storage, retrieving and modifying values, listing keys, and managing metadata like timestamps and digests. Example use cases include virtual machine configuration storage and lightweight filesystem abstractions within MirageOS unikernels.",
+      "description_length": 551,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    }
+  ],
+  "filtering": {
+    "total_modules_in_package": 13,
+    "meaningful_modules": 13,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
+  },
+  "statistics": {
+    "max_description_length": 687,
+    "min_description_length": 367,
+    "avg_description_length": 514.5384615384615,
+    "embedding_file_size_mb": 0.04767131805419922
+  }
+}

@@ -1,0 +1,261 @@
+{
+  "package": "obuilder",
+  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "embedding_dimension": 1024,
+  "total_modules": 30,
+  "creation_timestamp": "2025-07-15T23:12:04.604077",
+  "modules": [
+    {
+      "module_path": "Obuilder.Docker.Cmd",
+      "library": "obuilder",
+      "description": "This module provides low-level Docker CLI operations for managing images, containers, and volumes, including building, running, inspecting, and cleaning up resources. It works directly with Docker objects identified by string IDs, returning results in Lwt threads with error handling via `result` types. Specific use cases include building Docker images from specifications, querying OBuilder-associated volumes for runtime resource tracking, and manipulating manifests or mounted volumes during container lifecycle operations.",
+      "description_length": 527,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder.Docker.Cmd_log",
+      "library": "obuilder",
+      "description": "This module provides wrappers for Docker CLI commands managing images, containers, and volumes, supporting operations like creation, inspection, execution, and cleanup. Functions use Lwt for asynchronous execution, log output through `Build_log`, and return structured results with explicit error tagging via `Msg`. It enables introspection of Docker resources\u2014such as volumes and temporary caches\u2014by returning them as tagged string lists, supporting resource tracking and cleanup during build workflows.",
+      "description_length": 504,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Config.Mount",
+      "library": "obuilder",
+      "description": "This module defines configuration for mounting filesystem paths within a sandboxed build step. It specifies the type of mount (`Bind` or `Volume`), source and destination paths, and whether the mount is read-only. Concrete use cases include setting up isolated build environments with controlled access to host directories or persistent storage volumes.",
+      "description_length": 353,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder.Config.Secret",
+      "library": "obuilder",
+      "description": "Handles the configuration of secrets for sandboxed build steps, including parsing and serializing secret values and their targets. Works with the `t` record type containing `value` and `target` strings. Used to securely pass sensitive data like API keys or credentials into isolated build environments.",
+      "description_length": 302,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.S.DOCKER_CMD",
+      "library": "obuilder",
+      "description": "This module handles Docker image and container lifecycle operations like pulling, tagging, and removal, along with container execution control and volume management. It operates on Docker objects such as images, containers, and volumes, using Lwt-based asynchronous functions to interact with the Docker CLI. Specific use cases include automating build workflows that require temporary volume cleanup, querying OBuilder-associated volumes, and ensuring resource existence checks during containerized application deployments.",
+      "description_length": 524,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.S.FETCHER",
+      "library": "obuilder",
+      "description": "Fetches and extracts a base image into a specified rootfs directory. Returns the environment variables associated with the fetched image. Useful for initializing build environments with predefined configurations.",
+      "description_length": 212,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Docker.Extract",
+      "library": "obuilder",
+      "description": "Fetches and extracts Docker base images into a specified directory, initializing the root filesystem. It returns the environment configuration of the fetched image. This module is used to set up the initial filesystem state for building container images from a base image.",
+      "description_length": 272,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.S.STORE",
+      "library": "obuilder",
+      "description": "This module manages a content-addressable store for building and caching filesystem trees. It supports operations to build, retrieve, and delete entries by ID, track free space, and maintain logs and state. Concrete use cases include storing Docker image layers, caching build artifacts, and managing temporary directories for reproducible builds.",
+      "description_length": 347,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder.S.SANDBOX",
+      "library": "obuilder",
+      "description": "This module executes operations in isolated environments using a sandboxed filesystem. It provides `run` to perform commands within a controlled context, capturing logs and handling cancellation, and `finished` to signal completion. It works with configurations, Unix file descriptors, and build logs to ensure reproducible execution. Use it to safely run untrusted or isolated build steps while managing resource cleanup and logging.",
+      "description_length": 434,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.S.BUILDER",
+      "library": "obuilder",
+      "description": "This module implements a build system backend for constructing and managing artifacts based on specifications. It provides operations to build, delete, prune, and inspect stored items, along with resource management and health monitoring. It works with identifiers, contexts, and specifications tied to build processes and storage backends like SQLite. Use cases include executing reproducible builds, cleaning up unused artifacts, checking storage usage, and monitoring system health during continuous integration tasks.",
+      "description_length": 521,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Docker_sandbox.Docker_config",
+      "library": "obuilder",
+      "description": "This module translates an OBuilder configuration into Docker command-line arguments and execution parameters. It processes build configurations to generate the necessary Docker CLI flags and the command to run inside the container. A typical use case involves converting sandboxed build instructions into a Docker-compatible command sequence for execution in a controlled environment.",
+      "description_length": 384,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Builder",
+      "library": "obuilder",
+      "description": "This module orchestrates the execution of builds described by `Obuilder_spec.t`, managing build contexts, caching, and resource cleanup. It interacts with a store for artifact persistence and a sandbox for isolated execution, supporting operations like pruning old artifacts, checking storage health, and reporting cache performance. Concrete use cases include running container image builds, garbage collecting unused artifacts, and monitoring storage utilization during CI/CD pipelines.",
+      "description_length": 488,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Btrfs_store",
+      "library": "obuilder",
+      "description": "This module manages build artifacts using Btrfs subvolumes, enabling efficient snapshotting and space-efficient storage. It supports operations to build, retrieve, and delete build results, while tracking free space and managing cache versions with user-specified ownership. Concrete use cases include storing temporary build directories, maintaining versioned caches for dependencies, and logging build outputs for auditing or debugging.",
+      "description_length": 438,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Context",
+      "library": "obuilder",
+      "description": "This module creates and manages build contexts for constructing Docker images. It provides the `v` function to initialize a context with parameters like environment variables, user settings, and source directory. The context is used to track build-time information such as logging, file sources, and execution configuration.",
+      "description_length": 324,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Store_spec",
+      "library": "obuilder",
+      "description": "This module defines store configuration types and parsing functions for setting up storage backends. It supports Btrfs, ZFS, Rsync, XFS, and Docker stores, with operations for converting string representations to typed values, formatting, and initializing stores from CLI arguments. It is used to configure storage during build setup, validate rsync modes, and select appropriate store implementations based on command-line input.",
+      "description_length": 430,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Zfs_store",
+      "library": "obuilder",
+      "description": "This module manages build artifacts using ZFS snapshots, providing operations to build, store, retrieve, and delete snapshots based on build IDs. It supports atomic build updates, caching with versioned snapshots, and log management, all backed by ZFS for efficient storage and isolation. Use cases include CI/CD pipelines where reproducible, versioned build outputs are required with minimal disk overhead.",
+      "description_length": 407,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Docker_store",
+      "library": "obuilder",
+      "description": "This module stores build results as Docker images, managing their creation, deletion, and caching. It provides operations to build images from a base, track free space, retrieve build results and logs, and handle cache snapshots with ownership. Use it to manage versioned Docker image builds with efficient caching and disk usage tracking.",
+      "description_length": 339,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Native_sandbox",
+      "library": "obuilder",
+      "description": "This module runs sandboxed builds using a native implementation, providing a `run` function that executes a build configuration in an isolated environment with a specified root filesystem. It works with a sandbox configuration type that can be parsed from and converted to S-expressions, and supports command-line interface setup via Cmdliner. Concrete use cases include securely executing untrusted or isolated build processes with controlled filesystem access and logging.",
+      "description_length": 474,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Build_log",
+      "library": "obuilder",
+      "description": "This module manages build logs with operations to create, write to, and stream from logs. It works with a log type `t` that represents either writable temporary logs or read-only saved logs. Concrete use cases include capturing build output by appending strings, streaming log content to a callback during execution, and copying data from a file descriptor into a log.",
+      "description_length": 368,
+      "index": 18,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder.Rsync_store",
+      "library": "obuilder",
+      "description": "This module implements a build artifact storage system using rsync for efficient data replication and caching. It provides operations to build, retrieve, delete, and manage isolated build environments and their outputs, using filesystem paths and rsync-based copy or hardlink strategies. Key functions include `build` for creating new entries, `result` for fetching build paths, `cache` for managing versioned mutable state, and `delete` for removing entries. It works with unique identifiers for builds and caches, string paths, and supports concurrent-safe operations like logging, disk usage monitoring, and space reclamation via `df` and `complete_deletes`. Use cases include storing Docker build layers, caching CI build artifacts, and managing versioned build environments with disk-efficient rsync strategies.",
+      "description_length": 816,
+      "index": 19,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder.Config",
+      "library": "obuilder",
+      "description": "This module configures sandboxed build steps by defining working directories, command arguments, environment variables, mounts, and secrets, with support for serializing and deserializing configurations. It provides a `t` record for top-level configuration and includes submodules for defining mount points and secret injection targets. Mounts can specify bind or volume types with source, destination, and read-only flags, while secrets handle secure value-to-target mappings. Example usage includes setting up isolated builds with restricted filesystem access and injecting API keys securely into the sandbox environment.",
+      "description_length": 623,
+      "index": 20,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder.Docker_builder",
+      "library": "obuilder",
+      "description": "This module implements a Docker-based build system that executes builds using specifications, manages resource cleanup, and provides storage operations for tracking build artifacts. It works with identifiers, contexts, and specifications to perform builds, prune old entries, delete specific items, and monitor storage metrics. Concrete use cases include executing containerized builds, maintaining a cache of build results, and reclaiming storage space by removing outdated or unused artifacts.",
+      "description_length": 495,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.BUILDER",
+      "library": "obuilder",
+      "description": "This module implements a build system for managing and executing builds using a directed acyclic graph (DAG) of specifications. It provides operations to build, delete, prune, and inspect stored build artifacts, along with health checks and cache statistics. Concrete use cases include automated build execution with dependency tracking, garbage collection of unused artifacts, and monitoring storage usage and performance.",
+      "description_length": 423,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Zfs_clone",
+      "library": "obuilder",
+      "description": "This module provides a function `fetch` that initializes a root filesystem by cloning a ZFS volume corresponding to a specified base image. It works with ZFS volumes and expects the base image to exist as a ZFS volume under `obuilder/base-image/<base>`. A concrete use case is setting up isolated build environments by efficiently cloning preconfigured base images into a target rootfs directory.",
+      "description_length": 396,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Archive_extract",
+      "library": "obuilder",
+      "description": "Fetches and extracts base images in `.tar.gz` format into a specified root filesystem directory. It initializes the rootfs by downloading the archive and unpacking its contents. This operation is commonly used to set up container environments from pre-built image sources.",
+      "description_length": 272,
+      "index": 24,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder.Docker_sandbox",
+      "library": "obuilder",
+      "description": "This module orchestrates sandboxed builds using Docker by executing isolated operations, managing build contexts, and transferring files between host and containers. It processes configurations into Docker CLI arguments and commands, enabling precise control over execution environments. Key data types include build configurations, logs, and manifests, with operations for container setup, command execution, and artifact capture. Examples include translating OBuilder specs into Docker commands, running builds in isolated containers, and extracting build outputs for analysis.",
+      "description_length": 579,
+      "index": 25,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder.Docker",
+      "library": "obuilder",
+      "description": "This module provides a Docker CLI interface for managing images, containers, and volumes, enabling operations such as building, running, inspecting, and cleaning up resources. It works with Docker identifiers, filesystem paths, and volume configurations, supporting asynchronous execution via Lwt, structured logging, and error handling through `result` and `Msg` types. Child modules offer low-level command wrappers, resource introspection capabilities, and base image initialization, allowing tasks like automated deployment, file extraction from images, and runtime environment setup. Specific examples include building images from specifications, querying volumes for resource tracking, and fetching base images to initialize a root filesystem.",
+      "description_length": 749,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.S",
+      "library": "obuilder",
+      "description": "This module orchestrates build processes by defining core types for identifiers, tags, and logging, while abstracting storage, sandboxing, and execution through functors. It coordinates with child modules to manage Docker lifecycle operations, fetch base images, store filesystem trees, sandbox execution, and handle artifact lifecycle, all using Lwt for asynchronous interactions. Key data types include identifiers for build steps, tags for log classification, and configurations for execution contexts, with operations like `run` for sandboxed commands and `build` for artifact construction. Examples include automating Docker volume cleanup, initializing rootfs directories from base images, caching build layers, and executing isolated build steps with controlled resource access.",
+      "description_length": 785,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder.Xfs_store",
+      "library": "obuilder",
+      "description": "This module implements a build result store using XFS with reflink support, enabling efficient snapshots and deduplication. It manages directory trees keyed by build IDs, allowing atomic build operations, log tracking, and cache management with user-defined ownership. Use cases include fast, space-efficient storage of container images or reproducible build artifacts with snapshot isolation and cache versioning.",
+      "description_length": 414,
+      "index": 28,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Obuilder",
+      "library": "obuilder",
+      "description": "This module builds and manages container images and sandboxes, handling storage backends like Btrfs, ZFS, and Docker. It processes build specifications to execute isolated builds, manage artifact storage, and track logs, supporting operations like building Docker images, running sandboxed commands, and caching build layers. Key data types include build specifications, sandbox configurations, and store implementations, with concrete actions such as initializing root filesystems from base images, executing builds in isolated environments, and storing results using snapshot-based filesystems. Submodules provide storage strategies (rsync, XFS, ZFS), sandboxing mechanisms (native, Docker), logging facilities, and configuration handling for mounts and secrets.",
+      "description_length": 764,
+      "index": 29,
+      "embedding_norm": 1.0
+    }
+  ],
+  "filtering": {
+    "total_modules_in_package": 30,
+    "meaningful_modules": 30,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
+  },
+  "statistics": {
+    "max_description_length": 816,
+    "min_description_length": 212,
+    "avg_description_length": 465.46666666666664,
+    "embedding_file_size_mb": 0.10943794250488281
+  }
+}

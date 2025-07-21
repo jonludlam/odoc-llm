@@ -1,0 +1,165 @@
+{
+  "package": "earley",
+  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "embedding_dimension": 1024,
+  "total_modules": 18,
+  "creation_timestamp": "2025-07-15T23:09:42.520082",
+  "modules": [
+    {
+      "module_path": "Earley_core.Keywords.Spec",
+      "library": "earley.core",
+      "description": "This module defines character sets and reserved word lists to control keyword recognition in parsers. It specifies which characters prevent a token from being treated as a keyword and lists words that must be treated as reserved. It is used to configure keyword handling in lexing and parsing workflows.",
+      "description_length": 303,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Earley_core.Keywords.Make",
+      "library": "earley.core",
+      "description": "This module manages keyword reservations and provides parsers for matching specific strings under strict conditions. It works with strings and integrates with grammars to enforce keyword rules during parsing, using character sets defined in the `S` module. It is used to define reserved keywords in a parser, ensuring identifiers do not conflict with language keywords.",
+      "description_length": 369,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Input.Preprocessor",
+      "library": "earley.core",
+      "description": "This module defines a preprocessor interface for transforming and filtering input lines during parsing. It maintains a state across lines, allowing for dynamic adjustments to file names and line numbers, and determines whether each line should be included in the parsed output. It is used to handle input directives, such as those controlling line numbers or conditional inclusion, while validating the final state at the end of input.",
+      "description_length": 435,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Earley.WithPP",
+      "library": "earley.core",
+      "description": "This module extends the Earley parsing functionality by integrating an input preprocessor, enabling parsing of preprocessed strings, channels, and files according to a given grammar. It operates on the same grammar and blank types as the core Earley module, but applies preprocessing before parsing. Concrete use cases include parsing source files that require macro expansion, line continuation, or other forms of input transformation before syntactic analysis.",
+      "description_length": 462,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Utils.EqHashtbl",
+      "library": "earley.core",
+      "description": "This module implements a hash table with equality-based key comparisons. It supports creating a table with a specified size, adding key-value pairs, retrieving values by key, and iterating over all key-value pairs. It is useful for scenarios requiring efficient lookups and insertions with custom equality semantics, such as symbol table management or caching with non-standard key types.",
+      "description_length": 388,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Input.Tbl",
+      "library": "earley.core",
+      "description": "This module implements an imperative hash table optimized for efficiency, designed to store and retrieve values associated with input buffers and integer keys. It supports operations for creating, adding, finding, clearing, and iterating over entries. Concrete use cases include caching intermediate parsing results indexed by buffer positions or tracking dynamic parser state during input processing.",
+      "description_length": 401,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Utils.Fixpoint",
+      "library": "earley.core",
+      "description": "This module computes fixpoints for values that depend on other values, using mutable references to handle cycles and support incremental updates. It provides combinators like `from_fun`, `from_fun2`, and `from_ref` to build dependent computations, and `force` to evaluate them once stable. Concrete use cases include attribute evaluation in recursive structures like grammars or dependency graphs where values must be recomputed until convergence.",
+      "description_length": 447,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Earley_core.Input.WithPP",
+      "library": "earley.core",
+      "description": "This module provides functions to create input buffers from various sources\u2014functions, channels, files, and strings\u2014applying a preprocessor to the input data. It works with input data types like strings and channels, producing preprocessed `Earley_core.Input.buffer` values. Concrete use cases include loading and preprocessing grammar files, token streams, or custom input formats before parsing.",
+      "description_length": 397,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Input.OrdTbl",
+      "library": "earley.core",
+      "description": "This module implements an ordered table for efficiently managing and retrieving elements associated with positions in an input buffer. It supports adding entries with a buffer position and value, removing entries up to a given position, and iterating over stored values. It is used to track and process input data in ordered stages, such as maintaining state or annotations tied to specific input offsets during parsing.",
+      "description_length": 420,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Blanks",
+      "library": "earley.core",
+      "description": "This module provides functions to define and manipulate blank-parsing strategies, primarily handling character sets and comment syntaxes. It supports operations like ignoring specific character sets, handling line comments with customizable delimiters, and combining these behaviors. Concrete use cases include configuring parsers to skip whitespace and comments in OCaml source files or custom input formats.",
+      "description_length": 409,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Earley_core.Input",
+      "library": "earley.core",
+      "description": "This module manages input buffers with efficient access, line tracking, and UTF-8 column calculation, enabling precise positional analysis for parsing workflows. It includes a preprocessor interface for filtering and transforming input lines with stateful control over line numbers and inclusion, an imperative hash table for caching values by buffer and integer keys, and utilities for creating preprocessed buffers from various input sources. The ordered table submodule tracks values by buffer position, supporting incremental processing and state management tied to input offsets. Together, these components facilitate lexing, syntactic validation, and custom parsing tasks requiring accurate buffer comparisons and positional data.",
+      "description_length": 736,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Utils",
+      "library": "earley.core",
+      "description": "This module provides core utilities for working with equality-based closures, physical hash tables, and fixed-point computations over arbitrary types. It supports stateful operations through mutable references and polymorphic equality, enabling efficient memoization, state tracking, and iterative algorithms. The physical hash table submodule allows creating, updating, and iterating tables with custom equality semantics, while the fixpoint submodule enables defining and evaluating interdependent computations with cycle handling. Example uses include managing symbol tables with custom keys and computing stable attribute values in recursive data structures.",
+      "description_length": 662,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Keywords",
+      "library": "earley.core",
+      "description": "This module processes keyword-based parsing rules using predefined tokens and grammar specifications, enabling structured parsing of domain-specific languages or configuration formats. It works with token streams and grammar rule sets to provide concrete keyword recognition, validation, and reservation enforcement. The S submodule defines character sets and reserved word lists to control which tokens are treated as keywords, while the R submodule enforces strict string matching and manages keyword reservations during parsing. For example, S can specify that underscores are allowed in identifiers but not in keywords, and R can ensure that \"if\" is recognized only as a keyword and not as a variable name.",
+      "description_length": 710,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Regexp",
+      "library": "earley.core",
+      "description": "This module implements a minimal but efficient regular expression engine with support for parsing, matching, and extracting input based on patterns. It operates on a custom `regexp` type representing characters, character sets, sequences, alternatives, and modifiers like optional or repeated elements, and works with input buffers and strings for matching. Concrete use cases include tokenizing input streams, validating string formats, and extracting substrings based on structured patterns.",
+      "description_length": 493,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Charset",
+      "library": "earley.core",
+      "description": "This module implements efficient character sets with operations for creating, modifying, and querying sets using ranges, unions, and complements. It works directly with `char` values and provides functions to construct sets from ranges, strings, or existing sets, along with in-place modifications. Concrete use cases include parsing character classes in regular expressions, validating input character sets, and efficiently managing large character ranges.",
+      "description_length": 457,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core.Earley",
+      "library": "earley.core",
+      "description": "This module implements the Earley algorithm for building efficient, typed parsers that support complex grammars with recursive definitions, character and string matching, and input preprocessing. It provides core operations for grammar composition\u2014such as sequencing, alternatives, and repetition\u2014along with position tracking and memoization to optimize performance. The integrated preprocessor submodule extends parsing capabilities to handle transformed input sources, enabling macro expansion or line continuation processing before syntactic analysis. Together, these features allow developers to implement domain-specific languages or OCaml syntax extensions with customizable layouts and structured input handling.",
+      "description_length": 719,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Earley_core",
+      "library": "earley.core",
+      "description": "This module suite enables the construction and manipulation of robust, typed parsers with support for complex grammars, input preprocessing, and precise positional tracking. Key data types include grammars, token streams, input buffers, character sets, and regex patterns, with operations for composing parsing rules, defining keyword behavior, managing state through hash tables, and performing fixed-point computations. Users can configure parsers to skip whitespace and comments, tokenize input using regex and character sets, enforce keyword reservations, and process structured formats with custom delimiters. Example applications include parsing OCaml-like syntaxes, validating and transforming configuration files, and implementing domain-specific languages with macro expansion and custom layout rules.",
+      "description_length": 810,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Earley_str",
+      "library": "earley.str",
+      "description": "This module provides functions to integrate Str-based regular expressions into Earley parsers. It supports creating grammars that match regular expressions and extract capture groups, enabling parsing of complex textual formats like log files or structured data. The `regexp` function allows embedding regex patterns directly into grammars, while `blank_regexp` handles whitespace or ignored input according to a regex.",
+      "description_length": 419,
+      "index": 17,
+      "embedding_norm": 1.0
+    }
+  ],
+  "filtering": {
+    "total_modules_in_package": 18,
+    "meaningful_modules": 18,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
+  },
+  "statistics": {
+    "max_description_length": 810,
+    "min_description_length": 303,
+    "avg_description_length": 502.05555555555554,
+    "embedding_file_size_mb": 0.06583595275878906
+  }
+}

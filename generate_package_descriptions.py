@@ -79,8 +79,8 @@ class LLMClient:
             clean_readme = re.sub(r'<[^>]+>', '', package.readme_content)
             clean_readme = re.sub(r'\s+', ' ', clean_readme).strip()
             # Limit README content to avoid overly long prompts
-            if len(clean_readme) > 2000:
-                clean_readme = clean_readme[:2000] + "..."
+            if len(clean_readme) > 6000:
+                clean_readme = clean_readme[:6000] + "..."
             context_parts.append(f"README content: {clean_readme}")
         
         if package.statistics:

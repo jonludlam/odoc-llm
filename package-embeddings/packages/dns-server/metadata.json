@@ -1,0 +1,85 @@
+{
+  "package": "dns-server",
+  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
+  "embedding_dimension": 1024,
+  "total_modules": 8,
+  "creation_timestamp": "2025-07-15T23:06:28.211641",
+  "modules": [
+    {
+      "module_path": "Dns_server_mirage.Make",
+      "library": "dns-server.mirage",
+      "description": "This module implements DNS server functionality for MirageOS, providing `primary` and `secondary` functions to run authoritative and secondary DNS servers. It works with DNS zones represented as `Dns_trie.t`, handles zone updates via `on_update` callbacks, and supports DNS NOTIFY and SOA-based zone transfers. Concrete use cases include hosting DNS zones with dynamic updates, managing zone propagation between primary and secondary servers, and handling authenticated DNS updates from trusted sources.",
+      "description_length": 503,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dns_server_mirage",
+      "library": "dns-server.mirage",
+      "description": "This module enables DNS server operations in MirageOS, supporting both authoritative and secondary server roles. It manages DNS zones using `Dns_trie.t`, handles dynamic updates through `on_update` callbacks, and supports DNS NOTIFY and SOA-based transfers. It allows hosting and propagating DNS zones, handling authenticated updates, and maintaining zone consistency across primary and secondary servers. Example uses include running a dynamic DNS service and synchronizing zones between servers.",
+      "description_length": 497,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dns_zone",
+      "library": "dns-server.zone",
+      "description": "This module parses DNS zone files into structured maps and validates DNSKEY records within specified zones. It constructs a trie from multiple zone files, ensuring consistency and returning verified zones alongside cryptographic keys. It is used to load and validate DNS data for authoritative servers or zone transfers.",
+      "description_length": 320,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dns_server.Secondary",
+      "library": "dns-server",
+      "description": "This module implements a secondary DNS server that handles zone transfers (AXFR), SOA queries, and TSIG-verified communication. It maintains zone data in a `Dns_trie.t` structure and processes incoming DNS packets, managing state transitions for replication and query responses. It is used to synchronize DNS zones from a primary server and respond to client queries with up-to-date records.",
+      "description_length": 391,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_server.Authentication",
+      "library": "dns-server",
+      "description": "This module manages DNS server authentication by encoding operation privileges and IP addresses within domain names. It provides functions to validate access rights for DNS operations such as zone transfers, updates, and notifications, using keys composed of domain names and DNSKEY records. It supports concrete use cases like restricting AXFR requests to authorized subdomains or verifying DNS update permissions based on encoded key names.",
+      "description_length": 442,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_server.Primary",
+      "library": "dns-server",
+      "description": "This module implements a primary DNS server with zone management, supporting dynamic updates to DNS data and cryptographic keys. It processes DNS queries and zone transfer requests, handles notifications to secondary servers, and maintains state for active connections and cached data. Use cases include authoritative DNS hosting, secure zone transfers with TSIG, and custom query responses for load balancing or dynamic data.",
+      "description_length": 426,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dns_server",
+      "library": "dns-server",
+      "description": "This module implements a DNS server that processes queries, updates, and zone transfers using a trie-based DNS database. It supports answering DNS questions, handling dynamic updates with TSIG authentication, and performing AXFR/IXFR zone transfers, with key data structures including `t` for server state and `Dns_trie.t` for DNS data. The secondary server submodule synchronizes zones from a primary and responds to queries, while the authentication submodule enforces access control using DNSKEY records and domain-encoded keys. The primary server submodule enables authoritative hosting, secure zone replication, and dynamic record management, supporting use cases like load-balanced DNS responses and automated zone updates.",
+      "description_length": 729,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_trie",
+      "library": "dns-server",
+      "description": "This module provides operations for managing DNS resource records using a prefix tree structure, enabling insertion, deletion, and modification of records while enforcing DNS invariants such as SOA requirements, delegation rules, and type consistency. It operates on domain names structured as a trie, where nodes store resource maps and handle zone-specific data like SOA entries and name servers, supporting use cases such as CNAME-aware lookups, IXFR-style zone differencing, and validation of DNS constraints.",
+      "description_length": 513,
+      "index": 7,
+      "embedding_norm": 1.0
+    }
+  ],
+  "filtering": {
+    "total_modules_in_package": 8,
+    "meaningful_modules": 8,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
+  },
+  "statistics": {
+    "max_description_length": 729,
+    "min_description_length": 320,
+    "avg_description_length": 477.625,
+    "embedding_file_size_mb": 0.029478073120117188
+  }
+}
