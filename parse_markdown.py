@@ -1,9 +1,7 @@
-"""Markdown parsing utilities for OCaml documentation using standard markdown library."""
+"""Markdown parsing utilities for OCaml documentation using mistune AST."""
 import re
-import markdown
-from markdown.extensions import codehilite
-from bs4 import BeautifulSoup
-from typing import Dict, List, Any, Optional
+import mistune
+from typing import Dict, List, Any, Optional, Tuple
 
 def clean_text(text: str) -> str:
     """Clean and normalize text content."""
@@ -30,33 +28,83 @@ def parse_value_definition(name: str, signature: str, doc: str = "") -> Dict[str
         'anchor': f'val-{name}'
     }
 
-def extract_code_blocks_from_html(html_content: str) -> List[Dict[str, str]]:
-    """Extract code blocks from HTML content."""
-    soup = BeautifulSoup(html_content, 'html.parser')
-    code_blocks = []
+def extract_text_from_tokens(tokens: List[Dict[str, Any]]) -> str:
+    """Extract text content from mistune tokens."""
+    text_parts = []
+    for token in tokens:
+        if token.get('type') == 'text':
+            text_parts.append(token.get('raw', ''))
+        elif token.get('type') in ['code_inline', 'codespan']:
+            text_parts.append('`' + token.get('raw', '') + '`')
+        elif token.get('type') == 'strong' and 'children' in token:
+            text_parts.append(extract_text_from_tokens(token['children']))
+        elif token.get('type') == 'em' and 'children' in token:
+            text_parts.append(extract_text_from_tokens(token['children']))
+        elif token.get('type') == 'link' and 'children' in token:
+            text_parts.append(extract_text_from_tokens(token['children']))
+    return ''.join(text_parts).strip()
+
+def parse_markdown_ast(content: str) -> List[Dict[str, Any]]:
+    """Parse markdown content using mistune and extract elements."""
+    # Create a markdown parser
+    markdown_parser = mistune.create_markdown(renderer=None)
     
-    # Find all code blocks (both inline and pre-formatted)
-    for pre_elem in soup.find_all('pre'):
-        code_elem = pre_elem.find('code')
-        if code_elem:
-            code_text = code_elem.get_text().strip()
-            if code_text and (code_text.startswith('val ') or code_text.startswith('type ') or code_text.startswith('module ')):
-                # Get the text immediately following the code block for documentation
-                next_text = ""
-                next_elem = pre_elem.find_next_sibling()
-                while next_elem and next_elem.name in ['p', 'div']:
-                    text = next_elem.get_text().strip()
-                    if text:
-                        next_text = text
-                        break
-                    next_elem = next_elem.find_next_sibling()
+    # Parse to AST tokens - mistune returns a tuple, we want the first element
+    parsed = markdown_parser.parse(content)
+    tokens = parsed[0] if isinstance(parsed, tuple) else parsed
+    
+    elements = []
+    i = 0
+    
+    while i < len(tokens):
+        token = tokens[i]
+        
+        if token['type'] == 'heading':
+            # Extract heading text
+            title = extract_text_from_tokens(token.get('children', []))
+            level = token.get('attrs', {}).get('level', 1)
+            
+            # Skip module title (h1 containing "Module")
+            if level == 1 and 'Module' in title:
+                i += 1
+                continue
+            
+            section = {
+                'kind': 'section',
+                'title': title,
+                'level': level,
+                'content': ""
+            }
+            
+            # Collect content until next heading or code block
+            content_parts = []
+            j = i + 1
+            while j < len(tokens) and tokens[j]['type'] not in ['heading', 'block_code']:
+                if tokens[j]['type'] == 'paragraph':
+                    content_parts.append(extract_text_from_tokens(tokens[j].get('children', [])))
+                j += 1
+            
+            section['content'] = '\n'.join(content_parts)
+            elements.append(section)
+            
+        elif token.get('type') == 'block_code':
+            code_text = token.get('raw', '').strip()
+            
+            if code_text and (code_text.startswith('val ') or 
+                            code_text.startswith('type ') or 
+                            code_text.startswith('module ')):
+                # Get following documentation
+                following_text = ""
+                if i + 1 < len(tokens) and tokens[i + 1]['type'] == 'paragraph':
+                    following_text = extract_text_from_tokens(tokens[i + 1].get('children', []))
                 
-                code_blocks.append({
-                    'code': code_text,
-                    'following_text': next_text
-                })
+                parsed = parse_ocaml_code_block(code_text, following_text)
+                if parsed:
+                    elements.append(parsed)
+        
+        i += 1
     
-    return code_blocks
+    return elements
 
 def parse_ocaml_code_block(code_text: str, following_text: str = "") -> Optional[Dict[str, Any]]:
     """Parse a single OCaml code block."""
@@ -127,106 +175,63 @@ def parse_module_markdown(content: str) -> Dict[str, Any]:
         'sections': []   # Keep for backward compatibility
     }
     
-    # Convert markdown to HTML
-    md = markdown.Markdown(extensions=['codehilite', 'fenced_code'])
-    html_content = md.convert(content)
+    # Parse markdown to AST
+    markdown_parser = mistune.create_markdown(renderer=None)
+    parsed = markdown_parser.parse(content)
+    tokens = parsed[0] if isinstance(parsed, tuple) else parsed
     
-    # Parse with BeautifulSoup
-    soup = BeautifulSoup(html_content, 'html.parser')
-    
-    # Extract module name from the first h1
-    h1 = soup.find('h1')
+    # Extract module name and preamble
     module_name = None
-    if h1:
-        h1_text = h1.get_text()
-        match = re.search(r'Module `([^`]+)`', h1_text)
-        if match:
-            module_name = match.group(1)
-    
-    # Extract preamble (all content before first section heading or code element)
     preamble_parts = []
-    current_elem = soup.find('h1')  # Start after the h1 title
-    if current_elem:
-        current_elem = current_elem.find_next_sibling()
-        
-        while current_elem:
-            # Stop at first section heading (h2-h6) or code block
-            if current_elem.name and (current_elem.name in ['h2', 'h3', 'h4', 'h5', 'h6'] or 
-                                    (current_elem.name == 'pre' and current_elem.find('code'))):
+    i = 0
+    
+    # Find the h1 with module name
+    while i < len(tokens):
+        token = tokens[i]
+        if token.get('type') == 'heading' and token.get('attrs', {}).get('level') == 1:
+            title = extract_text_from_tokens(token.get('children', []))
+            match = re.search(r'Module `([^`]+)`', title)
+            if match:
+                module_name = match.group(1)
+                i += 1
                 break
-            
-            # Collect text from paragraphs and other text elements
-            if current_elem.name in ['p', 'ul', 'ol', 'blockquote']:
-                text = current_elem.get_text().strip()
-                if text:
-                    preamble_parts.append(text)
-            
-            current_elem = current_elem.find_next_sibling()
+        i += 1
+    
+    # Extract preamble (content after h1 until first h2+ or code block)
+    while i < len(tokens):
+        token = tokens[i]
+        if token.get('type') == 'heading' and token.get('attrs', {}).get('level', 1) > 1:
+            break
+        elif token.get('type') == 'block_code':
+            code_text = token.get('raw', '').strip()
+            if code_text and (code_text.startswith('val ') or 
+                            code_text.startswith('type ') or 
+                            code_text.startswith('module ')):
+                break
+        elif token.get('type') == 'paragraph':
+            preamble_parts.append(extract_text_from_tokens(token.get('children', [])))
+        i += 1
     
     if preamble_parts:
-        result['preamble'] = '\n'.join(preamble_parts)
-        # Keep module_documentation for backward compatibility
-        result['module_documentation'] = result['preamble']
+        result['preamble'] = '\n'.join(preamble_parts).strip()
+        result['module_documentation'] = result['preamble']  # backward compatibility
     
-    # Process all elements in order
-    all_elements = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre'])
+    # Process all elements using the AST
+    elements = parse_markdown_ast(content)
     
-    for elem in all_elements:
-        if elem.name.startswith('h'):
-            # This is a header
-            level = int(elem.name[1])  # h1 -> 1, h2 -> 2, etc.
-            title = elem.get_text().strip()
-            
-            # Skip the main module title
-            if level == 1 and 'Module' in title:
-                continue
-                
-            section = {
-                'kind': 'section',
-                'title': title,
-                'level': level,
-                'content': ""
-            }
-            
-            # Collect content until the next header or code block
-            content_parts = []
-            next_elem = elem.find_next_sibling()
-            while next_elem and not (next_elem.name and (next_elem.name.startswith('h') or next_elem.name == 'pre')):
-                if next_elem.name == 'p':
-                    content_parts.append(next_elem.get_text().strip())
-                next_elem = next_elem.find_next_sibling()
-            
-            section['content'] = '\n'.join(content_parts)
-            result['elements'].append(section)
-            result['sections'].append(section)  # Keep for backward compatibility
-            
-        elif elem.name == 'pre':
-            # This is a code block
-            code_elem = elem.find('code')
-            if code_elem:
-                code_text = code_elem.get_text().strip()
-                if code_text and (code_text.startswith('val ') or code_text.startswith('type ') or code_text.startswith('module ')):
-                    # Get the text immediately following the code block for documentation
-                    next_text = ""
-                    next_elem = elem.find_next_sibling()
-                    while next_elem and next_elem.name in ['p', 'div']:
-                        text = next_elem.get_text().strip()
-                        if text:
-                            next_text = text
-                            break
-                        next_elem = next_elem.find_next_sibling()
-                    
-                    parsed = parse_ocaml_code_block(code_text, next_text)
-                    if parsed:
-                        result['elements'].append(parsed)
-                        
-                        # Keep for backward compatibility
-                        if parsed.get('kind') == 'value':
-                            result['values'].append(parsed)
-                        elif parsed.get('kind') == 'type':
-                            result['types'].append(parsed)
-                        elif parsed.get('kind') == 'module':
-                            result['modules'].append(parsed)
+    # Populate result with elements
+    for elem in elements:
+        result['elements'].append(elem)
+        
+        # Keep for backward compatibility
+        if elem.get('kind') == 'value':
+            result['values'].append(elem)
+        elif elem.get('kind') == 'type':
+            result['types'].append(elem)
+        elif elem.get('kind') == 'module':
+            result['modules'].append(elem)
+        elif elem.get('kind') == 'section':
+            result['sections'].append(elem)
     
     return result
 
