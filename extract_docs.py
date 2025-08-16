@@ -269,9 +269,20 @@ def save_package_documentation(package_doc: Dict[str, Any], output_dir: Path):
     
     package_name = package_doc['package']
     output_file = output_dir / f"{package_name}.json"
+    temp_file = output_dir / f"{package_name}.json.tmp"
     
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(package_doc, f, indent=2, ensure_ascii=False)
+    # Write to temporary file first, then atomically rename
+    try:
+        with open(temp_file, 'w', encoding='utf-8') as f:
+            json.dump(package_doc, f, indent=2, ensure_ascii=False)
+        
+        # Atomically replace the target file
+        temp_file.rename(output_file)
+    except Exception as e:
+        # Clean up temp file if something went wrong
+        if temp_file.exists():
+            temp_file.unlink()
+        raise
 
 def main():
     parser = argparse.ArgumentParser(description='Extract OCaml documentation to structured JSON')
@@ -343,10 +354,21 @@ def main():
                 
                 pbar.update(1)
     
-    # Save index
+    # Save index with atomic write
     index_file = args.output_dir / 'index.json'
-    with open(index_file, 'w') as f:
-        json.dump(index, f, indent=2)
+    temp_index_file = args.output_dir / 'index.json.tmp'
+    
+    try:
+        with open(temp_index_file, 'w') as f:
+            json.dump(index, f, indent=2)
+        
+        # Atomically replace the index file
+        temp_index_file.rename(index_file)
+    except Exception as e:
+        # Clean up temp file if something went wrong
+        if temp_index_file.exists():
+            temp_index_file.unlink()
+        raise
     
     print(f"\nProcessing complete!")
     print(f"Successful: {successful}")

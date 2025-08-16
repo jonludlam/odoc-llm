@@ -22,7 +22,7 @@ import requests
 from tqdm import tqdm
 
 # Configure logging
-logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # Global shutdown flag
@@ -55,7 +55,7 @@ class EmbeddingResult:
 class EmbeddingClient:
     """Client for generating embeddings using a local embedding server."""
     
-    def __init__(self, base_url: str = "http://localhost:8000", model: str = "Qwen/Qwen3-Embedding-0.6B"):
+    def __init__(self, base_url: str = "http://localhost:8080", model: str = "Qwen/Qwen3-Embedding-8B-GGUF"):
         self.base_url = base_url
         self.model = model
         self.embedding_url = f"{base_url}/embedding"
@@ -128,24 +128,30 @@ class EmbeddingClient:
 def load_package_descriptions(input_dir: Path) -> List[PackageDescription]:
     """Load all package descriptions from JSON files."""
     descriptions = []
+    json_files = list(input_dir.glob("*.json"))
     
-    for json_file in input_dir.glob("*.json"):
-        try:
-            with open(json_file, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            
-            if 'package' in data and 'description' in data:
-                descriptions.append(PackageDescription(
-                    name=data['package'],
-                    version=data.get('version', 'unknown'),
-                    description=data['description']
-                ))
-            else:
-                pass  # Skip invalid files silently
+    logger.info(f"Found {len(json_files)} JSON files in {input_dir}")
+    
+    with tqdm(json_files, desc="Loading package descriptions", unit="file") as pbar:
+        for json_file in pbar:
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
                 
-        except Exception:
-            pass  # Skip files with errors silently
-            
+                if 'package' in data and 'description' in data:
+                    descriptions.append(PackageDescription(
+                        name=data['package'],
+                        version=data.get('version', 'unknown'),
+                        description=data['description']
+                    ))
+                    pbar.set_postfix({"loaded": len(descriptions)})
+                else:
+                    logger.warning(f"Invalid format in {json_file}")
+                    
+            except Exception as e:
+                logger.warning(f"Failed to load {json_file}: {e}")
+    
+    logger.info(f"Successfully loaded {len(descriptions)} package descriptions")
     return descriptions
 
 def generate_package_embedding(package: PackageDescription, client: EmbeddingClient) -> EmbeddingResult:
@@ -171,34 +177,53 @@ def generate_package_embedding(package: PackageDescription, client: EmbeddingCli
 
 def process_packages_batch(packages: List[PackageDescription], client: EmbeddingClient, 
                           batch_size: int = 16) -> List[EmbeddingResult]:
-    """Process a batch of packages with rate limiting."""
+    """Process a batch of packages with rate limiting and progress reporting."""
     results = []
+    total_batches = (len(packages) + batch_size - 1) // batch_size
     
-    for i in range(0, len(packages), batch_size):
-        if shutdown_requested:
-            break
+    logger.info(f"Processing {len(packages)} packages in {total_batches} batches of {batch_size}")
+    
+    with tqdm(total=len(packages), desc="Generating embeddings", unit="pkg") as pbar:
+        for i in range(0, len(packages), batch_size):
+            if shutdown_requested:
+                logger.info("Shutdown requested, stopping processing")
+                break
+                
+            batch = packages[i:i + batch_size]
+            batch_results = []
+            batch_num = i // batch_size + 1
             
-        batch = packages[i:i + batch_size]
-        batch_results = []
-        
-        # Process batch with some parallelization
-        with ThreadPoolExecutor(max_workers=min(4, len(batch))) as executor:
-            future_to_package = {
-                executor.submit(generate_package_embedding, package, client): package
-                for package in batch
-            }
+            logger.debug(f"Processing batch {batch_num}/{total_batches} ({len(batch)} packages)")
             
-            for future in as_completed(future_to_package):
-                if shutdown_requested:
-                    break
-                result = future.result()
-                batch_results.append(result)
-        
-        results.extend(batch_results)
-        
-        # Rate limiting between batches
-        if i + batch_size < len(packages) and not shutdown_requested:
-            time.sleep(0.1)  # Small delay between batches
+            # Process batch with some parallelization
+            with ThreadPoolExecutor(max_workers=min(4, len(batch))) as executor:
+                future_to_package = {
+                    executor.submit(generate_package_embedding, package, client): package
+                    for package in batch
+                }
+                
+                for future in as_completed(future_to_package):
+                    if shutdown_requested:
+                        break
+                    result = future.result()
+                    batch_results.append(result)
+                    
+                    # Update progress bar
+                    pbar.update(1)
+                    
+                    # Update status in progress bar
+                    successful = sum(1 for r in results + batch_results if r.success)
+                    total_processed = len(results) + len(batch_results)
+                    pbar.set_postfix({
+                        "success": f"{successful}/{total_processed}",
+                        "batch": f"{batch_num}/{total_batches}"
+                    })
+            
+            results.extend(batch_results)
+            
+            # Rate limiting between batches
+            if i + batch_size < len(packages) and not shutdown_requested:
+                time.sleep(0.1)  # Small delay between batches
     
     return results
 
@@ -207,43 +232,48 @@ def save_embeddings(results: List[EmbeddingResult], output_dir: Path) -> None:
     successful_results = [r for r in results if r.success]
     
     if not successful_results:
-        print("No successful embeddings to save")
+        logger.warning("No successful embeddings to save")
         return
+    
+    logger.info(f"Saving {len(successful_results)} successful embeddings")
     
     # Check embedding dimensions
     embedding_dims = [r.embedding.shape for r in successful_results]
     unique_dims = set(embedding_dims)
     
     if len(unique_dims) > 1:
-        print(f"Error: Embeddings have inconsistent dimensions: {unique_dims}")
+        logger.error(f"Embeddings have inconsistent dimensions: {unique_dims}")
         # Find which packages have different dimensions
         for i, (result, dim) in enumerate(zip(successful_results[:10], embedding_dims[:10])):
-            print(f"  {result.package_name}: {dim}")
+            logger.error(f"  {result.package_name}: {dim}")
         return
     
     # Create packages directory
     packages_dir = output_dir / "packages"
     packages_dir.mkdir(parents=True, exist_ok=True)
     
-    # Save each package separately
-    for result in successful_results:
-        package_dir = packages_dir / result.package_name
-        package_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Save embedding
-        embeddings_file = package_dir / "embeddings.npz"
-        np.savez_compressed(embeddings_file, embeddings=result.embedding[None, :])  # Add batch dimension
-        
-        # Save package metadata
-        metadata = {
-            "package": result.package_name,
-            "embedding_dimension": result.embedding.shape[0],
-            "generation_time": time.time()
-        }
-        
-        metadata_file = package_dir / "metadata.json"
-        with open(metadata_file, 'w', encoding='utf-8') as f:
-            json.dump(metadata, f, indent=2)
+    # Save each package separately with progress bar
+    with tqdm(successful_results, desc="Saving embeddings", unit="pkg") as pbar:
+        for result in pbar:
+            pbar.set_postfix({"current": result.package_name})
+            
+            package_dir = packages_dir / result.package_name
+            package_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Save embedding
+            embeddings_file = package_dir / "embeddings.npz"
+            np.savez_compressed(embeddings_file, embeddings=result.embedding[None, :])  # Add batch dimension
+            
+            # Save package metadata
+            metadata = {
+                "package": result.package_name,
+                "embedding_dimension": result.embedding.shape[0],
+                "generation_time": time.time()
+            }
+            
+            metadata_file = package_dir / "metadata.json"
+            with open(metadata_file, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2)
     
     # Save global metadata
     global_metadata = {
@@ -257,8 +287,8 @@ def save_embeddings(results: List[EmbeddingResult], output_dir: Path) -> None:
     with open(global_metadata_file, 'w', encoding='utf-8') as f:
         json.dump(global_metadata, f, indent=2)
     
-    print(f"Saved {len(successful_results)} package embeddings to {packages_dir}")
-    print(f"Saved global metadata to {global_metadata_file}")
+    logger.info(f"Saved {len(successful_results)} package embeddings to {packages_dir}")
+    logger.info(f"Saved global metadata to {global_metadata_file}")
 
 def main():
     import argparse
@@ -266,9 +296,9 @@ def main():
     parser = argparse.ArgumentParser(description="Generate embeddings for OCaml package descriptions")
     parser.add_argument("--input-dir", default="package-descriptions", 
                        help="Directory containing package description JSON files")
-    parser.add_argument("--output-dir", default="package-embeddings", 
-                       help="Output directory for embeddings")
-    parser.add_argument("--embedding-url", default="http://localhost:8000",
+    parser.add_argument("--output-dir", default="package-description-embeddings", 
+                       help="Output directory for package description embeddings")
+    parser.add_argument("--embedding-url", default="http://localhost:8080",
                        help="Base URL for embedding server")
     parser.add_argument("--model", default="Qwen/Qwen3-Embedding-0.6B",
                        help="Embedding model name")
@@ -276,8 +306,8 @@ def main():
                        help="Batch size for processing")
     parser.add_argument("--limit", type=int, 
                        help="Limit number of packages to process (for testing)")
-    parser.add_argument("--packages", nargs="+",
-                       help="Process specific packages only")
+    parser.add_argument("--packages",
+                       help="Comma-separated list of specific packages to process")
     
     args = parser.parse_args()
     
@@ -292,44 +322,49 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Load package descriptions
-    print(f"Loading package descriptions from {input_dir}")
+    logger.info(f"Loading package descriptions from {input_dir}")
     packages = load_package_descriptions(input_dir)
     
     if not packages:
-        print("No package descriptions found")
+        logger.error("No package descriptions found")
         return 1
     
-    print(f"Found {len(packages)} package descriptions")
+    logger.info(f"Found {len(packages)} package descriptions")
     
     # Filter by specific packages if specified
     if args.packages:
-        packages = [p for p in packages if p.name in args.packages]
-        print(f"Filtered to {len(packages)} packages: {args.packages}")
+        specified_packages = set(args.packages.split(","))
+        original_count = len(packages)
+        packages = [p for p in packages if p.name in specified_packages]
+        logger.info(f"Filtered from {original_count} to {len(packages)} packages: {specified_packages}")
     
     # Apply limit if specified
     if args.limit:
+        original_count = len(packages)
         packages = packages[:args.limit]
-        print(f"Limited to {len(packages)} packages")
+        logger.info(f"Limited from {original_count} to {len(packages)} packages")
     
     if not packages:
-        print("No packages to process")
+        logger.warning("No packages to process after filtering")
         return 0
     
     # Initialize embedding client
     try:
+        logger.info(f"Initializing embedding client: {args.embedding_url} with model {args.model}")
         client = EmbeddingClient(args.embedding_url, args.model)
     except Exception as e:
-        print(f"Failed to initialize embedding client: {e}")
+        logger.error(f"Failed to initialize embedding client: {e}")
         return 1
     
     # Generate embeddings
-    print(f"Generating embeddings for {len(packages)} packages")
+    logger.info(f"Starting embedding generation for {len(packages)} packages")
+    logger.info(f"Configuration: batch_size={args.batch_size}, model={args.model}")
     start_time = time.time()
     
     results = process_packages_batch(packages, client, args.batch_size)
     
     if shutdown_requested:
-        print("Processing interrupted by shutdown signal")
+        logger.warning("Processing interrupted by shutdown signal")
         return 1
     
     # Report results
@@ -337,22 +372,42 @@ def main():
     failed = len([r for r in results if not r.success])
     
     elapsed = time.time() - start_time
-    print(f"Processing complete in {elapsed:.1f}s")
-    print(f"Successfully processed: {successful}/{len(packages)} packages")
+    rate = len(packages) / elapsed if elapsed > 0 else 0
+    
+    logger.info(f"Embedding generation complete in {elapsed:.1f}s ({rate:.1f} packages/sec)")
+    logger.info(f"Results: {successful}/{len(packages)} successful, {failed} failed")
     
     if failed > 0:
-        print(f"Failed to process {failed} packages")
+        logger.warning(f"Failed to process {failed} packages:")
         # Log first few failures for debugging
-        for result in results[:5]:
-            if not result.success:
-                print(f"Failed {result.package_name}: {result.error}")
+        failed_results = [r for r in results if not r.success][:5]
+        for result in failed_results:
+            logger.warning(f"  {result.package_name}: {result.error}")
+        if len(failed_results) < failed:
+            logger.warning(f"  ... and {failed - len(failed_results)} more failures")
+    
+    # Calculate success rate and stats
+    success_rate = (successful / len(packages)) * 100 if packages else 0
+    logger.info(f"Success rate: {success_rate:.1f}%")
     
     # Save embeddings
     if successful > 0:
+        logger.info("Saving embeddings to disk...")
         save_embeddings(results, output_dir)
-        print(f"Package embeddings saved to {output_dir}")
+        logger.info(f"Package embeddings successfully saved to {output_dir}")
+        
+        # Final summary
+        logger.info("=== SUMMARY ===")
+        logger.info(f"Input directory: {input_dir}")
+        logger.info(f"Output directory: {output_dir}")
+        logger.info(f"Packages processed: {len(packages)}")
+        logger.info(f"Successful embeddings: {successful}")
+        logger.info(f"Failed embeddings: {failed}")
+        logger.info(f"Success rate: {success_rate:.1f}%")
+        logger.info(f"Total time: {elapsed:.1f}s")
+        logger.info(f"Processing rate: {rate:.1f} packages/sec")
     else:
-        print("No successful embeddings to save")
+        logger.error("No successful embeddings to save")
         return 1
     
     return 0

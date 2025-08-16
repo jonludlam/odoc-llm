@@ -68,6 +68,34 @@ class LLMClient:
             logger.error(f"Failed to initialize OpenAI client: {e}")
             raise
     
+    def validate_endpoint(self) -> bool:
+        """Validate that the LLM endpoint is reachable and functioning."""
+        try:
+            logger.info(f"Validating LLM endpoint...")
+            test_prompt = "Hello, this is a test message. Please respond with 'OK'."
+            
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant. Reply with 'OK' to test messages."},
+                    {"role": "user", "content": test_prompt}
+                ],
+                max_tokens=10,
+                temperature=0.1,
+                timeout=10.0  # Short timeout for validation
+            )
+            
+            if response.choices and response.choices[0].message.content:
+                logger.info(f"LLM endpoint validated successfully")
+                return True
+            else:
+                logger.error("LLM endpoint returned empty response")
+                return False
+                
+        except Exception as e:
+            logger.error(f"LLM endpoint validation failed: {type(e).__name__}: {e}")
+            return False
+    
     def generate_package_description(self, package: PackageInfo, log_prompts: bool = False) -> str:
         """Generate a concise 3-4 sentence description for a package."""
         
@@ -308,9 +336,17 @@ def main():
         logger.info("No packages to process")
         return 0
     
-    # Initialize LLM client
+    # Initialize LLM client and validate endpoint
     try:
         llm_client = LLMClient(args.llm_url, args.model, api_key)
+        
+        # Validate the endpoint before processing
+        if not llm_client.validate_endpoint():
+            logger.error("Failed to validate LLM endpoint. Please check that the LLM server is running and accessible.")
+            logger.error(f"Endpoint: {args.llm_url}")
+            logger.error(f"Model: {args.model}")
+            return 1
+            
     except Exception as e:
         logger.error(f"Failed to initialize LLM client: {e}")
         return 1

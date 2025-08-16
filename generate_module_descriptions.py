@@ -98,21 +98,86 @@ class LLMClient:
     
     def __init__(self, base_url: str = "http://localhost:8000", model: str = "Qwen/Qwen3-30B-A3B-FP8", api_key: str = "dummy_key"):
         try:
+            # OpenRouter needs /v1 appended like other OpenAI-compatible APIs
+            final_base_url = f"{base_url}/v1"
+            
             self.client = OpenAI(
-                base_url=f"{base_url}/v1",
+                base_url=final_base_url,
                 api_key=api_key,
                 timeout=120.0,  # 2 minute timeout for requests
                 max_retries=1  # Only retry once on failure
             )
             self.model = model
-            logger.info(f"LLMClient initialized with base_url={base_url}, model={model}, api_key={'***' if api_key != 'dummy_key' else 'dummy_key'}")
+            logger.info(f"LLMClient initialized with base_url={base_url}, final_base_url={final_base_url}, model={model}, api_key={'***' if api_key != 'dummy_key' else 'dummy_key'}")
         except Exception as e:
             logger.error(f"Failed to initialize OpenAI client: {e}")
             raise
     
+    def validate_endpoint(self) -> bool:
+        """Validate that the LLM endpoint is reachable and functioning."""
+        try:
+            logger.info(f"Validating LLM endpoint...")
+            test_prompt = "Hello, this is a test message. Please respond with 'OK'."
+            
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant. Reply with 'OK' to test messages."},
+                    {"role": "user", "content": test_prompt}
+                ],
+                max_tokens=10,
+                temperature=0.1,
+                timeout=10.0  # Short timeout for validation
+            )
+            
+            # Debug what we got back  
+            logger.info(f"Response type: {type(response)}")
+            if isinstance(response, str):
+                if "model" in response and "not available" in response.lower():
+                    logger.error(f"OpenRouter model error detected in response")
+                logger.info(f"Response content (first 500 chars): {response[:500]}")
+            else:
+                logger.info(f"Response content: {response}")
+            
+            if hasattr(response, 'choices') and response.choices:
+                message = response.choices[0].message
+                # Check for content in either content field or reasoning field (for reasoning models)
+                has_content = (message.content and message.content.strip()) or (hasattr(message, 'reasoning') and message.reasoning and message.reasoning.strip())
+                if has_content:
+                    logger.info(f"LLM endpoint validated successfully")
+                    return True
+                else:
+                    logger.error("LLM endpoint returned empty response")
+                    return False
+            else:
+                logger.error("LLM endpoint returned unexpected response format")
+                return False
+                
+        except Exception as e:
+            logger.error(f"LLM endpoint validation failed: {type(e).__name__}: {e}")
+            logger.error(f"Exception traceback: {traceback.format_exc()}")
+            return False
+    
     def _is_module_type(self, module: ModuleContent) -> bool:
         """Check if a module is actually a module type."""
         return module.is_module_type
+    
+    def _extract_response_content(self, response) -> str:
+        """Extract content from response, handling both regular and reasoning models."""
+        if not response.choices:
+            return ""
+        
+        message = response.choices[0].message
+        
+        # Try content field first (regular models)
+        if message.content and message.content.strip():
+            return message.content.strip()
+        
+        # Try reasoning field (reasoning models like Qwen reasoning models)
+        if hasattr(message, 'reasoning') and message.reasoning and message.reasoning.strip():
+            return message.reasoning.strip()
+        
+        return ""
     
     def _get_ancestor_preambles(self, module: ModuleContent, all_modules: Dict[str, ModuleContent]) -> List[Tuple[str, str]]:
         """Get preambles from ancestor modules.
@@ -132,7 +197,7 @@ class LLMClient:
         
         return ancestor_preambles
     
-    def generate_module_description(self, module: ModuleContent, all_modules: Dict[str, ModuleContent], log_prompts: bool = False) -> str:
+    def generate_module_description(self, module: ModuleContent, all_modules: Dict[str, ModuleContent], log_prompts: bool = False, module_descriptions: Optional[Dict[str, str]] = None) -> str:
         """Generate a concise description for a single module using chunking strategy."""
         
         # Count code elements (functions, types, modules) from ordered elements
@@ -140,11 +205,11 @@ class LLMClient:
         total_items = len(code_elements)
         
         if total_items <= 20:
-            return self._generate_simple_description(module, all_modules, log_prompts)
+            return self._generate_simple_description(module, all_modules, log_prompts, module_descriptions)
         else:
-            return self._generate_chunked_description(module, all_modules, log_prompts)
+            return self._generate_chunked_description(module, all_modules, log_prompts, module_descriptions)
     
-    def _build_simple_description_prompt(self, module: ModuleContent, all_modules: Dict[str, ModuleContent]) -> str:
+    def _build_simple_description_prompt(self, module: ModuleContent, all_modules: Dict[str, ModuleContent], module_descriptions: Optional[Dict[str, str]] = None) -> str:
         """Build prompt for modules with ≤20 functions/types."""
         
         # Check if this is a module type
@@ -156,12 +221,12 @@ class LLMClient:
         # Add ancestor preambles for context
         ancestor_preambles = self._get_ancestor_preambles(module, all_modules)
         if ancestor_preambles:
-            context_parts.append("\nAncestor Module Context:")
+            context_parts.append("\nAncestor module context:")
             for ancestor_path, preamble in ancestor_preambles:
                 context_parts.append(f"- {ancestor_path}: {preamble}")
         
         if module.documentation:
-            context_parts.append(f"\nModule Documentation: {module.documentation}")
+            context_parts.append(f"\nModule documentation: {module.documentation}")
         
         # Process elements in order they appear in documentation
         current_section = None
@@ -187,8 +252,18 @@ class LLMClient:
                     else:
                         elem_line = f"- type {elem.get('name', 'unnamed')}"
                 elif elem.get('kind') == 'module':
-                    # Format as module name
-                    elem_line = f"- module {elem.get('name', 'unnamed')}"
+                    # Format as module name, with description if available
+                    module_name = elem.get('name', 'unnamed')
+                    submodule_path = f"{module.path}.{module_name}" if module.path else module_name
+                    
+                    if module_descriptions and submodule_path in module_descriptions:
+                        submodule_desc = module_descriptions[submodule_path]
+                        if submodule_desc and not submodule_desc.startswith("Empty module"):
+                            elem_line = f"- module {module_name}: (* {submodule_desc} *)"
+                        else:
+                            elem_line = f"- module {module_name}"
+                    else:
+                        elem_line = f"- module {module_name}"
                 elif elem.get('kind') == 'module-type':
                     # Format as module type name
                     elem_line = f"- module type {elem.get('name', 'unnamed')}"
@@ -224,61 +299,83 @@ Description:"""
         
         return prompt
     
-    def _generate_simple_description(self, module: ModuleContent, all_modules: Dict[str, ModuleContent], log_prompts: bool = False) -> str:
+    def _generate_simple_description(self, module: ModuleContent, all_modules: Dict[str, ModuleContent], log_prompts: bool = False, module_descriptions: Optional[Dict[str, str]] = None) -> str:
         """Generate description for modules with ≤20 functions/types."""
         
-        prompt = self._build_simple_description_prompt(module, all_modules)
+        prompt = self._build_simple_description_prompt(module, all_modules, module_descriptions)
 
         if log_prompts:
             logger.info(f"=== PROMPT for {module.path} ===")
             logger.info(prompt)
             logger.info("=== END PROMPT ===")
         
-        try:
-            logger.info(f"Sending LLM request for module {module.path} (length: {len(prompt)} chars)")
-            import time
-            start_time = time.time()
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are an expert OCaml developer. Provide concise, direct answers without thinking aloud or explanation. /no_think"},
-                    {"role": "user", "content": prompt}
-                ],
-                max_tokens=1024,
-                temperature=0.1
-            )
-            elapsed = time.time() - start_time
-            logger.info(f"LLM request completed for module {module.path} in {elapsed:.1f}s")
-            
-            if not response.choices:
-                logger.error(f"LLM returned no choices for module {module.path}")
-                return f"OCaml module {module.path} - no response from LLM"
-            
-            result = response.choices[0].message.content.strip()
-            
-            # Filter out think tags and their content
-            result = re.sub(r'<think>.*?</think>\s*', '', result, flags=re.DOTALL).strip()
-            
-            if log_prompts:
-                logger.info(f"=== RESPONSE for {module.path} ===")
-                logger.info(result)
-                logger.info("=== END RESPONSE ===")
-            return result
-        except Exception as e:
-            import time
-            elapsed = time.time() - start_time if 'start_time' in locals() else 0
-            logger.error(f"LLM error for module {module.path} after {elapsed:.1f}s: {type(e).__name__}: {e}")
-            
-            if "timeout" in str(e).lower() or "timed out" in str(e).lower():
-                logger.error(f"LLM timeout for module {module.path}: {e}")
-                return f"OCaml module {module.path} - description generation timed out after {elapsed:.1f}s."
-            else:
-                logger.error(f"LLM error type: {type(e)}, message: {e}")
-                import traceback
-                logger.error(f"LLM error traceback: {traceback.format_exc()}")
-                return f"OCaml module {module.path} - description generation failed: {type(e).__name__}"
+        max_attempts = 3
+        for attempt in range(max_attempts):
+            try:
+                logger.info(f"Sending LLM request for module {module.path} (length: {len(prompt)} chars, attempt {attempt + 1}/{max_attempts})")
+                import time
+                start_time = time.time()
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are an expert OCaml developer. Provide concise, direct answers without thinking aloud or explanation. /no_think"},
+                        {"role": "user", "content": prompt}
+                    ],
+                    max_tokens=1024,
+                    temperature=0.1 + (attempt * 0.1)  # Increase temperature on retries
+                )
+                elapsed = time.time() - start_time
+                logger.info(f"LLM request completed for module {module.path} in {elapsed:.1f}s")
+                
+                result = self._extract_response_content(response)
+                if not result or not result.strip():
+                    logger.warning(f"LLM returned empty content for module {module.path} (attempt {attempt + 1}/{max_attempts})")
+                    if attempt < max_attempts - 1:
+                        logger.info(f"Retrying with higher temperature...")
+                        time.sleep(1)  # Brief pause before retry
+                        continue
+                    else:
+                        logger.error(f"All attempts failed for module {module.path} - returning empty description")
+                        return ""  # Return empty string for consistent handling
+                
+                # Filter out think tags and their content
+                result = re.sub(r'<think>.*?</think>\s*', '', result, flags=re.DOTALL).strip()
+                
+                # Check if result is still meaningful after filtering
+                if not result or len(result) < 20:
+                    logger.warning(f"Result too short after filtering for module {module.path} (length: {len(result)})")
+                    if attempt < max_attempts - 1:
+                        continue
+                    else:
+                        return ""
+                
+                if log_prompts:
+                    logger.info(f"=== RESPONSE for {module.path} ===")
+                    logger.info(result)
+                    logger.info("=== END RESPONSE ===")
+                return result
+                
+            except Exception as e:
+                import time
+                elapsed = time.time() - start_time if 'start_time' in locals() else 0
+                logger.error(f"LLM error for module {module.path} after {elapsed:.1f}s: {type(e).__name__}: {e}")
+                
+                if attempt < max_attempts - 1:
+                    if "timeout" in str(e).lower() or "timed out" in str(e).lower():
+                        logger.info(f"Retrying after timeout...")
+                        time.sleep(2)  # Longer pause after timeout
+                    else:
+                        logger.info(f"Retrying after error...")
+                        time.sleep(1)
+                    continue
+                else:
+                    logger.error(f"All attempts failed for module {module.path}")
+                    return ""  # Return empty string for consistent handling
+        
+        # Should never reach here, but just in case
+        return ""
     
-    def _generate_chunked_description(self, module: ModuleContent, all_modules: Dict[str, ModuleContent], log_prompts: bool = False) -> str:
+    def _generate_chunked_description(self, module: ModuleContent, all_modules: Dict[str, ModuleContent], log_prompts: bool = False, module_descriptions: Optional[Dict[str, str]] = None) -> str:
         """Generate description for large modules using chunking strategy."""
         
         # Extract code elements (functions, types, modules) from ordered elements
@@ -290,13 +387,13 @@ Description:"""
         # Process each chunk of 20 functions/types
         for i in range(0, len(code_elements), chunk_size):
             chunk = code_elements[i:i + chunk_size]
-            chunk_summary = self._summarize_chunk(module, chunk, i // chunk_size + 1, all_modules, log_prompts)
+            chunk_summary = self._summarize_chunk(module, chunk, i // chunk_size + 1, all_modules, log_prompts, module_descriptions)
             chunk_summaries.append(chunk_summary)
         
         # Now combine all chunk summaries with module info
         return self._combine_chunk_summaries(module, chunk_summaries, all_modules, log_prompts)
     
-    def _build_chunk_prompt(self, module: ModuleContent, chunk: List[Dict], chunk_num: int, all_modules: Dict[str, ModuleContent]) -> str:
+    def _build_chunk_prompt(self, module: ModuleContent, chunk: List[Dict], chunk_num: int, all_modules: Dict[str, ModuleContent], module_descriptions: Optional[Dict[str, str]] = None) -> str:
         """Build prompt for summarizing a chunk of functions/types/modules."""
         # Check if this is a module type
         is_module_type = self._is_module_type(module)
@@ -333,8 +430,18 @@ Description:"""
                 else:
                     item_line = f"- type {item.get('name', 'unnamed')}"
             elif item.get('kind') == 'module':
-                # Format as module name
-                item_line = f"- module {item.get('name', 'unnamed')}"
+                # Format as module name, with description if available
+                module_name = item.get('name', 'unnamed')
+                submodule_path = f"{module.path}.{module_name}" if module.path else module_name
+                
+                if module_descriptions and submodule_path in module_descriptions:
+                    submodule_desc = module_descriptions[submodule_path]
+                    if submodule_desc and not submodule_desc.startswith("Empty module"):
+                        item_line = f"- module {module_name}: {submodule_desc}"
+                    else:
+                        item_line = f"- module {module_name}"
+                else:
+                    item_line = f"- module {module_name}"
             elif item.get('kind') == 'module-type':
                 # Format as module type name
                 item_line = f"- module type {item.get('name', 'unnamed')}"
@@ -359,44 +466,72 @@ Avoid generic terms. Be specific about what these functions actually do.
 
 Chunk Summary:"""
 
-    def _summarize_chunk(self, module: ModuleContent, chunk: List[Dict], chunk_num: int, all_modules: Dict[str, ModuleContent], log_prompts: bool = False) -> str:
+    def _summarize_chunk(self, module: ModuleContent, chunk: List[Dict], chunk_num: int, all_modules: Dict[str, ModuleContent], log_prompts: bool = False, module_descriptions: Optional[Dict[str, str]] = None) -> str:
         """Summarize a chunk of functions/types."""
         
-        prompt = self._build_chunk_prompt(module, chunk, chunk_num, all_modules)
+        prompt = self._build_chunk_prompt(module, chunk, chunk_num, all_modules, module_descriptions)
 
         if log_prompts:
             logger.info(f"=== CHUNK PROMPT for {module.path} chunk {chunk_num} ===")
             logger.info(prompt)
             logger.info("=== END CHUNK PROMPT ===")
         
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are an expert OCaml developer. Provide concise, direct answers without thinking aloud or explanation."},
-                    {"role": "user", "content": prompt + "\n\n/no_think"}
-                ],
-                max_tokens=1024,
-                temperature=0.1
-            )
-            result = response.choices[0].message.content.strip()
+        # Retry logic for empty responses
+        max_retries = 3
+        base_temperature = 0.1
+        
+        for attempt in range(max_retries):
+            temperature = base_temperature + (attempt * 0.1)  # Increase temperature on retries
             
-            # Filter out think tags and their content
-            import re
-            result = re.sub(r'<think>.*?</think>\s*', '', result, flags=re.DOTALL).strip()
-            
-            if log_prompts:
-                logger.info(f"=== CHUNK RESPONSE for {module.path} chunk {chunk_num} ===")
-                logger.info(result)
-                logger.info("=== END CHUNK RESPONSE ===")
-            return result
-        except Exception as e:
-            if "timeout" in str(e).lower():
-                logger.error(f"LLM timeout for chunk {chunk_num} of module {module.path}: {e}")
-                return f"Chunk {chunk_num}: {len(chunk)} functions/types (timed out)"
-            else:
-                logger.error(f"LLM error for chunk {chunk_num} of module {module.path}: {e}")
-                return f"Chunk {chunk_num}: {len(chunk)} functions/types"
+            try:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are an expert OCaml developer. Provide concise, direct answers without thinking aloud or explanation."},
+                        {"role": "user", "content": prompt + "\n\n/no_think"}
+                    ],
+                    max_tokens=1024,
+                    temperature=temperature
+                )
+                result = self._extract_response_content(response)
+                
+                # Check if we got a meaningful response
+                if result and len(result.strip()) > 20:  # More than just a short phrase
+                    # Filter out think tags and their content
+                    import re
+                    result = re.sub(r'<think>.*?</think>\s*', '', result, flags=re.DOTALL).strip()
+                    
+                    if log_prompts:
+                        logger.info(f"=== CHUNK RESPONSE for {module.path} chunk {chunk_num} (attempt {attempt + 1}) ===")
+                        logger.info(result)
+                        logger.info("=== END CHUNK RESPONSE ===")
+                    return result
+                else:
+                    if attempt < max_retries - 1:
+                        logger.warning(f"Empty/short response for chunk {chunk_num} of module {module.path} (attempt {attempt + 1}), retrying with temp {temperature + 0.1}")
+                        time.sleep(1)  # Brief pause before retry
+                        continue
+                    else:
+                        logger.error(f"LLM returned empty/short content after {max_retries} attempts")
+                        return f"Chunk {chunk_num}: {len(chunk)} functions/types (no description generated)"
+                        
+            except Exception as e:
+                if "timeout" in str(e).lower():
+                    if attempt < max_retries - 1:
+                        logger.warning(f"LLM timeout for chunk {chunk_num} of module {module.path} (attempt {attempt + 1}), retrying...")
+                        time.sleep(2)  # Longer pause for timeouts
+                        continue
+                    else:
+                        logger.error(f"LLM timeout for chunk {chunk_num} of module {module.path} after {max_retries} attempts: {e}")
+                        return f"Chunk {chunk_num}: {len(chunk)} functions/types (timed out)"
+                else:
+                    if attempt < max_retries - 1:
+                        logger.warning(f"LLM error for chunk {chunk_num} of module {module.path} (attempt {attempt + 1}): {e}, retrying...")
+                        time.sleep(1)
+                        continue
+                    else:
+                        logger.error(f"LLM error for chunk {chunk_num} of module {module.path} after {max_retries} attempts: {e}")
+                        return f"Chunk {chunk_num}: {len(chunk)} functions/types"
     
     def _build_chunk_combine_prompt(self, module: ModuleContent, chunk_summaries: List[str], all_modules: Dict[str, ModuleContent]) -> str:
         """Build prompt for combining chunk summaries into final module description."""
@@ -447,40 +582,70 @@ Module Description:"""
             logger.info(prompt)
             logger.info("=== END FINAL PROMPT ===")
         
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=1024,
-                temperature=0.3
-            )
-            result = response.choices[0].message.content.strip()
+        # Retry logic for empty responses
+        max_retries = 3
+        base_temperature = 0.3
+        
+        for attempt in range(max_retries):
+            temperature = base_temperature + (attempt * 0.1)  # Increase temperature on retries
             
-            # Filter out think tags and their content
-            import re
-            result = re.sub(r'<think>.*?</think>\s*', '', result, flags=re.DOTALL).strip()
-            
-            if log_prompts:
-                logger.info(f"=== FINAL RESPONSE for {module.path} ===")
-                logger.info(result)
-                logger.info("=== END FINAL RESPONSE ===")
-            return result
-        except Exception as e:
-            if "timeout" in str(e).lower():
-                logger.error(f"LLM timeout combining chunks for module {module.path}: {e}")
-                return f"OCaml module {module.path} with {len(chunk_summaries)} functional areas (timed out)"
-            else:
-                logger.error(f"LLM error combining chunks for module {module.path}: {e}")
-                return f"OCaml module {module.path} with {len(chunk_summaries)} functional areas"
+            try:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=1024,
+                    temperature=temperature
+                )
+                result = self._extract_response_content(response)
+                
+                # Check if we got a meaningful response
+                if result and len(result.strip()) > 20:  # More than just a short phrase
+                    # Filter out think tags and their content
+                    import re
+                    result = re.sub(r'<think>.*?</think>\s*', '', result, flags=re.DOTALL).strip()
+                    
+                    if log_prompts:
+                        logger.info(f"=== FINAL RESPONSE for {module.path} (attempt {attempt + 1}) ===")
+                        logger.info(result)
+                        logger.info("=== END FINAL RESPONSE ===")
+                    return result
+                else:
+                    if attempt < max_retries - 1:
+                        logger.warning(f"Empty/short response combining chunks for module {module.path} (attempt {attempt + 1}), retrying with temp {temperature + 0.1}")
+                        time.sleep(1)  # Brief pause before retry
+                        continue
+                    else:
+                        logger.error(f"LLM returned empty/short content after {max_retries} attempts")
+                        return f"OCaml module {module.path} with {len(chunk_summaries)} functional areas (no description generated)"
+                        
+            except Exception as e:
+                if "timeout" in str(e).lower():
+                    if attempt < max_retries - 1:
+                        logger.warning(f"LLM timeout combining chunks for module {module.path} (attempt {attempt + 1}), retrying...")
+                        time.sleep(2)  # Longer pause for timeouts
+                        continue
+                    else:
+                        logger.error(f"LLM timeout combining chunks for module {module.path} after {max_retries} attempts: {e}")
+                        return f"OCaml module {module.path} with {len(chunk_summaries)} functional areas (timed out)"
+                else:
+                    if attempt < max_retries - 1:
+                        logger.warning(f"LLM error combining chunks for module {module.path} (attempt {attempt + 1}): {e}, retrying...")
+                        time.sleep(1)
+                        continue
+                    else:
+                        logger.error(f"LLM error combining chunks for module {module.path} after {max_retries} attempts: {e}")
+                        return f"OCaml module {module.path} with {len(chunk_summaries)} functional areas"
     
-    def generate_library_summary(self, library_name: str, module_descriptions: List[str], log_prompts: bool = False) -> str:
+    def generate_library_summary(self, library_name: str, module_descriptions: List[Tuple[str, str]], log_prompts: bool = False) -> str:
         """Generate a summary for a library based on its module descriptions."""
         
         context_parts = [f"Library: {library_name}"]
         
         context_parts.append("Module descriptions:")
-        for i, desc in enumerate(module_descriptions, 1):
-            context_parts.append(f"{i}. {desc}")
+        for module_name, desc in module_descriptions:
+            # Extract just the module name (last part after dots)
+            display_name = module_name.split('.')[-1]
+            context_parts.append(f"- {display_name}: {desc}")
         
         context = "\n".join(context_parts)
         
@@ -514,7 +679,10 @@ Library Summary:"""
                 max_tokens=1024,
                 temperature=0.1
             )
-            result = response.choices[0].message.content.strip()
+            result = self._extract_response_content(response)
+            if not result:
+                logger.error(f"LLM returned no content")
+                result = "Failed to generate description"
             
             # Filter out think tags and their content
             import re
@@ -532,135 +700,6 @@ Library Summary:"""
             else:
                 logger.error(f"LLM error generating library summary for {library_name}: {e}")
                 return f"Library containing {len(module_descriptions)} modules"
-
-    def merge_descriptions(self, module_name: str, child_descriptions: List[str], module_content: Optional[ModuleContent] = None, log_prompts: bool = False) -> str:
-        """Merge child module descriptions into a parent description."""
-        
-        context_parts = [f"Parent Module: {module_name}"]
-        
-        if module_content and module_content.documentation:
-            context_parts.append(f"Documentation: {module_content.documentation}")
-        
-        if child_descriptions:
-            context_parts.append("Child module descriptions:")
-            for i, desc in enumerate(child_descriptions, 1):
-                context_parts.append(f"{i}. {desc}")
-        
-        context = "\n".join(context_parts)
-        
-        prompt = f"""You are an expert OCaml developer. Write a 3-4 sentence description that:
-- Synthesizes the functionality of the child modules into a coherent overview
-- Identifies the main data types and operations available
-- Provides specific examples of what can be done with this module
-
-Do NOT:
-- Use generic phrases like "provides functionality" or "collection of modules"
-- Repeat the module name
-- Use filler words about code quality or programming patterns
-
-{context}
-
-Merged description:"""
-
-        if log_prompts:
-            logger.info(f"=== MERGE PROMPT for {module_name} ===")
-            logger.info(prompt)
-            logger.info("=== END MERGE PROMPT ===")
-        
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are an expert OCaml developer. Provide concise, direct answers without thinking aloud or explanation."},
-                    {"role": "user", "content": prompt + "\n\n/no_think"}
-                ],
-                max_tokens=1024,
-                temperature=0.1
-            )
-            result = response.choices[0].message.content.strip()
-            
-            # Filter out think tags and their content
-            import re
-            result = re.sub(r'<think>.*?</think>\s*', '', result, flags=re.DOTALL).strip()
-            
-            if log_prompts:
-                logger.info(f"=== MERGE RESPONSE for {module_name} ===")
-                logger.info(result)
-                logger.info("=== END MERGE RESPONSE ===")
-            return result
-        except Exception as e:
-            if "timeout" in str(e).lower():
-                logger.error(f"LLM timeout merging descriptions for {module_name}: {e}")
-                return f"OCaml module {module_name} containing: {'; '.join(child_descriptions[:3])} (timed out)"
-            else:
-                logger.error(f"LLM error merging descriptions for {module_name}: {e}")
-                return f"OCaml module {module_name} containing: {'; '.join(child_descriptions[:3])}"
-
-    def merge_descriptions_with_own_content(self, module_name: str, own_description: str, child_descriptions: List[str], module_content: Optional[ModuleContent] = None, log_prompts: bool = False) -> str:
-        """Merge a module's own description with its child module descriptions."""
-        
-        context_parts = [f"Parent Module: {module_name}"]
-        
-        if module_content and module_content.documentation:
-            context_parts.append(f"Documentation: {module_content.documentation}")
-        
-        context_parts.append(f"Own functionality: {own_description}")
-        
-        if child_descriptions:
-            context_parts.append("Child module descriptions:")
-            for i, desc in enumerate(child_descriptions, 1):
-                context_parts.append(f"{i}. {desc}")
-        
-        context = "\n".join(context_parts)
-        
-        prompt = f"""You are an expert OCaml developer. Write a 3-4 sentence description that:
-- Combines the module's own functionality with its child modules into a coherent overview
-- Identifies the main data types and operations available
-- Provides specific examples of what can be done with this module
-- Balances coverage of both the module's direct API and its submodules
-
-Do NOT:
-- Use generic phrases like "provides functionality" or "collection of modules"
-- Repeat the module name
-- Use filler words about code quality or programming patterns
-
-{context}
-
-Merged description:"""
-
-        if log_prompts:
-            logger.info(f"=== HYBRID MERGE PROMPT for {module_name} ===")
-            logger.info(prompt)
-            logger.info("=== END HYBRID MERGE PROMPT ===")
-        
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are an expert OCaml developer. Provide concise, direct answers without thinking aloud or explanation."},
-                    {"role": "user", "content": prompt + "\n\n/no_think"}
-                ],
-                max_tokens=1024,
-                temperature=0.1
-            )
-            result = response.choices[0].message.content.strip()
-            
-            # Filter out think tags and their content
-            import re
-            result = re.sub(r'<think>.*?</think>\s*', '', result, flags=re.DOTALL).strip()
-            
-            if log_prompts:
-                logger.info(f"=== HYBRID MERGE RESPONSE for {module_name} ===")
-                logger.info(result)
-                logger.info("=== END HYBRID MERGE RESPONSE ===")
-            return result
-        except Exception as e:
-            if "timeout" in str(e).lower():
-                logger.error(f"LLM timeout merging hybrid descriptions for {module_name}: {e}")
-                return f"OCaml module {module_name}: {own_description} Also contains: {'; '.join(child_descriptions[:2])} (timed out)"
-            else:
-                logger.error(f"LLM error merging hybrid descriptions for {module_name}: {e}")
-                return f"OCaml module {module_name}: {own_description} Also contains: {'; '.join(child_descriptions[:2])}"
 
 
 class ModuleExtractor:
@@ -808,40 +847,44 @@ def process_library(work_item: LibraryWorkItem, llm_client: LLMClient, log_promp
             continue
         
         # Generate new description
-        # Check if module has its own content (functions, types, elements)
-        has_own_content = any(elem.get('kind') in ['value', 'type', 'module-type'] for elem in module.elements)
-        
-        if not module.children:  # Leaf module
-            description = llm_client.generate_module_description(module, all_modules, log_prompts)
-        elif not has_own_content:  # Pure parent module - merge child descriptions only
-            child_descriptions = [module_descriptions.get(child, "") for child in module.children if child in module_descriptions]
-            description = llm_client.merge_descriptions(module.name, child_descriptions, module, log_prompts)
-        else:  # Hybrid module - has both own content and children
-            # First generate description for own content
-            own_description = llm_client.generate_module_description(module, all_modules, log_prompts)
-            
-            # Then get child descriptions
-            child_descriptions = [module_descriptions.get(child, "") for child in module.children if child in module_descriptions]
-            
-            # Combine both own content and children
-            if child_descriptions:
-                description = llm_client.merge_descriptions_with_own_content(
-                    module.name, own_description, child_descriptions, module, log_prompts)
-            else:
-                description = own_description
+        # Generate description (submodule descriptions are now included inline)
+        description = llm_client.generate_module_description(module, all_modules, log_prompts, module_descriptions)
         
         module_descriptions[module.path] = description
     
     # Generate library summary if this is a library
     library_summary = None
     if library_name:
-        valid_descriptions = [desc for desc in module_descriptions.values() if desc and not desc.startswith("Empty module")]
-        if valid_descriptions:
-            library_summary = llm_client.generate_library_summary(library_name, valid_descriptions, log_prompts)
+        valid_modules = [(module_path, desc) for module_path, desc in module_descriptions.items() 
+                        if desc and not desc.startswith("Empty module")]
+        
+        if valid_modules:
+            # Check if this library has only one top-level module
+            # Top-level modules have no dots in their path (or just library_name.ModuleName)
+            top_level_modules = []
+            for module_path, desc in valid_modules:
+                # Remove library name prefix if present
+                path_without_lib = module_path
+                if module_path.startswith(f"{library_name}."):
+                    path_without_lib = module_path[len(library_name)+1:]
+                elif module_path.startswith("unnamed."):
+                    path_without_lib = module_path[8:]  # Remove "unnamed."
+                
+                # Count dots to determine depth
+                if '.' not in path_without_lib:
+                    top_level_modules.append((module_path, desc))
+            
+            # If only one top-level module, use its description as the library summary
+            if len(top_level_modules) == 1:
+                library_summary = top_level_modules[0][1]  # Use the description
+                logger.info(f"Using single top-level module description as library summary for {library_name}")
+            else:
+                # Multiple top-level modules, generate library summary using only top-level modules
+                library_summary = llm_client.generate_library_summary(library_name, top_level_modules, log_prompts)
         else:
             library_summary = f"Library with {len(module_descriptions)} modules (no valid descriptions)"
     
-    # Clean up module paths
+    # Clean up module paths and include metadata
     cleaned_modules = {}
     for module_path, description in module_descriptions.items():
         # Replace "unnamed" with package name in the path
@@ -851,7 +894,15 @@ def process_library(work_item: LibraryWorkItem, llm_client: LLMClient, log_promp
             clean_path = package_name
         else:
             clean_path = module_path
-        cleaned_modules[clean_path] = description
+        
+        # Find the original module to get is_module_type info
+        original_module = all_modules.get(module_path)
+        is_module_type = original_module.is_module_type if original_module else False
+        
+        cleaned_modules[clean_path] = {
+            "description": description,
+            "is_module_type": is_module_type
+        }
     
     result = {
         "library_name": library_name,
@@ -984,6 +1035,12 @@ def library_worker(work_queue: queue.Queue, output_dir: Path, llm_url: str, mode
         # Each worker gets its own LLM client
         logger.info(f"Worker {worker_id} initializing LLM client...")
         llm_client = LLMClient(llm_url, model, api_key)
+        
+        # Validate the endpoint before processing
+        if not llm_client.validate_endpoint():
+            logger.error(f"Worker {worker_id} failed to validate LLM endpoint")
+            return
+        
         logger.info(f"Worker {worker_id} initialization complete")
         
         work_count = 0
@@ -1191,17 +1248,12 @@ def debug_module_prompts(args):
     print()
     
     # Check processing strategy
-    has_own_content = any(elem.get('kind') in ['value', 'type', 'module-type'] for elem in target_module.elements)
-    
-    print(f"Has own content: {has_own_content}")
     print(f"Has children: {bool(target_module.children)}")
     
     if not target_module.children:
         strategy = "Leaf module"
-    elif not has_own_content:
-        strategy = "Pure parent module"
     else:
-        strategy = "Hybrid module"
+        strategy = "Module with children (hybrid approach)"
     
     print(f"Processing strategy: {strategy}")
     print()
@@ -1263,32 +1315,8 @@ def debug_module_prompts(args):
             print()
             debug_client._show_chunked_prompts(target_module, all_modules)
             
-    elif strategy == "Pure parent module":
-        print("PROCESSING AS PURE PARENT MODULE")
-        print("This would use MERGE DESCRIPTIONS with child modules")
-        print("Child descriptions would be generated first, then merged")
-        print()
-        print("Example merge prompt:")
-        
-        mock_child_descs = [f"Child {child}: [would contain description of {child}]" 
-                           for child in target_module.children[:3]]  # Show first 3
-        if len(target_module.children) > 3:
-            mock_child_descs.append(f"... and {len(target_module.children) - 3} more children")
-        
-        merge_prompt = f"""You are an expert OCaml developer. Write a 2-3 sentence description for the {target_module.name} module based on its submodules:
-
-Module: {target_module.name}
-Documentation: {target_module.documentation or "No documentation"}
-
-Submodule descriptions:
-{chr(10).join(f"{i+1}. {desc}" for i, desc in enumerate(mock_child_descs))}
-
-Description:"""
-        
-        debug_client._show_prompt("MERGE DESCRIPTIONS PROMPT", merge_prompt)
-        
-    else:  # Hybrid module
-        print("PROCESSING AS HYBRID MODULE")
+    else:  # Module with children - hybrid approach
+        print("PROCESSING MODULE WITH CHILDREN (HYBRID APPROACH)")
         print()
         print("1. First generating own description:")
         
@@ -1415,6 +1443,16 @@ def main():
     
     signal.signal(signal.SIGTERM, main_signal_handler)
     signal.signal(signal.SIGINT, main_signal_handler)
+    
+    # Validate LLM endpoint before starting workers
+    logger.info("Validating LLM endpoint before starting workers...")
+    test_client = LLMClient(args.llm_url, args.model, api_key)
+    if not test_client.validate_endpoint():
+        logger.error("Failed to validate LLM endpoint. Please check that the LLM server is running and accessible.")
+        logger.error(f"Endpoint: {args.llm_url}")
+        logger.error(f"Model: {args.model}")
+        return
+    logger.info("LLM endpoint validation successful")
     
     logger.info(f"Starting ThreadPoolExecutor with {args.workers} workers...")
     

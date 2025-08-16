@@ -70,7 +70,7 @@ class EmbeddingConfig:
     checkpoint_interval: int = 100
     log_level: str = "INFO"
     max_retries: int = 3
-    timeout: float = 30.0
+    timeout: float = 120.0
     resume: bool = False
 
 
@@ -124,7 +124,7 @@ class EmbeddingClient:
                         self.endpoint_url,
                         json={"content": text},
                         headers={"Content-Type": "application/json"},
-                        timeout=min(self.config.timeout, 5.0)  # Shorter timeout for better shutdown response
+                        timeout=self.config.timeout
                     )
                     
                     if response.status_code == 200:
@@ -218,6 +218,34 @@ class ProgressCheckpoint:
         """Check if a package previously failed."""
         with self.lock:
             return package_name in self.failed_packages
+
+
+def has_existing_embeddings(package_name: str, output_dir: str) -> bool:
+    """Check if embeddings already exist for a package on disk."""
+    package_dir = Path(output_dir) / "packages" / package_name
+    metadata_file = package_dir / "metadata.json"
+    embeddings_file = package_dir / "embeddings.npz"
+    
+    if not metadata_file.exists() or not embeddings_file.exists():
+        return False
+    
+    try:
+        # Verify metadata is valid JSON
+        with open(metadata_file) as f:
+            metadata = json.load(f)
+        
+        # Verify embeddings file is valid
+        import numpy as np
+        embeddings = np.load(embeddings_file)
+        
+        # Basic sanity check - should have some modules
+        if len(metadata.get('modules', [])) == 0:
+            return False
+            
+        return True
+    except Exception as e:
+        logging.debug(f"Package {package_name} has invalid embeddings: {e}")
+        return False
 
 
 class ProgressTracker:
@@ -408,7 +436,17 @@ def process_single_package(
         # Collect all module descriptions from all libraries
         for library_name, library_data in libraries.items():
             modules_in_lib = library_data.get("modules", {})
-            for module_path, description in modules_in_lib.items():
+            for module_path, module_info in modules_in_lib.items():
+                # Handle both old format (string) and new format (dict with description/is_module_type)
+                if isinstance(module_info, dict):
+                    description = module_info.get("description", "")
+                    is_module_type = module_info.get("is_module_type", False)
+                    # Skip module types
+                    if is_module_type:
+                        continue
+                else:
+                    # Old format - module_info is the description string
+                    description = module_info
                 module_to_library[module_path] = (library_name, description)
         
         if not module_to_library:
@@ -666,12 +704,15 @@ def main():
     """Main function."""
     parser = argparse.ArgumentParser(description="Generate embeddings for OCaml module descriptions")
     parser.add_argument("--llm-url", default="http://localhost:8080", help="LLM API endpoint URL")
-    parser.add_argument("--model", default="Qwen/Qwen3-Embedding-0.6B", help="Embedding model name")
-    parser.add_argument("--workers", type=int, default=12, help="Number of worker threads")
-    parser.add_argument("--batch-size", type=int, default=32, help="Batch size for API requests")
-    parser.add_argument("--rate-limit", type=float, default=10.0, help="API requests per second")
+    parser.add_argument("--model", default="Qwen/Qwen3-Embedding-0.6B-GGUF", help="Embedding model name")
+    parser.add_argument("--workers", type=int, default=4, help="Number of worker threads (default: 4 for large models)")
+    parser.add_argument("--batch-size", type=int, default=16, help="Batch size for API requests (default: 16 for large models)")
+    parser.add_argument("--rate-limit", type=float, default=2.0, help="API requests per second (default: 2.0 for large models)")
+    parser.add_argument("--timeout", type=float, default=120.0, help="Request timeout in seconds (default: 120 for large models)")
     parser.add_argument("--output-dir", default="package-embeddings", help="Output directory")
     parser.add_argument("--resume", action="store_true", help="Resume from checkpoint")
+    parser.add_argument("--skip-existing", action="store_true", default=True, help="Skip packages with existing embeddings (default: True)")
+    parser.add_argument("--force-regenerate", action="store_true", help="Force regenerate embeddings even if they exist")
     parser.add_argument("--log-level", default="INFO", help="Logging level")
     parser.add_argument("--packages", help="Comma-separated list of specific packages to process")
     
@@ -684,6 +725,7 @@ def main():
         workers=args.workers,
         batch_size=args.batch_size,
         rate_limit=args.rate_limit,
+        timeout=args.timeout,
         output_dir=args.output_dir,
         resume=args.resume,
         log_level=args.log_level
@@ -721,9 +763,29 @@ def main():
     if config.resume:
         checkpoint.load_checkpoint()
     
-    # Filter out completed packages
-    packages_to_process = [p for p in all_packages if not checkpoint.is_completed(p.stem)]
-    logging.info(f"Processing {len(packages_to_process)} packages (excluding completed)")
+    # Filter packages based on completion and existing embeddings
+    packages_to_process = []
+    skipped_checkpoint = 0
+    skipped_existing = 0
+    skip_existing = args.skip_existing and not args.force_regenerate
+    
+    for p in all_packages:
+        package_name = p.stem
+        if checkpoint.is_completed(package_name):
+            skipped_checkpoint += 1
+        elif skip_existing and has_existing_embeddings(package_name, config.output_dir):
+            skipped_existing += 1
+        else:
+            packages_to_process.append(p)
+    
+    logging.info(f"Found {len(all_packages)} total packages")
+    if skipped_checkpoint > 0:
+        logging.info(f"Skipped {skipped_checkpoint} packages (in checkpoint)")
+    if skip_existing and skipped_existing > 0:
+        logging.info(f"Skipped {skipped_existing} packages (existing embeddings)")
+    if args.force_regenerate:
+        logging.info("Force regenerate mode: will overwrite existing embeddings")
+    logging.info(f"Processing {len(packages_to_process)} packages")
     
     if not packages_to_process:
         logging.info("All packages already completed")
@@ -772,26 +834,17 @@ def main():
                         logging.warning("Forcing exit after 10 second wait")
                         break
             
-            # Wait for all workers to complete with shorter timeout
-            remaining_futures = list(futures)
-            while remaining_futures and not shutdown_requested:
-                done_futures = []
-                for future in remaining_futures:
-                    try:
-                        future.result(timeout=1.0)
-                        done_futures.append(future)
-                    except concurrent.futures.TimeoutError:
-                        continue
-                    except Exception as e:
-                        logging.error(f"Worker error: {e}")
-                        done_futures.append(future)
-                
-                for future in done_futures:
-                    remaining_futures.remove(future)
-                
-                if remaining_futures and shutdown_requested:
-                    logging.warning(f"Forcing shutdown with {len(remaining_futures)} workers still running")
-                    break
+            # Wait for all workers to complete with timeout
+            try:
+                concurrent.futures.wait(futures, timeout=30.0)  # 30 second timeout
+            except Exception as e:
+                logging.warning(f"Timeout waiting for workers to complete: {e}")
+            
+            # Force completion if needed
+            for future in futures:
+                if not future.done():
+                    logging.warning("Forcing completion of unfinished worker")
+                    future.cancel()
     
     except KeyboardInterrupt:
         logging.info("Interrupted by user")
@@ -808,7 +861,7 @@ def main():
         logging.info(f"Processing completed. Summary: {summary}")
         
         # Create global metadata
-        create_global_metadata(config, all_packages, summary)
+        create_global_metadata(config, packages_to_process if packages_to_process else all_packages, summary)
         
         # Print final statistics
         print(f"\n=== Final Results ===")
