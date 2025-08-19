@@ -1,381 +1,309 @@
 {
   "package": "libabsolute",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 45,
-  "creation_timestamp": "2025-07-15T23:15:18.155030",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 36,
+  "creation_timestamp": "2025-08-15T14:26:18.913054",
   "modules": [
+    {
+      "module_path": "Libabsolute.Domains.Product.Make",
+      "library": "libabsolute",
+      "description": "This module combines two abstract domains into a product structure, enabling operations like variable management, lattice joins/meets, constraint refinement, and expression evaluation over their combined state. It works with abstract elements (`t`) composed of two domains' representations (`A` and `B`) and internal constraint encodings, prioritizing exact filtering in domain `B` for compatible constraints. It is used to build hierarchical abstract interpreters where distinct domains specialize in different constraint classes, such as handling linear arithmetic in one domain and structural properties in another.",
+      "description_length": 618,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
     {
       "module_path": "Libabsolute.Domains.Boolean.Make",
       "library": "libabsolute",
-      "description": "This module provides logical combination (join/meet), constraint conversion, and evaluation operations for abstract elements representing boolean domains. It works with internal constraint representations and domain elements (`t`) to enable filtering, instance testing, and rendering of boolean expressions. Its functionality supports program analysis scenarios requiring abstraction of numerical domains into boolean-constrained environments, such as verifying conditional logic or symbolic execution paths.",
-      "description_length": 508,
-      "index": 0,
+      "description": "This abstract domain specializes in boolean constraint manipulation, offering variable management, set-theoretic operations (union, intersection, difference), and conversion between concrete and abstract representations. It operates on boolean expressions lifted from numerical domains, using a structured type `t` to represent abstract elements. Key applications include constraint solving with boolean logic, integrating logical conditions into numerical domain analyses, and verifying systems with mixed data-type constraints.",
+      "description_length": 529,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Domains.Utree.Make",
       "library": "libabsolute",
-      "description": "This module supports operations on disjunctive constraint domains, including variable manipulation (addition/removal/enumeration), set-like joins/meets/splits, forward value range evaluation, and constraint conversion. It works with abstract elements representing disjunctive forms and internal constraint types, enabling efficient precomputation of meets and consistency checks for integration with general constraint systems. Typical use cases involve static analysis tasks requiring precise disjunctive reasoning, such as program verification or symbolic execution, where combining domains and visualizing abstract states improves scalability.",
-      "description_length": 646,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.Product.Make",
-      "library": "libabsolute",
-      "description": "This module combines two abstract domains to manage variables, perform lattice operations (join/meet), and convert constraints between internal and external representations while computing volumes and concretizations. It operates on product domain elements (`t`) and internal constraints (`internal_constr`), using boolean expressions to ensure logical consistency during filtering and representability checks. Designed for constraint solving scenarios where constraints are partitioned between domains to balance precision and efficiency, such as optimizing abstract interpretation workflows.",
-      "description_length": 593,
+      "description": "This module enables manipulation of disjunctive abstract elements with optimized meet precomputation, offering variable management, join/meet operations, volume computation, constraint conversion, and concretization. It operates on abstract constraint environments (type `t`) and internal constraints (`internal_constr`), incorporating boolean expressions to enforce constraint consistency and representability. These capabilities are particularly useful for combining abstract domains and optimizing constraint-solving workflows where fast precomputed meets are critical.",
+      "description_length": 572,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Polynom.Int",
-      "library": "libabsolute",
-      "description": "This module implements arithmetic operations and algebraic manipulations for integer polynomials structured as lists of cells, supporting addition, scalar multiplication, exponentiation, and normalization. It provides utilities for detecting monomial properties, converting between numeric types, and pretty-printing polynomial expressions represented through type `t` and `cell` constructs. These capabilities enable symbolic computation in constraint solving, formal verification, and optimization tasks requiring polynomial manipulation over integer domains.",
-      "description_length": 561,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.B",
-      "library": "libabsolute",
-      "description": "This module provides a functor `Make` that transforms a numeric domain into a boolean domain by lifting numeric comparisons and logical operations. It works with abstract domains representing numeric values, enabling the creation of boolean expressions from numeric constraints. Use it to implement custom boolean domains for constraint solving, such as in program analysis or symbolic execution.",
-      "description_length": 396,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.Utree",
-      "library": "libabsolute",
-      "description": "This module provides operations for working with disjunctive constraint domains, supporting variable manipulation, set-like joins/meets/splits, and forward value range evaluation. It uses abstract elements and internal constraint types to enable efficient meet precomputation and consistency checks, facilitating integration with broader constraint systems. You can use it for static analysis tasks like program verification or symbolic execution, where precise disjunctive reasoning and domain combination improve scalability and state visualization. For example, it can compute the intersection of multiple disjunctive constraints or evaluate ranges of variables under complex logical conditions.",
-      "description_length": 698,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.BoxF",
-      "library": "libabsolute",
-      "description": "This module provides numerical abstract domain operations for manipulating floating-point bounded boxes, including variable management, element combination via join/meet, constraint filtering, and bidirectional transformations between boxes and constraints. It works with `BoxF.t` structures representing multidimensional intervals with floating-point bounds, supporting both textual output through formatted printing and graphical rendering via drawable representations. These capabilities are used in constraint solving and program analysis to model numerical uncertainties, visualize solution spaces, or debug abstract interpretations.",
-      "description_length": 638,
-      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Domains.BoxS",
       "library": "libabsolute",
-      "description": "This module manipulates variable environments with floating-point bounds through operations like constraint filtering, join/meet combinations, volume computation, and dynamic variable management, while supporting abstraction-concretization cycles for constraint solving. It operates on box-shaped domains tracking `Libabsolute.Csp.decl` variables, where bounds may include or exclude exact values, enabling precise numerical analysis. The module also facilitates debugging and visualization via textual formatting and graphical rendering of abstract elements.",
-      "description_length": 559,
-      "index": 7,
+      "description": "This module provides operations for managing floating-point bounded boxes, including variable manipulation, domain combination via join/meet, constraint filtering, and arithmetic evaluation within constraint satisfaction problems. It works with variables, constraints, and box domains, supporting tasks like domain splitting, volume computation, and conversion between internal and external constraint representations. Specific use cases include numerical constraint solving and visualization through textual output or graphical rendering of box domains.",
+      "description_length": 554,
+      "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Libabsolute.Tools.VarMap",
+      "module_path": "Libabsolute.Polynom.Int",
       "library": "libabsolute",
-      "description": "This module provides dictionary-style operations for polymorphic maps with string keys, including insertion, deletion, lookup, merging, and list-specific manipulations like appending values or extracting ordered bindings. It supports transformations, filtering, and comparison operations, along with conversions to sequences and lists, key extraction, and safe value retrieval through functions like `find_fail`. These capabilities are tailored for managing variable bindings in constraint solving and symbolic computation workflows, where ordered traversal, structural integrity, and precise key-based queries are essential.",
-      "description_length": 625,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Signature.Domain",
-      "library": "libabsolute",
-      "description": "This module provides operations for manipulating abstract domains focused on boolean expressions, including variable management, logical combination (via join/meet), constraint conversion, and consistency checks through filtering. It works with abstract elements (`t`) representing boolean expressions and supports concretization, splitting, and precision adjustments for constraint solving tasks. Key use cases include symbolic reasoning, program verification, and constraint-based analysis where boolean logic dominates over numeric comparisons.",
-      "description_length": 547,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.Oct",
-      "library": "libabsolute",
-      "description": "This module provides operations for manipulating numerical constraints using **Apron octagons**, supporting variable addition/removal, join/meet combinations of abstract elements, constraint filtering, volume computations, and bidirectional conversion between constraints and abstract representations. It operates on abstract elements of type `t`, enabling refinement through splitting, forward evaluation, and concretization, while offering textual and graphical visualization for analysis and debugging. These capabilities are applied in program verification, static analysis, and optimization tasks involving numerical invariants and convex polyhedra approximations.",
-      "description_length": 669,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Signature.Numeric",
-      "library": "libabsolute",
-      "description": "This module provides operations for managing numerical abstract domains, including variable manipulation (`add_var`, `rm_var`), set-theoretic operations (`join`, `meet`), domain splitting, constraint filtering, and concretization. It operates on abstract environments of type `t` that model constrained numerical variables, supporting tasks like consistency enforcement and precision adjustments in static analysis. Visualization utilities enable graphical debugging of domains via rendering to output formats or `Picasso.Drawable.t` for interpretability in constraint-solving workflows.",
-      "description_length": 587,
-      "index": 11,
+      "description": "This module enables symbolic manipulation of integer polynomials through arithmetic operations (addition, multiplication, scalar division, exponentiation) and structural transformations like normalization, linearity detection, and coefficient extraction. It operates on multivariate polynomials represented as lists of monomial cells, with internal term-level handling via a `cell` type, supporting precise algebraic analysis. These capabilities are critical for constraint solving and formal verification tasks requiring exact integer polynomial manipulations in abstract domains.",
+      "description_length": 581,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Solver.Make",
       "library": "libabsolute",
-      "description": "Implements constraint solving algorithms using an abstract domain to analyze and verify properties of constraint satisfaction problems. It provides three core operations: measuring solution space coverage, checking satisfiability, and finding a feasible witness. Works directly with constraint satisfaction problems (`Libabsolute.Csp.t`) and abstract domain states (`D.t`), returning results such as coverage metrics, Kleene truth values, or feasibility evidence. Useful for program analysis tasks where precise bounds and constraint propagation are required.",
-      "description_length": 559,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Polynom.Rational",
-      "library": "libabsolute",
-      "description": "This module provides arithmetic operations such as addition, multiplication, exponentiation, and scalar division, alongside normalization and monomial analysis for rational polynomials. It operates on polynomials represented as lists of terms, each combining coefficients and variables, enabling symbolic manipulation in abstract arithmetic workflows. These capabilities are particularly useful for constraint solving and formal verification tasks involving polynomial expressions over rational coefficients.",
-      "description_length": 508,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Tools.VarSet",
-      "library": "libabsolute",
-      "description": "This module provides operations for manipulating sets of strings through standard set operations (union, intersection, difference), functional transformations (mapping, filtering, folding), and conversions to lists and sequences. It supports efficient membership checks, subset comparisons, and bidirectional iteration while maintaining compatibility with constraint-solving workflows that require variable set aggregation, analysis, or transformation. Key use cases include tracking variable dependencies, combining constraint scopes, and processing symbolic variable collections in abstract interpretation.",
-      "description_length": 608,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.D1-Make",
-      "library": "libabsolute",
-      "description": "This module provides operations for variable management, combining abstract elements via join/meet/difference, computing properties like volume, generating constraints, evaluating expressions, and rendering. It operates on abstract elements (`t`) representing constrained variable environments and internal constraint representations (`internal_constr`), enabling use cases in program analysis and verification. Functions for converting and filtering constraints using boolean expressions optimize constraint representations while enforcing consistency and representability checks during domain-specific transformations.",
-      "description_length": 620,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Polynom.Make",
-      "library": "libabsolute",
-      "description": "This module supports symbolic manipulation of multivariate polynomials represented as lists of monomial cells, each encoding coefficients and variable exponents. It provides arithmetic operations like addition, multiplication, and exponentiation, alongside property checks (e.g., detecting constant or linear terms) and conversions between numeric types, all parameterized over an abstract ring for domain-agnostic computations. It is particularly useful in constraint solving scenarios requiring polynomial normalization or symbolic analysis over abstract arithmetic domains, such as program verification or algebraic optimization.",
-      "description_length": 632,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.D1",
-      "library": "libabsolute",
-      "description": "This module implements a domain combinator of arity 1, such as powerset, allowing the extension of abstract domains with additional structural capabilities. It operates on domain types by transforming one domain into a more complex domain structure, enabling analysis of properties like sets of values or intervals. Use this to build composite domains for static analysis tasks such as tracking multiple possible values of a variable.",
-      "description_length": 434,
-      "index": 17,
+      "description": "Implements constraint solving algorithms using an abstract domain to analyze and verify properties of constraint satisfaction problems. It provides concrete operations for computing solution space coverage, checking satisfiability, and generating witnesses for feasible solutions. Designed for use in program verification and formal methods where precise domain-specific analysis is required.",
+      "description_length": 392,
+      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Libabsolute.Ring.T",
+      "module_path": "Libabsolute.Domains.Utree",
       "library": "libabsolute",
-      "description": "This module defines arithmetic operations for a type `t` with addition, multiplication, division, and negation, supporting conversions to and from integers, floats, and rational numbers. It includes constants for zero and one, total ordering, and exact equality checks, along with printing capabilities. Concrete use cases include symbolic computation, constraint solving, and abstract interpretation where precise arithmetic behavior is required.",
-      "description_length": 447,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.Poly",
-      "library": "libabsolute",
-      "description": "This module provides operations for manipulating numerical constraints represented as convex polyhedra, including variable management, set-theoretic operations (union, intersection, difference), constraint filtering, and volume computation. It works with abstract elements modeling bounded linear inequalities over variables, supporting both symbolic manipulation and numeric range evaluation. These capabilities are particularly useful for program analysis tasks requiring precise modeling of variable relationships, such as static analysis of numerical properties or verification of safety constraints in embedded systems. The module also includes visualization tools to render polyhedral structures in textual or graphical formats, aiding in debugging and result interpretation.",
-      "description_length": 781,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Domains.Product",
-      "library": "libabsolute",
-      "description": "This module combines two abstract domains to manage variables and perform lattice operations like join and meet, while converting constraints between internal and external representations. It operates on product domain elements and internal constraints, using boolean expressions to maintain logical consistency during filtering. It supports tasks like constraint partitioning between domains for optimized abstract interpretation, such as directing constraints to the most appropriate domain for exact filtering. Example: a constraint on integer ranges might be handled by one domain, while a constraint on boolean relations is handled by the other.",
-      "description_length": 650,
-      "index": 20,
+      "description": "This module implements disjunctive abstract elements with optimized meet precomputation, supporting operations such as variable management, join, meet, volume computation, constraint conversion, and concretization. It works with abstract constraint environments (`t`) and internal constraints (`internal_constr`), integrating boolean expressions for consistency and representability. It is used to combine abstract domains and optimize constraint-solving workflows where fast precomputed meets are critical.",
+      "description_length": 507,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Domains.ApronBox",
       "library": "libabsolute",
-      "description": "Implements Apron box abstractions for constraint solving, offering operations to manage variables, filter constraints, compute joins/meets, calculate volumes, and convert between abstract elements and constraints. Works with bounded variable domains represented as hyper-rectangles (boxes), enabling precise tracking of variable ranges and relationships. Useful for static analysis tools requiring efficient bound propagation and visualization of high-dimensional constraint spaces through graphical rendering or textual debugging output.",
-      "description_length": 538,
-      "index": 21,
+      "description": "This implementation provides interval-based abstract interpretation operations for numerical constraint solving, including variable domain manipulation, constraint filtering, and domain transformations like join/meet. It works with abstract elements representing variable intervals (ApronBox.t) and supports visualization through formatted printing and graphical rendering. Useful for static analysis tasks like program verification, where precise variable range tracking and constraint interaction are required.",
+      "description_length": 512,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Domains.Oct",
+      "library": "libabsolute",
+      "description": "This module provides numerical constraint analysis using the Octagon abstract domain, enabling operations like variable manipulation, constraint evaluation, and combinations of abstract elements through join/meet. It works with Octagon abstract elements, numerical variables, and constraint systems, supporting concretization and volume computation. Specific use cases include symbolic reasoning for program analysis and graphical visualization of abstract states via rendering or formatted output.",
+      "description_length": 498,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Polynom.Float",
-      "library": "libabsolute",
-      "description": "This module provides symbolic manipulation and arithmetic operations for multivariate polynomials with floating-point coefficients, represented as lists of term cells. It supports structural operations like monomial normalization, constant extraction, linearity detection, and polynomial simplification, alongside algebraic operations such as addition, multiplication, scalar division, and exponentiation. These capabilities are used in abstract interpretation tasks like program analysis, where precise handling of polynomial constraints over continuous domains is required.",
-      "description_length": 575,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.D2",
-      "library": "libabsolute",
-      "description": "This module implements a domain combinator of arity 2, allowing the combination of two abstract domains into a product domain. It provides operations to construct and manipulate paired domain elements, supporting constraint solving over composite domains. Concrete use cases include combining a sign domain with an interval domain to track both signs and ranges of values during analysis.",
-      "description_length": 388,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libabsolute.Domains.D2-Make",
-      "library": "libabsolute",
-      "description": "This module manipulates structured abstract domains by combining variable-based elements through set operations (union, intersection, difference), translating constraints into visualizable forms, and evaluating expressions against domain states. It operates on a composite abstract domain type (`t`) and an internal constraint representation (`internal_constr`), enabling workflows like constraint consistency verification, domain visualization, and solver integration through bidirectional constraint conversion. Specific applications include analyzing program invariants, filtering feasible value ranges under constraints, and debugging abstract interpretations via drawable representations.",
-      "description_length": 693,
-      "index": 24,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Domains.Boolean",
       "library": "libabsolute",
-      "description": "This module lifts numerical domains into boolean abstractions, enabling logical operations like conjunction and disjunction over abstract elements. It supports constraint conversion, evaluation, and filtering of boolean expressions, working with domain elements (`t`) and internal constraints. You can use it to verify conditional logic, analyze symbolic execution paths, or test whether values satisfy boolean-constrained properties. For example, it can determine if a value meets a boolean condition or simplify logical expressions during static analysis.",
-      "description_length": 557,
-      "index": 25,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Domains",
-      "library": "libabsolute",
-      "description": "This module manages a registry of abstract domains and combinators for constraint solving, allowing users to register custom numeric, boolean, and domain combinators of arity 1 or 2. It supports constructing complex domains via a string-based syntax that references registered components, such as combining numeric and boolean domains using predefined or user-defined combinators. Concrete use cases include building and manipulating abstract domains like \"Product(BoxF,Boolean)\" for static analysis tasks. The module enables the combination of domains through product and powerset constructions, supports disjunctive reasoning, and provides numeric abstractions such as boxes, octagons, and polyhedra, each with operations for variable management, constraint filtering, and visualization.",
-      "description_length": 789,
-      "index": 26,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Kleene",
-      "library": "libabsolute",
-      "description": "This module implements a three-valued logic system with values False, True, and Unknown. It provides logical operations for conjunction (and_), disjunction (or_), and negation (not_), along with a boolean converter (of_bool). It is used to model uncertain truth values in constraint solving scenarios where classical binary logic is insufficient.",
-      "description_length": 346,
-      "index": 27,
+      "description": "This module lifts numerical domains to boolean abstractions, enabling operations like union, intersection, and difference on boolean expressions derived from numerical constraints. It works with abstract elements of type `t` representing boolean conditions, supporting variable management and conversions between concrete and abstract forms. It is used for constraint solving with logical conditions, integrating boolean logic into numerical analyses, and verifying systems with mixed-type constraints.",
+      "description_length": 502,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Libabsolute.Tools",
+      "module_path": "Libabsolute.Tools.VarSet",
       "library": "libabsolute",
-      "description": "This module offers utilities for error reporting, terminal output, and data structure manipulation, with functions like `fail_fmt`, `inplace_print`, and `pp_list_sep` enabling precise formatting and in-place updates. It includes operations for working with lists, options, and pairs in arrays, supporting transformations and combinations that are crucial for constraint solving and data processing. The first child module extends these capabilities with polymorphic maps over string keys, allowing insertion, deletion, merging, and ordered traversal, with functions like `find_fail` ensuring safe access in symbolic computation contexts. The second child module complements this with string set operations for union, intersection, and membership checks, facilitating variable tracking and constraint scope manipulation in abstract interpretation workflows.",
-      "description_length": 856,
-      "index": 28,
-      "embedding_norm": 0.9999999403953552
+      "description": "This string-based set abstraction provides standard set algebra operations (union, intersection, difference), functional transformations (mapping, filtering, folding), and interconversion with lists and sequences for ordered processing. It operates on sets of string elements, supporting subset checks, membership queries, and bulk operations, making it suitable for managing variables in constraint systems or symbolic analysis workflows where precise set relationships and efficient traversal are critical.",
+      "description_length": 508,
+      "index": 10,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Libabsolute.F",
+      "module_path": "Libabsolute.Polynom.Rational",
       "library": "libabsolute",
-      "description": "This module offers arithmetic operations on floating-point numbers, including addition, multiplication, division, and negation, alongside conversions to and from integers and rationals. It supports comparisons, equality checks, and safe operations returning `option` types to handle edge cases like division by zero or invalid conversions. The module also provides float-to-string formatting and printing utilities, enabling precise numerical representation in constraint-solving workflows and abstract domain analyses where robustness and controlled error handling are critical.",
-      "description_length": 579,
-      "index": 29,
+      "description": "This module enables symbolic manipulation of rational polynomials through operations like monomial property detection, arithmetic (addition, multiplication, exponentiation), term simplification, and normalization. It operates on polynomials represented as lists of coefficient-cell pairs, where cells encode variable-exponent combinations, supporting applications in algebraic simplification and constraint solving over abstract arithmetic domains.",
+      "description_length": 448,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Domains.Product",
+      "library": "libabsolute",
+      "description": "This module implements a specialized reduced product of two abstract domains, where constraints are selectively filtered by one domain and propagated to the other based on exact solvability. It operates on pairs of abstract values from the combined domains, enabling precise constraint solving by leveraging the strengths of each domain. A typical use case involves combining a numerical domain with a symbolic one, where the symbolic domain handles complex constraints that the numerical domain cannot solve directly.",
+      "description_length": 518,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Domains.Poly",
+      "library": "libabsolute",
+      "description": "This module implements polyhedral abstract domain operations for numerical constraint analysis, offering variable management, set-theoretic operations (union, intersection, exclusion), and constraint refinement through filtering. It operates on abstract elements representing convex polyhedra over numerical variables, enabling volume calculations, concretization checks, and abstraction validity verification. The module supports debugging and visualization workflows via textual formatting and graphical rendering of polyhedral constraints, particularly useful in program analysis and verification pipelines.",
+      "description_length": 610,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Tools.VarMap",
+      "library": "libabsolute",
+      "description": "This module provides dictionary-like operations for managing polymorphic key-value pairs with string-derived keys, supporting standard manipulations (insertion, lookup, deletion) and advanced combinators for merging, filtering, and transforming maps. It emphasizes functional transformations through iteration, folding, and mapping, while enabling safe value extraction via optional returns and conversions to ordered sequences or lists. Typical applications include handling variable bindings in constraint systems, combining sparse data structures with merge strategies, and processing key-value collections without exception-based failure modes.",
+      "description_length": 648,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Polynom.Float",
+      "library": "libabsolute",
+      "description": "This module provides arithmetic operations on multivariate polynomials with float-based coefficients, including addition, scalar multiplication, exponentiation, and normalization through term combination. It works with polynomial structures represented as symbolic expressions over abstract arithmetic rings, supporting coefficient extraction, property checks (e.g., linearity), and form conversions. These capabilities are used in symbolic computation tasks for constraint solving and abstract interpretation in program analysis.",
+      "description_length": 530,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Q",
       "library": "libabsolute",
-      "description": "This module provides arithmetic operations (addition, multiplication, exponentiation, etc.), comparisons, and conversions between integers, floats, and rational numbers, working with rational values represented by the type `t` (aliased from `Mpqf.t`). It supports precise numerical computations in constraint-solving contexts, includes utilities for formatting rational numbers as human-readable strings\u2014specializing in clean representations for denominators that are powers of ten\u2014and offers helper functions for ceiling, floor, and equality checks.",
-      "description_length": 550,
-      "index": 30,
+      "description": "This module enables precise arithmetic operations on rational numbers, including addition, multiplication, exponentiation, and comparisons, alongside utilities for rounding, equality checks, and format-preserving string conversions. It operates on a rational number type represented by `t` (internally `Mpqf.t`), supporting exact computations and flexible textual representations. Its features are particularly useful in domains requiring numerical precision, such as constraint solving, symbolic mathematics, or scenarios where floating-point approximations would introduce unacceptable errors.",
+      "description_length": 595,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Libabsolute.Ring",
+      "module_path": "Libabsolute.Dom",
       "library": "libabsolute",
-      "description": "This module provides an algebraic framework for performing arithmetic operations on abstract domains that conform to a ring structure, such as intervals, polynomials, and symbolic expressions. It supports core operations including addition, multiplication, and additive inversion, along with conversions to and from numeric types like integers and floats, enabling precise constraint manipulation and transformation in static analysis. Submodules extend this functionality with concrete implementations that include constants, ordering, equality checks, and printing, facilitating use cases such as symbolic computation and program verification. Together, the module and its submodules allow for the structured analysis and simplification of arithmetic expressions in abstract interpretation and optimization tasks.",
-      "description_length": 815,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module represents variable definition domains using rational numbers, offering constructors for finite intervals, semi-open intervals, finite sets, and unbounded domains. It provides operations to check membership, determine boundedness, and convert domains into constraints for variables. Use cases include specifying valid ranges for variables in constraint-solving problems, such as restricting a variable to a closed interval or a discrete set of rational values.",
+      "description_length": 472,
+      "index": 17,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Libabsolute.Polynom",
+      "module_path": "Libabsolute.I",
       "library": "libabsolute",
-      "description": "This module enables symbolic computation over multivariate polynomials with coefficients in abstract arithmetic domains, supporting operations such as addition, multiplication, exponentiation, and normalization. It represents polynomials as lists of monomial cells encoding coefficients and variable exponents, with specialized variants for integer, rational, and floating-point arithmetic. The module allows algebraic manipulation, term analysis (e.g., linearity detection), and type conversion, facilitating tasks like constraint solving, formal verification, and program analysis. Examples include simplifying polynomial expressions, extracting constant terms, and performing arithmetic operations across different coefficient domains.",
-      "description_length": 738,
-      "index": 32,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Constraint",
-      "library": "libabsolute",
-      "description": "This module provides symbolic constraint construction and manipulation capabilities, supporting comparisons, logical operations, and interval/convex hull constraints over abstract expressions and rational numbers. It enables constraint inversion, variable substitution, and evaluation while working with symbolic expressions and rational constants, facilitating tasks like program verification and static analysis where constraint rewriting and logical transformations are critical.",
-      "description_length": 482,
-      "index": 33,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Signature",
-      "library": "libabsolute",
-      "description": "This module defines the core operations for abstract domains used in constraint solving, including consistency checking, domain splitting, and precision adjustment. It introduces abstract data types for both boolean and numerical expressions, supporting operations like join, meet, variable manipulation, and constraint filtering. The boolean submodule enables symbolic reasoning and logical combination of constraints, while the numerical submodule models constrained variable environments with support for set-theoretic operations and graphical debugging. Together, they enable domain-specific constraint solvers, program verification, and static analysis with customizable precision and interpretability.",
-      "description_length": 707,
-      "index": 34,
+      "description": "This module implements basic integer arithmetic operations such as addition, multiplication, division, and negation, with support for conversions to and from integers, floats, and rational numbers. It works directly with the built-in `int` type and includes utilities for comparison, equality checks, and formatted printing. Concrete use cases include performing safe integer division, converting numeric types in constraint expressions, and printing integer values in symbolic analysis contexts.",
+      "description_length": 496,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Solver",
       "library": "libabsolute",
-      "description": "This module combines constraint solving algorithms with an abstract domain to analyze and verify properties of constraint satisfaction problems. It defines three core operations: measuring solution space coverage, checking satisfiability, and finding a feasible witness, working with constraint satisfaction problems and abstract domain states. These operations return coverage metrics, Kleene truth values, or feasibility evidence. For example, it can determine whether a set of constraints has any solution, quantify how much of the solution space is covered, or produce a concrete example of a feasible solution.",
-      "description_length": 615,
-      "index": 35,
+      "description": "Implements constraint solving algorithms using an abstract domain to analyze and verify properties of constraint satisfaction problems. It provides concrete operations for computing solution space coverage, checking satisfiability, and generating witnesses for feasible solutions. Designed for use in program verification and formal methods where precise domain-specific analysis is required.",
+      "description_length": 392,
+      "index": 19,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Libabsolute.Kleene",
+      "library": "libabsolute",
+      "description": "This module implements a three-valued logic system with values False, True, and Unknown. It provides logical operations for conjunction (and_), disjunction (or_), and negation (not_) that operate on these truth values. These operations are used to model uncertain or incomplete information in constraint solving scenarios, such as when reasoning about program analysis or symbolic execution where boolean values may be unknown.",
+      "description_length": 427,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Libabsolute.Consistency",
+      "module_path": "Libabsolute.Domains",
       "library": "libabsolute",
-      "description": "This module implements consistency checks and filtering operations for abstract values relative to predicates, producing refined subsets that satisfy given constraints. It works with abstract domains and constraint satisfaction instances, tracking feasibility through the `feasible` type that represents unfeasible, partial, or confirmed consistent states. Concrete use cases include refining variable domains during constraint solving and validating predicate satisfaction in abstract interpretations.",
-      "description_length": 502,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module manages abstract domain registration and combination for constraint solving, providing functions to register numeric, boolean, and domain combinators of arity 1 or 2. It supports parsing domain expressions into concrete abstract domains, enabling dynamic composition through predefined combinators like product. Concrete use cases include building and manipulating hybrid abstract domains for numerical and boolean constraint analysis, such as combining interval arithmetic with boolean logic for program verification tasks.",
+      "description_length": 536,
+      "index": 21,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Libabsolute.Result",
+      "module_path": "Libabsolute.F",
       "library": "libabsolute",
-      "description": "This module represents solutions from an abstract solver as covers, tracking inner and outer elements. It provides operations to add elements to either part of a solution, compute the inner ratio as a float, and print results. Use it to manage and evaluate partial solutions during constraint solving with abstract domains.",
-      "description_length": 323,
-      "index": 37,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.I",
-      "library": "libabsolute",
-      "description": "This module implements basic integer arithmetic operations such as addition, multiplication, division, and negation, along with conversions to and from integers. It works directly with the built-in `int` type and supports interaction with floats, rational numbers (`Mpqf.t`), and string representations. Concrete use cases include performing safe integer division, converting between numeric types in constraint expressions, and formatting integers for debugging or output.",
-      "description_length": 473,
-      "index": 38,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Parser",
-      "library": "libabsolute",
-      "description": "This module provides functions to parse numeric expressions, constraints, and CSP problems from strings or files, performing syntax and optional semantic validation. It operates on abstract syntax trees for expressions, constraints, and CSPs, ensuring correct variable binding and domain usage. Concrete use cases include loading and validating constraint problems from text files or user input strings in a solver interface.",
-      "description_length": 425,
-      "index": 39,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libabsolute.Dom",
-      "library": "libabsolute",
-      "description": "This module represents variable definition domains using rational numbers, providing constructors for finite intervals, semi-open intervals, finite sets, and unbounded domains. It supports membership checks, boundedness tests, and conversion to constraints for a given variable. Concrete use cases include modeling variable ranges in static analysis and generating constraints for solver integration.",
-      "description_length": 400,
-      "index": 40,
+      "description": "This module provides arithmetic operations (addition, multiplication, division), rounding functions, and conversions between float, integer, and rational number types (Mpqf.t). It handles float values alongside these types to support precise numerical computations, comparisons, and formatted string representations, facilitating constraint solving over real numbers and debugging through value serialization.",
+      "description_length": 409,
+      "index": 22,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Instance",
       "library": "libabsolute",
-      "description": "This module represents points as mappings from variables to rational coordinates, supporting operations like translation and conversion to APRON generators. It provides constructors to build instances from variable-value lists and functions to manipulate and print these points. Use cases include modeling geometric points in constraint solving and integrating with APRON for abstract domain computations.",
-      "description_length": 405,
-      "index": 41,
+      "description": "This module represents points in a rational coordinate space, mapping variables to their values. It supports constructing instances from variable-value lists, translating points by vectors, and converting to APRON generators. Typical use cases include modeling program states for constraint solving and applying numerical analysis techniques like gradient descent.",
+      "description_length": 364,
+      "index": 23,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Libabsolute.Ring",
+      "library": "libabsolute",
+      "description": "Implements algebraic operations for abstract domains with ring structures, supporting addition, multiplication, and their inverses. Works with elements of a ring, including integers, polynomials, and matrices, under abstraction. Enables precise symbolic manipulation and constraint propagation in static analysis tasks.",
+      "description_length": 319,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Libabsolute.Csp",
+      "module_path": "Libabsolute.Polynom",
       "library": "libabsolute",
-      "description": "This module represents constraint satisfaction problems using types like `typ`, `decl`, `instance`, and `t`, supporting operations to construct and manipulate problems with integer and real variables, constraints, and optional objectives. It provides functions to add variables with specified bounds, fix variable values, and access problem components like variable names. Concrete use cases include modeling optimization problems with specific domains and constraints, and programmatically modifying problem structures for solving.",
-      "description_length": 532,
-      "index": 42,
+      "description": "This module provides symbolic manipulation of multivariate polynomials through arithmetic operations such as addition, multiplication, exponentiation, and normalization. It works with polynomials represented as lists of monomial cells or coefficient-cell pairs, supporting exact integer, floating-point, and rational coefficient computations. Concrete use cases include algebraic simplification, linearity detection, and constraint solving in abstract interpretation and program analysis tasks.",
+      "description_length": 494,
+      "index": 25,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Libabsolute.Signature",
+      "library": "libabsolute",
+      "description": "This module defines the core operations for abstract domains used in constraint solving, including consistency checking, domain splitting, and precision adjustment. It works with abstract value types representing constrained variable domains, typically numeric ranges or symbolic expressions. Concrete use cases include implementing domain-specific constraint solvers for program analysis and formal verification tasks.",
+      "description_length": 419,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Expr",
+      "library": "libabsolute",
+      "description": "This module provides a numerical expression language with constructors for constants, variables, and binary operations (addition, subtraction, multiplication, division, exponentiation), alongside utilities for expression analysis (e.g., linearity checks, variable collection) and transformation (variable substitution, evaluation, simplification). It operates on expressions represented as `Libabsolute.Expr.t`, annotated expressions, and numeric constants (`Libabsolute.Q.t`), with use cases in constraint solving, symbolic analysis, and numerical evaluation within abstract domains. Applications include building and manipulating symbolic expressions, verifying structural properties, and generating human-readable representations for debugging or output.",
+      "description_length": 757,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Consistency",
+      "library": "libabsolute",
+      "description": "This module implements consistency checks and filtering operations for abstract values relative to predicates, producing refined subsets that satisfy given constraints. It works with abstract domains and constraint satisfaction instances, tracking feasibility through the `feasible` type that indicates whether a solution is unfeasible, possible, or witnessed. Concrete use cases include refining variable domains during constraint solving and verifying predicate consistency in abstract interpretation workflows.",
+      "description_length": 513,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Tools",
+      "library": "libabsolute",
+      "description": "This module provides precise error signaling with formatted exceptions, in-place terminal output control, and list combination folding for constraint analysis workflows. It handles option types with lattice operations and includes specialized data structure modules for string-indexed maps and sets with functional transformation capabilities. These features support variable management in constraint solving systems and combinatorial analysis of structured data.",
+      "description_length": 463,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Constraint",
+      "library": "libabsolute",
+      "description": "This module provides a constraint language for expressing and manipulating logical comparisons between abstract expressions and rational values, supporting operations like equality checks, interval inclusions, and logical combinations. It works with symbolic expressions, rational constants, and constraint types that enable inversion, substitution, and convex hull construction over variable mappings. These capabilities are used for tasks like program analysis, abstract interpretation, and formal verification where combining symbolic and concrete constraints is critical.",
+      "description_length": 575,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Result",
+      "library": "libabsolute",
+      "description": "This module represents solutions from an abstract solver as covers, tracking inner and outer elements. It provides operations to add elements, compute the inner ratio of a solution, and print results. Use it to manage and evaluate approximate solutions in constraint solving workflows.",
+      "description_length": 285,
+      "index": 31,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute.Constant",
       "library": "libabsolute",
-      "description": "This module provides mutable configuration parameters and setter functions to control precision, iteration limits, and feature toggles in a constraint solving system based on abstract domains. It operates on primitive data types like floats, integers, strings, and booleans to configure behaviors such as numerical precision, debugging output, and solution pruning. These settings are used to fine-tune the performance and accuracy of symbolic or numerical computation workflows during constraint analysis.",
-      "description_length": 506,
-      "index": 43,
+      "description": "This module provides configuration and control operations for a constraint-solving system, managing mutable global state through primitive-typed reference variables (floats, integers, strings, booleans). It exposes parameters to tune solver behavior\u2014such as iteration limits, domain selection, pruning strategies, and output formats\u2014alongside debugging flags for tracing execution and precision adjustments. These mechanisms are used to optimize solver performance, enable stepwise analysis, and customize diagnostic output during abstract interpretation tasks.",
+      "description_length": 561,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Parser",
+      "library": "libabsolute",
+      "description": "This module provides functions to parse numeric expressions, constraints, and CSP problem files into their corresponding abstract syntax trees. It works with strings and file inputs, producing structured representations like expressions, constraints, and CSP problems. It supports concrete use cases such as reading and validating `.abs` files, parsing individual expressions or constraints for dynamic problem construction, and enforcing syntactic and semantic correctness during parsing.",
+      "description_length": 489,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libabsolute.Csp",
+      "library": "libabsolute",
+      "description": "This module defines core data structures and operations for building and manipulating constraint satisfaction problems (CSPs) with integer and real variables, including variable declarations, constraints, and objective functions. It provides functions to create and modify CSPs by adding variables with specified domains, fixing variable values, and appending constraints. Concrete use cases include modeling optimization problems with bounded variables and managing constraint logic in static analysis workflows.",
+      "description_length": 513,
+      "index": 34,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libabsolute",
       "library": "libabsolute",
-      "description": "This library provides a comprehensive framework for constraint solving using abstract domains, integrating numeric and boolean abstractions with symbolic computation and logical reasoning. Core data types include abstract domains for numeric and boolean expressions, symbolic polynomials, constraints, and configuration parameters, with operations for domain combination, constraint filtering, logical evaluation, and variable manipulation. Users can construct complex domains like products of boxes and booleans, perform arithmetic and logical operations with safe error handling, and model uncertain truth values using three-valued logic. Specific applications include static analysis of programs, formal verification, and solving constraint satisfaction problems with customizable precision and output visualization.",
-      "description_length": 819,
-      "index": 44,
-      "embedding_norm": 1.0
+      "description": "Libabsolute provides constraint solving capabilities over abstract domains, enabling precise modeling and analysis of numerical problems with integer and real variables. It supports operations such as variable domain specification, constraint creation and manipulation, expression construction, and instance management, all grounded in abstract interpretation techniques. Concrete use cases include program analysis, formal verification, and optimization workflows where symbolic and numeric constraints must be combined and solved within customizable abstract domains.",
+      "description_length": 569,
+      "index": 35,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 47,
-    "meaningful_modules": 45,
+    "total_modules_in_package": 38,
+    "meaningful_modules": 36,
     "filtered_empty_modules": 2,
-    "retention_rate": 0.9574468085106383
+    "retention_rate": 0.9473684210526315
   },
   "statistics": {
-    "max_description_length": 856,
-    "min_description_length": 323,
-    "avg_description_length": 575.0888888888888,
-    "embedding_file_size_mb": 0.1638936996459961
+    "max_description_length": 757,
+    "min_description_length": 285,
+    "avg_description_length": 504.8611111111111,
+    "embedding_file_size_mb": 0.5224170684814453
   }
 }

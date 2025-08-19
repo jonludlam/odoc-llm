@@ -1,69 +1,61 @@
 {
   "package": "poll",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:05:34.181492",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 5,
+  "creation_timestamp": "2025-08-14T22:59:16.407604",
   "modules": [
     {
-      "module_path": "Poll.Poll_intf.S",
+      "module_path": "Poll.Backend",
       "library": "poll",
-      "description": "This module implements a polling mechanism for monitoring file descriptors, allowing clients to register interest in specific I/O events and wait for them efficiently. It works with file descriptors and event types to track readiness for operations like reading or writing. Concrete use cases include managing asynchronous network I/O in servers or handling multiple client connections concurrently.",
-      "description_length": 399,
+      "description": "This module defines backend implementations for handling I/O multiplexing events, supporting platforms like Kqueue, Epoll, and Wepoll. It provides constructors and pattern matching capabilities to work with different event notification mechanisms. Concrete use cases include selecting and managing platform-specific event loops in network servers or asynchronous I/O applications.",
+      "description_length": 380,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Poll.Timeout",
-      "library": "poll",
-      "description": "This module defines timeouts for polling operations using three constructors: `Immediate`, `Never`, and `After` of an integer nanosecond delay. It provides constants and a factory function to create timeout values used in asynchronous polling contexts. Concrete use cases include specifying timeout behavior in event loops, network I/O, and task scheduling.",
-      "description_length": 357,
-      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Poll.Poll_intf",
       "library": "poll",
-      "description": "This module defines a polymorphic interface for managing asynchronous, event-driven tasks with support for scheduling callbacks, tracking readiness, and handling errors. It works with abstract types for tasks, timeouts, and event sources, enabling precise control over I/O and timing in cooperative multitasking systems such as network servers and clients. A key submodule implements efficient polling of file descriptors, letting clients register and wait for I/O events like read or write readiness, which is essential for handling concurrent network connections. Together, these components allow developers to build responsive, event-driven applications with fine-grained control over system resources.",
-      "description_length": 705,
-      "index": 2,
+      "description": "Defines a polymorphic interface for managing timed events with customizable clocks and scheduling. Supports operations to create, wait on, and cancel alarms, as well as track deadlines and timeouts. Designed for use with monotonic time representations and cooperative concurrency systems.",
+      "description_length": 288,
+      "index": 1,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Poll.Timeout",
+      "library": "poll",
+      "description": "This module defines timeouts for polling operations using an abstract time unit in nanoseconds. It provides constructors for immediate, indefinite, and timed timeouts. Used to specify duration constraints in asynchronous polling scenarios.",
+      "description_length": 239,
+      "index": 2,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Poll.Event",
       "library": "poll",
-      "description": "This module defines a data structure to represent I/O event flags, specifically tracking whether a file descriptor is readable, writable, or both. It provides predefined event combinations for common scenarios like read-only, write-only, and read-write events. Use this module when monitoring file descriptors with polling mechanisms to specify and check event conditions efficiently.",
-      "description_length": 384,
+      "description": "This module defines a basic event type with `readable` and `writable` boolean fields to represent I/O event states. It provides predefined event combinations like `read`, `write`, `read_write`, and `none` for use in polling operations. These values are used to specify desired event types when monitoring file descriptors for input or output readiness.",
+      "description_length": 352,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Poll.Backend",
-      "library": "poll",
-      "description": "This module defines backend types for handling I/O multiplexing, including Kqueue, Epoll, and Wepoll. It provides functions to determine the most efficient backend based on the operating system. Concrete use cases include selecting and initializing the appropriate backend for event-driven networking applications.",
-      "description_length": 314,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Poll",
       "library": "poll",
-      "description": "This module provides a low-level interface for monitoring file descriptors for I/O readiness, allowing clients to register descriptors, wait for events with configurable timeouts, and iterate over ready events. It works with concrete event types that specify read, write, or combined readiness, and selects the most efficient I/O multiplexing backend available on the system. Clients can use it to build event-driven network servers and clients that handle concurrent connections efficiently. Timeout behavior is controlled through explicit timeout values that determine whether polling should return immediately, wait indefinitely, or delay for a specified duration.",
-      "description_length": 667,
-      "index": 5,
+      "description": "This module implements a polling mechanism for monitoring I/O events on file descriptors using platform-specific backends like Kqueue, Epoll, or Wepoll. It allows setting events of interest on file descriptors, waiting for readiness with optional timeouts, and iterating over triggered events. Concrete use cases include building network servers that need to efficiently manage multiple connections or implementing custom event loops for asynchronous I/O operations.",
+      "description_length": 466,
+      "index": 4,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 6,
-    "meaningful_modules": 6,
+    "total_modules_in_package": 5,
+    "meaningful_modules": 5,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 705,
-    "min_description_length": 314,
-    "avg_description_length": 471.0,
-    "embedding_file_size_mb": 0.022240638732910156
+    "max_description_length": 466,
+    "min_description_length": 239,
+    "avg_description_length": 345.0,
+    "embedding_file_size_mb": 0.07289314270019531
   }
 }

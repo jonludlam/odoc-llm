@@ -1,101 +1,93 @@
 {
   "package": "spoc",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 10,
-  "creation_timestamp": "2025-07-15T23:08:14.713479",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:14:11.582776",
   "modules": [
     {
       "module_path": "External_kernels.Kernels_ext",
       "library": "spoc.external_kernels",
-      "description": "This module facilitates manipulation of OCaml abstract syntax trees (ASTs) through operations like parsing, constructing, and transforming expressions, types, and identifiers, with utilities for dynamic identifier generation and type conversion. It supports advanced code generation tasks by enabling AST node creation, location tracking, and constraint relaxation, particularly for bigarray operations and inverse identifier handling. These capabilities are tailored for syntax extensions and metaprogramming scenarios requiring direct AST manipulation.",
-      "description_length": 554,
+      "description": "This module offers utilities for transforming OCaml AST nodes to generate code involving bigarrays and inversion logic. It operates on Camlp4 AST structures, handling expressions, types, identifiers, and locations to manipulate or construct syntax trees programmatically. Specific applications include numerical code generation requiring bigarray operations and implementing inversion mechanisms via dynamically created identifiers and relaxed expression handling.",
+      "description_length": 464,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "External_kernels",
       "library": "spoc.external_kernels",
-      "description": "This module enables direct manipulation of OCaml ASTs for metaprogramming and syntax extensions, offering operations to parse, construct, and transform expressions, types, and identifiers. It provides data types representing AST nodes and supports dynamic identifier generation, location tracking, and type conversion, particularly for bigarray operations. Users can create and modify AST fragments programmatically, enabling tasks like generating OCaml code from external specifications or implementing custom syntax transformations. Example uses include building syntax extensions that introduce new language constructs or transforming existing code during preprocessing.",
-      "description_length": 673,
+      "description": "This module transforms OCaml AST nodes to generate code involving bigarrays and inversion logic. It operates on Camlp4 AST structures, handling expressions, types, identifiers, and locations to manipulate or construct syntax trees programmatically. It is specifically used for numerical code generation requiring bigarray operations and for implementing inversion mechanisms via dynamically created identifiers and relaxed expression handling.",
+      "description_length": 443,
       "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Spoc.Kernel.OpenCL",
+      "library": "spoc",
+      "description": "This module provides low-level functions to configure and launch OpenCL kernels on GPU devices. It handles setting kernel arguments with `opencl_load_arg` and executing kernels on a specified grid and block configuration with `opencl_launch_grid`. These operations are used when directly managing OpenCL memory buffers and execution parameters for parallel computations like matrix operations or image processing.",
+      "description_length": 413,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Spoc.Kernel.Cuda",
       "library": "spoc",
-      "description": "This module provides functions for launching CUDA kernels with specific grid and block configurations, and for loading kernel arguments onto CUDA devices. It works with CUDA-specific data structures like `cuda_extra`, `kernel`, `grid`, and `block`, along with device memory handling. Concrete use cases include configuring and executing parallel computations on GPU devices, and passing typed arguments to CUDA kernels during runtime.",
-      "description_length": 434,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Spoc.Kernel.OpenCL",
-      "library": "spoc",
-      "description": "This module provides functions to configure and launch OpenCL kernels on GPU devices. It handles setting kernel arguments and executing grids of work groups with specified block sizes. Concrete use cases include parallel computation tasks like matrix operations and image processing directly on OpenCL-compatible hardware.",
-      "description_length": 322,
+      "description": "This module provides functions for launching CUDA kernels and managing kernel arguments on GPU devices. It works with CUDA-specific execution configurations, including grids, blocks, and device memory. Concrete use cases include setting up and executing parallel computations on NVIDIA GPUs, such as matrix operations or large-scale data processing.",
+      "description_length": 349,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Spoc.Devices",
-      "library": "spoc",
-      "description": "This module provides operations for enumerating, initializing, and querying capabilities of GPGPU devices (CUDA and OpenCL), including checking numerical precision support and available extensions. It works with device descriptors, command queues, and platform-specific configuration data to manage execution contexts for parallel computation. Specific capabilities like double-precision arithmetic checks enable optimizing numerical algorithms for hardware compatibility, while command queue flushing ensures proper synchronization during device execution.",
-      "description_length": 557,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Spoc.Mem",
       "library": "spoc",
-      "description": "This module manages memory transfers between CPU and devices, providing explicit control over sending data to and from devices, reading and writing individual elements, and creating subvectors. It operates on Spoc.Vector.t values, allowing for direct manipulation of vector elements, copying regions between vectors, and sharing CPU memory between subvectors and their parent vectors. Concrete use cases include optimizing data movement in GPU computations, accessing and modifying specific vector elements during kernel execution, and efficiently slicing large vectors for batch processing.",
-      "description_length": 591,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Spoc.Vector",
-      "library": "spoc",
-      "description": "This module supports vector creation, element manipulation via unsafe indexing, and memory operations such as sub-vector extraction, data copying, and conversions between vectors and Bigarrays. It operates on Spoc vectors with numeric types like integers, floats, and complexes, while integrating GPU device memory handling through direct memory interoperability. These capabilities are tailored for high-performance numerical computing, enabling efficient data transfer between host and device memory or managing large-scale datasets with precise memory control.",
-      "description_length": 563,
-      "index": 6,
+      "description": "This module handles explicit memory transfers between devices and CPU, providing functions to move vectors to or from a device, read and write vector elements, and create subvectors that share CPU memory. It operates on typed vectors and supports direct memory manipulation with control over device queues. Use cases include optimizing data movement in GPU computations and managing memory layout for numerical algorithms.",
+      "description_length": 422,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Spoc.Kernel",
       "library": "spoc",
-      "description": "This module manages GPU kernel execution parameters and operations for launching computations on devices, supporting both CUDA and OpenCL backends. It allows configuration of grid and block dimensions, kernel argument setup, and execution or compilation of kernels on specific devices. The CUDA submodule enables launching kernels with typed arguments and device memory management using CUDA-specific structures, while the OpenCL submodule supports similar operations on OpenCL-compatible hardware. Examples include parallel vector operations, matrix computations, and image processing tasks executed directly on the GPU.",
-      "description_length": 621,
-      "index": 7,
+      "description": "This module defines GPU kernel execution configurations using `block` and `grid` types, and provides direct control over kernel arguments and execution via `set_arg`, `run`, and `compile`. It supports GPU computations on vectors and device memory through direct kernel manipulation, enabling tasks like matrix multiplication and vector transformations. Specific use cases include launching and configuring parallel GPU operations for numerical simulations and data-parallel algorithms.",
+      "description_length": 485,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Spoc.Devices",
+      "library": "spoc",
+      "description": "This module handles initialization, enumeration, and capability assessment of GPGPU devices, supporting both CUDA and OpenCL backends. It operates on device objects that encapsulate hardware-specific properties like supported extensions and numerical precision levels. Typical use cases include selecting appropriate devices for compute tasks based on double-precision support or available features.",
+      "description_length": 399,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Spoc.Tools",
       "library": "spoc",
-      "description": "This module provides operations for iterating over, mapping, and folding CPU-computed vectors. It supports boolean custom values and index-aware iterations, enabling efficient vector transformations and reductions. Use cases include numerical computations, element-wise vector processing, and conditional aggregations.",
-      "description_length": 318,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides operations for iterating over, mapping, and folding CPU-computed vectors. It supports boolean custom values and indexed iteration, enabling efficient vector transformations and aggregations. Use cases include numerical computations, array processing, and conditional vector manipulations.",
+      "description_length": 309,
+      "index": 7,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Spoc",
       "library": "spoc",
-      "description": "This module provides a comprehensive interface for managing GPGPU computations by integrating device enumeration, memory handling, and kernel execution. It centers around `Spoc.Vector.t` for data manipulation, supporting operations like subvector creation, element access, and memory transfers between CPU and GPU, while also enabling precise control over execution contexts through device descriptors and command queues. Users can query hardware capabilities such as double-precision support, launch GPU kernels with configured dimensions, and perform efficient numerical computations on large datasets. Example workflows include offloading matrix operations to a GPU, filtering and transforming data in vectors, and ensuring hardware compatibility for numerical algorithms.",
-      "description_length": 775,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides GPU-accelerated numerical computation capabilities through direct control of device memory, kernel execution, and hardware selection. It supports operations for compiling and launching parallel kernels, transferring and managing device memory, and selecting appropriate GPGPU devices based on capabilities such as double-precision support. Concrete use cases include high-performance matrix operations, vector transformations, and data-parallel numerical simulations using either CUDA or OpenCL backends.",
+      "description_length": 525,
+      "index": 8,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 13,
-    "meaningful_modules": 10,
-    "filtered_empty_modules": 3,
-    "retention_rate": 0.7692307692307693
+    "meaningful_modules": 9,
+    "filtered_empty_modules": 4,
+    "retention_rate": 0.6923076923076923
   },
   "statistics": {
-    "max_description_length": 775,
-    "min_description_length": 318,
-    "avg_description_length": 540.8,
-    "embedding_file_size_mb": 0.0367584228515625
+    "max_description_length": 525,
+    "min_description_length": 309,
+    "avg_description_length": 423.22222222222223,
+    "embedding_file_size_mb": 0.13084793090820312
   }
 }

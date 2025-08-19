@@ -1,109 +1,93 @@
 {
   "package": "ortac-runtime",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 11,
-  "creation_timestamp": "2025-07-15T23:07:24.957027",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:08:41.350606",
   "modules": [
     {
-      "module_path": "Ortac_runtime.Gospelstdlib.Sequence",
+      "module_path": "Ortac_runtime.Gospelstdlib.Sys",
       "library": "ortac-runtime",
-      "description": "This module implements sequence manipulation operations including creation, transformation, and traversal. It supports data types like polymorphic sequences, integers, and optional values, with functions for mapping, filtering, appending, and indexed access. Concrete use cases include processing ordered collections with precise element control, such as constructing sequences from functions, modifying elements at specific positions, or reducing sequences to values via folds.",
-      "description_length": 478,
+      "description": "This module exposes system-specific constants such as endianness, integer and word sizes, and maximum lengths for arrays and strings. It provides direct access to low-level runtime limits and architecture details. Use it to write platform-aware code that depends on system constraints, such as memory layout or data representation.",
+      "description_length": 331,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ortac_runtime.Gospelstdlib.Order",
+      "module_path": "Ortac_runtime.Gospelstdlib.Set",
       "library": "ortac-runtime",
-      "description": "This module provides a single function `is_pre_order` that checks whether a given comparison function satisfies the pre-order properties. It operates on any type `'a` and takes a binary comparison function as input. A concrete use case is validating that a custom comparison function correctly implements a pre-order relation, ensuring consistency in ordering logic for data structures like sets or maps.",
-      "description_length": 404,
+      "description": "This module supports membership testing, insertion, deletion, and set algebra operations (union, intersection, difference) over polymorphic set values, along with transformations like mapping, folding, filtering, and partitioning. It operates on comparable element types using a balanced tree structure, enabling efficient cardinality tracking and deterministic element selection. Use cases include data deduplication, collection transformation pipelines, and converting between sets, lists, or sequences for ordered processing or serialization.",
+      "description_length": 545,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Ortac_runtime.Gospelstdlib.Bag",
+      "module_path": "Ortac_runtime.Gospelstdlib.Sequence",
       "library": "ortac-runtime",
-      "description": "This module offers a suite of operations for manipulating multisets, including querying element counts, combining collections through union or intersection, filtering elements, and converting between lists and sequences. It utilizes a persistent `Bag.t` data structure that maintains element multiplicity across transformations. Such functionality is suited for scenarios requiring precise management of duplicate elements, such as statistical aggregation or combinatorial operations.",
-      "description_length": 484,
+      "description": "This module implements a sequence data structure with operations for creation, transformation, and manipulation. It supports fixed-size sequences and provides functions for accessing, updating, and iterating over elements. Concrete use cases include managing ordered collections of values where efficient access and modification at specific positions are required.",
+      "description_length": 364,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ortac_runtime.Gospelstdlib.List",
       "library": "ortac-runtime",
-      "description": "This module implements standard list operations such as computing length, retrieving elements by index, mapping, folding, and filtering. It works with polymorphic lists and supports transformations, comparisons, and conversions to and from sequences. Concrete use cases include processing sequences of values with index-based logic, combining elements from two lists, and checking membership or predicate conditions.",
-      "description_length": 416,
+      "description": "This module implements standard list operations such as computing length, accessing elements with `hd`, `tl`, and `nth`, reversing with `rev`, mapping with `map` and `mapi`, and folding with `fold_left` and `fold_right`. It supports operations over polymorphic lists and includes utilities for initialization, membership testing with `mem`, and conversions to and from sequences. Specific use cases include list transformation, indexed iteration with `init`, and predicate evaluation across one or two lists with `for_all`, `_exists`, `for_all2`, and `_exists2`.",
+      "description_length": 562,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ortac_runtime.Gospelstdlib.Sys",
+      "module_path": "Ortac_runtime.Gospelstdlib.Order",
       "library": "ortac-runtime",
-      "description": "This module exposes system-specific constants such as endianness, integer and word sizes, and maximum lengths for arrays and strings. It provides direct access to low-level runtime limits and architecture details. Use this module to write code that adapts to platform constraints or ensures data structure bounds compliance.",
-      "description_length": 324,
+      "description": "This module provides a single function `is_pre_order` that checks whether a given comparison function satisfies the pre-order properties, specifically that it is reflexive and transitive. It operates on any type `'a` as long as a comparison function from `'a -> 'a -> int` is provided. A concrete use case is validating custom comparison functions used in data structures like sets or maps to ensure they maintain correct ordering semantics.",
+      "description_length": 441,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ortac_runtime.Gospelstdlib.Set",
-      "library": "ortac-runtime",
-      "description": "This module provides polymorphic set operations for membership testing, modification, and relational comparisons, alongside utilities for transforming elements through mapping and filtering. It works with generic sets (`'a Set.t`) and supports conversions to and from lists and sequences, enabling seamless integration with ordered or sequential data workflows. These capabilities are particularly useful for tasks like data deduplication, set-based logic in algorithms, or bridging between functional and iterative processing pipelines.",
-      "description_length": 537,
-      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ortac_runtime.Gospelstdlib.Array",
       "library": "ortac-runtime",
-      "description": "This module supports element-wise transformations, folding operations, and structural validation of arrays through functions like `map`, `fold_left`, `sub`, and `permut`. It operates on arrays of generic elements, enabling conversions to sequences, lists, and bags while facilitating tasks like permutation checks for subarrays or full arrays. Key use cases include data validation, iterative processing over array segments, and equivalence testing between collections.",
-      "description_length": 469,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ortac_runtime.Gospelstdlib",
-      "library": "ortac-runtime",
-      "description": "This module combines core arithmetic, bitwise, and system-level utilities with rich data structure operations to support numerical computation, collection manipulation, and structured data validation. It provides primitive operations on integers, sequences, and functions, while submodules extend functionality to lists, arrays, sets, maps, and bags with transformations, comparisons, and structural queries. Use it to perform arithmetic and bitwise calculations, validate custom orderings, process sequences with indexed access, manage multisets with precise duplication, and adapt logic to system constraints like endianness and array limits. Submodules enable tasks ranging from list folding and array permutation checks to set-based deduplication and sequence construction.",
-      "description_length": 777,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ortac_runtime.Z",
-      "library": "ortac-runtime",
-      "description": "This module implements bounded quantification over integer ranges using `exists` and `forall`. It operates on integers and predicates, checking whether any or all values in a given interval satisfy a condition. It is useful for verifying properties over discrete numerical domains, such as validating array indices or loop invariants.",
-      "description_length": 334,
-      "index": 8,
+      "description": "This module provides array creation, element-wise transformations, folding, and permutation checks between arrays or subarrays. It operates on arrays, bags, and sequences, enabling tasks like algorithm verification requiring structural equivalence checks or data transformation pipelines between these structures. Specific functions support converting sequences to arrays, checking permutations within specified ranges, and combining arrays with logical predicates over single or paired elements.",
+      "description_length": 496,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ortac_runtime.Errors",
       "library": "ortac-runtime",
-      "description": "This module manages error collection and reporting during runtime. It provides functions to create and manipulate an error container, register new errors with locations, and print error reports. It works with a custom error type that includes location information and error messages, specifically supporting error tracking in program analysis or execution contexts.",
-      "description_length": 365,
-      "index": 9,
+      "description": "This module manages error collection and reporting during runtime. It provides functions to create and manipulate an error container, allowing the addition of errors with specific locations and messages. The module is used to accumulate and display errors encountered during program execution, such as parsing or runtime validation failures.",
+      "description_length": 341,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ortac_runtime.Z",
+      "library": "ortac-runtime",
+      "description": "This module implements bounded quantification over integer ranges using `exists` and `forall`. It operates on integers and predicates, checking whether any or all values in a closed interval satisfy a given condition. Useful for verifying properties over discrete numerical domains, such as validating array indices or loop invariants.",
+      "description_length": 335,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ortac_runtime",
       "library": "ortac-runtime",
-      "description": "This module provides data structures and utilities for representing source code locations, error types, and error reports used during runtime verification. It supports operations for pretty-printing, exception handling, and comparison checks, enabling precise reporting of failed preconditions, postconditions, and invariant violations in generated code. Submodules extend functionality with numerical and collection-based utilities, bounded integer quantification, and structured error management, allowing tasks such as validating array indices, performing arithmetic and bitwise operations, and tracking errors with location context. Together, they form a cohesive system for enforcing and analyzing specifications at runtime.",
-      "description_length": 729,
-      "index": 10,
-      "embedding_norm": 1.0
+      "description": "This module provides data structures for representing source code locations and error reports, along with functions to format and manage runtime errors. It includes bounded integer quantification operations and utilities for duplicating values. Used to track and report violations of conditions, invariants, and specifications during program execution.",
+      "description_length": 352,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
     "total_modules_in_package": 12,
-    "meaningful_modules": 11,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9166666666666666
+    "meaningful_modules": 9,
+    "filtered_empty_modules": 3,
+    "retention_rate": 0.75
   },
   "statistics": {
-    "max_description_length": 777,
-    "min_description_length": 324,
-    "avg_description_length": 483.3636363636364,
-    "embedding_file_size_mb": 0.040389060974121094
+    "max_description_length": 562,
+    "min_description_length": 331,
+    "avg_description_length": 418.55555555555554,
+    "embedding_file_size_mb": 0.13088703155517578
   }
 }

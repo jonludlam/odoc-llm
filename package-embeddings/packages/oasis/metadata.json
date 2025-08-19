@@ -1,1013 +1,965 @@
 {
   "package": "oasis",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 124,
-  "creation_timestamp": "2025-07-15T23:25:16.016299",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 118,
+  "creation_timestamp": "2025-08-18T18:38:09.219532",
   "modules": [
     {
-      "module_path": "BaseCompat.Compat_0_4.BaseSetup",
-      "library": "oasis.base",
-      "description": "This module defines a structured interface for handling package setup operations such as `configure`, `build`, `install`, and `clean`, along with versioned section-specific actions like `doc`, `test`, and their cleanup counterparts. It works directly with `OASISTypes.package` and related section types (`OASISTypes.doc`, `OASISTypes.test`) to manage build and documentation workflows. Concrete use cases include defining per-package build pipelines, executing setup scripts conditionally based on version, and maintaining backward compatibility across OASIS releases in generated `setup.ml` files.",
-      "description_length": 598,
+      "module_path": "PluginLoader.StringSet",
+      "library": "plugin-loader",
+      "description": "This module implements a set data structure for strings, supporting membership testing, insertion, deletion, and set operations like union, intersection, and difference, alongside transformations via mapping, filtering, and folding. It facilitates conversion between sets, lists, and sequences, enabling seamless integration with functional pipelines for tasks like unique string aggregation, log analysis, or configuration management where set-based manipulations are critical.",
+      "description_length": 478,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "BaseEnvLight.MapString",
-      "library": "oasis.base",
-      "description": "This module provides a comprehensive set of operations for creating, transforming, and querying **immutable maps with string keys**, including functional updates, ordered traversal, and key-based selection. It supports **string-keyed associative data structures** with generic value types, offering optimized physical equality checks and ordered iteration via functions like `of_seq`, `fold`, and `split`. Typical use cases include **configuration data parsing**, environment variable management, and structured data manipulation where immutability and key-order guarantees are critical.",
-      "description_length": 587,
+      "module_path": "PluginLoader.SetEntry",
+      "library": "plugin-loader",
+      "description": "This module implements a set data structure for managing PluginLoader.entry elements, supporting operations like union, intersection, difference, membership checks, and transformations through mapping and filtering. It enables bidirectional conversion between sets and sequences or lists, with safe element retrieval via optional and ordered accessors. Useful for scenarios requiring set logic, iterative processing, or integrating entry collections with sequence-based workflows.",
+      "description_length": 480,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "BaseCompat.Compat_0_4",
-      "library": "oasis.base",
-      "description": "This module adapts `setup_t` values for compatibility across OASIS minor releases, working with `BaseSetup.t` and `OASISContext.t` to ensure consistent setup data manipulation in `setup.ml`. It supports operations like loading and transforming project configurations, enabling version-aware handling of build pipelines and setup scripts. The child module extends this functionality by defining structured operations\u2014`configure`, `build`, `install`, and `clean`\u2014on `OASISTypes.package`, `doc`, and `test` types, supporting per-package workflows and conditional execution. Together, they facilitate backward-compatible project setup and maintenance across OASIS versions.",
-      "description_length": 669,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseCompat.Compat_0_3",
-      "library": "oasis.base",
-      "description": "This module provides `rctxt` for storing OASIS context state and `adapt_setup_t` for converting base setup values. It works with `OASISContext.t` and `BaseSetup.t` types. Used to maintain compatibility for `setup_t` manipulation across OASIS versions.",
-      "description_length": 251,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseContext",
-      "library": "oasis.base",
-      "description": "This module provides access to a global context used for managing message localization and internationalization settings. It includes a reference to a default context value and a function to retrieve command-line argument specifications. Concrete use cases include configuring localized error messages and handling multilingual output in command-line tools.",
-      "description_length": 357,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "BaseFileAB",
-      "library": "oasis.base",
-      "description": "This module handles filename transformations and variable substitution for configuration files ending in `.ab`. It computes target filenames from Unix paths and replaces environment variables in `.ab` files during the configuration step. Concrete use cases include generating configured source files from templates using substituted values.",
-      "description_length": 340,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseArgExt",
-      "library": "oasis.base",
-      "description": "Parses command line arguments using a list of key-specification-document tuples. Operates on string arrays and standard argument definitions. Useful for configuring application behavior based on user input, such as enabling flags or setting file paths.",
-      "description_length": 252,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "BaseOCamlcConfig",
-      "library": "oasis.base",
-      "description": "This module parses the output of the `ocamlc -config` command and converts it into usable environment variables. It provides direct access to configuration values such as the OCaml compiler path and specific build flags. Use it to programmatically retrieve OCaml build settings for tooling or build scripts.",
-      "description_length": 307,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseCheck",
-      "library": "oasis.base",
-      "description": "This module checks for the presence and versions of system programs and OCaml findlib packages. It provides functions to locate executables, verify their existence, and retrieve installation paths and package versions. Concrete use cases include validating the availability of `ocamlfind`, checking specific program binaries, and ensuring correct versions of findlib packages are installed.",
-      "description_length": 390,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseLog",
-      "library": "oasis.base",
-      "description": "This module maintains a log of named events, supporting operations to register, unregister, load, and filter events stored in a log file. It works with log entries represented as tuples of a name and a string value, and allows checking the existence of specific entries. It is used to track actions such as package installations or configuration changes in a build system.",
-      "description_length": 372,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseEnvLight",
-      "library": "oasis.base",
-      "description": "This module provides read-only access to configuration data stored in 'setup.data', enabling lightweight OCaml scripts to retrieve and evaluate key-value pairs with support for variable expansion and conditional logic. It includes a submodule for working with immutable, ordered string-keyed maps, allowing functional transformations and efficient lookups. Operations such as loading the environment, querying values with fallbacks, and evaluating expressions based on current settings can be performed without embedding complex setup logic. Example uses include extracting configuration parameters and conditionally selecting values based on environment state.",
-      "description_length": 661,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseGenerate",
-      "library": "oasis.base",
-      "description": "This module generates build system files like `setup.ml` based on a package description and setup update rules. It works with package metadata, file templates, and command-line configuration options. Concrete use cases include automating the creation of OCaml build scripts and managing version-specific compatibility during project setup.",
-      "description_length": 339,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseBuilt",
-      "library": "oasis.base",
-      "description": "This module tracks and manages files built during package installation, supporting operations to register, unregister, and query built files. It works with file paths and build contexts, organizing files into categories like executables, libraries, and objects. It is used to record installation artifacts and verify their existence during build or cleanup processes.",
-      "description_length": 367,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "BaseDynVar",
-      "library": "oasis.base",
-      "description": "This module initializes dynamic variables by reading from a `setup.log` file, setting values once the corresponding executables are successfully built. It operates on package configurations and execution contexts, specifically tracking variable states during the build process. Use cases include resolving executable paths or setting build-time environment variables based on log output.",
-      "description_length": 387,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseCompat",
-      "library": "oasis.base",
-      "description": "This module provides versioned compatibility layers for interacting with `setup_t` values in OASIS-generated `setup.ml` files, ensuring API stability across minor OASIS version updates. It includes functions like `setup_ml_text` to generate `setup.ml` content from a package description and exposes submodules like `Compat_0_3` and `Compat_0_4` that handle version-specific logic for operations such as `configure`, `build`, and `install`. It supports loading and transforming project configurations using types like `BaseSetup.t`, `OASISContext.t`, and `OASISTypes.package`, enabling portable setup scripts that adapt to the OASIS version specified in `_oasis`. The module also maintains context state with `rctxt` and converts base setup values using `adapt_setup_t`, facilitating backward-compatible project setup and maintenance.",
-      "description_length": 833,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseStandardVar",
-      "library": "oasis.base",
-      "description": "This module provides system and build configuration introspection capabilities, exposing variables like compiler paths, file extensions, and directory locations as strings or `host_dirname` values. It supports tasks such as determining platform-specific compilation flags, resolving library paths, and managing installation layouts for OCaml projects, particularly in build systems like OASIS for toolchain configuration and package metadata handling.",
-      "description_length": 451,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "BaseMessage",
-      "library": "oasis.base",
-      "description": "This module provides functions for logging messages at different severity levels\u2014`debug`, `info`, `warning`, and `error`\u2014using a fixed default context. It works with string formatting arguments via the `format4` type to generate output messages. Concrete use cases include emitting diagnostic or status information during build processes or command-line tool execution.",
-      "description_length": 369,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "BaseDoc",
-      "library": "oasis.base",
-      "description": "This module builds documentation for OCaml packages by applying a list of document generation functions to a package and its associated sections and documentation metadata. It works with `OASISTypes.package`, `OASISTypes.common_section`, and `OASISTypes.doc` data structures, along with context and command-line arguments. A concrete use case is generating API documentation or man pages from package definitions during a build process.",
-      "description_length": 436,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseSetup",
-      "library": "oasis.base",
-      "description": "This module defines the core lifecycle operations for OCaml package management, including configuration, building, documentation generation, testing, installation, and cleanup. It works with package descriptions, command-line arguments, and plugin contexts to execute setup tasks. Concrete use cases include running `setup.ml` to configure a package, building and installing libraries, generating documentation, and cleaning temporary files.",
-      "description_length": 441,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseData",
-      "library": "oasis.base",
-      "description": "This module provides predefined string values representing sets of exported modules used for different purposes in the build and runtime setup of OCaml projects. It works with string data types, each encoding a specific configuration of modules for embedding or scripting. Concrete use cases include generating setup files like `setup.ml`, creating OCaml scripts that load `setup.data`, and configuring toploops for dynamic execution or bundling.",
-      "description_length": 446,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseTest",
-      "library": "oasis.base",
-      "description": "This module runs tests by applying a list of test functions to a package, each paired with common section and test metadata. It processes command-line arguments and returns a failure percentage based on test outcomes. A concrete use case is executing a suite of package validation tests with custom arguments and measuring overall success.",
-      "description_length": 339,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "BaseEnv",
-      "library": "oasis.base",
-      "description": "This module manages environment variables with support for conditional definitions, command-line integration, and persistent storage in a setup file. It provides operations to define, retrieve, expand, and dump variables, along with handling origins such as defaults, environment, files, and command-line inputs. Concrete use cases include configuring build settings based on user input, generating CLI flags from variable definitions, and persisting configuration state across sessions.",
-      "description_length": 487,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "BaseCustom",
-      "library": "oasis.base",
-      "description": "This module executes custom commands during pre/post hooks and applies functions within a custom block context. It handles program execution with expanded arguments and manages failure scenarios using a failsafe flag. Concrete use cases include running build scripts with additional parameters and wrapping function calls in custom execution blocks.",
-      "description_length": 349,
-      "index": 22,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "CLIArgExt",
-      "library": "oasis.cli",
-      "description": "This module handles command line argument parsing and execution flow for a build system or package manager. It defines specifications for command-line flags, subcommands, and context initialization, supporting structured help output in Markdown or plain text. It is used to drive configuration, build, and package management tasks based on user input.",
-      "description_length": 351,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "CLISubCommand",
-      "library": "oasis.cli",
-      "description": "This module defines subcommands for a command-line interface, including their names, descriptions, usage text, and execution logic. It works with lists of command-line argument specifications and functions to parse and run subcommands. Concrete use cases include registering and invoking CLI subcommands like `build`, `test`, or `install`, each with custom argument parsing and behavior.",
-      "description_length": 387,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "CLICommon",
-      "library": "oasis.cli",
-      "description": "This module adds command-line arguments to locate and parse the `_oasis` file, which contains package metadata. It provides higher-order functions that wrap subcommand executions, allowing them to accept and process file paths. These functions are used directly by commands that need to interact with OASIS package definitions, such as build or configuration tools.",
-      "description_length": 365,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "CLIPager",
-      "library": "oasis.cli",
-      "description": "This module handles the execution of a 'pager' command by managing output buffering and formatting. It provides functions to open and close output streams, capturing formatted content in a buffer for later use. It is used to control how output is displayed or redirected, particularly when invoking external pager programs.",
-      "description_length": 323,
-      "index": 26,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "CustomPlugin.Test",
-      "library": "oasis.builtin-plugins",
-      "description": "This module implements test execution and cleanup routines for a custom build system. It provides `main` to run tests given a configuration and context, returning a float result, along with `clean` and `distclean` to remove test artifacts. It operates on custom plugin configurations and string arrays, typically used for handling test-specific build targets and flags.",
-      "description_length": 369,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "StdFilesPlugin.SetSection",
-      "library": "oasis.builtin-plugins",
-      "description": "This module provides a functional set interface for managing collections of `OASISTypes.section` values, supporting standard operations like union, intersection, difference, and membership testing, along with iteration, mapping, and predicate checks. It facilitates transformations between sets and sequences or lists, enabling efficient traversal and bulk updates, particularly useful for assembling or analyzing structured content in generated files like INSTALL.txt or README.txt. Key use cases include combining configuration sections, filtering based on criteria, and ensuring uniqueness when merging document fragments.",
-      "description_length": 625,
-      "index": 28,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OCamlbuildCommon.Tag",
-      "library": "oasis.builtin-plugins",
-      "description": "This module processes tags and tag-related operations for file path manipulation. It works with Unix filenames and handles wildcard patterns in paths. A key use case is concatenating file paths where one part may contain wildcards, such as when building or documenting OCaml projects with dynamic directory structures.",
-      "description_length": 318,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "CustomPlugin.Doc",
-      "library": "oasis.builtin-plugins",
-      "description": "Handles documentation generation and cleanup tasks within a custom build system. It provides `main` to generate documentation, `clean` to remove generated files, and `distclean` for deeper project-wide cleanup. Works with OASIS context and plugin structures, used during project documentation setup and release processes.",
-      "description_length": 321,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OMakePlugin.DocRuntime",
-      "library": "oasis.builtin-plugins",
-      "description": "Handles documentation generation during OMake-based project configuration. It processes package metadata and documentation settings to produce build instructions for generating documentation. This module is used when integrating documentation targets into the OMake build system, ensuring correct dependencies and output paths are configured.",
-      "description_length": 342,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "CustomPlugin.Build",
-      "library": "oasis.builtin-plugins",
-      "description": "Implements custom build logic for compiling and cleaning project artifacts based on package configuration. Operates on `OASISContext.t`, `CustomPlugin.t`, and `OASISTypes.package` to handle package-specific compilation and cleanup routines. Used to define package-specific build steps, such as compiling C stubs or generating documentation during development workflows.",
-      "description_length": 369,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OMakePlugin.BuildRuntime",
-      "library": "oasis.builtin-plugins",
-      "description": "This module implements runtime build and cleanup operations for OMake-based projects, specifically handling command-line interactions during package configuration and execution. It defines `main`, `clean`, and `distclean` functions that process build commands, invoke OMake tasks, and manage package-specific runtime parameters. Concrete use cases include executing custom build steps, cleaning generated files, and resetting build environments during package installation or testing.",
-      "description_length": 484,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OMakePlugin.InstallRuntime",
-      "library": "oasis.builtin-plugins",
-      "description": "This module implements runtime installation and uninstallation logic for OMake-based projects. It provides `install` and `uninstall` functions that execute custom actions during the build process, using contextual data and command-line arguments. These functions are used to handle package deployment, file copying, and cleanup tasks specific to runtime environments.",
-      "description_length": 367,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OCamlbuildPlugin.MapDirs",
-      "library": "oasis.builtin-plugins",
-      "description": "This module implements a polymorphic map with keys as build artifact categories (`Executable`, `Library`, `Object`) and values of arbitrary type, supporting ordered key operations like lookup, traversal, and transformation. It provides directory mapping management for OCamlbuild artifacts through functions to filter, merge, and convert sequences into structured maps. Use cases include custom build rule configuration where artifact types must be dynamically associated with directory paths or processing logic.",
-      "description_length": 513,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "StdFilesPlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module generates standard text files like INSTALL.txt and README.txt during package setup, integrating version constraints, library dependencies, and file path configurations to automate project metadata creation. It includes a set interface for manipulating `OASISTypes.section` values, supporting union, intersection, and mapping operations to assemble, filter, or analyze structured content across multiple files. For example, it can merge documentation sections from different dependencies or generate installation instructions based on build tool configurations. The combination of direct file generation and structured content manipulation enables flexible and automated management of project documentation.",
-      "description_length": 718,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "DevFilesPlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module generates standard development files such as Makefile and configure scripts based on package configuration. It defines a data structure `t` to hold generation parameters and provides functions to initialize, configure, and execute the file generation process. Concrete use cases include setting up build infrastructure for OCaml projects and enabling/disabling specific build files like Makefile or configure.",
-      "description_length": 421,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OCamlbuildCommon",
-      "library": "oasis.builtin-plugins",
-      "description": "This module coordinates command-line arguments, environment settings, and version checks to control `ocamlbuild` execution during package and documentation workflows. It manages build directories, tool configurations, and tag handling through direct functions and a sub-module that processes file paths with wildcards. You can use it to dynamically construct file paths with pattern matching, adjust `ocamlbuild` behavior based on OCaml version, or integrate with `ocamlfind` for tagged plugin builds. An example workflow includes conditionally running `ocamlbuild` with computed tags and adjusted paths when building an OASIS-managed package.",
-      "description_length": 643,
-      "index": 38,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OCamlbuildDocPlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module implements documentation generation and cleanup actions for OCaml projects managed with OASIS. It defines handlers for building and cleaning documentation, supports configuration through custom fields like `path`, `modules`, and `libraries`, and integrates with the build system via `doit` and `setup_changes`. Concrete use cases include generating HTML documentation from OCaml source files and cleaning up generated documentation artifacts.",
-      "description_length": 454,
-      "index": 39,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "NonePlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module implements placeholder and no-op functions for sections of code that are not implemented or should generate nothing. It works with context types, strings, and OASIS plugin setup structures to provide stubs for missing functionality. Concrete use cases include acting as a fallback in generation logic where specific sections are intentionally left unimplemented or used to satisfy interface requirements without performing actions.",
-      "description_length": 443,
-      "index": 40,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISBuiltinPlugins",
-      "library": "oasis.builtin-plugins",
-      "description": "Initializes built-in plugins for use in the system. Works with plugin data structures to enable loading and activation. Useful for setting up core plugin functionality during application startup.",
-      "description_length": 195,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "CustomPlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This system orchestrates project lifecycle tasks\u2014configuration, building, testing, documentation, and installation\u2014using structured records and conditional execution. It centers on `CustomPlugin.t` and `OASISSchema.t` to define and initialize versioned build parameters, supporting custom workflows like conditional compilation, test execution, and documentation generation. The core module manages schema initialization and plugin configuration, while submodules handle specific tasks: test execution and cleanup with `main`, `clean`, and `distclean`; documentation generation and maintenance using OASIS context; and package-specific build logic for compiling and cleaning artifacts based on `OASISTypes.package`. Examples include defining test routines that return float results, generating documentation during release, or compiling C stubs as part of a custom build step.",
-      "description_length": 876,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "InternalInstallPlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module implements installation logic for OCaml packages using an internal scheme, providing hooks to customize installation behavior for executables, libraries, objects, and documentation. It operates on OASISTypes structures like `common_section`, `build_section`, `executable`, `library`, and `doc`, while managing installation paths and command splitting for compatibility. Concrete use cases include customizing install/uninstall procedures during package deployment and handling file installation in cross-platform environments.",
-      "description_length": 538,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OCamlbuildPlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module integrates OCamlbuild with OASIS-based projects, enabling customization of build configurations, file filtering by extension, tag management, and path manipulation during compilation. It provides key data types such as build artifact categories (`Executable`, `Library`, `Object`) mapped to arbitrary values, supporting operations like lookup, traversal, and transformation to manage directory mappings and custom build rules. With functions to register actions via `doit`, modify metadata, and initialize plugin hooks, it facilitates automating file processing pipelines and extending OCamlbuild's behavior through dynamic argument handling. Specific uses include structuring multi-stage builds and associating artifact types with custom processing logic or output directories.",
-      "description_length": 790,
-      "index": 44,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "METAPlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module defines data structures and functions for generating and manipulating META file configurations, including types for plugin metadata, enabling/disabling features, and specifying dependencies. It provides functions to create and print META file entries, manage plugin state, and integrate with package descriptions. Concrete use cases include configuring findlib library metadata, adding custom lines to META files, and managing plugin-specific properties during package setup.",
-      "description_length": 487,
-      "index": 45,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OMakePlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module generates a complete OMake-based workflow for OCaml projects, handling configuration, build, documentation, testing, and installation. It provides core operations for defining build stages, running commands, and serializing configurations, working with package descriptions and runtime contexts to customize project scaffolding and build pipelines. The documentation submodule integrates doc generation into OMake with metadata-driven build rules, while the build submodule manages command execution and cleanup via `main`, `clean`, and `distclean`. The installation submodule handles deployment tasks through `install` and `uninstall`, using runtime data to perform file operations and environment-specific setup.",
-      "description_length": 726,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "InternalConfigurePlugin",
-      "library": "oasis.builtin-plugins",
-      "description": "This module handles package configuration by performing a series of checks and generating corresponding output files. It works with OASISTypes.package data and uses an internal scheme to determine configuration steps. It is used during the build setup phase to validate package properties and write configuration results.",
-      "description_length": 321,
-      "index": 47,
       "embedding_norm": 1.0
     },
     {
       "module_path": "PluginLoader.SetString",
       "library": "plugin-loader",
-      "description": "This module provides standard set operations for managing collections of unique strings, including creation, modification, membership checks, and set algebra (union, intersection, difference). It works with a specialized string set type (`PluginLoader.SetString.t`) and supports conversions to/from lists and sequences, enabling efficient traversal, filtering, and bulk operations. Typical use cases involve tracking string-based identifiers, normalizing input data, or performing fast lookups in configurations and pipelines.",
-      "description_length": 526,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "PluginLoader.StringSet",
-      "library": "plugin-loader",
-      "description": "This module implements a collection of string sets with comprehensive set-theoretic operations, including membership checks, element manipulation, union/intersection/difference calculations, and structural comparisons. It supports transformations through mapping, folding, and filtering, along with cardinality queries and bidirectional conversion to sequences and lists. These capabilities are particularly useful for managing unique string collections, processing data pipelines with set operations, or implementing algorithms requiring efficient membership validation and set algebra.",
-      "description_length": 587,
-      "index": 49,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "PluginLoader.SetEntry",
-      "library": "plugin-loader",
-      "description": "This module provides functional set operations for managing collections of `PluginLoader.entry` values, supporting creation, membership checks, union/intersection/difference calculations, and order-preserving iteration. It includes utilities to convert between sets and sequences or lists, enabling efficient data transformation pipelines. Typical applications include dependency resolution, uniqueness enforcement in plugin registries, and batch processing of plugin metadata with set-theoretic logic.",
-      "description_length": 502,
-      "index": 50,
+      "description": "This module supports operations like union, intersection, difference, and membership checks on string collections, along with transformations such as filtering, mapping, and partitioning. It works with a specialized set type (`PluginLoader.SetString.t`) for string elements, offering conversions to and from lists and sequences, including iterative processing and ordered construction. Typical use cases include deduplication of string data, dependency resolution with extremal element queries, and integrating set-based algorithms with sequence-driven workflows like parsing or traversal pipelines.",
+      "description_length": 599,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "PluginLoader",
       "library": "plugin-loader",
-      "description": "This module orchestrates dynamic plugin loading via Findlib packages while integrating specialized submodules for structured data management. It centers around loading and tracking plugins with metadata like name and version, using custom entry structures and string sets for efficient identifier handling. The core API initializes plugin contexts, loads plugins from paths, and lists registered entries, while submodules enable set operations on both strings and plugin entries for tasks like filtering, dependency resolution, and batch processing. For example, string sets can normalize plugin identifiers, and entry sets can enforce uniqueness in registries or compute plugin intersections.",
-      "description_length": 693,
-      "index": 51,
+      "description": "This module manages dynamic plugin loading with operations to initialize, load, and query plugins using string sets and entry sets. It provides functions to load plugins from specified paths, list registered plugins, and find plugin files with logging support. Key data structures include sets for string management and entry records capturing plugin metadata, supporting use cases like runtime plugin discovery and dependency handling.",
+      "description_length": 436,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "OASISDynRun.BaseSetup",
-      "library": "oasis.dynrun",
-      "description": "This module defines the core lifecycle operations for OCaml package management, including configuration, building, documentation generation, testing, installation, and cleanup. It works with package descriptions, command-line arguments, and context objects to execute actions like `configure`, `build`, `test`, and `install`. Concrete use cases include automating package setup, running test suites with timeouts, and managing build artifacts through clean and distclean steps.",
-      "description_length": 477,
-      "index": 52,
+      "module_path": "BaseCompat.Compat_0_4.BaseSetup",
+      "library": "oasis.base",
+      "description": "This module defines a structured interface for managing the lifecycle of an OASIS package, including configuration, building, documentation, testing, and installation. It operates on a `t` record that encapsulates functions tied to specific package actions, along with metadata like version and digest. Concrete use cases include implementing custom setup logic in `setup.ml` scripts and ensuring backward compatibility across OASIS versions during package maintenance.",
+      "description_length": 469,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "BaseCompat.Compat_0_4",
+      "library": "oasis.base",
+      "description": "This module provides functions to adapt and manipulate the `BaseSetup.t` record across OASIS versions, ensuring backward compatibility for setup scripts. It works with the `BaseSetup.t` type, which encapsulates package lifecycle operations such as configuration, building, and installation. Concrete use cases include loading and modifying setup data in `setup.ml` scripts when migrating between OASIS minor versions.",
+      "description_length": 417,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "OASISDynRun",
-      "library": "oasis.dynrun",
-      "description": "This module initializes and configures the runtime context for dynamic execution using a predefined setup function, working directly with `OASISContext.t` and `BaseSetup.t` to manage execution state and parameters. Its child modules define core lifecycle operations for OCaml package management\u2014such as configuration, building, testing, and installation\u2014executing actions like `configure`, `build`, and `install` using package descriptions and context objects. Together, they enable workflows like setting up a dynamic runtime environment, automating package setup, running test suites with timeouts, and managing build artifacts through clean steps. Specific examples include dynamically initializing execution contexts before running generated code and orchestrating full build-test-install pipelines with context-aware configurations.",
-      "description_length": 837,
-      "index": 53,
+      "module_path": "BaseCompat.Compat_0_3",
+      "library": "oasis.base",
+      "description": "This module provides `rctxt` for storing and accessing OASIS context state and `adapt_setup_t` for converting setup data between versions. It works with `OASISContext.t` and `BaseSetup.t` types to ensure compatibility across OASIS versions. It is used to maintain stable setup logic in `setup.ml` scripts despite internal API changes.",
+      "description_length": 334,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseEnvLight.MapString",
+      "library": "oasis.base",
+      "description": "This module provides operations for creating, transforming, and querying maps with string keys and arbitrary values. It supports persistent manipulation through functions like adding, removing, filtering, and mapping entries, as well as converting sequences of key-value pairs into maps. These features are useful for handling structured data, such as configuration settings, where immutable updates and efficient transformations are required.",
+      "description_length": 443,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseCustom",
+      "library": "oasis.base",
+      "description": "This module executes custom commands during pre/post hooks, expanding and running them with provided arguments. It handles functions wrapped in a `custom` block, applying them to values while supporting failsafe behavior. Useful for integrating external tools or scripts into a build process with contextual argument expansion.",
+      "description_length": 327,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseGenerate",
+      "library": "oasis.base",
+      "description": "This module generates build system files like `setup.ml` based on a package description and setup update rules. It operates on file templates, package metadata, and command-line arguments to produce configured output files. Use it to automate creation of project scaffolding or rebuild build scripts during development workflows.",
+      "description_length": 329,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseCompat",
+      "library": "oasis.base",
+      "description": "This module provides version-specific compatibility functions for manipulating `BaseSetup.t` and `OASISContext.t` types, ensuring stable API access across OASIS minor releases. It includes utilities like `adapt_setup_t` and `rctxt` for adapting setup data and maintaining context state during package configuration. Used internally in `setup.ml` scripts to handle version differences when loading or modifying package metadata.",
+      "description_length": 427,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseCheck",
+      "library": "oasis.base",
+      "description": "This module checks for the presence and versions of system programs and OCaml findlib packages. It provides functions to locate executable programs, verify their existence, and query package versions using customizable version comparisons. Key data types include program names, findlib package identifiers, and version comparators, with concrete use cases like finding `ocamlfind` or validating installed package versions during build configuration.",
+      "description_length": 449,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseMessage",
+      "library": "oasis.base",
+      "description": "This module provides functions for logging messages at different severity levels\u2014debug, info, warning, and error\u2014using a default context. It works with format strings to generate output, similar to `printf`-style functions. It is used to report status and issues during build or configuration processes.",
+      "description_length": 303,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseData",
+      "library": "oasis.base",
+      "description": "This module provides string values representing OCaml source code for various setup and runtime configurations. It includes predefined module sets for initializing build systems, loading setup data, bundling applications, and running dynamic scripts. These values are used to generate configuration files like `setup.ml` or `myocamlbuild.ml` in OCaml projects.",
+      "description_length": 360,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseEnv",
+      "library": "oasis.base",
+      "description": "This module manages environment variables with support for defining, redefining, and expanding variables based on origin (default, environment, file, command line). It works with strings, variable definitions, and command line argument specifications, enabling structured access to configuration data. Concrete use cases include loading and saving setup configurations, handling command line flags, and substituting variables in strings during build or setup processes.",
+      "description_length": 469,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "BaseLog",
+      "library": "oasis.base",
+      "description": "This module maintains a persistent log of named events, supporting operations to register, unregister, load, and filter events stored in a file. It works with log entries represented as tuples of a name and a string value, and allows checking for the existence of specific entries. Concrete use cases include tracking configuration changes or recording user actions within an application session.",
+      "description_length": 396,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseStandardVar",
+      "library": "oasis.base",
+      "description": "This module provides functions to retrieve system and build configuration values, such as paths, file extensions, and compilation flags, primarily used for build setup and system introspection. It operates on host system properties and package metadata, returning strings or directory paths aligned with Unix conventions and compiler-specific settings. Typical applications include determining installation directories, constructing build commands, and configuring package-specific options based on OS or architecture.",
+      "description_length": 518,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseDynVar",
+      "library": "oasis.base",
+      "description": "The module initializes and sets dynamic variables based on the contents of 'setup.log' after executables are successfully built. It operates on OASISContext and OASISTypes.package data structures, extracting and applying variable definitions from the log file. This is used to configure package-specific settings dynamically during the build process.",
+      "description_length": 350,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseEnvLight",
+      "library": "oasis.base",
+      "description": "This module provides functions to load and query a string-based key-value environment from a file or stream, supporting variable expansion, conditional value selection, and direct value retrieval. It works with maps of string keys to string values, enabling structured access to configuration data. Concrete use cases include parsing and evaluating setup configuration files with conditional logic and variable substitutions.",
+      "description_length": 425,
+      "index": 18,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "BaseBuilt",
+      "library": "oasis.base",
+      "description": "This module tracks built files for executables, libraries, objects, and documentation, providing registration, unregistration, and existence checks. It works with file paths and build contexts, supporting operations like folding over registered files and generating installation events. It is used to manage file installation during package setup, ensuring correct handling of generated files and tracking which files should be installed.",
+      "description_length": 438,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseSetup",
+      "library": "oasis.base",
+      "description": "This module defines the core lifecycle operations for OCaml projects managed by OASIS, including configuration, building, documentation generation, testing, installation, and cleaning. It works with OASIS-specific data types like `OASISTypes.package`, `OASISTypes.arg`, and context objects to handle project setup and maintenance tasks. Concrete use cases include running `setup.ml` to configure a package, building and installing libraries or executables, generating documentation, executing tests, and cleaning build artifacts.",
+      "description_length": 529,
+      "index": 20,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "BaseFileAB",
+      "library": "oasis.base",
+      "description": "This module handles file generation by substituting environment variables in `.ab` template files. It provides `to_filename` to compute the target filename from a Unix-style path and `replace` to process a list of `.ab` files, expanding variables into their final form. It works with OASIS-specific filename types and environment contexts to produce configuration files during build setup.",
+      "description_length": 389,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseArgExt",
+      "library": "oasis.base",
+      "description": "Parses command-line arguments using a list of key-specification-document tuples. Operates on string arrays and standard argument definitions. Useful for configuring application behavior based on user input, such as enabling flags or setting file paths.",
+      "description_length": 252,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseTest",
+      "library": "oasis.base",
+      "description": "This module runs tests defined in a package, executing a list of test functions with associated test cases and arguments. It processes each test function with a package, common section, and test configuration, returning a failure percentage. It is used to validate package behavior during development or CI workflows.",
+      "description_length": 317,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseDoc",
+      "library": "oasis.base",
+      "description": "Builds documentation for OCaml packages by processing a list of document definitions. Each definition includes a function to generate documentation, a common section, and document metadata. Used during package setup to create documentation files from structured configurations.",
+      "description_length": 277,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "BaseContext",
+      "library": "oasis.base",
+      "description": "This module provides access to a global context for managing message localization and internationalization settings. It exposes a list of command-line arguments and a reference to the default context value, which are used to configure and retrieve localized messages. Concrete use cases include setting up application-wide language preferences and formatting messages based on the current locale.",
+      "description_length": 396,
+      "index": 25,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "BaseOCamlcConfig",
+      "library": "oasis.base",
+      "description": "This module parses the output of `ocamlc -config` and exposes values such as the `ocamlc` executable path and configuration variables. It transforms the output into usable environment-like variables, primarily working with strings and predefined variable names. It is used to retrieve OCaml compiler configuration details programmatically, such as determining the location of standard libraries or defining build environment variables.",
+      "description_length": 435,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "CLISubCommand",
+      "library": "oasis.cli",
+      "description": "This module defines subcommands for a command-line interface, handling argument parsing, help generation, and execution. It works with types like `cli_parsing_t`, `Arg.key`, and `OASISTypes.name`, supporting the creation and registration of commands with names, descriptions, and run functions. Concrete use cases include implementing CLI tools with multiple subcommands, each having custom argument parsing and execution logic.",
+      "description_length": 428,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "CLIPager",
+      "library": "oasis.cli",
+      "description": "This module manages output pagination, providing a command to invoke a pager and handling formatted output streams. It works with buffers and formatters to capture and display output, allowing for structured text rendering. Concrete use cases include displaying help messages or command output in a terminal pager.",
+      "description_length": 314,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "CLIArgExt",
+      "library": "oasis.cli",
+      "description": "This module handles command line argument parsing and execution flow for CLI tools. It defines specifications for flags and arguments, supports contextual help generation in Markdown or plain text, and dispatches subcommands. It works with custom types like `help_extent` and `help_style`, and integrates with the `OASISContext.t` environment to configure and run command logic.",
+      "description_length": 378,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "CLICommon",
+      "library": "oasis.cli",
+      "description": "This module adds command-line arguments to locate and parse the `_oasis` file, enabling subcommands to access its path or parsed contents. It works with `CLISubCommand.run_t` functions that accept a filename or a filename and parsed package. Use this to implement commands that need to interact with OASIS package definitions, such as loading build configurations or extracting metadata.",
+      "description_length": 387,
+      "index": 30,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OASISUtils.MapExt.Make",
       "library": "oasis",
-      "description": "This module provides a suite of functional, persistent map operations for creating, transforming, and querying ordered key-value associations. It works with polymorphic map types `'a t` where keys are ordered via a comparison module, enabling precise control over key ordering and range-based operations. Specific use cases include merging maps with custom logic, converting between maps and association lists/sequences, and performing ordered traversals or splits for data aggregation and processing pipelines.",
-      "description_length": 511,
-      "index": 54,
+      "description": "This module extends map functionality with ordered key support, offering insertion, deletion, and traversal operations alongside higher-order transformations and comparisons. It operates on persistent map structures parameterized by key and value types, leveraging a fixed key ordering to enable efficient ordered sequence generation, predicate-based searches, and bidirectional conversions with association lists and sequences. Typical applications include managing sorted key-value collections, merging hierarchical data structures with custom combination logic, and processing ordered data streams in ascending or descending key order.",
+      "description_length": 638,
+      "index": 31,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OASISUtils.SetExt.Make",
       "library": "oasis",
-      "description": "This implementation supports set-theoretic operations like union, intersection, and difference, alongside filtering, transformation, and ordered element selection via functions such as `min_elt` and `max_elt`. It operates on immutable sets of ordered elements, using a modular ordering constraint to enable efficient range queries, sorted traversal, and persistent modifications. Typical applications include managing sorted collections, performing aggregation over ordered data, and bridging set operations with list or sequence-based processing pipelines.",
-      "description_length": 557,
-      "index": 55,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISUtils.SetExt.S",
-      "library": "oasis",
-      "description": "This module provides ordered set operations for element manipulation, including membership checks, union/intersection/difference calculations, and ordered traversal via iteration or folding. It works with sets of ordered elements (type `t` containing `elt` values), supporting transformations to and from sequences/lists, reverse iteration, and predicate-driven filtering or partitioning. Specific use cases include managing unique ordered collections, efficiently querying extremal elements, and integrating set operations with sequence-based data flows.",
-      "description_length": 555,
-      "index": 56,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISHostPath.Map",
-      "library": "oasis",
-      "description": "This module implements a specialized dictionary structure for associating host filenames with arbitrary data, offering operations to create, modify, and query mappings with physical equality optimizations. It supports key-based transformations, set-theoretic combinations, and ordered traversals while maintaining compatibility with list-based data interchange through safe conversion utilities. Typical applications include configuration management systems tracking host-specific file paths or dependency resolution tools requiring efficient filename indexing.",
-      "description_length": 561,
-      "index": 57,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISPlugin.Configure",
-      "library": "oasis",
-      "description": "This module defines plugins that handle configuration steps for packages, providing functions to create, register, and retrieve configuration actions. It works with package descriptions and plugin definitions to customize build setup. Concrete use cases include setting up package-specific configuration logic and integrating configuration plugins into the build system.",
-      "description_length": 370,
-      "index": 58,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "OASISPlugin.Build",
-      "library": "oasis",
-      "description": "This module defines plugins that handle build steps for packages, providing functions to create plugins, register and retrieve build actions, and parse plugin fields. It works with package descriptions and plugin configurations to customize build processes. Concrete use cases include integrating custom build tools or pre-processing steps into package compilation workflows.",
-      "description_length": 375,
-      "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISUtils.HashStringCsl",
-      "library": "oasis",
-      "description": "Provides case-insensitive string-keyed hash tables with standard operations like insertion, lookup, and iteration, along with in-place value transformations and sequence conversion. Works with key-value pairs where keys are strings compared without case sensitivity and values can be arbitrary types. Useful for handling HTTP headers, environment variables, or configuration data where case-insensitive key matching is required, and for transforming between sequence-based data and hashtable representations.",
-      "description_length": 508,
-      "index": 60,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISUtils.MapExt",
-      "library": "oasis",
-      "description": "This module extends polymorphic map structures with advanced operations like `merge`, `filter_map`, and `of_list`, enabling precise manipulation of key-value associations using custom or default key orderings. It supports functional, persistent transformations such as combining maps with user-defined logic, converting between maps and association lists or sequences, and performing ordered traversals and range-based queries. Child modules enhance these capabilities with specialized functions for ordered key-value management, data aggregation, and pipeline integration. Example uses include merging configuration settings, transforming dictionaries, and splitting or filtering key-based collections for analysis.",
-      "description_length": 716,
-      "index": 61,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISPlugin.SetPlugin",
-      "library": "oasis",
-      "description": "This module offers a functional interface for managing ordered collections of plugins, supporting operations like membership testing, union, intersection",
-      "description_length": 153,
-      "index": 62,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISVersion.StringVersion",
-      "library": "oasis",
-      "description": "This module provides version comparison operations using string representations of versions in the format \"x.y.z\". It includes a `compare` function for ordering version strings according to Debian policy and a `comparator_ge` function to check if a version satisfies a \"greater than or equal\" constraint. It is used to validate and compare software version strings in contexts like package dependency resolution.",
-      "description_length": 412,
-      "index": 63,
+      "description": "This module implements an immutable set structure with efficient operations for union, intersection, difference, and subset checks, supporting ordered element traversal via comparator-based sorting. It provides functions for predicate-driven filtering, element selection (e.g., min/max retrieval), and transformation between sets, sequences, and lists, all operating on a polymorphic set type parameterized by an ordered element type. It is particularly useful for managing sorted unique collections in scenarios like data aggregation pipelines, algorithmic workflows requiring ordered set operations, or applications needing safe, exception-free element access through optional return types.",
+      "description_length": 692,
+      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OASISGraph.SetInt",
       "library": "oasis",
-      "description": "This module provides standard integer set operations such as union, intersection, difference, membership checks, and cardinality queries, alongside transformations like mapping, filtering, and partitioning. It works with an abstract integer set type, supporting conversions to and from sequences and lists, with use cases involving efficient set manipulation, ordered iteration, and integration with sequence-based data processing pipelines.",
-      "description_length": 441,
-      "index": 64,
+      "description": "This implementation offers standard integer set operations including union, intersection, difference, and element-wise transformations via mapping and filtering, alongside functions for querying min/max values, cardinality, and membership. It operates on abstract integer sets and supports conversions to and from sequences and lists, enabling iterative construction and traversal. These capabilities are suited for set algebra computations, data aggregation workflows, and scenarios requiring predicate-based element selection or hierarchical data integration.",
+      "description_length": 561,
+      "index": 33,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "OASISUtils.POSIXShell",
+      "module_path": "OASISUtils.HashStringCsl",
       "library": "oasis",
-      "description": "This module provides functions to split, escape, and unescape strings for use in POSIX shell commands. It handles string manipulation to correctly manage quoted arguments and special characters. Use cases include preparing command-line arguments for execution and parsing shell input accurately.",
-      "description_length": 295,
-      "index": 65,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISFeatures.Data",
-      "library": "oasis",
-      "description": "This module manages feature and plugin version data for a package, providing functions to create and modify feature sets, add plugins with optional versions, and retrieve plugin versions. It works with a custom record type containing version information, plugin maps, and lists of alpha/beta features. Concrete use cases include tracking enabled experimental features and plugin dependencies in a package configuration.",
-      "description_length": 419,
-      "index": 66,
+      "description": "This module implements case-insensitive string-keyed hash tables with operations for insertion, lookup, deletion, iteration, folding, and in-place filtering, supporting both functional and imperative programming styles. It works with string keys that are compared without case sensitivity (e.g., \"Key\" and \"KEY\" are equivalent) paired with arbitrary values, and includes utilities for converting between hash tables and sequences of key-value pairs. It is particularly useful for handling case-insensitive identifiers in configurations, HTTP headers, or data parsing workflows where key case normalization is required.",
+      "description_length": 618,
+      "index": 34,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "OASISSection.MapSection",
+      "module_path": "OASISUtils.MapExt",
       "library": "oasis",
-      "description": "This module implements a persistent map for key-value pairs where keys are of type `CSection.t` and values are polymorphic, supporting functional operations like insertion, deletion, lookup, merging, and ordered traversal. It is designed for managing section-based configurations, enabling transformations, sequence conversion, and key-based queries while maintaining immutability through non-destructive updates.",
-      "description_length": 413,
-      "index": 67,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISFeatures.MapPlugin",
-      "library": "oasis",
-      "description": "This module manages polymorphic key-value associations using a composite key type combining plugin kinds and names, supporting operations like insertion, deletion, lookup, iteration, and merging. It provides utilities for converting sequences into structured maps and enables advanced manipulations such as filtering, splitting, and mapping over these associations. Such functionality is particularly useful for organizing plugin-specific data where entries are uniquely identified by their kind and name pair, enabling type-safe and efficient access patterns.",
-      "description_length": 560,
-      "index": 68,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISPlugin.Extra",
-      "library": "oasis",
-      "description": "This module defines plugins that handle configuration steps during package setup, specifically working with `OASISTypes.package` and plugin actions that modify configuration contexts. It provides functions to create and register plugins, retrieve plugin actions, and parse plugin fields using `OASISValues.t`. Concrete use cases include extending the configuration process with custom logic, such as adding new configuration flags or modifying build settings based on user input during quickstart.",
-      "description_length": 497,
-      "index": 69,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "PropList.FieldRO",
-      "library": "oasis",
-      "description": "This module creates a read-only field within a property list system, allowing field retrieval while restricting modification to schema-defined rules. It operates on property list data structures, using values of arbitrary type `'c` with optional parsing, printing, and default values. Concrete use cases include defining configuration fields that must remain immutable after initialization unless explicitly updated through schema logic.",
-      "description_length": 437,
-      "index": 70,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "PropList.Field",
-      "library": "oasis",
-      "description": "This module provides operations to define and manipulate fields that store typed values within a property list. It supports creating fields with optional parsing, printing, and validation logic, and allows setting and retrieving values in a `Data.t` structure. Concrete use cases include managing configuration properties with custom serialization or handling structured metadata in a type-safe way.",
-      "description_length": 399,
-      "index": 71,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "OASISSection.CSection",
-      "library": "oasis",
-      "description": "This module defines comparison operations for sections based on their unique identifiers. It supports equality checks, ordering, and hashing of `OASISTypes.section` values. Useful when sections need to be stored in ordered collections or compared for identity.",
-      "description_length": 260,
-      "index": 72,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISUtils.MapString",
-      "library": "oasis",
-      "description": "This module supports functional manipulation of string-keyed maps through operations like creation, modification, and ordered traversal, with utilities for merging, filtering, and transforming bindings. It emphasizes ordered key comparisons for tasks like splitting maps or retrieving min/max elements, while enabling conversions between maps and association lists or sequences. Typical use cases include managing configuration data with string keys, processing ordered key-value pairs, or building maps from list-based inputs.",
-      "description_length": 527,
-      "index": 73,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "PropList.Schema",
-      "library": "oasis",
-      "description": "This module defines schemas for property lists, where each schema organizes fields that can be accessed by name. It supports creating, checking existence, retrieving, and setting field values as strings while preserving their native types internally. Use cases include parsing and validating structured configuration data, mapping string inputs to typed properties, and generating field-specific output representations.",
-      "description_length": 419,
-      "index": 74,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISUnixPath.Set",
-      "library": "oasis",
-      "description": "This module provides set-theoretic operations for managing collections of Unix paths, including membership checks, union/intersection/difference calculations, and ordered traversal. It works with sets of `OASISUnixPath.unix_filename` values, supporting conversions to and from lists or sequences while maintaining compatibility with cross-platform path handling in package definitions. Typical applications include manipulating path-based configurations, validating file dependencies, or normalizing directory structures across different operating systems.",
-      "description_length": 556,
-      "index": 75,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISSection.SetSection",
-      "library": "oasis",
-      "description": "This module supports union, intersection, difference, and subset checks on immutable sets of `OASISSection.CSection.t` elements, leveraging a total ordering for comparisons. It provides functional transformations like `map`, `fold`, and `iter`, along with conversions to and from lists and sequences, enabling efficient iteration in ascending or descending order. Typical use cases include processing ordered collections of configuration sections, filtering hierarchical data based on predicates, or aggregating section metadata while preserving immutability.",
-      "description_length": 559,
-      "index": 76,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "PropList.Data",
-      "library": "oasis",
-      "description": "This module implements a heterogeneous data store for managing property lists, supporting operations to create, clear, and inspect stored fields. It works with a private type `t` representing the internal state of a property list, and exposes field names as strings. Concrete use cases include storing and resetting structured metadata where fields conform to a predefined schema.",
-      "description_length": 380,
-      "index": 77,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISUtils.SetStringCsl",
-      "library": "oasis",
-      "description": "This module implements an immutable set data structure for strings with ordered elements, supporting standard operations like membership checks, union/intersection/difference, and ordered traversal. It provides functions for transforming sets through mapping, filtering, and folding while maintaining sorted order, along with utilities to convert between sets and sequences/lists. Typical use cases include managing ordered collections of unique strings for tasks like configuration key deduplication, sorted string enumeration, or set algebra on textual data.",
-      "description_length": 560,
-      "index": 78,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISPlugin.MapPlugin",
-      "library": "oasis",
-      "description": "This module provides ordered map operations for managing key-value pairs where keys are plugin identifiers. It supports insertion, deletion, lookup, and transformations, along with iteration, folding, filtering, and conversions to and from lists and sequences. These maps are used to handle plugin configurations and dynamic extension systems within the OASIS framework.",
-      "description_length": 370,
-      "index": 79,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISUtils.SetString",
-      "library": "oasis",
-      "description": "This module implements immutable sets of strings with standard operations like membership testing, insertion, deletion, and set algebra (union, intersection, difference). It works with a lexicographically ordered string set type, supporting transformations through iteration, mapping, and folding, as well as conversions to and from lists and sequences. Typical applications include managing unique identifiers, maintaining sorted string collections, and efficiently performing set-based computations in data processing tasks.",
-      "description_length": 526,
-      "index": 80,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISPlugin.PLUGINS",
-      "library": "oasis",
-      "description": "This module manages a collection of plugins of the same type, defining operations to create, register, and retrieve plugin actions and values. It works with plugin data structures including `self_t`, `self_plugin`, and associated action and configuration types. Concrete use cases include registering package-level actions and parsing plugin-specific configuration fields during project setup or build processes.",
-      "description_length": 412,
-      "index": 81,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISPlugin.Doc",
-      "library": "oasis",
-      "description": "This module implements plugins for handling document building tasks, defining actions to process document sections and package configurations. It operates on document-specific data types like `OASISTypes.doc` and plugin structures such as `OASISTypes.plugin`. Concrete use cases include registering document build actions, retrieving plugin behavior for documents, and integrating document-related questions into project setup workflows.",
-      "description_length": 437,
-      "index": 82,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISPlugin.Test",
-      "library": "oasis",
-      "description": "This module defines structures and operations for managing test plugins, including creating plugins, registering and retrieving test actions, and handling quickstart configurations. It works with data types representing test sections, plugin actions, and plugin metadata. Concrete use cases include integrating test execution logic into a plugin system and configuring test-related plugin behavior during setup.",
-      "description_length": 411,
-      "index": 83,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISPlugin.Install",
-      "library": "oasis",
-      "description": "This module defines install and uninstall actions for plugins, working with package data structures and plugin types. It provides functions to create, register, and retrieve installation actions, along with parsing and quickstart question capabilities for plugin configuration. Concrete use cases include managing package installation steps and handling plugin lifecycle events during package setup or removal.",
-      "description_length": 410,
-      "index": 84,
+      "description": "This module extends standard map functionality with operations for ordered key traversal, predicate-based filtering, and bidirectional conversion to association lists and sequences. It works with persistent maps parameterized by key and value types, requiring a fixed key ordering. Concrete use cases include merging maps with custom combination logic, extracting ordered key sequences, and processing hierarchical data in sorted key order.",
+      "description_length": 440,
+      "index": 35,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OASISUtils.SetExt",
       "library": "oasis",
-      "description": "This module extends polymorphic set manipulation with multi-set operations like union, intersection, and difference, while supporting ordered elements through a comparator. It provides direct access to set-theoretic operations, filtering, transformation, and extremal element selection via functions like `min_elt` and `max_elt`, enabling efficient range queries and sorted traversal. The module handles immutable sets through persistent modifications, allowing integration with list or sequence-based pipelines, and supports reverse iteration, predicate filtering, and conversion to and from sequences. Use cases include managing unique ordered collections, tracking dependencies, and performing complex set logic in configurations or data aggregation workflows.",
-      "description_length": 763,
-      "index": 85,
+      "description": "Implements an immutable set structure with efficient union, intersection, difference, and subset operations, supporting ordered element traversal through comparator-based sorting. Provides functions for predicate filtering, min/max selection, and conversion between sets, sequences, and lists, operating on a polymorphic set type with ordered elements. Useful for data aggregation, algorithmic workflows requiring ordered sets, and safe element access via optional returns.",
+      "description_length": 473,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISUtils.SetStringCsl",
+      "library": "oasis",
+      "description": "This module implements an ordered string set structure with standard operations like membership testing, union, intersection, and difference, alongside traversal and transformation functions such as `map`, `fold`, and `filter`. It supports conversion between sets and lists/sequences, enabling efficient data reshaping and ordered iteration, suitable for applications requiring immutable, comparison-based collection processing\u2014such as configuration key management, dependency tracking, or data aggregation workflows.",
+      "description_length": 517,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISUnixPath.Set",
+      "library": "oasis",
+      "description": "This module implements a set structure for Unix paths with operations including union, intersection, difference, and ordered traversal. It supports conversion between sets, lists, and sequences, enabling efficient management of unique path collections in cross-platform build systems and package configurations. The ordered nature and cross-representation interoperability make it suitable for tasks like dependency resolution or path validation where consistent handling of Unix-encoded paths is required.",
+      "description_length": 506,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "PropList.Data",
+      "library": "oasis",
+      "description": "This module manages a heterogeneous data store for property lists, allowing creation, clearing, and listing of stored fields. It operates on the abstract type `t`, representing a collection of key-value pairs defined by the `Schema` and `Field` modules. Concrete use cases include storing and managing configuration settings or structured metadata with varying field types.",
+      "description_length": 373,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISPlugin.SetPlugin",
+      "library": "oasis",
+      "description": "This module provides a functional set abstraction for managing ordered collections of `OASISTypes.plugin` values, supporting operations like membership checks, union, intersection, difference, and ordered traversal. It relies on a private set type `t` with elements of type `elt` (plugins with a specific kind) and uses a total ordering relation for comparisons. Typical use cases include filtering plugins based on predicates, selecting extremal elements (e.g., min/max), and converting between sets and sequences for iteration or bulk transformations.",
+      "description_length": 553,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "PropList.FieldRO",
+      "library": "oasis",
+      "description": "This module creates a read-only field within a property list, allowing retrieval of its value after optional parsing and with support for default values. It operates on property list data structures, using schema definitions to control field behavior and context-sensitive parsing/printing. A typical use case is defining configuration fields that can be read but not directly modified outside schema validation.",
+      "description_length": 412,
+      "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISFeatures.Data",
+      "library": "oasis",
+      "description": "This module manages feature and plugin version data for a package, providing operations to create and update feature sets, add plugins with optional versions, and retrieve plugin versions. It works with a custom record type containing version information, plugin maps, and lists of alpha and beta features. Concrete use cases include tracking enabled experimental features and managing plugin dependencies in a package configuration.",
+      "description_length": 433,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISPlugin.MapPlugin",
+      "library": "oasis",
+      "description": "This module implements a finite map with `OASISTypes.plugin` keys and polymorphic values, supporting insertion, deletion, lookup, merging, filtering, and traversal operations. It provides functions for converting between maps and association lists, iterating over key-value pairs, and transforming values, which are useful for managing plugin configurations, combining datasets from multiple sources, and processing plugin metadata collections.",
+      "description_length": 444,
+      "index": 43,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OASISExpr",
+      "module_path": "OASISVersion.StringVersion",
       "library": "oasis",
-      "description": "This module evaluates boolean expressions composed of flags, tests, and logical operators (AND, OR, NOT). It supports operations like expression evaluation, condition-based selection from choices, and expression simplification. Concrete use cases include determining configuration options based on system properties or selecting build settings based on conditional expressions.",
-      "description_length": 377,
-      "index": 86,
+      "description": "This module provides version comparison operations using Debian policy rules, specifically comparing version strings with `compare` and checking if a version meets a minimum requirement with `comparator_ge`. It works directly with string-based version representations and optional comparator values. It is used to validate whether a given version satisfies a version constraint such as \">= 1.0.0\".",
+      "description_length": 397,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISHostPath.Map",
+      "library": "oasis",
+      "description": "This module implements a specialized map for associating host filenames with arbitrary values, supporting ordered key traversal and efficient lookups. It provides operations to transform values, filter bindings based on file path relationships, and split or merge mappings while preserving filename ordering. Typical use cases include tracking file metadata across a filesystem hierarchy or managing path-specific configurations in build systems where ordered processing of host paths is required.",
+      "description_length": 497,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "PropList.Schema",
+      "library": "oasis",
+      "description": "This module defines schemas for property lists, enabling creation, field lookup, value retrieval, and iteration over named fields with optional case insensitivity. It operates on `PropList.Schema.t` structures, which store fields along with their metadata and parsing context. Use cases include defining structured property lists with typed fields, validating field presence, and serializing or deserializing field values to and from strings.",
+      "description_length": 442,
+      "index": 46,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OASISBuildSection",
+      "module_path": "OASISPlugin.Doc",
       "library": "oasis",
-      "description": "This module handles operations related to locating module files and determining build dependencies and order for sections within a package. It works with package and section data structures, specifically managing dependencies and source paths. Concrete use cases include resolving module sources during a build and ordering sections to satisfy dependencies when compiling a project.",
-      "description_length": 382,
-      "index": 87,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISUtils",
-      "library": "oasis",
-      "description": "This module offers extended data structures and utilities for managing maps, sets, and string transformations with specialized operations. It includes case-insensitive string-keyed hash tables, ordered string sets, and enhanced polymorphic maps with merging and filtering capabilities, alongside functions for shell-safe string manipulation and identifier sanitization. You can use it to process configuration data with case-insensitive keys, generate valid variable names, manipulate shell command arguments, or perform precise set algebra and ordered traversals on string collections. Submodules provide specialized map merging, ordered set operations, and sequence conversions that support complex data manipulation pipelines in code analysis, configuration handling, and command-line interface tools.",
-      "description_length": 804,
-      "index": 88,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISParse",
-      "library": "oasis",
-      "description": "This module parses `_oasis` files from various input sources such as streams, files, or strings into structured package data. It supports validation and handling of plugin fields during parsing. Use it to load and process OASIS package configurations directly from disk or in-memory content.",
-      "description_length": 291,
-      "index": 89,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISSourcePatterns",
-      "library": "oasis",
-      "description": "This module handles pattern-based searches for OCaml source files using configurable templates. It processes lists of pattern objects to locate implementation and interface files corresponding to modules. Functions support parsing patterns from strings, generating file lists for given module names and paths, and converting patterns to structured data representations.",
-      "description_length": 369,
-      "index": 90,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISData",
-      "library": "oasis",
-      "description": "This module provides direct access to specific file content used in OASIS-related projects, including implementations and templates. It works with string values and lists of strings, primarily for reading predefined file templates or source code snippets. Concrete use cases include retrieving the contents of `oasissys.ml`, `oasissyslight.ml`, `oasissysbundle.ml`, and a multi-line README template in Markdown format.",
-      "description_length": 418,
-      "index": 91,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISUnixPath",
-      "library": "oasis",
-      "description": "This module provides functions to manipulate Unix-style file paths as strings, handling operations like joining components, extracting directories or filenames, managing extensions, and normalizing separators. It includes a set module for managing collections of paths with union, intersection, and difference operations, supporting membership checks and ordered traversal. You can use it to construct relative paths, process package metadata, validate file dependencies, or normalize directory structures across platforms. The module ensures consistent path representations when working with OASISTypes.package and '_oasis' file definitions.",
-      "description_length": 642,
-      "index": 92,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISFeatures",
-      "library": "oasis",
-      "description": "This module manages versioned features and configuration flags to control optional behaviors in OCaml project builds. It uses hashtables and custom metadata types to track feature states, versioned plugins, and boolean flags that influence compilation, documentation generation, and runtime linking. The module enables assertions on feature conditions during packaging, setup customization, and distribution configuration. Submodules support structured plugin version tracking and type-safe key-value associations indexed by plugin kind and name, allowing operations like merging, filtering, and version-aware feature activation. Example uses include enabling experimental features, managing plugin dependencies, and organizing build-time configuration data with precise key-based access.",
-      "description_length": 788,
-      "index": 93,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISGraph",
-      "library": "oasis",
-      "description": "This module implements a directed graph structure with integer-labeled vertices and arbitrary data associated with each vertex, supporting operations such as adding vertices and edges, topological sorting, folding over edges, and computing transitive closures. It includes a child module for standard integer set operations, enabling efficient set manipulation with union, intersection, difference, and transformations like mapping and filtering. Together, these components facilitate tasks like dependency tracking, build system scheduling, and analysis of package relationships in software ecosystems. Specific operations include inserting a vertex with associated data, adding directed edges, performing a topological sort, and using integer sets to represent and manipulate vertex neighborhoods.",
-      "description_length": 799,
-      "index": 94,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISDataNotation",
-      "library": "oasis",
-      "description": "This module translates OCaml data structures into strings that follow OCaml syntax, supporting types like records, lists, strings, variants, booleans, tuples, and function applications. It provides functions to convert basic values (unit, bool, string, option, list) into a structured representation and handles function conversion with argument handling and context-aware formatting. Concrete use cases include generating OCaml code from internal data models, serializing configurations, or building syntax trees for code generation.",
-      "description_length": 534,
-      "index": 95,
+      "description": "This module handles plugins for building documentation by defining actions and data structures tied to document sections. It works with `OASISTypes.doc` and `common_section` types, organizing operations like registering section-specific actions and retrieving plugin configuration values. Concrete use cases include setting up documentation generation steps and integrating document-building logic into plugin workflows.",
+      "description_length": 420,
+      "index": 47,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OASISMessage",
+      "module_path": "OASISSection.CSection",
       "library": "oasis",
-      "description": "This module provides functions to display messages at different verbosity levels\u2014debug, info, warning, error\u2014using `Printf.fprintf` syntax. It works with `OASISContext.t` to determine whether to output a message and supports attaching a callback to execute after a message is displayed. Use it to conditionally log diagnostic information, report errors, or issue warnings during build or configuration processes based on the current context settings.",
-      "description_length": 450,
-      "index": 96,
+      "description": "This module defines comparison, equality, and hashing operations for section values based solely on their `section_id`. It enables using sections as keys in maps and sets by providing total ordering and identity checks. Useful when managing collections of sections where identity is determined by their unique identifier.",
+      "description_length": 321,
+      "index": 48,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "OASISFindlib",
+      "module_path": "OASISPlugin.Test",
       "library": "oasis",
-      "description": "This module organizes OCaml libraries into hierarchical groups based on dependencies, using recursive data structures to represent containers and packages. It processes a package definition to generate a mapping of library groups, each sharing a common installation context and META file. Key operations include resolving the root library of a group, computing parent-child relationships, and translating between internal and Findlib names.",
-      "description_length": 440,
-      "index": 97,
+      "description": "This module implements plugins for defining and executing test suites within a build system. It provides functions to create test plugins, register test execution actions, and retrieve test-specific configuration values. It works with test sections defined in build configuration files, enabling integration of test runners like OUnit or Alcotest directly into the build process.",
+      "description_length": 379,
+      "index": 49,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISUtils.MapString",
+      "library": "oasis",
+      "description": "This module provides ordered string-keyed map manipulations with functional transformations, ordered queries, and list/sequence conversions. It supports operations like ordered traversal, min/max key selection, and safe value extraction while maintaining key order through `Ord.compare`, working with maps that associate string keys to arbitrary values. Typical applications include configuration data processing, ordered dictionary maintenance, and scenarios requiring predictable key ordering during iteration or serialization.",
+      "description_length": 529,
+      "index": 50,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISPlugin.Configure",
+      "library": "oasis",
+      "description": "This module handles the configuration phase of plugins by defining actions and data structures for processing package setup. It works with `OASISTypes.package` and plugin-specific types like `package_act` and `kind`, focusing on the `Configure` phase. Concrete use cases include registering configuration actions, retrieving plugin configuration logic, and integrating plugin fields into the package setup process through value parsing.",
+      "description_length": 436,
+      "index": 51,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISSection.SetSection",
+      "library": "oasis",
+      "description": "This module provides functional set operations for manipulating immutable collections of section objects, supporting union, intersection, difference, membership checks, and ordered traversal. It operates on sets of type `OASISSection.CSection.t` with a comparison-driven ordering, enabling deterministic iteration and safe transformations to lists or sequences. Typical use cases include managing hierarchical section data with guaranteed uniqueness, performing set-theoretic queries on configuration fragments, or processing document structures where ordered traversal and immutability are critical.",
+      "description_length": 600,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "PropList.Field",
+      "library": "oasis",
+      "description": "This module implements typed fields for storing and retrieving values within a property list, supporting operations to set and get values directly or via string parsing and printing. It works with generic data types through polymorphic field values and uses contexts for dynamic behavior during updates. Concrete use cases include managing configuration properties with schema-defined defaults, parsing user input into structured data, and serializing values for display or storage.",
+      "description_length": 482,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISUtils.POSIXShell",
+      "library": "oasis",
+      "description": "This module provides functions to split, escape, and unescape strings for use in POSIX shell commands. It handles string manipulation to correctly manage quoted arguments and special characters. Use cases include constructing and parsing command lines with spaces and quotes, such as when generating shell scripts or processing user input for execution.",
+      "description_length": 353,
+      "index": 54,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OASISSection",
+      "module_path": "OASISPlugin.Extra",
       "library": "oasis",
-      "description": "This module organizes and manipulates structured sections using their kind and name, centered around `OASISTypes.section`. It enables extracting, modifying, and identifying sections within lists, with utilities to convert section kinds to strings and manage common section data. The `Map` submodule provides a persistent key-value store for section-based configurations using `CSection.t` keys, while the `Set` submodule supports functional set operations over ordered sections. Together, they facilitate managing hierarchical project configurations, comparing sections for identity, and transforming collections of sections immutably.",
-      "description_length": 635,
-      "index": 98,
-      "embedding_norm": 1.0
+      "description": "This module defines plugins that participate in the configuration step of package setup, focusing on actions that modify the build context during configuration. It works with `OASISTypes.package` and plugin-specific actions that transform the build context. Concrete use cases include registering custom configuration logic, prompting quickstart questions, and parsing plugin-specific fields during project initialization.",
+      "description_length": 422,
+      "index": 55,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OASISString",
+      "module_path": "OASISPlugin.Install",
       "library": "oasis",
-      "description": "This module offers string manipulation and parsing operations such as splitting, trimming, case conversion, and substring detection, targeting text processing tasks like tokenization or character filtering. It works with `string` values to decompose sequences, extract optional parenthetical content, or split on delimiters (e.g., commas, newlines), supporting use cases like parsing structured text or sanitizing input. Specific functions enable conditional decomposition (e.g., `split_optional_parentheses`) and iterative transformations via character folding.",
-      "description_length": 562,
-      "index": 99,
-      "embedding_norm": 1.0
+      "description": "This module defines installable plugins that handle package installation and uninstallation actions. It works with package data structures and plugin types to register and execute installation steps. Concrete use cases include managing plugin-specific installation logic and integrating it into package setup workflows.",
+      "description_length": 319,
+      "index": 56,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OASISVersion",
+      "module_path": "OASISPlugin.Build",
       "library": "oasis",
-      "description": "This module implements version parsing and comparison logic according to Debian policy, supporting operations like equality, ordering, and constraint checking. It works with version strings (e.g., \"1.0.0\") and comparator expressions (e.g., \">= 1.0.0\") that define version ranges using logical conjunctions and disjunctions. The core functionality includes parsing version strings, comparing them using Debian rules, and checking whether a version satisfies a given constraint. Concrete use cases include validating software version constraints during package installation or dependency resolution, such as ensuring a package meets a required version or selecting the correct version from a list of available options.",
-      "description_length": 716,
-      "index": 100,
-      "embedding_norm": 1.0
+      "description": "This module implements plugins that handle package building by defining actions and configuration hooks for the build step. It works with package descriptions and plugin definitions to customize how projects are built. Concrete use cases include registering custom build commands and prompting configuration questions during project setup.",
+      "description_length": 339,
+      "index": 57,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OASISExecutable",
+      "module_path": "OASISUtils.SetString",
       "library": "oasis",
-      "description": "Handles the generation and configuration of executable filenames and paths for Unix systems, including support for native and bytecode executables with C stubs. Works with OASISTypes' common, build, and executable sections to determine output names and extensions. Used during build process to resolve final executable locations and dependencies.",
-      "description_length": 346,
-      "index": 101,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISFileTemplate",
-      "library": "oasis",
-      "description": "This module enables file generation by selectively replacing body sections within structured templates, preserving existing headers and footers. It operates on tracked template collections using a `templates` structure, supporting multiple comment syntaxes (OCaml, shell, Makefile) and incorporating digest-based validation to detect unauthorized body modifications. Typical use cases include automated configuration file updates or source code generation where header/footer content (e.g., licenses, static metadata) must remain untouched while dynamically injecting or modifying functional content in the body.",
-      "description_length": 612,
-      "index": 102,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISLicense",
-      "library": "oasis",
-      "description": "This module provides tools to represent, parse, and manipulate DEP-5\u2013compliant software licenses and exceptions using structured types like `DEP5Unit`, `DEP5Or`, and `DEP5And`, alongside metadata handling and legal disclaimer generation. It includes predefined constants for common licenses (e.g., MIT, GPL, BSD variants) and exceptions (e.g., OCaml linking exception, WTFPL), enabling precise specification of licensing terms in OCaml package metadata and OASIS-based projects.",
-      "description_length": 478,
-      "index": 103,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISPlugin",
-      "library": "oasis",
-      "description": "This module manages plugins within a package system by enabling registration, transformation, and contextual execution of plugin behaviors across different stages of package processing. It operates on structured data like plugin sets, maps, and typed registries, supporting operations such as union, lookup, filtering, and configuration parsing, while integrating with context-aware actions and string representations. Plugins can handle configuration, build, test, document generation, and installation tasks, allowing for custom logic during package setup, compilation, or deployment\u2014such as adding configuration flags, integrating custom build tools, or defining test execution steps. Submodules provide specialized interfaces for ordered collections, key-value maps, and domain-specific plugins, enabling fine-grained control over plugin behavior and interactions.",
-      "description_length": 868,
-      "index": 104,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISSchema",
-      "library": "oasis",
-      "description": "This module adds custom fields to the OASIS schema for plugins, supporting both static and conditional values. It operates on schema objects, plugin identifiers, and property lists, enabling structured data parsing, storage, and synchronization. Concrete use cases include extending OASIS configuration with plugin-specific settings that integrate seamlessly into the build system's data model.",
-      "description_length": 394,
-      "index": 105,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISGettext",
-      "library": "oasis",
-      "description": "This module provides internationalization functions for translating strings and format strings, including support for plural forms. It works with strings and OCaml format types (`format4`). Concrete use cases include marking strings for translation, translating singular and plural messages, and initializing localization settings.",
-      "description_length": 331,
-      "index": 106,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISHostPath",
-      "library": "oasis",
-      "description": "This module manipulates host-specific filenames with functions to convert between Unix and host formats, add extensions, and compare paths, centered around the `host_filename` type. Its child module provides a dictionary structure optimized for host filenames, enabling efficient mappings with physical equality, key-based transformations, and ordered traversals. You can build platform-specific paths, convert Unix-style paths for cross-platform use, and manage associations between filenames and data for tasks like configuration tracking or dependency resolution. The combined interface supports both direct path manipulation and advanced data structures keyed by host-dependent file paths.",
-      "description_length": 693,
-      "index": 107,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISFileUtil",
-      "library": "oasis",
-      "description": "This module handles file and directory operations such as copying, creating, and removing directories, finding files across paths with extensions, locating executables, and expanding glob patterns. It works with host filenames and provides case-sensitive file existence checks. Concrete use cases include managing build artifacts, resolving executable paths, and handling file system structures during package configuration.",
-      "description_length": 424,
-      "index": 108,
+      "description": "This module offers functional set operations for managing collections of unique strings, including union, intersection, difference, and subset checks, alongside transformations like filtering, mapping, and partitioning. It operates on an ordered string set type (`OASISUtils.SetString.t`) where elements are compared using a standardized ordering function, supporting efficient querying (e.g., min/max) and bidirectional iteration. Common use cases include deduplicating string sequences, enforcing uniqueness constraints, and performing algebraic set operations in data processing pipelines.",
+      "description_length": 592,
+      "index": 58,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OASISExec",
       "library": "oasis",
-      "description": "This module runs external commands and captures their output. It provides functions to execute a program with arguments, optionally process the exit code, and retrieve output either as a list of lines or a single line. It works directly with program names and argument lists, making it suitable for tasks like invoking compilers, reading version strings, or executing system utilities during build processes.",
-      "description_length": 408,
-      "index": 109,
+      "description": "This module runs external commands and captures their output. It provides functions to execute a program with arguments, optionally process the exit code, and retrieve output either as a list of lines or a single line. It works with program names and argument lists, handling execution in the context of OASISContext. Concrete use cases include invoking build tools, querying version numbers from executables, or running configuration scripts during package setup.",
+      "description_length": 464,
+      "index": 59,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISExecutable",
+      "library": "oasis",
+      "description": "Handles the generation and configuration of executable files in a Unix environment, determining the correct filenames and paths based on build settings. Works with `common_section`, `build_section`, and `executable` data structures to compute output paths and detect associated libraries. Used during the build process to resolve the final executable location and handle cases involving C stubs in bytecode builds.",
+      "description_length": 414,
+      "index": 60,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "FormatExt",
+      "module_path": "OASISFileTemplate",
       "library": "oasis",
-      "description": "This module extends the Format module with functions for rendering formatted text using markdown syntax. It provides operations for printing lists with separators, paragraphs, titles, and definitions, as well as utilities for managing spacing and block endings. These functions are useful when generating structured markdown output, such as documentation or formatted reports.",
-      "description_length": 376,
-      "index": 110,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISFileSystem",
-      "library": "oasis",
-      "description": "This module provides functions for converting between Unix-style file paths and abstract file names, deferring resource closure, and handling binary file input/output with custom readers and streams. It works with file names wrapped in a polymorphic type, Unix paths, and standard IO buffers. Concrete use cases include safely reading binary data from files, converting path representations across system boundaries, and managing file handles with explicit close semantics.",
-      "description_length": 473,
-      "index": 111,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISLibrary",
-      "library": "oasis",
-      "description": "This module computes source and generated files for OCaml libraries based on build configurations and file existence checks. It operates on tuples containing common, build, and library sections, using context, file extension, and platform-specific parameters. Concrete use cases include determining valid source file pairs (e.g., `.ml` and `.mli`) and generating build output file lists with alternative extensions for native and bytecode compilation.",
-      "description_length": 451,
-      "index": 112,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISSourceRepository",
-      "library": "oasis",
-      "description": "Handles parsing and validation of source repository metadata in OASIS configuration files. It defines the structure and constraints for specifying version control repositories, including fields like `type`, `location`, and `tag`. Useful when automating package setup or integrating version-controlled dependencies into OCaml projects.",
-      "description_length": 334,
-      "index": 113,
+      "description": "This module manages templated text files by selectively replacing content sections while preserving existing headers and footers during updates. It operates on templates structured into header, body, and footer components, supporting multiple file formats through predefined comment delimiters (e.g., OCaml, shell scripts, Makefiles). Typical use cases include automated code generation, configuration file maintenance, and build system integration where structured file updates must retain specific regions.",
+      "description_length": 508,
+      "index": 61,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OASISFlag",
+      "module_path": "OASISMessage",
       "library": "oasis",
-      "description": "Handles parsing and validation of command-line flags in OASIS configuration files. Works with `OASISTypes.common_section` and `OASISTypes.flag` to define and check flag values. Used to ensure correct flag usage in OASIS-based OCaml projects during setup or configuration.",
-      "description_length": 271,
-      "index": 114,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISSetupUpdate",
-      "library": "oasis",
-      "description": "This module defines a variant type `t` with three values: `NoUpdate`, `Weak`, and `Dynamic`, representing different update policies. It is used to specify how dependencies or configurations should be updated in a build or package management context. Concrete use cases include controlling update behavior in package installation tools or dependency resolution systems.",
-      "description_length": 368,
-      "index": 115,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OASISDocument",
-      "library": "oasis",
-      "description": "This module defines the structure and validation rules for document sections in an OASIS configuration. It works with `OASISTypes.common_section` and `OASISTypes.doc` to enforce correct formatting and content. It is used when parsing and generating OASIS files to ensure document sections conform to expected standards.",
-      "description_length": 319,
-      "index": 116,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISText",
-      "library": "oasis",
-      "description": "This module processes structured text elements like paragraphs, verbatim blocks, and blank lines. It provides functions to convert between strings and element lists, format output, and handle textual content with precise layout control. Use it to generate documentation, configuration files, or any multi-line text requiring formatting fidelity.",
-      "description_length": 345,
-      "index": 117,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISTypes",
-      "library": "oasis",
-      "description": "This module defines identifiers, enumerated variants, and structured data types for representing package metadata, dependencies, and build configurations. It organizes package definitions into sections like libraries, executables, and tests while supporting serialization to OASIS configuration files via `odn_of_*` functions. The types model version control systems, toolchains, and plugin interfaces, enabling structured manipulation of package definitions during build and distribution workflows.",
-      "description_length": 499,
-      "index": 118,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISContext",
-      "library": "oasis",
-      "description": "This module manages a global context for handling messages and internationalization, including logging levels like debug, info, and error. It works with file systems, command-line arguments, and plugins, allowing configuration of output verbosity and source file resolution. Concrete use cases include controlling log output during build processes and loading plugins based on user configuration.",
-      "description_length": 396,
-      "index": 119,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OASISPackage",
-      "library": "oasis",
-      "description": "This module defines the structure and validation rules for package metadata, including fields like name, version, and dependencies. It operates on the `OASISTypes.package` type, ensuring data integrity through schema definitions. Used during package parsing and generation to enforce correct format and required fields.",
-      "description_length": 319,
-      "index": 120,
+      "description": "This module provides functions to print messages at different verbosity levels\u2014debug, info, warning, and error\u2014using `Printf.fprintf` syntax. It works with the `OASISContext.t` type to determine whether a message should be displayed based on its severity level. These functions are used to conditionally output diagnostic information during build or configuration processes, with optional post-display actions via the `~after` callback.",
+      "description_length": 436,
+      "index": 62,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OASISTest",
       "library": "oasis",
-      "description": "Handles parsing and validation of test sections in OASIS configuration files. Works with `OASISTypes.common_section` and `OASISTypes.test` data structures. Used internally to ensure test sections conform to the expected format during package setup.",
-      "description_length": 248,
-      "index": 121,
+      "description": "Handles parsing and validation of test sections in OASIS configuration files. Works with `common_section` and `test` data types to define test suites and their properties. Used to specify test executables, dependencies, and run conditions directly within OASIS projects.",
+      "description_length": 270,
+      "index": 63,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "FormatExt",
+      "library": "oasis",
+      "description": "This module enhances the Format module with functions for rendering structured text using markdown syntax. It provides operations to print lists with separators, paragraphs, titles with levels, definitions, and spacing adjustments for formatted output. These functions are useful for generating well-formatted markdown documents, such as reports or documentation, directly from OCaml code.",
+      "description_length": 389,
+      "index": 64,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISUtils",
+      "library": "oasis",
+      "description": "This module provides string key/value map operations with ordered traversal and transformation, case-insensitive string hash tables, string set algebra with ordered iteration, and utilities for variable name formatting, error reporting with file locations, and POSIX shell string handling. It works with maps, sets, and hash tables parameterized over strings with ordered or case-insensitive comparison, along with string manipulation and error-raising functions. Concrete use cases include configuration data management, command line argument processing, dependency tracking, and data parsing workflows requiring case-insensitive or ordered string handling.",
+      "description_length": 658,
+      "index": 65,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OASISSourcePatterns",
+      "library": "oasis",
+      "description": "This module handles pattern-based searches for OCaml source files using configurable templates. It processes lists of pattern templates to locate implementation and interface files corresponding to a given module name. Concrete use cases include resolving `.ml` and `.mli` file paths during build configuration based on module names and directory structures.",
+      "description_length": 358,
+      "index": 66,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISSection",
+      "library": "oasis",
+      "description": "This module provides functions to extract, modify, and identify sections using their kind and name, along with utilities to convert sections to strings. It works directly with `OASISTypes.section`, `OASISTypes.section_kind`, and `OASISTypes.common_section` types. Concrete use cases include managing document or configuration sections with precise identity tracking, transforming section metadata, and organizing sections using set and map structures based on their unique identifiers.",
+      "description_length": 485,
+      "index": 67,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISPackage",
+      "library": "oasis",
+      "description": "This module defines the structure and validation rules for package metadata, including fields like name, version, and dependencies. It operates on the `OASISTypes.package` type, ensuring correct formatting and integrity of package definitions. Used during package creation and validation to enforce required fields and data consistency.",
+      "description_length": 336,
+      "index": 68,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OASISFileUtil",
+      "library": "oasis",
+      "description": "This module handles file and directory operations such as searching for files with specific extensions, copying files, creating and removing directories, and expanding glob patterns. It works with host filenames and provides case-sensitive file existence checks, directory traversal, and executable resolution relative to a given context. Concrete use cases include locating configuration files across multiple paths, copying build artifacts, ensuring directory structures exist before writing files, and resolving executable paths in a cross-platform manner.",
+      "description_length": 559,
+      "index": 69,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OASISFlag",
+      "library": "oasis",
+      "description": "Handles parsing and validation of flag definitions in configuration files. Works with `common_section` and `flag` data structures to represent and process boolean options. Used to define conditional features in package descriptions, such as enabling or disabling optional components.",
+      "description_length": 283,
+      "index": 70,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISSchema",
+      "library": "oasis",
+      "description": "This module defines functions to add plugin-specific fields to a schema, generating namespaced field identifiers and handling value parsing, default values, and conditional expressions. It operates on schema and plugin data structures, integrating with property lists to store and retrieve configuration values. Concrete use cases include extending OASIS configuration files with custom plugin fields that support both static defaults and dynamic conditional values.",
+      "description_length": 466,
+      "index": 71,
       "embedding_norm": 1.0
     },
     {
       "module_path": "PropList",
       "library": "oasis",
-      "description": "This module manages structured property lists with typed fields, enabling strict data validation and consistent access through a schema-driven interface. It supports defining read-only and mutable fields with custom parsing, printing, and validation, while schemas enforce type constraints and field existence. The internal data store maintains heterogeneous values, allowing creation, retrieval, and reset of fields by name with type guarantees. Examples include modeling configuration data with immutable and computed fields, parsing typed metadata from strings, and managing structured settings with validation on update.",
-      "description_length": 624,
-      "index": 122,
+      "description": "This module handles property lists through typed fields and schemas, enabling structured storage, retrieval, and manipulation of heterogeneous data. It supports operations such as defining field schemas, setting and getting typed values, and managing read-only fields with context-sensitive parsing. Concrete use cases include parsing and validating configuration files, managing structured metadata with mixed types, and serializing user input into typed properties.",
+      "description_length": 467,
+      "index": 72,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISFeatures",
+      "library": "oasis",
+      "description": "This module provides operations for tracking feature lifecycles, managing plugin dependencies, and validating feature status against package data with version-aware checks. It works with custom types representing features, package metadata, and publication stages, enabling use cases like conditional activation of documentation, test execution, and dynamic runtime settings during project builds, along with origin-based compatibility validation.",
+      "description_length": 447,
+      "index": 73,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISParse",
+      "library": "oasis",
+      "description": "This module parses `_oasis` files from various input sources such as streams, files, or strings into structured package data. It supports validation and error handling through a provided context and allows ignoring unknown plugin fields during parsing. Typical use cases include reading OASIS package configurations from disk or in-memory strings, and converting them into a package representation for further processing.",
+      "description_length": 421,
+      "index": 74,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OASISVersion",
+      "library": "oasis",
+      "description": "This module implements version comparison logic based on Debian policy, supporting operations to parse, compare, and apply constraints to version strings like \"1.0.0\". It defines a version type and comparator type for expressing constraints such as \">= 1.0.0\" or combinations using logical AND/OR. It is used to check whether a given version satisfies a specific version constraint in package management or dependency resolution contexts.",
+      "description_length": 438,
+      "index": 75,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISLibrary",
+      "library": "oasis",
+      "description": "This module computes source and generated files for OCaml libraries based on build configurations and file existence checks. It operates on tuples containing common, build, and library sections, producing file lists with Unix-style paths. Concrete use cases include determining module source files and predicting build outputs like compiled libraries or DLLs.",
+      "description_length": 359,
+      "index": 76,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISSetupUpdate",
+      "library": "oasis",
+      "description": "This module defines a variant type `t` with three values: `NoUpdate`, `Weak`, and `Dynamic`, representing different update strategies. It is used to specify how dependencies or configurations should be updated in a build or package management context. Concrete use cases include controlling package version resolution and dependency refresh behavior in development tools.",
+      "description_length": 371,
+      "index": 77,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISGettext",
+      "library": "oasis",
+      "description": "This module provides internationalization functions for translating strings and format strings, including support for plural forms. It works with string literals and OCaml format specifiers to enable localized text output. Concrete use cases include marking strings for translation, translating singular and plural messages, and initializing localization settings for multi-language applications.",
+      "description_length": 396,
+      "index": 78,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISString",
+      "library": "oasis",
+      "description": "The module offers string manipulation functions like splitting, trimming, case conversion, and prefix/suffix handling, along with inspection tools for substring checks, comma/newline-based splitting, and optional parenthetical content extraction. It operates on `string` and `char` types to support tasks such as parsing text data, tokenizing strings, filtering characters, and extracting structured information from formatted input. Specific applications include processing comma-separated values, handling parenthetical annotations, and transforming text through targeted character replacements or case normalization.",
+      "description_length": 619,
+      "index": 79,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OASISObject",
       "library": "oasis",
-      "description": "Handles file resolution for OCaml object compilation, determining source and generated files based on build context and object type. Works with tuples of common, build, and object sections, along with Unix filenames and existence checks. Used to compute source file pairs (like .ml/.mli) and alternative generated file lists during library or executable builds.",
+      "description": "Handles file resolution for OCaml object compilation, computing source and generated files based on build context and object type. Works with tuples of common, build, and object sections, using Unix filenames and existence checks. Used to determine source file pairs (e.g., .ml and .mli) and alternative generated file paths during library or executable builds.",
       "description_length": 361,
-      "index": 123,
+      "index": 80,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISDocument",
+      "library": "oasis",
+      "description": "Handles parsing and validation of document sections in OASIS configuration files. Works with `OASISTypes.common_section` and `OASISTypes.doc` data structures to enforce schema rules during package setup. Used internally when loading and processing OASIS package descriptions.",
+      "description_length": 275,
+      "index": 81,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISValues",
+      "library": "oasis",
+      "description": "This module handles parsing, validation, and formatting of structured values with specific constraints, operating on a generic type `t` to represent data like strings, booleans, lists, URLs, and module-specific identifiers. It enforces formatting rules for use cases such as OASIS configuration files, ensuring correctness for values like findlib package names, command-line arguments, and category hierarchies through delimiters, case checks, and predefined choice validations.",
+      "description_length": 478,
+      "index": 82,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISBuildSection",
+      "library": "oasis",
+      "description": "This module handles operations related to locating module files, determining build order for sections, and computing transitive build dependencies limited to libraries. It works with package and section data structures, using file paths and dependency lists. Concrete use cases include resolving source files for modules, ordering sections for compilation, and mapping sections to their full set of library dependencies.",
+      "description_length": 420,
+      "index": 83,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OASISExpr",
+      "library": "oasis",
+      "description": "This module evaluates boolean expressions composed of flags, tests, and logical operators (AND, OR, NOT). It supports parsing and evaluating conditional expressions used to determine configuration values, such as selecting build options based on environment properties. Key operations include `eval` for expression evaluation and `choose` for selecting among configuration choices based on conditions.",
+      "description_length": 401,
+      "index": 84,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISUnixPath",
+      "library": "oasis",
+      "description": "This module offers path manipulation capabilities such as joining components, extracting directory/file names, modifying extensions, normalizing paths, and case conversion for Unix-style strings. It handles string-based paths with a dedicated set module for maintaining unique path collections using ordered operations like union and difference. These tools are optimized for cross-platform build systems that require consistent Unix path representations in package metadata and configuration files.",
+      "description_length": 499,
+      "index": 85,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISData",
+      "library": "oasis",
+      "description": "This module provides direct access to specific file content as predefined string values, including `oasissys.ml`, `oasissyslight.ml`, `oasissysbundle.ml`, and a list of strings representing lines in a README template file. It is used to retrieve hardcoded file templates and configurations needed during package generation or project scaffolding tasks. The module is typically used in build or project management contexts where predefined file contents are required.",
+      "description_length": 466,
+      "index": 86,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISSourceRepository",
+      "library": "oasis",
+      "description": "Handles parsing and validation of source repository metadata in OASIS configuration files. Works with `common_section` and `source_repository` data structures to define version-controlled project dependencies. Used to specify and manage external repositories for package development and distribution.",
+      "description_length": 300,
+      "index": 87,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OASISFileSystem",
+      "library": "oasis",
+      "description": "This module provides functions for converting between Unix filenames and abstract file representations, deferring resource closure, and handling binary file streams. It works with filename abstractions, closers, readers, and buffers to manage file input/output operations. Concrete use cases include safely reading from and writing to files in a binary mode, converting path representations, and ensuring resources are properly closed after use.",
+      "description_length": 445,
+      "index": 88,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISDataNotation",
+      "library": "oasis",
+      "description": "This module translates OCaml data structures into strings that follow OCaml syntax, supporting types like records, lists, strings, variants, booleans, tuples, and function applications. It provides functions to convert basic values into a structured representation and to format these representations into valid OCaml code. Use cases include generating OCaml source code from in-memory data structures or serializing configuration data into readable OCaml expressions.",
+      "description_length": 468,
+      "index": 89,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISContext",
+      "library": "oasis",
+      "description": "This module manages a global context for handling messages and internationalization (i18n), including logging levels (`Debug`, `Info`, `Warning`, `Error`), source file tracking, and plugin loading. It works with custom types like `source_filename`, `source`, and a configuration record `t` that controls output verbosity and plugin behavior. Concrete use cases include setting up command-line argument parsing for context configuration, redirecting log output, and loading plugins based on user input or environment settings.",
+      "description_length": 525,
+      "index": 90,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OASISTypes",
+      "library": "oasis",
+      "description": "This module defines structured types for package metadata, dependencies, and build-related entities such as libraries, executables, and tests, incorporating identifiers, version control systems, and custom commands. It supports conditional configurations and plugin extensions, enabling precise dependency management, source repository integration, and build customization for package definitions.",
+      "description_length": 397,
+      "index": 91,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISFindlib",
+      "library": "oasis",
+      "description": "This module organizes libraries and objects into hierarchical groups that share a common installation context, using containers and packages to model parent-child relationships. It computes mappings between library names and findlib names, and identifies root components within groups. It is used to manage the structure and installation of related OCaml libraries and objects within a package.",
+      "description_length": 394,
+      "index": 92,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISHostPath",
+      "library": "oasis",
+      "description": "This module provides functions to construct and manipulate host filenames from components, convert between Unix and host filename formats, and add extensions to paths. It operates on the `OASISTypes.host_filename` type, which represents file paths in a host-specific format. Concrete use cases include normalizing file paths for cross-platform compatibility, appending extensions to source file paths during build processes, and managing host-specific directory structures in package management tools.",
+      "description_length": 501,
+      "index": 93,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISText",
+      "library": "oasis",
+      "description": "This module processes structured text composed of paragraphs, verbatim blocks, and blank lines. It provides functions to parse plain strings into structured elements, format verbatim and structured text for output, and convert structured text back to strings. It is used to handle multi-line, formatted text in contexts like documentation generation or configuration file parsing.",
+      "description_length": 380,
+      "index": 94,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISGraph",
+      "library": "oasis",
+      "description": "This module implements a directed graph structure with integer-labeled vertices and associated values of arbitrary type. It supports graph construction, vertex and edge manipulation, topological sorting, edge traversal via folding, and transitive closure computation. Concrete use cases include dependency resolution, control flow analysis, and hierarchical data processing where node relationships require explicit ordering or closure operations.",
+      "description_length": 447,
+      "index": 95,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISLicense",
+      "library": "oasis",
+      "description": "This module enables parsing, combining, and serializing of DEP-5 license expressions with support for version constraints (specific, or-later), logical operators (AND/OR), and exceptions. It operates on structured representations of licenses and exceptions, offering predefined constants for common licenses like MIT, GPL, and Apache, as well as specialized exceptions such as OCaml linking. Typical use cases include generating legal disclaimers, validating license compatibility, or constructing complex license declarations for software distribution.",
+      "description_length": 553,
+      "index": 96,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OASISDynRun.BaseSetup",
+      "library": "oasis.dynrun",
+      "description": "This module defines the core lifecycle operations for OCaml packages, including configuration, building, documentation generation, testing, installation, and cleanup. It works with package descriptions, command-line arguments, and context objects to execute setup steps. Concrete use cases include running `configure` to prepare a build environment, `build` to compile sources, `test` to execute test suites, and `install` to deploy artifacts.",
+      "description_length": 443,
+      "index": 97,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISDynRun",
+      "library": "oasis.dynrun",
+      "description": "This module provides a dynamic runtime context and predefined setup actions for managing the lifecycle of OCaml packages. It includes functions to configure, build, test, and install packages based on command-line inputs and package descriptions. A concrete use case is automating the execution of setup steps in a package's development workflow, such as compiling sources or running tests during continuous integration.",
+      "description_length": 420,
+      "index": 98,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OMakePlugin.DocRuntime",
+      "library": "oasis.builtin-plugins",
+      "description": "Handles documentation generation during OMake-based project configuration. It processes package metadata and documentation settings to generate build instructions for project documentation. Useful when integrating documentation workflows into OMake-controlled build systems.",
+      "description_length": 274,
+      "index": 99,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "CustomPlugin.Test",
+      "library": "oasis.builtin-plugins",
+      "description": "This module implements test execution and cleanup operations for a custom build system. It provides `main` to run tests given a configuration and context, returning a float result, along with `clean` and `distclean` to remove test artifacts. It works with custom plugin configurations, context objects, and string arrays, typically used to integrate testing into a package's build pipeline.",
+      "description_length": 390,
+      "index": 100,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OCamlbuildCommon.Tag",
+      "library": "oasis.builtin-plugins",
+      "description": "This module processes file tags and patterns for build configuration, supporting operations like matching filenames against tagged patterns and expanding wildcards. It works with strings representing file paths and tags, using Unix filename semantics. Concrete use cases include determining build flags based on file extensions and applying rules to groups of files in a build system.",
+      "description_length": 384,
+      "index": 101,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "StdFilesPlugin.SetSection",
+      "library": "oasis.builtin-plugins",
+      "description": "This module provides standard set operations\u2014union, intersection, difference, subset checks, and element-wise transformations\u2014for collections of `OASISTypes.section` values. It supports functional manipulation through immutable operations like mapping, filtering, and folding, while enabling conversions between sets and sequences or lists. These capabilities are particularly useful for managing structured content blocks in text file generation, such as merging configuration sections or validating hierarchical data layouts.",
+      "description_length": 527,
+      "index": 102,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "CustomPlugin.Doc",
+      "library": "oasis.builtin-plugins",
+      "description": "Handles documentation generation and cleanup tasks within a custom build system. It provides `main` to generate documentation, `clean` to remove generated files, and `distclean` for thorough cleanup, all operating on OASIS context and plugin structures. Used during project documentation setup and release preparation.",
+      "description_length": 318,
+      "index": 103,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OMakePlugin.BuildRuntime",
+      "library": "oasis.builtin-plugins",
+      "description": "This module implements the runtime logic for building, cleaning, and distributing OCaml projects using OMake. It defines entry points for executing build commands like `main`, `clean`, and `distclean`, which operate on package configurations and command-line arguments. These functions integrate with OMake's build system to compile, clean, and package projects during development and release workflows.",
+      "description_length": 403,
+      "index": 104,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "CustomPlugin.Build",
+      "library": "oasis.builtin-plugins",
+      "description": "Implements custom build and cleanup operations for package compilation, distribution, and configuration. Operates on `OASISContext.t`, `CustomPlugin.t`, and `OASISTypes.package` data structures. Used to define package-specific build logic, including cleaning intermediate files or fully removing generated artifacts.",
+      "description_length": 316,
+      "index": 105,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OMakePlugin.InstallRuntime",
+      "library": "oasis.builtin-plugins",
+      "description": "This module implements runtime installation and uninstallation logic for OMake-based projects. It provides `install` and `uninstall` functions that execute custom actions during the build process, using runtime configuration data passed via `OMakeFields.run_t`. These functions are used to handle deployment tasks such as copying binaries, setting permissions, or cleaning up installed files.",
+      "description_length": 392,
+      "index": 106,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OCamlbuildCommon",
+      "library": "oasis.builtin-plugins",
+      "description": "This module handles command-line arguments and environment-specific adjustments for building OCaml projects, including operations like determining the build directory, fixing arguments, and running `ocamlbuild` or `ocamlbuild -clean`. It works with data types such as `args`, string arrays, and OCaml packages to support concrete tasks like applying version constraints, expanding file tags, and configuring build tools. It is used to integrate OCamlbuild into OASIS-based project setups, enabling precise control over build flags and plugin behavior.",
+      "description_length": 551,
+      "index": 107,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OASISBuiltinPlugins",
+      "library": "oasis.builtin-plugins",
+      "description": "Initializes the set of built-in plugins available for use. Works with internal plugin structures to enable functionality such as task registration and command-line interface extensions. Useful for setting up plugin-based features in applications like OASIS itself.",
+      "description_length": 264,
+      "index": 108,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "DevFilesPlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module generates standard development files such as Makefile and configure scripts based on package configuration. It defines a type `t` to specify which files to generate and whether to include specific targets. Concrete use cases include setting up build infrastructure for OCaml projects and enabling standard build workflows through generated files.",
+      "description_length": 358,
+      "index": 109,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OMakePlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module generates and manages OMake-based build, installation, and documentation workflows for OCaml projects. It provides functions to run commands, initialize build environments, and serialize runtime configurations, working directly with OASISTypes and OMakeFields data structures. Concrete use cases include automating project compilation, documentation generation, and package installation or uninstallation through OMake's build system.",
+      "description_length": 446,
+      "index": 110,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "InternalInstallPlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module handles installation logic for various package components using hooks that modify build sections and paths. It works with data types like `OASISTypes.executable`, `library`, `object_`, and `doc`, along with context and package metadata. Concrete use cases include executing custom installation commands, splitting long command lines on Windows, and registering installation/uninstallation routines for plugins.",
+      "description_length": 422,
+      "index": 111,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "InternalConfigurePlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module handles package configuration by performing a series of checks and generating corresponding output files. It works with OASISTypes.package data and uses a context parameter during configuration. It is used to initialize configuration state and execute internal build setup based on command-line arguments.",
+      "description_length": 317,
+      "index": 112,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "NonePlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module implements placeholder and no-op functions for sections of code that are not implemented or should generate nothing. It works with context types (`ctxt`) and plugin setup structures, providing stubs that can be used during development or to disable specific generation steps. Concrete use cases include acting as a fallback in plugin systems where certain sections are intentionally left unimplemented or used to suppress generation for specific parts of a configuration.",
+      "description_length": 483,
+      "index": 113,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "CustomPlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module provides structured operations for managing package lifecycle stages including configuration, building, testing, documentation, installation, and cleanup. It operates on OASIS-specific types like `OASISTypes`, `OASISContext`, and schema definitions, alongside plugin-defined structures for phase-specific customization. These capabilities enable developers to implement tailored build systems with typed, extensible logic for each lifecycle phase, supporting use cases like adding custom schema fields or integrating domain-specific build tools.",
+      "description_length": 557,
+      "index": 114,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OCamlbuildDocPlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module implements documentation generation and cleanup actions for OCaml projects by integrating with OASIS. It defines handlers for building and cleaning documentation, using configuration data like file paths, modules, and OCamlbuild arguments. It is used to generate OASIS plugin setups that control doc building workflows during package configuration.",
+      "description_length": 360,
+      "index": 115,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "StdFilesPlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module generates standard text files such as INSTALL.txt and README.txt, using package metadata and version constraints. It defines data structures for representing packages, including tools and findlib packages with optional version comparators, and maintains file paths and author information. Key operations include merging version constraints, mapping libraries to packages, and generating file content based on package data.",
+      "description_length": 434,
+      "index": 116,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "METAPlugin",
+      "library": "oasis.builtin-plugins",
+      "description": "This module generates META file content for OCaml packages, handling library and syntax extensions with fields like enable status, descriptions, dependencies, and custom lines. It works with package metadata structures, string lists, and formatting outputs for findlib groups. Concrete use cases include configuring plugin-enabled META files during package setup and injecting custom findlib directives for syntax or library plugins.",
+      "description_length": 433,
+      "index": 117,
       "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 132,
-    "meaningful_modules": 124,
-    "filtered_empty_modules": 8,
-    "retention_rate": 0.9393939393939394
+    "total_modules_in_package": 129,
+    "meaningful_modules": 118,
+    "filtered_empty_modules": 11,
+    "retention_rate": 0.9147286821705426
   },
   "statistics": {
-    "max_description_length": 876,
-    "min_description_length": 153,
-    "avg_description_length": 470.241935483871,
-    "embedding_file_size_mb": 0.45081520080566406
+    "max_description_length": 692,
+    "min_description_length": 252,
+    "avg_description_length": 429.5169491525424,
+    "embedding_file_size_mb": 1.710458755493164
   }
 }

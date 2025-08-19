@@ -1,39 +1,39 @@
 {
   "package": "obuilder-spec",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:55.286709",
+  "creation_timestamp": "2025-08-14T22:52:43.160902",
   "modules": [
-    {
-      "module_path": "Obuilder_spec.Docker",
-      "library": "obuilder-spec",
-      "description": "Converts a build specification into a Dockerfile, supporting BuildKit features and targeting either Unix or Windows operating systems. Works directly with the `Spec.t` type, which represents the abstract build configuration. Useful for generating Dockerfiles programmatically from internal build descriptions, ensuring compatibility with Docker's syntax and feature set.",
-      "description_length": 370,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
     {
       "module_path": "Obuilder_spec.Secret",
       "library": "obuilder-spec",
-      "description": "This module defines a secret specification with an ID, target path, and BuildKit options. It provides functions to create and serialize secret values, mapping OCaml values to and from S-expressions. A typical use case involves configuring secret mounts in container builds, specifying where a secret should be mounted and how BuildKit should handle it.",
-      "description_length": 352,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines a type `t` representing secrets used in build configurations, with fields for an identifier, target mount path, and BuildKit-specific options. It provides functions to convert values between S-expressions and the secret type, ensuring structured handling of sensitive data. A helper function `v` simplifies creating secret values with optional customization of the mount path and BuildKit options, commonly used when defining secure build environments.",
+      "description_length": 472,
+      "index": 0,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Obuilder_spec.Cache",
       "library": "obuilder-spec",
-      "description": "This module defines a cache specification with an identifier, target path, and BuildKit options. It supports serializing and deserializing cache configurations using S-expressions. Use it to declare and manage cache volumes in build definitions, specifying where and how caches should be mounted during builds.",
-      "description_length": 310,
+      "description": "This module defines a cache specification with an identifier, mount target, and BuildKit options. It supports serializing and deserializing cache configurations to and from S-expressions. Use it to declare and manage cache volumes in container build definitions, such as mounting a cache at a specific path with custom size or sharing options.",
+      "description_length": 343,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Obuilder_spec.Docker",
+      "library": "obuilder-spec",
+      "description": "Converts a build specification into a Dockerfile string, supporting BuildKit syntax and targeting Unix or Windows operating systems. Works directly with the `Spec.t` type, which represents a sequence of build steps and dependencies. Useful for generating Dockerfiles programmatically from internal build configurations.",
+      "description_length": 319,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Obuilder_spec",
       "library": "obuilder-spec",
-      "description": "This module orchestrates the construction of container build specifications, translating high-level configurations into Dockerfiles with support for advanced BuildKit features across Unix and Windows platforms. At its core, it manipulates the `Spec.t` type, representing build steps, and integrates secrets and cache configurations through dedicated submodules. The secrets submodule handles secure value injection via S-expressions, while the cache submodule manages build-time cache volumes. Example usage includes programmatically generating a Dockerfile that mounts a secret at `/run/secrets/mykey` and caches dependencies in `/var/cache/apt`.",
-      "description_length": 647,
+      "description": "This module enables defining and serializing container build processes through structured operations like command execution, file copying, and environment manipulation. It works with typed representations of build stages, runtime settings, and platform-specific configurations (Unix/Windows users), alongside utilities for managing caches, secrets, and Dockerfile generation. It is suited for scenarios requiring programmatic construction of container images with reproducible build specifications and cross-platform support.",
+      "description_length": 525,
       "index": 3,
       "embedding_norm": 1.0
     }
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 647,
-    "min_description_length": 310,
-    "avg_description_length": 419.75,
-    "embedding_file_size_mb": 0.014940261840820312
+    "max_description_length": 525,
+    "min_description_length": 319,
+    "avg_description_length": 414.75,
+    "embedding_file_size_mb": 0.05838966369628906
   }
 }

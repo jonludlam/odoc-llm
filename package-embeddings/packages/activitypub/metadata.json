@@ -1,197 +1,205 @@
 {
   "package": "activitypub",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 22,
-  "creation_timestamp": "2025-07-15T23:10:59.309390",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 23,
+  "creation_timestamp": "2025-08-15T12:19:47.254133",
   "modules": [
     {
       "module_path": "Activitypub.Cohttp_tls.Request.IO",
       "library": "activitypub",
-      "description": "This module handles input/output operations for HTTP requests over TLS, including reading from and writing to network connections. It provides functions for reading lines or fixed amounts of data from an input channel and writing or flushing data to an output channel. Concrete use cases include sending HTTP request headers and bodies, and reading server responses during TLS-secured HTTP communication.",
-      "description_length": 404,
+      "description": "This module handles asynchronous input and output operations for HTTP requests over TLS, specifically managing connections, reading from and writing to streams. It works with TLS-secured connections using types like `ic` (input channel), `oc` (output channel), and `conn`. Concrete use cases include reading request headers, streaming request bodies, and sending responses over HTTPS.",
+      "description_length": 384,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub.Cohttp_tls.Response.IO",
-      "library": "activitypub",
-      "description": "This module handles input/output operations for HTTP responses over TLS connections. It provides functions to read lines or fixed amounts of data from an input channel and write or flush data to an output channel. Concrete use cases include processing incoming HTTP response headers line by line and streaming response body content to a TLS connection.",
-      "description_length": 352,
-      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub.Cohttp_tls.Server_core.IO",
       "library": "activitypub",
-      "description": "This module implements asynchronous I/O operations for handling TLS-encrypted connections in a server context. It provides functions for reading from and writing to input/output channels, managing connection streams, and handling errors during I/O operations. Concrete use cases include processing incoming HTTP requests and sending responses over secure TLS connections.",
-      "description_length": 371,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub.Cohttp_tls.Response",
-      "library": "activitypub",
-      "description": "This module manages HTTP responses over TLS connections, offering direct functions to read headers line by line and stream or flush response bodies. It includes submodules that handle low-level I/O operations, enabling precise control over data transmission. You can read a fixed number of bytes from a response body or write and flush data incrementally to ensure timely delivery. These capabilities support use cases like processing large responses in chunks or parsing headers as they arrive.",
-      "description_length": 495,
-      "index": 3,
+      "description": "This module implements asynchronous I/O operations for handling TLS-encrypted connections, including reading from and writing to input/output channels with functions like `read_line`, `read`, and `write`. It works with TLS-wrapped connection types (`conn`), input channels (`ic`), and output channels (`oc`), enabling secure network communication. It is used to build ActivityPub servers that require direct manipulation of TLS-protected network streams, such as processing incoming requests or sending responses over HTTPS.",
+      "description_length": 524,
+      "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Activitypub.Cohttp_tls.IO",
+      "module_path": "Activitypub.Cohttp_tls.Response.IO",
       "library": "activitypub",
-      "description": "This module implements asynchronous I/O operations over TLS connections using `Lwt` for concurrency. It provides functions to read from and write to input/output channels, handle connection errors, and manage line-based or chunked data transmission. Concrete use cases include sending HTTP requests and responses over secure TLS sockets and processing network streams in event-driven servers.",
-      "description_length": 392,
-      "index": 4,
+      "description": "This module handles input/output operations for HTTP responses over TLS, including reading from and writing to network connections. It provides functions for reading lines or fixed amounts of data from an input channel and writing or flushing data to an output channel. Concrete use cases include processing HTTP response headers and streaming response bodies during network communication.",
+      "description_length": 389,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub.Object.G",
       "library": "activitypub",
-      "description": "This module provides functions to query and extract specific values from an RDF graph, such as IRIs, strings, integers, booleans, and datetime values, based on a given term and object IRI. It supports operations like retrieving the first matching value, checking literal types, and extracting ordered or unordered lists of values. Concrete use cases include parsing ActivityPub object properties from RDF data, handling language-tagged strings, and decoding linked objects into typed values.",
-      "description_length": 491,
+      "description": "This module provides functions to query and extract specific values from RDF graphs, such as IRIs, strings, integers, booleans, and datetime values, based on predicates and subjects. It supports operations like retrieving the first matching term, checking literal types, and extracting ordered or optional linked data. Concrete use cases include parsing ActivityPub object properties like content, summary, or published timestamps from RDF triples.",
+      "description_length": 448,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Activitypub.Cohttp_tls.Response",
+      "library": "activitypub",
+      "description": "This module provides operations for constructing, serializing, and manipulating HTTP responses over TLS, including accessing metadata like headers, status codes, and streaming response bodies via reader/writer abstractions. It operates on TLS response objects and integrates with an I/O monad for asynchronous network communication, enabling secure HTTP interactions such as header parsing, data streaming, and encrypted payload transmission. Use cases include implementing TLS-secured API endpoints, handling chunked transfers, and managing asynchronous response workflows in distributed systems.",
+      "description_length": 597,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Activitypub.Cohttp_tls.Server_core",
+      "library": "activitypub",
+      "description": "This module implements core server functionality for handling TLS-encrypted HTTP connections with explicit control over request/response processing. It provides functions to construct server values that process incoming TLS connections, route requests, and generate responses using callbacks that operate on connection state, request headers, and message bodies. Key operations include `make`, `make_expert`, and `make_response_action` for defining custom request handling logic, along with helper functions like `respond`, `respond_string`, and `respond_redirect` for generating standard HTTP responses. It works directly with TLS-wrapped connections, Cohttp request/response types, and Lwt-based asynchronous IO. Concrete use cases include building ActivityPub-compatible HTTP servers that require fine-grained control over TLS communication, such as handling inbox delivery requests or serving signed HTTP responses with custom routing logic.",
+      "description_length": 945,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub.Cohttp_tls.Server",
       "library": "activitypub",
-      "description": "This module implements a TLS-based HTTP server for handling ActivityPub requests. It provides functions to construct responses, including redirects, errors, and file-based responses, using Cohttp and Lwt for asynchronous I/O. Key operations include `make`, `respond`, and `callback`, which enable defining request handlers and running the server securely over TLS.",
-      "description_length": 364,
+      "description": "This module implements a TLS-based HTTP server for handling ActivityPub requests. It provides functions to construct responses, including redirects, errors, and static file delivery, while supporting custom request processing logic through callback registration. Key operations include `respond`, `respond_string`, and `make`, which are used to generate HTTP responses and set up server behavior tailored for ActivityPub services.",
+      "description_length": 430,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub.Cohttp_tls.IO",
+      "library": "activitypub",
+      "description": "This module implements asynchronous I/O operations over TLS connections using `Lwt` for concurrency. It handles low-level communication such as reading from and writing to secure channels, with functions like `read_line`, `read`, `write`, and `flush`. It is used to manage encrypted network interactions in ActivityPub implementations requiring secure HTTP over TLS.",
+      "description_length": 366,
+      "index": 7,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub.Cohttp_tls.Request",
       "library": "activitypub",
-      "description": "This module enables the construction, manipulation, and secure transmission of HTTP requests over TLS. It centers around the `Request.t` type, representing TLS-secured HTTP requests, and provides operations for accessing and modifying request components such as headers, methods, and URIs, along with I/O functions for sending and receiving encrypted data over network connections. The child module handles low-level TLS-aware I/O, allowing precise reading and writing of request headers and bodies during HTTP exchanges. Example uses include building HTTPS clients that stream encrypted request data or implement custom logic for handling bidirectional TLS communication.",
-      "description_length": 672,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub.Cohttp_tls.Server_core",
-      "library": "activitypub",
-      "description": "This module implements a TLS-based HTTP server that handles requests with custom logic, streams content, or delegates to expert handlers, working with TLS connections, HTTP requests and responses, and Lwt-based IO streams. It supports asynchronous I/O operations for reading from and writing to encrypted channels, managing connection streams, and handling errors during communication. Main data types include TLS connections, HTTP requests, and Lwt streams, with operations for routing, streaming, and secure communication. You can use it to serve ActivityPub endpoints, handle secure file transfers, or build custom web application pipelines with async I/O support.",
-      "description_length": 667,
+      "description": "This module provides operations for constructing, parsing, and manipulating HTTP requests with TLS transport, including accessors for headers, methods, URIs, and body encodings. It works with HTTP request structures, supporting asynchronous I/O for reading/writing headers and streaming body content over secure connections. Specific use cases include handling incoming federation requests in ActivityPub servers, efficiently processing large payloads via chunked transfers, and managing secure client-server interactions with custom header/body logic.",
+      "description_length": 552,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Activitypub.Sset",
+      "module_path": "Activitypub.Actor",
       "library": "activitypub",
-      "description": "This module provides standard set operations (union, intersection, difference, membership checks) for immutable string collections, along with transformation functions like map, filter, and fold. It supports conversions to and from lists and sequences, enabling ordered traversal and iterative construction through sequence-based manipulation. It is suited for scenarios requiring efficient handling of unique textual data, such as processing ordered streams (e.g., logs, feeds), normalizing string sets for comparison, or implementing functional algorithms that rely on immutability and set-theoretic operations.",
-      "description_length": 613,
+      "description": "This module defines an IRI used to indicate that an actor manually approves follower requests. It works with the `Iri.t` data type to represent this specific activitypub behavior. A concrete use case is setting or checking approval policies for social follow interactions in a decentralized social network.",
+      "description_length": 306,
       "index": 9,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Activitypub.Types",
+      "module_path": "Activitypub.Smap",
       "library": "activitypub",
-      "description": "This module defines core data structures and operations for working with ActivityPub objects, including identifiers, activity types, and actor types. It provides functions to convert between IRIs and typed values for activities and actors, along with utilities for extracting IRIs from polymorphic variants and handling localized content and names. Concrete use cases include parsing and constructing ActivityPub JSON-LD data, resolving activity and actor types from IRIs, and working with nested activity trees for social networking operations.",
-      "description_length": 545,
+      "description": "This module implements string-keyed maps with operations for key-value manipulation, aggregation, and transformation, supporting arbitrary value types. It provides functions for bidirectional conversion between maps and sequences/lists, along with ordered traversal, filtering, and structural analysis. Typical applications include managing dynamic key-value configurations, processing JSON-like structures, and handling HTTP headers or query parameters.",
+      "description_length": 454,
       "index": 10,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Activitypub.E",
+      "module_path": "Activitypub.Utils",
       "library": "activitypub",
-      "description": "This module defines error types and handling utilities for the Activitypub implementation. It provides functions to create and format error values, register custom error string converters, and pretty-print errors. Concrete use cases include reporting invalid Activitypub payloads, failed object resolutions, and protocol violations during federation operations.",
-      "description_length": 361,
+      "description": "This module offers cryptographic operations, directory management, RDF graph filtering, JSON-LD processing, and time conversion utilities. It works with strings, IRIs, MIME types, RDF graphs, and timestamp representations, enabling data serialization, linked data manipulation, and temporal formatting. These functions support ActivityPub protocol interactions, content negotiation, logging workflows, and linked data transformations.",
+      "description_length": 434,
       "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub.Http_sign",
       "library": "activitypub",
-      "description": "This module implements HTTP signature verification and generation for ActivityPub requests. It provides functions to verify signed requests using X.509 public keys, create signature headers for outgoing requests, and generate RSA-SHA256 signatures using either raw keys or actor IRIs. It works with Cohttp request and header types, X509 keys, and Iri identifiers, primarily used for securing federated ActivityPub communications.",
-      "description_length": 429,
+      "description": "This module implements HTTP signature verification and generation for ActivityPub requests. It provides functions to verify signed requests using public keys, create signature headers for outgoing requests, and generate RSA256 signing functions tied to actors or explicit keys. It works with Cohttp requests and headers, X509 keys, and IRI identifiers, primarily used in federated social network protocols requiring secure request authentication.",
+      "description_length": 446,
       "index": 12,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Activitypub.Token",
+      "module_path": "Activitypub.E",
       "library": "activitypub",
-      "description": "This module generates, serializes, and manages authentication tokens and key pairs for ActivityPub actors. It provides functions to create tokens with random keys, serialize and deserialize token data, and persist token lists to and from files. Concrete use cases include handling per-actor API keys and managing token-based authentication in a distributed social networking context.",
-      "description_length": 383,
+      "description": "This module defines error types and handling utilities for the ActivityPub implementation. It includes functions to convert errors to strings, register custom string converters, and pretty-print errors. Concrete use cases include reporting validation failures, network issues, and protocol mismatches during ActivityPub operations.",
+      "description_length": 331,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Activitypub.Object",
+      "module_path": "Activitypub.Sset",
       "library": "activitypub",
-      "description": "This module processes RDF graphs in JSON-LD and related formats, enabling operations like filtering roots, mapping terms, and managing addressing relations such as BTO/BCC removal. It includes core data types for RDF terms, graphs, and ActivityPub objects, supporting tasks like identifier extraction, metadata copying, and privacy-preserving transformations. The child module enhances querying capabilities by allowing precise retrieval of typed values\u2014such as IRIs, strings, and datetimes\u2014from the graph, facilitating structured parsing of ActivityPub properties and language-tagged content. Together, they enable workflows like federated social media data processing, JSON-LD normalization, and secure metadata handling in distributed systems.",
-      "description_length": 746,
+      "description": "This module implements set-theoretic operations, ordered traversal, and sequence-based construction for collections of unique strings. It centers on a string-specific set type (`t`) that supports membership queries, functional transformations, and conversions to/from lists and sequences with controlled ordering. Typical applications include deduplicating string sequences, computing set relationships (e.g., union, subset checks), and efficiently iterating over or building sets using ordered or filtered views.",
+      "description_length": 513,
       "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub.Cohttp_tls",
-      "library": "activitypub",
-      "description": "This module implements HTTP over TLS for secure web communication, providing functions to establish encrypted connections, send and receive HTTP messages, and build secure clients and servers. It includes submodules for handling TLS-secured responses with streaming body support, asynchronous I/O with `Lwt`, ActivityPub-compatible server logic, request construction and transmission, and a flexible TLS server for custom request handling. Main data types include TLS connections, HTTP requests and responses, and Lwt streams, with operations for reading and writing headers and bodies, managing secure I/O, and defining asynchronous request handlers. You can use it to stream encrypted request data, serve TLS-secured web content, handle large HTTP responses in chunks, or run an asynchronous HTTPS server with custom routing and streaming logic.",
-      "description_length": 847,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub.Log",
-      "library": "activitypub",
-      "description": "This module provides functions for logging messages at various severity levels, handling result values with error logging, and formatting log output. It works with `Logs` types including `level`, `src`, `Tag.set`, and `result` values. Concrete use cases include logging application events, errors, and debugging information with structured tags and custom formatting.",
-      "description_length": 367,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub.Smap",
-      "library": "activitypub",
-      "description": "This module offers operations for managing polymorphic key-value collections with string identifiers, supporting standard map manipulations (insertion, deletion, merging) alongside list-accumulating updates (e.g., `add_to_list`) and bidirectional traversal. It provides utilities for transforming, filtering, and querying data through folds, maps, and comparisons, while also enabling efficient conversions between maps and sequences/lists of key-value pairs. Use cases include processing JSON-like structures, aggregating string-indexed data, and handling immutable key-value collections during iterative transformations.",
-      "description_length": 622,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub.Actor",
-      "library": "activitypub",
-      "description": "This module defines an IRI used to indicate that an actor manually approves follower requests. It works with the `Iri.t` data type to represent the specific activitypub extension for approval. A concrete use case is signaling that an actor requires manual acceptance of follow requests in a federated social network.",
-      "description_length": 316,
-      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub.Jsonld_static",
       "library": "activitypub",
-      "description": "This module provides predefined JSON-LD context strings for ActivityStreams and Security V1, along with a map of IRI identifiers to these contexts. It works with string values and Iri.Map structures to associate context names with their corresponding JSON-LD content. Use this module to embed standard JSON-LD contexts directly in applications without requiring network requests to fetch them.",
-      "description_length": 393,
-      "index": 19,
+      "description": "This module provides direct access to predefined JSON-LD context strings for ActivityStreams and JSON-LD Security v1. It includes a map of IRI identifiers to these context strings, enabling immediate resolution without network requests. Use this to validate, process, or expand JSON-LD payloads using locally available, standardized contexts.",
+      "description_length": 342,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub.Object",
+      "library": "activitypub",
+      "description": "This module provides RDF graph parsing, manipulation, and querying capabilities for semantic data structures like ActivityPub objects, focusing on JSON-LD serialization, remote content resolution, and error-resilient graph transformations. It operates on RDF graphs to handle ActivityPub-specific semantics such as activity streams, distributed addressing, and object identity extraction. Key use cases include processing social media activities with privacy controls, normalizing linked data representations, and managing object metadata in federated systems.",
+      "description_length": 560,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub.Types",
+      "library": "activitypub",
+      "description": "This module defines core data types for representing ActivityPub objects, actors, and activities, along with conversions between their IRI representations and typed values. It includes functions to extract IRIs from polymorphic variants like links or objects, and utilities to retrieve localized names and content from actors and objects. Concrete use cases include parsing and constructing ActivityPub JSON-LD structures, handling activity references in a social networking context, and managing actor identities with multilingual metadata.",
+      "description_length": 541,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub.Cache",
       "library": "activitypub",
-      "description": "This module implements a disk-based HTTP response cache with expiration, handling IRI resolution and JSON parsing errors. It provides operations to create a cache with a specified storage root and entry expiration delay. Concrete use cases include caching remote ActivityPub resource lookups and reducing redundant HTTP requests during federation operations.",
-      "description_length": 358,
-      "index": 20,
+      "description": "This module implements a disk-based HTTP response cache with expiration. It stores cached responses in a specified directory and associates each entry with a time-to-live delay. It is used to persist and retrieve HTTP query results, particularly for handling IRI-based resources and JSON responses in a type-safe way.",
+      "description_length": 317,
+      "index": 18,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Activitypub.Cohttp_tls",
+      "library": "activitypub",
+      "description": "This module implements secure HTTP communication over TLS for ActivityPub applications. It provides low-level I/O operations, request/response handling, and server construction functions that work with TLS-encrypted connections and Lwt-based asynchronous IO. Concrete use cases include building ActivityPub-compatible servers that handle inbox deliveries, signed HTTP responses, and custom federation logic over secure channels.",
+      "description_length": 428,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub.Token",
+      "library": "activitypub",
+      "description": "This module manages authentication tokens with operations to create, serialize, and store token data. It works with record types representing tokens, including named tokens and authentication tokens containing actor identifiers. Concrete use cases include generating random keys, parsing and formatting authentication tokens as strings, and reading or writing token lists from and to files.",
+      "description_length": 390,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub.Log",
+      "library": "activitypub",
+      "description": "This module defines logging functions for emitting structured log messages at various severity levels, including specialized helpers for handling `result` values that carry error messages. It works directly with `Logs.level`, `Logs.Tag.set`, and `result` types, providing formatters and error-handling callbacks. Concrete use cases include logging application events, debugging information, and error traces with contextual metadata like tags and headers.",
+      "description_length": 455,
+      "index": 21,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub",
       "library": "activitypub",
-      "description": "This module suite provides comprehensive support for building and securing ActivityPub-based federated systems. It centers around immutable string collections, ActivityPub object models, and IRI handling, with operations for set manipulation, JSON-LD processing, RDF graph querying, and HTTP signature verification. Key data types include IRI identifiers, ActivityPub objects, HTTP requests with TLS, and authentication tokens, enabling tasks like secure communication, social activity parsing, and cache-efficient federation. Specific workflows include verifying signed ActivityPub requests, normalizing and querying JSON-LD metadata, managing actor authentication tokens, and serving encrypted HTTP content with streaming support.",
-      "description_length": 732,
-      "index": 21,
+      "description": "This module implements core components for building ActivityPub-compatible systems, providing concrete operations for decentralized social networking. It handles secure HTTP communication, JSON-LD processing, RDF graph manipulation, and cryptographic signing, working with data types like IRI, JSON-LD contexts, RDF graphs, and TLS connections. Use cases include federated social media platforms, decentralized identity management, and secure inbox delivery between actors in a distributed network.",
+      "description_length": 498,
+      "index": 22,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 36,
-    "meaningful_modules": 22,
-    "filtered_empty_modules": 14,
-    "retention_rate": 0.6111111111111112
+    "meaningful_modules": 23,
+    "filtered_empty_modules": 13,
+    "retention_rate": 0.6388888888888888
   },
   "statistics": {
-    "max_description_length": 847,
-    "min_description_length": 316,
-    "avg_description_length": 496.3636363636364,
-    "embedding_file_size_mb": 0.08033370971679688
+    "max_description_length": 945,
+    "min_description_length": 306,
+    "avg_description_length": 463.04347826086956,
+    "embedding_file_size_mb": 0.33373069763183594
   }
 }

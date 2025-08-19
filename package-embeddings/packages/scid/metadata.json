@@ -1,65 +1,65 @@
 {
   "package": "scid",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:06:09.361827",
+  "creation_timestamp": "2025-08-14T23:00:08.140573",
   "modules": [
     {
-      "module_path": "Scid.D.Manual",
+      "module_path": "Scid.E.Manual",
       "library": "scid",
-      "description": "This module provides low-level functions to manually control input buffering for a decoding process. It works with `Scid.D.t` decoder instances, supplying them with raw byte sequences from strings or bytes buffers. Use this when implementing custom input handling for parsers or streaming data protocols where precise control over the decoder's input is required.",
-      "description_length": 363,
+      "description": "Handles byte buffer management for encoding operations. It provides `add_bytes` to supply a buffer and `rem` to check remaining space. Used when writing encoded data to a specific byte range, ensuring precise control over buffer usage.",
+      "description_length": 235,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Scid.E.Manual",
+      "module_path": "Scid.D.Manual",
       "library": "scid",
-      "description": "This module provides low-level buffer management for encoding operations. It allows appending bytes to an encoding buffer and querying the remaining free space. Use it when manually handling binary data serialization, such as constructing network packets or binary file formats.",
-      "description_length": 278,
+      "description": "This module provides low-level functions to manually refill a decoder's input buffer using either a string or bytes. It works directly with the decoder type `Scid.D.t` and operates on byte sequences with specified offsets and lengths. Use this to implement custom decoding logic where input data is supplied incrementally, such as parsing streaming or fragmented binary data.",
+      "description_length": 375,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Scid.D",
       "library": "scid",
-      "description": "This module decodes input from channels, strings, or manual sources, producing result values incrementally and handling partial input with explicit signals for more data, end-of-input, or detailed error messages. It includes a submodule for low-level input buffering control, allowing direct manipulation of byte sequences fed into decoder instances, which is essential for custom streaming protocols or interactive input processing. Main data types include decoder states and input buffers, with operations to advance decoding steps and inject new input data. You can use it to build streaming parsers that process data as it arrives or implement interactive command-line tools that handle partial user input gracefully.",
-      "description_length": 721,
+      "description": "This module decodes input from various sources like channels, strings, or manual buffers, producing structured results or errors. It operates on a decoder type `t`, handling byte-level input and parsing into higher-level values of type `Scid.R.t`. Concrete use cases include parsing binary file formats, network protocols, or streaming data where input may arrive in fragments or require custom buffering.",
+      "description_length": 405,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Scid.E",
       "library": "scid",
-      "description": "This module handles data encoding and streaming to various output destinations, supporting incremental writes and state management for scenarios like serialization or network communication. It provides core operations for creating encoders, writing values, and managing partial output, while its child module offers low-level buffer manipulation for binary data construction. You can encode structured data to a channel, buffer, or custom output function, and directly manage buffer space when building binary formats like network packets.",
-      "description_length": 539,
+      "description": "Handles encoding data to output destinations like channels, buffers, or manual byte ranges. It provides `encode` to process encoding steps and `make` to initialize encoders tied to a specific output. Used for structured data serialization with precise buffer control through the `Manual` submodule.",
+      "description_length": 298,
       "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Scid.H",
+      "module_path": "Scid.R",
       "library": "scid",
-      "description": "This module validates and writes SCID headers in byte buffers. It checks if a byte sequence at a given position matches the valid SCID header and writes a specified segment of the header to a target buffer. It operates directly on `Stdlib.Bytes.t` values, using integer positions and lengths for precise memory manipulation. Use cases include parsing and constructing SCID-identified data streams or files with strict header formatting requirements.",
-      "description_length": 449,
+      "description": "This module defines a compact in-memory representation of financial tick data, including timestamps, price levels, trade volumes, and directional statistics. It provides direct serialization and deserialization routines for efficient binary storage or transmission, along with comparison and pretty-printing for analysis or debugging. Concrete use cases include high-frequency market data logging, backtesting engines, and real-time trading system telemetry.",
+      "description_length": 458,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Scid.R",
+      "module_path": "Scid.H",
       "library": "scid",
-      "description": "This module defines a record type representing a time-series data point with fields for timestamp, open/high/low/close prices, trade counts, and volume metrics. It provides functions for serialization, deserialization, comparison, and pretty-printing of these records. It is used for efficiently storing, reading, and comparing financial tick data in binary format.",
-      "description_length": 365,
+      "description": "This module defines the structure and validation of SCID headers. It provides direct validation of byte sequences against the SCID header format and writes predefined header segments to byte buffers. It operates on `Stdlib.Bytes.t` values, supporting precise byte-level manipulation and verification at specific offsets.",
+      "description_length": 320,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Scid",
       "library": "scid",
-      "description": "This module processes SCID-formatted data through incremental decoding and encoding, supporting streaming input and output with precise buffer control. It uses core data types like decoder states, encoder streams, and byte buffers to handle partial data, manage I/O, and validate SCID headers during transmission or parsing. You can build interactive tools that process SCID data in real-time, validate headers in binary streams, or encode financial time-series records to disk or network with minimal overhead. Specific applications include SCID-compliant network services, streaming file parsers, and binary data converters for high-frequency trading logs.",
-      "description_length": 658,
+      "description": "This module implements a binary format for financial tick data with strict header validation, efficient in-memory representation, and precise serialization. It operates on byte buffers and custom data structures for timestamps, prices, and volumes, enabling direct mapping between memory and storage. Concrete use cases include high-frequency trading systems, market data replay, and binary log processing.",
+      "description_length": 406,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -69,9 +69,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 721,
-    "min_description_length": 278,
-    "avg_description_length": 481.85714285714283,
-    "embedding_file_size_mb": 0.02582263946533203
+    "max_description_length": 458,
+    "min_description_length": 235,
+    "avg_description_length": 356.7142857142857,
+    "embedding_file_size_mb": 0.10181713104248047
   }
 }

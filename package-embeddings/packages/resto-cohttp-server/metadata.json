@@ -1,117 +1,109 @@
 {
   "package": "resto-cohttp-server",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:08:09.907178",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 11,
+  "creation_timestamp": "2025-08-14T23:17:40.447684",
   "modules": [
     {
-      "module_path": "Resto_cohttp_server.Server.Make_selfserver.Agent",
+      "module_path": "Resto_cohttp_server.Server.Make_selfserver.Handlers",
       "library": "resto-cohttp-server",
-      "description": "This module implements an agent for handling HTTP requests in a self-contained server environment. It uses the `default_agent` value to identify itself when making internal requests. The agent is specifically designed to work with services registered in the server's directory, enabling direct invocation of endpoints without external network calls.",
-      "description_length": 349,
+      "description": "This module implements HTTP request handlers for a self-contained RPC server, processing errors, CORS validation, and responses for RPC calls. It operates on Cohttp types like headers, responses, and bodies, along with Resto services and media types. It is used to serve locally registered RPC endpoints, handle method dispatch, and return properly formatted HTTP responses for success, error, and chunked output cases.",
+      "description_length": 419,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Resto_cohttp_server.Server.Make_selfserver.Handlers",
+      "module_path": "Resto_cohttp_server.Server.Make_selfserver.Media_type",
       "library": "resto-cohttp-server",
-      "description": "This module implements HTTP request handlers for a self-contained RPC server, processing errors, CORS validation, and responses for RPC calls. It operates on Cohttp types like headers, responses, and bodies, along with Resto services and media types. It is used to serve directory-registered endpoints locally, handle malformed requests, and generate appropriate HTTP responses including JSON or chunked transfer encodings.",
-      "description_length": 423,
+      "description": "This module defines operations for handling media types, including parsing and matching media ranges, selecting preferred encodings, and constructing or destructing values based on a given media type. It works with lists of `Media_type.t` values, which encapsulate media range names, quality parameters, and serialization functions. Concrete use cases include negotiating content types from HTTP accept headers, serializing service responses into byte sequences, and selecting appropriate encodings for REST endpoints based on client preferences.",
+      "description_length": 546,
       "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Resto_cohttp_server.Server.Make.Media_type",
+      "library": "resto-cohttp-server",
+      "description": "This module defines operations for handling media types in HTTP requests and responses, including parsing and matching content types, selecting appropriate encodings based on client preferences, and constructing or deconstructing data using specific encodings. It works with media type values that include MIME types, quality parameters, and serialization functions for encoding and decoding data. Concrete use cases include negotiating response formats based on the `Accept` header, serializing service outputs into bytes, and deserializing request bodies into structured data for processing.",
+      "description_length": 593,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Resto_cohttp_server.Server.Make_selfserver.Media",
+      "library": "resto-cohttp-server",
+      "description": "This module handles media type negotiation for HTTP requests and responses, using a configured list of supported media types and a default. It provides functions to determine the appropriate input and output media types based on request headers and predefined defaults. Use it to ensure correct content type handling when serving or consuming RESTful APIs with specific media type requirements.",
+      "description_length": 394,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resto_cohttp_server.Server.Make_selfserver.Directory",
       "library": "resto-cohttp-server",
-      "description": "This module provides path-based routing for REST services with operations to register handlers of varying argument arities, resolve conflicts during service registration, and manage dynamic/static path components. It works with typed directories mapping paths to services, leveraging Lwt promises and higher-order combinators to enable type-safe, composable routing for Cohttp servers. Typical use cases include building RESTful APIs with nested routes, merging versioned endpoints, or handling dynamic subdirectories that extract parameters from URLs.",
-      "description_length": 552,
-      "index": 2,
+      "description": "This module enables the creation and management of a hierarchical REST service directory with type-safe routing, supporting operations to register HTTP services with variable path parameters, merge service trees, and resolve method/path requests with detailed error handling. It works with `directory` structures that model routing trees, dynamic handlers for lazy subdirectory generation, and schema-based descriptions to enable self-documenting service hierarchies. Typical use cases include organizing modular APIs with nested routes, dynamically generating subdirectories based on request parameters, and combining multiple service definitions into a unified routing tree with conflict resolution.",
+      "description_length": 701,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Resto_cohttp_server.Server.Make_selfserver.Agent",
+      "library": "resto-cohttp-server",
+      "description": "This module implements an agent for handling self-serving HTTP requests within a local server context. It provides functions to dispatch requests to registered services and manage communication between the server and client. The agent works with HTTP requests and responses, using the server's internal service directory to route calls appropriately. A concrete use case is enabling local testing of service endpoints without requiring an external HTTP server.",
+      "description_length": 460,
+      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Resto_cohttp_server.Server.Make.Directory",
       "library": "resto-cohttp-server",
-      "description": "This module enables constructing REST service directories with type-safe routing and dynamic path resolution, supporting operations like registering services with typed parameters, mounting subdirectories with dynamic argument extraction, and merging directories while detecting conflicts. It works",
-      "description_length": 298,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Resto_cohttp_server.Server.Make_selfserver.Media_type",
-      "library": "resto-cohttp-server",
-      "description": "This module defines operations for handling media types, including parsing and matching media ranges, constructing and destructing encoded values, and resolving accept headers against a list of supported media types. It works with Cohttp's media range type and custom encodings to manage content negotiation and serialization. Concrete use cases include determining the appropriate response format based on client accept headers and serializing service responses into specific media types like JSON or CBOR.",
-      "description_length": 507,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Resto_cohttp_server.Server.Make.Media_type",
-      "library": "resto-cohttp-server",
-      "description": "This module handles media type negotiation and content encoding for HTTP services. It provides functions to register, select, and resolve media types based on client preferences, including parsing and matching accept headers, selecting appropriate encodings, and constructing or destructing payloads. Typical use cases include serving JSON or binary data with content negotiation in REST APIs.",
-      "description_length": 393,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resto_cohttp_server.Server.Make_selfserver.Media",
-      "library": "resto-cohttp-server",
-      "description": "This module handles media type negotiation for HTTP requests and responses, using a medias structure that includes a list of supported types and a default. It provides functions to determine the appropriate input and output media types based on request headers, returning errors if no acceptable type is found. It is used to ensure correct content handling in a self-contained server context.",
-      "description_length": 392,
+      "description": "This module routes HTTP requests to typed service handlers by managing a hierarchical directory structure of REST endpoints with parameterized paths, supporting operations to register services with varying argument arities, resolve path parameters, and merge routing trees. It works with typed routing directories and service definitions that map Cohttp requests to Lwt-based handlers, enabling use cases like building modular APIs with dynamic subtree generation and conflict detection for overlapping routes or method mismatches.",
+      "description_length": 531,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resto_cohttp_server.Server.Make",
       "library": "resto-cohttp-server",
-      "description": "This module implements a CoHTTP-based RPC server that routes HTTP requests to registered services using a structured directory, handling request parsing, media type negotiation, and response generation with support for CORS and access control. It provides core operations for defining and mounting services, negotiating content types, and applying security policies, with main data types including service handlers, directories, and media type registries. The first child module enables building type-safe REST directories with dynamic path resolution, allowing precise routing and merging of services, while the second handles content negotiation, supporting client-driven selection of formats like JSON or binary. Together, they enable constructing secure, typed, and content-aware RESTful APIs with structured routing and customizable request handling.",
-      "description_length": 855,
+      "description": "This module implements an HTTP server for routing requests to typed REST services, supporting initialization with media types, CORS, and access control, and launching on a network endpoint. It handles request parsing, service routing, and response generation using Cohttp and Lwt, working with typed directories of services and media type negotiators. Concrete use cases include serving versioned APIs with content-type negotiation, enforcing access control dynamically, and embedding modular service trees with automatic route conflict detection.",
+      "description_length": 547,
       "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Resto_cohttp_server.Server.LOGGING",
-      "library": "resto-cohttp-server",
-      "description": "This module defines logging functions for handling formatted messages at different severity levels, including debug, info, notice, warning, and error. It supports both synchronous and Lwt asynchronous variants, enabling non-blocking log output in concurrent applications. These functions are used to track server activity, such as request handling, errors, and internal events, with structured message formatting.",
-      "description_length": 413,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Resto_cohttp_server.Server.Make_selfserver",
       "library": "resto-cohttp-server",
-      "description": "This module assembles a self-contained RPC server environment with integrated HTTP handling, routing, and content negotiation. It centers around Cohttp types for requests and responses, combined with typed directories mapping paths to services, and Lwt promises for asynchronous handling. The core operations include routing RESTful endpoints with dynamic path components, negotiating media types for request/response serialization, and generating proper HTTP responses with error handling and CORS support. Example usage includes serving versioned APIs locally, handling JSON/CBOR content negotiation, and routing nested endpoints with typed parameters.",
-      "description_length": 654,
-      "index": 9,
+      "description": "This module implements a self-contained RPC server for local service testing, providing HTTP request dispatching, media type negotiation, and response handling. It works with REST service directories, media type configurations, and Cohttp request/response types to serve registered endpoints directly in-process. Concrete use cases include testing API routes locally without external HTTP infrastructure and enabling direct client-server interaction within the same runtime.",
+      "description_length": 474,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Resto_cohttp_server.Server",
       "library": "resto-cohttp-server",
-      "description": "This module serves a structured directory of registered services over HTTP, handling request routing, content negotiation, and response generation. It provides core data types such as service handlers, directories, and media type registries, along with operations for mounting services, negotiating formats like JSON or CBOR, and enforcing security policies including CORS. The first child module enables type-safe routing and directory merging, supporting dynamic path resolution and precise endpoint mapping, while the second offers logging facilities for tracking server activity with structured, asynchronous message handling. Together with the third child module, which integrates HTTP handling and routing into a self-contained RPC environment, it supports building versioned, content-aware APIs with typed endpoints and customizable request processing.",
-      "description_length": 859,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module serves a directory of registered services over HTTP, handling request routing and response generation. It works with service definitions and HTTP request/response structures to expose endpoints dynamically. Concrete use cases include building RESTful APIs and serving web services with customizable logging and middleware support.",
+      "description_length": 342,
+      "index": 9,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Resto_cohttp_server",
       "library": "resto-cohttp-server",
-      "description": "This module organizes and serves typed HTTP endpoints through a structured directory, enabling precise routing, content negotiation, and response generation. It centers around service handlers, directories, and media type registries, allowing operations like mounting versioned APIs, enforcing CORS, and dynamically resolving paths. With integrated logging and asynchronous handling, it supports building secure, self-contained RPC services that process requests with typed endpoints and customizable logic. Example uses include serving JSON or CBOR-encoded APIs with automatic format negotiation and tracking server activity through structured logs.",
-      "description_length": 650,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module serves a directory of registered services over HTTP, handling request routing and response generation. It works with service definitions and HTTP request/response structures to expose endpoints dynamically. Concrete use cases include building RESTful APIs and serving web services with customizable logging and middleware support.",
+      "description_length": 342,
+      "index": 10,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 12,
-    "meaningful_modules": 12,
+    "total_modules_in_package": 11,
+    "meaningful_modules": 11,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 859,
-    "min_description_length": 298,
-    "avg_description_length": 528.75,
-    "embedding_file_size_mb": 0.044025421142578125
+    "max_description_length": 701,
+    "min_description_length": 342,
+    "avg_description_length": 486.27272727272725,
+    "embedding_file_size_mb": 0.14545059204101562
   }
 }

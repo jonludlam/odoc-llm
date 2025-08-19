@@ -1,245 +1,229 @@
 {
   "package": "macaque",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 28,
-  "creation_timestamp": "2025-07-15T23:13:16.495115",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 26,
+  "creation_timestamp": "2025-08-15T12:38:50.911649",
   "modules": [
     {
-      "module_path": "Sql.Op",
+      "module_path": "Query.Make.Db",
       "library": "macaque",
-      "description": "This module provides functions for null value handling, arithmetic and logical operations, aggregate computations (count, min, max, sum), hash generation (MD5), and temporal operations (current timestamp). It operates on SQL expressions (`Sql.t`), grouped contexts (`Sql.group`), sequences (`Sql.sequence`), and SQL types like `numeric_t`, `string_t`, and timestamps. These tools are used to build query expressions with conditional logic, aggregation pipelines, sequence value management, and data integrity checks in SQL-based applications.",
-      "description_length": 542,
+      "description": "This component offers database interaction capabilities centered on connection lifecycle management, transaction control, and SQL execution. It operates on database handles (`Db.t`), connection metadata, and PostgreSQL-specific types like `timestamptz`, `jsonb`, and `inet`, supporting operations such as query preparation, result parsing, and bidirectional type conversion between OCaml and SQL representations. Key use cases include building type-safe database interfaces, handling complex data serialization (e.g., arrays, geometric types), and managing transactional workflows with monadic composition for sequencing operations.",
+      "description_length": 632,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Sql_public.Op",
-      "library": "macaque",
-      "description": "This module provides arithmetic, comparison, logical, and aggregate operations for constructing type-safe SQL expressions, along with utilities for value manipulation and metadata handling. It operates on typed SQL value tuples (`value' * sql_type`) that track both runtime data and schema-level type information. Key use cases include building complex query expressions (e.g., `sum`, `is_distinct_from`, `md5`), implementing type-aware conditionals (`&&`, `||`), and managing sequence operations (`nextval`, `currval`) during query analysis or generation.",
-      "description_length": 556,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Query.QUERY-Db",
-      "library": "macaque",
-      "description": "This module provides database connection management, transaction control, query execution, and result processing capabilities, complemented by type conversion utilities for bridging PostgreSQL-specific data representations (e.g., JSONB, hstore, arrays, UUIDs, and temporal types) with OCaml. It operates on structured data like parameterized SQL statements, result rows, metadata descriptors, and serialized formats, enabling precise handling of type-safe queries and object-relational mappings. Designed for applications requiring robust transactional workflows, complex data serialization, and interoperability with PostgreSQL's advanced type system, it supports use cases such as schema evolution, batch data ingestion, and custom type marshaling with configurable conversion logic.",
-      "description_length": 785,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Sql.Table_type",
       "library": "macaque",
-      "description": "This module defines specific SQL field type constructors for use in table definitions, such as boolean, integer, text, and timestamp. Each function takes a nullability witness and returns a structured SQL type representation with `get`, `nul`, and `t` fields. These types are used directly in table schemas to enforce correct data handling during database interactions.",
-      "description_length": 369,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Sql.Sequence",
-      "library": "macaque",
-      "description": "This module defines functions for creating SQL sequence types with specified names. It provides `serial` for 32-bit integer sequences, `bigserial` for 64-bit integer sequences, and `sequence` which also produces 64-bit integer sequences. These are used to generate auto-incrementing identifiers in SQL schema definitions.",
-      "description_length": 321,
-      "index": 4,
+      "description": "This module defines SQL field type constructors for use within table declarations, mapping directly to standard SQL types like boolean, integer, text, and timestamp. Each function takes a nullability witness and returns a structured SQL type with `get`, `nul`, and `t` fields representing the type's behavior. It is used to declare schema-aware table structures in OCaml code using the `<:table< .. >>` syntax.",
+      "description_length": 410,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Sql_public.Value",
+      "module_path": "Sql_public.Sequence",
       "library": "macaque",
-      "description": "This module converts OCaml values of specific types into a paired representation of `value'` and `sql_type`, both defined in `Sql_internals`. Each function corresponds to a concrete SQL data type, handling primitives like booleans, integers, floats, strings, and timestamps, as well as composite types like arrays. It is used to serialize OCaml values into a format suitable for SQL operations, such as query parameter binding or result parsing.",
-      "description_length": 445,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Query.Db",
-      "library": "macaque",
-      "description": "This component provides database connectivity, transaction control, and SQL execution capabilities, supporting operations like connection pooling, transactional blocks with isolation settings, and cursor-based iteration over result sets. It operates on structured data such as connection descriptors, OIDs, PostgreSQL arrays, and custom types (`jsonb`, `hstore`, `inet`), alongside time-related values and scalar primitives, with utilities for bidirectional type conversion between OCaml and PostgreSQL representations. Key use cases include type-safe query construction, parsing database results into OCaml structures, and managing stateful interactions like session data attachment or sequence value retrieval during transactions.",
-      "description_length": 732,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Sql_public.ViewOp",
-      "library": "macaque",
-      "description": "This module implements set operations and binary operators for combining SQL views. It provides functions like union, intersection, and difference, which manipulate `generic_view` structures representing SQL query results. These operations are used to build complex queries by combining views with standard SQL semantics, such as `UNION ALL` or `EXCEPT`.",
-      "description_length": 354,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Query.Make",
-      "library": "macaque",
-      "description": "This module executes SQL queries and handles result parsing with logging support, working with SQL types defined via the `Sql` module, including queries, views, and typed values. It provides operations to run parameterized SQL, retrieve single or multiple rows, and extract scalar values from a database. The `Sql` module defines the core SQL types and structures used throughout, enabling type-safe query construction and result mapping. Together, they allow tasks like executing prepared statements, logging query execution, and transforming results into OCaml values with precise typing.",
-      "description_length": 590,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Sql_public.View",
-      "library": "macaque",
-      "description": "Constructs a concrete view from a single database row, typically used to materialize a view from a query result. Works with `Sql_internals.row` and `Sql_internals.concrete_view` types. Useful when mapping raw query results to structured view representations in database abstractions.",
-      "description_length": 283,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Sql.ViewOp",
-      "library": "macaque",
-      "description": "This module provides SQL set operations\u2014union, intersection, and difference\u2014over views with consistent schemas. It combines two views into a new read-only view, supporting both distinct and all-element variants of each operation. These functions are used to compose complex queries from simpler views, such as merging result sets, finding common rows, or excluding entries between views.",
-      "description_length": 387,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Query.THREAD",
-      "library": "macaque",
-      "description": "This module implements asynchronous I/O operations for network communication, providing functions to open connections, send and receive binary data, and handle exceptions during transmission. It works with custom `in_channel` and `out_channel` types to manage input and output streams over sockets. Concrete use cases include implementing network protocols, reading and writing binary messages, and handling client-server communication with error recovery.",
-      "description_length": 456,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Query.QUERY",
-      "library": "macaque",
-      "description": "This module executes SQL queries and retrieves results from a database using a set of functions tailored for different result types. It supports operations like `query` for executing arbitrary SQL, `view` variants for selecting lists, single values, or optional results, and `value` functions for scalar outcomes. It works directly with SQL types, database connections, and monadic result wrappers, enabling precise database interactions such as fetching user records, counting entries, or retrieving optional profile data.",
-      "description_length": 523,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Sql.View",
-      "library": "macaque",
-      "description": "Handles SQL view injections with support for single-row queries. Works with SQL row types and non-nullable, non-writable fields. Use for safely embedding SQL views that return exactly one row.",
-      "description_length": 192,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Sql.Value",
-      "library": "macaque",
-      "description": "This module directly converts OCaml values like booleans, integers, floats, strings, and time-related types into corresponding SQL values for query construction. Each function maps a specific OCaml type to a typed SQL expression, supporting parameterized queries and safe value interpolation. It is used when embedding values into SQL statements using pa_macaque syntax extensions or manual query building.",
-      "description_length": 406,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Query.Make_with_Db",
-      "library": "macaque",
-      "description": "This module executes SQL queries and retrieves results using database and thread abstractions. It supports operations for running parameterized queries, fetching multiple or single results, and extracting scalar values. Concrete use cases include querying database tables, retrieving lists of records, and handling optional or non-nullable fields directly from SQL results.",
-      "description_length": 373,
-      "index": 15,
+      "description": "This module generates unique identifier values for database records using sequence types. It provides functions to create serial, bigserial, and custom sequence values, each returning a tuple of the input and an atom representing the sequence type. These functions are used when defining table columns that require auto-incrementing values in SQL schemas.",
+      "description_length": 355,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sql_public.Table_type",
       "library": "macaque",
-      "description": "This module defines SQL type constructors for various database schema definitions. Each function takes a boolean flag to indicate nullability and returns a corresponding SQL type representation. It is used to declare column types in database tables with specific constraints and data formats.",
-      "description_length": 292,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Sql_public.Sequence",
-      "library": "macaque",
-      "description": "This module generates sequence values for database identifiers, producing pairs of input values and atomic sequence types. It supports serial, bigserial, and custom sequence types, mapping each to a corresponding SQL sequence representation. Use this module to define auto-incrementing columns in table schemas with precise sequence behavior.",
-      "description_length": 342,
-      "index": 17,
+      "description": "This module defines functions that construct SQL type representations from OCaml types, mapping directly to database schema definitions. Each function corresponds to a specific SQL data type, such as boolean, integer, text, and timestamp, and accepts a boolean indicating nullability. These functions are used when defining table schemas in OCaml to ensure correct SQL type generation during database interaction.",
+      "description_length": 413,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Query",
+      "module_path": "Query.Make",
       "library": "macaque",
-      "description": "This module executes SQL queries and processes results with typed SQL interactions, offering functions like `query`, `view`, and `value` to retrieve result sets, mapped records, and scalar values. It supports direct database access through connection handles and monadic result wrappers, enabling precise data extraction for tasks like fetching user records or counting entries. Submodules handle PostgreSQL type conversions, transaction control, and connection pooling, supporting advanced use cases like schema evolution and batch data ingestion. Additional components provide asynchronous I/O for network communication and utilities for parsing SQL types defined in the `Sql` module.",
-      "description_length": 686,
-      "index": 18,
+      "description": "This module implements type-safe database query execution and result processing workflows. It operates on SQL queries and views defined using the `Sql` module's type definitions, returning results within the `Db.monad` context for handling side effects. Concrete use cases include executing parameterized queries, retrieving lists or single values from views, and handling nullable and non-nullable SQL types with explicit conversion to OCaml representations.",
+      "description_length": 459,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql_public.ViewOp",
+      "library": "macaque",
+      "description": "This module implements set operations and binary operators for combining SQL views. It provides functions for union, intersection, and difference operations, both with and without duplicate elimination, as well as a general binary operator function. These operations work on concrete SQL views, enabling the construction of complex queries by combining existing view structures.",
+      "description_length": 378,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql_public.View",
+      "library": "macaque",
+      "description": "Converts a database row into a concrete view instance by applying the row data to a generic view structure. Works with `Sql_internals.row` and `Sql_internals.concrete_view` types. Useful for materializing views from raw query results in a type-safe manner.",
+      "description_length": 256,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Query.Make_with_Db",
+      "library": "macaque",
+      "description": "This module executes SQL queries and views against a database, supporting operations like single-value retrieval, list views, and optional results. It works with SQL types defined via the `Sql` module, handling both nullable and non-nullable values, and integrates with a database abstraction through the `Db` module. Concrete use cases include fetching a list of records, retrieving a single value, or querying an optional result directly from a database connection.",
+      "description_length": 467,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql.View",
+      "library": "macaque",
+      "description": "Handles SQL view injections for single-row queries, converting a SQL expression into a typed view. Works with SQL row types and enforces non-nullability and non-writability constraints. Useful for safely embedding static SQL views directly into OCaml code using antiquotations.",
+      "description_length": 277,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Inner_sql",
+      "module_path": "Sql_public.Op",
       "library": "macaque",
-      "description": "This module provides utilities for type manipulation, query construction, and SQL string generation, focusing on handling nullability, type coercion, and structured data extraction. It operates on SQL-specific representations like typed values, fields, rows, and tables, alongside internal constructs for views and query DSLs. Key use cases include dynamic SQL query composition, safe/unsafe type conversions, and programmatic generation of executable SQL statements from abstract syntax trees.",
-      "description_length": 494,
-      "index": 19,
+      "description": "This module provides type-safe construction of SQL expressions through operations like comparisons, arithmetic, logical operators, and aggregate functions, working with typed SQL values represented as value-type pairs. It supports use cases such as building query conditions (`is_null`, `is_distinct_from`), performing calculations (`+`, `*`), aggregating data (`sum`, `count`), and utilizing database functions (`md5`, `current_timestamp`) while handling optional values through explicit null semantics.",
+      "description_length": 504,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql.Value",
+      "library": "macaque",
+      "description": "This module directly maps OCaml values to SQL types for query injection, supporting basic and temporal types like integers, floats, strings, dates, timestamps, and arrays. Each function converts a specific OCaml type into a typed SQL value suitable for use in queries. It is used to safely embed values into SQL statements, particularly within pa_macaque antiquotations.",
+      "description_length": 370,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql_public.Value",
+      "library": "macaque",
+      "description": "This module directly converts OCaml primitive and database-specific types into SQL values paired with their corresponding SQL types. It handles conversions for booleans, integers, floats, strings, byte arrays, and temporal types like time, date, and timestamps, including time zones and intervals. These functions are used when binding OCaml values to SQL queries, ensuring correct type representation in the database.",
+      "description_length": 418,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql.Op",
+      "library": "macaque",
+      "description": "This module provides functions for handling null values, arithmetic operations, comparisons, logical operations, and SQL aggregates like `count`, `sum`, `min`, and `max`. It operates on SQL type values annotated with nullability, SQL groups, sequences, and unit values, producing typed SQL expressions with precise nullability guarantees. These capabilities support use cases such as constructing complex SQL expressions, aggregating data in grouped queries, generating unique sequence values, and working with timestamps or hash functions like `md5`.",
+      "description_length": 551,
+      "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Check",
+      "module_path": "Sql.Sequence",
       "library": "macaque",
-      "description": "This module performs schema validation checks for database tables and sequences. It verifies table structures by comparing expected column names, data types, and nullability against actual database descriptions, and ensures sequences match expected type definitions. Functions operate on SQL views, sequences, and PGOCaml monadic database connections, supporting compile-time schema validation for type-safe database interactions.",
-      "description_length": 430,
-      "index": 20,
+      "description": "This module defines sequence generators for SQL identifiers, producing 32-bit and 64-bit integer sequences. It includes functions for creating serial and bigserial sequences commonly used in database schema definitions. These sequences are used to generate auto-incrementing values for table columns in SQL databases.",
+      "description_length": 317,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Query.Db",
+      "library": "macaque",
+      "description": "This module provides database connectivity, transaction control, and type mapping capabilities, working with structured data representations like `oid`, `param`, `result`, and `row`. It enables type-safe query execution through parameterized statements, handles bidirectional conversion between PostgreSQL and OCaml types (e.g., `jsonb`, `timestamptz`, `uuid`), and manages session state with customizable isolation levels. Use cases include executing parameterized SQL with typed results, parsing database schema metadata, and handling transactional operations with explicit commit/rollback semantics.",
+      "description_length": 602,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql.ViewOp",
+      "library": "macaque",
+      "description": "This module implements standard SQL set operations for combining or comparing query results. It provides functions like `union`, `intersect`, and `except`, each with both deduplicated and all-rows variants, operating on SQL views with matching row types. These operations are used to construct complex queries by combining or filtering result sets from multiple views.",
+      "description_length": 368,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql_keywords",
+      "library": "macaque",
+      "description": "This module manages SQL keyword normalization and safety, providing a list of reserved keywords with their SQL 2003 and PostgreSQL reservation status. It includes functions to normalize keyword case and escape identifiers that conflict with SQL keywords. These operations are used during SQL query parsing and generation to avoid syntax errors and ensure compatibility.",
+      "description_length": 369,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql",
+      "library": "macaque",
+      "description": "This module provides type-safe construction and manipulation of SQL queries and schemas through typed expressions, views, and nullability-aware values. It operates on structured data representations like rows, tuples, and sequences, enabling use cases such as null-safe aggregation, view composition, and embedding OCaml values into SQL while preserving type correctness. Key operations include query building (select/insert/update), schema definition, and result handling via composable, type-checked primitives.",
+      "description_length": 513,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sql_base",
       "library": "macaque",
-      "description": "Handles basic SQL type definitions and object management for PostgreSQL interactions. Provides an untyped type for raw object handling, an OID type for PostgreSQL object identifiers, and a path separator for constructing SQL paths. Used for low-level database schema manipulation and direct SQL query construction.",
-      "description_length": 314,
-      "index": 21,
+      "description": "Handles basic SQL type representations and object identifiers. Provides a type `untyped` for generic SQL values and `oid` for PostgreSQL object IDs, along with a `path_separator` string used for hierarchical data paths. Useful for low-level database interaction where type erasure or object identity is required.",
+      "description_length": 312,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sql_builders",
       "library": "macaque",
-      "description": "This module provides functions for constructing and validating SQL queries, including select, insert, delete, and update operations, alongside type manipulation, field access, and conditional expressions. It operates on database entities such as tables, views, row identifiers, and typed values to enable dynamic query generation, schema-aware transformations, and type-safe database interactions. Use cases include building parameterized queries, enforcing type consistency in expressions, and programmatically composing complex SQL statements from modular components.",
-      "description_length": 569,
+      "description": "This module enables constructing and manipulating SQL queries, expressions, and values through operations like type checking, casting, field access, conditional logic, and query building for selects, inserts, updates, deletes, views, and grouping. It operates on internal SQL representations such as values, rows, tables, and views, supporting parameterized query construction via a fluent, type-safe DSL to ensure correctness and composability in dynamic SQL generation.",
+      "description_length": 471,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Check",
+      "library": "macaque",
+      "description": "This module performs schema validation checks for database tables and sequences. It verifies table structures by comparing expected column names, data types, and nullability against actual database metadata, and ensures sequences match expected type definitions. Functions operate on SQL views, sequences, and PGOCaml monadic database connections, using OCaml objects to represent schema metadata.",
+      "description_length": 397,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sql_types",
+      "library": "macaque",
+      "description": "This interface provides type coercion, value extraction, and type refinement operations for managing SQL type information in structured query systems. It works with type markers like `nullable`, `non_nullable`, and `non_writable`, along with typed value representations, to enforce type safety during query construction and execution. Specific use cases include safely extracting typed values from SQL results (`get`, `get_val`) and refining ambiguous types (`force_gettable`) in type-safe query interfaces.",
+      "description_length": 507,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Query",
+      "library": "macaque",
+      "description": "This module implements type-safe database query execution and result processing workflows. It operates on SQL queries and views defined using the `Sql` module's type definitions, returning results within the `Db.monad` context for handling side effects. Concrete use cases include executing parameterized queries, retrieving lists or single values from views, and handling nullable and non-nullable SQL types with explicit conversion to OCaml representations.",
+      "description_length": 459,
       "index": 22,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Sql_parsers",
+      "module_path": "Sql_printers",
       "library": "macaque",
-      "description": "This module provides low-level parsing functions for converting SQL query results into OCaml values through direct, unsafe extraction from strings and arrays, alongside type-specific deserializers for SQL data types like integers, floats, dates, and arrays. It operates on untyped SQL result data, using references to manage parsing positions, and is typically integrated into generic database result processing pipelines to enable typed value conversion from raw query outputs.",
-      "description_length": 478,
+      "description": "This module provides functions to convert structured SQL components like selections, conditions, and values into properly escaped and formatted SQL strings, supporting operations such as query assembly and literal value serialization. It works with abstract syntax trees derived from `Sql_internals` types (e.g., `select`, `where`) and OCaml primitives (booleans, floats, byte arrays), ensuring safe SQL generation. It is used to construct dynamic queries from internal data models and embed typed values into SQL statements without injection risks.",
+      "description_length": 549,
       "index": 23,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sql_public",
       "library": "macaque",
-      "description": "This module transforms structured queries into executable SQL strings while managing type-safe value handling and result parsing. It processes SQL abstract syntax trees and typed references to generate valid SQL output, supporting operations like query composition, view manipulation, and schema construction. The module coordinates with submodules to build complex expressions using arithmetic, logical, and aggregate functions, combine views with set operations like union and except, and serialize OCaml values into SQL-compatible representations. Specific capabilities include constructing type-aware conditions (`sum`, `is_distinct_from`), defining nullable column types, mapping query rows to structured views, and generating sequence-backed identifiers for database schemas.",
-      "description_length": 781,
+      "description": "This module converts SQL abstract syntax trees into string representations, parses SQL values with type handling, and provides type-safe SQL expression and schema construction. It operates on SQL queries, views, and typed values, supporting data types like integers, strings, timestamps, and nullables. Concrete use cases include generating SQL strings from OCaml-defined queries, binding OCaml values into SQL expressions, defining database schemas with typed columns, and combining SQL views using set operations.",
+      "description_length": 515,
       "index": 24,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Sql_printers",
+      "module_path": "Inner_sql",
       "library": "macaque",
-      "description": "This module offers functions to convert SQL abstract syntax tree (AST) elements and primitive OCaml types into textual SQL representations, handling tasks like escaping values, formatting lists, and rendering clauses (e.g., WHERE conditions, ORDER BY). It operates on SQL AST nodes, basic types (bool, float, bytea), and query structures, enabling use cases like dynamic SQL query generation and serialization of internal data models into executable SQL statements.",
-      "description_length": 465,
+      "description": "This module enables type-safe manipulation of SQL values and type information through coercions, recovery, and structured field access on polymorphic records and database rows. It facilitates constructing and transforming SQL queries (including SELECT, INSERT, UPDATE, DELETE) with conditional logic, ordering, and view operations, using internal representations like query trees and table data. Its core applications involve dynamically building type-preserving queries and converting structured query objects into executable SQL strings for database interaction.",
+      "description_length": 564,
       "index": 25,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Sql_keywords",
-      "library": "macaque",
-      "description": "This module manages SQL keyword normalization and safety, providing a list of reserved keywords with their SQL standard and PostgreSQL-specific statuses. It includes functions to normalize keyword casing and escape identifiers that conflict with reserved words. These operations are essential for generating valid SQL queries when user input may clash with database-specific reserved terms.",
-      "description_length": 390,
-      "index": 26,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Sql",
-      "library": "macaque",
-      "description": "This module enables type-safe manipulation of SQL type information, including nullable markers, casting, and parsing, while supporting query construction with conditional logic, grouping, and table transformations. It provides core data types like `Sql.t` for SQL expressions, `Sql.group` for grouped contexts, and typed representations such as `numeric_t` and `string_t`, alongside operations for aggregation, arithmetic, and temporal logic. Child modules extend this foundation with null handling, field type constructors, sequence types, set operations on views, single-row view injection, and direct conversion of OCaml values to typed SQL expressions. Examples include building conditional queries with aggregations, defining table schemas with typed nullable fields, generating auto-incrementing IDs, combining views with union operations, and safely embedding OCaml values into SQL statements.",
-      "description_length": 900,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 81,
-    "meaningful_modules": 28,
-    "filtered_empty_modules": 53,
-    "retention_rate": 0.345679012345679
+    "total_modules_in_package": 78,
+    "meaningful_modules": 26,
+    "filtered_empty_modules": 52,
+    "retention_rate": 0.3333333333333333
   },
   "statistics": {
-    "max_description_length": 900,
-    "min_description_length": 192,
-    "avg_description_length": 480.5357142857143,
-    "embedding_file_size_mb": 0.10213661193847656
+    "max_description_length": 632,
+    "min_description_length": 256,
+    "avg_description_length": 439.7307692307692,
+    "embedding_file_size_mb": 0.3770608901977539
   }
 }

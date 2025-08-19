@@ -1,119 +1,119 @@
 {
   "package": "unix-errno",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 14,
-  "creation_timestamp": "2025-07-15T23:09:57.376249",
+  "creation_timestamp": "2025-08-14T23:30:51.330107",
   "modules": [
     {
-      "module_path": "Errno_unix",
-      "library": "unix-errno.unix",
-      "description": "This module translates between symbolic error numbers and Unix error codes, providing direct access to the C `errno` variable and raising exceptions in either representation. It supports converting error codes to exceptions, handling system call failures, and ensuring correct error propagation in POSIX-compliant environments. Concrete use cases include error handling in system interfaces like file operations, socket programming, and process management.",
-      "description_length": 456,
+      "module_path": "Unix_errno_bindings.C",
+      "library": "unix-errno.errno_bindings",
+      "description": "This module provides operations to access and manipulate Unix errno constants, including retrieving specific error codes like `EMEDIUMTYPE` or `ERPCMISMATCH` and managing the current errno state. It works with signed integer representations of system error codes, wrapping results in a monadic type for safe handling of low-level system interactions. These abstractions are used in scenarios requiring precise error diagnosis during system calls, RPC implementations, or Unix environment-specific error handling.",
+      "description_length": 512,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Unix_errno_types_detected",
-      "library": "unix-errno.errno_types_detected",
-      "description": "This module supports low-level memory manipulation and type-safe interoperability with C code through operations on C-compatible data representations. It handles primitive types (integers, floats, pointers), structured types (structs, unions, arrays), and memory abstractions (Bigarrays, pointers) to enable tasks like direct memory access, type coercion, and C library integration. Specific use cases include defining C-style data layouts, performing pointer arithmetic, and converting between OCaml and C memory representations for system programming or foreign function interface (FFI) development.",
-      "description_length": 601,
+      "module_path": "Unix_errno_bindings",
+      "library": "unix-errno.errno_bindings",
+      "description": "This module provides direct access to Unix errno constants and operations to manipulate error states, such as retrieving specific error codes like `EMEDIUMTYPE` and `ERPCMISMATCH`. It works with signed integers representing system error codes, wrapping them in a monadic type for safe handling of low-level system interactions. It is used for precise error diagnosis in system calls, RPC implementations, and Unix-specific error handling.",
+      "description_length": 438,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Errno.Host",
       "library": "unix-errno",
-      "description": "This module converts between host-specific error definitions and a portable representation. It operates on `Errno.defns`, which represents error code descriptions, and the abstract type `t` that encapsulates host-specific error information. Use this module to serialize or deserialize error definitions for cross-platform compatibility or storage.",
-      "description_length": 347,
+      "description": "This module converts between host-specific error definitions and a standardized error representation. It operates on `Errno.defns` and `Errno.Host.t` types, enabling portable handling of system error codes across different platforms. Use this module to translate error codes from system calls into a consistent format for application logic.",
+      "description_length": 340,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Errno",
       "library": "unix-errno",
-      "description": "This module defines error codes and related operations for handling system call errors, converting between host-specific error definitions and a portable representation. It provides functions to map error codes to symbolic names, produce human-readable messages, and encapsulate host-specific error information using types like `t` and `Errno.defns`. You can use it to interpret failed system calls\u2014such as file access or network operations\u2014by converting `errno` values into structured, cross-platform error data. The module also supports serializing error definitions for storage or transmission, enabling consistent error handling across different systems.",
-      "description_length": 658,
+      "description": "This module defines a standardized set of POSIX error codes as a variant type and provides functions to map between numeric error codes and their symbolic representations. It works with system call error codes and structured error definitions to support consistent error handling across platforms. Use it to interpret and compare system errors, such as identifying connection refusals or permission issues from OS-level operations.",
+      "description_length": 431,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Unix_errno_bindings.C",
-      "library": "unix-errno.errno_bindings",
-      "description": "This module provides operations to retrieve and manipulate Unix error codes as signed integers, including resetting and querying the current `errno` value within a monadic context. It works with system-specific error constants (e.g., `EMEDIUMTYPE`, `EKEYEXPIRED`, RPC-related codes) and wraps results in a functional return type to handle effectful computations. These functions are used for precise error propagation in low-level system programming, handling RPC/streaming failures, and system call error diagnostics.",
-      "description_length": 518,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Unix_errno_bindings",
-      "library": "unix-errno.errno_bindings",
-      "description": "This module handles Unix error codes as signed integers within a monadic context, allowing retrieval, manipulation, and querying of the current `errno` value. It supports system-specific error constants such as `EMEDIUMTYPE` and `EKEYEXPIRED`, and wraps operations in a functional return type for effectful computations. It enables precise error propagation in low-level system programming, handling RPC/streaming failures, and system call diagnostics. For example, it can reset `errno`, check specific error conditions, or wrap system call results for safe error handling.",
-      "description_length": 573,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Unix_errno_types.C",
-      "library": "unix-errno.errno_types",
-      "description": "This module provides constants of type `Signed.sint` representing Unix error codes (e.g., `eacces`, `eaddrinuse`, `econnrefused`) to identify system-level error conditions. These values are used in low-level system programming contexts such as file I/O, networking, and inter-process communication to handle failures like permission denial, network connection issues, or invalid memory access.",
-      "description_length": 393,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Unix_errno_generated",
-      "library": "unix-errno.errno_types",
-      "description": "This module exposes low-level Unix error constants as pure functions mapping to signed integers, enabling precise system error handling across diverse environments. It supports operations for retrieving platform-specific errno values (e.g., hardware faults, key management errors, Mach-O binary issues) and provides combinators for integrating these codes with foreign function interfaces via Ctypes. Designed for system-level programming, it facilitates cross-platform error code consistency and interoperability with C libraries requiring direct errno manipulation.",
-      "description_length": 567,
-      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Unix_errno_types",
-      "library": "unix-errno.errno_types",
-      "description": "This module defines a set of integer constants representing standard Unix error codes, enabling precise identification of system-level error conditions. The primary type is `Signed.sint`, used to represent errors such as `eacces` (permission denied), `eaddrinuse` (network address in use), and `econnrefused` (connection refused). These constants are used in system programming tasks like handling file I/O errors, diagnosing network failures, or managing inter-process communication. For example, a function attempting to open a restricted file might return `eacces`, allowing the caller to handle permission issues explicitly.",
-      "description_length": 628,
-      "index": 8,
+      "module_path": "Errno_unix",
+      "library": "unix-errno.unix",
+      "description": "This module translates between symbolic error numbers and Unix error codes, manipulating the C `errno` thread-local state and raising exceptions accordingly. It operates on `Errno.t`, `Unix.error`, and system-level integer error codes through direct conversions and bidirectional mappings. Concrete use cases include handling system call errors via `get_errno` and `raise_errno`, and safely wrapping functions that return `None` on error with `raise_on_errno`.",
+      "description_length": 460,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Errno_host.OSX",
       "library": "unix-errno.host",
-      "description": "Represents a specific macOS version (10.11.4) as a value of type `Errno.Host.t`. Used to handle OS-specific error codes and system call behaviors on macOS. Enables writing platform-targeted code that adapts to known OS versions for compatibility and correctness.",
-      "description_length": 262,
-      "index": 9,
+      "description": "Represents the macOS version 10.11.4 as a specific target configuration. Works with the `Errno.Host.t` type to distinguish between different OS versions for error handling. Useful when writing platform-specific code that requires precise macOS version checks.",
+      "description_length": 259,
+      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Errno_host.Linux",
       "library": "unix-errno.host",
-      "description": "Represents the Linux kernel version 4.4.6 as an `Errno.Host.t` value. Used to specify or compare against known Linux versions when handling system error codes or platform-specific behavior. Directly assists in conditional logic based on kernel version constraints.",
-      "description_length": 264,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "Represents the Linux kernel version 4.4.6 as an `Errno.Host.t` value. Used to specify or compare against known Linux versions when handling system error codes or OS-specific behavior. Directly assists in conditional logic for compatibility checks or error mapping in low-level system programming.",
+      "description_length": 296,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Errno_host",
       "library": "unix-errno.host",
-      "description": "This module provides values of type `Errno.Host.t` representing specific OS versions\u2014macOS 10.11.4 and Linux 4.4.6\u2014for handling system error codes and syscall behaviors. These values enable conditional logic that adapts to known platform versions, ensuring compatibility and correctness. For example, code can branch based on whether the host matches the Linux 4.4.6 kernel or the macOS 10.11.4 version, allowing precise error handling and system interaction.",
-      "description_length": 459,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Errno_map_osx_10_11_4",
-      "library": "unix-errno.host",
-      "description": "This module defines error number constants and host-specific error handling for macOS 10.11.4. It maps OS-specific error codes to a structured format usable in error reporting and system call handling. Useful for low-level system programming where precise error identification and handling is required.",
-      "description_length": 302,
-      "index": 12,
+      "description": "This module defines specific OS version targets like Linux 4.4.6 and macOS 10.11.4 as values of type `Errno.Host.t`. It enables precise version-based conditionals for handling OS-specific error codes and system behavior in low-level system programming. Use it to implement compatibility checks or map errors differently based on exact OS versions.",
+      "description_length": 347,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Errno_map_linux_4_4_6",
       "library": "unix-errno.host",
-      "description": "This module defines error number constants and descriptions for Linux kernel version 4.4.6. It maps specific system call error codes to their corresponding symbolic names and provides a host-specific error handling context. Use this module when working with low-level system operations that require precise error identification and handling on Linux systems.",
-      "description_length": 358,
+      "description": "This module defines error number constants and descriptions for Linux kernel version 4.4.6. It maps specific Linux system call errors to human-readable messages and structured data. Use this module when handling low-level system errors in environments targeting that kernel version.",
+      "description_length": 282,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Errno_map_osx_10_11_4",
+      "library": "unix-errno.host",
+      "description": "This module defines error number constants and host-specific error information for macOS 10.11.4. It maps OS-specific error codes to their symbolic names and provides access to host-level error details. Useful for handling and inspecting system-level errors in low-level system programming tasks such as file operations, process control, or network communication.",
+      "description_length": 363,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Unix_errno_types.C",
+      "library": "unix-errno.errno_types",
+      "description": "This module provides a collection of constants representing Unix system call error codes, such as `EACCES`, `ENOENT`, and `EPIPE`, which are used to identify specific failure conditions in low-level operations. The error codes are defined as signed integer values of type `Signed.sint` and grouped under a submodule `F` for structured access, primarily serving error handling in system programming tasks like file I/O, networking, and inter-process communication. These constants align with POSIX standards, enabling precise error checking and handling when interacting with Unix-like operating system interfaces.",
+      "description_length": 613,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Unix_errno_types",
+      "library": "unix-errno.errno_types",
+      "description": "This module defines a set of standard Unix error codes as signed integers, such as `EACCES`, `ENOENT`, and `EPIPE`, used for precise error identification in system calls. It organizes these constants under the `C` submodule for structured access, primarily supporting error handling in low-level operations like file manipulation, socket communication, and process control. These values correspond directly to POSIX error codes, enabling accurate diagnosis and response to failure conditions in Unix-like environments.",
+      "description_length": 518,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Unix_errno_generated",
+      "library": "unix-errno.errno_types",
+      "description": "This module exposes operations to retrieve and reset Unix error codes (errno) as signed integers, along with symbolic constants representing specific system error conditions (e.g., `ECHRNG`, `ESRMNT`). It works with C-compatible error mappings and integrates FFI utilities for bridging OCaml with C functions, such as type conversions and result handling. These capabilities are particularly useful for low-level system programming, error handling in foreign function calls, and mapping OCaml exceptions to POSIX error semantics.",
+      "description_length": 529,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Unix_errno_types_detected",
+      "library": "unix-errno.errno_types_detected",
+      "description": "This module enables low-level type definitions and memory manipulation for interfacing OCaml with C, offering precise mappings of C primitives (e.g., fixed-width integers, floats, pointers) and composite types (structs, unions, arrays) via libraries like `Ctypes_static` and `Bigarray`. It supports pointer arithmetic, memory allocation, type coercion, and structured data access, facilitating direct interaction with C APIs and system-level data layouts. Specific use cases include binding foreign functions, handling hardware-specific memory alignments, and managing C-compatible aggregates like null-terminated strings or sized arrays in OCaml.",
+      "description_length": 647,
       "index": 13,
       "embedding_norm": 1.0
     }
@@ -125,9 +125,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 658,
-    "min_description_length": 262,
-    "avg_description_length": 456.14285714285717,
-    "embedding_file_size_mb": 0.05126476287841797
+    "max_description_length": 647,
+    "min_description_length": 259,
+    "avg_description_length": 431.07142857142856,
+    "embedding_file_size_mb": 0.2034158706665039
   }
 }

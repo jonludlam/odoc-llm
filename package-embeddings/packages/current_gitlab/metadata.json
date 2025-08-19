@@ -1,89 +1,89 @@
 {
   "package": "current_gitlab",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 10,
-  "creation_timestamp": "2025-07-15T23:06:25.809739",
+  "creation_timestamp": "2025-08-14T23:06:59.882855",
   "modules": [
-    {
-      "module_path": "Current_gitlab.Api.Ref",
-      "library": "current_gitlab",
-      "description": "This module defines types and operations for representing Git references and merge requests in GitLab. It includes types like `mr_info` for merge request metadata, `t` for tagged references or merge requests, and `id` for simplified identifiers. Functions support pretty-printing, comparison, and conversion of references to Git-compatible strings, enabling precise handling of GitLab API responses and webhook events.",
-      "description_length": 418,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Current_gitlab.Api.Anonymous",
       "library": "current_gitlab",
-      "description": "This module provides the `head_of` function, which retrieves the head commit of a specified GitLab repository and reference without requiring an API token. It operates on public repositories only and relies on external webhook configuration to notify the system of changes. Use this when tracking public GitLab projects where authentication is unnecessary or unavailable.",
-      "description_length": 371,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Current_gitlab.Api.Ref_map",
-      "library": "current_gitlab",
-      "description": "This module provides a map data structure optimized for working with ordered GitLab reference keys (`Current_gitlab.Api.Ref.t`), supporting standard map operations like insertion, lookup, and bulk transformations while preserving key ordering. It enables efficient traversal, filtering, and aggregation over key-value pairs where keys represent GitLab branch/tag references and values can be arbitrary data types. Typical use cases include tracking pipeline states across GitLab branches, merging CI configuration metadata, or processing commit history in ordered sequences.",
-      "description_length": 574,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Current_gitlab.Api.Status",
-      "library": "current_gitlab",
-      "description": "This module defines commit status states and constructs status objects for reporting to GitLab. It works with commit identifiers and status metadata such as name, description, and URL. Use it to create and update build or test results directly in GitLab's UI for specific commits.",
-      "description_length": 280,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Current_gitlab.Api.Commit",
-      "library": "current_gitlab",
-      "description": "This module represents a specific Git commit from GitLab, providing access to its metadata such as commit hash, message, timestamp, and repository identity. It supports operations to retrieve commit details, construct repository identifiers, set commit statuses, and generate web URIs. Concrete use cases include tracking commit information for CI pipelines, displaying commit data in web interfaces, and updating commit status in response to build results.",
-      "description_length": 457,
-      "index": 4,
+      "description": "This module provides the `head_of` function, which retrieves the head commit of a specified repository and reference without using an API token, requiring the repository to be public. It works with repository identifiers, Git references, and commit identifiers. Use this to track the latest commit of a public GitLab repository's branch or tag when webhook notifications are configured to trigger updates.",
+      "description_length": 405,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Current_gitlab.Api.Repo",
       "library": "current_gitlab",
-      "description": "This module represents a GitLab repository and provides operations to retrieve repository metadata and version control information. It works with repository identifiers and integrates with the GitLab API to fetch branches, open merge requests, and head commits. Concrete use cases include tracking repository state changes and retrieving the latest commit for continuous integration workflows.",
-      "description_length": 393,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module represents a GitLab project's repository and provides operations to retrieve repository metadata such as its identifier, compare repositories, and format their representation. It supports fetching CI references (branches and open merge requests) and obtaining the head commit of the default branch. These functions are used to interact with GitLab's API for continuous integration workflows, such as triggering builds or inspecting repository state.",
+      "description_length": 461,
+      "index": 1,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Current_gitlab.Auth",
+      "module_path": "Current_gitlab.Api.Commit",
       "library": "current_gitlab",
-      "description": "Handles user authentication via GitLab OAuth. It provides functions to create an authentication configuration, generate a login URI, and manage the login callback route. Works with GitLab OAuth credentials and integrates with web frameworks to enable secure user login flows. Useful for applications needing GitLab-based identity verification.",
-      "description_length": 343,
-      "index": 6,
+      "description": "This module represents a specific Git commit from GitLab, providing access to its metadata such as commit hash, message, owner, repository, and associated merge request or branch name. It supports operations to retrieve commit details, construct repository identifiers, and set commit statuses via the GitLab API. Concrete use cases include tracking and updating the status of a commit in response to CI/CD pipeline events or displaying commit information in a user interface.",
+      "description_length": 476,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_gitlab.Api.Ref",
+      "library": "current_gitlab",
+      "description": "This module defines types and operations for working with GitLab references, including branches and merge requests. It provides structured representations like `mr_info` for merge request data and supports conversion to Git-compatible reference strings. Use cases include handling webhook events and API responses that refer to commits via branches or merge requests.",
+      "description_length": 367,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_gitlab.Api.Ref_map",
+      "library": "current_gitlab",
+      "description": "This module implements an ordered map structure optimized for keys of type `Current_gitlab.Api.Ref.t`, supporting efficient key-based operations like insertion, lookup, filtering, and ordered traversal. It provides bulk transformations (e.g., merging, splitting, sequence-based updates) and maintains strict key ordering for deterministic iteration and functional updates. Such maps are particularly useful for tracking GitLab references (e.g., branches, tags) in workflows requiring ordered processing, such as commit history analysis or webhook event routing.",
+      "description_length": 561,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_gitlab.Api.Status",
+      "library": "current_gitlab",
+      "description": "This module defines the status types and creation function for reporting build states to GitLab. It works with commit statuses, using `state` variants like `Success` or `Failure`, and constructs status values with metadata such as name, description, and URL. It is used to update GitLab commit status checks in response to CI pipeline outcomes.",
+      "description_length": 344,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Current_gitlab.Api",
       "library": "current_gitlab",
-      "description": "This module provides direct access to the GitLab API for retrieving repository metadata and event data, with strongly-typed representations of refs, commits, and repositories. It supports operations like fetching the head commit, listing branches and open PRs, and accessing raw reference data, enabling precise handling of webhook payloads and CI-related queries. Submodules enhance this functionality with specialized types for merge requests and references, public head commit retrieval, ordered reference maps, commit status reporting, and detailed commit and repository objects. For example, you can track public project heads without authentication, map branch references to pipeline states, or update commit statuses directly in GitLab's UI.",
-      "description_length": 748,
-      "index": 7,
+      "description": "This module provides direct access to GitLab's API for handling webhooks, commits, and repository data. It includes functions to retrieve head commits, list CI references, and manage GitLab refs with structured types, supporting concrete workflows like validating webhook payloads, updating commit statuses for CI pipelines, and tracking branch or merge request heads. The module works with GitLab projects through types like `Repo_id`, `Commit`, and `Ref`, enabling integration with continuous integration and deployment systems by directly interfacing with GitLab's API endpoints.",
+      "description_length": 582,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Current_gitlab.Repo_id",
       "library": "current_gitlab",
-      "description": "This module represents and manipulates identifiers for GitLab projects, encapsulating the owner, repository name, and project ID. It provides functions to parse identifiers from strings, compare them, and format them for display. It is used to uniquely identify and work with GitLab repositories in command-line tools and event handlers.",
-      "description_length": 337,
+      "description": "This module defines a type `t` representing a GitLab repository identifier, composed of an owner, name, and project ID. It provides functions to pretty-print, compare, and parse repository IDs in the format `owner/name/project_id`. Useful for handling GitLab project identifiers consistently across command-line interfaces and logging.",
+      "description_length": 335,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_gitlab.Auth",
+      "library": "current_gitlab",
+      "description": "This module handles user authentication via GitLab OAuth. It provides functions to create an authentication configuration, generate a login URI for web authentication, and manage the login callback route. It works with `Current_gitlab.Auth.t` and integrates with `Current_web` for web-based authentication flows. Use it to secure web interfaces by authenticating users through GitLab and to set up OAuth-based access control in web applications.",
+      "description_length": 445,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Current_gitlab",
       "library": "current_gitlab",
-      "description": "This module integrates with GitLab webhooks and APIs to handle event processing, repository identification, and user authentication. It provides core functionality for parsing webhook payloads, authenticating via OAuth, and uniquely identifying GitLab projects using structured identifiers. You can, for example, set up a webhook endpoint to process push events, retrieve branch and merge request data, or generate login URIs for GitLab-based user authentication. Strongly-typed data models for commits, refs, and repositories enable precise querying and status updates directly from CI pipelines or command-line tools.",
-      "description_length": 619,
+      "description": "This module handles GitLab webhook integration, providing a webhook endpoint that authenticates payloads using a secret. It works with repository identifiers, commits, and refs to support workflows like validating webhook events, retrieving head commits, and updating CI statuses. Use it to build continuous integration pipelines that react to GitLab events such as push or merge requests.",
+      "description_length": 389,
       "index": 9,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -93,9 +93,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 748,
-    "min_description_length": 280,
-    "avg_description_length": 454.0,
-    "embedding_file_size_mb": 0.03675270080566406
+    "max_description_length": 582,
+    "min_description_length": 335,
+    "avg_description_length": 436.5,
+    "embedding_file_size_mb": 0.1453094482421875
   }
 }

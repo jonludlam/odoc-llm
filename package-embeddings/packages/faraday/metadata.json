@@ -1,53 +1,45 @@
 {
   "package": "faraday",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:42.794768",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 3,
+  "creation_timestamp": "2025-08-14T22:50:43.441228",
   "modules": [
     {
-      "module_path": "Faraday.BE",
+      "module_path": "Faraday.LE",
       "library": "faraday",
-      "description": "This module provides functions to serialize integer and floating-point values in big-endian format into a Faraday buffer. It supports 16-bit, 32-bit, 48-bit, and 64-bit unsigned integers, as well as 32-bit and 64-bit floating-point numbers. These operations are useful for generating network protocols, binary file formats, or low-level data representations where byte order must be explicitly controlled.",
-      "description_length": 405,
+      "description": "This module provides functions to serialize integers and floating-point numbers in little-endian format into a buffer. It operates on `Faraday.t` serializers, writing values such as 16-bit, 32-bit, 48-bit, and 64-bit integers and 32- and 64-bit floats directly into the internal buffer. These operations are used when constructing binary protocols or file formats that require strict byte layout, such as network packets or disk-based data structures.",
+      "description_length": 451,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Faraday.Flushed_reason",
       "library": "faraday",
-      "description": "This module defines the reasons for flushing a serializer's output, such as when bytes are written successfully or when the downstream consumer stops accepting input. It works with the `t` type representing flush conditions, used to signal state changes during serialization. Concrete use cases include controlling flow in network protocols or file output where partial writes require handling.",
-      "description_length": 394,
+      "description": "This module defines the possible reasons for a flush operation in a serializer, indicating whether the flush was triggered by a shift, a drain, or because there was no pending output. It works with the serializer's internal state to signal how and why the flush callback is invoked. Concrete use cases include controlling serialization flow based on output availability, handling backpressure from downstream consumers, and optimizing buffer management during serialization.",
+      "description_length": 474,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Faraday.LE",
+      "module_path": "Faraday.BE",
       "library": "faraday",
-      "description": "This module implements low-level, memory-efficient serialization of numeric values in little-endian byte order. It provides functions to write 16-bit, 32-bit, 48-bit, and 64-bit unsigned integers, as well as 32-bit and 64-bit floating-point numbers directly into a serializer's internal buffer. These operations are used when constructing binary protocols or file formats that require strict control over numeric representation, such as network packet serialization or compact binary logging.",
-      "description_length": 492,
+      "description": "This module provides functions to serialize integer and floating-point values in big-endian format into a Faraday buffer. It supports 16-bit, 32-bit, 48-bit, and 64-bit unsigned integers, as well as 32-bit floats and 64-bit doubles. These operations are useful for generating network protocols or binary file formats that require fixed-size, big-endian numeric encodings.",
+      "description_length": 371,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Faraday",
-      "library": "faraday",
-      "description": "This module enables high-performance serialization through a combination of buffered and unbuffered write operations, managing an internal buffer and output queue to minimize memory copies and optimize for vectorized output. It supports direct manipulation of strings, bytes, and bigstrings, with child modules adding specialized numeric serialization in both big-endian and little-endian formats, along with flush control logic for managing output flow. You can write structured binary data efficiently, such as constructing network packets with precise byte ordering or streaming large data sets with minimal allocation overhead. The combination of fine-grained memory control and extensible output handling makes it suitable for high-throughput network services and compact binary format generation.",
-      "description_length": 802,
-      "index": 3,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 4,
-    "meaningful_modules": 4,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "meaningful_modules": 3,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.75
   },
   "statistics": {
-    "max_description_length": 802,
-    "min_description_length": 394,
-    "avg_description_length": 523.25,
-    "embedding_file_size_mb": 0.014955520629882812
+    "max_description_length": 474,
+    "min_description_length": 371,
+    "avg_description_length": 432.0,
+    "embedding_file_size_mb": 0.04388904571533203
   }
 }

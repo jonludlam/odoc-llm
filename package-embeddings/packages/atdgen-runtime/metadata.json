@@ -1,173 +1,141 @@
 {
   "package": "atdgen-runtime",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 19,
-  "creation_timestamp": "2025-07-15T23:10:02.516710",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 15,
+  "creation_timestamp": "2025-08-14T23:28:39.514640",
   "modules": [
     {
-      "module_path": "Atdgen_runtime.Json_adapter.Type_field.Make",
+      "module_path": "Atdgen_runtime.Json_adapter.Type_field.Default_param",
       "library": "atdgen-runtime",
-      "description": "This module implements JSON normalization and restoration for objects with type fields, converting between arbitrary JSON trees and Atdgen-compatible representations. It operates on `Yojson.Safe.t` values, using a parameter module to define type-specific rewriting rules. Useful for handling polymorphic JSON data where a field indicates the object's type, ensuring compatibility with Atdgen-generated code during serialization and deserialization.",
-      "description_length": 448,
+      "description": "This module defines the default type field name used in JSON objects to indicate the type of the object when deserializing. It provides a single value `type_field_name` set to `\"type\"`, which is used to identify the type field in JSON during adapter processing. This supports deserialization of polymorphic JSON objects where the type field determines which variant to construct.",
+      "description_length": 379,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Atdgen_runtime.Json_adapter.Type_field.Param",
+      "module_path": "Atdgen_runtime.Json_adapter.Type_field.Make",
       "library": "atdgen-runtime",
-      "description": "This module defines the parameterized structure for handling JSON objects where a specific field denotes the type of the object. It provides operations to extract and manipulate the type field, enabling dispatching on the object's type during JSON parsing and serialization. Concrete use cases include decoding polymorphic JSON data structures, such as API responses with a `\"type\"` field indicating the variant of the payload.",
-      "description_length": 427,
+      "description": "This module implements JSON normalization and restoration for objects with a type field, converting between arbitrary JSON trees and Atdgen-compatible representations. It operates on `Yojson.Safe.t` values, transforming them based on a specified type field to match expected type definitions. Use it when deserializing and serializing JSON objects that include a discriminant field indicating their variant type.",
+      "description_length": 412,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Atdgen_runtime.Json_adapter.Type_and_value_fields.Make",
       "library": "atdgen-runtime",
-      "description": "This module provides `normalize` and `restore` functions to convert between JSON trees and Atd-compliant forms, specifically handling type and value fields. It operates on `Yojson.Safe.t` data structures, enabling seamless serialization and deserialization for custom JSON adapters. Use this when implementing bidirectional JSON transformations that adhere to Atdgen's format conventions.",
-      "description_length": 388,
+      "description": "This module provides `normalize` and `restore` functions to convert between JSON trees and Atdgen-compliant representations, specifically handling variant types with tag and value fields. It operates on `Yojson.Safe.t` values, transforming them based on specified tag and payload field names. Use it when working with JSON data that encodes variant types using explicit tag and value fields, such as deserializing external JSON into Atdgen-compatible structures or serializing Atdgen-generated types back into standard JSON.",
+      "description_length": 524,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Atdgen_runtime.Json_adapter.Type_and_value_fields.Param",
-      "library": "atdgen-runtime",
-      "description": "This module defines parameters for JSON adapters that handle tagged unions by specifying field names for type and value, along with optional known tags. It works with JSON objects that include a type field and a value field, enabling proper decoding and encoding of variant types. Concrete use cases include mapping JSON representations of sum types to OCaml variants, especially when dealing with APIs that use explicit type tags.",
-      "description_length": 431,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Atdgen_runtime.Json_adapter.Type_field.Default_param",
-      "library": "atdgen-runtime",
-      "description": "This module defines the default parameter for the type field name used in JSON adapters, specifically setting it to `\"type\"`. It supports handling JSON objects where a field named `\"type\"` indicates the object's type. This is useful when deserializing polymorphic JSON data into OCaml variants following atdgen's conventions.",
-      "description_length": 325,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atdgen_runtime.Util.Json",
       "library": "atdgen-runtime",
-      "description": "This library provides JSON serialization and deserialization capabilities for converting OCaml values to and from JSON representations, supporting single values, lists, and sequences through readers and writers that interface with strings, files, channels, and lexbufs using `Yojson.Safe`. It includes mechanisms to handle unknown JSON fields during parsing, allowing applications to customize error behavior or ignore unexpected fields when working with evolving data schemas or third-party APIs. The type-specific conversion functions and flexible input/output handling make it suitable for tasks like API data exchange, configuration parsing, and persistent storage serialization.",
-      "description_length": 683,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atdgen_runtime.Json_adapter.Type_field",
-      "library": "atdgen-runtime",
-      "description": "This module processes JSON objects with a type discriminator field, converting between polymorphic variants and JSON representations using normalization and restoration functions. It provides `normalize` and `restore` operations that transform JSON trees to and from Atdgen-compatible forms, based on a specified type field, typically `\"type\"`. Child modules implement parameterized JSON rewriting, type field extraction, and default type field naming, enabling dispatching on object type during serialization. Example use cases include decoding API responses where a `\"type\"` field distinguishes between different payload variants into OCaml sum types.",
-      "description_length": 653,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Atdgen_runtime.Json_adapter.S",
-      "library": "atdgen-runtime",
-      "description": "This module defines the interface for JSON adapters that transform JSON trees between their original structure and a normalized form compatible with Atdgen's expectations. It operates on `Yojson.Safe.t` values, providing `normalize` to convert real JSON into an Atdgen-compliant shape and `restore` to revert it back. Concrete use cases include adapting JSON input before decoding with Atdgen-generated code or transforming Atdgen-processed JSON for external consumption.",
-      "description_length": 471,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atdgen_runtime.Json_adapter.Type_and_value_fields",
-      "library": "atdgen-runtime",
-      "description": "This module supports JSON serialization and deserialization for polymorphic variants with a catch-all case, particularly for legacy `tag_field` use cases. It processes record types with fields holding variant values, allowing unknown cases to be captured and handled, which is useful for versioned or extensible API payloads. The `normalize` and `restore` functions transform JSON trees into Atd-compliant forms, working bidirectionally with `Yojson.Safe.t` structures for custom JSON adapters. Parameters for handling tagged unions specify type and value field names, enabling precise mapping between JSON objects and OCaml sum types with explicit type tags.",
-      "description_length": 659,
-      "index": 8,
+      "description": "This module facilitates converting JSON values to and from strings, files, and buffers, handling single values, sequences, and lists with customizable formatting and position tracking. It provides mechanisms to manage unknown JSON fields during parsing, enabling error customization or logging through a mutable handler. Use cases include strict schema validation, lenient data ingestion, and precise control over serialization behavior in complex data pipelines.",
+      "description_length": 463,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atdgen_runtime.Util.Biniou",
       "library": "atdgen-runtime",
-      "description": "This module handles serialization and deserialization of values in the biniou format. It provides functions to read from and write to channels or files, supporting efficient binary data exchange. Use cases include persisting structured data to disk or transmitting it over network sockets.",
-      "description_length": 289,
-      "index": 9,
+      "description": "This module handles serialization and deserialization of values in the biniou binary format. It provides functions to read from and write to channels or files, supporting efficient data exchange with external systems. Concrete use cases include persisting structured data to disk or transmitting it over network sockets.",
+      "description_length": 320,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Atdgen_runtime.Json_adapter.Type_and_value_fields",
+      "library": "atdgen-runtime",
+      "description": "This module converts JSON representations of variant types using explicit tag and value fields into Atdgen-compliant forms and vice versa. It works directly with `Yojson.Safe.t` values, transforming them based on provided tag and payload field names, supporting optional values and catch-all cases. Use it to deserialize JSON into Atdgen-generated types or serialize such types back into standard JSON when variants are encoded with separate tag and payload fields.",
+      "description_length": 465,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atdgen_runtime.Json_adapter.One_field",
       "library": "atdgen-runtime",
-      "description": "This module handles JSON serialization and deserialization for polymorphic variants with a single field, where the field name encodes the variant type. It operates on `Yojson.Safe.t` values, transforming between idiomatic OCaml representations and JSON structures that conform to Atdgen's expected format. It is useful when working with JSON APIs that represent variant types using a single key to indicate the constructor, such as representing `User` as `{ \"User\": { \"id\": \"...\", \"age\": 42 } }`.",
-      "description_length": 496,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module handles JSON transformations for single-field objects where the field name represents the type of the value. It works with `Yojson.Safe.t` structures, providing `normalize` and `restore` functions to convert between real JSON trees and Atdgen-compatible forms. Use this when serializing or deserializing polymorphic JSON objects that follow this specific tagging convention.",
+      "description_length": 386,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Atdgen_runtime.Util.Validation",
       "library": "atdgen-runtime",
-      "description": "This module provides functions to construct and format validation errors with structured paths, using `path_elem` lists to represent field or index access. It includes utilities to convert paths and errors into human-readable strings, such as `.settings.ports[0]`, and to create error values with optional messages. Concrete use cases include reporting nested JSON decoding errors or validating complex data structures with precise location information.",
-      "description_length": 453,
-      "index": 11,
+      "description": "This module provides functions to construct and format validation errors with structured paths, using `path_elem` lists to represent field or index locations in nested data. It supports error creation with optional messages and converts errors to human-readable strings by flattening the path into a dotted/indexed notation. Concrete use cases include reporting deserialization or schema validation failures in generated ATD code.",
+      "description_length": 430,
+      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Atdgen_runtime.Util",
+      "module_path": "Atdgen_runtime.Json_adapter.Type_field",
       "library": "atdgen-runtime",
-      "description": "This library provides serialization and validation tools for working with structured data in OCaml. It supports JSON and biniou formats for encoding and decoding values to and from strings, files, and channels, with configurable handling of unknown fields during JSON parsing. The validation module constructs rich error messages with path information to report issues in nested data structures. Examples include decoding JSON API responses with optional fields, persisting data to binary files using biniou, and validating configuration files with detailed error locations.",
-      "description_length": 574,
-      "index": 12,
+      "description": "This module handles JSON normalization and restoration for objects containing a type field that indicates their variant. It converts between raw JSON trees and Atdgen-compatible representations by using a specified field (typically `\"type\"`) to determine the correct variant structure. It operates on `Yojson.Safe.t` values and is used when serializing or deserializing polymorphic JSON objects with a known type discriminant.",
+      "description_length": 426,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atdgen_runtime.Ob_run",
       "library": "atdgen-runtime",
-      "description": "This module offers serialization and deserialization capabilities for OCaml values, handling lists, arrays, options, and primitive types (e.g., integers, strings, floats) in the Biniou binary format. It includes error handling for missing fields and unsupported variants, supports array processing via node-tagged input buffers, and is used for efficient binary data exchange and robust parsing in type-sensitive contexts.",
-      "description_length": 422,
-      "index": 13,
+      "description": "This module implements binary serialization and deserialization for OCaml data structures using the Biniou format, focusing on low-level operations for handling primitive types, arrays, and optional values. It works directly with Biniou input/output buffers (`Bi_inbuf.t`, `Bi_outbuf.t`) and uses `node_tag` identifiers to manage type-specific encoding during data conversion. Key applications include robust parsing of binary streams with error recovery, efficient array manipulation with index-aware transformations, and cross-language data interchange requiring compact binary representations.",
+      "description_length": 596,
+      "index": 9,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Atdgen_runtime.Version",
+      "module_path": "Atdgen_runtime.Util",
       "library": "atdgen-runtime",
-      "description": "This module defines a single value `version` representing the current version string of the software. It works with string data to store and expose version information. Useful for embedding version numbers directly into applications or libraries at compile time.",
-      "description_length": 262,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atdgen_runtime.Json_adapter",
-      "library": "atdgen-runtime",
-      "description": "This module transforms JSON structures to and from formats compatible with Atdgen by normalizing and restoring type information using tagging conventions. It operates on `Yojson.Safe.t` values, offering direct `normalize` and `restore` operations to adjust JSON for polymorphic variants, custom type tags, and extensible data formats. Submodules handle dispatching on type fields, single-field variants, and legacy tag fields, supporting use cases like decoding API responses with variant payloads or serializing versioned data. Specific examples include mapping `{ \"type\": \"user\", ... }` to OCaml sum types or transforming `{ \"User\": { ... } }` into corresponding variant representations.",
-      "description_length": 689,
-      "index": 15,
+      "description": "This module includes submodules for handling binary and JSON data serialization, parsing, and validation. It works with data types like JSON values, biniou-encoded binary data, and structured validation errors. Use cases include reading and writing JSON or biniou data to files or network streams, handling malformed input during parsing, and generating detailed validation error messages for complex data structures.",
+      "description_length": 417,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atdgen_runtime.Ov_run",
       "library": "atdgen-runtime",
-      "description": "This module provides validation functions for lists, arrays, and options, ensuring structural and value constraints are met. It works with polymorphic lists, arrays, and option types, using validation functions that return error information via `option`. Concrete use cases include validating input data structures during deserialization or enforcing schema constraints in data-processing pipelines.",
-      "description_length": 399,
-      "index": 16,
+      "description": "This module provides functions to validate lists, arrays, and optional values by applying validation logic to each element. It works with polymorphic lists, arrays, and option types, allowing validation errors to be reported with indexed context. Concrete use cases include validating input data structures like configuration settings or API payloads during decoding or deserialization.",
+      "description_length": 386,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Atdgen_runtime.Json_adapter",
+      "library": "atdgen-runtime",
+      "description": "This module provides functions to transform JSON values between arbitrary structures and Atdgen-compatible representations, specifically for handling polymorphic variants. It supports operations like normalizing and restoring JSON based on type fields, single-field tagging, or explicit tag/value pairs, working directly with `Yojson.Safe.t` trees. Use it to customize JSON serialization and deserialization when dealing with variant types that have specific tagging conventions such as `\"type\"` fields, field names as tags, or separate tag and payload fields.",
+      "description_length": 560,
+      "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Atdgen_runtime.Oj_run",
+      "module_path": "Atdgen_runtime.Version",
       "library": "atdgen-runtime",
-      "description": "This module provides bidirectional conversion between OCaml values and JSON representations, focusing on type-safe marshaling of primitives (integers, floats, strings) and composite structures (lists, arrays, associative containers) while supporting nullable fields and numeric string encoding. It operates on JSON abstract syntax trees through reader/writer combinators, offering error propagation for invalid inputs and transformation adapters to bridge schema mismatches. Typical applications include API data binding, configuration parsing, and robust inter-process communication where precise type handling and error resilience are critical.",
-      "description_length": 646,
-      "index": 17,
+      "description": "This module defines a single value `version` that holds a string representing the current version of the software. It is typically used to expose the version number to other parts of the application or for reporting purposes. The module works directly with string data to provide version information.",
+      "description_length": 300,
+      "index": 13,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Atdgen_runtime",
       "library": "atdgen-runtime",
-      "description": "This library enables structured data serialization, validation, and transformation across JSON and Biniou formats, with precise error handling and schema compatibility. It centers on data codecs for primitive and composite types, validation combinators for enforcing constraints, and adapters for mapping between OCaml types and external representations. You can decode JSON API responses into OCaml types with optional fields, validate nested data structures with detailed error paths, persist values to binary files using Biniou, and transform polymorphic JSON payloads to and from tagged OCaml variants. Key data types include `Yojson.Safe.t` for JSON manipulation, validation result types for error tracking, and Biniou encoders/decoders for efficient binary serialization.",
-      "description_length": 777,
-      "index": 18,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module includes submodules for handling data serialization, validation, and version management. It works with JSON and Biniou data formats, validation errors, and version strings. Use it to serialize and deserialize structured data with customizable tagging strategies, validate complex data structures with detailed error reporting, and manage version information in applications.",
+      "description_length": 386,
+      "index": 14,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 19,
-    "meaningful_modules": 19,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 16,
+    "meaningful_modules": 15,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9375
   },
   "statistics": {
-    "max_description_length": 777,
-    "min_description_length": 262,
-    "avg_description_length": 499.57894736842104,
-    "embedding_file_size_mb": 0.06946277618408203
+    "max_description_length": 596,
+    "min_description_length": 300,
+    "avg_description_length": 430.0,
+    "embedding_file_size_mb": 0.2177886962890625
   }
 }

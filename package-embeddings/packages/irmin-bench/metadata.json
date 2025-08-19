@@ -1,15 +1,15 @@
 {
   "package": "irmin-bench",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 116,
-  "creation_timestamp": "2025-07-15T23:22:56.275193",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 50,
+  "creation_timestamp": "2025-08-18T18:37:00.236356",
   "modules": [
     {
       "module_path": "Bench_common.Generate_trees",
       "library": "irmin-bench.common",
-      "description": "This module generates trees with specific structural characteristics by adding random content either depthwise or breadthwise. It operates on tree data structures provided by the Store module, modifying them through recursive extensions. Concrete use cases include creating test datasets with controlled complexity for benchmarking tree traversal and storage performance.",
-      "description_length": 371,
+      "description": "This module generates trees with specific structural properties by adding random content either depthwise or breadthwise. It operates on tree data structures provided by the Store module, modifying them asynchronously. Concrete use cases include stress-testing tree storage and traversal algorithms under controlled conditions.",
+      "description_length": 327,
       "index": 0,
       "embedding_norm": 1.0
     },
@@ -22,928 +22,400 @@
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bench_common.Info",
+      "module_path": "Bench_common.Conf",
       "library": "irmin-bench.common",
-      "description": "This module implements a function `f` that processes values of type `I.t` using the function `I.f`. It is designed to apply `I.f` directly to input data structured according to the `I` module's specifications. A typical use case involves transforming or analyzing data streams where each element conforms to the type defined in `I.t`.",
-      "description_length": 334,
+      "description": "This module configures parameters for Irmin-Pack, defining values for tuning the behavior of the store's inode tree and hashing strategies. It works with integers, boolean flags, and custom types from `Irmin_pack.Conf` for length headers and inode child ordering. Concrete use cases include setting the branching factor for performance optimization, choosing a hashing strategy to avoid vulnerabilities, and preventing accidental persistence of empty directories.",
+      "description_length": 463,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bench_common.Conf",
+      "module_path": "Bench_common.Info",
       "library": "irmin-bench.common",
-      "description": "This module defines configuration parameters for tuning the behavior of an Irmin-based storage system, particularly around inode tree structure and hashing strategies. It works with integers, boolean flags, and custom types from `Irmin_pack.Conf` to specify encoding and ordering policies. Concrete use cases include setting the branching factor for inode trees, choosing how content lengths are encoded, and mitigating hash collision risks in persisted directories.",
-      "description_length": 466,
+      "description": "This module implements a benchmarking function `f` that executes and measures the performance of a given function from module `I`. It works with functions of type `unit -> unit` and produces timing results. It is used to profile specific operations, such as cryptographic computations or data processing routines, by running them and reporting execution time metrics.",
+      "description_length": 367,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bench_common",
       "library": "irmin-bench.common",
-      "description": "This module orchestrates benchmarking workflows by timing execution, tracking progress, and generating random data for performance testing. It directly supports operations like `with_timer` for measuring function calls on basic types and Lwt values, `random_blob` for generating test payloads, and integrates tree generation, file system cleanup, and data processing through its submodules. The tree generation submodule builds structured test datasets by recursively extending Store trees, while the file utilities handle directory removal and size calculation. A dedicated processing submodule applies transformations to typed data streams, and a configuration submodule tunes storage parameters like inode branching and hash collision handling for Irmin-based systems.",
-      "description_length": 771,
+      "description": "This module provides functions for benchmarking operations, including timing execution, managing artefact directories, and displaying progress bars. It handles bytes, strings, and asynchronous operations, with specific use cases like profiling cryptographic functions, configuring store parameters, and generating structured trees for performance testing. Submodules support tasks such as file system cleanup, tree generation, and schema configuration.",
+      "description_length": 452,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_stat_summary.Watched_node.Map",
+      "module_path": "Irmin_traces.Trace_collection.Make_stat.Bag_of_stats",
       "library": "irmin-bench.traces",
-      "description": "This module supports associative map operations for aggregating and analyzing statistics about version-controlled nodes, using `Watched_node.Key.t` as the key type and arbitrary values. It enables efficient traversal, transformation, and structural queries over trace data, with utilities to convert between maps and sequences/lists for flexible data manipulation. Designed for building structured summaries of long-lived traces, it facilitates reporting or JSON export in scenarios where performance-critical analysis of commit histories (e.g., tracking node behavior across ~1000 commits per second) is required.",
-      "description_length": 614,
+      "description": "This module implements a statistical bag structure for collecting and aggregating trace data, particularly oriented toward performance metrics and resource usage tracking. It works with float lists as input for index generation and provides operations to create, pack, and manage trace data along with garbage collection and disk usage statistics. Concrete use cases include gathering timing data during trace file construction and resource profiling in replayable trace analysis workflows.",
+      "description_length": 490,
       "index": 5,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_traces.Trace_stat_summary.Watched_node.Val",
+      "module_path": "Irmin_traces.Trace_stat_summary.Span.Map",
       "library": "irmin-bench.traces",
-      "description": "This module represents a summary of values associated with a watched node in a versioned data structure, capturing the current value and differences per block. It works with versioned values (`Vs.t`) and provides a structured format for analyzing changes over time. Concrete use cases include generating human-readable summaries and JSON exports for performance analysis of long-running traces.",
-      "description_length": 394,
+      "description": "This module provides associative map operations for organizing polymorphic values keyed by `Span.Key.t`, enabling efficient aggregation, merging, and traversal of span-related statistics derived from `Stat_trace` data. It supports use cases like converting structured trace summaries into ordered sequences, combining metrics across spans, and handling large-scale commit timelines with operations optimized for performance despite high commit volumes. The map's ability to interconvert with lists and sequences facilitates bulk processing and hierarchical analysis of trace durations and phase-specific metrics.",
+      "description_length": 612,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_definitions.Replayable_trace.V0",
+      "module_path": "Irmin_traces.Trace_definitions.Stat_trace.V1",
       "library": "irmin-bench.traces",
-      "description": "This module defines data structures and serialization formats for recording and replaying interactions between Tezos and Irmin. It includes types for operations like adds, copies, commits, and checks, along with their associated keys, hashes, and context IDs, all versioned for compatibility. The module is used to serialize and deserialize trace files that capture detailed state transitions for deterministic replay and analysis in Tezos.",
-      "description_length": 440,
+      "description": "This module supports tracking performance metrics in Tezos nodes through versioned data structures that capture events like tree operations, garbage collection, and disk activity. It defines serialized types such as `row_t` for trace events (e.g., commits, copies) with timestamps and metadata, alongside conversion functions to migrate older trace formats to version 1. These structures enable detailed storage analysis, trace replay, and JSON summarization for performance optimization and debugging.",
+      "description_length": 502,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_definitions.Stat_trace.V0",
       "library": "irmin-bench.traces",
-      "description": "This module provides serialization and deserialization operations for structured performance metrics and store state tracking in Tezos node runs, focusing on low-level storage subsystems like pack files, tree operations, and garbage collection. It works with enumerated types for watched node components, integer representations of operational states, and bag-like containers for aggregated statistics, all encoded via Irmin's `Repr.t` for compatibility with 32-bit systems. Specific use cases include generating JSON summaries of node performance, analyzing replay traces for disk/memory usage patterns, and capturing versioned snapshots of store configurations during Irmin-based Tezos operations.",
-      "description_length": 699,
+      "description": "This module captures and serializes statistics for Tezos node operations, focusing on metrics like cache behavior, tree operations, garbage collection, and disk/index I/O. It defines structured types for trace data (e.g., `store_after`, `commit_base`, `config`) and utilities to convert between enumerated node types and integers, enabling versioned serialization via `Repr.t`. These capabilities support use cases like replaying storage behavior, analyzing performance bottlenecks, and generating JSON summaries for trace analysis.",
+      "description_length": 532,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_stat_summary.Span.Map",
+      "module_path": "Irmin_traces.Trace_definitions.Replayable_trace.V0",
       "library": "irmin-bench.traces",
-      "description": "This module provides associative map operations for structured key-value associations where keys are span identifiers and values represent arbitrary trace data. It supports functional transformations, filtering, and bidirectional conversions with sequences and lists, enabling efficient traversal and aggregation of time-annotated spans. The module is particularly useful for analyzing trace summaries by correlating span durations with build-up and commit phases, facilitating performance profiling of versioned data structures.",
-      "description_length": 529,
+      "description": "This module defines data structures and serialization routines for replayable traces of Irmin operations used in Tezos. It includes types for trace events such as `add`, `copy`, `commit`, and `checkout`, along with representations for keys, hashes, context IDs, and messages. These definitions enable precise logging and replay of interactions with Irmin stores, particularly for debugging and testing Tezos components.",
+      "description_length": 419,
       "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_definitions.Stat_trace.V1",
-      "library": "irmin-bench.traces",
-      "description": "This module provides a statistical tracing framework for tracking performance metrics in storage systems, focusing on operations like tree modifications, disk usage, garbage collection, and index activity. It works with versioned data structures representing trace events (e.g., `Add`, `Commit`, `Find`) and associated metadata, including hierarchical statistics for pack files and inode operations. Designed for use in Tezos node runs or replay scenarios, it supports serialization to JSON and ensures backward compatibility through migration functions between trace format versions.",
-      "description_length": 584,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary.Span.Val",
-      "library": "irmin-bench.traces",
-      "description": "This module represents statistical values for a span in a trace summary, including count, cumulative count, duration, log-scale duration, and cumulative duration. It provides structured metrics for analyzing performance characteristics of trace spans, particularly in tracking buildup and commit phases. These metrics are used to quantify time distribution across operations and identify performance bottlenecks in systems generating stat traces.",
-      "description_length": 446,
-      "index": 11,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_traces.Trace_collection.Make_stat.Bag_of_stats",
+      "module_path": "Irmin_traces.Trace_stat_summary.Watched_node.Map",
       "library": "irmin-bench.traces",
-      "description": "This module provides operations to create and manage a collection of statistics for trace files, including functions to pack data, build trees, index timestamps, and collect garbage. It works with custom data types representing trace files, disk usage, and time measurements. It is used to analyze and process blockchain trace data in Tezos, particularly for performance monitoring and trace replay scenarios.",
-      "description_length": 409,
-      "index": 12,
+      "description": "This module provides a suite of functional associative map operations for key-value pairs where keys conform to `Irmin_traces.Trace_stat_summary.Watched_node.Key.t` and values are polymorphic. It supports transformations, queries, and aggregations over these maps, including merging, filtering, traversal, and conversion to ordered sequences or lists, optimized for analyzing hierarchical trace statistics. These operations are specifically designed for post-processing versioned trace data into structured summaries, enabling efficient extraction of metrics, path-based analysis, and serialization to formats like JSON outside of Tezos runtime contexts.",
+      "description_length": 654,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary.Watched_node.Key",
       "library": "irmin-bench.traces",
-      "description": "This module defines a key type for watched nodes in a trace summary, supporting conversion between string representations and enumerated values. It works with a polymorphic variant type that identifies specific node categories like `Big_maps_index` or `Rolls_owner_current`. Use cases include key manipulation and lookup in trace summaries for performance analysis and JSON export.",
-      "description_length": 381,
-      "index": 13,
+      "description": "This module defines a key type representing specific watched nodes in a Tezos context, such as `Contracts_index` or `Rolls_owner_current`. It provides bidirectional conversion between these keys and strings, ensuring correct parsing and representation. These keys are used to identify and categorize different types of data structures during trace analysis.",
+      "description_length": 357,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Trace_stat_summary.Watched_node.Val",
+      "library": "irmin-bench.traces",
+      "description": "This module represents a summary of values observed at a specific node in a version-controlled trace, capturing both the current value and the difference per block. It works with versioned data structures (`Vs.t`) to store and compare state changes over time. This is used to analyze performance metrics or state evolution in long-running Irmin traces, particularly when generating human-readable or JSON-exportable summaries of large commit histories.",
+      "description_length": 452,
+      "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary.Span.Key",
       "library": "irmin-bench.traces",
-      "description": "This module defines enumerations and operations for categorizing and converting trace events into human-readable and structured formats. It works with polymorphic variant types representing atomic operations (`Add`, `Remove`, etc.), phases (`Buildup`, `Commit`), and summary categories (`Block`, `Unseen`). Concrete use cases include converting trace keys to strings for logging, parsing strings back into trace keys for analysis, and mapping trace events to numeric identifiers for serialization in JSON or other export formats.",
-      "description_length": 529,
+      "description": "This module defines enumerations and operations for handling trace event keys, including `atom_seen`, `phase`, and `t` types. It provides functions for converting between symbols and integers, listing all values, and converting to and from strings. These keys are used to categorize events within trace summaries, such as distinguishing between `Buildup`, `Commit`, and various atomic operations like `Add` or `Find`.",
+      "description_length": 417,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Trace_stat_summary.Span.Val",
+      "library": "irmin-bench.traces",
+      "description": "This module represents statistical values for a span in a trace summary, including count, cumulative count, duration, log-scaled duration, and cumulative duration. It provides structured metrics for analyzing time and operation distributions within trace spans. These metrics are used to summarize performance characteristics of Irmin commits, particularly in long-running traces with high commit volumes.",
+      "description_length": 405,
       "index": 14,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Contents-Key",
+      "module_path": "Irmin_traces.Trace_common.Seq",
       "library": "irmin-bench.traces",
-      "description": "This module defines key types and conversion operations for content identifiers in a trace replay system. It provides a structured way to handle content keys and their associated hash values. Use this module to map content keys to hashes for efficient content addressing and verification in trace replay scenarios.",
-      "description_length": 314,
+      "description": "This module supports operations for creating, transforming, and combining sequences (`'a Seq.t`), which model potentially infinite, lazily-evaluated data streams. It provides utilities for iterative processing, element-wise search, functional transformations (like mapping and filtering), and structured merging with customizable ordering, alongside sequence generation (e.g., cyclic or iterative sequences) and matrix transposition. These capabilities are suited for applications requiring efficient handling of large or infinite datasets, such as algorithmic data processing pipelines or combinatorial computations.",
+      "description_length": 617,
       "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Contents",
-      "library": "irmin-bench.traces",
-      "description": "This module implements a read-write contents store with typed keys and values, supporting operations to add, find, and index content by hash. It provides atomic batch operations, safe and unsafe content insertion, and key-value membership checks. Use cases include content-addressed storage for versioned data, trace replay systems, and persistent value management in Irmin-based applications.",
-      "description_length": 393,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-History-V",
-      "library": "irmin-bench.traces",
-      "description": "This module defines operations for working with versioned, labeled vertices in a trace replay context. It provides functions to create, compare, hash, and retrieve labels for vertices, where each vertex represents a commit in a version-controlled system. Use cases include tracking changes in a repository, comparing commit states, and mapping commits to their associated metadata.",
-      "description_length": 381,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Val",
-      "library": "irmin-bench.traces",
-      "description": "This module supports structured serialization, querying, and modification of versioned node values in a persistent tree-based store. It operates on node values composed of steps, metadata, hashes, and key-value pairs, enabling operations like merging divergent versions, hashing for content addressing, and lazy read handling. Typical use cases include managing immutable hierarchical data in version control systems, reconciling concurrent updates, and optimizing cache behavior for large-scale tree structures.",
-      "description_length": 512,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Contents-Hash",
-      "library": "irmin-bench.traces",
-      "description": "This module implements hash computation and manipulation for content-addressed storage. It provides functions to generate deterministic hashes from values, compute short hashes for efficient lookup, and access the size of hash outputs. It works directly with content values and hash types defined in the backend, enabling efficient key generation and hash table integration. Use this when building content-addressed storage systems requiring consistent hashing and compact hash representations.",
-      "description_length": 494,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Hash",
-      "library": "irmin-bench.traces",
-      "description": "This module provides operations to compute and manipulate fixed-size cryptographic hashes from sequences of strings. It supports generating deterministic hash values, converting hashes to raw byte strings, and computing smaller integer hashes for use in data structures like hash tables. Concrete use cases include generating unique identifiers for data structures in Irmin stores and efficiently comparing or indexing hash values.",
-      "description_length": 431,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Val",
-      "library": "irmin-bench.traces",
-      "description": "This module defines and manipulates commit values, which include node keys, commit keys, and commit metadata. It provides functions to construct commits, retrieve their node keys, parent commit keys, and associated commit info. Concrete use cases include building and inspecting commit objects in a version-controlled store.",
-      "description_length": 324,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Hash",
-      "library": "irmin-bench.traces",
-      "description": "This module implements hash computation and manipulation for commit identifiers in a storage backend. It provides functions to generate deterministic hashes from commit values, compute shortened hash integers for efficient lookup, and access the standard hash size in bytes. The module is used to uniquely identify and index commit entries within a version-controlled data store.",
-      "description_length": 379,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary_pp.Table2",
-      "library": "irmin-bench.traces",
-      "description": "This module constructs and formats two-dimensional tables for displaying trace statistics summaries, primarily using `summary_floor` values that include labeled rows of scalar data. It converts structured data into matrices of pretty-printable cells, handling headers, spacers, and multi-column rows. It is used to generate human-readable tabular reports of performance metrics with fixed scalar formatting.",
-      "description_length": 407,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary.Bag_stat_folder",
-      "library": "irmin-bench.traces",
-      "description": "This module computes aggregated statistics from a sequence of commits, tracking values before and after each commit, and accumulating differences per block, buildup, and commit. It works with `Def.bag_of_stats` and `Def.pack` types, using a provided function to extract numeric values from statistics. It is used to generate summaries suitable for JSON export, focusing on performance metrics across version-controlled data.",
-      "description_length": 424,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Sigs-Make",
-      "library": "irmin-bench.traces",
-      "description": "This module implements trace replay functionality for a given store, allowing the execution of previously recorded operations against a configured store instance. It works with store configurations and trace data to reconstruct past state transitions. A concrete use case includes debugging distributed system behavior by replaying event logs against a mock or test store backend.",
-      "description_length": 380,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Tree-Proof",
-      "library": "irmin-bench.traces",
-      "description": "This module constructs and validates compact proofs of tree transformations, capturing pre- and post-state hashes along with the minimal tree subset required to recompute the result. It operates on tree structures with nodes, contents, and metadata, supporting proof-based verification in distributed systems where peers must confirm computation integrity without full storage access. Use cases include secure state synchronization and verifiable off-chain computation in decentralized applications.",
-      "description_length": 499,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary_utils.Resample",
-      "library": "irmin-bench.traces",
-      "description": "This module provides functions to resample 1D vectors, supporting both interpolation and nearest-neighbor methods. It includes low-level control via `should_sample` and a stateful accumulator API for incremental resampling. A high-level `resample_vector` function simplifies resizing vectors to a target length, useful for trace data analysis and visualization.",
-      "description_length": 361,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node",
-      "library": "irmin-bench.traces",
-      "description": "This module implements a node store with support for reading, writing, and merging node values identified by keys. It provides operations to check existence (`mem`), retrieve (`find`), insert (`add`, `unsafe_add`), and index nodes via their hash. It is used to manage node data in a version-controlled store, enabling operations like batch updates and 3-way merges for concurrent modifications.",
-      "description_length": 394,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Metadata",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the metadata type and operations for managing node metadata, including a default value and a merge function. It works with the `metadata` type, providing essential functionality for combining and initializing metadata values. It is used to handle metadata during operations like merging branches or initializing nodes in a store.",
-      "description_length": 349,
-      "index": 29,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary_utils.Parallel_folders",
       "library": "irmin-bench.traces",
-      "description": "This module composes and executes parallel statistical summarization pipelines over structured trace data. It provides combinators to build, extend, and finalize folders that process rows of trace data independently and concurrently. Each folder accumulates values of a specific type, and the results are combined using user-defined functions at finalization.",
-      "description_length": 359,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Schema-Path",
-      "library": "irmin-bench.traces",
-      "description": "This module defines operations for constructing, deconstructing, and transforming paths represented as lists of steps. It supports path manipulation with functions like prepending, appending, and mapping over steps, along with value type definitions for serialization. It is used to represent and work with hierarchical key paths in a store, enabling structured access and traversal.",
-      "description_length": 383,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_common.Io",
-      "library": "irmin-bench.traces",
-      "description": "This module implements IO operations for reading and writing trace files using a binary format derived from a file format module. It supports reading sequences of encoded values with prefixes, decoding files with magic headers, and managing incremental writes with buffered output channels. Concrete use cases include persisting trace data to disk and reading back structured binary logs efficiently.",
-      "description_length": 400,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store",
-      "library": "irmin-bench.traces",
-      "description": "This module facilitates version control and atomic updates in a tree-structured key-value store with Git-like semantics, supporting operations such as branching, merging, and conflict resolution. It manipulates data structures like commits, trees, and branches through path-based queries and asynchronous modifications, suitable for collaborative workflows and audit trail systems. Additional features include garbage collection for storage optimization and repository management with pluggable backends.",
-      "description_length": 504,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Contents-Key",
-      "library": "irmin-bench.traces",
-      "description": "This module defines a key type for commit node contents in a version-controlled storage system, providing operations to convert keys to hashes. It works with hash and key types specific to commit node contents. Use it to manage and reference immutable content nodes in a Mercurial-style repository.",
-      "description_length": 298,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Repo",
-      "library": "irmin-bench.traces",
-      "description": "This module provides operations to create, manage, and interact with versioned storage backends, including functions to access content, node, commit, and branch stores. It works with repository handles (`Backend.Repo.t`) and associated configuration (`Irmin__.Conf.t`), supporting read, write, and batch operations. Concrete use cases include initializing a fresh repository with a given configuration, performing atomic batch updates, and retrieving typed stores for manipulating versioned data.",
-      "description_length": 496,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Key",
-      "library": "irmin-bench.traces",
-      "description": "This module defines key types and conversion functions for commit node keys in a trace replay system. It provides a concrete type `t` for commit node keys and a `to_hash` function to convert keys into their corresponding hash values. This supports efficient lookups and integrity checks in version-controlled data stores tracking commit history.",
-      "description_length": 345,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Schema",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the schema for a trace replay store, specifying submodules for hash, branch, info, metadata, path, and contents operations. It works with versioned data structures to support replaying historical states of a repository. Concrete use cases include implementing version-controlled storage backends and audit trail systems.",
-      "description_length": 340,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_common.File_format-Latest",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the current schema for trace file serialization, including version tracking, header structure, and row encoding. It works with `header` and `row` types, using `Repr.t` codecs for binary or structured I/O. Concrete use cases include reading and writing trace files in a consistent, versioned format for persistent storage and replay.",
-      "description_length": 352,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary.Span",
-      "library": "irmin-bench.traces",
-      "description": "This module organizes spans within a stat trace into a structured format that captures timing relationships between operations, including detailed breakdowns of seen and unseen buildup durations alongside commit times. It supports mapping, serialization, and aggregation of spans, enabling analysis of performance characteristics in versioned data structures and Irmin commit sequences. Key data types include spans with associated timing metrics, statistical summaries for cumulative and log-scale durations, and polymorphic variants for categorizing trace events like `Buildup` and `Commit`. Operations allow conversion between string and numeric identifiers, filtering spans by phase, and generating structured reports for visualization or post-processing.",
-      "description_length": 759,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Tree",
-      "library": "irmin-bench.traces",
-      "description": "This module enables structural manipulation and hierarchical traversal of in-memory tree representations in Irmin, supporting operations like merging, diffing, and proof-based verification. It works with hierarchical tree structures that combine metadata-rich contents and subtrees, alongside hash-indexed representations for efficient storage and retrieval. Specific use cases include version control system operations, distributed data synchronization, and forensic analysis through cryptographic proof generation and validation.",
-      "description_length": 531,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_definitions.Replayable_trace",
-      "library": "irmin-bench.traces",
-      "description": "This module captures structured traces of Tezos's interactions with Irmin, enabling deterministic replay and analysis of state transitions through versioned, serializable operations. It supports key actions like adds, copies, commits, and lookups, using hashes, keys, and context identifiers to model changes and support auditing, debugging, and trace-based analysis. The module handles binary trace files with efficient buffering and sequential decoding, while its child module defines the core data structures and serialization formats needed for trace recording and replay. Together, they allow precise reconstruction of Irmin state evolution and support use cases such as protocol testing and forensic analysis.",
-      "description_length": 715,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Schema-Info",
-      "library": "irmin-bench.traces",
-      "description": "This module defines types and operations for handling commit metadata, including author, message, and timestamp. It provides functions to construct and access commit info values, along with an empty commit info and a function that returns it. Useful for creating and manipulating commit details in version control systems or audit trails.",
-      "description_length": 338,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node-Hash",
-      "library": "irmin-bench.traces",
-      "description": "This module implements hash computation and manipulation for node values in a store backend. It provides functions to generate deterministic hashes from node values, compute short integer hashes for efficient lookup, and defines the hash size in bytes. It is used to uniquely identify and efficiently index node data within a version-controlled or persistent storage system.",
-      "description_length": 374,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary_pp.Table4",
-      "library": "irmin-bench.traces",
-      "description": "This module implements operations for constructing and transforming structured tables of statistical summaries, particularly handling curve arithmetic and formatting. It works with nested lists of floating-point values, string-labeled data, and custom variant types representing table rows and formatting options. Concrete use cases include resampling time-series data, computing derived metrics like averages and ratios, and generating multi-row header layouts for tabular output.",
-      "description_length": 481,
-      "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Slice",
-      "library": "irmin-bench.traces",
-      "description": "This module provides operations to construct and manipulate slice data structures that can store and iterate over values of type contents, node, or commit. It supports creating empty slices, adding individual values to slices, and iterating over all values in a slice. It is used to collect and process sets of version-controlled data elements in a repository.",
-      "description_length": 360,
-      "index": 45,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_common.Magic",
-      "library": "irmin-bench.traces",
-      "description": "This module defines a type `t` representing magic values used to identify file formats or trace types. It provides functions to convert these magic values to and from strings, along with pretty-printing support. These operations are used to uniquely label and distinguish trace file formats in a human-readable way.",
-      "description_length": 315,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Hash",
-      "library": "irmin-bench.traces",
-      "description": "This module implements hash computation and manipulation for commit node identifiers in a version-controlled storage system. It provides functions to generate deterministic hashes from values, compute shortened hash representations, and access the size of hash outputs. These operations are used to uniquely identify and efficiently compare commit node states within a hash table or serialization context.",
-      "description_length": 405,
-      "index": 47,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Contents-Val",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the type and merge function for store contents in a version-controlled trace replay system. It handles values that may be present or absent, supporting conflict resolution during merges. Use it to manage and merge historical states of values in a distributed, versioned store.",
-      "description_length": 296,
-      "index": 48,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node-Contents",
-      "library": "irmin-bench.traces",
-      "description": "This module implements a read-write contents store for Irmin node values, supporting key-value operations indexed by cryptographic hashes. It provides functions to check existence (`mem`), retrieve values (`find`), write new values (`add`, `unsafe_add`), and merge contents using a key-based strategy. It is used to store and retrieve the contents of Irmin nodes in a version-controlled repository, enabling efficient lookups and atomic batch updates.",
-      "description_length": 451,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_collection.Make_stat",
-      "library": "irmin-bench.traces",
-      "description": "This module collects detailed traces of state transitions and timing metrics during operations on a version-controlled store, capturing pre- and post-state snapshots for analysis. It enables tracking of short operations like adds, lookups, and commits, and supports trace replay and performance monitoring through structured data collection. Child modules handle trace file management, garbage collection, and time indexing, enabling efficient analysis of disk usage and blockchain trace data. Example uses include performance debugging in Tezos by analyzing operation timing and state changes over time.",
-      "description_length": 604,
-      "index": 50,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Contents-Val",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the type and operations for handling values stored in a version-controlled, mergeable key-value store. It includes a merge function that resolves conflicts between different versions of a value, supporting deletion by returning `None`. It is used in distributed systems where concurrent updates to stored values must be reconciled, such as in versioned document storage or collaborative editing applications.",
-      "description_length": 428,
-      "index": 51,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Contents-Hash",
-      "library": "irmin-bench.traces",
-      "description": "This module implements hash computation and manipulation for content values in a store backend. It provides functions to generate deterministic hashes from content values, compute short hashes for efficient table indexing, and defines the size of hash outputs. It is used to uniquely identify and efficiently compare content in a version-controlled or persistent data store.",
-      "description_length": 374,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary.Span_folder",
-      "library": "irmin-bench.traces",
-      "description": "This module folds over a trace to accumulate statistics about spans, including counts, durations, and cumulative metrics, using a structured accumulator. It processes span data to build detailed performance summaries with per-span histograms and timing logs. Designed for offline analysis of versioned traces, it enables precise profiling of operations like commits and lookups.",
-      "description_length": 378,
-      "index": 53,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node-Contents-Val",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the type and operations for values stored in a version-controlled trace replay system. It includes a merge function that handles conflict resolution during merges, supporting deletion by returning `None`. It is used to manage and reconcile changes to stored values across different branches or versions in a repository.",
-      "description_length": 339,
-      "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Tree-Private-Env",
-      "library": "irmin-bench.traces",
-      "description": "This module defines a typed interface for working with environment data in a tree structure, specifically supporting checks for emptiness. It operates on `Tree.Private.Env.t` values, which represent internal environment states. It is used in trace replay systems to validate whether an environment contains meaningful data.",
-      "description_length": 323,
-      "index": 55,
+      "description": "This module composes and executes parallel accumulation pipelines over structured rows of data. It provides combinators to build and combine folders that process rows independently, aggregate results, and apply final transformations. Use cases include summarizing telemetry logs or trace data by applying multiple statistical counters or aggregators in a single pass.",
+      "description_length": 367,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary_pp.Table1",
       "library": "irmin-bench.traces",
-      "description": "This module constructs a pretty-printable table from a list of trace summaries, organizing data into rows that represent either statistical values or section headers. It processes each summary into structured rows with typed cells, handling both scalar values and labeled sections, and formats them into a matrix for output. The primary use case is generating human-readable tables for performance analysis reports from trace data.",
-      "description_length": 431,
-      "index": 56,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-History-E",
-      "library": "irmin-bench.traces",
-      "description": "This module defines a directed edge structure with ordered vertices and labeled transitions, supporting creation, comparison, and access to source and destination vertices. It works with vertices and labels to model directed relationships in a graph-like structure. Concrete use cases include representing control flow graphs, dependency chains, or version history in a trace replay system.",
-      "description_length": 390,
-      "index": 57,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_common.File_format",
-      "library": "irmin-bench.traces",
-      "description": "Handles serialization and deserialization of trace data in a versioned binary format. Works with `Latest.header` and `Latest.row` types, providing functions to read, write, and convert between different versions of the file format. Used for persisting and migrating trace files across schema changes while maintaining compatibility with existing data.",
-      "description_length": 351,
-      "index": 58,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary.Store_watched_nodes_folder",
-      "library": "irmin-bench.traces",
-      "description": "This module accumulates statistics for watched nodes in a version-controlled store, tracking values and differences per block. It processes commit events to update accumulators and produces a final map of watched nodes with their aggregated metrics. It is used to generate performance summaries from commit traces, focusing on store-related node activity.",
-      "description_length": 355,
-      "index": 59,
+      "description": "This module constructs and formats tabular data for pretty-printing trace summaries, focusing on converting summary statistics into structured rows and cells. It processes lists of trace summaries into data rows with scalar values and section headers, organizing them into a matrix format suitable for display. Concrete use cases include generating human-readable tables from performance metrics or trace data for analysis and reporting.",
+      "description_length": 437,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_definitions.Stat_trace",
+      "module_path": "Irmin_traces.Trace_stat_summary.Bag_stat_folder",
       "library": "irmin-bench.traces",
-      "description": "This module serializes and processes structured traces of Tezos node operations, tracking actions like Add, Commit, and Find across storage subsystems, while supporting performance analysis, garbage collection monitoring, and replayable trace generation. It handles versioned headers, commit records, and statistical aggregates, using typed channels for trace lifecycle management and enabling JSON summarization for auditing and debugging. The child modules enhance this by providing serialization routines for low-level storage metrics and migration-aware trace event handling, supporting use cases like disk usage analysis and versioned store snapshots in 32-bit environments. Together, they allow detailed inspection of Irmin-based storage behavior through structured, replayable, and migratable trace data.",
-      "description_length": 811,
-      "index": 60,
+      "description": "This module folds over a sequence of commits to compute aggregated statistics for values extracted from `Def.bag_of_stats`. It tracks differences and cumulative values across blocks, buildups, and commits using a custom accumulation function. The result is a structured summary suitable for reporting or JSON export, particularly useful when analyzing performance metrics across version-controlled traces.",
+      "description_length": 405,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Tree-Contents",
+      "module_path": "Irmin_traces.Trace_definitions.Replayable_trace",
       "library": "irmin-bench.traces",
-      "description": "This module provides operations to manipulate and evaluate lazy tree contents, including hashing, key retrieval, forcing evaluation, and cache management. It works with lazy content values that may resolve to concrete data or errors, and supports asynchronous evaluation via Lwt. Use cases include efficiently accessing and managing cached or on-demand loaded tree content in a version-controlled or persistent store.",
-      "description_length": 417,
-      "index": 61,
+      "description": "This module provides operations for managing the lifecycle of trace files (creation, flushing, closing, removal) and encoding or decoding versioned binary representations of trace data, including headers and event rows. It works with structured representations of Irmin interactions such as `add`, `commit`, and `checkout` operations, alongside keys, hashes, context identifiers, and metadata messages. These capabilities enable precise logging and deterministic replay of Tezos's interactions with Irmin stores, primarily used for debugging and validating Tezos components during testing.",
+      "description_length": 589,
+      "index": 19,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_common.Var_int",
-      "library": "irmin-bench.traces",
-      "description": "This module encodes and decodes integers to and from a variable-length binary format using only the 7 least significant bits of each byte, continuing until the 8th bit is zero. It operates directly on input and output channels, reading or writing sequences of bytes to represent integers in a compact, streaming-friendly way. It is useful for efficiently serializing integers in a format that favors smaller values with fewer bytes, commonly used in trace file formats or binary protocols.",
-      "description_length": 489,
-      "index": 62,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Head",
-      "library": "irmin-bench.traces",
-      "description": "This module manages the heads of a version-controlled store, providing operations to list all heads, retrieve or update the current head, and perform safe or merging updates. It works with commit objects and branch references, supporting actions like hard resets, conditional updates, and merging with conflict detection. Concrete use cases include implementing branch management, ensuring causality during head updates, and merging divergent commit histories.",
-      "description_length": 460,
-      "index": 63,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Schema-Metadata",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the metadata structure used in trace replay, including its type representation, default value, and merge function. It works with `Schema.Metadata.t` values, enabling consistent handling and merging of metadata during trace replay operations. Concrete use cases include tracking and combining metadata changes in a distributed system's trace replay mechanism.",
-      "description_length": 378,
-      "index": 64,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node-Contents-Key",
-      "library": "irmin-bench.traces",
-      "description": "This module defines key types and hashing operations for node contents in a trace replay system. It provides functions to convert keys into hashes, enabling efficient content addressing and retrieval. It is used to manage and replay immutable data traces in a version-controlled storage backend.",
-      "description_length": 295,
-      "index": 65,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Schema-Contents",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the content schema for a trace replay store, where values are represented as raw bytes. It provides a type definition for byte sequences and a merge function that handles conflict resolution during concurrent updates, returning `Conflict` if values cannot be reconciled. The merge function supports deletion by returning `None` and is used when replaying or merging historical states in a version-controlled trace store.",
-      "description_length": 440,
-      "index": 66,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary_pp.Table0",
       "library": "irmin-bench.traces",
-      "description": "This module constructs a pretty-printable table from a list of trace summaries, focusing on configuration entries such as hostname, store type, and word size. It maps summary data to table cells and organizes them into rows for structured display. It is used to generate human-readable output of trace statistics in a tabular format.",
-      "description_length": 333,
-      "index": 67,
+      "description": "This module builds structured tables for pretty-printing trace summaries, focusing on configuration entries like hostname, store type, and word size. It converts summary data into tabular form using `PrintBox.t` for formatting, enabling clear visual comparison of multiple trace runs. The primary use case is generating human-readable tables from trace metadata configurations.",
+      "description_length": 377,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Trace_stat_summary_pp.Table4",
+      "library": "irmin-bench.traces",
+      "description": "This module implements operations for constructing and transforming structured tables of statistical summary data, particularly handling multi-row headers, resampling of data curves, and formatting for pretty-printing. It works with nested lists of float values representing curves, along with typed formatting and layout directives to control table appearance. Concrete use cases include generating aligned, formatted tables from multiple trace summaries, combining and scaling curve data, and preparing output for display in reports or logs.",
+      "description_length": 543,
+      "index": 21,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Branch-Key",
+      "module_path": "Irmin_traces.Trace_stat_summary.Span",
       "library": "irmin-bench.traces",
-      "description": "This module defines operations for working with branch keys, including validation and accessing the main branch. It provides the type `t` for branch keys, a type witness for serialization, and a function to check branch validity. Use this module when managing branch identifiers in a Git-like versioned storage system.",
-      "description_length": 318,
-      "index": 68,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node-Val",
-      "library": "irmin-bench.traces",
-      "description": "This module provides operations for constructing, serializing, and manipulating hierarchical node values in a version-controlled store, supporting queries like `find` and `head`, modifications via `add`/`remove`, and hash-based content addressing. It works with node values composed of keys, metadata, hashes, and sequences of step-value pairs, enabling efficient pagination through offset/length parameters. Use cases include managing immutable data structures with branching histories, merging concurrent updates, and handling metadata-aware read operations in distributed systems.",
-      "description_length": 583,
-      "index": 69,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Commit",
-      "library": "irmin-bench.traces",
-      "description": "This module implements immutable commit objects representing store updates, with operations to create commits, access their metadata, and retrieve associated trees and parent commits. It works with commit values containing a repository reference, info, parent commit keys, and a root tree. Concrete use cases include building and inspecting commit histories, reconstructing tree states, and resolving commits by key or hash for version traversal and consistency checks.",
-      "description_length": 469,
-      "index": 70,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Schema-Branch",
-      "library": "irmin-bench.traces",
-      "description": "Handles branch management in a trace replay system. It defines branch names as strings, validates branch names, and provides the main branch identifier. Used to ensure correct branch handling during trace replays and manage branch-specific data.",
-      "description_length": 245,
-      "index": 71,
-      "embedding_norm": 1.0
+      "description": "This module organizes trace span statistics using keys from the `Key` module to categorize phases and atomic events, and values from the `Val` module to track count, duration, and cumulative metrics. It uses the `Map` module to aggregate and analyze these statistics across spans, enabling structured performance analysis of Irmin commit traces. Concrete use cases include summarizing time spent in operations like `Add` or `Find`, and distinguishing between phases such as `Buildup` and `Commit` for performance profiling.",
+      "description_length": 523,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary_utils.Variable_summary",
       "library": "irmin-bench.traces",
-      "description": "This module summarizes statistics for a variable with zero or more occurrences per period, supporting accumulation of values and finalization into a structured summary. It works with floating-point values and tracks metrics like mean, min, max, diff, distribution histograms, and evolution curves, with support for log scaling and configurable smoothing. It is used to analyze variables such as per-cycle durations or event counts where samples may vary in frequency across periods.",
-      "description_length": 482,
-      "index": 72,
+      "description": "This module processes variable data across defined periods to compute statistical summaries, including max, min, mean, and distribution metrics using dynamic histograms. It handles variables with zero or multiple samples per period, supporting advanced scenarios like irregularly occurring events within fixed intervals. The module generates smoothed evolution curves and histograms, accommodating log-scaled data and producing output suitable for detailed performance analysis.",
+      "description_length": 478,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Trace_replay.Make",
+      "library": "irmin-bench.traces",
+      "description": "This module replays trace data from a store, using a configuration to initialize and execute trace processing. It handles loading and iterating over trace entries to reconstruct state transitions or validate historical operations. A typical use case involves auditing or debugging distributed system behavior by replaying stored event logs.",
+      "description_length": 340,
+      "index": 24,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Path",
+      "module_path": "Irmin_traces.Trace_collection.Make_stat",
       "library": "irmin-bench.traces",
-      "description": "This module implements path manipulation operations for node paths in a version-controlled store, using a list of steps to represent paths. It supports creating, inspecting, and transforming paths through functions like `cons`, `rcons`, `decons`, `rdecons`, and `map`. Concrete use cases include tracking traversal routes in a tree structure, building and decomposing paths for node access, and transforming path elements for serialization or analysis.",
-      "description_length": 452,
-      "index": 73,
+      "description": "This module implements a trace collector for capturing performance metrics during operations on a version-controlled store. It tracks timing data for short operations like adds, lookups, and commits, and collects pre- and post-state snapshots of the store for replayable trace analysis. The module works directly with store trees, statistical bags of timing samples, and trace files on disk, enabling concrete use cases such as profiling merge durations and disk usage during trace replay workflows.",
+      "description_length": 499,
+      "index": 25,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node",
+      "module_path": "Irmin_traces.Trace_common.Magic",
       "library": "irmin-bench.traces",
-      "description": "This module provides low-level read and write operations for node values in a version-controlled store, using hash-based addressing. It supports existence checks, value retrieval, and storage with optional hash pre-specification, along with batched writes and three-way merge functionality. Designed for use in version control systems, it enables efficient node management in Irmin-based applications.",
-      "description_length": 401,
-      "index": 74,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Contents",
-      "library": "irmin-bench.traces",
-      "description": "This module implements a read-write contents store for versioned data, handling content-addressed storage operations using keys derived from hashes. It supports existence checks, value retrieval, indexed lookups by hash, and atomic batch writes, while allowing direct hash specification for optimized writes. Use cases include storing and retrieving immutable content in a version-controlled Irmin backend, such as file contents or serialized node data in a Merkle tree.",
-      "description_length": 470,
-      "index": 75,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Remote",
-      "library": "irmin-bench.traces",
-      "description": "This module implements remote synchronization for stores using URIs, enabling data transfer between local and remote repositories. It provides `fetch` to retrieve remote branch contents into a local store and `push` to send local changes to a remote store, both operating over endpoints. It is used to replicate or share store state across distributed systems, such as syncing a local Irmin store with a remote Git-based store.",
-      "description_length": 427,
-      "index": 76,
+      "description": "This module defines a `t` type for handling magic values, typically used to identify file formats or versions. It provides functions to convert between strings and these magic values, ensuring correct parsing and representation. Useful in scenarios requiring validation or identification of file types based on predefined magic strings.",
+      "description_length": 336,
+      "index": 26,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit",
+      "module_path": "Irmin_traces.Trace_stat_summary.Store_watched_nodes_folder",
       "library": "irmin-bench.traces",
-      "description": "This module implements a commit store with support for reading, writing, and merging commit values. It provides operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) commit values, along with indexing by hash and batched writes. It works directly with commit keys, hashes, and values, enabling concrete use cases like reconstructing commit history, verifying stored commits, and merging branches in version-controlled systems.",
-      "description_length": 462,
-      "index": 77,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node-Contents-Hash",
-      "library": "irmin-bench.traces",
-      "description": "This module implements hash computation and manipulation for node content identifiers in a storage backend. It provides functions to generate deterministic hashes from values, compute shortened hash versions for efficient lookup, and defines the structure of hash values used in the system. It is used to uniquely identify and efficiently reference node content in a Merkle tree-like structure.",
-      "description_length": 394,
-      "index": 78,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-History",
-      "library": "irmin-bench.traces",
-      "description": "This module provides operations for manipulating directed acyclic graphs (DAGs) representing version history, supporting vertex and edge membership checks, traversal (successors/predecessors), iterative transformations, and structural modifications while preserving graph integrity. It operates on a persistent DAG structure composed of vertices and edges, encapsulated in the `History.t` type, with functional updates returning new graph instances. It is particularly suited for version control systems, collaborative editing platforms, or any application requiring immutable historical state tracking with efficient DAG-based computations.",
-      "description_length": 641,
-      "index": 79,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Tree-Private",
-      "library": "irmin-bench.traces",
-      "description": "This module provides access to environment data associated with a tree structure, specifically through the `get_env` function which retrieves the environment from a given tree instance. It works with tree data structures that are part of the `Tree.Private` module. A concrete use case includes inspecting or modifying the execution context of a tree during trace replay operations.",
-      "description_length": 381,
-      "index": 80,
+      "description": "This module accumulates statistics for watched nodes in a versioned store, tracking per-node values and differences per block. It processes a stream of commits to build a summary map of node statistics, using an accumulator that maintains historical values for computing deltas. It is used to generate detailed performance metrics for specific nodes in a trace, optimized for parallel processing.",
+      "description_length": 396,
+      "index": 27,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary.Watched_node",
       "library": "irmin-bench.traces",
-      "description": "This module tracks and aggregates statistics for versioned nodes in trace summaries, working with map-like structures to associate keys with node values for efficient updates and queries. It computes metrics like memory usage and operation frequency over time, supporting analysis of long-lived traces with high commit throughput. The module's key type enables structured lookups and key-based transformations, while its summary module captures current and historical node values in a version-aware format. Together, these components facilitate detailed performance analysis and structured JSON export of node behavior across complex trace data.",
-      "description_length": 645,
-      "index": 81,
+      "description": "This module processes statistical summaries of watched nodes in version-controlled traces, focusing on hierarchical data aggregation and transformation. It works with structured maps that associate string-convertible keys to value summaries tracking state changes over time. Concrete use cases include analyzing performance metrics across thousands of Irmin commits, generating JSON-exportable reports of evolving data structures, and extracting path-based statistics from long-running versioned traces.",
+      "description_length": 503,
+      "index": 28,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Config",
+      "module_path": "Irmin_traces.Trace_stat_summary.Span_folder",
       "library": "irmin-bench.traces",
-      "description": "This module defines the return types for trace replay operations, supporting either a unit result or a summary of trace statistics. It works with the `Irmin_traces.Trace_stat_summary.t` type to capture aggregated trace data. Concrete use cases include specifying the output format when replaying execution traces for analysis or reporting.",
-      "description_length": 339,
-      "index": 82,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend",
-      "library": "irmin-bench.traces",
-      "description": "This module defines backend interfaces for replaying Irmin traces, including operations for managing contents, nodes, commits, branches, and repositories. It works with version-controlled data structures like immutable trees, commits, and references, enabling trace-based reconstruction of repository states. Concrete use cases include implementing custom backends for Irmin trace replay, supporting portable node and commit serialization, and handling branch and slice operations in a trace-driven context.",
-      "description_length": 507,
-      "index": 83,
+      "description": "This module folds over a trace to accumulate statistics about spans, including counts, durations, and cumulative values. It processes events like commits, checkouts, and memory operations, tracking their duration and frequency. The result is a structured summary suitable for analysis or export, capturing per-span metrics and temporal relationships.",
+      "description_length": 350,
+      "index": 29,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Repo",
+      "module_path": "Irmin_traces.Trace_definitions.Stat_trace",
       "library": "irmin-bench.traces",
-      "description": "This module manages repositories in a version-controlled storage system, supporting operations to open, close, and configure repositories, as well as list branches and commit heads. It enables importing and exporting repository slices, and provides graph traversal functions\u2014depth-first with `iter` and breadth-first with `breadth_first_traversal`\u2014to process commits, nodes, contents, and branches with customizable predicates and callbacks. It works directly with repository handles, commit keys, node keys, contents keys, and branch names, targeting concrete tasks like history traversal, data import/export, and repository introspection.",
-      "description_length": 640,
-      "index": 84,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Branch-Val",
-      "library": "irmin-bench.traces",
-      "description": "This module defines operations for converting branch values into hashes and provides the necessary type definitions for working with branch values in a storage backend. It includes functions to obtain the hash of a branch value and specifies the types involved in storing and identifying branch values. Concrete use cases include managing versioned branch data in a distributed store where hash-based identification is required.",
-      "description_length": 428,
-      "index": 85,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node-Val-Metadata",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the metadata type used in node values and provides operations for handling metadata during trace replay. It includes functions to retrieve the metadata type representation, obtain a default metadata value, and merge metadata values. This is used when reconstructing and merging node states during the replay of Irmin store operations.",
-      "description_length": 354,
-      "index": 86,
+      "description": "This module supports serialization, version migration, and trace file I/O for Tezos node statistics, handling versioned data structures (V0/V1) that represent store configurations, commit operations, and performance metrics like tree operations, garbage collection, and disk I/O. It operates on trace files through reader streams and buffered writers, enabling use cases such as replaying node operations, analyzing memory usage, and generating JSON summaries for performance diagnostics. Key data structures include versioned headers, commit metadata, and encoded sequences of operations like `Add`, `Commit`, and `Find` with associated integer values.",
+      "description_length": 653,
+      "index": 30,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary_pp.Table3",
       "library": "irmin-bench.traces",
-      "description": "This module constructs and formats multi-row tables for displaying trace statistics, using structured data types like `summary_floor` and `variable` to represent rows and numerical values. It processes lists of summaries into tabular form with headers and formatted cells, suitable for pretty-printing. Concrete use cases include generating human-readable reports of performance metrics or trace data with aligned columns and labeled sections.",
-      "description_length": 443,
-      "index": 87,
+      "description": "This module constructs and formats multi-level tables for displaying trace statistics, using nested rows and columns with specific alignment and spacing. It processes summary data structured as tuples of formatting directives, labels, and variable lists, organizing them into a matrix suitable for pretty-printing. Concrete use cases include generating human-readable reports of performance metrics or trace summaries with aligned columns and row headers.",
+      "description_length": 455,
+      "index": 31,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Val-Metadata",
+      "module_path": "Irmin_traces.Trace_stat_summary_utils.Resample",
       "library": "irmin-bench.traces",
-      "description": "This module defines the metadata type used in commit nodes and provides operations for handling metadata values. It includes functions to retrieve the default metadata value and to merge metadata during conflict resolution. This module is used when working with commit node metadata in a repository, particularly during operations that require merging changes from different branches.",
-      "description_length": 384,
-      "index": 88,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay.Make",
-      "library": "irmin-bench.traces",
-      "description": "This module replays trace data from a store, using a configuration to set up the store and a specific type's configuration to guide the replay process. It operates on trace data structures stored in an Irmin backend, reconstructing state transitions from historical entries. Use it to audit or simulate past operations on a traceable data structure, such as replaying a series of versioned edits to a document.",
-      "description_length": 410,
-      "index": 89,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Branch",
-      "library": "irmin-bench.traces",
-      "description": "This module manages branch-commit associations in a repository, supporting operations like checking branch existence, retrieving or setting bound commits, listing branches, and watching for changes. It works with `repo`, `branch`, and `commit` types, providing precise control over branch state and event handling. Use cases include tracking active branches, implementing branch-based versioning workflows, and synchronizing commit updates across distributed systems.",
-      "description_length": 467,
-      "index": 90,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Node-Key",
-      "library": "irmin-bench.traces",
-      "description": "This module defines key types and conversion functions for node identifiers in a trace replay system. It provides a structured way to handle node keys and their associated hash representations, enabling efficient lookups and comparisons. It is used to map node keys to hashes for reconstructing or analyzing execution traces in a storage backend.",
-      "description_length": 346,
-      "index": 91,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Info",
-      "library": "irmin-bench.traces",
-      "description": "This module defines and manipulates commit metadata, including author, message, and timestamp. It provides functions to construct, access, and format commit info values, with support for serialization through Irmin's type system. Use cases include creating commit metadata for versioned traces and logging trace events with structured author and message fields.",
-      "description_length": 361,
-      "index": 92,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Status",
-      "library": "irmin-bench.traces",
-      "description": "This module defines a type `t` representing the possible states of a store: empty, a branch, or a commit. It provides a value type `t` for serialization and a pretty-printer `pp` for human-readable output. Use this module to inspect or display the current state of a repository in a structured and formatted way.",
-      "description_length": 312,
-      "index": 93,
+      "description": "This module provides functions to resample a 1D vector (`curve`) to a different length using interpolation or nearest-neighbor methods. It includes operations to determine sampling positions, accumulate values, and finalize the resampled curve, ensuring the first and last points of input and output match. It is used to adapt time-series or numeric sequence data to a target resolution while preserving endpoint values.",
+      "description_length": 420,
+      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary_utils.Exponential_moving_average",
       "library": "irmin-bench.traces",
-      "description": "This module implements a functional Exponential Moving Average (EMA) that tracks a running average of input samples with configurable decay. It supports operations to update the average with new values, batch updates, controlled forgetting of past data, and querying the current average or internal state. Use cases include smoothing time-series data, monitoring system metrics, and analyzing traces where recent values should have more weight than older ones.",
-      "description_length": 460,
-      "index": 94,
+      "description": "This module implements a functional Exponential Moving Average (EMA) with configurable decay rates, supporting operations to update the average with new samples, batch updates, controlled forgetting of past data, and value extraction. It works with a state type `t` representing the EMA state, and float values for samples and control parameters. Concrete use cases include smoothing time-series data, tracking trends in performance metrics, and summarizing recent behavior in traces with decaying relevance.",
+      "description_length": 508,
+      "index": 33,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Path",
+      "module_path": "Irmin_traces.Trace_common.Var_int",
       "library": "irmin-bench.traces",
-      "description": "This module implements path manipulation operations for store paths, including creating paths from step lists, prepending/appending steps, and deconstructing paths from either end. It works with abstract path and step types, supporting transformations through mapping functions. Concrete use cases include building and traversing hierarchical store paths in Irmin-based applications.",
-      "description_length": 383,
-      "index": 95,
+      "description": "This module provides functions for encoding and decoding variable-length integers to and from binary channels. It operates directly on `in_channel` and `out_channel` types, using a format where each byte contains 7 bits of data and the 8th bit indicates continuation. It is used for efficiently serializing integers in a space-efficient format, particularly in environments requiring compatibility with Tezos' serialization format.",
+      "description_length": 431,
+      "index": 34,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Sigs",
+      "module_path": "Irmin_traces.Trace_common.Io",
       "library": "irmin-bench.traces",
-      "description": "This module implements trace replay functionality for Irmin stores, allowing the reconstruction of store states from a sequence of previously recorded operations. It works with Irmin store types, particularly those supporting commit and checkout operations. Concrete use cases include debugging store behavior by replaying operation traces, and verifying consistency by comparing replayed states against expected outcomes.",
-      "description_length": 422,
-      "index": 96,
+      "description": "This module provides functions for reading and writing binary-encoded trace files with support for versioned headers and rows. It works with `in_channel`, `out_channel`, and custom buffer types to handle sequential access and buffered writes. Concrete use cases include reading trace files with versioned headers, appending rows to a trace file, and decoding sequences of binary data from channels.",
+      "description_length": 398,
+      "index": 35,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Schema-Hash",
+      "module_path": "Irmin_traces.Trace_stat_summary_pp.Table2",
       "library": "irmin-bench.traces",
-      "description": "This module defines operations for generating and manipulating fixed-size cryptographic hashes from sequences of strings, with support for converting hashes to raw byte strings and computing smaller integer hashes for use in hash tables. It works directly with string inputs and custom hash types, enabling efficient storage and comparison of hash values. Concrete use cases include content-addressed storage key generation and hash-based data integrity checks.",
-      "description_length": 461,
-      "index": 97,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary_pp.Pb",
-      "library": "irmin-bench.traces",
-      "description": "This module provides layout and formatting operations for building structured, styled text-based documents using box primitives. It supports alignment, padding, grid arrangement, and tree-like structures over data types like strings, integers, floats, and nested lists or arrays, with utilities for hyperlinks and matrix transformations. It is designed for generating richly formatted summaries and tabular data visualizations outside Tezos-specific contexts.",
-      "description_length": 459,
-      "index": 98,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Contents",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the core operations for managing and manipulating store contents, including merging values, computing hashes, and retrieving contents by key or hash. It works with the `contents` type, along with `hash`, `contents_key`, and `repo` types for identity and storage. Concrete use cases include content addressable storage, conflict-free merge resolution, and content retrieval in version-controlled or distributed stores.",
-      "description_length": 437,
-      "index": 99,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Key",
-      "library": "irmin-bench.traces",
-      "description": "This module defines types and conversions for commit keys in a trace replay system. It provides a type `t` representing commit keys and a function `to_hash` to convert commit keys into their corresponding hash values. It is used to manage and reference specific commits in a version-controlled or trace-based data store.",
-      "description_length": 320,
-      "index": 100,
+      "description": "This module constructs and formats two-dimensional tables for displaying trace statistics, using rows of labeled float quartets to represent summary data. It converts structured summary floors into printable matrices and generates header rows from string labels. It is used to produce aligned, human-readable tables from multi-level trace data, such as benchmark results or performance metrics.",
+      "description_length": 394,
+      "index": 36,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Branch",
-      "library": "irmin-bench.traces",
-      "description": "This module implements an atomic-write branch store with support for reading, writing, and watching branch keys and their associated commit values. It provides operations like `mem`, `find`, `set`, `test_and_set`, `remove`, and `list` for managing branch entries, along with `watch`, `watch_key`, and `unwatch` for change notifications. It is used to track and manipulate named branches in a version-controlled system, where each branch points to a specific commit.",
-      "description_length": 465,
-      "index": 101,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay_intf.Store-Backend-Commit-Node-Metadata",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the metadata type for commit nodes, including default values and a merge function for combining metadata during conflict resolution. It works with the `Backend.Commit.Node.Metadata.t` type, which represents metadata associated with version control commits. It is used to manage and merge metadata such as timestamps, author information, or custom annotations when applying or merging commits.",
-      "description_length": 412,
-      "index": 102,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Irmin_traces.Trace_replay",
-      "library": "irmin-bench.traces",
-      "description": "This module replays trace data from an Irmin backend, using configuration parameters to set up the store and guide the replay process. It reconstructs state transitions from historical entries, enabling the simulation or audit of past operations on versioned data structures. For example, it can replay a sequence of document edits to analyze changes over time or verify system behavior. Key operations include loading trace data, applying replay rules, and producing reconstructed states at specified points in history.",
-      "description_length": 520,
-      "index": 103,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary_conf",
-      "library": "irmin-bench.traces",
-      "description": "This module defines configuration parameters for summarizing trace statistics, including histogram bin count, curve sampling count, and moving average decay and threshold values. It works with numerical data to configure statistical summaries for performance tracing. Concrete use cases include tuning trace analysis for profiling or monitoring system behavior.",
-      "description_length": 361,
-      "index": 104,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_replay_intf",
       "library": "irmin-bench.traces",
-      "description": "This module defines interfaces for replaying operation traces on Irmin stores, specifying return types as either unit or a summary statistic. It works with Irmin stores and trace data structures to support concrete use cases like benchmarking performance characteristics of Irmin operations or validating store behavior against recorded traces. The `Config` submodule parameterizes replay configurations, enabling precise control over trace execution and result aggregation. Key data types include commit values, node keys, content hashes, and versioned paths, with operations for hash computation, content addressing, and version-controlled tree manipulation. Submodules provide structured access to content stores, commit metadata, path handling, and DAG-based history tracking, enabling tasks like proof generation, branch management, and trace-driven repository reconstruction.",
-      "description_length": 881,
-      "index": 105,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Tezos_history_metrics",
-      "library": "irmin-bench.traces",
-      "description": "This module computes and tracks weekly statistics for Tezos blockchain data, including transaction, operation, and block counts per week. It works with lists of integer tuples representing timestamps and associated metrics. Concrete use cases include generating historical reports and analyzing network activity trends over time.",
-      "description_length": 329,
-      "index": 106,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_traces.Import",
-      "library": "irmin-bench.traces",
-      "description": "This module provides Lwt-based monadic and applicative syntax for asynchronous programming, including bind, map, and parallel composition operations. It works with Lwt threads and standard data types like arrays, using functions like `shuffle` for randomization. Concrete use cases include orchestrating asynchronous workflows and managing concurrent operations with precise sequencing and composition.",
-      "description_length": 402,
-      "index": 107,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary_utils",
-      "library": "irmin-bench.traces",
-      "description": "This module provides tools for summarizing and analyzing numerical trace data with support for histograms, curves, and adaptive formatting of floats and time spans. It includes operations for snapping values, approximating counts from block data, and pretty-printing based on examples, enabling tasks like trace visualization and report generation. The resampling submodule adjusts vector lengths using interpolation or nearest-neighbor methods, while the parallel processing submodule builds concurrent pipelines for structured trace analysis. Variable summarization tracks metrics like mean, min, max, and histograms, and the EMA submodule computes weighted averages for time-series smoothing.",
-      "description_length": 695,
-      "index": 108,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_stat_summary",
-      "library": "irmin-bench.traces",
-      "description": "This module transforms performance traces into structured summaries for analysis and JSON export, organizing metrics into nested `bag_stat` records that capture cache behavior, disk usage, garbage collection, and tree operations. It supports time-series resampling, parallel metric extraction, and detailed span analysis, enabling profiling of commit timing and memory patterns across distributed nodes. Child modules aggregate commit statistics, structure timing spans, fold over traces for cumulative metrics, track watched nodes, and maintain versioned node summaries with key-based metrics. These components work together to produce detailed, hierarchical performance reports from long-running traces, optimized for offline analysis and visualization.",
-      "description_length": 755,
-      "index": 109,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_traces.Trace_definitions",
-      "library": "irmin-bench.traces",
-      "description": "This module defines the file format and data structures for capturing and replaying structured traces of Tezos node operations, particularly interactions with Irmin. It supports versioned serialization of actions like Add, Commit, and Find, using hashes, keys, and context identifiers to model state transitions and support auditing, debugging, and protocol testing. The module includes efficient binary trace handling, JSON summarization, and migration-aware event processing, enabling forensic analysis, disk usage tracking, and deterministic replay in 32-bit environments. Example uses include reconstructing Irmin state evolution, analyzing garbage collection patterns, and generating replayable snapshots for testing.",
-      "description_length": 722,
-      "index": 110,
+      "description": "This module defines trace replay result types and interfaces for working with Irmin stores and trace signatures. It supports returning either unit or statistical summaries using the `Irmin_traces.Trace_stat_summary.t` type. It is used to control and structure the output of trace replay operations during system analysis or debugging.",
+      "description_length": 334,
+      "index": 37,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_collection",
       "library": "irmin-bench.traces",
-      "description": "This module captures detailed traces of state transitions and timing metrics during operations on a version-controlled store, supporting analysis of short actions like adds, lookups, and commits. It structures trace data for replay, performance monitoring, and disk usage analysis, with support for garbage collection and time-based indexing. You can use it to debug performance in Tezos by examining operation timelines and state evolution. Key data includes pre/post-state snapshots, timestamps, and structured trace files.",
-      "description_length": 525,
-      "index": 111,
+      "description": "This module implements a trace collector for capturing performance metrics during operations on a version-controlled store. It tracks timing data for short operations like adds, lookups, and commits, and collects pre- and post-state snapshots of the store for replayable trace analysis. The module works directly with store trees, statistical bags of timing samples, and trace files on disk, enabling concrete use cases such as profiling merge durations and disk usage during trace replay workflows.",
+      "description_length": 499,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Trace_definitions",
+      "library": "irmin-bench.traces",
+      "description": "This module defines the file format structures for trace data used in Tezos, primarily handling two types of traces: replayable traces and statistical traces. It provides precise encodings and versioned data layouts for operations such as `add`, `commit`, and `checkout`, along with metadata like keys, hashes, and performance metrics. These definitions support trace generation, deterministic replay, and postprocessing workflows including summarization and visualization.",
+      "description_length": 473,
+      "index": 39,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_traces.Trace_stat_summary_conf",
+      "library": "irmin-bench.traces",
+      "description": "This module defines configuration parameters for summarizing trace statistics, including histogram bin count, curve sampling count, and moving average decay and threshold values. It works with numerical data to shape statistical summaries and time-series analysis. Concrete use cases include tuning trace visualization fidelity and controlling smoothing behavior for performance metrics.",
+      "description_length": 387,
+      "index": 40,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary_cb",
       "library": "irmin-bench.traces",
-      "description": "This module processes trace statistics into structured results, handling conversions from summary data into lists of named metrics. It defines types for metrics as string-float list pairs, and results containing those metrics, along with functions to create and filter result lists. It is used to generate trace summaries compatible with the CodeBench visualizer, ensuring numeric values are valid and structured correctly for display.",
-      "description_length": 435,
-      "index": 112,
+      "description": "This module processes trace statistics into structured results, handling conversions from summary data into lists of named metrics. It defines types for metrics as lists of float values indexed by strings, and results containing those metrics alongside a name. Functions filter out NaN values and construct result lists from different summary inputs, preparing data for serialization or further processing.",
+      "description_length": 406,
+      "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Tezos_history_metrics",
+      "library": "irmin-bench.traces",
+      "description": "This module computes and tracks weekly statistics for Tezos blockchain data, aggregating transaction, operation, and block counts per week. It processes historical data to generate a list of weekly metrics, each entry containing the week's timestamp and the corresponding counts. Useful for analyzing network activity trends over time.",
+      "description_length": 335,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Trace_stat_summary_utils",
+      "library": "irmin-bench.traces",
+      "description": "This module provides functions for summarizing and transforming numerical data, including histogram and curve representations, value snapping, and adaptive formatting for floats and time spans. It supports statistical operations on traces such as computing approximate transaction and operation counts, and includes specialized modules for exponential moving averages, curve resampling, variable summarization, and parallel data aggregation. Concrete use cases include analyzing performance metrics, smoothing time-series data, adapting trace visualizations, and processing telemetry logs with structured data rows.",
+      "description_length": 615,
+      "index": 43,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_common",
       "library": "irmin-bench.traces",
-      "description": "This module handles trace file formats with support for reading and writing variable-length integers, magic numbers, and sequential data structures, working directly with low-level binary data and custom file layouts. It includes submodules for IO operations, schema definitions, magic value handling, versioned serialization, variable-length integer encoding, and lazy sequence processing, enabling structured access to trace files with efficient binary encoding and version-aware data migration. Key data types include `header`, `row`, and `t` for magic values, with operations for reading prefixed sequences, decoding magic-prefixed files, and streaming integer encodings. You can use it to write trace files with typed headers and encoded rows, read structured binary logs incrementally, or serialize integers in a compact, variable-length format suitable for binary protocols.",
-      "description_length": 881,
-      "index": 113,
+      "description": "This module provides support for managing trace files through operations like reading, writing, and transforming binary-encoded data. It works with sequences, magic values, variable-length integers, and custom binary I/O channels to handle structured trace data. Concrete use cases include decoding trace files with versioned headers, appending structured rows to trace logs, and encoding integers in a compact binary format for Tezos-compatible serialization.",
+      "description_length": 460,
+      "index": 44,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces.Trace_stat_summary_pp",
       "library": "irmin-bench.traces",
-      "description": "This module organizes trace summaries into structured, human-readable tables with precise formatting for scalar values, labels, and nested sections. It processes lists of summaries into matrices of typed cells, supporting operations like curve arithmetic, derived metric computation, and multi-row header layouts. Specific uses include generating performance reports with aligned numerical data, configuration tables with host and store metadata, and formatted trace analysis logs. The submodules handle low-level layout, styling, and transformations, enabling rich text-based visualizations with alignment, padding, and grid arrangements.",
-      "description_length": 639,
-      "index": 114,
+      "description": "This module provides functions and submodules for constructing and pretty-printing structured tables from trace summaries, primarily working with `Summary.t` and float-based scalar values. It supports formatting multi-level tables with aligned rows and columns, handling labeled float quartets, nested headers, and resampled curve data. Concrete use cases include generating human-readable reports from performance metrics, benchmark results, or trace data with precise column alignment and structured layout.",
+      "description_length": 509,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Trace_replay",
+      "library": "irmin-bench.traces",
+      "description": "This module replays trace data from a store by loading and iterating over trace entries to reconstruct state transitions or validate historical operations. It works with trace entries stored in a versioned repository, using a configuration to control processing behavior. It is used to audit or debug distributed systems by replaying event logs to reproduce past system states.",
+      "description_length": 377,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Trace_stat_summary",
+      "library": "irmin-bench.traces",
+      "description": "This module transforms low-level Irmin commit traces into structured, analyzable summaries that capture performance metrics like elapsed time, garbage collection statistics, disk activity, and operation-specific breakdowns (e.g., find/pack operations). It operates on `Stat_trace` inputs and organizes aggregated data through hierarchical folders for spans, node statistics, and time-series resampling, enabling detailed profiling of version-controlled data evolution. Designed for export to JSON, it supports performance optimization and historical analysis of Irmin repositories, though processing large traces requires significant computational resources.",
+      "description_length": 658,
+      "index": 47,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_traces.Import",
+      "library": "irmin-bench.traces",
+      "description": "This module defines type aliases for Irmin permission modes and provides Lwt-based monadic and applicative operators for asynchronous computation chaining and combination. It includes functions for binding, mapping, and running Lwt threads in sequence or parallel, along with a shuffle function for randomly reordering arrays using a provided random state. Concrete use cases include orchestrating asynchronous Irmin operations and managing concurrent data processing tasks with controlled concurrency and error handling.",
+      "description_length": 521,
+      "index": 48,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_traces",
       "library": "irmin-bench.traces",
-      "description": "This module processes and analyzes structured traces of version-controlled operations, reconstructing historical state transitions and extracting performance metrics. It supports trace replay, statistical summarization, and versioned serialization of actions like commits and lookups, using data types such as hashes, keys, and versioned paths. You can use it to audit document changes, generate time-series reports on blockchain activity, or profile store performance with histograms and EMA smoothing. It also handles binary trace encoding, asynchronous workflows, and structured table output for visualization and offline analysis.",
-      "description_length": 634,
-      "index": 115,
+      "description": "This module collection implements trace collection, analysis, and replay functionality for version-controlled stores, primarily targeting Tezos blockchain data. It provides structured trace file handling, performance metric aggregation, and deterministic replay mechanisms for auditing and profiling. Concrete use cases include capturing and analyzing Irmin operation traces, generating weekly blockchain statistics, and replaying historical state transitions for debugging and performance optimization.",
+      "description_length": 503,
+      "index": 49,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 117,
-    "meaningful_modules": 116,
+    "total_modules_in_package": 51,
+    "meaningful_modules": 50,
     "filtered_empty_modules": 1,
-    "retention_rate": 0.9914529914529915
+    "retention_rate": 0.9803921568627451
   },
   "statistics": {
-    "max_description_length": 881,
+    "max_description_length": 658,
     "min_description_length": 168,
-    "avg_description_length": 450.2931034482759,
-    "embedding_file_size_mb": 0.4216890335083008
+    "avg_description_length": 454.26,
+    "embedding_file_size_mb": 0.7249727249145508
   }
 }

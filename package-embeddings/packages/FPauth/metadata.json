@@ -1,55 +1,55 @@
 {
   "package": "FPauth",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:05:13.692289",
+  "creation_timestamp": "2025-08-14T22:55:47.610242",
   "modules": [
+    {
+      "module_path": "FPauth.Make_Auth.Session_manager",
+      "library": "FPauth",
+      "description": "Manages session-based authentication state by extracting user data from sessions and populating request-local variables. Uses `M.t` as the user entity type and provides the `auth_setup` middleware to configure authentication context for each request. Enables downstream handlers to access authenticated user information and session helpers directly from the request.",
+      "description_length": 366,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "FPauth.Make_Auth.Authenticator",
       "library": "FPauth",
-      "description": "Authenticator runs a list of authentication strategies against a Dream request to determine authentication success and provides a function to invalidate sessions by logging out users. It works with strategies conforming to `FPauth_core.Auth_sign.STRATEGY` and entity types defined by the parent module. This module is used to implement per-request authentication checks and session logout functionality in Dream web applications.",
-      "description_length": 429,
-      "index": 0,
+      "description": "Handles authentication workflows by executing a list of authentication strategies against incoming requests, determining overall authentication success. Works with `Dream.request` and strategy modules conforming to `FPauth_core.Auth_sign.STRATEGY`. Used to validate user credentials during login attempts and to terminate sessions during logout.",
+      "description_length": 345,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "FPauth.Make_Auth.Router",
       "library": "FPauth",
-      "description": "Router defines routes for authentication workflows, handling login and logout actions. It works with authentication strategies and HTTP requests/responses, using Dream's routing system. Concrete use cases include setting up login endpoints that trigger specific authentication strategies and logging out users by invalidating their session.",
-      "description_length": 340,
-      "index": 1,
+      "description": "Router defines routes for authentication workflows, handling login and logout actions. It works with authentication strategies and Dream's routing system to integrate session management and response handling. Concrete use cases include setting up `/login` and `/logout` endpoints that trigger strategy-based authentication flows and return appropriate HTTP responses.",
+      "description_length": 367,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "FPauth.Make_Auth.Variables",
       "library": "FPauth",
-      "description": "This module defines local variables and types used during authentication, including flags for authentication status, current user entities, and error handling. It provides functions to update the current user and manage session state within a Dream web application. These variables are essential for tracking authentication state and user data across individual requests.",
-      "description_length": 371,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "FPauth.Make_Auth.Session_manager",
-      "library": "FPauth",
-      "description": "SessionManager handles session-based authentication by extracting user data from the session and setting it as local variables for each request. It works with session data structures and user entities defined by the application's authentication model. This enables downstream handlers to access authenticated user information directly from the request context.",
-      "description_length": 360,
+      "description": "This module defines request-local variables for tracking authentication state, including `authenticated`, `current_user`, and `auth_error`, all tied to the `Auth_sign.MODEL` type. It provides functions to update the current user and propagate changes to the session. These variables are used to manage per-request authentication context and errors within middleware and route handlers.",
+      "description_length": 385,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "FPauth.Make_Auth",
       "library": "FPauth",
-      "description": "This module implements a comprehensive authentication system for Dream web applications by integrating strategies, session management, and routing. It centers around authentication workflows using strategies conforming to `Auth_sign.STRATEGY`, with core data types including user entities, session data, authentication flags, and local state variables. Operations include per-request authentication checks, session-based user tracking, login/logout route handling, and session invalidation. Example use cases include securing routes by requiring authentication, associating user data with requests via sessions, and triggering specific authentication flows on login endpoints.",
-      "description_length": 676,
+      "description": "This module creates an authentication system using a provided model type, offering middleware to manage request-local authentication state and session integration. It includes an authenticator for executing strategies like login and logout, and a router to define authentication endpoints. Concrete use cases include setting up `/login` to validate credentials and `/logout` to terminate sessions with proper session management and response handling.",
+      "description_length": 450,
       "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "FPauth",
       "library": "FPauth",
-      "description": "This module provides a structured authentication framework for Dream web applications, orchestrating strategies, session handling, and route protection. It revolves around user entities, session data, and authentication flags, offering operations to authenticate requests, manage logged-in users, and control access to routes. It enables securing endpoints by requiring login, associating user data with sessions, and defining custom authentication flows for login and logout actions.",
-      "description_length": 484,
+      "description": "Creates an authentication system with middleware for request-local state and session management. It provides an authenticator for login and logout operations and a router to define authentication endpoints. Used to implement concrete flows like credential validation at `/login` and session termination at `/logout`.",
+      "description_length": 316,
       "index": 5,
       "embedding_norm": 1.0
     }
@@ -61,9 +61,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 676,
-    "min_description_length": 340,
-    "avg_description_length": 443.3333333333333,
-    "embedding_file_size_mb": 0.02222919464111328
+    "max_description_length": 450,
+    "min_description_length": 316,
+    "avg_description_length": 371.5,
+    "embedding_file_size_mb": 0.08734703063964844
   }
 }

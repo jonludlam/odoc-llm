@@ -1,119 +1,119 @@
 {
   "package": "vecosek-scene",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 14,
-  "creation_timestamp": "2025-07-15T23:07:39.997327",
+  "creation_timestamp": "2025-08-14T23:19:20.039616",
   "modules": [
     {
-      "module_path": "Vecosek_scene.Scene.Action",
+      "module_path": "Vecosek_scene.Scene.Event",
       "library": "vecosek-scene",
-      "description": "This module defines and manipulates event handlers that respond to specific events within a scene description. It provides functions to create, add, and remove handlers, each associated with a list of events and corresponding actions. These handlers are used to define dynamic behavior in response to events, such as triggering sequences or modifying state based on event conditions.",
-      "description_length": 383,
+      "description": "This module defines the core event types that the sequencer processes, including track start and end notifications and MIDI input events. It works directly with identifiers and MIDI event structures to represent state changes and external input. Concrete use cases include triggering track transitions and handling real-time MIDI signals in the sequencer.",
+      "description_length": 355,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vecosek_scene.Scene.Midi_event",
-      "library": "vecosek-scene",
-      "description": "This module defines a type for representing MIDI events with fields for port, status, channel, and data bytes. It provides a function to construct MIDI events and a function to convert them to human-readable strings. It is used to describe and display MIDI messages sent or received by a Jack port in a sequencer scene.",
-      "description_length": 319,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vecosek_scene.Scene.Ticked_action",
-      "library": "vecosek-scene",
-      "description": "This module defines a type for actions with associated timestamps in a musical sequence, where each action is tied to a specific tick count. It provides functions to create these timestamped actions and compare them based on their tick values. It is used to represent and manage timed events within a track, such as note triggers or parameter changes, in a sequencer.",
-      "description_length": 367,
-      "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Vecosek_scene.Scene.Id",
       "library": "vecosek-scene",
-      "description": "This module provides an identifier type for referencing tracks within a scene description, based on string-based unique identifiers. It includes operations for comparing identifiers and generating fresh ones. Useful for managing track references in a sequencer's initial state configuration.",
-      "description_length": 291,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Vecosek_scene.Scene.Biniou",
-      "library": "vecosek-scene",
-      "description": "This module provides direct serialization and deserialization of `Scene.t` values to and from Biniou format. It includes functions to convert scenes to and from strings, as well as reading from and writing to input/output channels. These operations are useful for efficiently storing, transmitting, or reloading scene configurations in binary form.",
-      "description_length": 348,
-      "index": 4,
+      "description": "This module manages unique identifiers for tracks in the sequencer scene description. It provides a type alias for string-based IDs and a function to generate fresh unique identifiers. The `compare` function enables ordering of these string IDs, which is useful for data structures requiring key comparison.",
+      "description_length": 307,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Vecosek_scene.Scene.Event",
+      "module_path": "Vecosek_scene.Scene.Action",
       "library": "vecosek-scene",
-      "description": "This module defines event types that the sequencer reacts to, including track start and end notifications and MIDI input handling. It works with identifiers and MIDI events to represent changes in the sequencer's state. Concrete use cases include triggering actions when a track ends, starting a track, or processing incoming MIDI signals.",
-      "description_length": 339,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vecosek_scene.Scene.Track",
-      "library": "vecosek-scene",
-      "description": "This module defines the structure and creation of tracks within a scene, representing sequences of timed actions. It provides functions to construct tracks with unique identifiers, event lists, and specified lengths, along with a display name. Tracks are used to organize and manage timed musical or procedural events in a sequencer.",
-      "description_length": 333,
-      "index": 6,
+      "description": "This module defines and manipulates event handlers that respond to events in a scene description. It provides functions to create, add, and remove handlers that bind events to sequences of actions, using `Scene.Event.t` and `Scene.Action.t` types. Concrete use cases include defining responses to user input or system events in a sequencer, such as triggering audio playback or updating visual elements based on event triggers.",
+      "description_length": 427,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vecosek_scene.Scene.Json",
       "library": "vecosek-scene",
-      "description": "Converts scene data to and from JSON format for persistent storage or transmission. It operates directly on `Scene.t` values, using JSON as the interchange format. Use this module to load scenes from JSON strings or files, or to save scenes for later restoration.",
-      "description_length": 263,
+      "description": "Converts between `Scene.t` and JSON format using `atdgen`-generated serializers. Handles parsing from and printing to JSON strings and channels. Useful for loading scene configurations from JSON files or saving scenes to disk.",
+      "description_length": 226,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Vecosek_scene.Scene.Ticked_action",
+      "library": "vecosek-scene",
+      "description": "This module defines a type `t` representing an action with an associated tick timestamp, used to schedule actions within a track of a sequencer. It provides a `make` function to construct ticked actions and a `compare` function to order them based on their tick values. It is used to manage timed events in a musical or procedural sequence, where precise ordering and scheduling of actions are required.",
+      "description_length": 403,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Vecosek_scene.Scene.Track",
+      "library": "vecosek-scene",
+      "description": "This module defines and manipulates `Track` values, which represent sequences of timed actions within a scene. It provides functions to create tracks with unique identifiers, associate events to them, and set their length and display name. Use cases include constructing and modifying individual tracks for a musical or animation sequencer, where each track corresponds to a specific instrument or visual element.",
+      "description_length": 413,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Vecosek_scene.Scene.Midi_event",
+      "library": "vecosek-scene",
+      "description": "This module defines a structured representation of MIDI events with fields for port, status, channel, and data bytes. It provides a constructor `make` to create MIDI event records and `to_string` to convert them into human-readable strings. These capabilities are used to configure and display MIDI event data within a sequencer's initial state description.",
+      "description_length": 357,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Vecosek_scene.Scene.Biniou",
+      "library": "vecosek-scene",
+      "description": "This module provides direct serialization and deserialization of `Scene.t` values to and from Biniou format. It includes functions to convert scenes to and from strings, as well as reading from and writing to input/output channels. These operations are used for efficient binary storage and transmission of sequencer scene states.",
+      "description_length": 330,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Vecosek_scene.Scene_format_b",
+      "module_path": "Vecosek_scene.Meta",
       "library": "vecosek-scene",
-      "description": "This module provides bidirectional serialization of musical sequence data to the *biniou* binary format, focusing on types like `event`, `action`, `track`, and `scene` that model timed musical events, MIDI control, and BPM logic. It enables efficient storage and transmission of complex scene data through structured conversion functions for tagged and untagged binary representations, ensuring compatibility via node tag handling. Use cases include persisting dynamic musical arrangements, transmitting control sequences over networks, and managing tempo changes with `bpm_operation` values.",
-      "description_length": 592,
+      "description": "Stores and provides access to build-time metadata such as version information. Works with string values, specifically exposing a `version` field. Useful for runtime inspection of the application's version or embedding build details into logs and diagnostics.",
+      "description_length": 258,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vecosek_scene.Scene_format_j",
       "library": "vecosek-scene",
-      "description": "This module provides JSON serialization and deserialization functions for a scene-based MIDI control system. It operates on data structures representing MIDI events, actions (such as track control, BPM changes, and event handlers), and scene state, enabling use cases like persisting control configurations to JSON files, dynamically reconfiguring scenes via JSON data exchange, or integrating with web-based tools for MIDI management.",
-      "description_length": 435,
+      "description": "This module provides JSON (de)serialization functions for MIDI events, track configurations, BPM changes, and scene state management. It operates on types like `event`, `action`, `track`, and `scene`, enabling bidirectional conversion between OCaml values and JSON representations using buffered and string-based interfaces. These capabilities support persistent storage of musical sequences, dynamic tempo adjustments, and data interchange between applications.",
+      "description_length": 462,
       "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Vecosek_scene.Scene_format_t",
+      "library": "vecosek-scene",
+      "description": "This module defines data structures and operations for representing and manipulating musical scenes with MIDI events, track controls, and tempo changes. It includes types for BPM adjustments, track management, MIDI input/output, and event handling, enabling precise sequencing and real-time control. Concrete use cases include building and modifying musical sequences, handling MIDI input/output events, and managing track state within a scene.",
+      "description_length": 444,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vecosek_scene.Scene",
       "library": "vecosek-scene",
-      "description": "This module structures the initial state of a sequencer scene, defining tracks, event handlers, and timing parameters like BPM and PPQN. It supports constructing, rendering, and manipulating scenes, with direct serialization through JSON and Biniou. Submodules handle MIDI events, timestamped actions, track management, and event handling to enable dynamic responses to sequencer state changes. Use it to configure musical sequences, manage track-based compositions, and serialize scene data for storage or transmission.",
-      "description_length": 520,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Vecosek_scene.Scene_format_t",
-      "library": "vecosek-scene",
-      "description": "This module defines data structures and operations for managing musical scenes with MIDI events, tempo changes, and track control. It supports typed representations of BPM adjustments, MIDI messages, track state transitions, and event handlers for dynamic scene manipulation. Concrete use cases include sequencing musical patterns, handling real-time MIDI input/output, and structuring multi-track compositions with precise timing.",
-      "description_length": 431,
+      "description": "This module represents and manipulates the initial state of a sequencer, including tracks, event handlers, timing parameters (BPM, PPQN), and active components. It supports creating, serializing, and rendering scenes, with concrete use cases in configuring and persisting sequencer states for music or animation workflows.",
+      "description_length": 322,
       "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Vecosek_scene.Meta",
+      "module_path": "Vecosek_scene.Scene_format_b",
       "library": "vecosek-scene",
-      "description": "Stores and provides access to build-time metadata such as version information. Works with string values, specifically exposing a `version` field. Useful for runtime inspection of package versions or logging build-specific identifiers.",
-      "description_length": 234,
+      "description": "This module provides serialization and deserialization operations for MIDI scene data structures using the biniou binary format, supporting both tagged and untagged value representations. It works with types like tracks, scenes, MIDI events, actions, and event handlers, enabling efficient storage, transmission, and programmatic manipulation of MIDI sequencing data. Specific use cases include persisting MIDI compositions, exchanging scene configurations between systems, and real-time editing of time-stamped musical events.",
+      "description_length": 527,
       "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vecosek_scene",
       "library": "vecosek-scene",
-      "description": "This module manages musical scene data with structured representations of timed events, MIDI control, and tempo logic, supporting bidirectional serialization to binary and JSON formats. It centers on data types like `event`, `action`, `track`, and `scene`, enabling operations such as BPM adjustments, track state transitions, and timestamped action handling. Use it to configure and persist multi-track compositions, transmit control sequences over networks, or integrate with web tools via JSON. It also exposes version metadata for runtime inspection of build-specific identifiers.",
-      "description_length": 584,
+      "description": "This module provides operations for managing sequencer scenes with support for MIDI events, track configurations, and tempo changes. It works with data structures representing musical scenes, tracks, events, and handlers, along with BPM and PPQN timing parameters. Concrete use cases include creating, serializing, and rendering sequencer states for music or animation workflows, with support for both binary and JSON formats for data persistence and interchange.",
+      "description_length": 463,
       "index": 13,
       "embedding_norm": 1.0
     }
@@ -125,9 +125,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 592,
-    "min_description_length": 234,
-    "avg_description_length": 388.5,
-    "embedding_file_size_mb": 0.051293373107910156
+    "max_description_length": 527,
+    "min_description_length": 226,
+    "avg_description_length": 378.14285714285717,
+    "embedding_file_size_mb": 0.20328330993652344
   }
 }

@@ -1,149 +1,117 @@
 {
   "package": "ctypes-foreign",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 16,
-  "creation_timestamp": "2025-07-15T23:09:01.288753",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 12,
+  "creation_timestamp": "2025-08-14T23:24:58.130984",
   "modules": [
     {
-      "module_path": "Ctypes_foreign_basis.Make.Funptr",
+      "module_path": "Ctypes_foreign_basis.Make.Ffi",
       "library": "ctypes-foreign",
-      "description": "This module creates C-compatible function pointers from OCaml functions, enabling direct invocation of those functions in foreign contexts. It manages the conversion and lifetime of these function pointers using `of_fun` to wrap OCaml functions and `free` to release associated resources. Use it when exposing OCaml callbacks to C libraries or implementing FFI-based interfaces requiring function pointers.",
-      "description_length": 406,
+      "description": "This module provides low-level operations for converting between OCaml functions and C-compatible function pointers, enabling direct interoperability with C libraries. It supports working with static function definitions and runtime function values, handling details like ABI compatibility, runtime lock management, and thread registration. Concrete use cases include binding C functions that accept or return function pointers, implementing callbacks from C into OCaml, and managing the lifecycle of function pointers to prevent leaks.",
+      "description_length": 536,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ctypes_foreign_basis.Make.Ffi",
-      "library": "ctypes-foreign",
-      "description": "This module provides low-level operations for converting between OCaml functions and C-compatible function pointers, enabling direct interoperability with C libraries. It supports creating callable C function pointers from OCaml closures and extracting OCaml functions from existing C function pointers, using the Libffi library to handle calling conventions and runtime locks. Concrete use cases include binding C functions that accept or return function pointers, implementing callbacks from C into OCaml, and managing the lifecycle of function pointers to prevent leaks.",
-      "description_length": 573,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Ctypes_closure_properties.Make",
       "library": "ctypes-foreign",
-      "description": "This module links the lifetimes of two OCaml objects, ensuring one remains alive while the other is in use. It provides `record` to associate a value with a key and `retrieve` to access that value as long as it is still live. Use this when managing external resources that must persist as long as a related object is active, such as tying a file descriptor's lifetime to a handle.",
-      "description_length": 380,
-      "index": 2,
+      "description": "This module links the lifetimes of two OCaml objects, ensuring one remains live while the other is in use, and provides a key to safely retrieve the dependent object. It works directly with `Obj.t` values, using an integer key for association. Use this when managing foreign or low-level resources in OCaml where manual lifetime control is necessary, such as binding to C callbacks that must not outlive their associated OCaml values.",
+      "description_length": 434,
+      "index": 1,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ctypes_ffi.CLOSURE_PROPERTIES",
-      "library": "ctypes-foreign",
-      "description": "This module manages lifetime dependencies between OCaml values and C pointers. It allows linking the lifetime of a C pointer to an OCaml value, ensuring the OCaml value is not collected while the C pointer is still in use. It is used in foreign function interfaces to safely associate and retrieve OCaml data from C contexts.",
-      "description_length": 325,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ctypes_closure_properties.MUTEX",
-      "library": "ctypes-foreign",
-      "description": "This module implements a mutual exclusion lock (mutex) for managing concurrent access to shared resources. It provides operations to create, lock, attempt to lock non-blockingly, and unlock a mutex. Concrete use cases include synchronizing threads in multi-threaded applications to prevent race conditions on shared data.",
-      "description_length": 321,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ctypes_foreign_basis.Make",
-      "library": "ctypes-foreign",
-      "description": "This module enables calling C functions from OCaml by generating and managing foreign function interfaces. It supports defining function pointers, importing foreign values, and dynamically wrapping OCaml functions for use in C contexts, with core operations like `of_fun` to create callable C function pointers and `free` to release them. The child modules extend this by providing low-level conversion between OCaml closures and C function pointers, using Libffi to handle calling conventions and runtime interactions. You can use it to bind C libraries that require function pointers, implement callbacks from C to OCaml, or manipulate C-compatible function pointers directly in OCaml code.",
-      "description_length": 692,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Foreign.Funptr",
-      "library": "ctypes-foreign",
-      "description": "This module converts OCaml closures into C-compatible function pointers and manages their lifetimes. It works with `fn` type closures and produces `t` type function pointers that can be passed to C code. Use it to safely pass OCaml functions to C libraries, ensuring they remain valid during the C call and are properly released afterward.",
-      "description_length": 339,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Ctypes_ffi.Make",
       "library": "ctypes-foreign",
-      "description": "This module enables interoperability between OCaml and C by dynamically calling functions through pointers and converting OCaml functions to C-compatible function pointers. It operates on function types defined in Ctypes_static and handles low-level details like ABI selection, runtime lock management, and thread registration. Concrete use cases include binding to C libraries at runtime, exposing OCaml callbacks to C code, and managing lifecycle of function pointers without static stubs.",
-      "description_length": 491,
-      "index": 7,
+      "description": "This module enables interoperability between OCaml and C by dynamically calling functions through pointers and converting OCaml functions into C-compatible function pointers. It operates on function types defined with Ctypes_static.fn and handles both static and dynamic function pointers (funptr). Concrete use cases include binding C libraries at runtime, exposing OCaml callbacks to C code, and managing lifecycle of function pointers for foreign interfaces.",
+      "description_length": 461,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ctypes_foreign_basis.Make",
+      "library": "ctypes-foreign",
+      "description": "This module enables direct interoperability with C by converting OCaml functions to C-compatible function pointers and vice versa. It handles low-level details like ABI compatibility, runtime locks, and thread registration, supporting use cases such as binding C functions that take or return callbacks and managing function pointer lifecycles. Key operations include creating function pointers from OCaml closures, loading foreign values from shared libraries, and dynamically managing C-compatible function exports.",
+      "description_length": 517,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ctypes_foreign_basis",
+      "library": "ctypes-foreign",
+      "description": "This module converts OCaml functions to C-compatible function pointers and manages their lifecycles, enabling direct interoperability with C. It supports loading foreign values from shared libraries and binding C functions that accept or return callbacks. Use cases include exporting OCaml functions to C APIs, handling C-compatible function pointers with proper ABI alignment, and dynamically linking C functions at runtime.",
+      "description_length": 425,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ctypes_ffi_stubs",
+      "library": "ctypes-foreign",
+      "description": "This module directly manages foreign function interface (FFI) operations, handling low-level type representations and function calls. It works with structured FFI type descriptions, function signatures, and closures, supporting operations like struct layout definition, function pointer creation, and dynamic callback setup. Concrete use cases include binding C functions with complex signatures, implementing custom calling conventions, and embedding OCaml closures in C-compatible function pointers.",
+      "description_length": 501,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libffi_abi",
       "library": "ctypes-foreign",
-      "description": "This module defines constants for common Application Binary Interfaces (ABIs) and provides functions to retrieve the system's default ABI or convert ABI values to integer codes. It operates on an abstract type representing calling conventions, enabling precise control over foreign function interface behavior across diverse platforms. These features are particularly useful for cross-platform development and interfacing with C libraries that require adherence to specific calling conventions on different operating systems or architectures.",
-      "description_length": 542,
+      "description": "This module provides operations to define and convert between specific Application Binary Interface (ABI) identifiers, such as `aix`, `darwin`, `fastcall`, and `thiscall`, which encode calling conventions for foreign function interoperability. It centers on the `abi` type, an enumerated representation of platform-specific ABIs, and includes utility functions to map these identifiers to integer codes required by low-level interfaces. These capabilities are primarily used when configuring foreign function calls to align with C library conventions across diverse operating systems and architectures.",
+      "description_length": 602,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Foreign",
+      "library": "ctypes-foreign",
+      "description": "This module directly exposes C functions and values as OCaml values, enabling calls to and integration with C libraries. It supports function pointers and dynamic closure creation, handling type conversions and memory management across language boundaries. Concrete use cases include binding system APIs, embedding C libraries in OCaml applications, and implementing callbacks from C to OCaml.",
+      "description_length": 393,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ctypes_weak_ref",
+      "library": "ctypes-foreign",
+      "description": "This module provides operations to create, update, and access single weak references to values, allowing the referenced values to be reclaimed by the garbage collector. It works with arbitrary OCaml values, tracking them weakly to avoid prolonging their lifetime. Concrete use cases include caching mechanisms where entries should not prevent garbage collection, or managing cross-references in data structures that must not cause memory leaks.",
+      "description_length": 444,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ctypes_ffi",
       "library": "ctypes-foreign",
-      "description": "This module enables defining and calling foreign functions with C-compatible signatures, supporting direct interaction with C libraries through dynamic function pointers and callbacks. It provides data types for C-compatible function closures, handles calling conventions and memory management, and supports operations like binding C functions to OCaml and exposing OCaml functions to C. The lifetime management submodule links OCaml values to C pointers, ensuring safe resource handling during FFI calls, while the dynamic interoperability submodule allows runtime function invocation and conversion of OCaml functions to C-compatible pointers. Examples include safely calling C-allocated functions from OCaml, registering OCaml callbacks in C libraries, and managing the lifecycle of C pointers tied to OCaml values.",
-      "description_length": 818,
+      "description": "This module enables interoperability between OCaml and C by converting OCaml functions into C-compatible function pointers and calling C functions through pointers. It works with function types defined using `Ctypes_static.fn`, supporting both static and dynamic function pointers. Concrete use cases include binding C libraries at runtime, exposing OCaml callbacks to C code, and managing the lifecycle of function pointers for foreign interfaces.",
+      "description_length": 448,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ctypes_ffi_stubs",
+      "module_path": "Ctypes_closure_properties",
       "library": "ctypes-foreign",
-      "description": "This module directly supports defining and manipulating foreign function interfaces (FFI) by providing low-level control over function signatures and calling conventions. It works with abstract types representing FFI type descriptors, function call specifications, and closures, enabling precise interfacing with C libraries. Concrete use cases include dynamically constructing function pointers with custom calling conventions, marshaling arguments and return values for C functions, and implementing callbacks that integrate with C-based APIs.",
-      "description_length": 545,
+      "description": "This module ensures the lifetime of an OCaml object is tied to another, using an integer key to associate and retrieve dependent `Obj.t` values. It is used when interfacing with C callbacks or foreign resources that must not outlive their related OCaml values. The Make functor creates a safe binding between these objects, preventing premature garbage collection.",
+      "description_length": 364,
       "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dl",
       "library": "ctypes-foreign",
-      "description": "This module provides direct access to dynamic linking operations, allowing opening and closing shared libraries and resolving symbols within them. It works with abstract handles representing loaded libraries and native integer values for symbol addresses. Concrete use cases include loading plugins at runtime, accessing functions from shared libraries like `libm.so`, and implementing custom dynamic symbol resolution logic.",
-      "description_length": 425,
+      "description": "This module provides direct access to dynamic linking operations through `dlopen`, `dlclose`, and `dlsym`, enabling loading and interaction with shared libraries at runtime. It works with abstract handles representing loaded libraries and native integer values for symbol addresses. Concrete use cases include interfacing with C libraries, implementing plugin systems, and runtime function resolution in low-level applications.",
+      "description_length": 427,
       "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ctypes_weak_ref",
-      "library": "ctypes-foreign",
-      "description": "This module provides operations to create, update, and access single weak references to values, allowing the referenced values to be reclaimed by the garbage collector when no strong references remain. It works with arbitrary OCaml values, tracking liveness with the `is_empty` function. Concrete use cases include caching external resources like file handles or large data structures without preventing their collection.",
-      "description_length": 421,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ctypes_foreign_basis",
-      "library": "ctypes-foreign",
-      "description": "This module enables seamless interoperability between OCaml and C by generating and managing foreign function interfaces. It provides core data types for C function pointers and operations like `of_fun` to expose OCaml functions as C-callable pointers and `free` to release them. Built on Libffi, it handles calling conventions and runtime interactions, allowing direct manipulation of C-compatible functions in OCaml. You can use it to bind C libraries requiring function pointers, implement C-to-OCaml callbacks, or dynamically wrap OCaml closures for use in C contexts.",
-      "description_length": 572,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ctypes_closure_properties",
-      "library": "ctypes-foreign",
-      "description": "This module coordinates the management of closures and their associated concurrency properties through a structured interface that integrates lifetime control and thread-safe access. It enables the creation of closures that interact with shared resources, using synchronization primitives like mutexes to ensure safe concurrent execution. The module supports operations to bind the lifetimes of related objects, ensuring that external resources persist while in use, and provides tools to manage mutual exclusion for shared data. For example, a closure can be tied to a resource handle that remains valid as long as the closure is active, while a mutex ensures only one thread modifies the resource at a time.",
-      "description_length": 709,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Foreign",
-      "library": "ctypes-foreign",
-      "description": "This module enables direct interaction with C APIs by exposing C functions and values as OCaml values, supporting function pointers, dynamic management, and value imports through `Ctypes`. It allows calling C functions from OCaml and passing OCaml closures to C code as function pointers, ensuring safe lifetime management. One submodule specializes in converting `fn` type closures into C-compatible `t` type pointers, facilitating callbacks from C to OCaml, such as handling events in a C-based GUI library from OCaml logic. Combined, they support concrete tasks like binding system calls from `libc`, integrating with C-based networking libraries, or controlling hardware via OCaml-written event handlers passed to C drivers.",
-      "description_length": 728,
-      "index": 15,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 16,
-    "meaningful_modules": 16,
+    "total_modules_in_package": 12,
+    "meaningful_modules": 12,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 818,
-    "min_description_length": 321,
-    "avg_description_length": 517.9375,
-    "embedding_file_size_mb": 0.05855274200439453
+    "max_description_length": 602,
+    "min_description_length": 364,
+    "avg_description_length": 462.6666666666667,
+    "embedding_file_size_mb": 0.1743631362915039
   }
 }

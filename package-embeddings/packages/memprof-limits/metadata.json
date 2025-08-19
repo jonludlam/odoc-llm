@@ -1,49 +1,49 @@
 {
   "package": "memprof-limits",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:28.361045",
+  "creation_timestamp": "2025-08-14T22:52:13.687985",
   "modules": [
     {
-      "module_path": "Memprof_limits.Token",
+      "module_path": "Memprof_limits.Memprof",
       "library": "memprof-limits",
-      "description": "This module provides a thread-safe atomic flag abstraction with operations to create, set, and check the state of the flag. It works with a single abstract data type `t` representing the token. Concrete use cases include signaling between threads, cancellation flags for long-running computations, and synchronization points in concurrent programs.",
-      "description_length": 348,
+      "description": "This module tracks memory allocations with configurable sampling rates and callstack capture, using `allocation` records to store sample counts, sizes, sources, and backtraces. It provides `start` and `stop` functions to control profiling, along with a `null_tracker` for default callback behavior. Use it to analyze memory usage patterns in applications requiring precise allocation accounting, such as optimizing data structure efficiency or diagnosing memory leaks.",
+      "description_length": 468,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memprof_limits.Resource_bind",
+      "module_path": "Memprof_limits.Token",
       "library": "memprof-limits",
-      "description": "This module enables RAII-style resource management using the `let&` binding, ensuring resources are automatically cleaned up at the end of a scope. It works with any resource type that requires explicit release, such as file handles or memory buffers. Use it to safely manage transient resources within a controlled scope, avoiding leaks even in the presence of exceptions.",
-      "description_length": 373,
+      "description": "This module provides atomic flag management through token creation, setting, and checking. It works with a single abstract token type `t`, allowing threads to safely set and query the token's state. Concrete use cases include signaling cancellation or completion across threads without the need for locks.",
+      "description_length": 305,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Memprof_limits.Masking",
       "library": "memprof-limits",
-      "description": "This module provides `with_resource` to safely manage interrupt masking during critical operations involving memory profiling, ensuring asynchronous exceptions are deferred until after resource release. It works with arbitrary types `'a`, `'b`, and `'c` through the provided acquire, scope, and release functions. Use it to protect sensitive allocations or cleanup code from premature interruption, such as when writing to shared state or finalizing resources under memory limits.",
-      "description_length": 480,
+      "description": "This module provides `with_resource` to safely manage resources subject to asynchronous interrupts, ensuring proper cleanup even during cancellation. It works with arbitrary data types through higher-order functions for acquisition, scope, and release. Use it to protect critical sections like file handles or network connections from abrupt termination due to memory or CPU limits.",
+      "description_length": 382,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memprof_limits.Memprof",
+      "module_path": "Memprof_limits.Resource_bind",
       "library": "memprof-limits",
-      "description": "This module tracks memory allocations with configurable sampling rates and callstack capture, using `allocation` records to store sample counts, sizes, sources, and backtraces. It supports activation and deactivation of profiling via `start` and `stop`, with optional callstack depth control and custom tracking callbacks. Concrete use cases include identifying memory hotspots in long-running applications and diagnosing allocation patterns in performance-critical code paths.",
-      "description_length": 477,
+      "description": "This module provides a custom `let&` binding operator for managing resource lifetimes using RAII-style scoping. It works with functions and resource types that require deterministic cleanup at the end of a scope. Concrete use cases include handling file handles, network connections, or memory allocations that must be released immediately after use.",
+      "description_length": 350,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Memprof_limits",
       "library": "memprof-limits",
-      "description": "This module enforces global memory and allocation limits while enabling token-based cancellation of CPU-bound tasks. It provides atomic flags for cross-thread signaling, scoped resource management via `let&` bindings, and safe handling of asynchronous exceptions during critical memory operations. You can interrupt computations that exceed memory thresholds, manage file handles or memory buffers with automatic cleanup, and profile allocations with stack traces to identify performance bottlenecks. Cancellation tokens coordinate task termination, while profiling tools capture detailed allocation data under varying memory pressures.",
-      "description_length": 636,
+      "description": "This module enforces global memory and allocation limits on tasks, allowing interruption if specified thresholds are exceeded. It works with functions as tasks, integer-based memory limits, and atomic tokens for cancellation signaling. Concrete use cases include restricting memory usage during long-running computations and canceling CPU-bound operations across threads.",
+      "description_length": 371,
       "index": 4,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -53,9 +53,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 636,
-    "min_description_length": 348,
-    "avg_description_length": 462.8,
-    "embedding_file_size_mb": 0.01860523223876953
+    "max_description_length": 468,
+    "min_description_length": 305,
+    "avg_description_length": 375.2,
+    "embedding_file_size_mb": 0.07288837432861328
   }
 }

@@ -1,65 +1,65 @@
 {
   "package": "mirage-runtime",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:05:59.905236",
+  "creation_timestamp": "2025-08-14T23:08:18.997205",
   "modules": [
-    {
-      "module_path": "Mirage_runtime_network.Arg",
-      "library": "mirage-runtime.network",
-      "description": "This module defines Cmdliner argument converters for parsing IP addresses and prefixes. It supports both IPv4 and IPv6 addresses, as well as their prefix representations. These converters are used to directly parse network configuration values from command-line arguments.",
-      "description_length": 272,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_runtime_network.V6",
-      "library": "mirage-runtime.network",
-      "description": "This module defines command-line term parsers for configuring IPv6 networking parameters. It provides functions to specify an IPv6 network prefix, a default gateway, and whether to accept router advertisements. These are used to set up and configure IPv6 network interfaces in MirageOS-based applications.",
-      "description_length": 305,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_runtime_network.V4",
-      "library": "mirage-runtime.network",
-      "description": "This module defines command-line terms for specifying IPv4 network configurations. It provides functions to parse and validate network prefixes and optional gateway addresses. Useful for configuring virtualized network interfaces with specific subnets and routing defaults.",
-      "description_length": 273,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_runtime_network",
-      "library": "mirage-runtime.network",
-      "description": "This module orchestrates network configuration for MirageOS applications by parsing command-line arguments into structured network settings, including IP addressing, DNS resolution, TLS parameters, and syslog integration. It directly supports operations like selecting secure communication protocols, defining HTTP headers, and configuring monitoring targets, while its child modules handle precise parsing of IPv4 and IPv6 configurations, including prefixes, gateways, and router advertisements. Data types such as IP addresses, TLS key pairs, and DNS server lists enable use cases like cloud-deployed virtualized services, TLS-secured hosts, and logging-enabled environments. Command-line configurability allows for flexible deployment scenarios, from adaptive timeout handling to remote syslog aggregation.",
-      "description_length": 809,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Mirage_runtime.Conv",
       "library": "mirage-runtime",
-      "description": "This module provides a command-line converter for setting log reporter thresholds. It works with `Mirage_runtime.log_threshold` values. A concrete use case is configuring logging verbosity levels through command-line arguments.",
-      "description_length": 227,
-      "index": 4,
+      "description": "This module provides a command-line converter for parsing log reporter thresholds. It works with `Mirage_runtime.log_threshold` values, translating string inputs into corresponding logging level types. Useful for configuring logging verbosity in Mirage-based applications via command-line arguments.",
+      "description_length": 299,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_runtime",
       "library": "mirage-runtime",
-      "description": "This module orchestrates runtime configuration and lifecycle management for Mirage unikernels, centering on logging control, command-line parsing, and exit hook registration. It operates on data types like `Cmdliner.Term.t`, `log_threshold`, and unit functions to configure logging levels, parse boot-time arguments, and manage event loop phases. The child module integrates command-line converters for setting log verbosity, enabling concrete workflows such as adjusting logging output via CLI flags. Together, these components support structured unikernel execution from initialization to shutdown.",
-      "description_length": 600,
+      "description": "This module manages logging configuration and lifecycle hooks for Mirage unikernels, offering operations to set log levels, parse command-line thresholds, and register callbacks for exit or event loop events. It works with command-line argument structures, string constants for option categorization (e.g., TLS, disk), and hook management systems. Specific use cases include boot-time setup of network/disk backends, error handling via Cmdliner-based argument parsing, and runtime parameter configuration through `with_argv` and `register_arg` functions.",
+      "description_length": 554,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_runtime_network.Arg",
+      "library": "mirage-runtime.network",
+      "description": "This module defines Cmdliner argument converters for parsing IPv4 and IPv6 addresses and prefixes. It supports command-line input of IP addresses and subnets in both IPv4 and IPv6 formats, converting them into corresponding Ipaddr types. Use this when building command-line interfaces that require direct IP address or network range input from users.",
+      "description_length": 350,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_runtime_network.V6",
+      "library": "mirage-runtime.network",
+      "description": "This module defines command-line term parsers for configuring IPv6 networking parameters. It provides functions to specify an IPv6 network prefix, a default gateway, and whether to accept router advertisements. These are used to set up network interfaces with specific IPv6 configurations in MirageOS unikernels.",
+      "description_length": 312,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_runtime_network.V4",
+      "library": "mirage-runtime.network",
+      "description": "This module defines command-line terms for specifying IPv4 network configurations. It provides functions to parse and validate network prefixes and optional gateway addresses. Useful for configuring virtualized network interfaces with specific subnets and routing in MirageOS unikernels.",
+      "description_length": 287,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_runtime_network",
+      "library": "mirage-runtime.network",
+      "description": "This module configures network interfaces, communication parameters, and monitoring settings for MirageOS unikernels through command-line options. It operates on IPv4/IPv6 configurations, DNS and TLS parameters, connection timeouts, and syslog destinations using `Cmdliner.Term.t`, enabling use cases like embedded networking stacks, secure remote logging with TLS-encrypted syslog, and fine-grained control over HTTP monitoring headers or DNS resolver behavior.",
+      "description_length": 462,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Functoria_runtime",
       "library": "mirage-runtime.functoria",
-      "description": "This module handles command-line argument parsing and runtime configuration using Cmdliner terms. It allows registering terms as runtime arguments, evaluating them with `with_argv`, and retrieving exit codes for errors or help requests. Use it to build command-line interfaces where arguments are processed dynamically at runtime, with support for custom sections in generated documentation.",
-      "description_length": 391,
+      "description": "This module handles command-line argument parsing and runtime configuration using Cmdliner terms. It provides functions to register and evaluate command-line arguments, execute terms with custom argument arrays, and manage exit codes for errors or help/version output. It works directly with `Cmdliner.Term.t` values, string arrays for arguments, and unit-returning callbacks for delayed evaluation. Use cases include building command-line interfaces with custom argument handling, dynamic configuration based on runtime inputs, and structured error reporting for CLI tools.",
+      "description_length": 574,
       "index": 6,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -69,9 +69,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 809,
-    "min_description_length": 227,
-    "avg_description_length": 411.0,
-    "embedding_file_size_mb": 0.02583599090576172
+    "max_description_length": 574,
+    "min_description_length": 287,
+    "avg_description_length": 405.42857142857144,
+    "embedding_file_size_mb": 0.10178089141845703
   }
 }

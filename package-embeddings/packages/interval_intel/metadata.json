@@ -1,87 +1,87 @@
 {
   "package": "interval_intel",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 10,
-  "creation_timestamp": "2025-07-15T23:07:53.628058",
+  "creation_timestamp": "2025-08-14T23:12:13.320509",
   "modules": [
     {
-      "module_path": "Interval_intel.Fpu.RoundDown",
+      "module_path": "Interval_intel.I.U",
       "library": "interval_intel",
-      "description": "This module implements floating-point arithmetic and mathematical operations that round results downward, ensuring accurate lower bounds for interval computations. It operates on standard float values and includes functions for arithmetic, exponentiation, trigonometric operations, and constants like \u03c0 and e, specifically designed to address inaccuracies in Intel x87 FPU lower bounds. These operations are critical for applications like branch-and-bound algorithms that require strict lower bounds and cross-architecture consistency, where standard math libraries produce divergent results due to differences in floating-point rounding behavior.",
-      "description_length": 647,
+      "description": "This module restores the standard integer and floating-point arithmetic and comparison operators that are redefined by the parent module. It provides direct access to operations like addition, subtraction, multiplication, division, and comparisons for both integers and floats. Use this module locally within expressions to switch back to conventional arithmetic without affecting the rest of the interval-based computation.",
+      "description_length": 424,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Interval_intel.Fpu.Rename",
       "library": "interval_intel",
-      "description": "This module aliases transcendental floating-point functions to their deterministic, cross-architecture counterparts from the Fpu module, ensuring consistent results on both 32-bit and 64-bit Intel processors. It specifically handles functions like sin, cos, tan, exp, log, and their hyperbolic variants, replacing the standard OCaml implementations with ones that guarantee correct rounding and predictable behavior for interval computations. Use this module to eliminate discrepancies in floating-point results across architectures while maintaining compatibility with existing code that uses standard math functions.",
-      "description_length": 618,
+      "description": "This module aliases transcendental floating-point functions like `sin`, `cos`, `tan`, `exp`, `log`, and `(**)` to their deterministic counterparts from the `Fpu` module, ensuring consistent results across 32-bit and 64-bit Intel processors. It preserves standard arithmetic operators (`+`, `-`, etc.) while replacing only the transcendental functions, allowing reliable use in interval computations and branch-and-bound optimization where result consistency is critical. Use this module to ensure predictable floating-point behavior in numerical algorithms that require precise control over rounding and function evaluation.",
+      "description_length": 624,
       "index": 1,
-      "embedding_norm": 1.0000001192092896
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Interval_intel.I.Precision",
+      "module_path": "Interval_intel.I.Arr",
       "library": "interval_intel",
-      "description": "This module sets and retrieves the decimal precision for printing intervals using `pr` and `pp`. It controls how many digits are displayed when formatting intervals, with an option to use as many digits as needed for accuracy. Use it to adjust output verbosity or ensure consistent interval display in debugging and logging.",
-      "description_length": 324,
+      "description": "This module provides functions to compute the maximum and mean sizes of intervals in an array, along with formatting and printing utilities for interval arrays. It operates specifically on arrays of interval type `Interval_intel.I.t`. Use cases include analyzing interval vectors in optimization algorithms and debugging through string representation or output streams.",
+      "description_length": 369,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Interval_intel.Fpu.RoundUp",
       "library": "interval_intel",
-      "description": "This module provides correctly rounded-up floating-point operations for arithmetic, power, and transcendental functions (e.g., `+`, `*`, `sin`, `exp`, `pow`) on `float` values, ensuring results represent strict upper bounds for interval computations. It addresses Intel FPU rounding inconsistencies by guaranteeing bounds validity even in edge cases, such as trigonometric function evaluations near critical points like \u03c0/2, and ensures cross-architecture consistency between 32/64-bit systems. These functions are critical for reliable interval arithmetic in numerical algorithms like Branch and Bound, where midpoints must provably lie within computed bounds.",
-      "description_length": 661,
+      "description": "This module provides floating-point arithmetic and mathematical functions that compute **strict upper bounds** via upward rounding, operating on `float` values. It includes basic operations (`+`, `-`, `*`, `/`, `sqrt`), power functions (`pow`, `cbr`), transcendental functions (`exp`, `log`, trigonometric variants), and constants (`pi`, `euler`), all optimized for **interval arithmetic** in branch-and-bound optimization. These functions ensure correctness on Intel processors by addressing rounding inconsistencies between 32/64-bit architectures, with trigonometric operations constrained to inputs within ]-2\u2076\u00b3, 2\u2076\u00b3[ to maintain precision guarantees.",
+      "description_length": 655,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Interval_intel.Fpu.Rename_all",
+      "module_path": "Interval_intel.Fpu.RoundDown",
       "library": "interval_intel",
-      "description": "This module aliases all standard floating-point operations to their deterministic, cross-platform counterparts from the Fpu module, ensuring consistent results on both 32-bit and 64-bit Intel processors. It replaces functions like `+.` and `cos` with precise, bounds-correcting implementations such as `fadd` and `fcos`, which are essential for reliable interval arithmetic in branch-and-bound algorithms. Use this module to enforce uniform floating-point behavior across architectures, especially when exact reproducibility is required in numerical computations involving trigonometric, exponential, or interval-bound operations.",
-      "description_length": 630,
+      "description": "This module provides **floating-point arithmetic operations rounded down**, including basic arithmetic, power functions, trigonometric and hyperbolic operations, and square root calculations, all operating on `float` values. It ensures strict downward rounding for reliable lower bounds in interval computations, critical for **branch and bound optimization algorithms** where correctness depends on precise interval boundaries. Designed for Intel x87 processors, it addresses rounding inconsistencies in standard math libraries by enforcing consistent, architecture-agnostic results while maintaining efficiency through assembly-level optimizations.",
+      "description_length": 650,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Interval_intel.I.Arr",
+      "module_path": "Interval_intel.Fpu.Rename_all",
       "library": "interval_intel",
-      "description": "This module provides operations for manipulating arrays of intervals, specifically for computing the maximum and mean sizes of intervals, converting arrays to string representations, and printing arrays to output channels or formatters. It works with arrays of `Interval_intel.I.t` values, which represent intervals on Intel processors with correct rounding. Concrete use cases include analyzing interval vectors for numerical precision, logging interval data, and formatting interval arrays for debugging or output.",
-      "description_length": 516,
+      "description": "This module aliases all floating-point arithmetic and transcendental functions to their deterministic counterparts from the `Fpu` module, ensuring consistent results across 32-bit and 64-bit Intel processors. It redefines operators like `+.` and functions like `sin`, `cos`, and `exp` to use precise, interval-aware implementations that maintain correct rounding and bound consistency, particularly for large input values. Concrete use cases include branch-and-bound optimization algorithms where numerical stability and reproducibility across platforms are critical.",
+      "description_length": 567,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Interval_intel.I.U",
+      "module_path": "Interval_intel.I.Precision",
       "library": "interval_intel",
-      "description": "This module restores standard integer and floating-point arithmetic and comparison operators that were redefined by the parent interval module. It provides basic operations like addition, subtraction, multiplication, division, and comparisons for `int` and `float` types, allowing their use in contexts where interval arithmetic operators have been opened. Use this module to disambiguate standard arithmetic from interval operations, such as within nested expressions involving both regular math and interval computations.",
-      "description_length": 523,
+      "description": "This module sets and retrieves the global decimal precision for interval printing functions `pr` and `pp`. It works with integers and optional integer values to control output formatting. Use it to control how many decimal digits are displayed when printing intervals, or to restore full precision output.",
+      "description_length": 305,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Interval_intel.I",
       "library": "interval_intel",
-      "description": "This module enables interval arithmetic for floating-point computations, redefining standard operators to work with intervals represented by the `t` type. It supports basic arithmetic, transcendental functions, and set operations like hull and intersection, ensuring correct rounding for reliable error bounds and scientific calculations. Submodules control output precision, manipulate interval arrays, and restore standard arithmetic for `int` and `float`, allowing precise formatting, bulk analysis, and coexistence of regular and interval math in the same context. For example, you can compute the hull of two intervals, print the result with a specified number of digits, and then switch back to normal floating-point addition within the same function.",
-      "description_length": 757,
+      "description": "This module implements interval arithmetic with IEEE floating-point numbers, emphasizing precise rounding control and Intel processor optimizations. It provides overloaded arithmetic operators, transcendental functions, and set-theoretic operations for intervals represented as lower/upper bound pairs (`t` type), supporting applications in branch-and-bound optimization and numerical analysis. Key capabilities include handling edge cases in division, zero containment, and statistical operations on interval arrays, with utilities for customizable formatting and precision management.",
+      "description_length": 586,
       "index": 7,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Interval_intel.Fpu",
       "library": "interval_intel",
-      "description": "This module provides deterministic floating-point arithmetic and transcendental operations with guaranteed rounding modes for cross-architecture consistency on Intel processors. It includes `float`-based functions for addition, multiplication, exponentiation, and trigonometric operations, each available in nearest, downward, and upward rounding variants to support precise interval computations. Specific functions like `fcos`, `fsin`, and `fmod` ensure correct results across 32-bit and 64-bit systems, replacing standard library functions that exhibit inconsistent rounding behavior. Submodules refine this functionality by exposing rounded-up, rounded-down, and transparently aliased versions of these operations, enabling reliable use in branch-and-bound algorithms where bounds validity and reproducibility are critical.",
-      "description_length": 827,
+      "description": "This module provides low-level Intel-specific floating-point operations for interval arithmetic, including arithmetic operators (addition, subtraction, multiplication, division) and transcendental functions (sine, cosine, exponential, logarithm) with explicit rounding control in three modes (nearest, low, high). These functions operate on `float` values and are optimized for branch and bound optimization algorithms, ensuring numer",
+      "description_length": 434,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Interval_intel",
       "library": "interval_intel",
-      "description": "This module provides interval arithmetic with precise rounding tailored for Intel processors, operating on intervals defined by lower and upper float bounds. It supports arithmetic operations, transcendental functions, and array-based computations, while rigorously handling edge cases like division by zero or invalid domains, ensuring verified results for numerical analysis and scientific simulations. Submodules refine rounding control, enable interval array manipulation, and restore standard arithmetic, allowing precise formatting, bulk analysis, and coexistence of regular and interval math. For example, you can compute the hull of two intervals, print the result with a specified number of digits, or use rounded variants of trigonometric functions in branch-and-bound algorithms with guaranteed bounds validity.",
-      "description_length": 822,
+      "description": "This module provides interval arithmetic operations with correct rounding tailored for Intel x87 FPU semantics, including basic arithmetic, transcendental functions (sin, cos, log, exp), and set operations (union, min, max) over intervals represented as lower/upper floating-point bounds. It supports mixed-type computations (interval-float) and specialized utilities for arrays, designed for branch and bound optimization algorithms requiring rigorous error bounds and efficient handling of uncertain or approximate values.",
+      "description_length": 524,
       "index": 9,
       "embedding_norm": 1.0
     }
@@ -93,9 +93,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 827,
-    "min_description_length": 324,
-    "avg_description_length": 632.5,
-    "embedding_file_size_mb": 0.03675270080566406
+    "max_description_length": 655,
+    "min_description_length": 305,
+    "avg_description_length": 513.8,
+    "embedding_file_size_mb": 0.14542007446289062
   }
 }

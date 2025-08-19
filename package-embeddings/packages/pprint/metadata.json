@@ -1,101 +1,93 @@
 {
   "package": "pprint",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 10,
-  "creation_timestamp": "2025-07-15T23:06:46.262172",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:17:04.041711",
   "modules": [
     {
-      "module_path": "PPrintEngine.RENDERER",
+      "module_path": "PPrint.ToChannel",
       "library": "pprint",
-      "description": "This module defines the interface for rendering documents to output channels, supporting both pretty and compact formatting. It works with a `document` type representing structured text and a `channel` type for output destinations. Concrete use cases include formatting source code for display or file output with controlled indentation and line breaks.",
-      "description_length": 353,
+      "description": "This module provides functions to render pretty-printed documents directly to an output channel. It supports two rendering modes: `pretty` for formatted output with indentation and line breaks constrained by width and ribbon fraction, and `compact` for unindented, newline-preserving output. It operates on `PPrint.document` values and writes to standard output channels, making it suitable for generating code or structured text files.",
+      "description_length": 436,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "PPrint.ToChannel",
+      "module_path": "PPrint.ToFormatter",
       "library": "pprint",
-      "description": "This module provides functions to render pretty-printed documents directly to an output channel. It supports two rendering modes: `pretty` for formatted output with indentation and line breaks within specified width constraints, and `compact` for unindented, linear output that preserves explicit newlines. It operates on `document` values and writes to standard output channels, making it suitable for generating source code, configuration files, or structured text logs.",
-      "description_length": 472,
+      "description": "This module provides functions to render pretty-printed documents into a formatter channel, controlling layout with indentation and line breaks. It works with documents defined by the `PPrint` module, using standard formatter channels for output. Concrete use cases include generating formatted code or structured text output with customizable line widths and ribbon constraints.",
+      "description_length": 379,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "PPrintEngine.ToBuffer",
-      "library": "pprint",
-      "description": "This module provides functions to render pretty-printed documents into a memory buffer. It supports both formatted output with indentation and line breaks (`pretty`) and compact output without indentation (`compact`). The primary data types are `document` for the structured content to render and `channel` representing the output buffer. Use this module when generating formatted text or code in memory, such as producing OCaml source files or structured logs.",
-      "description_length": 461,
-      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "PPrint.RENDERER",
+      "module_path": "PPrint.ToBuffer",
       "library": "pprint",
-      "description": "This module defines operations for rendering structured documents to output channels, supporting both pretty-printing with indentation and line-breaking constraints and compact printing without formatting. It works with a `document` type representing structured text and a `channel` type for output destinations. Concrete use cases include generating formatted OCaml code or configuration files from abstract syntax trees.",
+      "description": "This module provides functions to render pretty-printed documents into a memory buffer, handling indentation and line breaks according to specified width and ribbon constraints. It works with `Buffer.t` as the output channel and `PPrint.document` as the structured document type. Use it to generate formatted text output, such as source code or configuration files, directly into a buffer for further processing or output.",
       "description_length": 422,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "PPrintEngine.ToFormatter",
+      "library": "pprint",
+      "description": "This module provides functions to render pretty-printed documents into a formatter channel. It supports two rendering modes: `pretty` for indentation-aware output with configurable line width and ribbon constraints, and `compact` for flat output that preserves explicit newlines. It operates on `PPrintEngine.document` structures and targets `Stdlib.Format.formatter` channels, making it suitable for generating formatted code or structured text output directly to files, standard output, or custom formatter sinks.",
+      "description_length": 515,
       "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "PPrintEngine.ToChannel",
       "library": "pprint",
-      "description": "This module provides functions to render pretty-printed documents directly to an output channel. It supports two rendering modes: `pretty` for formatted output with indentation and line breaks within specified width constraints, and `compact` for unindented, minimal whitespace output. It operates on `document` values and writes to standard OCaml `out_channel` targets, making it suitable for generating code files, logs, or CLI output.",
-      "description_length": 437,
+      "description": "This module provides functions to render pretty-printed documents directly to an output channel. It supports two rendering modes: `pretty` for formatted output with indentation and line breaks constrained by width and ribbon fraction, and `compact` for unindented, newline-preserving output. It operates on `document` values and writes to standard output channels, making it suitable for generating code or structured text files.",
+      "description_length": 429,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "PPrintEngine.ToFormatter",
+      "module_path": "PPrint.OCaml",
       "library": "pprint",
-      "description": "This module provides two rendering functions, `pretty` and `compact`, which format and output documents to a `Format.formatter` channel. It operates on `PPrintEngine.document` structures, which represent the layout of the text to be printed. Use `pretty` to format documents with indentation and line breaks within a specified width, and `compact` to print documents without indentation while preserving explicit newlines.",
-      "description_length": 422,
+      "description": "This module provides combinators to generate human-readable documents for OCaml values, supporting literals (numbers, strings, booleans), structured data (tuples, records, variants), and containers (arrays, lists, options). It handles mutable and immutable values, preserves sharing, and safely formats cyclic structures by avoiding infinite loops. The output adheres to OCaml syntax, enabling use cases like pretty-printing serialized data, debugging complex values, or generating valid OCaml code snippets with consistent indentation and line breaks.",
+      "description_length": 552,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "PPrint.ToFormatter",
+      "module_path": "PPrintEngine.ToBuffer",
       "library": "pprint",
-      "description": "This module provides functions to render pretty-printed documents into a formatter channel, controlling layout with indentation and line breaks. It works with `document` values and outputs to `Stdlib.Format.formatter` channels. Concrete use cases include generating formatted OCaml code or structured text output with precise control over line width and indentation.",
-      "description_length": 366,
+      "description": "This module provides two rendering functions, `pretty` and `compact`, which write formatted text documents to a buffer. It operates on `document` values from the `PPrintEngine` and uses `Stdlib.Buffer.t` as the output target. Use `pretty` to format text with indentation and line breaks within a specified line width, and `compact` to render without indentation while preserving explicit newlines.",
+      "description_length": 397,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "PPrint.ToBuffer",
+      "module_path": "PPrint",
       "library": "pprint",
-      "description": "This module provides functions to render pretty-printed documents into a memory buffer, supporting both formatted and compact output. It operates on `Stdlib.Buffer.t` channels and `PPrint.document` structures, allowing precise control over line width and layout. Use it to generate well-formatted text or code output in memory, such as for logging, string generation, or intermediate processing.",
-      "description_length": 395,
+      "description": "This module offers operations for constructing and manipulating structured documents with precise control over indentation, line breaks, and semantic layout. It works with document values, ranges, and formatting states to enable tasks like generating OCaml code, pretty-printing nested data structures, and composing human-readable text from atomic elements and delimiters. Key use cases include formatting source code with syntactic validity, rendering complex outputs with conditional layout choices, and building composable document fragments for structured text generation.",
+      "description_length": 577,
       "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "PPrint",
-      "library": "pprint",
-      "description": "This module combines document construction with rendering capabilities to produce formatted text output across different targets. It centers around the `document` type, which represents structured text, and provides operations to render it to output channels, buffers, or formatters with control over indentation, line breaks, and layout. Functions support both `pretty` mode for formatted output within width constraints and `compact` mode for linear rendering. Use it to generate OCaml code, configuration files, or structured logs by combining documents and rendering them to standard output, memory buffers, or custom formatters.",
-      "description_length": 633,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
       "module_path": "PPrintEngine",
       "library": "pprint",
-      "description": "This module structures and renders text documents with precise control over layout, using atomic elements like strings and combinators for grouping and nesting. It manages state for indentation and line wrapping, supporting output to channels, buffers, or formatters. The `document` type represents structured text, while rendering functions like `pretty` and `compact` control formatting based on output targets such as `out_channel`, `buffer`, or `formatter`. Use it to generate well-formatted code, logs, or structured text across different output destinations with consistent layout.",
-      "description_length": 587,
-      "index": 9,
+      "description": "This module provides operations for constructing structured text layouts using atomic elements like characters and line breaks, combined with indentation controls through functions such as `char`, `break`, `group`, and `nest`. It works with a `document` type that represents formattable text, enabling precise control over spacing and alignment, and supports rendering to channels, buffers, or formatters in either compact or width-constrained \"pretty\" modes. It is particularly useful for code formatting tasks requiring UTF-8 handling, ribbon-aware layout adjustments, and stateful document analysis during rendering.",
+      "description_length": 619,
+      "index": 8,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 15,
-    "meaningful_modules": 10,
-    "filtered_empty_modules": 5,
-    "retention_rate": 0.6666666666666666
+    "total_modules_in_package": 13,
+    "meaningful_modules": 9,
+    "filtered_empty_modules": 4,
+    "retention_rate": 0.6923076923076923
   },
   "statistics": {
-    "max_description_length": 633,
-    "min_description_length": 353,
-    "avg_description_length": 454.8,
-    "embedding_file_size_mb": 0.036739349365234375
+    "max_description_length": 619,
+    "min_description_length": 379,
+    "avg_description_length": 480.6666666666667,
+    "embedding_file_size_mb": 0.13077545166015625
   }
 }

@@ -1,89 +1,89 @@
 {
   "package": "volgo-hg-eio",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 10,
-  "creation_timestamp": "2025-07-15T23:07:00.135779",
+  "creation_timestamp": "2025-08-14T23:10:11.848362",
   "modules": [
     {
-      "module_path": "Volgo_hg_eio.Impl.Add",
+      "module_path": "Volgo_hg_eio.Impl.Ls_files",
       "library": "volgo-hg-eio",
-      "description": "This module provides the `add` function to stage a file or directory in a Mercurial repository using the `hg add` command. It operates on a repository root path and a target path within the repository, both represented as typed values. It is used internally to implement version control operations for adding untracked files to the Mercurial index.",
-      "description_length": 348,
+      "description": "Handles listing files in a Mercurial repository by invoking the `hg` command line tool. It processes the output to return a list of paths relative to a specified directory within the repository. This function is used to retrieve tracked files under a specific subtree for operations like status checks or file enumeration.",
+      "description_length": 322,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Volgo_hg_eio.Impl.Ls_files",
+      "module_path": "Volgo_hg_eio.Impl.Add",
       "library": "volgo-hg-eio",
-      "description": "This module implements the `ls_files` operation for listing files in a Mercurial repository using the `hg` command-line tool. It works with repository root paths and paths within the repo to return a list of tracked files relative to a given directory. It is used to retrieve file listings during operations like status checks or tree navigation within a version-controlled project.",
-      "description_length": 382,
+      "description": "This module implements the `add` operation for a Mercurial backend, executing the `hg add` command via the `Eio` runtime to track new files in a repository. It operates on a repository root path and a relative path within the repo, both represented as typed values. It is used to stage a specific file or directory for version control in a Mercurial repository.",
+      "description_length": 361,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Volgo_hg_eio.Impl.Current_revision",
+      "module_path": "Volgo_hg_eio.Impl.Hg",
       "library": "volgo-hg-eio",
-      "description": "This module retrieves the current revision identifier from a Mercurial repository using the `hg` command line tool. It operates on a repository root path and returns a typed revision value or an error if the revision cannot be determined. It is used to implement version control functionality that requires knowledge of the working directory's current state.",
-      "description_length": 358,
+      "description": "This module executes Mercurial commands via the `hg` CLI tool in an `Eio` environment, handling command invocation, output parsing, and error handling. It operates on typed representations of Mercurial output and provides structured access to repository state through specific command wrappers. Concrete use cases include querying repository changesets, managing working directory state, and interacting with remote repositories programmatically.",
+      "description_length": 446,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Volgo_hg_eio.Impl.File_system",
       "library": "volgo-hg-eio",
-      "description": "This module provides direct file system operations for interacting with Mercurial repositories using the `hg` command-line tool. It supports loading and saving files with specified permissions, reading directory contents, and handles paths using `Fpath_sexp0.Absolute_path.t`. Concrete use cases include managing repository files during version control operations and inspecting directory structures in a Mercurial-backed project.",
-      "description_length": 430,
+      "description": "This module provides functions to interact with the file system in the context of a Mercurial backend implementation. It supports reading files, writing files with optional permissions, and listing directory contents, all returning typed results that integrate with error handling. These operations are used to manage repository files and directories when interacting with the `hg` command-line tool through the `Volgo_hg_eio` backend.",
+      "description_length": 435,
       "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Volgo_hg_eio.Impl.Commit",
       "library": "volgo-hg-eio",
-      "description": "This module provides the `commit` function, which executes a Mercurial commit operation using the `hg` command line tool. It works with `repo_root` and `commit_message` data types to specify the repository path and commit message, respectively. It returns a result indicating success or failure, handling errors via the `Err.t` type.",
-      "description_length": 333,
+      "description": "This module handles creating commits in a Mercurial repository by invoking the `hg commit` command with the specified commit message and repository root. It works with typed representations of repository roots and commit messages, converting them into command-line arguments and handling the execution result. A concrete use case is programmatically committing changes in a Mercurial repository from within an Eio-based application.",
+      "description_length": 432,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Volgo_hg_eio.Impl.Init",
+      "module_path": "Volgo_hg_eio.Impl.Current_revision",
       "library": "volgo-hg-eio",
-      "description": "This module provides initialization logic for Mercurial repositories, specifically handling the creation of a new repository at a specified path. It works with absolute file paths and returns a typed result indicating success or failure. A concrete use case is initializing a Mercurial repository during version-controlled project setup, ensuring no existing repository is present at the target location.",
-      "description_length": 404,
+      "description": "This module retrieves the current revision identifier from a Mercurial repository using the `hg` command line tool. It operates on a repository root path and returns a typed revision hash or an error. It is used to implement version control functionality that requires tracking the current commit in a Mercurial-managed project directory.",
+      "description_length": 338,
       "index": 5,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Volgo_hg_eio.Impl.Hg",
+      "module_path": "Volgo_hg_eio.Impl.Init",
       "library": "volgo-hg-eio",
-      "description": "This module provides direct execution of Mercurial commands via the `hg` CLI tool, handling argument construction, process invocation, and output parsing. It operates on typed representations of Mercurial output and works with absolute paths and command-line arguments. It is used internally to implement version control operations such as status, log, and diff by translating them into `hg` invocations and processing structured output.",
-      "description_length": 437,
+      "description": "Implements repository initialization by invoking the `hg` command line tool within an `Eio` environment. Works with absolute file paths and returns a typed result indicating success or error. Used to create a new Mercurial repository at a specified location, failing if one already exists.",
+      "description_length": 289,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Volgo_hg_eio.Runtime",
       "library": "volgo-hg-eio",
-      "description": "This module provides direct access to file system operations and Mercurial command execution within an Eio environment. It supports loading and saving files, reading directory contents, and invoking `hg` commands with typed result parsing. Designed for interacting with Mercurial repositories via the command line, it handles tasks such as retrieving file contents, modifying files, listing directory entries, and running version control operations like status checks or log retrieval.",
-      "description_length": 485,
+      "description": "This module provides direct filesystem and command execution capabilities for interacting with Mercurial repositories. It supports loading and saving files, reading directory contents, and invoking the `hg` command line tool in a controlled environment. These operations are used to implement Mercurial-specific version control logic, such as retrieving repository state or applying changes through the `hg` executable.",
+      "description_length": 419,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Volgo_hg_eio.Impl",
       "library": "volgo-hg-eio",
-      "description": "This module implements a Mercurial backend using the `hg` CLI, offering typed operations for version control tasks like init, add, commit, and log. It centers around the `t` type for runtime context, interacting directly with the file system and `hg` processes to manage repositories, track changes, and query history. Submodules handle specific tasks: `add` stages files, `commit` applies changes, `ls_files` lists tracked files, and `init` creates new repositories. It supports Eio-based applications needing direct Mercurial integration, such as tracking file states or inspecting revision history through structured CLI interactions.",
-      "description_length": 637,
+      "description": "This module implements a Mercurial backend using the `hg` command line tool, providing typed operations for repository management and version control actions. It works with typed paths, revisions, and commit messages, executing commands in an `Eio` environment and parsing structured results from `hg` output. Concrete operations include initializing repositories, adding and committing files, querying current revisions, listing tracked files, and interacting with the file system to support Mercurial operations.",
+      "description_length": 514,
       "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Volgo_hg_eio",
       "library": "volgo-hg-eio",
-      "description": "This module implements a Mercurial backend by interfacing with the `hg` command-line tool via Eio, translating version control operations into CLI invocations and parsing structured results. It provides a `create` function to configure a Vcs handle with an Eio filesystem and process manager, enabling operations like commit, clone, and log retrieval. The module supports direct file system interactions, directory listing, and typed execution of Mercurial commands such as status checks or log queries. Submodules handle core tasks including repository initialization, file staging, change tracking, and revision history inspection, making it suitable for Eio-based applications requiring Mercurial integration.",
-      "description_length": 712,
+      "description": "This module implements a Mercurial backend using the `hg` command line tool, providing typed operations for repository management and version control actions. It works with typed paths, revisions, and commit messages, executing commands in an `Eio` environment and parsing structured results from `hg` output. Concrete operations include initializing repositories, adding and committing files, querying current revisions, listing tracked files, and interacting with the file system to support Mercurial operations.",
+      "description_length": 514,
       "index": 9,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -93,9 +93,9 @@
     "retention_rate": 0.9090909090909091
   },
   "statistics": {
-    "max_description_length": 712,
-    "min_description_length": 333,
-    "avg_description_length": 452.6,
-    "embedding_file_size_mb": 0.036795616149902344
+    "max_description_length": 514,
+    "min_description_length": 289,
+    "avg_description_length": 407.0,
+    "embedding_file_size_mb": 0.13097381591796875
   }
 }

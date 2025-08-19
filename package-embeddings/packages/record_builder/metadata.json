@@ -1,109 +1,77 @@
 {
   "package": "record_builder",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 11,
-  "creation_timestamp": "2025-07-15T23:07:31.319943",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 7,
+  "creation_timestamp": "2025-08-14T23:13:42.178889",
   "modules": [
     {
       "module_path": "Record_builder.Hlist.Suffix_index",
       "library": "record_builder",
-      "description": "This module provides operations to manipulate and access elements within right-nested tuples used for record field tracking. It supports concrete operations like extracting the entire list of elements and retrieving the tail of a structured tuple. These capabilities enable precise control over field composition during record rebuilding processes.",
-      "description_length": 348,
+      "description": "This module provides operations to access and manipulate suffixes of right-nested tuples representing record fields. It supports concrete actions like retrieving the entire list of fields or extracting a suffix starting from a specific point. These functions are useful when rebuilding records incrementally, allowing precise control over field composition without reconstructing the full structure.",
+      "description_length": 399,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Record_builder.Hlist.Element_index",
       "library": "record_builder",
-      "description": "This module represents indices into heterogenous lists, enabling precise access and manipulation of elements within right-nested tuple structures. It supports operations like locating the first element, translating indices through tail extensions, and adjusting indices relative to suffixes. These capabilities are essential for safely rebuilding record fields in a structured, type-preserving manner.",
-      "description_length": 401,
+      "description": "This module represents indices into heterogenous lists (Hlists), enabling precise access and manipulation of elements within right-nested tuple structures. It supports operations like referencing the first element, shifting indices through tails, and locating elements within suffixes. These capabilities are used to rebuild record fields in a type-safe manner, particularly when transforming or composing nested record structures.",
+      "description_length": 431,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Record_builder.Make.Make_creator_types",
       "library": "record_builder",
-      "description": "This module defines internal types used during the construction of records via field folding. It supports operations that accumulate field values into a final record structure, ensuring type correctness throughout the process. These types are essential for implementing record builders that handle optional and required fields in a structured, type-safe manner.",
-      "description_length": 361,
+      "description": "This module defines internal types used during the construction of records via field folding. It supports operations that accumulate and transform record fields, enabling type-safe record assembly. These types are essential for implementing record builders that validate field presence and types at compile time.",
+      "description_length": 312,
       "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Record_builder.Make_2",
+      "library": "record_builder",
+      "description": "Handles construction of record values by defining fields incrementally using applicative functors. Works with record types and field descriptions, enabling creation of records through a sequence of field assignments. Useful for building complex records with validation or effectful field computations.",
+      "description_length": 301,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Record_builder.Make",
+      "library": "record_builder",
+      "description": "This module implements type-safe record construction by accumulating and validating individual fields through applicative operations. It works with record types defined via field descriptions, using an applicative functor to sequence field assignments. Concrete use cases include building records with required fields where each field's type and presence are enforced at compile time, ensuring correctness during construction.",
+      "description_length": 426,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Record_builder.Hlist",
       "library": "record_builder",
-      "description": "This module implements heterogeneous lists as right-nested tuples, enabling type-safe construction and deconstruction of record fields through operations like `cons`, `head`, and `tail`. It supports indexed access via `nth` and slicing via `drop`, allowing precise manipulation of fields during record reconstruction. Submodules provide concrete tools for element extraction, tail traversal, and index translation, enabling structured access and safe modification of nested tuple elements. Example uses include incrementally building records with type-preserving field additions and extracting or reordering fields based on positional indices.",
-      "description_length": 643,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Record_builder.Make",
-      "library": "record_builder",
-      "description": "This module orchestrates the assembly of records by combining field descriptors with applicative effects, enabling type-safe construction of complex data from validated or effectful components. It leverages internal types that track field presence and structure during folding, supporting both required and optional fields. You can define a record schema with field-level validations and combine them into a final record using applicative syntax. Submodules provide the foundational types that ensure correctness while allowing flexible composition of field-building steps.",
-      "description_length": 573,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Record_builder.Partial_applicative_S",
-      "library": "record_builder",
-      "description": "This module implements applicative operations for building records incrementally. It allows mapping over values within a context using `map` and combining two values into a tuple with `both`. These functions support constructing complex record types from simpler components in a structured, composable way.",
-      "description_length": 306,
+      "description": "This module implements right-nested tuples (Hlists) to represent and manipulate record fields during reconstruction. It supports construction via `cons`, decomposition via `head` and `tail`, and precise element access using typed indices from the `Element_index` and `Suffix_index` submodules. Use it to build and transform records incrementally, accessing and dropping prefixes or retrieving specific fields by index in a type-safe way.",
+      "description_length": 437,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Record_builder.S2",
-      "library": "record_builder",
-      "description": "Handles construction of record values from applicative contexts, supporting field-by-field accumulation. Works with record types and applicative functors, enabling creation of records where each field is computed in an effectful context. Useful for parsing or validating configuration data where each field may require independent error handling or state.",
-      "description_length": 355,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Record_builder.S-Make_creator_types",
-      "library": "record_builder",
-      "description": "This module defines internal types for constructing records by folding over their fields, primarily used during record deserialization or transformation. It works with algebraic data types representing record fields and accumulators for building records incrementally. Concrete use cases include parsing JSON or binary data into OCaml records in a type-safe manner.",
-      "description_length": 365,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Record_builder.S",
-      "library": "record_builder",
-      "description": "Handles construction of records by defining and combining individual fields using applicative functors. Works with record types and applicative structures to build values field by field. Useful for creating complex record values from independent applicative computations.",
-      "description_length": 271,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Record_builder.Partial_applicative_S2",
-      "library": "record_builder",
-      "description": "This module provides `map` and `both` operations for building and combining partially applied record fields in a type-safe manner. It works with record types where each field is wrapped in a custom type `('a, 'e) t`, allowing transformations and combinations of field values while preserving error handling context `'e`. Concrete use cases include incrementally constructing validated records from individual fields and composing multiple field parsers into a single record initializer.",
-      "description_length": 486,
-      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Record_builder",
       "library": "record_builder",
-      "description": "This module enables type-safe, applicative-style record construction by combining heterogeneous fields through structured combinators and effectful contexts. It uses `Hlist` to represent field lists as nested tuples, supporting operations like `cons`, `map`, and `both` for incremental assembly and transformation, while `Make` and `Make_2` provide the core machinery for defining and combining field descriptors. Users can build records step-by-step from validated or effectful components, such as parsing JSON into a record with per-field error handling, or composing multiple result-typed fields into a single validated structure. Submodules refine this process with indexed access, applicative combinators, and internal types that ensure correctness during field accumulation and transformation.",
-      "description_length": 799,
-      "index": 10,
+      "description": "This module implements type-safe record construction using applicative functors and heterogeneous lists to accumulate and validate fields incrementally. It works with record types defined through field descriptions, supporting precise field access, prefix manipulation, and effectful field computations. Concrete use cases include building records with required and typed fields, transforming field values during construction, and safely decomposing records into individual components.",
+      "description_length": 485,
+      "index": 6,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 14,
-    "meaningful_modules": 11,
-    "filtered_empty_modules": 3,
-    "retention_rate": 0.7857142857142857
+    "total_modules_in_package": 8,
+    "meaningful_modules": 7,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.875
   },
   "statistics": {
-    "max_description_length": 799,
-    "min_description_length": 271,
-    "avg_description_length": 446.1818181818182,
-    "embedding_file_size_mb": 0.04038429260253906
+    "max_description_length": 485,
+    "min_description_length": 301,
+    "avg_description_length": 398.7142857142857,
+    "embedding_file_size_mb": 0.10188484191894531
   }
 }

@@ -1,773 +1,733 @@
 {
   "package": "wasmer",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 94,
-  "creation_timestamp": "2025-07-15T23:19:59.147189",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 89,
+  "creation_timestamp": "2025-08-15T16:11:20.819872",
   "modules": [
     {
       "module_path": "Wasmer.Wasi.NamedExtern.Vec.O",
       "library": "wasmer",
-      "description": "This module provides functions to create and manage a vector of named external WASI objects. It works with a specific structure type `t_bis` defined in the `Wasmer.Wasi.NamedExtern.Vec` module, using Ctypes for memory management. Concrete use cases include initializing and cleaning up vectors that hold named WASI externals for WebAssembly instance setup.",
-      "description_length": 356,
+      "description": "This module provides functions to create and manage a structure representing a vector of named externs in the Wasmer WASI implementation. It works with Ctypes structures and pointers to handle low-level memory operations. Concrete use cases include initializing and freeing resources for vectors used in WebAssembly instance exports.",
+      "description_length": 333,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Wasmer.Wasi.NamedExtern.O",
-      "library": "wasmer",
-      "description": "This module manages the lifecycle of WebAssembly System Interface (WASI) named external structures. It provides functions to allocate and free memory for these structures, which represent named external resources used in WASI-based WebAssembly execution. Concrete use cases include setting up and tearing down WASI environment data during WebAssembly module instantiation.",
-      "description_length": 372,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Wasi.Config.O",
-      "library": "wasmer",
-      "description": "This module manages the configuration of a WebAssembly System Interface (WASI) environment. It provides functions to create and destroy configuration objects that define how WASI interacts with the host system, such as setting environment variables and mapping directories. These operations are essential for initializing WASI before running WebAssembly modules that require system-level access.",
-      "description_length": 395,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Wasmer.Wasi.NamedExtern.V",
       "library": "wasmer",
-      "description": "This module manages ownership and conversion of Wasi NamedExtern structures, providing functions to grab ownership of a structure and convert it into a dependent state. It works directly with Wasi NamedExtern types, including their pointer and structure representations. Concrete use cases include handling Wasi imports and exports in WebAssembly modules by managing their lifecycle and state transitions.",
-      "description_length": 405,
-      "index": 3,
+      "description": "This module handles ownership and conversion of Wasi external data structures, specifically managing transitions between owning and dependent states. It works with pointer types and structures defined in the `Wasmer.Wasi.NamedExtern` module, such as `data_type` and `owning_struct`. Concrete use cases include safely grabbing ownership of a Wasi external object and converting it into a dependent state for resource management.",
+      "description_length": 427,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.Wasi.NamedExtern.Vec",
       "library": "wasmer",
-      "description": "This module implements dynamic arrays for managing opaque data elements with explicit memory control, combining direct operations on vectors of type `t` with specialized submodules for structured data. It supports creating, accessing, and transferring vectors backed by C-style memory, with functions for allocating, resizing, and safely releasing resources, particularly useful when interfacing OCaml with C APIs requiring manual memory handling. The child module extends this functionality to vectors of named WASI externals, enabling initialization and cleanup of `t_bis` structures used in WebAssembly instance configuration. Example usage includes constructing a vector from OCaml values, passing it to C for processing, and ensuring proper deallocation after use.",
-      "description_length": 769,
-      "index": 4,
+      "description": "Facilitates low-level memory management and manipulation of Ctypes-based vectors (`t`) containing `owning_struct` elements, with operations for ownership transfer via `grab_ownership`/`lose_ownership`, unsafe pointer access, and conversions from lists/arrays. Works with structures initialized from C FFI bindings, supporting state inspection (`is_null`, `get_state`) and direct element-level mutation. Designed for efficient interoperability with Wasmer's WASI implementation, particularly for handling ownership-sensitive data structures during WebAssembly runtime interactions.",
+      "description_length": 580,
+      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Wasmer.Val.V",
+      "module_path": "Wasmer.Wasi.NamedExtern.O",
       "library": "wasmer",
-      "description": "This module manages the internal data structure for WebAssembly values, providing operations to manipulate and transfer ownership of value vectors. It works with `data_type` structures representing WebAssembly values and `owning_struct` types that manage resource lifetimes. Concrete use cases include converting value vectors into dependent pointers and reclaiming ownership during garbage collection or resource cleanup.",
-      "description_length": 422,
+      "description": "This module provides functions to create and manage a structure that represents a named external value in the WASI environment. It works with Ctypes pointers to a specific structure type and supports operations to initialize and free the associated resources. Concrete use cases include setting up WASI imports for WebAssembly modules by associating names with external function pointers.",
+      "description_length": 388,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Wasi.Config.O",
+      "library": "wasmer",
+      "description": "This module provides functions to create and manage Wasi configuration structures used for setting up WebAssembly module execution environments. It works with the `t` type, representing a Wasi configuration structure, and supports operations like initialization and cleanup. Concrete use cases include configuring environment variables, preopened directories, and argument vectors for Wasi-based WebAssembly modules.",
+      "description_length": 416,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Ref.O",
+      "library": "wasmer",
+      "description": "This module manages reference-counted objects in the Wasmer runtime, providing low-level memory management operations. It works with pointer types to reference structures and their descriptors, ensuring proper allocation and deallocation. Concrete use cases include creating and freeing references to WebAssembly objects such as functions, memories, and globals.",
+      "description_length": 362,
       "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.DeclareShareableRef.Shared",
+      "library": "wasmer",
+      "description": "This module manages ownership and access to C structures representing WASM objects through pointers. It provides operations to create, delete, and manipulate shared references with explicit control over ownership states, ensuring safe interactions with underlying C resources. Concrete use cases include handling WASM object lifetimes, transferring ownership across FFI boundaries, and safely accessing or releasing pointers to WASM structures like `wasm_instance_t` or `wasm_module_t`.",
+      "description_length": 486,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.Val.O",
       "library": "wasmer",
-      "description": "This module defines operations for working with WebAssembly values, including creating, inspecting, and converting values of type `t` and `d`. It supports data types such as integers, floats, and reference types as defined in the WebAssembly specification. Concrete use cases include passing arguments to and retrieving results from WebAssembly functions.",
-      "description_length": 355,
-      "index": 6,
+      "description": "This module defines operations for working with WebAssembly values, including creating, accessing, and manipulating `t` structures that represent those values. It provides functions to extract and set data of specific types, such as integers and floats, from these structures. Concrete use cases include handling function arguments and return values when interacting with WebAssembly modules through the Wasmer runtime.",
+      "description_length": 419,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Val.V",
+      "library": "wasmer",
+      "description": "This module manages ownership and conversion of WebAssembly value vectors, providing operations to extract and transform vector elements into dependent pointers. It works with structured data types representing WebAssembly values and their ownership states. Concrete use cases include handling function returns and managing pointers in WebAssembly interface calls.",
+      "description_length": 364,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Frame.V",
+      "library": "wasmer",
+      "description": "This module manages ownership and conversion of WebAssembly frame data structures, specifically handling transitions between raw pointers and their owning structures. It provides functions to grab ownership of a data pointer, convert it back to a dependent state, and associate lifecycle management callbacks. These operations are used when interacting with WebAssembly frames to ensure safe pointer handling during execution and debugging.",
+      "description_length": 440,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Byte.V",
+      "library": "wasmer",
+      "description": "This module handles byte-level data manipulation, providing functions to manage memory ownership and conversion between byte vectors and pointers. It works with `data_type` as `Wasmer.Byte.byte` and structures like `owning_struct` for safe pointer transformations. Concrete use cases include converting byte vectors to dependent pointers and reclaiming ownership of memory regions.",
+      "description_length": 381,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.DeclareShareableRef.S",
       "library": "wasmer",
-      "description": "This module defines operations for declaring and managing shareable references in WebAssembly memory, specifically handling the `wasm_externref_t` type. It provides functions to create, access, and manipulate reference types that can be shared across WebAssembly instances. Concrete use cases include passing host-defined objects into WebAssembly modules and enabling cross-instance communication via shared memory.",
-      "description_length": 415,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Wasi_.Env_O_",
-      "library": "wasmer",
-      "description": "This module manages the lifecycle of WebAssembly System Interface (WASI) environment objects. It provides functions to create and destroy WASI environment instances, which are used to configure and execute WebAssembly modules with WASI imports. The module works directly with `t` structures representing WASI environment state.",
-      "description_length": 327,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.DeclareShareableRef.Shared",
-      "library": "wasmer",
-      "description": "This module manages ownership and lifecycle of WASM objects through functions that create, transfer, and release pointers with strict ownership tracking. It works with Ctypes structures representing WASM objects and their associated state. Concrete use cases include safely wrapping C pointers into OCaml values, transferring ownership to C APIs, and ensuring proper resource cleanup without relying on finalizers.",
-      "description_length": 414,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Wasi.Config",
-      "library": "wasmer",
-      "description": "This module manages the creation, manipulation, and lifecycle of WASI configuration objects, allowing them to be initialized with string identifiers and safely shared between OCaml and C. It provides direct operations to create, delete, and modify configuration pointers, while its child modules extend functionality for setting environment variables, mapping directories, and configuring host interactions. The module supports concrete tasks like preparing WASI environments for WebAssembly execution, attaching runtime settings, and ensuring proper resource cleanup after use. Key data types include configuration pointers and string values, with operations that track ownership and state across language boundaries.",
-      "description_length": 718,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Byte.V",
-      "library": "wasmer",
-      "description": "This module handles byte-level data manipulation, providing functions to manage ownership and transform byte vectors into dependent structures. It works with `data_type` representing individual bytes and `owning_struct` for managing byte vector ownership. Concrete use cases include converting raw byte data into managed structures and ensuring proper memory handling when interfacing with WebAssembly.",
-      "description_length": 402,
+      "description": "This module declares and manages shareable references for WebAssembly structures, enabling safe access and manipulation of underlying C pointers. It works with opaque types representing WebAssembly entities like functions, memories, and globals. Concrete use cases include defining typed pointers for passing WebAssembly objects between OCaml and C, and ensuring correct ownership and lifetime management when interacting with the WebAssembly runtime.",
+      "description_length": 451,
       "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Wasmer.Extern.Vec",
+      "module_path": "Wasmer.Wasi.Env",
       "library": "wasmer",
-      "description": "This module offers low-level management of C-compatible vector structures, enabling creation, pointer manipulation, and ownership tracking through explicit state control. It operates on `Wasmer.Extern.Vec` and vectors of `owning_struct` values, facilitating direct interaction with C APIs that demand manual memory management and unsafe pointer operations. These capabilities are critical for interfacing with C libraries requiring precise ownership semantics and low-level data handling.",
-      "description_length": 488,
+      "description": "This module provides operations for precise pointer management and ownership control of WASI environment objects, enabling safe interactions between OCaml and C APIs through mechanisms like state transitions, pointer conversion, and resource deallocation. It works directly with low-level pointers and structured data representing WebAssembly module imports, particularly handling dynamic linking scenarios. Specific use cases include ensuring memory safety during cross-language calls and resolving unordered WASI imports at runtime for modular WebAssembly execution.",
+      "description_length": 568,
       "index": 12,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Wasmer.Extern.V",
+      "module_path": "Wasmer.Val.Anon0",
       "library": "wasmer",
-      "description": "This module manages ownership and conversion of vector elements in the Wasmer FFI bindings. It provides functions to grab ownership of a vector element and convert it back into a structure with dependent ownership. These operations are used when working with `Wasmer.Extern.t` vectors to interface with C structures defined in `wasm.h`.",
-      "description_length": 336,
+      "description": "This module defines a C-compatible union type for representing WebAssembly values, with fields for 32-bit and 64-bit integers, 32-bit and 64-bit floats, and a reference type. It provides direct access to the underlying memory layout of WebAssembly values, enabling reading and writing of numeric and reference data at the C interface level. Concrete use cases include marshaling values between OCaml and WebAssembly runtimes, inspecting function arguments, and implementing custom value conversions.",
+      "description_length": 499,
       "index": 13,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Wasmer.Wasi.Env_T",
+      "module_path": "Wasmer.Wasi_.Env_O_",
       "library": "wasmer",
-      "description": "This module defines an environment type `t` used to manage and configure WebAssembly System Interface (WASI) contexts. It provides operations to create, manipulate, and access environment variables and preopened directories for WASI-based WebAssembly modules. Concrete use cases include setting up sandboxed execution environments with controlled filesystem access and environment variable state.",
-      "description_length": 396,
+      "description": "This module manages the lifecycle of a WebAssembly System Interface (WASI) environment structure, providing operations to create and destroy instances of the structure. It works with Ctypes pointers to a `_t` structure representing the WASI environment. Concrete use cases include initializing a WASI environment before instantiating a WebAssembly module and cleaning up resources after execution.",
+      "description_length": 397,
       "index": 14,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Wasmer.Frame.Vec",
+      "module_path": "Wasmer.Wasi_.Env_",
       "library": "wasmer",
-      "description": "This module provides low-level operations for managing vectors that interoperate with C APIs, focusing on ownership control, memory management, and direct pointer manipulation. It works with Ctypes structures representing Wasmer frame vectors, enabling creation from OCaml collections, element access, and explicit lifecycle handling for scenarios like interfacing with WebAssembly runtime APIs or managing dynamically allocated data buffers. Use cases include bridging OCaml and C-based systems where strict ownership semantics and memory layout guarantees are required.",
-      "description_length": 571,
+      "description": "This module manages ownership and access to a C pointer of type `Wasmer.Wasi_.Env_O_.t`, providing operations to create, transfer, and manipulate ownership states safely. It supports concrete use cases like interfacing with C APIs that require passing or returning pointers, ensuring proper memory management through explicit ownership control. Functions allow creating new owning structures, grabbing or releasing ownership, checking pointer validity, and safely accessing the underlying pointer with enforced state requirements.",
+      "description_length": 530,
       "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Wasmer.Wasi.Config_T",
+      "module_path": "Wasmer.DeclareType.Vec",
       "library": "wasmer",
-      "description": "This module configures WASI (WebAssembly System Interface) settings for a WebAssembly instance, setting up environment variables, preopened directories, and mapped directories. It works with strings, lists, and abstract types representing file descriptors and WASI configurations. Concrete use cases include preparing a WebAssembly module to access specific host filesystem paths or inject environment variables at instantiation time.",
-      "description_length": 434,
+      "description": "This module provides low-level operations for managing C-compatible vectors with explicit ownership semantics, including creation, memory allocation, and element access via pointers. It works with Ctypes structures representing Wasmer vectors (`Vec.t`) containing owned elements (`V.owning_struct`), requiring careful handling of memory lifetimes. These functions are used when interfacing with C APIs that expect strict ownership control, such as passing vectors across language boundaries or managing dynamically sized collections in WebAssembly contexts.",
+      "description_length": 557,
       "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.Wasi.NamedExtern",
       "library": "wasmer",
-      "description": "This module manages the lifecycle and ownership of named external resources used in WebAssembly execution, particularly for WASI-based environments. It provides direct operations for allocating and converting named extern structures, and combines these with child modules that handle dynamic arrays of such structures, enabling safe memory management and interaction with C APIs. You can create and manipulate vectors of named externs, pass them across language boundaries, and ensure proper cleanup after use. Example workflows include setting up WASI environment data and managing imports and exports during WebAssembly module instantiation.",
-      "description_length": 643,
+      "description": "This module provides operations for managing ownership and memory of Ctypes pointers to named external structures in WASI environments, including creation, initialization, and safe transfer of ownership. It works with Ctypes-based vectors and structures to handle external objects' modules, names, and raw values, ensuring correct memory management and preventing null pointer dereferences in Wasmer's WASI implementation.",
+      "description_length": 422,
       "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Extern.Vec",
+      "library": "wasmer",
+      "description": "This module enables low-level management of vectors containing WebAssembly external values through C-compatible structures, focusing on precise ownership control and pointer safety. It operates on Ctypes representations of C structs with `size` and `data` fields, facilitating conversions between raw pointers and owned/guarded OCaml values while preventing invalid memory access. Specific use cases include constructing vectors of Wasm objects (functions, globals, etc.) for C API interactions, safely transferring ownership of pointers, and extracting typed Wasm entities from vector elements.",
+      "description_length": 595,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Extern.V",
+      "library": "wasmer",
+      "description": "This module manages ownership and conversion of WebAssembly external data structures, specifically handling vectors of `Wasmer.Extern.t` structures. It provides functions to transfer ownership of vector elements and convert them into dependent pointers tied to the vector's lifetime. Concrete use cases include safely extracting and managing individual WebAssembly object references from a vector while ensuring proper ownership semantics.",
+      "description_length": 439,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.Byte.Vec",
       "library": "wasmer",
-      "description": "This module provides low-level operations for managing C-compatible byte vectors, including memory allocation, element access, pointer manipulation, and bidirectional conversion between Wasmer's vector representation and OCaml's native byte storage. It works directly with C-style structures wrapped in OCaml types (`Wasmer.Byte.Vec.s`) to ensure safe memory ownership handling and interoperability with WebAssembly runtimes. Specific use cases include bridging byte data between OCaml and Wasmer's C API, enabling efficient byte-level operations for WebAssembly module instantiation and execution.",
-      "description_length": 598,
-      "index": 18,
+      "description": "The module enables precise management of C-compatible byte vectors through operations for safe initialization, element manipulation, and memory lifecycle control, including explicit ownership transfer and null-pointer validation. It works with structures wrapping C byte vectors (`Wasmer.Byte.Vec.s`), facilitating conversions to OCaml bytes and lists, and is designed for scenarios requiring interoperability with C APIs that handle binary data buffers, such as WebAssembly bytecode processing or low-level data serialization.",
+      "description_length": 527,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.Wasi.NamedExtern_T",
       "library": "wasmer",
-      "description": "This module defines a named external value in the WebAssembly System Interface (WASI), associating a string name with an external function or value. It works with WebAssembly externs and string identifiers to enable named resolution of external functions during module instantiation. Concrete use cases include mapping host functions to WASI-imported names and resolving named exports from a WebAssembly instance.",
-      "description_length": 413,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.DeclareType.V",
-      "library": "wasmer",
-      "description": "This module defines operations for managing and converting data types in the Wasmer WebAssembly runtime. It provides functions to grab ownership of a data type structure and convert it into a dependent type with associated state management callbacks. These capabilities are essential for interfacing with WebAssembly objects that require explicit ownership and state tracking.",
-      "description_length": 376,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Frame.V",
-      "library": "wasmer",
-      "description": "This module handles vector data structures tied to WebAssembly frames, providing operations to manage ownership and convert between raw pointers and structured data. It works with `Wasmer.Frame.t` structures and their vector representations, enabling precise control over memory and object state. Concrete use cases include transferring ownership of frame data during WebAssembly execution and linking dependent updates to object state transitions.",
-      "description_length": 448,
+      "description": "This module handles external imports and exports in WebAssembly modules, specifically managing named external functions and their associated metadata. It works with WebAssembly instance and module types, enabling the binding and invocation of host functions from WebAssembly code. Concrete use cases include defining callback functions that WebAssembly code can call, such as I/O operations or system interfaces, by attaching names and signatures to these functions for use during module instantiation.",
+      "description_length": 502,
       "index": 21,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Wasmer.Wasi.Env",
+      "module_path": "Wasmer.Wasi.Env_T",
       "library": "wasmer",
-      "description": "This module provides operations for managing the lifecycle and ownership of WASI environment objects through pointer-based manipulation and state transitions, including creating, deleting, and transferring controlled access. It works with WebAssembly modules and their associated import tables to resolve unordered environment imports as optional collections of named external resources. These capabilities are essential for embedding WebAssembly runtimes with strict resource management requirements and for bridging host environments with WebAssembly execution contexts.",
-      "description_length": 572,
+      "description": "This module defines an environment type `t` for managing WebAssembly System Interface (WASI) contexts, specifically used to configure and pass runtime environment information to WASI-based WebAssembly modules. It includes operations to create and manipulate environment variables, file descriptors, and process arguments, which are essential for sandboxed WebAssembly programs to interact with the host system. Concrete use cases include setting up a WASI environment for executing WebAssembly binaries with controlled access to system resources like files and environment variables.",
+      "description_length": 583,
       "index": 22,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Wasmer.DeclareType.Vec",
+      "module_path": "Wasmer.Wasi.Config_T",
       "library": "wasmer",
-      "description": "This module offers operations to manage C-style vectors with explicit ownership semantics, enabling creation, element access, and memory manipulation of structures containing size and data pointers. It facilitates safe and unsafe interactions with C APIs by handling ownership transitions and manual memory management for vectors of `owning_struct` elements. Use cases include bridging OCaml with C functions requiring vector inputs, such as initializing vectors from OCaml arrays, transferring ownership to C for processing, or modifying vector contents during FFI callbacks.",
-      "description_length": 576,
+      "description": "This module defines configuration settings for WebAssembly System Interface (WASI) instances, including operations to set and retrieve environment variables, preopen directories, and arguments. It works with string-based key-value pairs and lists to configure WASI execution contexts. Concrete use cases include preparing a WASI environment for running WebAssembly modules with specific filesystem access and runtime parameters.",
+      "description_length": 428,
       "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Wasi_.Env_",
-      "library": "wasmer",
-      "description": "This module manages ownership and lifecycle of Wasi environment objects through explicit pointer manipulation and state tracking. It provides operations to create, transfer, and release ownership of Wasi environment pointers, along with checks for pointer validity and state transitions. Concrete use cases include interfacing with C APIs that require passing or returning Wasi environment pointers with precise ownership semantics.",
-      "description_length": 432,
-      "index": 24,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Wasmer.Val.Vec",
       "library": "wasmer",
-      "description": "This module enables low-level manipulation of C-compatible vectors containing `Wasmer.Val.V` values, offering memory management operations like allocation, deletion, and element-level access via pointers. It works with Ctypes structures and raw pointers to bridge OCaml and C APIs, emphasizing precise control over memory ownership and layout. Typical use cases involve passing vectors across language boundaries, handling uninitialized or dynamically sized data, and interfacing with C functions requiring direct memory access to value arrays.",
-      "description_length": 544,
+      "description": "This module provides low-level operations for managing C-style vectors of `Wasmer.Val.V` values, including memory allocation, element access, ownership transitions, and compatibility validation with WebAssembly value types. The vectors, structured as size-pointer pairs, enable safe interaction with WebAssembly runtime APIs for tasks like passing function arguments/results between OCaml and WebAssembly, ensuring proper memory management and ownership semantics during cross-language calls.",
+      "description_length": 492,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.DeclareType.V",
+      "library": "wasmer",
+      "description": "This module defines operations for managing ownership and conversion of a structured data type, primarily through `grab_ownership` to take ownership of a structure and `to_dependent` to convert a data type into a dependent state with an update function. It works with `data_type` as a pointer to a structured type and `owning_struct` representing the owned structure. Concrete use cases include handling object state transitions and managing pointer ownership in WebAssembly bindings.",
+      "description_length": 484,
       "index": 25,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Wasmer.Val.Anon0",
+      "module_path": "Wasmer.Frame.Vec",
       "library": "wasmer",
-      "description": "This module defines a union type for representing WebAssembly value types, including 32-bit and 64-bit integers, 32-bit and 64-bit floats, and reference types. It provides direct field accessors to manipulate and retrieve these values within the union structure. This is used internally to interface with WebAssembly runtime values via the wasmer C bindings.",
-      "description_length": 358,
+      "description": "This module provides operations for creating, manipulating, and converting C-style vectors with strict ownership semantics, including functions for safe memory allocation, element access, and conversion from OCaml collections like arrays and lists. It works with C structures representing vectors of `Wasmer.Frame.V.owning_struct` elements, which encapsulate size-data pairs and enforce ownership rules during pointer interactions. These capabilities are particularly useful for interoperating with C APIs that require precise memory management, such as handling WebAssembly function parameters or results that demand explicit ownership transfer and null safety.",
+      "description_length": 662,
       "index": 26,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Wasmer.Ref.O",
+      "module_path": "Wasmer.Wasi.Config",
       "library": "wasmer",
-      "description": "This module manages WebAssembly reference types by providing operations to create and destroy reference objects. It works with `Wasmer.Ref.t` structures and their underlying `d` type descriptors. Use it to interface with WebAssembly functions that require reference-typed parameters or return values.",
-      "description_length": 300,
+      "description": "This module provides operations for constructing and managing WASI configuration structures, focusing on safe memory handling and ownership transfer between OCaml and C. It works with configuration objects (`t` and `s` types) that store settings for WebAssembly execution environments, including string-based identifiers. These tools are used to initialize WASI instances with controlled parameter validation and precise pointer management, particularly when embedding WebAssembly runtimes requiring strict safety guarantees.",
+      "description_length": 525,
       "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Wasi",
-      "library": "wasmer",
-      "description": "This module orchestrates the configuration and management of WebAssembly System Interface (WASI) environments, enabling precise control over execution contexts through configuration objects, environment variables, and directory mappings. It centers around data types such as configuration pointers, named externs, and environment objects, offering operations to create, modify, and safely share these across OCaml and C boundaries. Specific capabilities include setting up sandboxed WebAssembly modules with restricted filesystem access, linking host functions to WASI imports, and managing resource lifecycles during module instantiation and teardown. Example workflows involve preparing WASI configurations with preopened directories, injecting environment variables, and resolving named externs for module imports and exports.",
-      "description_length": 829,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Byte",
-      "library": "wasmer",
-      "description": "This module introduces a `byte` type as an unsigned 8-bit integer with Ctypes integration for low-level byte manipulation, supporting direct operations on individual bytes and byte vectors via the `Vec` submodule. The `Vec` module manages memory ownership and transformations between raw byte vectors and structured representations, using types like `data_type` and `owning_struct` for safe handling of binary data. It enables efficient conversion between Wasmer's C API byte vectors and OCaml's native storage, facilitating tasks like parsing binary formats or preparing data for WebAssembly execution. Specific capabilities include allocating byte buffers, converting between OCaml bytes and Wasmer's vector type, and safely managing memory when passing byte data to and from WebAssembly runtimes.",
-      "description_length": 799,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Ref_T",
-      "library": "wasmer",
-      "description": "This module implements reference management operations for WebAssembly structures, including creation, deletion, and reference counting. It works with opaque pointer types (`d`) representing WebAssembly objects like engines, stores, and instances. Concrete use cases include ensuring proper memory management of WebAssembly entities during module instantiation and execution.",
-      "description_length": 375,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Frame_T",
-      "library": "wasmer",
-      "description": "This module provides operations to inspect and manipulate WebAssembly stack frames, including accessing caller information and control flow constructs. It works with WebAssembly execution contexts, specifically frame instances and related metadata. Concrete use cases include debugging WebAssembly programs, implementing custom exception handling, and tracing function calls during runtime.",
-      "description_length": 390,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.OwnableObject",
-      "library": "wasmer",
-      "description": "This module manages the ownership state of C objects via pointer wrappers, providing operations to create, transfer, and query ownership. It works with C pointers (`O.t Ctypes.ptr`) and an ownership state enumeration, enabling precise control over object lifetimes. Concrete use cases include interfacing with C APIs that require explicit ownership transfer, such as passing objects to C functions that take ownership or retrieving pointers to be managed by OCaml.",
-      "description_length": 464,
-      "index": 32,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Trap_T",
-      "library": "wasmer",
-      "description": "This module defines traps, which represent runtime errors or interrupts during WebAssembly execution. It provides functions to create, inspect, and handle traps, including retrieving error messages and determining the cause of a trap. It works with WebAssembly instances and execution contexts to manage exceptional conditions during module instantiation or function calls.",
-      "description_length": 373,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Importtype",
-      "library": "wasmer",
-      "description": "This module provides functions for managing the lifecycle and ownership of WebAssembly import descriptors, including creation, duplication, deletion, and pointer conversions, while tracking ownership states. It operates on C structures that encapsulate import metadata like module names, field names, and external types, enabling structured access to these components. These operations are essential for defining and manipulating import interfaces in WebAssembly modules, particularly when integrating with host environments or runtime systems requiring precise resource management.",
-      "description_length": 582,
-      "index": 34,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.Store_T",
       "library": "wasmer",
-      "description": "This module manages the storage and retrieval of WebAssembly objects such as modules, instances, and globals. It provides functions to create, look up, and delete entries associated with specific names. Concrete use cases include caching compiled WebAssembly modules for reuse and maintaining a registry of instantiated WebAssembly components during runtime.",
-      "description_length": 358,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Functype",
-      "library": "wasmer",
-      "description": "This module enables creation, ownership management, and introspection of WebAssembly function types through C-compatible structures. It operates on `Functype` pointers and `Valtype.Vec.s` vectors to define and access function parameters and return types, ensuring safe memory handling via explicit ownership control and null-pointer checks. Typical usage includes constructing WebAssembly function signatures from OCaml while interfacing with C-based runtime systems.",
-      "description_length": 467,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Limits",
-      "library": "wasmer",
-      "description": "This module defines a structure for specifying memory and table limits in WebAssembly instances, with fields for minimum and maximum sizes. It supports setting and retrieving these limits using unsigned 32-bit integers, and provides a default maximum value for convenience. Concrete use cases include configuring memory or table size constraints when instantiating WebAssembly modules.",
-      "description_length": 385,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Globaltype",
-      "library": "wasmer",
-      "description": "This module provides operations to construct, inspect, and manage WebAssembly global types, focusing on value type and mutability attributes. It works directly with `Wasmer.Globaltype.s` values and C pointers, enabling safe/unsafe conversions, memory management, and introspection of global type properties. Specific use cases include defining WebAssembly globals with precise type constraints and analyzing existing global types during runtime or compilation workflows.",
-      "description_length": 470,
-      "index": 38,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Extern",
-      "library": "wasmer",
-      "description": "This module enables safe interoperability with WebAssembly external values by converting between generic `Extern.s` structures and specific component types like `Func`, `Global`, `Table`, and `Memory`, while managing low-level C structure ownership through pointer manipulation, duplication, and deletion. It includes submodules for handling C-compatible vectors and their elements, supporting creation, state control, and ownership transfer of structures used in Wasmer's FFI bindings. You can inspect external component kinds, convert between typed and generic representations, or manage resource lifecycles across OCaml and C when working with WebAssembly modules. Specific operations include extracting a `Func` from an `Extern.s`, creating vectors of `owning_struct` values, and transferring ownership of vector elements to OCaml-managed structures.",
-      "description_length": 854,
-      "index": 39,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Exporttype_T",
-      "library": "wasmer",
-      "description": "This module defines the structure and operations for handling WebAssembly export types, including retrieving the name and kind of exports. It works with data types representing WebAssembly exports, such as function, memory, and global exports. Concrete use cases include inspecting exported elements from a WebAssembly module to determine their type and name during runtime interaction.",
-      "description_length": 386,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Global",
-      "library": "wasmer",
-      "description": "This module enables creation, deletion, and ownership management of WebAssembly global variables through low-level memory operations and type-safe value access. It operates on global variable instances, their type descriptors, and value containers to ensure correct data manipulation within a runtime. These capabilities are critical for embedding WebAssembly engines where strict resource control and type constraints govern variable state and lifetimes.",
-      "description_length": 455,
-      "index": 41,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Tabletype_T",
-      "library": "wasmer",
-      "description": "This module defines the `Tabletype_T` structure, which represents WebAssembly table types. It includes operations to create, inspect, and manipulate table type descriptors, such as setting and retrieving element types and limits. It works with WebAssembly table types to support module validation and instantiation in the Wasmer runtime.",
-      "description_length": 337,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Util",
-      "library": "wasmer",
-      "description": "This module includes functions for converting WebAssembly text format (WAT) to binary format (WASM), loading WASM files into byte vectors, and defining function types from value kinds. It operates on strings, byte vectors, and value kind lists to support WebAssembly module manipulation. Concrete use cases include parsing WAT input for execution, preparing WASM binaries for instantiation, and specifying function signatures for WebAssembly imports and exports.",
-      "description_length": 462,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Valkind",
-      "library": "wasmer",
-      "description": "This module defines value kinds for WebAssembly types, including integers, floats, and reference types. It provides conversions between OCaml and C representations of these types, along with predicates to classify value kinds as numeric or reference types. Useful for validating and handling WebAssembly values in host functions and runtime interfaces.",
-      "description_length": 352,
-      "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Externkind",
-      "library": "wasmer",
-      "description": "This module defines the kind of external WebAssembly items, such as functions, globals, tables, and memories, using both OCaml variants and their corresponding C-compatible 8-bit unsigned integer representations. It provides conversions between these representations with `of_c` and `to_c`, ensuring interoperability with C bindings for WebAssembly. Use cases include classifying and handling different types of WebAssembly externals when interacting with the runtime.",
-      "description_length": 468,
-      "index": 45,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Memorytype",
-      "library": "wasmer",
-      "description": "The module provides operations for ownership control, pointer management, and lifecycle handling of WebAssembly memory type structures, primarily through wrappers that track ownership state and expose safe interactions with C APIs. It works with C-pointer-backed types like `Wasmer.Memorytype.s` and `Limits`, enabling use cases such as manual memory lifetime management, integration with C-based WebAssembly runtimes, and direct manipulation of memory type descriptors via FFI bindings like `new_unsafe`.",
-      "description_length": 505,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Wasi_",
-      "library": "wasmer",
-      "description": "This module manages the creation, ownership, and lifecycle of WASI environment instances used for configuring and executing WebAssembly modules. It centers around the `t` type, representing WASI environment state, and provides operations to create, destroy, and transfer ownership of these instances. Functions support explicit pointer manipulation and validity checks, enabling safe interaction with C APIs that require passing or returning WASI environment pointers. Example usage includes initializing a WASI environment for a WebAssembly module and transferring ownership to a C function that expects a valid environment pointer.",
-      "description_length": 633,
-      "index": 47,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Memory",
-      "library": "wasmer",
-      "description": "This module provides low-level memory management operations for WebAssembly linear memory regions, including allocation, resizing, and direct memory access. It works with memory instances represented as `s` values, which encapsulate raw pointers and ownership state, alongside memory type descriptors and byte buffers. These operations enable precise control over memory lifecycles, data exchange between host/guest environments, and dynamic memory adjustments during WebAssembly execution.",
-      "description_length": 490,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Foreign_T",
-      "library": "wasmer",
-      "description": "This module defines foreign type bindings for WebAssembly structures, mapping C types to OCaml representations. It includes operations to retrieve type information and structure names, working with descriptors and base names of WebAssembly entities. It is used to interface OCaml code with WebAssembly C functions by providing type metadata for foreign function bindings.",
-      "description_length": 371,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Externtype",
-      "library": "wasmer",
-      "description": "This module facilitates ownership management and type interoperability for WebAssembly external type representations, handling operations like structure creation, pointer conversion, and bidirectional casting between abstract type descriptors (`Functype`, `Globaltype`, etc.) and their C-compatible memory layouts. It works with both mutable and immutable variants of WebAssembly type definitions, enabling seamless translation between OCaml's high-level abstractions and low-level WASM runtime representations. Typical use cases include embedding WebAssembly engines in OCaml applications, validating module interfaces, and managing lifecycle-critical resources during runtime compilation or instantiation.",
-      "description_length": 707,
-      "index": 50,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.DeclareRef",
-      "library": "wasmer",
-      "description": "This module provides low-level reference management for C structures, offering operations to create, duplicate, and delete references with explicit ownership control, ensuring pointer validity during cross-language interactions. It handles abstract values, C-compatible pointers, and host-side metadata, enabling type coercion and FFI-safe state transitions when bridging OCaml with WebAssembly runtimes. Use cases include maintaining reference integrity across FFI boundaries and safely converting between OCaml and C types in embedded systems.",
-      "description_length": 545,
-      "index": 51,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Val",
-      "library": "wasmer",
-      "description": "This module enables the creation, manipulation, and memory management of WebAssembly values through typed OCaml structures like `Val.t` and `Val.s`, offering direct accessors for primitive types such as integers, floats, and references. It supports ownership transfer and integrates with C-based WebAssembly runtimes via FFI, facilitating safe cross-language interactions. Submodules handle value vectors, low-level memory operations, and C-compatible data layouts, allowing tasks like passing arguments to WebAssembly functions, managing resource lifetimes, and interfacing with C APIs using raw pointers and union types. Specific operations include converting value arrays, reclaiming memory post-garbage collection, and working with statically and dynamically sized data across language boundaries.",
-      "description_length": 801,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Global_T",
-      "library": "wasmer",
-      "description": "This module manages WebAssembly global variables, providing operations to read, write, and create global instances with specific value types. It works with WebAssembly value types (`I32`, `I64`, `F32`, `F64`) and mutable or immutable global declarations. Concrete use cases include initializing exported globals, modifying imported global values, and inspecting global state during WebAssembly execution.",
-      "description_length": 404,
-      "index": 53,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Frame",
-      "library": "wasmer",
-      "description": "This module manages WebAssembly stack frames through safe ownership tracking and introspection, enabling operations like duplication, state retrieval, and function metadata access using `Frame.s` values. It integrates low-level vector handling for C interoperation, allowing creation from OCaml collections, pointer manipulation, and explicit memory management. Submodules provide structured access to frame vectors and facilitate state transitions during execution, supporting precise control over data flow and object lifetimes. Example uses include inspecting call stacks for debugging and transferring frame ownership across runtime boundaries.",
-      "description_length": 648,
-      "index": 54,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Wasmer.VectorType",
-      "library": "wasmer",
-      "description": "This module defines the metadata and ownership semantics for vector structures used in the Wasmer WebAssembly bindings. It includes operations to manage ownership of vector elements, convert elements back into pointers dependent on the vector, and specifies the base name of the vector structure. It works with vector types in C that represent WebAssembly objects, such as `wasm_extern_vec_t`, enabling safe interaction between OCaml and C-level vectors.",
-      "description_length": 454,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Config",
-      "library": "wasmer",
-      "description": "This module manages ownership and interaction with a C structure representing a configuration object. It provides functions to create, delete, and manipulate pointers to this structure while tracking ownership states to ensure safe memory management. Concrete use cases include initializing a new configuration, passing ownership to C code, and safely retrieving or releasing underlying pointers for interoperability with C APIs.",
-      "description_length": 429,
-      "index": 56,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Func_T",
-      "library": "wasmer",
-      "description": "This module defines the types and operations for working with WebAssembly functions, including creating, calling, and inspecting function instances. It handles function signatures, imports, and exports, enabling interaction with WebAssembly modules through typed interfaces. Concrete use cases include defining host functions callable from WebAssembly code and extracting function metadata for runtime inspection.",
-      "description_length": 413,
-      "index": 57,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Functype_T",
-      "library": "wasmer",
-      "description": "This module defines the `d` type, which represents WebAssembly function types, and includes a `name` value for identifying the structure. It provides operations to create and inspect function types, such as specifying parameter and result types. Use cases include defining the signature of WebAssembly functions when setting up imports or exports in a WebAssembly instance.",
-      "description_length": 373,
-      "index": 58,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.DeclareShareableRef",
-      "library": "wasmer",
-      "description": "This module enables safe management of C and WebAssembly object references in OCaml, combining direct operations on shareable reference types with specialized handling for `wasm_externref_t` and C pointers. It supports creating, duplicating, and transferring references while enforcing strict ownership and thread-safety, with concrete use cases including embedding host objects in WebAssembly and passing OCaml-managed values to C APIs. The core functionality works with `s` and `Ctypes.ptr` types, while child modules extend this to WebAssembly memory and WASM object lifecycle control. Examples include converting OCaml values to shareable references for cross-instance communication and wrapping C pointers with finalizers for automatic resource cleanup.",
-      "description_length": 758,
-      "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.StructType",
-      "library": "wasmer",
-      "description": "This module defines the metadata for structure-declaring objects, including the base name of the structure and an associated data type `d`. It is used to describe the layout and identity of WebAssembly-related structures in the OCaml bindings. Concrete use cases include mapping C-defined WebAssembly structures to OCaml representations and providing structure names for FFI bindings.",
-      "description_length": 384,
-      "index": 60,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Importtype_T",
-      "library": "wasmer",
-      "description": "This module defines the structure and operations for working with WebAssembly import types, specifically handling the `wasm_importtype_t` C structure. It provides functions to access the module and name fields of an import type, enabling inspection of imported functions and global variables in WebAssembly modules. Concrete use cases include retrieving the module name and field name from WebAssembly imports during module validation or linking.",
-      "description_length": 446,
-      "index": 61,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Mutability",
-      "library": "wasmer",
-      "description": "This module defines mutability states for WebAssembly variables, mapping between C and OCaml representations. It supports conversion operations `of_c` and `to_c` for translating mutability values to and from C-compatible types. Used when interacting with WebAssembly memory or global variables that require specifying whether a value is constant or mutable.",
-      "description_length": 357,
-      "index": 62,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.DeclareVec",
-      "library": "wasmer",
-      "description": "This module manages vector creation, ownership, and pointer interactions for C-compatible data structures declared via the `WASM_DECLARE_VEC` macro, using Ctypes-based representations. It provides memory-safe operations for element access, duplication, and direct pointer manipulation, designed for handling variable-length data sequences in WebAssembly interoperation scenarios. These capabilities are particularly useful when passing owned vector data between OCaml and C components in Wasmer-based systems.",
-      "description_length": 509,
-      "index": 63,
+      "description": "This module defines the storage model for WebAssembly instances, managing linear memory, tables, and global variables. It provides operations to allocate, grow, and access memory buffers and table entries, along with tracking mutable state during execution. Concrete use cases include instantiating WebAssembly modules, executing functions that read/write memory, and inspecting exported globals.",
+      "description_length": 396,
+      "index": 28,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Wasmer.Ref",
       "library": "wasmer",
-      "description": "This module provides low-level operations for managing references to C structures, including creation, duplication, deletion, and pointer manipulation with strict ownership tracking. It works primarily with `Wasmer.Ref.s` and `Wasmer.Ref.O.t Ctypes.ptr` to interface with C memory and WebAssembly runtime components. The child module extends this functionality to handle WebAssembly reference types, enabling creation and destruction of reference objects and interaction with functions expecting reference-typed parameters or return values. Examples include passing OCaml-managed pointers to WebAssembly functions and safely managing their lifecycles.",
-      "description_length": 651,
-      "index": 64,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Store",
-      "library": "wasmer",
-      "description": "This module directly manages low-level ownership and lifecycle operations for `Store` structures in the Wasmer C API, providing functions to create, delete, and transfer ownership of store objects. It works with pointers to `Store` structures and associated state tracking to ensure safe interactions with the underlying C memory. Concrete use cases include initializing a new store from an engine, safely releasing ownership when passing a store to C code, and reclaiming or inspecting the raw pointer for further operations.",
-      "description_length": 526,
-      "index": 65,
+      "description": "This module provides low-level operations for managing reference-counted WebAssembly objects, including creating, duplicating, and freeing references, comparing object identity, and manipulating raw pointers to interface with C. It works with structured types representing WebAssembly entities like functions and memories, using `Ctypes.ptr` for embedding host-side metadata and finalizers. Specific use cases involve precise memory management when passing pointers between OCaml and C, attaching host data to WebAssembly objects, and ensuring proper ownership handling during interop.",
+      "description_length": 585,
+      "index": 29,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Wasmer.Valtype_T",
+      "module_path": "Wasmer.Mutability",
       "library": "wasmer",
-      "description": "This module defines the `d` type, which represents WebAssembly value types such as i32, i64, f32, and f64. It provides operations to classify and compare these primitive types, enabling precise handling of WebAssembly function signatures and variable declarations. Use cases include validating input/output types in WebAssembly module interfaces and mapping between OCaml and WebAssembly type systems.",
-      "description_length": 401,
-      "index": 66,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Instance_T",
-      "library": "wasmer",
-      "description": "This module manages WebAssembly instance state and execution, providing functions to instantiate modules, access exports, and interact with memory. It operates on `wasm_instance_t` and related structures, enabling direct manipulation of WebAssembly instances. Concrete use cases include running compiled WebAssembly code, retrieving function pointers, and inspecting exported memory buffers.",
-      "description_length": 391,
-      "index": 67,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Name",
-      "library": "wasmer",
-      "description": "This module provides functions for creating, manipulating, and converting C-compatible vectors of `Wasmer.Byte.V.owning_struct`, including memory allocation, element access, and ownership management via safe/unsafe pointer operations. It also handles bidirectional conversion between `Wasmer.Name.s` and string/bytes representations, enabling serialization and deserialization of WebAssembly name structures. These operations are critical for interfacing with low-level C APIs in the WebAssembly runtime, managing memory safety during data transfers, and working with serialized name metadata in OCaml applications.",
-      "description_length": 615,
-      "index": 68,
+      "description": "This module defines mutability qualifiers for WebAssembly memory operations, distinguishing between constant (`Const`) and variable (`Var`) memory. It provides conversions between C and OCaml representations of these qualifiers, ensuring correct memory access semantics when interfacing with WebAssembly. Use cases include validating and enforcing memory mutability rules during WebAssembly module instantiation and execution.",
+      "description_length": 426,
+      "index": 30,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Config",
+      "library": "wasmer",
+      "description": "This module directly manages low-level ownership and manipulation of Wasmer configuration structures through pointers. It provides operations to create, delete, and transfer ownership of configuration objects, along with safe and unsafe accessors for interacting with C APIs. Concrete use cases include initializing Wasmer configurations, passing them to C functions while maintaining correct ownership, and safely freeing resources after use.",
+      "description_length": 443,
+      "index": 31,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.Externtype_T",
       "library": "wasmer",
-      "description": "This module defines the external types used in WebAssembly bindings, such as function, global, memory, and table types. It provides operations to inspect and manipulate these types, including retrieving their kind and associated data. Concrete use cases include validating imported values and extracting type information for function signatures or memory limits.",
-      "description_length": 362,
-      "index": 69,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Extern_T",
-      "library": "wasmer",
-      "description": "This module defines external type descriptors for WebAssembly entities such as functions, memories, and globals. It provides operations to inspect and manipulate these externs, including extracting their types and underlying data. Concrete use cases include validating imported values and extracting function pointers for host bindings.",
-      "description_length": 336,
-      "index": 70,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Func",
-      "library": "wasmer",
-      "description": "This module manages lifecycle operations and callback mechanisms for WebAssembly functions via direct C API bindings. It works with low-level structures like `wasm_func_t` pointers and OCaml representations of Wasm values (`Val.Vec`) and traps, enabling safe interaction between OCaml code and Wasm function interfaces. Typical use cases include creating host functions callable from Wasm, wrapping C-compatible callbacks with OCaml closures, and enforcing type-safe parameter/result handling during cross-language invocations.",
-      "description_length": 527,
-      "index": 71,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Trap",
-      "library": "wasmer",
-      "description": "This module provides operations for managing ownership and manipulation of C-based trap structures in OCaml, focusing on memory safety and pointer conversions. It works with `Wasmer.Trap.s` (safe OCaml wrappers), `Wasmer.Store.s`, `Wasmer.Message.s`, and related types to enable creating traps from stores, attaching host-specific data with optional finalizers, and inspecting trap details like messages or stack traces. Key use cases include safe integration of WebAssembly traps with OCaml code, debugging via introspection, and managing lifecycle-critical resources across language boundaries.",
-      "description_length": 596,
-      "index": 72,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Config_T",
-      "library": "wasmer",
-      "description": "This module defines configuration structures for customizing WebAssembly instance behavior, primarily through embedding APIs. It works with opaque data types representing configuration settings, such as compilation options and runtime constraints. Concrete use cases include setting maximum memory limits, specifying custom memory models, and defining interrupt handlers for embedded WebAssembly execution.",
-      "description_length": 406,
-      "index": 73,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Memory_T",
-      "library": "wasmer",
-      "description": "This module defines operations for managing WebAssembly linear memory, including creating, resizing, and accessing memory buffers. It works with memory descriptors and raw pointers to handle memory instances within the WebAssembly execution environment. Concrete use cases include allocating memory for WebAssembly modules and reading or writing data to and from WebAssembly memory from OCaml.",
-      "description_length": 393,
-      "index": 74,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Engine",
-      "library": "wasmer",
-      "description": "This module provides memory management and ownership control for low-level engine instances, including creation with configuration (safe and unsafe variants) and pointer lifecycle handling via C interop. It operates on raw pointers to engine structures and configuration objects, enabling use cases like embedding WebAssembly execution environments in OCaml applications with precise resource management. Specific patterns include attaching engine state to foreign data or managing transient engine instances with exception-safe cleanup.",
-      "description_length": 537,
-      "index": 75,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Message",
-      "library": "wasmer",
-      "description": "This module provides memory management and conversion operations for vector structures used in the Wasmer runtime, enabling efficient handling of byte sequences and interoperability with C. It works with byte buffers, lists, and strings, offering functions to convert between these OCaml types and Wasmer's internal vector representation while managing ownership and memory safety. Specific use cases include serializing data to binary formats, interfacing with C APIs requiring contiguous memory buffers, and manipulating raw bytes in WebAssembly execution contexts.",
-      "description_length": 567,
-      "index": 76,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Instance",
-      "library": "wasmer",
-      "description": "This module provides operations for managing WebAssembly instance lifecycles, including safe/unsafe creation, ownership transfer, and state inspection. It works with instance references, host data pointers, and export tables, enabling use cases like embedding WebAssembly execution in OCaml applications with custom finalization logic for associated resources. Key patterns include converting between raw pointers and managed references, attaching host context to instances, and extracting exported functions or memory.",
-      "description_length": 519,
-      "index": 77,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.DeclareRefBase",
-      "library": "wasmer",
-      "description": "This module provides low-level operations for managing reference types that interface with C structures, focusing on ownership semantics and pointer manipulation. It works with Ctypes pointers and abstract reference types to enable safe and unsafe conversions, duplication, identity checks, and host information management via finalizers. These capabilities are particularly useful for embedding C-based resources in OCaml code, ensuring proper cleanup and state management when interacting with external systems like WebAssembly engines.",
-      "description_length": 538,
-      "index": 78,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.ObjectType",
-      "library": "wasmer",
-      "description": "This module defines metadata for ownable objects, including two distinct types `t` and `d`. It provides operations to manage ownership and associated data for objects within the WebAssembly execution context. Concrete use cases include tracking ownership of WebAssembly instances and managing object lifetimes in host bindings.",
-      "description_length": 327,
-      "index": 79,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Table",
-      "library": "wasmer",
-      "description": "This module provides low-level operations for managing WebAssembly tables, including creation, resizing, element access, and type inspection, while handling pointer ownership and FFI boundary crossings. It works with table structures tied to the WebAssembly execution model, supporting direct manipulation of table elements and capacity in scenarios like dynamic linking or function table management. Specific use cases include embedding WebAssembly modules that require runtime table modifications or interfacing with C libraries via FFI where pointer control is critical.",
-      "description_length": 573,
-      "index": 80,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Memorytype_T",
-      "library": "wasmer",
-      "description": "This module defines the `d` type, which represents WebAssembly memory types in the Wasmer runtime. It provides operations to create, inspect, and manipulate memory type descriptors, such as setting and retrieving memory limits. Concrete use cases include configuring linear memory for WebAssembly modules and validating memory constraints during instantiation.",
-      "description_length": 360,
-      "index": 81,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Foreign",
-      "library": "wasmer",
-      "description": "This module provides operations for managing C structures within OCaml, focusing on memory management (creation, duplication, deletion), ownership control, and raw pointer manipulation. It works with types `t` and `s` representing foreign C structures, enabling safe and unsafe conversions between foreign and reference types while supporting metadata attachment and finalization. These capabilities are particularly useful for integrating OCaml host functions with WebAssembly foreign objects, such as exposing OCaml-defined values to Wasm or managing host-side context data with finalizers.",
-      "description_length": 592,
-      "index": 82,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Globaltype_T",
-      "library": "wasmer",
-      "description": "This module defines the type and operations for working with WebAssembly global variable types, including creating, inspecting, and manipulating global type descriptors. It operates on data structures representing WebAssembly global variables, specifically handling their value types and mutability flags. Concrete use cases include configuring and validating global variables when setting up WebAssembly module instances.",
-      "description_length": 422,
-      "index": 83,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Engine_T",
-      "library": "wasmer",
-      "description": "This module defines the core runtime engine for executing WebAssembly modules, providing functions to instantiate and manage WebAssembly instances. It works with WebAssembly binary code and linear memory structures, enabling direct execution of compiled Wasm functions. Concrete use cases include loading and running Wasm modules from bytes, invoking exported functions, and accessing memory buffers for data exchange.",
-      "description_length": 418,
-      "index": 84,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Module_T",
-      "library": "wasmer",
-      "description": "This module defines the base name and type for Wasm C API structures, providing low-level type definitions and naming conventions used across the Wasmer bindings. It works with string identifiers and abstract types representing WebAssembly entities. Concrete use cases include mapping C API structs like `wasm_module_t` to OCaml types for direct FFI interactions.",
-      "description_length": 363,
-      "index": 85,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wasmer.Valtype",
-      "library": "wasmer",
-      "description": "This module enables creating and inspecting WebAssembly value types by translating between OCaml and C representations, offering operations to construct types with specific kinds (e.g., numeric, reference) and query their properties. It works with value types representing WebAssembly primitives like `i32`, `f64`, `func_ref`, and `extern_ref`, while managing their lifecycle through pointer ownership tracking. Typical use cases include validating type compatibility during WebAssembly execution or marshaling OCaml values into WebAssembly type signatures for function exports.",
-      "description_length": 578,
-      "index": 86,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.DeclareType",
-      "library": "wasmer",
-      "description": "This module enables low-level management of ownership and pointer interactions with C structures, centered around owning structures and vectors with precise control over resource lifetimes. It provides direct operations for safe and unsafe vector duplication, ownership transfer, and state checks, leveraging `Ctypes` for memory safety during C interop. The child modules extend this by offering type conversion with state management callbacks and specialized handling of C-style vectors containing owning structures. Examples include initializing vectors from OCaml arrays, transferring ownership to C functions, and managing WebAssembly object lifetimes through dependent type conversions.",
-      "description_length": 691,
-      "index": 87,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Tabletype",
-      "library": "wasmer",
-      "description": "This module enables creating and inspecting WebAssembly table types by defining element types and limits, using `Valtype` and `Limits` structures. It supports use cases like configuring table instances in WebAssembly modules with precise capacity constraints and element type validation. Operations include constructing table types with safety-checked boundaries and querying their properties for runtime introspection.",
-      "description_length": 419,
-      "index": 88,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Table_T",
-      "library": "wasmer",
-      "description": "This module defines operations for working with WebAssembly tables, including creating, growing, and accessing table elements. It handles table instances that store reference types, such as functions, and supports dynamic resizing within the WebAssembly runtime constraints. Concrete use cases include managing indirect function calls and implementing WebAssembly features like `call_indirect` through table-based dispatch.",
-      "description_length": 423,
-      "index": 89,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wasmer.Module",
-      "library": "wasmer",
-      "description": "This module provides operations for creating, validating, and manipulating WebAssembly modules through low-level memory management and FFI-safe interactions with C structures. It works directly with module descriptors, stores, byte vectors, and import/export type lists to enable serialization, deserialization, and runtime inspection of WebAssembly binaries. Specific use cases include embedding WebAssembly execution environments, managing host-guest data boundaries with custom finalizers, and tooling for binary format analysis.",
-      "description_length": 532,
-      "index": 90,
+      "description": "This module defines types and operations for working with WebAssembly external types, such as functions, globals, memories, and tables. It provides functions to retrieve the type and kind of external values, and to downcast them to specific type representations. Concrete use cases include inspecting imported or exported elements in a WebAssembly module to determine their capabilities and signatures.",
+      "description_length": 402,
+      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.Exporttype",
       "library": "wasmer",
-      "description": "This module enables creating and managing pairs of names with their corresponding external types in WebAssembly contexts, alongside handling the underlying C structures' ownership and pointer conversions. It operates on data structures that encapsulate WebAssembly export type information, specifically associating identifiers with external type descriptors to support runtime integration. Use cases include mapping exported names to their declared types when inspecting or instantiating WebAssembly modules, ensuring proper memory management when interfacing with C-based runtime components.",
-      "description_length": 592,
-      "index": 91,
+      "description": "This module focuses on operations for managing ownership and lifecycle of WebAssembly export type descriptors, including safe creation, duplication, and deletion of C-backed structures. It works with compound types pairing human-readable names and external type descriptors, enabling structured access to export metadata through construction and deconstruction utilities. These capabilities are essential when building or inspecting WebAssembly module interfaces where precise resource management and export introspection are required.",
+      "description_length": 535,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Globaltype",
+      "library": "wasmer",
+      "description": "This module provides memory management and ownership manipulation operations for opaque global type handles, enabling creation, duplication, deletion, and pointer access with explicit ownership semantics. It supports construction and inspection of WebAssembly global types through functions that define value types and mutability, and retrieve these properties from existing instances. These capabilities are used when interfacing with WebAssembly modules to manage global variable declarations and enforce correct pointer handling across language boundaries.",
+      "description_length": 559,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Util",
+      "library": "wasmer",
+      "description": "This module includes functions for converting WebAssembly text format (WAT) to binary format (WASM), loading WASM files into byte vectors, and defining function types from value kinds. It operates on strings, byte vectors, and value kind lists to support WebAssembly module creation and manipulation. Concrete use cases include parsing WAT input for execution, preparing WASM binaries for instantiation, and specifying function signatures for imports and exports.",
+      "description_length": 463,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Global",
+      "library": "wasmer",
+      "description": "This module offers functions to manage ownership and manipulate WebAssembly global variables through C structures in OCaml, including creation, duplication, deletion, and pointer access with strict ownership tracking. It operates on global variables within a Store, supporting value and type operations like retrieval and updates, while distinguishing between safe and unsafe initialization. These tools are essential for embedding WebAssembly modules in OCaml applications, ensuring memory safety during foreign function interactions and enabling precise control over global state in WebAssembly environments.",
+      "description_length": 610,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Exporttype_T",
+      "library": "wasmer",
+      "description": "This module defines types and operations for working with WebAssembly exports, specifically handling the underlying C structures and their lifetimes. It provides functions to access exported values such as functions, memories, and globals from a WebAssembly instance. Concrete use cases include retrieving named exports, inspecting their types, and managing pointer ownership when interacting with the WebAssembly runtime.",
+      "description_length": 422,
+      "index": 37,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Memory",
+      "library": "wasmer",
+      "description": "This module provides operations for managing ownership, allocation, and manipulation of WebAssembly linear memory within a runtime environment. It works with memory instances, memory types, raw byte pointers, and page-based size values to enable tasks like dynamic memory resizing, data inspection, and safe cross-context data transfers. Key use cases include allocating memory for Wasm modules, querying memory properties, and performing low-level memory operations while ensuring proper ownership handling.",
+      "description_length": 508,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Limits",
+      "library": "wasmer",
+      "description": "This module defines a structure for memory and table limits in WebAssembly, with fields for minimum and maximum sizes. It supports setting and retrieving these limits using 32-bit unsigned integers, and provides a default maximum value. Concrete use cases include configuring memory or table size constraints when instantiating WebAssembly modules.",
+      "description_length": 348,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Engine_T",
+      "library": "wasmer",
+      "description": "This module defines the core runtime engine for executing WebAssembly modules, providing functions to create, configure, and manage execution contexts. It works with WebAssembly instance and module data structures, enabling direct interaction with compiled Wasm code. Concrete use cases include instantiating Wasm modules, invoking exported functions, and handling execution state within a sandboxed environment.",
+      "description_length": 412,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Extern_T",
+      "library": "wasmer",
+      "description": "This module defines external types and operations for working with WebAssembly structures, such as functions, memories, and globals, by wrapping raw C pointers. It provides functions to access and manipulate these structures, including retrieving their names and underlying data. Concrete use cases include inspecting exported WebAssembly elements and managing their lifetimes in OCaml code.",
+      "description_length": 391,
+      "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Memory_T",
+      "library": "wasmer",
+      "description": "This module handles memory operations for WebAssembly instances, including allocation, resizing, and data access. It works with memory buffers represented as byte arrays, enabling direct interaction with linear memory. Concrete use cases include reading from and writing to memory regions, and managing memory growth within a WebAssembly runtime environment.",
+      "description_length": 358,
+      "index": 42,
+      "embedding_norm": 0.9999998807907104
+    },
+    {
+      "module_path": "Wasmer.Config_T",
+      "library": "wasmer",
+      "description": "This module defines configuration structures for customizing WebAssembly instance behavior, such as setting compilation targets or enabling/disabling features. It works with opaque data types representing configuration objects, manipulated through C bindings. Concrete use cases include configuring Wasmer's runtime environment for specific execution contexts or optimizing compilation settings.",
+      "description_length": 395,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Memorytype",
+      "library": "wasmer",
+      "description": "This module provides operations to create, manipulate, and manage ownership of memory type configurations in a WebAssembly runtime. It works with `Memorytype.t` values and associated C pointers to structures like `Limits`, enabling precise control over memory constraints for WebAssembly instances. Specific use cases include defining memory limits during instance initialization and safely interfacing with C APIs while handling ownership transitions of underlying resources.",
+      "description_length": 476,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Func_T",
+      "library": "wasmer",
+      "description": "This module defines the types and operations for working with WebAssembly functions, including creating, calling, and inspecting function instances. It handles function signatures, imports, and exports, enabling direct interaction with WebAssembly modules. Concrete use cases include defining host functions callable from WebAssembly code and extracting function pointers for invocation.",
+      "description_length": 387,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Message",
+      "library": "wasmer",
+      "description": "This module provides operations for creating and managing C-compatible vectors of binary data with strict ownership tracking, including allocation, destruction, element access, and safe/unsafe pointer conversions. It works with vector structures wrapping raw memory buffers, supporting efficient conversions to and from OCaml lists, bytes, and strings. These capabilities enable safe interoperability with C APIs requiring binary message handling and facilitate serialization tasks in mixed-language environments.",
+      "description_length": 513,
+      "index": 46,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Wasi_",
+      "library": "wasmer",
+      "description": "This module provides operations for working with WebAssembly System Interface (WASI) environments, including initializing WASI state with provided arguments and environment variables, and attaching the WASI instance to WebAssembly modules. It works with Ctypes pointers to internal WASI structures and handles interactions with C APIs for setting up WASI before module instantiation. Concrete use cases include configuring WASI for running WASM programs with specific input/output settings and resource constraints.",
+      "description_length": 515,
+      "index": 47,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer.DeclareOwn",
       "library": "wasmer",
-      "description": "This module defines structures and operations for managing ownership of WASM objects through pointers, providing functions to create, transfer, and manipulate ownership states safely or explicitly. It works with Ctypes structures representing WASM objects and their associated state, along with data types for tracking ownership. Concrete use cases include interfacing with C API functions that require passing or returning WASM objects while ensuring correct memory management and ownership handling.",
-      "description_length": 501,
-      "index": 92,
+      "description": "This module defines ownership-managed structures for WASM objects, providing operations to create, inspect, and transfer ownership of C pointers. It works with Ctypes structures representing WASM types and tracks ownership state to prevent invalid pointer access. Concrete use cases include safely wrapping C API pointers, transferring ownership to C functions, and reclaiming or releasing resources tied to WASM objects.",
+      "description_length": 421,
+      "index": 48,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Valtype_T",
+      "library": "wasmer",
+      "description": "This module defines value types for WebAssembly, including operations to classify and manipulate value types such as `i32`, `i64`, `f32`, and `f64`. It provides functions to check type equality, convert between internal and external representations, and handle type-specific data. Concrete use cases include validating function signatures and managing value type information during WebAssembly module instantiation.",
+      "description_length": 415,
+      "index": 49,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Foreign_T",
+      "library": "wasmer",
+      "description": "This module defines foreign types and operations for working with WebAssembly structures in OCaml, primarily handling type definitions and pointer management for Wasmer's internal representations. It works with abstract data types corresponding to WebAssembly entities, such as function types, module instances, and runtime values. Concrete use cases include defining the structure of WebAssembly imports and exports, managing pointers to C-level objects, and ensuring type-safe interactions between OCaml and the underlying Wasmer C bindings.",
+      "description_length": 543,
+      "index": 50,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Instance",
+      "library": "wasmer",
+      "description": "This module provides low-level operations to manage WebAssembly instance lifecycles, manipulate pointers with ownership semantics, and interface between WebAssembly modules and host environments. It operates on instances, stores, modules, and extern vectors, enabling precise control over memory via reference conversions, export function retrieval, and host data association with finalization. Typical use cases include embedding compiled modules into applications, coordinating instance state across FFI boundaries, and ensuring safe memory access during WebAssembly execution.",
+      "description_length": 579,
+      "index": 51,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.DeclareRef",
+      "library": "wasmer",
+      "description": "This module provides low-level operations for managing ownership and access of C structures through references, enabling safe pointer manipulation (e.g., `get_ptr`, `get_ptr_const`), ownership transitions (`grab_ownership`, `lose_ownership`), and lifecycle control (`delete`, `duplicate`). It operates on C objects and their associated metadata via pointers, ensuring proper validation (e.g., null checks) and type-safe conversions between reference types and `Wasmer.Ref.s`. These capabilities are critical for securely integrating C-based WebAssembly runtimes with OCaml, where precise memory management and ownership tracking prevent leaks or invalid access during host-guest interactions.",
+      "description_length": 692,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Store",
+      "library": "wasmer",
+      "description": "This module directly manages low-level ownership and manipulation of WebAssembly store objects via C bindings. It provides functions to create, delete, and transfer ownership of store instances, along with safe and unsafe pointer accessors. Concrete use cases include interfacing with WebAssembly engines, handling store lifecycle management, and passing store references to C APIs.",
+      "description_length": 382,
+      "index": 53,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Ref_T",
+      "library": "wasmer",
+      "description": "This module provides operations to manage reference-counted objects, including incrementing and decrementing reference counts, and accessing the underlying pointer. It works with opaque pointer types that represent WebAssembly objects in the Wasmer runtime. Concrete use cases include safely handling WebAssembly instance and module pointers across function calls, ensuring proper memory management and preventing premature deallocation.",
+      "description_length": 437,
+      "index": 54,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Frame_T",
+      "library": "wasmer",
+      "description": "This module provides functions to inspect and manipulate WebAssembly stack frames, including retrieving frame information such as function indices and module names. It operates on data types representing WebAssembly frames and their associated metadata. Concrete use cases include debugging WebAssembly execution by walking the call stack and extracting detailed frame data during trap handling.",
+      "description_length": 395,
+      "index": 55,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Functype",
+      "library": "wasmer",
+      "description": "This module offers low-level memory lifecycle management and ownership control for function type objects, interfacing with C APIs to ensure safe pointer manipulation. It operates on `Valtype.Vec` structures to define and inspect WebAssembly function signatures by managing parameter and result type vectors, enabling precise construction and analysis of function types in WebAssembly contexts.",
+      "description_length": 393,
+      "index": 56,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Valkind",
+      "library": "wasmer",
+      "description": "This module defines value kinds for WebAssembly such as integers, floats, and reference types, along with conversions between their OCaml and C representations. It provides functions to check whether a value kind is numeric or a reference. Use this module when working with WebAssembly type definitions and when translating between OCaml and C representations of value kinds in low-level WebAssembly operations.",
+      "description_length": 411,
+      "index": 57,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Table_T",
+      "library": "wasmer",
+      "description": "This module manages WebAssembly table instances, providing operations to create, grow, and access table elements. It works with table types that reference WebAssembly function references or other table entries. Concrete use cases include dynamically resizing tables at runtime and retrieving or setting elements by index for indirect function calls.",
+      "description_length": 349,
+      "index": 58,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Externtype",
+      "library": "wasmer",
+      "description": "This module manages low-level resource ownership and type conversions for C-allocated structures used in WebAssembly interactions. It provides pointer manipulation operations with strict ownership tracking, null safety, and type coercion between abstract external types and concrete WebAssembly constructs like functions, globals, tables, and memories. These capabilities enable safe embedding of WebAssembly components while preventing common memory management errors during cross-language calls.",
+      "description_length": 497,
+      "index": 59,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Functype_T",
+      "library": "wasmer",
+      "description": "This module defines the interface for working with WebAssembly function types, including operations to create, inspect, and manipulate function signatures. It operates on data types representing WebAssembly functions, such as parameter and result types. Concrete use cases include defining the signature of a WebAssembly function before instantiating it or validating function type compatibility during module linking.",
+      "description_length": 418,
+      "index": 60,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.DeclareRefBase",
+      "library": "wasmer",
+      "description": "This module centers on low-level reference management for C structures exposed to OCaml via Ctypes, providing operations to manipulate pointers with strict ownership semantics\u2014such as duplicating references, checking equality, and attaching host-side metadata with optional finalizers. It works directly with pointer types representing Wasmer objects, enforcing safe access patterns to prevent use-after-free or null pointer dereferences when interfacing with C APIs. Specific use cases include embedding reference-counted objects in OCaml codebases, safely transferring ownership of C-allocated resources, and associating lifecycle-managed metadata with pointers.",
+      "description_length": 664,
+      "index": 61,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Func",
+      "library": "wasmer",
+      "description": "This module manages memory and ownership of pointers to WebAssembly functions, enabling lifecycle control through creation, duplication, and deletion of function objects while enforcing safe pointer state transitions. It operates on C-compatible function pointers and OCaml-wrapped closures, supporting environment capture and type-safe invocation with arity checks. Typical use cases include bridging OCaml code with WebAssembly exports, handling callback registrations, and ensuring memory safety during cross-language calls via ownership tracking.",
+      "description_length": 550,
+      "index": 62,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.DeclareShareableRef",
+      "library": "wasmer",
+      "description": "This module enables precise management of ownership and safe sharing of references to WebAssembly objects through C pointers, handling operations like duplication, ownership transitions, and host data attachment with optional finalizers. It works with Ctypes-based structures and opaque types representing WebAssembly entities, supporting use cases such as cross-language reference sharing and lifetime-critical resource management where ownership semantics must be explicitly enforced. Key functionality includes converting between raw pointers and OCaml-managed handles while preventing invalid access due to premature pointer release or insufficient ownership.",
+      "description_length": 663,
+      "index": 63,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Engine",
+      "library": "wasmer",
+      "description": "This module provides functions for creating and managing ownership of C structures representing WebAssembly execution engines, using the `Wasmer.Engine.s` type to handle pointer manipulation and lifetime safety. It supports operations to instantiate engines from `Wasmer.Config` configurations, including an unsafe variant that skips ownership validation, enabling direct control over compilation settings. These capabilities are critical for embedding WebAssembly runtimes where precise memory management and engine customization are required.",
+      "description_length": 544,
+      "index": 64,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Byte",
+      "library": "wasmer",
+      "description": "This module defines the `byte` type as an unsigned 8-bit integer and provides safe conversions between byte vectors, pointers, and memory regions. It includes functions for managing memory ownership, transforming byte buffers, and ensuring valid pointer access when interfacing with C. Use cases include handling raw binary data from WebAssembly execution and preparing input/output buffers for C-based APIs.",
+      "description_length": 408,
+      "index": 65,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Global_T",
+      "library": "wasmer",
+      "description": "This module manages global WebAssembly variables, providing functions to read, write, and inspect their values. It operates on `wasm_global_t` pointers, allowing access to global variable state within a WebAssembly instance. Concrete use cases include retrieving the current value of a global variable after execution or modifying mutable globals before running a WebAssembly module.",
+      "description_length": 383,
+      "index": 66,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.DeclareType",
+      "library": "wasmer",
+      "description": "This module provides utilities for managing memory ownership and conversions between C and OCaml data representations, focusing on pointer ownership tracking, state transitions (e.g., owning to dependent states), and safe/unsafe conversions. It operates on Ctypes-based structures and `Vec.t` types representing WebAssembly-compatible vectors, with explicit handling of memory allocation and pointer access. Specific use cases include ensuring correct ownership semantics when interfacing with C APIs and optimizing vector operations via shallow copies (`duplicate`/`duplicate_unsafe`) in performance-sensitive contexts.",
+      "description_length": 620,
+      "index": 67,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Module_T",
+      "library": "wasmer",
+      "description": "This module defines the structure and operations for working with WebAssembly modules, including creating, inspecting, and managing module instances. It handles data types such as function types, imports, exports, and module definitions. Concrete use cases include loading and validating WebAssembly bytecode, extracting function signatures, and linking imported functions to their implementations.",
+      "description_length": 398,
+      "index": 68,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.DeclareVec",
+      "library": "wasmer",
+      "description": "This module provides low-level memory management and pointer manipulation capabilities for C vectors generated via the WASM_DECLARE_VEC macro, focusing on ownership transfer and safe element access. It operates on self-owning vector structures that bridge OCaml and C representations, supporting creation from OCaml lists/arrays and direct pointer interactions. Typical use cases involve handling temporary buffers for WebAssembly runtime operations and ensuring safe ownership transitions when interfacing with C APIs.",
+      "description_length": 519,
+      "index": 69,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Trap",
+      "library": "wasmer",
+      "description": "The module provides functions to create, duplicate, and delete trap objects with strict ownership management and pointer safety checks, alongside operations to access trap metadata (e.g., messages, origin frames, and traces), attach host-specific data with finalizers, and convert between reference types. It operates on low-level structures like `s`-exponential representations of traps, stores, messages, and frames, integrating C pointer interactions via `Ctypes.ptr` for safe cross-language resource handling. These features enable robust error diagnostics, debugging of WebAssembly execution failures, and secure resource management when embedding traps in host applications.",
+      "description_length": 680,
+      "index": 70,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Foreign",
+      "library": "wasmer",
+      "description": "This module provides operations for creating, converting, and managing `Foreign` objects by enforcing strict ownership rules over C-style pointers and reference types, including safe/unsafe creation from a `Store` and conversions to/from `Ref` objects. It ensures memory safety through pointer duplication, equality checks, and host info manipulation, while raising exceptions for invalid access or ownership violations. These capabilities are critical for integrating host-side functionality with WebAssembly runtimes, where precise control over pointer lifetimes and cross-language data sharing is required.",
+      "description_length": 609,
+      "index": 71,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Wasi",
+      "library": "wasmer",
+      "description": "This module implements the WebAssembly System Interface (WASI) for the Wasmer runtime, providing operations to configure and run WebAssembly modules with sandboxed system access. It works with environment variables, file descriptors, and process arguments to enable secure host interactions, such as filesystem access and process spawning. Concrete use cases include executing untrusted WebAssembly code with controlled I/O, setting up WASI-based runtimes for serverless functions, and embedding WebAssembly modules with fine-grained resource permissions.",
+      "description_length": 555,
+      "index": 72,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Frame",
+      "library": "wasmer",
+      "description": "This module provides operations to safely manage the lifecycle of WebAssembly stack frames and vectors, including creation, conversion, memory deallocation, and precise pointer handling with null checks and ownership transfer rules. It enables introspection of stack frames to retrieve function indices, offsets, and module offsets, along with controlled duplication of frames for safe manipulation. These features are critical for interfacing with WebAssembly runtime systems and C APIs that demand strict memory safety and ownership discipline, particularly in error-prone scenarios like null pointer dereferencing or ownership mismanagement.",
+      "description_length": 644,
+      "index": 73,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Importtype_T",
+      "library": "wasmer",
+      "description": "This module defines the structure and operations for working with WebAssembly import types, including retrieving the name and kind of imports. It handles data types such as strings and pointers to internal structures. Concrete use cases include inspecting and validating the imports of a WebAssembly module before instantiation.",
+      "description_length": 328,
+      "index": 74,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Module",
+      "library": "wasmer",
+      "description": "This module provides operations for creating, validating, and manipulating WebAssembly modules, including lifecycle management (instantiation, serialization), host environment integration (import/export inspection, host info handling), and structural comparisons. It operates on WebAssembly modules alongside supporting types like stores, byte vectors, and import/export descriptors. These capabilities are particularly useful for embedding WebAssembly execution in OCaml applications or toolchains requiring precise memory ownership control.",
+      "description_length": 542,
+      "index": 75,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.OwnableObject",
+      "library": "wasmer",
+      "description": "This module manages the ownership state of C objects, providing operations to create, transfer, and query ownership of pointers. It works with Ctypes pointers and a custom ownership state to enforce correct usage of C resources from OCaml. Concrete use cases include safely wrapping C API calls that require ownership transfer or tracking the lifecycle of C-allocated objects.",
+      "description_length": 376,
+      "index": 76,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Globaltype_T",
+      "library": "wasmer",
+      "description": "This module defines the types and operations for working with WebAssembly global variable declarations, including accessing their content types and mutability flags. It handles structures representing global variable signatures, used when defining or validating WebAssembly modules. Concrete use cases include inspecting or constructing global variable types in WebAssembly module interfaces.",
+      "description_length": 392,
+      "index": 77,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Val",
+      "library": "wasmer",
+      "description": "This module provides low-level operations for handling WebAssembly values, including creation, type conversion, and memory management with strict ownership handling. It supports typed access to integers, floats, references, and vector data structures, enabling safe interoperability between OCaml and WebAssembly through explicit pointer lifetime control. These operations are essential for passing structured data during interface calls and maintaining null safety in embedded runtime environments.",
+      "description_length": 499,
+      "index": 78,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Tabletype_T",
+      "library": "wasmer",
+      "description": "This module defines the type and operations for working with WebAssembly table types, including creating, inspecting, and manipulating table type descriptors. It handles data structures representing table element types and limits, used when defining or validating WebAssembly modules. Concrete use cases include specifying table type constraints during module instantiation and checking table type compatibility during linking.",
+      "description_length": 427,
+      "index": 79,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Memorytype_T",
+      "library": "wasmer",
+      "description": "This module defines the `d` type, which represents WebAssembly memory types in the Wasmer runtime. It provides operations to create, inspect, and manipulate memory type descriptors, including setting and retrieving memory limits. Concrete use cases include configuring linear memory for WebAssembly modules and validating memory constraints during instantiation.",
+      "description_length": 362,
+      "index": 80,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Importtype",
+      "library": "wasmer",
+      "description": "This module provides utilities for managing lifetimes and ownership of WebAssembly import descriptors, including operations to create, duplicate, and validate pointers to these structures while enforcing strict ownership semantics. It works with low-level C pointers representing import types that encapsulate module names, field names, and external type metadata, ensuring safe state transitions and memory handling. These capabilities are critical when integrating WebAssembly imports with host code, such as defining callback interfaces or validating module dependencies during instantiation.",
+      "description_length": 595,
+      "index": 81,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Extern",
+      "library": "wasmer",
+      "description": "This module enables creation, duplication, and safe manipulation of WebAssembly external values (functions, globals, tables, memories) with precise ownership control, supporting both mutable and const variants. It operates on C-compatible structures like `Extern_T` and vector-based collections through submodules `V` and `Vec`, ensuring correct memory management via lifetime tracking and state validation. Specific use cases include embedding WebAssembly modules in OCaml applications, safely exchanging externs with C APIs, and managing bulk operations on extern collections while preventing dangling pointers or resource leaks.",
+      "description_length": 631,
+      "index": 82,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Trap_T",
+      "library": "wasmer",
+      "description": "This module handles trap creation and management during WebAssembly execution. It provides functions to retrieve trap messages and source locations, working with trap objects returned from WebAssembly runtime errors. Concrete use cases include debugging failed WebAssembly function calls by extracting detailed error information.",
+      "description_length": 329,
+      "index": 83,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Valtype",
+      "library": "wasmer",
+      "description": "This module manages the lifecycle and ownership of WebAssembly value types via precise pointer operations, including creation, duplication, deletion, and safe access to C structures. It operates on value type representations to enable construction from type kinds, classification into numeric or reference forms, and runtime validation, supporting tasks like function signature definition and type-safe resource management in WebAssembly contexts.",
+      "description_length": 447,
+      "index": 84,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Externkind",
+      "library": "wasmer",
+      "description": "This module defines an enumeration mapping between OCaml and C for external WebAssembly object kinds, including functions, globals, tables, and memory. It provides bidirectional conversion functions to translate these kinds for use with C bindings in the Wasmer runtime. Direct use cases include identifying and handling different WebAssembly external types during module instantiation or host function registration.",
+      "description_length": 416,
+      "index": 85,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wasmer.Instance_T",
+      "library": "wasmer",
+      "description": "This module manages WebAssembly instance state and execution, providing functions to instantiate modules, access exports, and handle memory. It operates on `wasm_instance_t` pointers, allowing creation from a module and retrieval of exported functions and globals. Use cases include running WebAssembly code, interacting with host functions, and inspecting instance exports.",
+      "description_length": 374,
+      "index": 86,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wasmer.Tabletype",
+      "library": "wasmer",
+      "description": "This module provides operations to manage the lifecycle and ownership of WebAssembly table types, including creating instances with specified element types and limits, and safely inspecting their properties. It works with pointers to C structures representing table types (`Wasmer.Tabletype_T`) and abstract OCaml values (`Wasmer.Tabletype.s`), enforcing safety through ownership transitions and null checks. These capabilities are used when defining or interacting with WebAssembly tables in host code, ensuring correct resource management and type fidelity.",
+      "description_length": 559,
+      "index": 87,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wasmer",
       "library": "wasmer",
-      "description": "This module provides low-level access to WebAssembly runtime entities such as engines, stores, modules, and instances, enabling direct manipulation of WebAssembly state, types, and memory. It includes operations for creating and inspecting function types, managing externals and globals, and handling memory buffers and traps during execution. Child modules extend this functionality with specialized capabilities: WASI configuration for sandboxing and environment control, byte and vector utilities for binary data handling, reference and ownership management for safe C interop, and structured access to imports, exports, and function calls. Example workflows include compiling and running WebAssembly modules, inspecting and modifying exported memory, linking host functions to WASI imports, and managing the lifecycle of WebAssembly objects across OCaml and C boundaries.",
-      "description_length": 875,
-      "index": 93,
-      "embedding_norm": 1.0
+      "description": "This module provides low-level operations for managing WebAssembly runtime components through **ownership-safe pointer manipulation**, **reference counting**, and **memory-safe C interoperability**. It works directly with C structures representing Wasm modules, instances, memory buffers, and runtime state, alongside OCaml wrappers for type-safe access to engine internals. These bindings enable use cases like embedding custom WebAssembly engines, implementing host-to-guest FFI with WASI, and fine-grained control over object lifetimes during module instantiation or trap handling.",
+      "description_length": 584,
+      "index": 88,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 94,
-    "meaningful_modules": 94,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 91,
+    "meaningful_modules": 89,
+    "filtered_empty_modules": 2,
+    "retention_rate": 0.978021978021978
   },
   "statistics": {
-    "max_description_length": 875,
-    "min_description_length": 300,
-    "avg_description_length": 488.28723404255317,
-    "embedding_file_size_mb": 0.3419027328491211
+    "max_description_length": 692,
+    "min_description_length": 328,
+    "avg_description_length": 476.75280898876406,
+    "embedding_file_size_mb": 1.290231704711914
   }
 }

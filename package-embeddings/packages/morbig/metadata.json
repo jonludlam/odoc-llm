@@ -1,263 +1,263 @@
 {
   "package": "morbig",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 32,
-  "creation_timestamp": "2025-07-15T23:12:26.405429",
+  "creation_timestamp": "2025-08-15T12:26:20.831323",
   "modules": [
-    {
-      "module_path": "Morbig.Engine.Lexer",
-      "library": "morbig",
-      "description": "This module implements a lexer for parsing shell-like input, providing functions to initialize the lexing state, retrieve the next token with its position and associated aliases, and track the current parsing position. It operates on lexing buffers and maintains internal state for tokenization, including support for rolling back to previous states and checking end-of-input conditions. Concrete use cases include interactive shell input processing, command-line parsing with position tracking, and alias resolution during lexical analysis.",
-      "description_length": 541,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Morbig.PrelexerState.AtomBuffer",
       "library": "morbig",
-      "description": "This module implements a buffer for managing a list of atoms, providing operations to retrieve, construct, check emptiness, append strings, and extract the last line. It works with a custom atom list type representing parsed elements. Concrete use cases include accumulating and manipulating sequences of atoms during lexing, particularly for handling multi-line input and string concatenation.",
-      "description_length": 394,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.CSTHelpers.NameSet",
-      "library": "morbig",
-      "description": "This module implements an immutable set data structure with ordered elements, supporting standard set operations like union, intersection, and difference, as well as membership checks and ordered traversal. It provides transformations for mapping, filtering, and partitioning sets, along with conversions to and from lists and sequences while preserving element order. It is particularly suited for scenarios requiring precise set algebra, ordered collection manipulation, or deterministic iteration over elements, such as compiler intermediate representations or static analysis tools.",
-      "description_length": 586,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.Parser.Incremental",
-      "library": "morbig",
-      "description": "This module provides incremental parsing capabilities for constructing a concrete syntax tree (CST) from a stream of tokens. It includes functions to initialize parsing at a given position and handle syntax errors gracefully. Concrete use cases include interactive REPLs and streaming parsers where input is processed piece by piece.",
-      "description_length": 333,
-      "index": 3,
+      "description": "This module implements a buffer for managing a list of atoms, providing operations to retrieve, add, and inspect the contents. It supports data types including lists of atoms and strings, with functions to push string data into the buffer and extract the last line. Concrete use cases include building and manipulating sequences of lexical tokens during parsing.",
+      "description_length": 362,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Morbig.HereDocument.Lexer",
       "library": "morbig",
-      "description": "This module processes here documents by registering redirection operators and delimiters, and scanning their contents. It works with lexing buffers, located words, and pretokens to track and parse document boundaries during input processing. Use it to handle multi-line string input in shell-like syntax parsing, where documents are enclosed between a delimiter and marked with `<<` or `<<-`.",
-      "description_length": 392,
+      "description": "This module processes here documents during lexing by tracking delimiters and operators. It registers redirection operators and delimiters, controls lexing state transitions, and identifies when input matches registered here document boundaries. It works with lex buffers, located words, and custom syntax trees to handle shell-like here document syntax in a parser.",
+      "description_length": 366,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Morbig.Engine.Lexer",
+      "library": "morbig",
+      "description": "This module implements a lexer for parsing input streams, providing operations to initialize the lexing state, retrieve the next token with its position and associated aliases, and track the current position in the input. It works with lexing buffers, parsing states, and lexing positions to support incremental tokenization of input. Concrete use cases include interactive shell input processing and step-by-step parsing of command-line expressions.",
+      "description_length": 450,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.CSTHelpers.NameSet",
+      "library": "morbig",
+      "description": "This module offers a comprehensive set of ordered collection operations for managing unique elements with deterministic ordering, including standard set algebra, membership queries, and ordered traversal. It works with elements of a configurable type `elt` organized into sets that enforce sorted iteration and support transformations like mapping, filtering, and partitioning under monotonic constraints. Typical applications include maintaining symbol tables with lexicographic ordering, analyzing hierarchical data structures with ordered traversal guarantees, and implementing algorithms requiring efficient extremal element access or sequence-based set construction.",
+      "description_length": 671,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Morbig.Parser.Incremental",
+      "library": "morbig",
+      "description": "This module provides incremental parsing capabilities for constructing a concrete syntax tree (CST) from shell script input. It includes `entry_point` for initiating the parsing process at a given position and `intended_error` for handling and signaling parsing errors at specific positions. These functions work directly with lexical positions and the CST representation of shell programs, enabling precise error reporting and partial parsing in interactive or streaming contexts.",
+      "description_length": 481,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Morbig.Parser.MenhirInterpreter",
       "library": "morbig",
-      "description": "This module enables low-level parsing operations including token ingestion, parser state manipulation, and checkpoint management to control execution flow and handle errors during incremental parsing. It operates on parser environments, grammar symbols (terminals, nonterminals, and productions), and LR(1) states, allowing tasks like analyzing grammar properties (e.g., first sets, nullable symbols) or implementing custom parsing strategies through state inspection and intervention. Specific applications include error recovery mechanisms, incremental input processing, and dynamic parser configuration based on runtime analysis.",
-      "description_length": 632,
+      "description": "This module enables low-level control of LR(1) parsing workflows through incremental token processing, checkpoint management, and stack manipulation. It operates on parser environments (`env`), grammar symbols (`terminal`, `nonterminal`, `xsymbol`), and LR(1) states (`lr1state`), providing introspection into production indices, acceptable tokens, and reduction strategies. Key use cases include implementing custom error recovery, dynamic grammar analysis via production inspection, and integrating lexers with parser state transitions through functions like `feed` and `force_reduction`.",
+      "description_length": 590,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Morbig.CSTVisitors",
+      "module_path": "Morbig.Aliases",
       "library": "morbig",
-      "description": "This module provides visitor functions like `iter`, `map`, `reduce`, and their dual counterparts such as `iter2` and `map2` for traversing and transforming concrete syntax trees. It works directly with the nodes and structures of the parsed syntax tree, enabling precise manipulation and analysis of language constructs. Use cases include implementing linters, code transformers, and static analyzers that require deep inspection or modification of syntactic elements.",
-      "description_length": 468,
+      "description": "This module manages alias definitions and substitutions during shell command parsing. It provides an alias table type `t` and operations to expand aliases in command names when appropriate. The `alias_substitution` function replaces a word with its aliased definition during parsing, while `interpret` ensures aliases are not used in contexts where static expansion is impossible, such as nested commands.",
+      "description_length": 405,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Morbig.Errors",
-      "library": "morbig",
-      "description": "This module defines operations for converting error exceptions into human-readable strings. It works with the `exn` type to provide descriptive error messages. Useful for logging or displaying errors during parsing or evaluation.",
-      "description_length": 229,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.QuoteRemoval",
-      "library": "morbig",
-      "description": "This module processes strings by removing quotes and handling escaped characters according to specific parsing rules. It defines a state machine to track backslash sequences and strips tabs at the start of lines. It is useful for preprocessing input in formats like shell scripts or configuration files where quote removal and line formatting matter.",
-      "description_length": 350,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.Options",
-      "library": "morbig",
-      "description": "This module defines configuration options and operations for processing input files, selecting output formats, and controlling analysis behavior. It provides access to command-line settings such as the selected backend (Json, Bin, etc.), input file lists, and flags for error handling, debugging, and feature toggles. Concrete use cases include determining the output file path from an input file, checking whether to skip alias expansion, and deciding whether to continue analysis after encountering errors.",
-      "description_length": 508,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.Scripts",
-      "library": "morbig",
-      "description": "This module identifies script types based on file content and parses shell scripts into a concrete syntax tree. It checks if a file is a non-shell script or an ELF binary using magic strings and numbers, and parses script files or strings into a structured program representation. It works directly with file paths, raw content strings, and produces a structured syntax tree for further analysis. Use cases include script classification and static analysis of shell code.",
-      "description_length": 471,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.JsonHelpers",
-      "library": "morbig",
-      "description": "Converts concrete syntax trees to and from JSON format, optionally omitting location data. Writes syntax trees to output channels in JSON or DOT format. Used to serialize and visualize parsed program structures.",
-      "description_length": 211,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.Engine",
-      "library": "morbig",
-      "description": "This module coordinates parsing and lexing for a custom shell-like language, integrating incremental parsing with Menhir checkpoints and alias resolution. It processes input through lexbufs, constructs and manipulates CSTs, and maintains alias state across parsing steps. The lexer submodule drives tokenization with position tracking, rollback support, and alias integration, enabling interactive input handling and command-line parsing. Together, they support parsing incomplete input streams, resolving token sequences dynamically, and reconstructing syntax trees with accurate source positions.",
-      "description_length": 598,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Morbig.Pretokenizer",
-      "library": "morbig",
-      "description": "This module creates a pre-tokenizer from a prelexer state and lexing buffer, producing a function to generate pre-tokens with their start and end positions, along with a function to reset the pre-tokenizer state. It operates on lexing buffers and prelexer states to produce and track pre-token positions during lexical analysis. It is used to pre-process shell input into structured tokens before full parsing, enabling precise error reporting and position tracking in the original source.",
-      "description_length": 489,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Morbig.PrelexerState",
-      "library": "morbig",
-      "description": "This module manages the state of a prelexer for shell-like syntax, tracking context for quotes, braces, and nested structures while manipulating atom buffers to build syntactic elements incrementally. It works with types like `prelexer_state`, `lexbuf`, and `pretokens`, supporting operations for escape analysis, delimiter matching, and context-sensitive tokenization. The atom buffer submodule provides concrete tools to accumulate, inspect, and manipulate sequences of atoms, enabling efficient handling of multi-line input and string concatenation. Together, they facilitate parsing complex shell constructs such as parameter expansions and here-documents by maintaining lexical context and structured atom sequences.",
-      "description_length": 721,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.Pretoken",
-      "library": "morbig",
-      "description": "This module represents and manipulates pre-tokenized elements of a shell-like language, including words, I/O numbers, operators, and delimiters. It provides functions to convert between strings and pre-token values, extract operator tokens, and transform prewords. Concrete use cases include parsing shell commands, handling redirections, and processing special syntax constructs during lexical analysis.",
-      "description_length": 404,
-      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Morbig.Keyword",
       "library": "morbig",
-      "description": "This module manages keyword recognition and parsing in a concrete syntax tree, providing functions to convert strings to tokens, check reserved words, and associate tokens with terminal symbols. It works with strings, parser tokens, and Menhir interpreter symbols to support lexing and parsing operations. It is used to resolve keyword ambiguities during parsing and ensure correct token delimitation in structured input.",
-      "description_length": 421,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Morbig.Name",
-      "library": "morbig",
-      "description": "This module provides functions to validate characters and strings as names. It includes predicates for checking if a character is alphabetic or alphanumeric, and a function to verify if a string is a valid name. Concrete use cases include validating identifiers in parsers or ensuring user input conforms to naming rules.",
-      "description_length": 321,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Morbig.Prelexer",
-      "library": "morbig",
-      "description": "This module processes lexing buffers to recognize shell tokens according to POSIX rules, handling cases outside here-document mode and context-independent token recognition. It operates on lexing buffers and prelexer state, producing lists of pretokens with positional information. It is used to implement the core token recognition phase of shell script parsing, particularly for standard input or script file analysis.",
-      "description_length": 420,
-      "index": 18,
+      "description": "This module manages keyword recognition and parsing in a shell script context. It provides a list of keywords with their associated tokens and symbols, checks if a string is a reserved word, and determines if a token must be well-delimited. It is used during lexical analysis to correctly interpret shell syntax constructs such as control flow statements and command separators.",
+      "description_length": 378,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Morbig.Parser",
+      "module_path": "Morbig.Pretokenizer",
       "library": "morbig",
-      "description": "This module parses the POSIX shell language into a concrete syntax tree, handling complex constructs like control structures, redirections, and here-documents. It processes input buffers into structured representations using a rich set of token types, supporting analysis or interpretation of shell programs. Incremental parsing allows piecemeal processing with error handling, ideal for REPLs and streaming input, while low-level operations manage parser state, grammar symbols, and LR(1) states for tasks like error recovery and custom parsing strategies. Examples include parsing a shell script into a CST, incrementally parsing user input in a REPL, or inspecting parser states to guide dynamic error recovery.",
-      "description_length": 714,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Morbig.CST",
-      "library": "morbig",
-      "description": "This module defines the concrete syntax tree (CST) structure for POSIX shell scripts, with data constructors directly mapping to grammar production rules. It includes types like `program`, `position`, and `linebreak'` to represent parsed shell code with precise source location tracking. The module enables detailed analysis and transformation of shell scripts, such as interpreting complex command structures and embedded word syntax.",
-      "description_length": 435,
-      "index": 20,
+      "description": "This module creates a tokenizer that processes a lexing buffer and produces pretokens with their start and end positions. It works with lexing buffers and pretoken values, tracking position information during lexical analysis. Useful for implementing custom parsing stages that require precise token positioning, such as syntax error reporting or source code transformation tools.",
+      "description_length": 380,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Morbig.Assignment",
+      "module_path": "Morbig.Scripts",
       "library": "morbig",
-      "description": "Processes potential assignment statements during parsing by analyzing token sequences and positions. It takes a checkpoint, a triple of parsed value and positions, and a list of word components, then returns a token result in a first-success monad context. This module is used to handle variable assignments in shell-like syntax parsing.",
-      "description_length": 337,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.HereDocument",
-      "library": "morbig",
-      "description": "This module processes here documents by registering redirection operators and delimiters, and scanning their contents. It works with lexing buffers, located words, and pretokens to track and parse document boundaries during input processing. Use it to handle multi-line string input in shell-like syntax parsing, where documents are enclosed between a delimiter and marked with `<<` or `<<-`. For example, it can capture a block of text starting with `<<EOF` and ending at the next `EOF` line.",
-      "description_length": 493,
-      "index": 22,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Morbig.Aliases",
-      "library": "morbig",
-      "description": "This module manages alias definitions and substitutions during shell command parsing. It provides an alias table type `t` and operations to expand aliases in command names, while enforcing restrictions on nested alias definitions. It ensures aliases are only substituted in valid contexts, such as top-level command names, and prevents alias redefinition within compound commands or function bodies.",
-      "description_length": 399,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Morbig.CSTHelpers",
-      "library": "morbig",
-      "description": "This module provides utilities for manipulating located values and lexical positions in the CST, enabling operations like concatenating programs, converting names to function names, extracting string representations, and handling syntactic positions. It works with lexing positions, custom position types, and CST nodes such as command components and redirect lists, while the included `NameSet` module supports ordered set operations like union, intersection, and ordered traversal. You can use it to build and transform structured syntax elements, track name collections with deterministic ordering, or support parsing and error reporting in shell-like language implementations. Specific examples include merging CST fragments with proper position tracking, normalizing identifiers, and analyzing name sets for static checks.",
-      "description_length": 827,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.Debug",
-      "library": "morbig",
-      "description": "Prints formatted messages to an output channel, typically used for debugging. Works with standard output channels and format strings. Useful for logging variable values and execution flow during development.",
-      "description_length": 207,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Morbig.Token",
-      "library": "morbig",
-      "description": "This module provides functions to convert various parsed token types into their string representations. It operates on located words, I/O numbers, assignment words, and raw parser tokens. Useful for debugging or logging the contents of parsed shell syntax elements directly.",
-      "description_length": 274,
-      "index": 26,
+      "description": "This module identifies script types and parses shell files. It checks if a file is an ELF binary or non-POSIX shell script using magic numbers, and parses shell syntax into a concrete syntax tree. It operates on file names and strings, returning boolean checks or AST structures. Use cases include script analysis, file type detection, and shell syntax processing.",
+      "description_length": 364,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Morbig.RecursiveParser",
       "library": "morbig",
-      "description": "The module provides a `parse` function that takes a prelexer state and a lexing buffer, returning a located program in the concrete syntax tree (CST) representation. It operates on lexing buffers and CST structures, specifically handling the recursive parsing of programs. This is used for parsing shell scripts into structured CST nodes during lexical analysis.",
-      "description_length": 362,
-      "index": 27,
+      "description": "The module defines a recursive parser that processes a lexing buffer and generates a located program in the concrete syntax tree (CST) format. It operates on lexing buffers and prelexer states to produce structured CST nodes with positional information. This parser is used to transform raw input into a syntactically structured representation for further analysis or interpretation.",
+      "description_length": 383,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.CSTHelpers",
+      "library": "morbig",
+      "description": "This module provides utilities for manipulating concrete syntax tree elements with a focus on positional tracking, lexical type conversions, and command structure analysis. It operates on located values, syntactic positions, and shell command components like redirects and words, while the embedded NameSet module enables ordered collection management for deterministic name traversal. Key use cases include CST validation, shell syntax parsing, and generating position-aware transformations in language processing tasks.",
+      "description_length": 521,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.PrelexerState",
+      "library": "morbig",
+      "description": "This module manages lexical token buffering and nested context tracking during parsing, using atom-based representations of word components, quotes, and assignments alongside a stack-based system to handle nested states like here-documents, backquotes, or braces. It provides operations to build and manipulate these structures, supporting precise escape analysis, delimiter detection, and state transitions required for parsing shell-like syntax with layered quoting or structured constructs. Key applications include tokenizing complex command-line inputs involving nested contexts or syntactic elements like variable assignments and quoted strings.",
+      "description_length": 651,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Morbig.Pretoken",
+      "library": "morbig",
+      "description": "This module represents preliminary token forms during parsing, handling conversions between strings and structured tokens. It supports operations like mapping strings to tokens, extracting word components, and identifying operators or newline markers. Use it to process raw input into categorized lexical elements before full CST construction.",
+      "description_length": 343,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.Debug",
+      "library": "morbig",
+      "description": "This module provides a `printf` function for formatted output to standard channels, working with format strings and values of arbitrary types. It supports debugging by allowing precise control over output formatting, including type-safe string interpolation. Concrete use cases include logging intermediate values during parsing or tracing execution flow in compilers or interpreters.",
+      "description_length": 384,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.Options",
+      "library": "morbig",
+      "description": "This module defines configuration options and operations for processing input files, selecting output formats, and controlling analysis behavior. It provides access to command-line settings such as the selected backend (Json, Bin, etc.), input file lists, and flags for error handling, debugging, and feature toggles. Concrete use cases include determining the output file path from an input file, checking whether to disable alias expansion, or deciding whether to continue analysis after encountering an error.",
+      "description_length": 512,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Morbig.HereDocument",
+      "library": "morbig",
+      "description": "Lexer tracks here document delimiters and operators during lexing, managing state transitions and identifying boundary matches. It works with lex buffers, located words, and syntax trees to handle shell-like here document syntax. Use it to implement custom parsers that support here document constructs with proper delimiter registration and redirection handling.",
+      "description_length": 363,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.Errors",
+      "library": "morbig",
+      "description": "Handles error conditions during parsing and I/O operations. Provides `string_of_error` to convert error exceptions into human-readable strings. Used to report parsing failures, alias handling limitations, and I/O issues with descriptive messages.",
+      "description_length": 246,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.JsonHelpers",
+      "library": "morbig",
+      "description": "This module provides functions to serialize and deserialize concrete syntax trees (CSTs) to and from JSON and DOT formats. It supports reading and writing CSTs with or without location information in JSON, and generating DOT representations for visualization. Use cases include persisting parsed program structures, exchanging data between tools, and generating graphical representations of CSTs.",
+      "description_length": 396,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Morbig.Nesting",
       "library": "morbig",
-      "description": "This module represents and manipulates nested shell syntax structures such as backquotes, parentheses, braces, double quotes, and here documents. It provides operations to convert nesting types to strings and to check if a nesting context is under a backquoted-style command substitution. Concrete use cases include parsing and analyzing shell command structures in programs that process shell scripts or perform syntax highlighting.",
-      "description_length": 433,
-      "index": 28,
+      "description": "Handles nested shell syntax elements like quotes, parentheses, and command substitutions. It tracks nesting levels with specific markers such as backquotes, braces, and here-documents. Used to determine if a given nesting context is inside a backquoted-style command substitution.",
+      "description_length": 280,
+      "index": 19,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Morbig.Assignment",
+      "library": "morbig",
+      "description": "Processes checkpoints from the parser to recognize assignment statements in shell scripts. It analyzes word components and positions to identify variable assignments during syntactic analysis. Useful for static analysis tools that need to track variable definitions in scripting languages.",
+      "description_length": 289,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.Parser",
+      "library": "morbig",
+      "description": "This module defines a token type representing lexical elements of shell scripts, including keywords, operators, and structured values like words and names. It provides parsing functions `intended_error` and `entry_point` for handling errors and constructing a located CST from token streams. Concrete use cases include parsing shell programs with precise error handling and incremental construction of syntax trees during interactive or streaming input processing.",
+      "description_length": 464,
+      "index": 21,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Morbig.Name",
+      "library": "morbig",
+      "description": "This module provides functions to validate characters and strings as names. It includes predicates to check if a character is alphabetic (`alpha`), alphanumeric (`alphanum`), and if a string qualifies as a valid name (`is_name`). These functions are used to ensure identifiers conform to naming rules in contexts like parsing or lexing.",
+      "description_length": 336,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.Engine",
+      "library": "morbig",
+      "description": "This module manages parsing and lexing operations for command-line input, supporting incremental tokenization and state tracking. It handles lexing buffers, parsing checkpoints, and alias management to enable interactive input processing and step-by-step parsing of shell commands. Use cases include parsing user input in an interactive shell and evaluating command-line expressions incrementally.",
+      "description_length": 397,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.Prelexer",
+      "library": "morbig",
+      "description": "This module processes lexing buffers to recognize shell tokens according to POSIX rules, handling cases outside here-document mode and context-independent token recognition. It operates on lexing buffers and prelexer state, producing pretokens with positional information. It is used to parse shell input into structured tokens for further processing in the parser.",
+      "description_length": 365,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.QuoteRemoval",
+      "library": "morbig",
+      "description": "This module processes strings by removing quotes, handling escaped characters with a backslash state machine, and stripping leading tabs from lines. It operates directly on string inputs and maintains internal state for parsing sequences like escaped quotes. Concrete use cases include sanitizing input strings in parsers, preparing text for further lexical analysis, and normalizing quoted expressions.",
+      "description_length": 403,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.CSTVisitors",
+      "library": "morbig",
+      "description": "This module provides traversal and transformation functions for concrete syntax trees, enabling operations like node inspection, modification, and extraction. It works directly with the node types defined in the Morbig CST (Concrete Syntax Tree) structure, such as expressions, statements, and declarations. Use cases include implementing linters, code refactoring tools, and static analysis passes that require deep syntactic inspection or manipulation of OCaml source code.",
+      "description_length": 475,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.CST",
+      "library": "morbig",
+      "description": "This module defines the concrete syntax tree (CST) structure for parsed POSIX shell scripts, with data constructors directly mirroring the grammar's production rules. It includes detailed types for program elements such as commands, words, and line breaks, capturing the full syntactic structure of shell scripts beyond simple tokenization. Specific use cases include static analysis, transformation, and interpretation of shell scripts based on their precise syntactic representation.",
+      "description_length": 485,
+      "index": 27,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Morbig.ExtMenhirLib",
       "library": "morbig",
-      "description": "This module extends the Menhir parser library with functions to inspect and manipulate parser checkpoints, query accepted tokens, and analyze the parsing state. It works with parser environments, checkpoints, and nonterminal symbols, enabling precise control over incremental parsing steps. Concrete use cases include implementing custom error recovery, dynamic token prediction, and tracing the parser's state transitions during analysis or debugging.",
-      "description_length": 452,
+      "description": "This module extends the Menhir parser library with operations to inspect and manipulate parser checkpoints, query accepted tokens, and analyze the parser's state. It works with Menhir's incremental parser environment, checkpoints, and nonterminal symbols, enabling precise control over parsing decisions. Concrete use cases include implementing custom error recovery, dynamic token prediction, and parser introspection for debugging or tooling purposes.",
+      "description_length": 453,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Morbig.Token",
+      "library": "morbig",
+      "description": "This module provides functions to convert various parsed token types into their string representations. It operates on structured data types such as `word`, `io_number`, `assignment_word`, and `token`, all originating from the CST (Concrete Syntax Tree) and parser modules. Use cases include debugging and logging during parsing, where human-readable forms of tokens are needed for inspection or error reporting.",
+      "description_length": 412,
       "index": 29,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Morbig.CSTSerializers",
       "library": "morbig",
-      "description": "This module converts specific concrete syntax tree (CST) nodes, such as `program` and `bracket_expression`, to and from Yojson representations. It supports direct serialization and deserialization for these structures, enabling persistent storage or transmission of parsed shell syntax trees. Use this when you need to export or import CST nodes in JSON format for analysis, debugging, or external processing.",
-      "description_length": 409,
+      "description": "This module converts concrete syntax tree nodes such as `program` and `bracket_expression` to and from Yojson representations. It supports structured serialization and deserialization for specific syntax elements in the Morbig CST. Use this module when persisting or transmitting parsed syntax trees in JSON format, or when reconstructing syntax trees from JSON input.",
+      "description_length": 368,
       "index": 30,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Morbig",
       "library": "morbig",
-      "description": "This module parses and processes shell-like syntax into structured representations, enabling analysis, transformation, and serialization of scripts. It defines core data types such as concrete syntax trees, lexing buffers, prelexer states, and parser checkpoints, with operations for tokenization, alias resolution, quote handling, and error reporting. You can parse shell scripts into CSTs, convert them to JSON or DOT for visualization, analyze script structure with visitors, or extract and manipulate syntactic elements like assignments and here-documents. Submodules support incremental parsing, custom error messages, configuration control, and precise position tracking for robust static analysis and tooling.",
-      "description_length": 716,
+      "description": "This module offers syntactic manipulation and analysis of shell scripts through concrete syntax tree (CST) transformations, alias expansion, and assignment resolution. It operates on lexing buffers, tokens, and nested contextual states to handle complex parsing scenarios like here-documents and quote removal, while supporting error recovery and custom serialization formats. Typical applications include static analysis tools, script refactoring utilities, and custom shell language extensions requiring precise syntax tree manipulation.",
+      "description_length": 539,
       "index": 31,
       "embedding_norm": 0.9999999403953552
     }
@@ -269,9 +269,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 827,
-    "min_description_length": 207,
-    "avg_description_length": 454.59375,
-    "embedding_file_size_mb": 0.11667251586914062
+    "max_description_length": 671,
+    "min_description_length": 246,
+    "avg_description_length": 422.25,
+    "embedding_file_size_mb": 0.46419811248779297
   }
 }

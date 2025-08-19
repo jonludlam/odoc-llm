@@ -1,39 +1,39 @@
 {
   "package": "gettext-stub",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:44.406837",
+  "creation_timestamp": "2025-08-14T22:51:21.976933",
   "modules": [
     {
-      "module_path": "GettextStub.Preload",
+      "module_path": "GettextStub.Native",
       "library": "gettext-stub",
-      "description": "This module provides the `realize` function, which preloads all translation strings for a given text domain by leveraging the native gettext library. It operates on `GettextTypes.t` values, transforming them into fully realized translation environments (`GettextTypes.t'`). Use this module when early loading of all translations is preferred, such as in environments where translation completeness is critical at startup.",
-      "description_length": 421,
+      "description": "This module binds translation functions directly to C library calls for runtime localization. It processes format strings using `check_format` to ensure compatibility with `printf`-style formatting. Use it to implement multilingual output in applications relying on GNU gettext for localization.",
+      "description_length": 295,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "GettextStub.Native",
+      "module_path": "GettextStub.Preload",
       "library": "gettext-stub",
-      "description": "Implements translation retrieval using the native gettext C library, binding all translations directly to C calls. Works with `GettextTypes.t` configurations to produce localized strings with format checking. Useful for applications requiring integration with system-level gettext infrastructure and compiled message catalogs.",
-      "description_length": 326,
+      "description": "This module provides the `realize` function, which preloads all translation strings for a given text domain by leveraging the native gettext library. It operates on `GettextTypes.t` values, transforming them into fully initialized `GettextTypes.t'` instances by attempting to translate the empty string, a required entry in MO files. Use this module when early loading of all translations is preferred, such as in environments where predictable translation behavior is critical and many strings will be used.",
+      "description_length": 508,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GettextStubCompat",
-      "library": "gettext-stub",
-      "description": "This module directly interfaces with the C gettext library, enabling localization tasks such as setting locales, retrieving translated strings, and managing message catalogs. It operates on strings and enumerated locale categories (like LC_MESSAGES), supporting functions for singular/plural translations and domain-specific lookups. Concrete use cases include implementing multilingual applications, translating UI elements, and handling regional formatting for time or currency.",
-      "description_length": 480,
-      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "GettextStub",
       "library": "gettext-stub",
-      "description": "This module implements translation handling using the native gettext library, enabling applications to load and retrieve localized strings based on text domains. It operates on `GettextTypes.t` configurations, transforming them into realized translation environments or directly retrieving translated strings through C bindings. You can use it to preload all translations at startup or fetch individual translations on demand, ensuring integration with system-level gettext infrastructure and compiled message catalogs. For example, `realize` preloads translations into a `GettextTypes.t'` environment, while direct retrieval supports format-checked localized string generation during runtime.",
-      "description_length": 693,
+      "description": "This module implements localization using the GNU gettext library, providing direct access to translation functions through C bindings. It supports operations for loading and realizing translation domains, handling format strings safely with `printf`-style compatibility. Use it to enable multilingual output in applications where translations are managed via MO files and immediate or on-demand localization is required.",
+      "description_length": 421,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GettextStubCompat",
+      "library": "gettext-stub",
+      "description": "This module provides direct bindings to the C gettext library for handling internationalization and localization tasks. It supports operations for setting and querying locales, retrieving translated strings from message catalogs, and managing plural forms and text domains. Specific use cases include loading translations for different languages, switching between locales at runtime, and specifying custom directories or encodings for message catalogs.",
+      "description_length": 453,
       "index": 3,
       "embedding_norm": 1.0
     }
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 693,
-    "min_description_length": 326,
-    "avg_description_length": 480.0,
-    "embedding_file_size_mb": 0.014933586120605469
+    "max_description_length": 508,
+    "min_description_length": 295,
+    "avg_description_length": 419.25,
+    "embedding_file_size_mb": 0.058353424072265625
   }
 }

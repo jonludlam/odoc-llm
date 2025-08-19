@@ -1,216 +1,72 @@
 {
   "package": "tracing",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 46,
-  "creation_timestamp": "2025-07-15T23:15:00.865000",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 36,
+  "creation_timestamp": "2025-08-15T14:25:12.746780",
   "modules": [
     {
-      "module_path": "Tracing.Trace.Expert",
-      "library": "tracing",
-      "description": "This module provides functions to write structured traces in the Fuchsia Trace Format using a high-level, ergonomic API. It works with timestamps, interned strings, and trace events such as durations, counters, and instant events. It is used to convert performance data into visualizable traces for analysis in tools like Perfetto, as demonstrated in the Dominodb converter example.",
-      "description_length": 382,
+      "module_path": "Tracing_destinations_unix",
+      "library": "tracing.tracing_destinations_unix",
+      "description": "This module provides functions to create tracing destinations for writing trace data to files or file descriptors. It supports writing directly to a specified file, using the best performance-oriented method, or writing to an existing file descriptor. Concrete use cases include logging trace events to disk or redirecting trace output to a pipe or socket.",
+      "description_length": 356,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Tracing.Trace.Thread",
-      "library": "tracing",
-      "description": "This module provides functions to write thread-specific trace events in the Fuchsia Trace Format, including operations to record timestamps, durations, and instantaneous events. It works with trace writers and thread identifiers to associate events with specific threads in a trace visualization. Use this module to generate detailed, thread-aware performance traces for offline analysis in tools like Perfetto, such as visualizing execution timelines of concurrent tasks in a data processing pipeline.",
-      "description_length": 502,
+      "module_path": "Tracing_zero.Writer.Expert.Write_arg_unchecked",
+      "library": "tracing.tracing_zero",
+      "description": "This module provides low-level functions to write unvalidated event arguments directly to a trace writer, bypassing safety checks. It supports writing primitive types like strings, 32-bit, 63-bit, and 64-bit integers, pointers, and floats, using pre-registered string IDs for argument names. These functions are used when performance is critical and the caller guarantees the validity of the inputs, such as in hot loops or system-critical tracing paths.",
+      "description_length": 454,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Parser.Thread_index",
-      "library": "tracing",
-      "description": "This module defines a type `t` representing thread indices in Fuchsia trace parsing, constrained to the range 1\u2013255. It provides conversion to integers, comparison, hashing, and S-expression serialization. It is used to identify and manage thread identifiers during trace analysis.",
-      "description_length": 281,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Parser.Warnings",
-      "library": "tracing",
-      "description": "This module tracks and reports warnings encountered during the parsing of Fuchsia trace records. It maintains counts of unparsed records and arguments, and provides a way to convert these warning statistics into an S-expression for logging or debugging purposes. It is used to monitor data loss or corruption during trace processing.",
-      "description_length": 333,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing.Trace.Arg",
-      "library": "tracing",
-      "description": "This module represents named arguments of simple types that can be attached to trace events, such as integers, strings, and floats, which are displayed in Perfetto when an event is selected. It defines operations to construct and serialize these key-value pairs for use in trace records. Concrete use cases include annotating trace events with metadata like operation IDs, durations, or status messages for detailed performance analysis.",
-      "description_length": 437,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing.Parser.Parse_error",
-      "library": "tracing",
-      "description": "Handles errors encountered during parsing of Fuchsia Trace Format traces. It defines specific error conditions such as malformed records, invalid references, and incomplete data, and provides a function to convert these errors into S-expressions for structured reporting or logging. Used when processing trace data incrementally through a parser driven by `parse_next` calls.",
-      "description_length": 375,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Parser.Event",
-      "library": "tracing",
-      "description": "This module defines a structured representation of Fuchsia trace events, including their timestamp, thread, category, name, arguments, and type. It provides functions to convert event data to S-expressions for debugging and to compare events based on their content. Concrete use cases include analyzing trace logs to inspect event timing, correlating events across threads, and extracting argument data for performance analysis.",
-      "description_length": 428,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Trace.Async",
-      "library": "tracing",
-      "description": "This module provides functions to write asynchronous trace events in the Fuchsia Trace Format using a high-level, easy-to-use API. It works with standard OCaml types and abstracts away the complexity of directly handling `Tracing_zero.Writer.t`, making it suitable for offline trace generation where performance is not critical. A concrete use case is converting performance data into a visual timeline using tools like Perfetto, as demonstrated in the Dominodb converter example.",
-      "description_length": 480,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing.Parser.Thread",
-      "library": "tracing",
-      "description": "This module represents threads in Fuchsia trace parsing, tracking thread and process identifiers along with optional names. It provides comparison and S-expression serialization for thread data. Useful for correlating trace events with specific threads and processes during trace analysis.",
-      "description_length": 289,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Parser.Record",
-      "library": "tracing",
-      "description": "This module parses individual records from Fuchsia trace data, producing structured representations of events, interned strings and threads, process and thread name changes, and tick initialization metadata. It operates on an Iobuf.t containing raw trace output, advancing through the buffer to return parsed records or errors. Concrete use cases include analyzing trace logs to reconstruct timeline events, track thread and process naming, and interpret timestamp synchronization data.",
-      "description_length": 486,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing.Parser.String_index",
-      "library": "tracing",
-      "description": "This module defines a type `t` representing string indices in the range 1 to 32767, used for referencing strings in Fuchsia trace records. It provides operations for comparison, hashing, and conversion to integers, ensuring safe handling of string references during trace parsing. Concrete use cases include resolving string references in trace events and validating index values during trace format parsing.",
-      "description_length": 408,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Parser.Event_arg",
-      "library": "tracing",
-      "description": "This module parses event arguments from Fuchsia trace records, handling both string keys and typed values such as integers, floats, and pointers. It structures parsed arguments as key-value pairs, using string indices for efficient string referencing. Typical use cases include extracting and comparing event metadata during trace analysis, such as identifying event durations or correlating events by string identifiers.",
-      "description_length": 421,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing.Parser.Event_type",
-      "library": "tracing",
-      "description": "This module defines the types and operations for interpreting event kinds in Fuchsia trace records. It includes variants for trace events such as instants, durations, counters, and asynchronous and flow events, each carrying relevant metadata like timestamps, correlation IDs, and identifiers. These types are used to represent and differentiate the various structured events emitted during trace parsing.",
-      "description_length": 405,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Queue_to_spans",
-      "library": "tracing",
-      "description": "This module tracks the timing of events in a single-threaded system by maintaining the order and timing of message processing. It uses the relationship between input and output times to estimate when each event actually started processing, based on the constraint that processing can only begin after the previous event has completed and the current event has arrived. It is useful for reconstructing event timelines in systems where only queue entry and exit times are available.",
-      "description_length": 480,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Trace",
-      "library": "tracing",
-      "description": "This module enables structured trace generation in the Fuchsia Trace Format, supporting events like durations, counters, instant events, and async slices, along with thread and process identifiers, timestamp mapping, and async state tracking via `Async.t`. It provides high-level operations for building trace records with normal OCaml types, abstracting low-level writer details while prioritizing API ergonomics over raw performance. Submodules handle thread-specific event writing, key-value argument attachment, and asynchronous event lifetime management, enabling rich trace annotations and structured timelines. Example usage includes converting performance logs into visual traces viewable in Perfetto, such as tracking concurrent task execution or database operation latencies.",
-      "description_length": 785,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Parser",
-      "library": "tracing",
-      "description": "This module parses Fuchsia Trace Format data from an Iobuf.t buffer, advancing through trace records and returning structured data such as events, threads, and string or thread indices. It handles low-level parsing details including partial records, error reporting, and metadata extraction like base time and clock frequency, while its submodules define core types such as event kinds, thread and string indices, and parsed event structures. Use it to process raw trace output into usable event streams, analyze event timing across threads, or extract structured metadata for logging and diagnostics. Submodules track warnings, resolve interned strings, and parse event arguments with typed values, supporting detailed trace inspection and validation.",
-      "description_length": 752,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Buffer",
-      "library": "tracing",
-      "description": "This module manages trace data buffering with operations to create, resize, consume, and output trace events. It works with `Iobuf.t` for reading and parsing trace data, and `Tracing_zero.Writer.t` for serializing buffered events into valid traces. Use cases include collecting and processing structured trace events from instrumented code, handling malformed data gracefully, and exporting traces for analysis or logging.",
-      "description_length": 422,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing.Record_writer",
-      "library": "tracing",
-      "description": "This module provides functions to write parsed trace records back into a trace file while preserving string and thread identifiers. It works with trace writers and parsed trace records. A concrete use case is re-serializing modified trace data without losing original interning information.",
-      "description_length": 290,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing.Flow",
-      "library": "tracing",
-      "description": "This module manages flow events by buffering steps until the flow is finalized. It provides functions to create a flow, add steps with timing information, and finalize the flow. It works with trace writers and thread identifiers to record structured performance data.",
-      "description_length": 267,
-      "index": 18,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing",
-      "library": "tracing",
-      "description": "This module reconstructs and manipulates execution timelines from trace data, enabling precise event ordering, structured trace generation, and low-level parsing and serialization. Key data types include trace events with timestamps, thread and string identifiers, and buffered I/O structures, supporting operations like event timing inference, async flow tracking, and trace re-serialization. You can use it to convert logs into visualizable traces in Perfetto, analyze cross-thread timing, or modify and re-export trace data while preserving interning. Example workflows include tracking task concurrency, reconstructing event start times from queue I/O, and exporting structured diagnostics from instrumented systems.",
-      "description_length": 720,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_tool_output.Serve",
-      "library": "tracing.tool_output",
-      "description": "This module serves trace files through a local web server, enabling visualization in a browser. It provides functions to create a server instance, specify a port, and serve individual trace files. A typical use case involves launching a server to display a specific trace file on a designated port, automatically opening the UI in a browser.",
-      "description_length": 341,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_tool_output",
-      "library": "tracing.tool_output",
-      "description": "This module manages trace output configuration and visualization, allowing users to save trace data to files or serve it through a local web server for browser-based viewing. It supports operations like setting output paths, writing trace data using `Tracing_zero.Writer.t`, and launching a Perfetto UI server to display traces immediately. The integrated web server submodule enables serving trace files on a specified port and opening them in a browser for real-time analysis. Example usage includes capturing application performance data, saving it for later review, or instantly visualizing it via a hosted UI.",
-      "description_length": 614,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_destinations_unix",
-      "library": "tracing.tracing_destinations_unix",
-      "description": "This module provides functions to create tracing destinations for writing trace data to files or file descriptors. It supports synchronous and performance-optimized file output, along with writing to arbitrary file descriptors. Use cases include logging trace events to disk or redirecting trace output to pipes or sockets.",
-      "description_length": 323,
-      "index": 22,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Tracing_zero.Writer.Expert.Event_type",
       "library": "tracing.tracing_zero",
-      "description": "This module defines a set of event types used to represent different kinds of tracing events, such as instant events, counters, durations, asynchronous events, and flow events. It works with the `t` type, which is a phantom type used to distinguish between different event kinds at the type level. These event types are used when constructing trace records, particularly in conjunction with functions that precompute headers and sizes for efficient serialization.",
-      "description_length": 463,
-      "index": 23,
+      "description": "This module defines a set of event types used to categorize different kinds of tracing events, such as `instant`, `counter`, and various duration, async, and flow events. It works with the `t` type, which represents individual event categories. These event types are used directly when constructing trace records, particularly in conjunction with functions that precompute headers and sizes for efficient serialization.",
+      "description_length": 419,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing_zero.Writer.Arg_types",
+      "library": "tracing.tracing_zero",
+      "description": "This module defines argument type specifications for event records, allowing the declaration of expected argument counts for integers, 32-bit integers, floats, and strings. It ensures correctness by requiring pre-commitment to argument counts before writing event data, enforcing that exact number during recording. Concrete use cases include structured logging and trace event generation where type and count validation is critical.",
+      "description_length": 433,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing_zero.Writer.Thread_id",
+      "library": "tracing.tracing_zero",
+      "description": "This module maps 64-bit thread IDs to compact 8-bit identifiers for efficient trace representation. It provides a conversion function `of_int` to transform integer thread IDs into the optimized 8-bit format. Useful in tracing systems where compact thread identification is required for performance-sensitive logging.",
+      "description_length": 316,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing_zero.Writer.Expert",
+      "library": "tracing.tracing_zero",
+      "description": "This module implements low-overhead tracing event serialization with direct control over string interning, buffer management, and header composition. It works with string identifiers, event types like duration and counter, and raw byte streams, supporting precise trace construction via precomputed headers and unchecked argument writing. Concrete use cases include instrumenting performance-critical code paths and generating structured trace records with minimal runtime overhead.",
+      "description_length": 482,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing_zero.Writer.Write_arg",
+      "library": "tracing.tracing_zero",
+      "description": "This module writes structured event arguments to a trace stream, immediately following a corresponding event writer. It supports scalar types like strings, integers, floats, and pointers, each associated with a named identifier. Concrete use cases include logging function parameters or system metrics with precise type handling during tracing.",
+      "description_length": 344,
+      "index": 6,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Tracing_zero.Writer.Expert.Write_arg_unchecked",
+      "module_path": "Tracing_zero.Destinations.Buffer_until_initialized",
       "library": "tracing.tracing_zero",
-      "description": "This module provides low-level, unchecked functions for writing various primitive values\u2014such as strings, 32-bit integers, 63-bit integers, 64-bit integers, pointers, and floats\u2014directly into a trace writer. Each function takes a writer, a field name (as a string ID), and a value to record. These functions are used when performance is critical and the caller ensures correctness, bypassing validation that would otherwise prevent malformed traces.",
-      "description_length": 449,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing_zero.Writer.String_id",
-      "library": "tracing.tracing_zero",
-      "description": "This module implements a string identifier system using integers to represent unique string slots. It supports creating identifiers from integers, checking equality, and provides an empty identifier value. It is used to manage temporary string references in a tracing context, where the maximum number of slots is fixed.",
-      "description_length": 320,
-      "index": 25,
+      "description": "This module buffers trace events in memory until a destination is set, then forwards all buffered and subsequent events to that destination. It ensures trace writes during initialization or after shutdown are handled gracefully by discarding writes after `close` is called. It works with any destination implementing the `Tracing_zero.Writer_intf.Destination` interface and is ideal for global tracing systems that must start collecting data before the final output destination is configured.",
+      "description_length": 492,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
@@ -218,172 +74,236 @@
       "library": "tracing.tracing_zero",
       "description": "Translates between time and tick-based representations using a fixed ticks-per-second rate, anchored to a base time and tick count. It supports precise time-to-tick and tick-to-time conversions for high-resolution timing scenarios. This is useful in tracing systems where events are timestamped in ticks relative to a known epoch.",
       "description_length": 330,
-      "index": 26,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.S",
-      "library": "tracing.tracing_zero",
-      "description": "This module offers low-level, zero-allocation functions for constructing Fuchsia Trace Format (FTF) traces in performance-critical contexts. It operates on trace streams via writer handles (`t`), leveraging interned string and thread identifiers to efficiently record events like durations, counters, asynchronous operations, and flow sequences (with reusable flow IDs), while enforcing basic format constraints. Designed for minimal overhead in fast paths, it supports precomputing event headers and avoids dynamic memory allocation, making it suitable for low-latency tracing scenarios where resource usage must be tightly controlled.",
-      "description_length": 636,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.S-Expert-Event_type",
-      "library": "tracing.tracing_zero",
-      "description": "This module defines event types for tracing, including instant events, counters, durations, asynchronous events, and flows. It provides specific values representing different tracing event kinds, such as `duration_begin`, `async_end`, and `flow_step`. These event types are used to categorize and structure trace data for performance monitoring and analysis.",
-      "description_length": 358,
-      "index": 28,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Tracing_zero.Writer_intf.S-Thread_id",
+      "module_path": "Tracing_zero.Writer.String_id",
       "library": "tracing.tracing_zero",
-      "description": "This module provides a type `t` representing interned 8-bit thread IDs, derived from 64-bit thread and process IDs. It includes a function `of_int` to convert an integer to this compact thread ID representation. This is used to efficiently identify and track threads in trace data where space and performance are critical.",
-      "description_length": 322,
-      "index": 29,
+      "description": "This module implements a string identifier system using integers to represent unique string slots. It provides operations to create identifiers from integers, check equality, and access a predefined empty identifier. The system is designed to manage a fixed maximum number of temporary string slots efficiently, useful in scenarios like tracing or logging systems where string interning is needed.",
+      "description_length": 397,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Tracing_zero.Destinations.Buffer_until_initialized",
+      "module_path": "Tracing_zero.Writer",
       "library": "tracing.tracing_zero",
-      "description": "This module buffers trace events in memory until a destination is set, then forwards all buffered events to the new destination and routes subsequent events directly. It ensures trace writes during application shutdown are safely ignored after closing. Useful for global trace writers that must capture events from initialization before external destinations like files are configured.",
-      "description_length": 385,
-      "index": 30,
+      "description": "The module enables structured trace event generation with specialized handling for asynchronous operations, durations, and counters, using pre-allocated slots for efficiency. It manages interrelated data structures including interned string/thread identifiers, timestamped events, and type-serialized arguments, while exposing low-level buffer controls for performance-critical paths. This design supports use cases like high-frequency system tracing where precise event modeling and minimal serialization overhead are paramount.",
+      "description_length": 529,
+      "index": 10,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.S-Write_arg",
-      "library": "tracing.tracing_zero",
-      "description": "This module defines functions to write event arguments of specific types, such as `string`, `int32`, `int64`, `float`, and `pointer`, each associated with a named identifier. It operates on a writer type `t` and requires precise alignment with corresponding event writers. Use cases include logging structured trace data where typed arguments must be recorded immediately after their associated event.",
-      "description_length": 401,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing_zero.Writer.Thread_id",
-      "library": "tracing.tracing_zero",
-      "description": "This module maps 64-bit thread IDs to compact 8-bit identifiers for efficient trace representation. It provides a conversion function `of_int` that transforms integer thread IDs into the interned 8-bit format. This is used to reduce the storage overhead of thread identifiers in tracing output.",
-      "description_length": 294,
-      "index": 32,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.S-Expert-Write_arg_unchecked",
-      "library": "tracing.tracing_zero",
-      "description": "This module provides low-level, unchecked functions for writing various primitive values\u2014such as strings, 32-bit integers, 63-bit integers, 64-bit integers, pointers, and floats\u2014directly into a trace context under a specified name. It operates on a trace writer type `t` and uses `String_id.t` for efficient string handling. These functions are used when performance is critical and trace validity checks are intentionally skipped, such as in high-frequency tracing scenarios where safety is managed externally.",
-      "description_length": 511,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.S-Arg_types",
-      "library": "tracing.tracing_zero",
-      "description": "This module defines argument type specifications for event records, ensuring correct argument counts and types are used when writing events. It works with basic value types like integers, 32-bit integers, floats, and strings, tracking how many of each type are expected. Concrete use cases include defining event signatures in tracing systems where strict format checking is required at write time.",
-      "description_length": 398,
-      "index": 34,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.S-String_id",
-      "library": "tracing.tracing_zero",
-      "description": "This module implements operations for creating and comparing string identifiers from integers, using a fixed-size slot allocation strategy. It supports equality checks, integer-to-identifier conversion, and provides a predefined maximum limit on the number of temporary string slots. Concrete use cases include managing unique string identifiers in environments with constrained resources or predefined identifier limits.",
-      "description_length": 421,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_zero.Writer.Expert",
-      "library": "tracing.tracing_zero",
-      "description": "This module provides low-level control over trace event serialization, combining direct buffer manipulation with efficient string interning and header precomputation. It supports high-performance tracing through operations like `write_from_header_with_tsc`, `set_string_slot`, and `set_dyn_slot`, which work with custom writers and time-stamp counters to minimize overhead. The event module defines typed event representations\u2014such as durations, counters, and async events\u2014using a phantom type `t` to enforce kind-level correctness during trace construction. The writer module complements this with unchecked, performance-critical primitives for writing raw values like integers, floats, and strings directly into trace buffers, ensuring maximum throughput when safety guarantees are externally managed.",
-      "description_length": 803,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_zero.Writer.Arg_types",
-      "library": "tracing.tracing_zero",
-      "description": "This module defines argument type specifications for event records, allowing the declaration of expected argument counts for typed values like integers and floats. It provides `none` for events without arguments and `create` to specify counts of each type. These declarations ensure correct argument writing before event completion, preventing mismatches during serialization.",
-      "description_length": 376,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.S-Expert",
-      "library": "tracing.tracing_zero",
-      "description": "This module provides low-level tracing functionality for writing structured binary trace data with fine-grained control over string interning, buffer switching, and event header composition. It operates on custom data types including `t` for writer state, `header` for precomputed event headers, and `String_id.t` for interned strings, alongside direct manipulation of byte buffers and time stamp counters. Concrete use cases include instrumenting performance-critical code paths with minimal overhead, managing trace event categories and names in a constrained slot system, and integrating with probe infrastructure for dynamic tracing scenarios.",
-      "description_length": 647,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.Arg_writers",
-      "library": "tracing.tracing_zero",
-      "description": "This module defines functions for writing typed values into a tracing context, including strings, integers of various widths, pointers, and floats. It operates on a `t` type that represents the writer state and uses `string_id` to identify fields. These functions are used to record structured data during tracing events, such as logging function arguments or performance metrics.",
-      "description_length": 380,
-      "index": 39,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Tracing_zero.Writer.Write_arg",
-      "library": "tracing.tracing_zero",
-      "description": "This module writes structured event arguments to a trace stream, using a writer and string identifiers for argument names. It supports specific data types including strings, 32-bit integers, 63-bit integers, 64-bit integers, pointers, and floats. Each function appends a typed argument to the trace event, assuming it immediately follows a correctly matched event writer call.",
-      "description_length": 376,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tracing_zero.Writer_intf.Destination",
-      "library": "tracing.tracing_zero",
-      "description": "This module defines an abstraction for writing trace data to various destinations, such as files or in-memory buffers. It provides operations to obtain a buffer ready for writing (`next_buf`) and to finalize the output (`close`). It is used in tracing systems that require efficient, flexible output targets, including testing environments and potential shared-memory transports.",
-      "description_length": 379,
-      "index": 41,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Tracing_zero.Writer_intf",
       "library": "tracing.tracing_zero",
-      "description": "This module defines interfaces for writing trace data with support for destination handling, argument serialization, and timestamp translation. It works with trace events, timestamps, and writer configurations, enabling custom trace backends and timestamp transformations. Main data types include writer state (`t`), interned string and thread IDs, event types like durations and counters, and precomputed headers. Operations allow precise time-to-tick conversion, low-level trace construction, typed argument writing, and efficient buffer management for performance-critical tracing scenarios.",
-      "description_length": 594,
-      "index": 42,
+      "description": "This module defines interfaces for writing trace data, including destination handling and argument serialization. It works with time-based and tick-based timestamping, using a fixed rate conversion anchored to a base time. Concrete use cases include logging high-resolution timestamps in tracing systems and converting event times between different clock domains.",
+      "description_length": 363,
+      "index": 11,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Tracing_zero.Destinations",
       "library": "tracing.tracing_zero",
-      "description": "This module manages trace data output by writing to Iobufs with support for strict and dynamic buffering, along with a black hole option for discarding traces. It coordinates trace event routing during logging or benchmarking and enables use cases like in-memory capture, streaming to pre-allocated storage, and trace suppression. A child module holds events until a destination is assigned, then replays buffered data and forwards new events, ensuring safe handling during shutdown. Together, they allow deferred configuration of trace outputs while maintaining visibility from early initialization stages.",
-      "description_length": 607,
-      "index": 43,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tracing_zero.Writer",
-      "library": "tracing.tracing_zero",
-      "description": "This module enables structured performance tracing by capturing events like durations, counters, and async operations, using interned string and thread identifiers to efficiently represent trace data. It provides low-level writing primitives for direct buffer manipulation alongside typed event definitions that enforce correctness through phantom types, supporting both high-performance and type-safe tracing workflows. With operations like `write_from_header_with_tsc` for time-stamped event writing and `set_string_slot` for interned string management, it allows detailed control flow and async task visualization in performance tools. Submodules handle identifier mapping, argument specification, and typed event construction, enabling use cases such as tracking thread activity with compact 8-bit IDs and writing structured event metadata with guaranteed argument consistency.",
-      "description_length": 881,
-      "index": 44,
+      "description": "This module provides functions to create trace event destinations for writing to I/O buffers, discarding output, or buffering until a destination is set. It works with Iobuf.t for direct buffer manipulation and supports any destination implementing `Tracing_zero.Writer_intf.Destination`. Concrete use cases include writing trace data to pre-allocated buffers, benchmarking with no-op output, and deferring trace collection until a logging backend is initialized.",
+      "description_length": 463,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Tracing_zero",
       "library": "tracing.tracing_zero",
-      "description": "This module provides a structured tracing system that captures performance data with support for timestamps, interned identifiers, and typed event definitions. It includes data types for trace writers, buffered events, and interned strings and thread IDs, along with operations for writing time-stamped durations, counters, and async events directly to buffers. Users can configure trace backends dynamically, capture traces in-memory or suppress them, and visualize control flow with precise timing and structured metadata. Example uses include tracking thread activity with compact IDs, logging performance counters with strict buffer control, and replaying buffered events once a trace destination is available.",
-      "description_length": 714,
-      "index": 45,
+      "description": "The module implements structured trace event generation with optimized handling of asynchronous operations, durations, and counters using pre-allocated slots. It works with timestamped events, interned strings, thread identifiers, and type-serialized arguments, primarily for high-frequency system tracing. Concrete use cases include capturing detailed performance metrics in low-overhead tracing systems and managing trace output destinations such as I/O buffers and deferred logging backends.",
+      "description_length": 494,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing_tool_output.Serve",
+      "library": "tracing.tool_output",
+      "description": "This module serves trace files through a hosted web UI, allowing users to visualize and explore tracing data by specifying a port and controlling browser behavior. It provides functions to create a server instance, define command parameters for configuration, and serve specific trace files. Concrete use cases include launching a local trace viewer on a specified port and automatically opening the UI in a browser for interactive analysis.",
+      "description_length": 441,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing_tool_output",
+      "library": "tracing.tool_output",
+      "description": "Handles trace output configuration and visualization by providing command parameters for file saving and serving. It works with trace data through the `t` type and writes traces using a provided function, then either serves them via a web UI or saves the file with instructions for later viewing. Direct use cases include generating and immediately viewing traces through a hosted Perfetto UI or saving them with a default name for offline analysis.",
+      "description_length": 449,
+      "index": 15,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Tracing.Trace.Expert",
+      "library": "tracing",
+      "description": "This module provides functions to write structured traces in the Fuchsia Trace Format using a high-level, easy-to-use API. It works with `Tracing.Trace.t` values, handling ID tracking and string interning internally, and is designed for use with offline trace conversion tools. A concrete use case is converting performance data into a trace file viewable in Perfetto, as demonstrated by the `dominodb_converter.ml` example.",
+      "description_length": 424,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Trace.Thread",
+      "library": "tracing",
+      "description": "This module provides functions to write thread-specific trace events in the Fuchsia Trace Format, including operations to record thread names, start and end events, and instantaneous events. It works with trace writers and thread identifiers to organize events within a timeline. Concrete use cases include visualizing execution timelines of concurrent processes in performance analysis tools like Perfetto.",
+      "description_length": 407,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser.String_index",
+      "library": "tracing",
+      "description": "This module defines a type `t` representing string indices in the range 1 to 32767, used for referencing strings in Fuchsia trace records. It provides operations for converting indices to integers, comparing them, and computing hashes and equality. Concrete use cases include tracking references to string tables when parsing trace events that include string arguments or metadata.",
+      "description_length": 381,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser.Thread_index",
+      "library": "tracing",
+      "description": "This module defines a type for thread indices used in parsing Fuchsia trace records, ensuring values are within the valid range (1 to 255). It provides conversion to integers, comparison, hashing, and equality checks, supporting efficient handling of thread identifiers during trace parsing. Concrete use cases include mapping and distinguishing thread-specific trace events in a multi-threaded trace stream.",
+      "description_length": 408,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser.Event",
+      "library": "tracing",
+      "description": "This module parses Fuchsia trace events from an `Iobuf.t`, producing structured records with timestamps, thread identifiers, categories, names, arguments, and event types. It supports sequential decoding of trace logs generated by `Tracing_zero.Writer.t` or similar wrappers. Use it to analyze or transform trace data into custom formats for debugging or performance analysis.",
+      "description_length": 376,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser.Thread",
+      "library": "tracing",
+      "description": "This module defines a thread identifier type with associated process and thread names, supporting comparison and S-expression conversion. It works with parsed trace data to track and identify threads within Fuchsia trace records. Concrete use cases include correlating trace events with specific threads and processes during trace analysis.",
+      "description_length": 340,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser.Warnings",
+      "library": "tracing",
+      "description": "Handles warnings encountered during the parsing of Fuchsia Trace Format traces, tracking the number of unparsed records and arguments. Increments counters when malformed or unsupported data is detected while processing the trace buffer. Useful for diagnosing trace corruption or format mismatches during post-processing analysis.",
+      "description_length": 329,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Tracing.Parser.Event_arg",
+      "library": "tracing",
+      "description": "This module parses event arguments from Fuchsia trace records, mapping string-indexed keys to typed values like integers, floats, and pointers. It supports concrete operations such as converting parsed values to S-expressions for debugging or comparing event arguments for equality checks. Use cases include extracting and inspecting arguments from trace events during post-processing or analysis of trace data.",
+      "description_length": 411,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser.Record",
+      "library": "tracing",
+      "description": "This module defines the types and operations for parsing individual records from a Fuchsia trace buffer. It supports extracting structured data such as events, interned strings and threads, process and thread name changes, and tick initialization metadata. Direct use cases include analyzing trace files to reconstruct timeline events, mapping thread/process identifiers to names, and handling timestamp synchronization.",
+      "description_length": 420,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser.Parse_error",
+      "library": "tracing",
+      "description": "This module defines error types for parsing Fuchsia Trace Format records, including cases like invalid references, truncated data, and overflow conditions. It provides a `sexp_of_t` function to convert these errors into S-expressions for serialization or logging. These errors are returned during trace parsing when malformed or unsupported data is encountered in the input buffer.",
+      "description_length": 381,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser.Event_type",
+      "library": "tracing",
+      "description": "This module defines the types and operations for interpreting event kinds in Fuchsia trace records. It includes discriminated unions for event types such as `Instant`, `Counter`, `Duration_begin`, and `Flow_end`, each capturing specific trace metadata like timestamps, correlation IDs, and durations. These types are used directly by the parser to represent and differentiate trace events during analysis.",
+      "description_length": 405,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Trace.Arg",
+      "library": "tracing",
+      "description": "This module represents named arguments of simple types that can be attached to trace events, such as integers, strings, pointers, and floats, which appear in the details panel of Perfetto when an event is selected. It defines a value type that distinguishes between interned and non-interned strings and provides conversions to S-expressions for serialization. Use this module to attach metadata like event durations, identifiers, or numeric values directly to trace events for richer visualization in performance analysis tools.",
+      "description_length": 529,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Trace.Async",
+      "library": "tracing",
+      "description": "This module provides functions to write asynchronous trace events in the Fuchsia Trace Format using a high-level, OCaml-friendly API. It works with trace writers and timestamped events, allowing users to record durations, instantaneous events, and asynchronous sequences. Concrete use cases include converting performance data from profiling tools into visualizable traces for analysis in Perfetto, such as tracking task execution or I/O operations over time.",
+      "description_length": 459,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Record_writer",
+      "library": "tracing",
+      "description": "This module provides functions to create and use a writer that serializes parsed trace records back into a trace file, preserving string and thread identifiers. It operates on `Tracing.Parser.Record.t` values and requires an underlying `Tracing_zero.Writer.t` for output. Use this when reconstructing trace files from parsed data, ensuring consistency with the original interned values.",
+      "description_length": 386,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Parser",
+      "library": "tracing",
+      "description": "Parses Fuchsia Trace Format records from an `Iobuf.t`, advancing with `parse_next` to extract structured events, interned strings, thread metadata, and timestamp information. It handles trace data written by `Tracing_zero.Writer.t`, converting raw buffers into typed records with support for event arguments, thread identifiers, and string indexing. Concrete use cases include analyzing trace logs to reconstruct timelines, correlate events by thread, and extract performance metrics with precise timestamps.",
+      "description_length": 508,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Buffer",
+      "library": "tracing",
+      "description": "This module manages trace data buffering with operations to create, resize, consume, and output trace events. It works with `Iobuf.t` for reading and parsing trace data, and `Tracing_zero.Writer.t` for writing valid traces. Concrete use cases include buffering and processing trace events during live tracing sessions or when replaying trace data from a stream.",
+      "description_length": 361,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Queue_to_spans",
+      "library": "tracing",
+      "description": "This module tracks the timing of events in a single-threaded system by maintaining the order of message processing. It uses the relationship between input and output times to estimate when each event actually started processing, based on the queueing behavior. It is useful for reconstructing event timelines in systems where only input and output timestamps are available.",
+      "description_length": 373,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Flow",
+      "library": "tracing",
+      "description": "This module manages flow events by buffering steps until the flow is finalized, allowing incremental addition of events with thread and timing metadata. It works with flow identifiers, trace writers, and thread identifiers to structure hierarchical timing data. Concrete use cases include tracking multi-step operations across threads, such as request processing pipelines or distributed task execution, where each step is recorded and later written to a trace log.",
+      "description_length": 465,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing.Trace",
+      "library": "tracing",
+      "description": "The library enables creating structured performance traces with duration events, counters, instantaneous events, and visual flow connections in the Fuchsia Trace Format. It works with trace files, time values, process/thread identifiers, and event metadata, abstracting low-level writer operations into idiomatic OCaml types. Designed for offline conversion tools, it simplifies trace generation with automatic ID tracking and string interning, particularly handling asynchronous event sequences through functions like `write_async_instant` and `write_async_end`, as demonstrated in tools like dominodb_converter.ml for visualizing performance data in Perfetto.",
+      "description_length": 661,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tracing",
+      "library": "tracing",
+      "description": "This module provides structured tracing capabilities for performance analysis, supporting operations to record duration events, counters, asynchronous steps, and flow connections. It works with trace files, time stamps, thread identifiers, and event metadata to enable precise timeline reconstruction and visualization. Concrete use cases include converting performance logs into structured traces for tools like Perfetto, analyzing multi-threaded request pipelines, and reconstructing event timing from input-output traces in single-threaded systems.",
+      "description_length": 551,
+      "index": 35,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 46,
-    "meaningful_modules": 46,
+    "total_modules_in_package": 36,
+    "meaningful_modules": 36,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 881,
-    "min_description_length": 267,
-    "avg_description_length": 462.30434782608694,
-    "embedding_file_size_mb": 0.16751480102539062
+    "max_description_length": 661,
+    "min_description_length": 316,
+    "avg_description_length": 426.02777777777777,
+    "embedding_file_size_mb": 0.5221843719482422
   }
 }

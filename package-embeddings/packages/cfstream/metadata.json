@@ -1,85 +1,69 @@
 {
   "package": "cfstream",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:05:46.782601",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 6,
+  "creation_timestamp": "2025-08-14T23:06:16.216574",
   "modules": [
     {
-      "module_path": "CFStream.Stream.Infix",
+      "module_path": "CFStream.Stream.Or_error",
       "library": "cfstream",
-      "description": "This module defines infix operators for constructing and transforming streams with integers and floats. It supports creating numeric ranges, applying mapping and filtering operations, and handling optional transformations. Use cases include generating sequences for iteration, processing data streams with concise syntax, and building pipelines for numeric computations.",
-      "description_length": 370,
+      "description": "This module processes streams of values wrapped in `Or_error.t`, providing operations to map, fold, and combine streams while handling potential errors. It supports transformations with functions like `map` and `fold`, and combines streams with `map2_exn`, propagating errors encountered during processing. Concrete use cases include parsing or validating sequences of data where each step may fail, such as reading and processing lines from a file with error handling.",
+      "description_length": 469,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "CFStream.Streamable.S2",
+      "module_path": "CFStream.Stream.Infix",
       "library": "cfstream",
-      "description": "This module converts between a custom data structure and a stream of key-value pairs. It provides functions to transform a structure into a stream and reconstruct the structure from a stream. Use it when processing or serializing structured data incrementally, such as parsing or generating sequences of records.",
-      "description_length": 312,
+      "description": "This module provides infix operators for constructing and transforming streams with integer and float ranges, mapping, filtering, and filter-mapping operations. It works directly with stream data types, allowing concise inline manipulations such as creating sequences with specified increments or applying functions during traversal. Concrete use cases include generating numerical sequences, processing stream elements inline without function call syntax, and chaining transformations and filters in a readable, operator-based style.",
+      "description_length": 534,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "CFStream.Stream.Or_error",
-      "library": "cfstream",
-      "description": "This module processes streams of values wrapped in `Or_error.t`, providing operations to map, fold, and combine streams while propagating errors. It handles transformations with functions like `map`, `fold`, and `map2_exn`, ensuring errors are carried through computations. Use cases include parsing or validating sequences of data where each step may fail, such as reading and processing lines from a file with potential format errors.",
-      "description_length": 436,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "CFStream.Streamable.S",
-      "library": "cfstream",
-      "description": "This module defines conversions between a data structure and a `Stream.t`. It provides `to_stream` to serialize the data structure into a stream of elements, and `of_stream` to construct the data structure by consuming a stream. These functions enable streaming-based processing and batch construction for compatible types like lists, sets, or custom collections.",
-      "description_length": 363,
-      "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "CFStream.Stream.Result",
       "library": "cfstream",
-      "description": "This module provides higher-order functions to process streams of `Result` values, allowing iteration over successful elements without explicit pattern matching. It supports operations like mapping, folding, and combining two streams with functions that handle both success and error cases. Concrete use cases include processing sequences of fallible computations, aggregating results, or transforming values while preserving error handling semantics.",
-      "description_length": 451,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "CFStream.Streamable",
-      "library": "cfstream",
-      "description": "This module provides tools for working with lazy streams, allowing creation from sequences, files, or functions, and supports transformations like map, filter, and concat. It handles infinite or large data sequences efficiently, with core operations for stream manipulation and consumption. The child modules enable converting structured data to and from streams, supporting incremental serialization and deserialization of records or collections. Use cases include line-by-line file parsing, streaming data conversion, and generating infinite mathematical sequences.",
-      "description_length": 567,
-      "index": 5,
+      "description": "This module provides higher-order functions to process streams of results by abstracting away error handling, allowing operations like mapping, folding, and iteration to focus only on the success case. It works with streams of `Result.t` values, applying functions that either return a result or assume success, and propagating errors automatically. Concrete use cases include transforming streams of parsed values, aggregating results from sequential computations, and handling error-prone data streams without explicit pattern matching at each step.",
+      "description_length": 551,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "CFStream.Stream",
       "library": "cfstream",
-      "description": "This module handles the creation, transformation, and consumption of streams, supporting lazy evaluation, parallel iteration, and error-aware processing. It works with generic streams (`'a t`), character and string streams from input channels, and conversions to and from lists, arrays, hashtables, and sets, making it ideal for parsing, handling large datasets, and managing input streams with error recovery. The child modules enhance this functionality with numeric stream operations using infix operators, error propagation over streams of `Or_error.t`, and result-aware processing for streams of `Result` values. Examples include generating numeric sequences, reading and validating lines from a file, and aggregating results from fallible computations.",
-      "description_length": 758,
-      "index": 6,
-      "embedding_norm": 1.0
+      "description": "The module provides functions for lazy stream creation, transformation, and traversal, including filtering, mapping, folding, and merging operations that handle stateful computations and infinite sequences. It operates on generic streams (`'a t`) and integrates with standard data structures like lists, arrays, and error-aware types (`Result.t`, `Or_error.t`), supporting indexed processing, parallel traversal, and stream fusion. These capabilities are used for tasks such as incremental data processing, I/O pipelines with on-demand evaluation, and error-resilient stream aggregation where elements are consumed sequentially.",
+      "description_length": 628,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "CFStream.Streamable",
+      "library": "cfstream",
+      "description": "This module defines operations for creating and manipulating lazy streams, supporting element-wise processing and infinite sequences. It works with stream data types that encapsulate delayed computations. Concrete use cases include parsing incremental input, generating sequences on demand, and handling potentially infinite data sources like real-time event streams.",
+      "description_length": 367,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "CFStream",
       "library": "cfstream",
-      "description": "This module enables working with lazy, potentially infinite streams of data, supporting creation from sequences, files, or functions, and offering transformations like map, filter, and concat. It provides core data types such as generic streams (`'a t`), along with specialized variants for characters, strings, and error-aware values (`Or_error.t`, `Result.t`), enabling efficient processing of large or incremental data. Operations include consuming streams into collections, parallel iteration, and numeric stream computations using infix operators. Specific uses include line-by-line file parsing, infinite sequence generation, and handling fallible stream elements with error propagation.",
-      "description_length": 693,
-      "index": 7,
+      "description": "The module provides lazy stream processing capabilities including creation, transformation, and traversal of infinite sequences with support for stateful and error-aware computations. It operates on generic stream types and integrates with lists, arrays, and result types, enabling use cases such as incremental parsing, real-time event processing, and on-demand data generation. Key operations include mapping, filtering, folding, and merging, with support for indexed and parallel traversal.",
+      "description_length": 493,
+      "index": 5,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 8,
-    "meaningful_modules": 8,
+    "total_modules_in_package": 6,
+    "meaningful_modules": 6,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 758,
-    "min_description_length": 312,
-    "avg_description_length": 493.75,
-    "embedding_file_size_mb": 0.029493331909179688
+    "max_description_length": 628,
+    "min_description_length": 367,
+    "avg_description_length": 507.0,
+    "embedding_file_size_mb": 0.08740806579589844
   }
 }

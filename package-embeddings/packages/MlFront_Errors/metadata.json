@@ -1,65 +1,65 @@
 {
   "package": "MlFront_Errors",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:05:43.873243",
+  "creation_timestamp": "2025-08-14T23:01:12.024173",
   "modules": [
     {
-      "module_path": "MlFront_Errors.Errors.Details",
+      "module_path": "MlFront_Errors.Errors.Syntax",
       "library": "MlFront_Errors",
-      "description": "This module accumulates and manages error-related information such as problems, contexts, errors, and suggestions during execution. It provides functions to add structured diagnostic messages and control when they are printed using `protect` and `pp`. Concrete use cases include collecting and displaying detailed error diagnostics during parsing or type-checking phases, and conditionally raising exceptions after error accumulation.",
-      "description_length": 434,
+      "description": "This module handles syntax error reporting and propagation during parsing or processing of code structures. It provides functions to raise and chain syntax-related errors with contextual messages, using result types that include `Error (`Msg _)` or `Error `ErrorCaptured`. Concrete use cases include validating token streams, checking AST node consistency, and signaling malformed input during compiler front-end stages.",
+      "description_length": 420,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "MlFront_Errors.Errors.Syntax",
+      "module_path": "MlFront_Errors.Errors.Details",
       "library": "MlFront_Errors",
-      "description": "This module provides monadic bind operators for handling result values with custom error types, specifically supporting error propagation and transformation. It works with `result` values where errors are either a message (`Msg`) or a captured error (`ErrorCaptured`). These operators are used to sequence operations that may fail, allowing concise error handling in parsers or interpreters where different error cases must be distinguished and propagated.",
-      "description_length": 456,
+      "description": "This module accumulates and manages error-related information such as problems, contexts, errors, and suggestions during the execution of a `protect` block. It provides functions to add formatted messages of different categories and to raise a structured error exception with optional backtrace support. Use it to collect diagnostic information during validation or parsing phases and print it in a controlled manner when an error occurs.",
+      "description_length": 438,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "MlFront_Errors.Errors",
       "library": "MlFront_Errors",
-      "description": "This module manages error accumulation and propagation, combining structured diagnostic messaging with monadic error handling. It supports data types like `Msg` and `ErrorCaptured`, along with operations to add, track, and conditionally raise errors, and to bind and transform `result` values. You can use it to collect detailed error contexts during parsing or type-checking, and to sequence operations that propagate distinct error cases through monadic combinators.",
-      "description_length": 468,
+      "description": "This module handles error accumulation and propagation during validation or parsing phases, providing structured exceptions with optional backtraces. It works with error messages, contexts, and result types that include syntax-related errors and formatted diagnostic information. Concrete use cases include collecting validation issues during AST processing, signaling malformed input in parsers, and managing error contexts in compiler front-end stages.",
+      "description_length": 454,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "MlFront_Errors.BindsResult",
-      "library": "MlFront_Errors",
-      "description": "This module provides monadic operations for working with `Result` types, including `bind`, `map`, `return`, and `zero`. It enables chaining and transforming `Result` values while handling error propagation explicitly. Use it to write concise error-handling pipelines where each step depends on the success of the previous one, such as parsing or validation workflows.",
-      "description_length": 367,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "MlFront_Errors.ExitCodes",
-      "library": "MlFront_Errors",
-      "description": "Maps exit codes to human-readable descriptions, using NTSTATUS values on Windows. Provides `ntstatus_descriptions` for listing known codes and `code_to_string` for translating individual exit codes into descriptive strings. Useful for debugging and logging process termination reasons across platforms.",
-      "description_length": 302,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "MlFront_Errors.ExitHandler",
       "library": "MlFront_Errors",
-      "description": "This module handles error propagation and process exit conditions in command-line applications. It provides functions to manage exit statuses, signals, and error contexts, working with result types and logging mechanisms. Use cases include capturing errors during program execution, handling interruptions like SIGINT, and logging structured error messages with contextual details.",
-      "description_length": 381,
+      "description": "Handles process exit statuses and exceptions in a structured way, translating them into result types or logging errors with context. Works with result types, exit status variants, and logging functions to capture and report errors during program execution. Useful for command-line tools that need to handle failures from external processes or internal computations while preserving error context and providing detailed diagnostics.",
+      "description_length": 431,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "MlFront_Errors.BindsResult",
+      "library": "MlFront_Errors",
+      "description": "This module provides monadic operations for working with `Result` values, including `bind`, `map`, and `return`. It supports chaining fallible computations and transforming their outputs while preserving error handling. Use it to compose functions that return `Result` types, especially when integrating with the ocaml-monadic PPX for cleaner syntax.",
+      "description_length": 350,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "MlFront_Errors.ExitCodes",
+      "library": "MlFront_Errors",
+      "description": "This module provides exit code translation and human-readable descriptions, specifically mapping integer exit codes to descriptive strings using NTSTATUS values on Windows. It includes a list of NTSTATUS descriptions as triples (hexcode, description, codename) and a function to convert exit codes into either a standard or Windows-specific string representation. Use cases include debugging process exits and logging descriptive error messages for system-level errors on Windows platforms.",
+      "description_length": 490,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "MlFront_Errors",
       "library": "MlFront_Errors",
-      "description": "This module coordinates error handling across parsing, type-checking, and process execution by combining structured diagnostics with monadic result propagation. It defines key data types like `Msg`, `ErrorCaptured`, and `Result`, supporting operations to bind, map, and transform outcomes while accumulating contextual errors. Functions for mapping exit codes to descriptive messages and managing termination signals enable robust command-line error reporting and debugging. Example uses include sequencing parser steps that collect detailed errors, translating system exit codes into readable strings, and handling interruptions with structured logging.",
-      "description_length": 654,
+      "description": "This module provides operations for error handling and result processing in compiler front-end stages. It includes monadic combinators for `Result` types, structured error accumulation with context, exit code translation using NTSTATUS values, and handlers for process exit statuses. Use it to manage parsing errors, validate ASTs, log descriptive system errors on Windows, and compose fallible compiler phases with clean error propagation.",
+      "description_length": 440,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -69,9 +69,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 654,
-    "min_description_length": 302,
-    "avg_description_length": 437.42857142857144,
-    "embedding_file_size_mb": 0.0258636474609375
+    "max_description_length": 490,
+    "min_description_length": 350,
+    "avg_description_length": 431.85714285714283,
+    "embedding_file_size_mb": 0.1018533706665039
   }
 }

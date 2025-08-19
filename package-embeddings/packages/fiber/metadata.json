@@ -1,141 +1,149 @@
 {
   "package": "fiber",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 15,
-  "creation_timestamp": "2025-07-15T23:08:33.978013",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 16,
+  "creation_timestamp": "2025-08-14T23:21:00.379038",
   "modules": [
     {
-      "module_path": "Fiber.Stream.Out",
+      "module_path": "Fiber.Stream.In",
       "library": "fiber",
-      "description": "This module provides functions to create and write to output streams that push values to a consumer fiber. It works with stream outputs that can signal the end of the stream by writing `None`. Concrete use cases include producing values incrementally in a pipeline, such as reading from a file or network socket and sending chunks through the stream.",
-      "description_length": 350,
+      "description": "This module implements input streams for structured concurrency, supporting operations like reading values, filtering and mapping elements, and iterating over stream contents sequentially or in parallel. It works with finite or infinite streams of values of any type, where each stream can only be read from or written to by one fiber at a time. Concrete use cases include processing asynchronous data sources such as file lines, network packets, or event generators in a controlled, single-reader fashion.",
+      "description_length": 506,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Fiber.Stream.In",
+      "module_path": "Fiber.Stream.Out",
       "library": "fiber",
-      "description": "This module implements destructive input streams for structured concurrency, supporting operations like reading values, filtering and mapping elements, and iterating sequentially or in parallel. It works with finite or infinite streams generated from functions, lists, or other streams, where each stream can only be accessed by one reader or writer at a time. Concrete use cases include processing asynchronous data pipelines, handling event streams, and building composable sources of values for concurrent programs.",
-      "description_length": 518,
+      "description": "This module provides functions to create and write to output streams that push values to a consumer fiber. It works with `Fiber.Stream.Out.t`, representing stream outputs, and supports writing optional values to drive the stream. Concrete use cases include producing data in a structured concurrency context, such as feeding a pipeline from a generator or sending results from a computation to a consumer.",
+      "description_length": 405,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fiber.Throttle",
-      "library": "fiber",
-      "description": "This module limits concurrent execution of fibers by maintaining a fixed-size pool of permits. It works with `Fiber.fiber` and provides functions to create, resize, and monitor the pool, as well as run fibers while respecting the concurrency limit. Concrete use cases include controlling parallelism in batched network requests or limiting simultaneous file I/O operations.",
-      "description_length": 373,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fiber.Mvar",
-      "library": "fiber",
-      "description": "Implements mailbox variables for structured concurrency, supporting synchronized value passing between fibers. Provides creation of empty or pre-filled mailbox containers and blocking read/write operations to coordinate data exchange. Useful for producer-consumer patterns where one fiber waits for a result computed by another.",
-      "description_length": 328,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fiber.Make_map_traversals",
-      "library": "fiber",
-      "description": "This module provides `parallel_iter` and `parallel_map` functions that operate on map data structures, enabling concurrent execution over key-value pairs. It works directly with any map implementation that conforms to the `Map` module type, applying fiber-based asynchronous operations to each binding. Concrete use cases include concurrently processing map entries for I/O-bound tasks or parallel data transformations while preserving the map structure.",
-      "description_length": 454,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Fiber.Expert",
-      "library": "fiber",
-      "description": "This module provides low-level operations for suspending and resuming fibers by manipulating continuations directly. It works with fiber continuations (`k`) and fiber tasks (`Fiber.t`). Use cases include implementing custom concurrency primitives or optimizing performance-critical sections of asynchronous code.",
-      "description_length": 312,
-      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Fiber.Ivar",
       "library": "fiber",
-      "description": "This module implements single-assignment variables for concurrency, allowing a value to be written once and read multiple times. It supports operations to create an empty variable, read its value asynchronously, fill it with a value exactly once, and check if it has been filled without blocking. It is used to synchronize data flow between concurrent fibers, such as signaling completion or sharing a result across multiple readers.",
-      "description_length": 433,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fiber.Scheduler",
-      "library": "fiber",
-      "description": "This module schedules the execution of fibers by starting their evaluation and advancing them when dependencies are resolved. It works with fibers and stalled computation states, allowing precise control over asynchronous task progression. Use this to implement custom concurrency primitives or manage fiber execution in event-driven systems.",
-      "description_length": 342,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fiber.Mutex",
-      "library": "fiber",
-      "description": "This module provides mutual exclusion locks for managing concurrent access to shared resources within a structured concurrency model. It supports creating locks and executing functions under exclusive lock ownership, ensuring safe synchronization across concurrent execution paths. Commonly used to protect mutable state modifications in multi-threaded or asynchronous workflows.",
-      "description_length": 379,
-      "index": 8,
+      "description": "This module implements single-assignment variables for concurrency, enabling fibers to synchronize on a value that becomes available asynchronously. It works with `'a Fiber.Ivar.t`, a type representing a write-once variable, and interacts with `Fiber` operations to manage asynchronous reads and writes. Concrete use cases include coordinating parallel tasks, such as waiting for a background computation to produce a result or signaling completion of an I/O operation.",
+      "description_length": 469,
+      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Fiber.O",
+      "module_path": "Fiber.Make_map_traversals",
       "library": "fiber",
-      "description": "This module provides operators for composing and sequencing concurrent fibers, enabling asynchronous workflows with precise control over execution order and data dependencies. It works with values of type `'a Fiber.t`, representing concurrent computations that may produce a result of type `'a`. Concrete use cases include chaining dependent asynchronous operations, running independent fibers in parallel and combining their results, and transforming fiber outputs without blocking.",
-      "description_length": 483,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fiber.Pool",
-      "library": "fiber",
-      "description": "This module manages a pool of concurrent tasks, allowing tasks to be submitted, executed in parallel, and stopped gracefully. It works with the `Fiber.fiber` type to schedule functions that run within the pool's concurrency context. Concrete use cases include parallelizing independent computations, managing background jobs, and ensuring coordinated shutdown of concurrent operations.",
-      "description_length": 385,
-      "index": 10,
+      "description": "This module provides `parallel_iter` and `parallel_map` functions that operate on map data structures, applying fiber-based concurrent functions to each key-value pair. It works directly with any map type that conforms to the provided `Map` module interface, producing traversals that execute in parallel. These functions are useful for performing I/O-bound or computationally intensive operations on map elements concurrently, such as making parallel network requests or processing independent data entries in bulk.",
+      "description_length": 516,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Fiber.Stream",
       "library": "fiber",
-      "description": "This module enables structured concurrency through destructive streams that support composition into pipelines, allowing data to flow between single-reader and single-writer endpoints. It provides core operations like `connect`, `supply`, and `pipe` to link `In` and `Out` endpoints, facilitating producer-consumer patterns and streaming I/O. The child modules extend this by offering functions to create and manipulate output streams that send incremental values, and input streams that process elements through transformations like map and filter. Together, they support building and processing asynchronous data pipelines from sources such as files, sockets, or generated sequences.",
-      "description_length": 685,
-      "index": 11,
+      "description": "This module implements destructive streams for structured concurrency, enabling the creation of pipelines that process finite or infinite sequences of values. It provides functions to connect input and output streams, supply values without closing the output, and create in-memory pipes for communication between fibers. Concrete use cases include streaming data from a file or network source through transformation stages to a consumer, or coordinating producer-consumer workflows in concurrent applications.",
+      "description_length": 509,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Fiber.Pool",
+      "library": "fiber",
+      "description": "This module manages a pool of concurrent tasks, allowing tasks to be submitted, executed in parallel, and stopped. It works with the `Fiber.fiber` type to handle asynchronous execution and tracks the running state of the pool. Concrete use cases include parallelizing independent computations, managing background jobs, and ensuring cleanup after task completion or failure.",
+      "description_length": 374,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Fiber.Mvar",
+      "library": "fiber",
+      "description": "This module provides synchronization primitives for concurrent programs using mailbox variables, which act as single-cell buffers that can be empty or full. It supports creating empty or pre-filled variables, reading from them (blocking if empty), and writing to them (blocking if full). Concrete use cases include coordinating data flow between concurrent fibers, implementing bounded channels, and managing shared state access in a structured concurrency model.",
+      "description_length": 463,
+      "index": 6,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Fiber.Cancel",
+      "module_path": "Fiber.Var",
       "library": "fiber",
-      "description": "This module provides operations to manage cancellation of concurrent computations, including creating cancellation tokens, triggering cancellation, and handling cancellation events. It works with the `t` type to represent cancellation tokens and `Fiber.fiber` for concurrent tasks. Concrete use cases include aborting long-running background tasks or gracefully shutting down concurrent operations when a timeout or external signal occurs.",
-      "description_length": 439,
-      "index": 12,
+      "description": "This module provides dynamic scoping for variables within a concurrent fiber, allowing values to be bound and retrieved lexically during the execution of nested fibers. It supports operations to create, get, set, and unset variables that are local to the currently executing fiber. Concrete use cases include managing request-specific state, such as user authentication data or logging contexts, across asynchronous operations in a structured and thread-safe way.",
+      "description_length": 463,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Fiber.Svar",
       "library": "fiber",
-      "description": "This module provides state variables that support multiple updates and allow fibers to wait for specific state changes. It works with arbitrary values of type `'a` and supports operations to read the current value, write a new value, and wait until a predicate on the value becomes true. Concrete use cases include tracking the state of a build system or signaling progress in a concurrent workflow, where different fibers can react to state transitions without polling.",
-      "description_length": 470,
+      "description": "This module provides state variables that support multiple updates and conditional waiting. It allows creating a state variable with an initial value, reading its current value, writing a new value, and waiting for the value to satisfy a predicate. Concrete use cases include tracking and reacting to state changes in long-running processes, such as monitoring build system states or signaling specific conditions in concurrent tasks.",
+      "description_length": 434,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Fiber.Expert",
+      "library": "fiber",
+      "description": "This module provides low-level control over fiber execution by allowing fibers to be suspended and resumed explicitly. It works with fibers and their continuations, enabling precise manipulation of asynchronous workflows. Use cases include implementing custom concurrency primitives or optimizing performance-critical sections of asynchronous code.",
+      "description_length": 348,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Fiber.Cancel",
+      "library": "fiber",
+      "description": "This module manages cancellation of concurrent computations by allowing explicit checks and handlers for cancellation events. It works with cancellation tokens (`t`) and fibers, providing operations to trigger cancellation, check its status, and define cleanup behavior. Concrete use cases include aborting background tasks on user request or handling timeouts in concurrent operations.",
+      "description_length": 386,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Fiber.Scheduler",
+      "library": "fiber",
+      "description": "This module schedules the execution of fibers by starting their evaluation or advancing them when dependencies are resolved. It works with fibers and stalled computation states, handling progress through explicit control over execution steps. Use it to manage concurrent tasks that pause and resume based on filled ivars.",
+      "description_length": 321,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Fiber.O",
+      "library": "fiber",
+      "description": "This module provides operators for sequencing and composing concurrent fibers, enabling asynchronous workflows with support for both unit and value-returning operations. It works with the `Fiber.t` type, allowing developers to express dependencies between concurrent tasks using binding and mapping operators. Concrete use cases include chaining dependent asynchronous operations, running independent tasks in parallel, and transforming fiber results without explicit callbacks.",
+      "description_length": 478,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Fiber.Mutex",
+      "library": "fiber",
+      "description": "This module provides mutual exclusion locks for concurrent execution within a structured concurrency context. It supports creating a lock with `create`, and executing a function while holding the lock with `with_lock`. It is used to protect shared resources from race conditions when accessed by multiple concurrent fibers.",
+      "description_length": 323,
       "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Fiber.Throttle",
+      "library": "fiber",
+      "description": "This module limits concurrent execution of fibers by maintaining a fixed-size pool of permits. It works with fibers and a throttler type that tracks active jobs, allowing operations like dynamic resizing of the pool and blocking execution until capacity is available. Concrete use cases include rate-limiting network requests or controlling parallelism in batch processing tasks.",
+      "description_length": 379,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Fiber",
       "library": "fiber",
-      "description": "This module enables structured concurrency through asynchronous task creation, parallel execution, and error handling via applicative and monadic composition. It operates on fibers and collections, integrating synchronization primitives such as mutexes, condition variables, and single-assignment variables to manage shared resources and coordinate task dependencies. The module supports concrete use cases like building network servers, parallel data processors, and systems requiring precise control over concurrent resource access. Submodules extend this foundation with specific concurrency control mechanisms: limiting parallelism via permit pools, coordinating fibers through mailboxes and streams, managing shared state with cancellation tokens, and composing pipelines for streaming I/O. They also provide utilities for direct continuation manipulation, custom scheduling, and parallel iteration over map structures, enabling efficient and expressive concurrent workflows without relying on preemptive threads.",
-      "description_length": 1018,
-      "index": 14,
-      "embedding_norm": 1.0
+      "description": "The module offers structured concurrency primitives to compose asynchronous workflows with parallel execution, error handling, and resource synchronization. It operates on fibers and employs synchronization variables (Ivar, Mvar), mutexes, and throttles to manage concurrent tasks, supporting use cases like parallel data traversal, coordinated task orchestration, and exception-safe resource management in concurrent programs.",
+      "description_length": 427,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
     "total_modules_in_package": 16,
-    "meaningful_modules": 15,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9375
+    "meaningful_modules": 16,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 1018,
-    "min_description_length": 312,
-    "avg_description_length": 464.6,
-    "embedding_file_size_mb": 0.05492877960205078
+    "max_description_length": 516,
+    "min_description_length": 321,
+    "avg_description_length": 425.0625,
+    "embedding_file_size_mb": 0.23237991333007812
   }
 }

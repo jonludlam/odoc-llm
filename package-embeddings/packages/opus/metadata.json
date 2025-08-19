@@ -1,39 +1,39 @@
 {
   "package": "opus",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:57.949405",
+  "creation_timestamp": "2025-08-14T22:53:09.627193",
   "modules": [
     {
-      "module_path": "Opus.Encoder",
-      "library": "opus",
-      "description": "This module implements an Opus audio encoder for real-time streaming and file encoding. It supports configuration through control commands like setting bitrate, signal type, and VBR mode, and works with PCM audio data in both regular and Bigarray formats. It encodes audio frames into Ogg packets, suitable for VoIP, music streaming, or low-latency broadcast applications.",
-      "description_length": 372,
+      "module_path": "Opus_decoder",
+      "library": "opus.decoder",
+      "description": "This module implements an Opus audio decoder for use with the `Ogg_demuxer` module, handling the decoding of Opus-encoded audio streams. It provides a reference to the decoder's sample rate and a function to register the decoder for use in demuxing pipelines. Concrete use cases include playing back Opus audio from Ogg containers or converting Opus streams to raw PCM data.",
+      "description_length": 374,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Opus.Decoder",
       "library": "opus",
-      "description": "This module decodes Opus audio streams from Ogg packets into floating-point PCM data, supporting both standard and forward-error-correction decoding. It works with types like `Ogg.Stream.packet`, `Ogg.Stream.t`, and both regular and Bigarray float arrays for output. Use cases include streaming audio playback, real-time voice communication, and file transcoding where Opus-encoded data needs to be converted to raw audio samples.",
-      "description_length": 430,
+      "description": "This module decodes Opus audio streams from OGG packets into floating-point PCM data, supporting both standard and forward-error-correction decoding. It manages decoder state, channel count, and gain control via `apply_control`, and works directly with Ogg packets and Bigarray-based sample buffers. Use it to extract and process multi-channel audio from Opus-encoded streams in formats like .ogg or .opus.",
+      "description_length": 406,
       "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Opus.Encoder",
+      "library": "opus",
+      "description": "This module implements an Opus audio encoder for real-time streaming and file encoding. It supports configuration through control commands like setting bitrate, signal type, and VBR mode, and works with PCM audio data in both regular and bigarray formats. It encodes audio frames into an Ogg stream, producing packets that conform to the Opus in Ogg bitstream specification.",
+      "description_length": 374,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Opus",
       "library": "opus",
-      "description": "This module provides core Opus encoding and decoding capabilities, integrating real-time streaming support and Ogg packet handling from its submodules. It manages encoder settings like bitrate and signal type, and exposes decoder features such as forward-error-correction and bandwidth detection, operating on PCM and Bigarray data. You can encode live audio into Ogg packets for VoIP, decode Opus streams into float PCM for playback, and adapt bandwidth dynamically during transmission. The API supports both low-level control via commands and high-level streaming interfaces through integrated Ogg packet handling.",
-      "description_length": 616,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Opus_decoder",
-      "library": "opus.decoder",
-      "description": "This module implements an Opus audio decoder for use with the Ogg_demuxer module. It provides a reference to the decoder's sample rate and a function to register the decoder. It is used to decode Opus-encoded audio streams extracted from Ogg containers.",
-      "description_length": 253,
+      "description": "This module handles Opus audio encoding and decoding with specific support for OGG containers. It provides types for bandwidth selection and direct control over encoder and decoder parameters through control commands. The Decoder module converts Opus streams into PCM data, while the Encoder module prepares audio for streaming or storage using configurable bitrate and signal settings.",
+      "description_length": 386,
       "index": 3,
       "embedding_norm": 0.9999999403953552
     }
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 616,
-    "min_description_length": 253,
-    "avg_description_length": 417.75,
-    "embedding_file_size_mb": 0.014927864074707031
+    "max_description_length": 406,
+    "min_description_length": 374,
+    "avg_description_length": 385.0,
+    "embedding_file_size_mb": 0.05844593048095703
   }
 }

@@ -1,103 +1,103 @@
 {
   "package": "mindstorm-lwt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:07:21.732483",
+  "creation_timestamp": "2025-08-14T23:12:52.978664",
   "modules": [
     {
       "module_path": "Mindstorm_lwt.NXT.Sensor.Ultrasonic",
       "library": "mindstorm-lwt",
-      "description": "This module initializes and controls an ultrasonic sensor connected to an NXT brick's input port using Lwt for asynchronous communication. It supports configuring the sensor's mode (off, measurement, continuous measurement, event detection, reset), setting calibration values (zero offset, scale multiplier/divider), and retrieving raw byte readings or internal configuration values. Concrete use cases include obstacle detection, distance measurement, and sensor calibration in robotics applications.",
-      "description_length": 501,
+      "description": "This module initializes and controls an ultrasonic sensor connected to an NXT brick via I2C, allowing configuration of its mode and parameters. It supports reading raw sensor data bytes, adjusting measurement intervals, and retrieving the sensor's current state. Concrete use cases include obstacle detection, distance measurement, and triggering actions based on proximity in robotics applications.",
+      "description_length": 399,
       "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mindstorm_lwt.NXT.USB",
+      "library": "mindstorm-lwt",
+      "description": "This module lists available LEGO NXT devices connected via USB and establishes connections to them. It provides `bricks` to enumerate NXT devices and `connect` to open a communication channel with a specific device. Concrete use cases include detecting plugged-in NXT bricks and initiating USB-based control for robotics applications.",
+      "description_length": 334,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mindstorm_lwt.NXT.Sensor",
       "library": "mindstorm-lwt",
-      "description": "This module manages sensor input ports on the NXT brick, supporting sensor types such as light, temperature, sound, and color, with configuration options for sensor modes and data retrieval. It enables tasks like reading processed or raw sensor values, detecting colors, and handling I2C communication, while also supporting legacy RCX sensors. A child module extends this functionality to ultrasonic sensors, allowing asynchronous control via Lwt, mode configuration for measurement or event detection, and calibration for accurate distance readings. Together, they provide a comprehensive interface for interacting with a wide range of analog and digital sensors in robotic applications.",
-      "description_length": 689,
-      "index": 1,
+      "description": "This module configures and reads data from sensors connected to the NXT brick's input ports, supporting sensor types like light, temperature, sound, and color, as well as low-speed I2C devices such as the ultrasonic sensor. It allows setting sensor type and mode, retrieving raw and scaled data, and performing low-level I2C communication for custom sensor interaction. Concrete use cases include reading color values from a color sensor, measuring distance with an ultrasonic sensor, and detecting button presses or light levels for real-time robotics control.",
+      "description_length": 561,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mindstorm_lwt.NXT.Message",
       "library": "mindstorm-lwt",
-      "description": "This module sends and receives messages to and from specific mailboxes on a connected NXT device using Lwt for asynchronous communication. It operates on mailbox and remote types, representing message queues on the NXT, and handles string-based message payloads. Use this module to interact with running programs on the NXT that are designed to receive or send messages through predefined mailboxes.",
-      "description_length": 399,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mindstorm_lwt.NXT.Motor",
-      "library": "mindstorm-lwt",
-      "description": "This module controls Lego Mindstorm NXT motor outputs through an Lwt interface, allowing asynchronous configuration of motor parameters like speed, braking, and regulation modes. It operates on motor ports A, B, C, or all simultaneously, using a structured state type that includes power level, rotation limits, and run behavior. Concrete use cases include setting a motor to rotate at a specific speed with braking enabled, querying a motor's current state and tachometer values, or resetting a motor's position counter for precise movement tracking.",
-      "description_length": 551,
+      "description": "This module sends and receives messages to and from a running Lego Mindstorm NXT program using Bluetooth communication. It operates on mailbox and remote types representing message queues, with functions to write to and read from these queues. Concrete use cases include sending control commands to the NXT brick or retrieving sensor data from a running program.",
+      "description_length": 362,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mindstorm_lwt.NXT.Sound",
-      "library": "mindstorm-lwt",
-      "description": "This module plays sound files and tones on a connected Lego Mindstorm NXT brick. It supports playing `.rso` sound files, stopping playback, and generating tones with specified frequency and duration. Concrete use cases include triggering audio feedback during robot operations or playing alerts based on sensor input.",
-      "description_length": 317,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mindstorm_lwt.NXT.Program",
       "library": "mindstorm-lwt",
-      "description": "Starts, stops, and queries the status of programs on a connected Lego Mindstorm NXT brick. Works with program names as strings and a connection handle. Useful for managing execution of compiled `.rxe` programs, such as launching a specific behavior or checking which program is currently active.",
-      "description_length": 295,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mindstorm_lwt.NXT.USB",
-      "library": "mindstorm-lwt",
-      "description": "This module lists available LEGO NXT devices connected via USB and establishes connections to them. It provides `bricks` to retrieve USB devices and `connect` to link to a specific NXT brick. Use cases include detecting connected NXT hardware and initiating USB communication for control or data retrieval.",
-      "description_length": 306,
-      "index": 6,
+      "description": "This module controls program execution on a connected Lego NXT brick, allowing programs to be started, stopped, and queried by name. It operates on a connection type representing a link to the brick, interacting directly with `.rxe` program files. Use this module to launch specific programs, halt execution, or check which program is currently running.",
+      "description_length": 353,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mindstorm_lwt.NXT.Find",
       "library": "mindstorm-lwt",
-      "description": "This module provides operations to search for and iterate over files on a connected Lego NXT brick using wildcard patterns. It supports listing, inspecting, and processing files with functions to retrieve filenames, their sizes, and advance through matches. Concrete use cases include scanning for log files, retrieving sensor data files, or managing stored programs on the device.",
-      "description_length": 381,
+      "description": "This module provides operations to search for and iterate over files on a connected Lego NXT brick using wildcard patterns. It supports listing, inspecting, and processing files with functions like `patt`, `next`, and `iter`, and allows extracting metadata such as file size. Concrete use cases include scanning for log files, retrieving sensor data files, or managing firmware updates by matching specific naming conventions on the device.",
+      "description_length": 440,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mindstorm_lwt.NXT.Motor",
+      "library": "mindstorm-lwt",
+      "description": "This module controls Lego Mindstorm NXT motor outputs through Lwt-based asynchronous operations. It defines motor port values (A, B, C), regulation modes, and run states, and provides functions to set motor states, retrieve motor feedback, and reset position counters. Concrete use cases include setting motor speed and direction with optional braking, synchronizing motors, and reading tachometer values for precise movement control.",
+      "description_length": 434,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mindstorm_lwt.NXT.Sound",
+      "library": "mindstorm-lwt",
+      "description": "This module plays `.rso` sound files and generates tones on a connected Lego Mindstorm NXT brick using an Lwt interface. It supports playing and stopping audio files, as well as producing custom tones with specified frequency and duration. Concrete use cases include triggering alerts, feedback sounds, or simple melodies during robotics operations.",
+      "description_length": 349,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mindstorm_lwt.NXT",
       "library": "mindstorm-lwt",
-      "description": "This module integrates sensor management, motor control, sound playback, program execution, and file operations for interacting with LEGO NXT devices. It supports direct manipulation of sensors through configurable ports, asynchronous motor adjustments, and audio feedback, while enabling communication with NXT programs via mailboxes. Users can detect and connect to devices over USB, manage files stored on the brick, and handle I2C and legacy sensor protocols. Specific tasks include reading color sensor data, playing alert tones, starting NXT programs remotely, and scanning for log files using pattern matching.",
-      "description_length": 617,
+      "description": "This module enables asynchronous control of Lego NXT devices through USB or Bluetooth, offering operations for motor and sensor management, program execution, sound playback, and inter-device messaging. It handles file system operations on the brick, metadata queries (battery, firmware), and connection-specific tasks like Bluetooth resets or firmware updates via USB. Designed for robotics applications, it supports real-time interaction scenarios such as remote control over Bluetooth or bulk data transfers during USB-connected maintenance tasks.",
+      "description_length": 550,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mindstorm_lwt_connect.USB",
       "library": "mindstorm-lwt",
-      "description": "This module manages connections to USB devices, specifically LEGO NXT bricks. It provides operations to list available USB devices and establish connections with them. The `bricks` function retrieves a list of detected USB devices, while `connect` opens a communication channel to a specified device, optionally checking its status with a custom function.",
-      "description_length": 355,
+      "description": "This module manages USB device connections, providing operations to list available devices and establish connections with status checks. It works with USB device structures and handles asynchronous communication using Lwt. Concrete use cases include connecting to LEGO NXT bricks over USB and monitoring device status during communication.",
+      "description_length": 339,
       "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mindstorm_lwt_connect",
+      "library": "mindstorm-lwt",
+      "description": "This module connects to Bluetooth and USB devices, supporting asynchronous communication with LEGO NXT bricks. It provides functions to send and receive data packages, check device status, and manage connections with locking for atomic operations. Concrete use cases include sending commands to and reading responses from NXT devices over Bluetooth or USB, with precise handling of package formats and status checks.",
+      "description_length": 416,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mindstorm_lwt",
       "library": "mindstorm-lwt",
-      "description": "This module enables full control over LEGO NXT devices through an Lwt interface, integrating sensor input, motor output, sound playback, and program interaction. Key data types include ports for sensors, motors, and mailboxes, with operations for asynchronous reading, configuration, and execution. Users can connect to NXT bricks over USB, read color or I2C sensor values, play sounds, start programs remotely, and manage files on the device using pattern-based searches. For example, you can detect a color sensor\u2019s input, trigger a motor response, and log data to a file on the NXT brick\u2014all concurrently.",
-      "description_length": 608,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mindstorm_lwt_connect",
-      "library": "mindstorm-lwt",
-      "description": "This module enables asynchronous communication with LEGO Mindstorms devices over Bluetooth and USB, coordinating low-level device connections with protocol handling. It supports establishing and managing connections using Lwt, sending and receiving binary data with proper formatting, and includes USB-specific functionality for NXT bricks. The `bricks` function lists connected USB devices, `connect` initiates a connection with a device, and custom status checks can be applied during connection setup. It is used to send commands to and read sensor data from NXT or EV3 bricks in robotics applications.",
-      "description_length": 605,
+      "description": "This module provides asynchronous operations for controlling Lego NXT devices over USB or Bluetooth, including motor and sensor management, program execution, sound playback, and inter-device messaging. It supports file system operations on the brick, battery and firmware queries, and connection management tasks like Bluetooth resets and firmware updates. Concrete use cases include remote control of robots over Bluetooth and automated maintenance tasks during USB connections.",
+      "description_length": 480,
       "index": 11,
       "embedding_norm": 1.0
     }
@@ -109,9 +109,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 689,
-    "min_description_length": 295,
-    "avg_description_length": 468.6666666666667,
-    "embedding_file_size_mb": 0.04400157928466797
+    "max_description_length": 561,
+    "min_description_length": 334,
+    "avg_description_length": 418.0833333333333,
+    "embedding_file_size_mb": 0.17438697814941406
   }
 }

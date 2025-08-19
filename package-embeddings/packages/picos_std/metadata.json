@@ -1,32 +1,24 @@
 {
   "package": "picos_std",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 22,
-  "creation_timestamp": "2025-07-15T23:12:06.055753",
+  "creation_timestamp": "2025-08-15T12:21:15.708543",
   "modules": [
-    {
-      "module_path": "Picos_std_event.Event",
-      "library": "picos_std.event",
-      "description": "This module implements a composable abstraction for handling synchronous, cancelable events that represent future or concurrent actions. It provides operations like `choose` to offer multiple events, `wrap` and `map` to transform event results, and `sync` to wait for an event's outcome. It works with event values, requests, and computations, enabling concrete use cases such as coordinating concurrent I/O operations or managing timed or conditional event synchronization.",
-      "description_length": 474,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Picos_std_event",
-      "library": "picos_std.event",
-      "description": "This module provides a composable abstraction for handling synchronous, cancelable events that represent future or concurrent actions. It supports key operations like `choose` to offer multiple events, `wrap` and `map` to transform event results, and `sync` to wait for an event's outcome. The main data types include event values, requests, and computations, enabling precise coordination of concurrent I/O, timed events, and conditional synchronization. For example, it can be used to manage parallel network requests or implement timeouts for long-running operations.",
-      "description_length": 570,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
     {
       "module_path": "Picos_std_finally",
       "library": "picos_std.finally",
-      "description": "This module provides syntax and primitives for safely managing resource acquisition and release, ensuring resources are properly released even in the presence of exceptions or fiber cancellation. It works with resource types wrapped in `instance` values, supporting operations like borrowing, transferring, and dropping resources between fibers. Concrete use cases include writing robust network servers where resources like client connections must be reliably released after handling, even when fibers are canceled or errors occur.",
-      "description_length": 532,
-      "index": 2,
+      "description": "This module provides syntax and utilities for safely managing resource acquisition and release in the presence of cancellation, ensuring resources are properly released even when exceptions or cancellations occur. It operates on resource values of arbitrary type `'r` and encapsulates them in `instance` structures that track ownership and handle cleanup. Concrete use cases include writing robust network servers where client-handling fibers may be canceled, ensuring opened connections or files are reliably closed, and safely transferring resource ownership between fibers without leaks.",
+      "description_length": 590,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Picos_std_sync.Semaphore.Counting",
+      "library": "picos_std.sync",
+      "description": "This module implements counting semaphores for concurrency control, supporting operations to initialize, acquire, release, and query the semaphore state. It works with the `t` type representing the semaphore and uses integer values to track available resources. Concrete use cases include limiting concurrent access to a fixed number of resources, such as database connections or thread pools, and coordinating task execution in event-driven systems.",
+      "description_length": 450,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
@@ -34,63 +26,7 @@
       "library": "picos_std.sync",
       "description": "This module implements a binary semaphore synchronization primitive, which allows threads to coordinate access to a shared resource with strict mutual exclusion. It supports operations to acquire, release, and attempt to acquire the semaphore, each modifying the internal state atomically. Use cases include protecting access to a critical section, signaling between concurrent tasks, or limiting execution to a single active thread at a time.",
       "description_length": 443,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Picos_std_sync.Semaphore.Counting",
-      "library": "picos_std.sync",
-      "description": "This module implements counting semaphores with operations to create, acquire, release, and query the semaphore's state. It works with the `t` type representing the semaphore and supports concurrent coordination by controlling access to a shared resource based on a counter. Concrete use cases include limiting concurrent access to a fixed number of resources, such as database connections or thread pools, and synchronizing task execution in event-driven systems.",
-      "description_length": 464,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Picos_std_sync.Ivar",
-      "library": "picos_std.sync",
-      "description": "This module implements single-assignment variables that support both value assignment and exception-based poisoning, with operations to read, fill, or poison the variable in a thread-safe manner. It works with generic values of type `'a` and exceptions, allowing synchronization between concurrent tasks by blocking reads until a result or error is available. Concrete use cases include coordinating task completion, propagating errors across threads, and implementing one-time initialization patterns in concurrent programs.",
-      "description_length": 525,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Picos_std_sync.Semaphore",
-      "library": "picos_std.sync",
-      "description": "This module provides synchronization primitives for coordinating concurrent execution using both binary and counting semaphores. The binary semaphore enforces mutual exclusion with acquire and release operations, ensuring only one thread accesses a critical section at a time, while the counting semaphore controls access to a pool of resources using a counter. You can use the binary semaphore to protect shared data structures or signal between tasks, and the counting semaphore to limit concurrent database connections or manage worker threads in a pool. Both support non-blocking attempts to acquire, enabling fine-grained control over concurrency.",
-      "description_length": 652,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Picos_std_sync.Latch",
-      "library": "picos_std.sync",
-      "description": "This module implements a dynamic single-use countdown latch for coordinating parallel computations. It supports operations to increment or decrement a counter, block until the counter reaches zero, and register events for notification. It is used to track completion of a dynamically determined number of tasks, such as signaling when a group of concurrent jobs has finished execution.",
-      "description_length": 385,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Picos_std_sync.Stream",
-      "library": "picos_std.sync",
-      "description": "This module implements a concurrent, lock-free stream with multiple producers and consumers, supporting operations to push values, tap into the stream at a specific position, and read or peek values either immediately or by waiting for new data. It works with generic data types through polymorphic stream and cursor structures, enabling precise control over stream positions and error propagation via poisoning. Concrete use cases include building event-driven pipelines, coordinating asynchronous tasks through shared state updates, and implementing backpressure-aware communication channels between concurrent components.",
-      "description_length": 624,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Picos_std_sync.Mutex",
-      "library": "picos_std.sync",
-      "description": "This module provides mutual-exclusion locks with standard operations: creating, locking, unlocking, and protecting a critical section. It works with the `t` type representing a mutex, supporting both blocking and non-blocking acquisition via `lock` and `try_lock`. Concrete use cases include synchronizing access to shared resources like counters, caches, or stateful devices in concurrent programs.",
-      "description_length": 399,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Picos_std_sync.Condition",
-      "library": "picos_std.sync",
-      "description": "This module provides condition variables for thread synchronization, supporting operations to wait for a condition while releasing a mutex, signal a single waiting thread, or broadcast to all waiting threads. It works with mutexes and fibers in a concurrent environment, enabling coordination between threads. Concrete use cases include implementing producer-consumer patterns or synchronizing access to shared resources based on state changes.",
-      "description_length": 444,
-      "index": 10,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
@@ -98,86 +34,150 @@
       "library": "picos_std.sync",
       "description": "This module implements lazy suspensions that can be safely forced concurrently from multiple fibers or domains without raising exceptions. It provides operations to create suspensions from functions or values, check if a suspension has been evaluated, and force evaluation with result caching. Use cases include deferring expensive computations until needed and sharing asynchronous results across concurrent tasks.",
       "description_length": 415,
-      "index": 11,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Picos_std_sync.Mutex",
+      "library": "picos_std.sync",
+      "description": "This module provides mutual exclusion locks with operations to create, lock, unlock, and conditionally lock a mutex. It works with the `t` type representing mutex instances, supporting concurrent access control in a fiber-based scheduler. Concrete use cases include synchronizing access to shared resources like counters, caches, or state variables across concurrent fibers.",
+      "description_length": 374,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Picos_std_sync.Ivar",
+      "library": "picos_std.sync",
+      "description": "This module implements a single-assignment variable that supports both value assignment and exception-based poisoning, with operations to read, wait for, or inspect the variable's state. It works with arbitrary values of type `'a` and exceptions, along with backtrace information for precise error reporting. Concrete use cases include synchronizing completion of concurrent tasks, signaling errors across threads, and building higher-level async workflows where a one-time result needs to be shared and awaited.",
+      "description_length": 512,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Picos_std_sync.Condition",
+      "library": "picos_std.sync",
+      "description": "This module provides condition variables for thread synchronization, allowing fibers to wait for specific conditions to be signaled. It supports operations to wait on a condition (releasing a mutex while waiting), signal a single waiting fiber, or broadcast to all waiting fibers. These primitives are useful for coordinating access to shared resources in concurrent programs, such as implementing producer-consumer patterns or synchronizing state changes across multiple fibers.",
+      "description_length": 479,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Picos_std_sync.Stream",
+      "library": "picos_std.sync",
+      "description": "This module implements a lock-free, poisonable, many-to-many stream for concurrent data exchange. It supports operations to create a stream, push values, poison the stream with an exception, and tap into the stream to obtain a cursor for reading from a specific position. Readers can use `peek_opt` for non-blocking reads, `read` for blocking reads, and `read_evt` to get an event-based interface for asynchronous consumption.",
+      "description_length": 426,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Picos_std_sync.Latch",
+      "library": "picos_std.sync",
+      "description": "This module implements a dynamic single-use countdown latch for coordinating parallel computations. It supports operations to increment or decrement a counter, wait until the counter reaches zero, and check the success of counter modifications. Concrete use cases include synchronizing the completion of a known or dynamically determined number of tasks, such as signaling when a set of concurrent jobs has finished execution.",
+      "description_length": 426,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Picos_std_sync.Semaphore",
+      "library": "picos_std.sync",
+      "description": "This module provides counting and binary semaphores for concurrency control, enabling resource limiting and mutual exclusion. It works with semaphore types that track availability using integer or boolean state. Concrete use cases include managing access to a fixed-size database connection pool with counting semaphores and synchronizing access to critical sections using binary semaphores.",
+      "description_length": 391,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Picos_std_sync",
       "library": "picos_std.sync",
-      "description": "This module provides low-level synchronization and communication primitives for concurrent programming, enabling coordination between tasks through shared state, locks, and signaling mechanisms. Key data types include single-assignment variables for one-time result propagation, semaphores for resource control, mutexes for critical section protection, condition variables for state-based synchronization, countdown latches for parallel task tracking, concurrent streams for multi-producer pipelines, and lazy suspensions for deferred evaluation. You can use these primitives to implement patterns like producer-consumer workflows, coordinated task completion, concurrent resource pools, and event-driven pipelines with precise control over concurrency and error handling. Examples include synchronizing access to a shared counter, propagating computation results across threads, or managing a dynamic set of background jobs.",
-      "description_length": 925,
+      "description": "This module implements synchronization and communication primitives for concurrent programming with fibers and domains. It includes mutexes, condition variables, semaphores, lazy values, latches, single-assignment variables (ivars), and concurrent streams, all designed to coordinate and exchange data between concurrent tasks. Use cases include building bounded queues, deferring computation until needed, signaling task completion, sharing one-time results, and managing resource pools.",
+      "description_length": 488,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Picos_std_event.Event",
+      "library": "picos_std.event",
+      "description": "This module provides first-class synchronous communication abstractions, allowing the composition and synchronization of events that represent future or concurrent actions. It supports operations like `choose` for offering multiple events, `wrap` and `map` for transforming event results, and `sync` for waiting on an event to complete. It works with events parameterized over result types and integrates with computations and requests to model cancellable, composable concurrency.",
+      "description_length": 481,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Picos_std_event",
+      "library": "picos_std.event",
+      "description": "This module implements composable, synchronous event abstractions with support for selecting between multiple events, transforming event results, and waiting for event completion. It operates on events that carry result values, enabling precise control over concurrent and future actions. Concrete use cases include coordinating cancellable operations, handling asynchronous I/O completion, and composing time-based triggers in concurrent systems.",
+      "description_length": 447,
       "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Picos_std_awaitable.Awaitable.Awaiter",
       "library": "picos_std.awaitable",
-      "description": "This module manages awaiters for an awaitable atomic location, supporting low-level synchronization. It provides operations to add and remove awaiters, which are triggered when the awaitable's value changes. These functions enable precise control over waiting threads in scenarios like condition variables or event-driven synchronization.",
-      "description_length": 338,
+      "description": "This module manages awaiters for an awaitable atomic location, supporting asynchronous waiting and signaling. It provides `add` to register an awaiter with a trigger on an awaitable, and `remove` to signal and unregister the awaiter. These operations enable fine-grained synchronization mechanisms like condition variables or event-driven coordination between threads.",
+      "description_length": 368,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Picos_std_awaitable.Awaitable",
       "library": "picos_std.awaitable",
-      "description": "This module implements awaitable atomic locations with operations for reading, writing, and synchronizing shared state across threads or fibers. It supports standard atomic operations like `get`, `set`, `compare_and_set`, and `fetch_and_add`, along with futex-style `await`, `signal`, and `broadcast` for efficient waiting and notification. The child module manages awaiters, allowing precise control over waiting threads by registering and triggering callbacks on value changes. Together, these features enable building low-level concurrency primitives such as locks, condition variables, and event counters with fine-grained synchronization.",
-      "description_length": 643,
+      "description": "This module implements awaitable atomic locations with operations for synchronous communication between fibers. It supports standard atomic operations like `get`, `set`, `compare_and_set`, and `fetch_and_add`, along with futex-style `await`, `signal`, and `broadcast` for blocking and waking fibers based on value changes. Concrete use cases include implementing locks, condition variables, and event-driven coordination where fibers wait for specific state changes before resuming execution.",
+      "description_length": 492,
       "index": 14,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Picos_std_awaitable",
       "library": "picos_std.awaitable",
-      "description": "This module provides awaitable atomic locations for fine-grained synchronization in concurrent programs. It supports standard atomic operations like `get`, `set`, `compare_and_set`, and `fetch_and_add`, along with futex-style `await`, `signal`, and `broadcast` to coordinate threads or fibers efficiently. The module enables precise control over waiting operations through awaiter management, allowing construction of low-level concurrency primitives such as locks, condition variables, and event counters. For example, you can use `await` to pause execution until a specific value is set, then resume it using `signal` or `broadcast` to notify one or all waiting threads.",
-      "description_length": 672,
+      "description": "This module provides atomic operations such as `get`, `set`, `compare_and_set`, and `fetch_and_add`, along with futex-style synchronization primitives like `await`, `signal`, and `broadcast`. It works with atomic values to enable coordination between fibers, allowing them to block and resume execution based on value changes. It is used to build synchronization mechanisms like mutexes and condition variables where fibers wait for specific state transitions.",
+      "description_length": 460,
       "index": 15,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Picos_std_structured.Flock",
+      "module_path": "Picos_std_structured.Control",
       "library": "picos_std.structured",
-      "description": "This module manages a dynamic flock of fibers, providing scoped concurrency with automatic joining and error propagation. It supports operations like `join_after` to create nested scopes, `fork` to spawn fibers within the current flock, and `terminate` to cancel all fibers in the scope. Use cases include structuring concurrent tasks with guaranteed cleanup, handling scoped parallelism, and managing error propagation across multiple fibers.",
-      "description_length": 443,
+      "description": "This module provides operations for managing fiber lifecycle and cancellation in structured concurrency, including yielding control, sleeping, protecting against cancellation, and enforcing timeouts. It works with fibers and exceptions, particularly `Terminate` and `Errors`, to coordinate termination and error handling across concurrent tasks. Concrete use cases include implementing cancellable operations, deferring execution with timeouts, and ensuring cleanup in long-running fibers.",
+      "description_length": 489,
       "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Picos_std_structured.Promise",
       "library": "picos_std.structured",
-      "description": "This module implements cancelable promises for concurrent computation and fiber management, supporting operations to await results, check completion status, and terminate execution. It works with arbitrary values wrapped in a promise type, along with exceptions and timing parameters. Concrete use cases include managing background tasks with controlled cancellation, implementing timeouts on concurrent operations, and coordinating fibers that must complete or be canceled based on external conditions.",
-      "description_length": 503,
+      "description": "This module implements cancelable promises for concurrent computation and fiber management. It supports operations to create completed promises, await their results, check execution status, and terminate running fibers either immediately or after a timeout. Concrete use cases include managing background tasks with explicit cancellation and coordinating asynchronous operations with timeouts.",
+      "description_length": 393,
       "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Picos_std_structured.Bundle",
-      "library": "picos_std.structured",
-      "description": "This module manages dynamic bundles of concurrent fibers, providing structured concurrency with guarantees of fiber termination. It supports operations to fork fibers, handle errors, and manage lifetimes through explicit joining or termination. Concrete use cases include orchestrating scoped concurrency in applications like request processing pipelines or resource-constrained parallel tasks.",
-      "description_length": 394,
-      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Picos_std_structured.Run",
       "library": "picos_std.structured",
-      "description": "This module runs fibers in parallel using two core patterns: `all` waits for all fibers to complete unless one fails (excluding `Terminate`), while `any` waits only for the first fiber to finish or fail, then cancels the rest. It operates on lists of fiber-producing functions, enabling structured concurrency for tasks like parallel computation and cancellation. Use cases include managing concurrent I/O operations, coordinating background tasks, and implementing race conditions where the fastest result wins.",
-      "description_length": 512,
+      "description": "This module runs fibers in parallel using two distinct coordination patterns: `all` waits for all fibers to complete unless one fails (excluding `Terminate`), while `any` waits only for the first fiber to finish or fail, canceling the rest. It operates on lists of fiber-producing functions, coordinating their execution and cancellation based on completion or error. Use `all` to run independent background tasks that must all succeed, and `any` to race fibers and proceed with the first to complete.",
+      "description_length": 501,
+      "index": 18,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Picos_std_structured.Bundle",
+      "library": "picos_std.structured",
+      "description": "This module manages dynamic bundles of fibers, ensuring all forked fibers are joined or terminated when the bundle scope exits. It provides operations to fork fibers, handle errors, and enforce termination either immediately or after a timeout. Concrete use cases include structuring concurrent tasks with scoped lifetimes, such as managing background jobs or parallel computations that must complete or be canceled together.",
+      "description_length": 425,
       "index": 19,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Picos_std_structured.Control",
+      "module_path": "Picos_std_structured.Flock",
       "library": "picos_std.structured",
-      "description": "This module provides low-level control operations for managing fiber execution in structured concurrency, including cancellation checks, yielding, sleeping, and timeout handling. It works directly with fibers and exceptions, enabling precise control over execution flow and resource management. Concrete use cases include implementing custom concurrency patterns, enforcing timeouts on operations, and managing cancellation behavior within fiber-based applications.",
-      "description_length": 465,
+      "description": "This module manages a dynamic flock of fibers, providing operations to delimit concurrency scopes, fork fibers, and handle errors across all fibers in the flock. It works with fibers and promises, ensuring that all forked fibers terminate before returning from `join_after`, and propagating unhandled exceptions to cancel the entire flock. Concrete use cases include structuring concurrent tasks with scoped lifetimes, such as handling multiple network requests within a single request handler or managing background tasks with guaranteed cleanup.",
+      "description_length": 547,
       "index": 20,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Picos_std_structured",
       "library": "picos_std.structured",
-      "description": "This module provides structured concurrency primitives for managing fibers with dynamic scoping, cancellation, and coordination. It supports key data types such as fibers, promises, and fiber bundles, with operations for forking, joining, terminating, awaiting results, and enforcing timeouts. You can use it to implement scoped parallelism with automatic cleanup, coordinate concurrent tasks with `all` or `any` semantics, and manage background computations with cancelable promises. Examples include processing concurrent I/O requests, orchestrating parallel pipelines, and enforcing timeouts on fiber execution.",
-      "description_length": 614,
+      "description": "This module implements structured concurrency primitives for managing fibers, promises, and dynamic task groups. It provides coordinated task lifecycle management, cancellation handling, and scoped parallelism through concrete data structures like bundles and flocks. Use cases include building concurrent network servers with scoped fiber lifetimes, orchestrating background tasks with explicit cancellation, and coordinating parallel computations with failure propagation.",
+      "description_length": 474,
       "index": 21,
       "embedding_norm": 1.0
     }
@@ -189,9 +189,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 925,
-    "min_description_length": 338,
-    "avg_description_length": 519.8181818181819,
-    "embedding_file_size_mb": 0.08038330078125
+    "max_description_length": 590,
+    "min_description_length": 368,
+    "avg_description_length": 457.77272727272725,
+    "embedding_file_size_mb": 0.31918907165527344
   }
 }

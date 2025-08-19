@@ -1,1533 +1,797 @@
 {
   "package": "irmin-layers",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 189,
-  "creation_timestamp": "2025-07-15T23:41:56.257744",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 97,
+  "creation_timestamp": "2025-08-15T17:18:05.903547",
   "modules": [
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Contents.Val",
-      "library": "irmin-layers",
-      "description": "This module defines the value type and merge operation for content stored in a node. It supports versioned data with conflict resolution, handling optional values to represent existence or deletion. Used directly in merging branch contents during commit operations.",
-      "description_length": 265,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Irmin_layers.Make.Private.Commit.Node.Contents.Key",
       "library": "irmin-layers",
-      "description": "This module defines key and value types for content addressing in a commit node store, along with hashing operations. It provides functions to compute deterministic keys from values, generate short hashes for efficient lookups, and specifies the size of hash outputs. Concrete use cases include content-based addressing in version control systems and efficient hash table indexing for node contents.",
-      "description_length": 399,
+      "description": "This module defines key operations for managing content identifiers in a hash-based storage system. It provides functions to generate deterministic keys from values, compute short hashes for efficient lookup, and retrieve the size of hash outputs. These operations are used to uniquely identify and efficiently access stored content values within the node store.",
+      "description_length": 362,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Commit.Node.Contents.Val",
+      "library": "irmin-layers",
+      "description": "This module defines the value type and merge operation for content stored in a node. It supports merging user-defined content values with conflict resolution, handling deletions and missing keys via `None`. It is used directly in commit operations to reconcile changes between different versions of a node's contents.",
+      "description_length": 317,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Contents.Key",
       "library": "irmin-layers",
-      "description": "This module defines key operations for managing content identifiers in a store, including hashing values into keys and computing shorter hashes for efficient lookups. It works with `t` as the key type and `value` as the content type, primarily used for content-based addressing. Concrete use cases include generating deterministic keys from content values and using short hashes for in-memory indexing.",
+      "description": "This module defines key operations for managing content identifiers in a content-addressable store. It provides functions to compute deterministic hashes from values, generate short hashes for efficient lookup, and exposes the size of hash outputs. These operations are used to uniquely identify stored contents using their cryptographic hash, enabling efficient and collision-resistant data retrieval.",
       "description_length": 402,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Commit.Node.Contents.Val",
-      "library": "irmin-layers",
-      "description": "This module defines the value type and merge operation for contents in the node store. It supports versioned data with a merge function that handles conflicts and deletions during branch merges. It is used directly by the commit backend to manage content evolution in a Git-like DAG structure.",
-      "description_length": 293,
-      "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Key",
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Contents.Val",
       "library": "irmin-layers",
-      "description": "This module defines operations for generating and handling node keys, including hashing values into keys and computing shorter hashes for efficient lookups. It works with node keys and values from the underlying node store. Concrete use cases include key generation for node storage and fast hash-based comparisons in data structures like Hashtbl.",
-      "description_length": 347,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Node.Contents.Key",
-      "library": "irmin-layers",
-      "description": "This module defines key operations for managing content identifiers in a node store, including hashing values into keys and computing short hashes for efficient lookups. It works with `t` as the key type and `value` as the content type, alongside standard hash functions and size constants. Concrete use cases include generating deterministic keys from content values and using short hashes for in-memory indexing structures like hash tables.",
-      "description_length": 442,
-      "index": 5,
+      "description": "This module defines the value type and merge operation for content stored in the node contents store. It supports versioned data with conflict resolution, handling optional values to represent absent keys during merges. It is used directly in commit operations to manage content state across branches.",
+      "description_length": 301,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make.Private.Commit.Node.Metadata",
       "library": "irmin-layers",
-      "description": "This module defines the metadata type and operations for node metadata, including a default value and a merge function. It works with the metadata type `t` used in node storage. Concrete use cases include merging node metadata during commit operations and providing a standard metadata value when none is specified.",
-      "description_length": 315,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type used in node operations and provides a default value for metadata when not specified. It includes a merge function tailored for combining metadata values during node updates. The metadata supports versioned data tracking and is essential for maintaining context in node-based data structures.",
-      "description_length": 330,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Val",
-      "library": "irmin-layers",
-      "description": "This module provides functions to construct, modify, and hash Merkle tree nodes that can represent either internal nodes with child references or leaf nodes containing key-value pairs and metadata. It supports operations like cryptographic hashing, proof generation/conversion, depth-limited node reconstruction, and cache-aware traversal, while handling metadata updates and read-side effects. These capabilities enable efficient integrity checks, partial data verification, and optimized node management in layered storage systems.",
-      "description_length": 533,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Commit.Node.Path",
-      "library": "irmin-layers",
-      "description": "This module implements path manipulation operations for node structures, using step-based sequences to represent hierarchical locations. It supports creating paths from step lists, checking emptiness, and modifying paths by adding or removing steps at either end. These operations enable precise navigation and transformation of node hierarchies in backend storage systems.",
-      "description_length": 373,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Commit.Node.Val",
-      "library": "irmin-layers",
-      "description": "This module supports operations for constructing, modifying, and hashing node values in a Merkle tree structure, which encapsulate step-value pairs, metadata, and cryptographic hashes. It enables depth-limited tree reconstruction via proofs, handles recursive read effects for immutable data traversal, and facilitates caching control and paginated access to large datasets. Key use cases include version-controlled storage systems, distributed data synchronization with cryptographic integrity guarantees, and efficient partial tree validation in resource-constrained environments.",
-      "description_length": 582,
-      "index": 10,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Commit.Node.Key",
-      "library": "irmin-layers",
-      "description": "This module defines key operations for node keys in the commit store, including hashing values into keys and generating short hashes for efficient lookups. It works with node keys and values, providing deterministic key generation and hash functions. Concrete use cases include storing and retrieving node data in a hash table or persisting node keys in a backend.",
-      "description_length": 364,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Node.Contents.Val",
-      "library": "irmin-layers",
-      "description": "This module defines the value type and merge operation for contents stored in a node. It provides the base structure and conflict-handling logic for user-defined content values during merges. It is used directly in node-level operations where content values must be compared, combined, or resolved during version control operations like branch merging.",
-      "description_length": 352,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Path",
-      "library": "irmin-layers",
-      "description": "This module implements path manipulation operations for node structures, using a list of steps to represent paths. It supports creating, inspecting, and transforming paths with functions like `v`, `is_empty`, `cons`, `rcons`, `decons`, `rdecons`, and `map`. These operations enable efficient traversal and modification of node paths in the commit store.",
-      "description_length": 353,
-      "index": 13,
+      "description": "This module defines the metadata type and operations for node metadata, including a default value and a merge function. It works with the `t` type, representing metadata associated with nodes in the commit graph. It is used to handle metadata during node creation or updates when the specific metadata is not provided by higher-level APIs.",
+      "description_length": 339,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make.Private.Commit.Node.Contents",
       "library": "irmin-layers",
-      "description": "This module implements a content-addressable store using hash-based keys to manage versioned node contents in a persistent storage system. It provides core operations like `mem`, `find`, `add`, `unsafe_add`, `clear`, and `merge`, enabling efficient storage, retrieval, and conflict resolution of values identified by their content. The store uses key and value types defined in its first child module, which includes hashing functions for deterministic key generation and short hash computation. The second child module enhances it with version-aware merge logic, ensuring consistent handling of content updates and deletions across branches in a commit graph.",
-      "description_length": 660,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Contents",
-      "library": "irmin-layers",
-      "description": "This module provides a content-addressable store where values are identified by keys derived from their data, supporting operations like `mem`, `find`, `add`, and merging. It manages low-level data objects such as file contents or tree nodes, ensuring consistent and efficient access in versioned or Merkle-based systems. The store uses a versioned value type with conflict resolution and an optional presence flag, enabling operations like merge during commit processes. Keys are deterministically generated from values, with support for short hashes to optimize in-memory indexing and lookups.",
-      "description_length": 595,
-      "index": 15,
+      "description": "This module implements a content-addressable store using hash-derived keys to manage node content values. It supports operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) values, along with merging values through key resolution. It is used to store and retrieve node contents in a way that ensures deterministic key-value associations.",
+      "description_length": 372,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_layers.Make.Private.Node.Contents.Val",
+      "module_path": "Irmin_layers.Make.Private.Commit.Node.Val",
       "library": "irmin-layers",
-      "description": "This module defines the value type and merge operation for contents stored in a node. It supports versioned data with conflict resolution, handling existence and deletion through optional values. Useful for managing structured data like configuration files or version-controlled documents where merges must resolve differences or remove entries.",
-      "description_length": 345,
-      "index": 16,
+      "description": "This module implements Merkle tree node operations for structured data integrity, providing functions to construct and manipulate hierarchical node values composed of key-value pairs and nested sub-values. It supports cryptographic hash computation, proof generation, and metadata-aware transformations on node states, enabling efficient verification and versioned data management in distributed systems. The operations are optimized for paginated traversal and depth-constrained proof conversion, with applications in blockchain state verification and content-addressable storage.",
+      "description_length": 581,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Commit.Node.Key",
+      "library": "irmin-layers",
+      "description": "This module defines key operations for node values, including hashing to generate deterministic keys and producing shorter hashes for efficient lookups. It works directly with node keys and values, using a fixed-size hash output. Concrete use cases include generating compact identifiers for node storage and enabling hash-based indexing in data structures like hashtables.",
+      "description_length": 373,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Key",
+      "library": "irmin-layers",
+      "description": "This module defines key operations for node keys in the commit store, including hashing values into keys, computing short hashes, and providing the size of hash results. It works with node keys and values, supporting efficient key generation and hash-based lookups. Concrete use cases include managing node identity and enabling hash-based indexing in storage backends.",
+      "description_length": 369,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Val",
+      "library": "irmin-layers",
+      "description": "This module provides functions to construct, modify, and hash Merkle tree nodes composed of steps that map to child nodes or metadata-annotated contents, supporting operations like key-value insertion, cryptographic proof conversion, and depth-limited traversal via effect handlers. It works with structured types such as `proof`, `head`, and `effect`, which enable verifiable incremental traversals and bounded-resolution node operations. These capabilities are used in distributed systems for tasks like cryptographic verification, efficient tree synchronization, and handling hierarchical data with provable consistency.",
+      "description_length": 623,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make.Private.Node.Contents.Key",
       "library": "irmin-layers",
-      "description": "This module defines key operations for managing content identifiers in a node store. It provides functions to compute deterministic hashes from values, generate short hashes for efficient lookups, and specifies the data types for keys and values. It is used to uniquely identify and efficiently reference stored node contents.",
-      "description_length": 326,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Node.Contents",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for managing versioned node contents with deterministic keys derived from values. It supports storing, retrieving, and merging structured data, using hashes to uniquely identify immutable content and track changes across versions. Operations like `mem`, `find`, `add`, and `unsafe_add` enable efficient access and modification, while child modules define merge strategies and hashing schemes for consistent key generation. It can manage configuration files, version-controlled documents, or any structured data requiring conflict resolution and content-based addressing.",
-      "description_length": 621,
-      "index": 18,
+      "description": "This module defines key operations for managing content identifiers in a node store, including hashing values into keys and computing shorter hashes for efficient lookups. It works with `t` as the key type and `value` as the content type, both specific to the contents store. It is used to generate deterministic keys from content values and to create compact hashes for use in hash tables.",
+      "description_length": 390,
+      "index": 10,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_layers.Make.Private.Branch.Key",
+      "module_path": "Irmin_layers.Make.Private.Node.Contents.Val",
       "library": "irmin-layers",
-      "description": "This module defines the key type for branch names and provides validation operations. It includes a predefined `master` branch key and a function to check if a branch key is valid. It works directly with branch keys in the context of a branch store, ensuring correct handling of branch identifiers in backend operations.",
-      "description_length": 320,
-      "index": 19,
+      "description": "This module defines the value type and operations for contents stored in a node, including a merge function for resolving conflicts during version merges. It works with optional values of type `t`, representing stored contents, and supports deletion by returning `None`. It is used to manage user-defined content values within the node store during version control operations.",
+      "description_length": 376,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_layers.Make_ext.Private.Contents.Val",
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Path",
       "library": "irmin-layers",
-      "description": "This module defines the value type and merge operation for content stored in a backend. It supports merging user-defined content values, handling conflicts and deletions during version control operations. It is used directly by backends to manage content evolution in a repository.",
-      "description_length": 281,
-      "index": 20,
+      "description": "This module implements path manipulation operations for node stores, handling path construction, decomposition, and transformation. It works with abstract path (`t`) and step (`step`) types, supporting operations like prepending/appending steps, checking emptiness, and mapping over path components. Concrete use cases include building and traversing hierarchical node paths in a commit store backend.",
+      "description_length": 401,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Node.Contents.Val",
+      "library": "irmin-layers",
+      "description": "This module defines the value type and operations for contents stored in a node, including a merge function for resolving conflicts during version merges. It works with optional values of type `t`, representing content that may be absent. It is used to handle user-defined content values during merge operations in a version-controlled store.",
+      "description_length": 342,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Node.Contents.Key",
+      "library": "irmin-layers",
+      "description": "This module defines key operations for managing content identifiers in a node store. It provides functions to generate deterministic keys from values, compute short hashes for efficient lookups, and specifies the structure of keys and values. It is used to handle content-based addressing in the node store, ensuring efficient and consistent key management for stored values.",
+      "description_length": 375,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Metadata",
+      "library": "irmin-layers",
+      "description": "This module defines the metadata type and operations for node values, including a default metadata value and a merge function. It works with the `t` type representing metadata values. Used to handle per-node metadata in the commit store, such as timestamps or author information, during merge operations.",
+      "description_length": 304,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node.Contents",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable store for node contents, where keys are cryptographic hashes of values. It supports operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) values, along with merging values through their keys. The store works directly with hash keys and versioned content values, enabling efficient, collision-resistant data management for Irmin's commit and node structures.",
+      "description_length": 438,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Commit.Node.Path",
+      "library": "irmin-layers",
+      "description": "This module implements path manipulation operations for node structures, using a list of steps to represent paths. It supports creating paths from step lists, checking emptiness, prepending/appending steps, and deconstructing paths from either end. These operations are used to navigate and modify hierarchical node data in the commit store.",
+      "description_length": 341,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make_ext.Private.Branch.Val",
       "library": "irmin-layers",
-      "description": "This module computes deterministic hashes from sequences of strings and provides utilities for working with these hashes. It defines a value type `t` for hash digests, along with functions to generate hashes, compute short integer hashes, and retrieve the size of hash digests. It is used to create and manage keys for a branch store, particularly in contexts requiring stable and compact identifiers.",
-      "description_length": 401,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Node.Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type used in node operations and provides essential functions for handling metadata values. It includes a default metadata value for use in APIs that do not require custom metadata, and a merge function tailored for combining metadata during node operations. The module directly supports versioned node metadata management in Irmin backends.",
-      "description_length": 374,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Node.Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type used in node operations and provides essential functions for handling metadata values. It includes a default metadata value for use in APIs that do not require custom metadata, and a merge function tailored for combining metadata during node operations. The module directly supports versioned node management by enabling metadata customization and conflict resolution in specific contexts like branching or merging.",
-      "description_length": 453,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Contents.Key",
-      "library": "irmin-layers",
-      "description": "This module defines key and value types for content addressing, where keys are derived from hashing content. It provides operations to compute deterministic keys from values, generate short hashes for efficient lookups, and access the size of hash outputs. It is used to uniquely identify content in a store based on its value.",
-      "description_length": 327,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Node.Val",
-      "library": "irmin-layers",
-      "description": "This module provides operations to build and manipulate immutable tree-like structures by converting between node values and sequences of step-value pairs, managing metadata and hash computations, and supporting proof-based representations. It works with versioned, hash-identified trees that store key-value pairs and associated metadata, optimized for depth-limited traversal and caching. These capabilities enable use cases like version control systems, cryptographic verification, and efficient storage of hierarchical, append-only data.",
-      "description_length": 541,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Contents.Val",
-      "library": "irmin-layers",
-      "description": "This module defines the value type and merge operation for content stored in a private content store. It supports merging optional values, handling conflicts with descriptive messages, and signaling deletions via `None`. It is used to manage user-defined content values during merge operations in a storage backend.",
-      "description_length": 315,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Commit.Val",
-      "library": "irmin-layers",
-      "description": "This module creates and manipulates commit values, including their node, parents, and info. It works with commit values (`t`) and their hashes (`hash`). Used to construct commits with node references, parent hashes, and metadata, and to access those components for storage or traversal.",
-      "description_length": 286,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Node.Contents",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for managing node contents in a version-controlled system, supporting operations like `mem`, `find`, `add`, and `unsafe_add` to store and retrieve values based on their content-derived keys. It works with a key type `t` and a content type `value`, using hashing to generate deterministic identifiers and enabling efficient lookups through short hashes and in-memory indexing. The value module defines the structure and merge logic for content values, allowing conflict resolution during version control operations such as branch merging. Together, these components enable deterministic storage, retrieval, and merging of node contents in layered backend systems like Irmin.",
-      "description_length": 724,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Commit.Node",
-      "library": "irmin-layers",
-      "description": "This module provides a content-addressable store for immutable node structures, using hash-derived keys to support versioned storage and merge operations across hierarchical data. It offers core functions like `mem`, `find`, `add`, and `merge`, working with node values and keys derived from content hashes, while integrating metadata, path manipulation, and Merkle tree logic from its submodules. You can use it to build and validate versioned tree structures, navigate hierarchical node paths, and perform conflict-free merges during commit operations. The module enables efficient, cryptographically secure storage and retrieval of large, distributed datasets with support for partial validation and paginated access.",
-      "description_length": 720,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Key",
-      "library": "irmin-layers",
-      "description": "This module defines types and operations for handling commit keys in a storage backend. It includes functions to compute deterministic hashes from commit values, generate shortened hash representations, and a predefined type descriptor for serialization. It is used to uniquely identify commit entries in a hash-based store, where each commit is mapped to a fixed-size key derived from its content.",
-      "description_length": 398,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Contents.Key",
-      "library": "irmin-layers",
-      "description": "This module defines key and value types for content-addressed storage, where keys are derived from the content itself using a deterministic hash function. It provides operations to compute and manipulate these keys, including hashing values into keys and generating shorter hashes for efficient lookups. It is used to uniquely identify content in a store based on its value, enabling efficient and consistent data retrieval.",
-      "description_length": 424,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Node.Val",
-      "library": "irmin-layers",
-      "description": "This module provides low-level operations for manipulating version-controlled, immutable node values with support for tree-like structures, key-value pairs, and metadata. It enables constructing and inspecting node representations, converting between sequences and hierarchical layouts, paginating entries, and handling lazy computation via effect handlers, while working directly with hashes, steps (keys), and proof-based serializable forms. These capabilities are optimized for use cases requiring efficient tree manipulation, proof-based validation, and backend storage systems managing large, versioned datasets with caching and incremental loading.",
-      "description_length": 654,
-      "index": 32,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Branch.Val",
-      "library": "irmin-layers",
-      "description": "This module computes deterministic hashes from sequences of strings and provides utilities for handling hash values. It defines a type `t` for hash values, a `hash` function that builds hashes from string sequences, and a `short_hash` function for generating compact hashes suitable for use in OCaml hashtables. It is used to generate store keys in a branch store, ensuring consistent and compact identifiers for values.",
-      "description_length": 420,
-      "index": 33,
+      "description": "This module provides functions to compute and manipulate hash values derived from sequences of strings, specifically for use in store key generation. It defines a deterministic hashing mechanism, a shorter hash variant suitable for hash tables, and the size of hash outputs. These operations are used to uniquely identify branch values through cryptographic hashes, ensuring efficient and collision-resistant key handling.",
+      "description_length": 422,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make_ext.Private.Branch.Key",
       "library": "irmin-layers",
-      "description": "This module defines operations for working with branch keys, including validation and the definition of the master branch. It provides the type `t` for branch keys and checks whether a given key represents a valid branch. Use cases include ensuring branch key integrity and referencing the primary branch in version-controlled systems.",
-      "description_length": 335,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Node.Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for generating and handling node keys derived from node values. It includes functions to compute a deterministic key from a value, produce a short integer hash for use in hash tables, and provides the size of the generated keys. These operations are used to uniquely identify and efficiently reference node values within a store.",
-      "description_length": 360,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Val",
-      "library": "irmin-layers",
-      "description": "This module creates and manipulates commit values, providing functions to construct commits with node hashes, parent hashes, and metadata. It works with commit values (`t`) and hash values (`hash`), exposing accessors to retrieve node, parent, and info fields from a commit. Concrete use cases include building new commit objects during version control operations and extracting metadata or dependencies from existing commits.",
-      "description_length": 426,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable node store for versioned data, using hashes as keys to manage node values with operations like `mem`, `find`, `add`, and `merge`. It supports structured paths, metadata handling, and Merkle tree node construction, enabling efficient storage, retrieval, and version control operations. Child modules handle key generation, metadata merging, Merkle node hashing, path manipulation, and value-based key derivation, allowing tasks like cryptographic integrity checks, path transformation, and conflict-resolving merges. Example uses include building versioned tree structures, verifying partial data proofs, and managing hierarchical node states with metadata-aware operations.",
-      "description_length": 718,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Node.Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for generating and handling node keys derived from node values. It provides functions to compute deterministic hashes, produce shortened hash versions, and specifies the size of hash outputs. These capabilities are essential for uniquely identifying and efficiently managing node data within a storage backend.",
-      "description_length": 341,
-      "index": 38,
+      "description": "This module defines operations for working with branch keys, including validation and type handling. It provides the master branch identifier and checks for valid branch names. Use cases include managing branch key types and ensuring branch validity in storage backends.",
+      "description_length": 270,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make.Private.Commit.Key",
       "library": "irmin-layers",
-      "description": "This module defines operations for generating and handling commit keys, including hashing commit values into keys and computing shorter hashes for use in data structures like hash tables. It works with commit keys and values, where keys are derived from commit content using a deterministic hash function. Concrete use cases include uniquely identifying commits based on their content and efficiently indexing commits in hash-based collections.",
-      "description_length": 444,
+      "description": "This module defines key and value types for commit data, along with hashing operations. It provides functions to compute deterministic keys from commit values, generate short hashes for efficient lookups, and retrieve the size of hash results. It is used to manage commit identifiers and support efficient storage and retrieval in commit stores.",
+      "description_length": 345,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Commit.Val",
+      "library": "irmin-layers",
+      "description": "This module defines and manipulates commit values, including creating commits with info, node references, and parent hashes. It works with commit values (`t`) and hash values (`hash`), providing accessors to retrieve node, parent, and info fields. Concrete use cases include constructing new commits and extracting metadata or structural references from existing commits.",
+      "description_length": 371,
+      "index": 21,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Node.Metadata",
+      "library": "irmin-layers",
+      "description": "This module defines the metadata type and operations for node metadata, including a default value and a merge function. It works with the `metadata` type, providing essential functionality for handling metadata in node stores. Concrete use cases include merging node metadata during conflict resolution and initializing nodes with default metadata when specific values are not provided.",
+      "description_length": 386,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Node.Contents",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable store for managing node contents with deterministic key generation. It supports operations to check existence (`mem`), retrieve (`find`), insert (`add`, `unsafe_add`), clear, and merge values based on their content. The store works with keys derived from values using the `Key` module and handles values conforming to the `Val` module's structure, specifically tailored for version-controlled content with optional and mergeable types.",
+      "description_length": 480,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Contents.Val",
+      "library": "irmin-layers",
+      "description": "This module defines the value type and merge operation for content stored in a key-value store. It supports merging optional values, handling conflicts, and signaling deletions via `None`. It is used directly for managing user-defined content values during versioned state merges.",
+      "description_length": 280,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Contents.Key",
+      "library": "irmin-layers",
+      "description": "This module defines key and value types for content-addressed storage, where keys are derived from the content itself using a deterministic hash function. It provides operations to compute and manipulate these keys, including hashing content to generate keys and producing shorter hashes for efficient in-memory lookups. Concrete use cases include content-based addressing in a version-controlled store and efficient key comparison or storage indexing.",
+      "description_length": 452,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Key",
+      "library": "irmin-layers",
+      "description": "This module defines key operations for handling commit identifiers in a storage backend. It provides functions to generate deterministic keys from commit values, compute short hashes for efficient lookup, and specifies the data types for commit keys and values. It is used to manage unique identifiers for commit objects in a hash-based storage system.",
+      "description_length": 352,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Val",
+      "library": "irmin-layers",
+      "description": "This module defines commit values with their associated metadata, including creation, accessors for node, parents, and info. It works with commit hashes and lists of hashes to represent commit relationships. Used to construct and serialize commit objects in a version-controlled store.",
+      "description_length": 285,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Node.Key",
+      "library": "irmin-layers",
+      "description": "This module defines key and value types for a node store, along with hashing operations. It provides functions to compute deterministic keys from values, generate short hashes for efficient lookups, and retrieve the size of hash outputs. It is used to manage identifiers and hashing in a node store implementation.",
+      "description_length": 314,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Node.Val",
+      "library": "irmin-layers",
+      "description": "This module provides operations to construct, modify, and analyze tree-structured node values, including managing key-value pairs, cryptographic proofs, and paginated sequences. It works with data structures combining hashes, metadata, and structured proofs, enabling use cases like version control systems or distributed data synchronization where cryptographic integrity and efficient hierarchical data access are critical.",
+      "description_length": 425,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Commit.Node",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable node store for Merkle tree structures, using cryptographic hashes as keys. It provides operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) node values, along with utilities for merging, path manipulation, and metadata handling. Concrete use cases include cryptographic verification of tree structures, efficient node storage in version-controlled systems, and synchronization of hierarchical data in distributed backends.",
+      "description_length": 504,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Contents.Key",
+      "library": "irmin-layers",
+      "description": "This module defines key and value types for content addressing, where keys are derived from values using a deterministic hash function. It supports operations to compute and manipulate these keys, including generating a full hash from a value and producing a shorter hash for use in hash tables. Typical use cases include content-based addressing in storage backends and efficient key comparison via the short hash.",
+      "description_length": 415,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Contents.Val",
+      "library": "irmin-layers",
+      "description": "This module defines the value type and merge operation for content stored in a private content store. It supports merging optional values, handling conflicts with descriptive messages, and signaling deletions via `None`. It is used to manage user-defined content values during merge operations in a backend implementation.",
+      "description_length": 322,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Branch.Val",
+      "library": "irmin-layers",
+      "description": "This module provides functions to compute and manipulate hash values derived from sequences of strings, specifically for use in store key generation. It defines operations for producing a deterministic hash and a shortened version suitable for hash tables, along with the size of the full hash in bytes. Concrete use cases include generating compact identifiers for branch values and supporting efficient key comparisons in storage backends.",
+      "description_length": 441,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Branch.Key",
+      "library": "irmin-layers",
+      "description": "This module defines the key type for branch names and provides validation operations. It includes a type `t` for representing branch keys, a function `is_valid` to check their validity, and the `master` value for the default branch. It is used to manage and validate branch identifiers within the branch store.",
+      "description_length": 310,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Node.Val",
+      "library": "irmin-layers",
+      "description": "The module provides functions to construct, inspect, and manipulate node values in a Merkle tree structure, focusing on key-value pairs with optional metadata. It supports operations like hashing, converting between sequences and node representations, and generating cryptographic proofs, while enabling efficient traversal and modification of nodes through recursive read handling and step-based value retrieval. These capabilities are particularly useful for building and validating Merkle trees in distributed systems or cryptographic applications.",
+      "description_length": 551,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Node.Key",
+      "library": "irmin-layers",
+      "description": "This module defines key and value types for a node store, along with hashing operations. It provides functions to compute deterministic keys from values and to generate short hashes for use in hash tables. The module is used to manage unique identifiers for nodes in a content-addressable storage system.",
+      "description_length": 304,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Node.Metadata",
+      "library": "irmin-layers",
+      "description": "This module defines the metadata type and associated operations for node metadata in a private node store. It includes functions for merging metadata values and provides a default metadata instance for use in APIs that do not require custom metadata. The metadata is used to store and manage additional information associated with nodes in the store.",
+      "description_length": 350,
+      "index": 37,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Commit.Node",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable node store with operations to check existence, retrieve, and store values using keys derived from content hashes. It works with node keys and values, supporting efficient lookups and writes while ensuring deterministic key generation for integrity. Concrete use cases include storing Merkle tree nodes, generating cryptographic hashes for versioned data, and enabling hash-based indexing for distributed storage systems.",
+      "description_length": 465,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Node.Contents",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable store for node contents, using hash-based keys derived from values. It supports operations to check existence (`mem`), retrieve (`find`), insert (`add`, `unsafe_add`), clear, and merge node contents. The store works directly with hash keys and content values, handling deterministic key generation and conflict resolution during merges.",
+      "description_length": 381,
       "index": 39,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_layers.Make_ext.Private.Node",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for versioned node data, organizing values through hash-derived keys and supporting existence checks, retrieval, insertion, and deletion. It merges node contents using a three-way conflict resolution strategy, working with structured values composed of metadata, content, and keys handled through its submodules. The metadata submodule manages versioned metadata with a default value and merge logic, while the content submodule stores and retrieves node bodies using deterministic hashing and in-memory indexing. Additional submodules handle low-level node construction, tree manipulation, and key generation, enabling efficient storage, hierarchical traversal, and proof-based validation of versioned datasets in Irmin backends.",
-      "description_length": 781,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Tree.Contents",
-      "library": "irmin-layers",
-      "description": "This module handles lazy content values within a tree structure, providing operations to compute their hash, force their evaluation, and clear cached results. It works with `t` values representing deferred content nodes, which resolve to concrete `contents` or errors. Use it to efficiently manage and access content values in a tree that may not yet be fully loaded, such as when inspecting or modifying nodes in a versioned, in-memory store.",
-      "description_length": 443,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Branch",
-      "library": "irmin-layers",
-      "description": "This module provides an atomic-write store for branch-value mappings, where branches are managed as validated keys and values correspond to hash identifiers. It supports operations like conditional updates, key listing, and change watching, enabling concurrent management of versioned references and hash-based content tracking. The system uses hash digests to uniquely identify content and ensures branch keys adhere to validity constraints, including special handling for the master branch. For example, it can track concurrent updates to named branches while maintaining integrity through atomic operations and validated keys.",
-      "description_length": 629,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Tree.Contents",
-      "library": "irmin-layers",
-      "description": "This module handles lazy content values within a tree structure, providing operations to compute their hash, force their evaluation, and clear cached results. It works with `Tree.Contents.t`, an abstract type representing lazy content values, and interacts with `contents` and `hash` types. Concrete use cases include deferring content retrieval until necessary, verifying content integrity via hashing, and managing memory usage by clearing unused cached values.",
-      "description_length": 463,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Tree.Proof",
-      "library": "irmin-layers",
-      "description": "This module handles the construction and manipulation of tree proofs in Irmin, enabling verifiable computations over immutable trees. It works with tree structures that include contents, nodes, inodes, and extenders, and supports serialization of these structures for proof generation and validation. Concrete use cases include generating compact proofs of tree transformations, verifying state transitions without full storage access, and reconstructing partial trees from proofs.",
-      "description_length": 481,
-      "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.History.V",
-      "library": "irmin-layers",
-      "description": "This module defines vertices in a directed acyclic graph (DAG) representing version history, where each vertex is uniquely labeled and supports comparison, hashing, and equality checks. It operates on commit data structures labeled with metadata, enabling precise tracking and traversal of version histories. Concrete use cases include identifying and comparing commit nodes in a distributed version control system.",
-      "description_length": 415,
-      "index": 45,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private_layer.Hook",
-      "library": "irmin-layers",
-      "description": "This module defines hook values that wrap asynchronous actions, allowing them to be triggered with a value of a generic type `'a`. It works with the `Private_layer.Hook.t` type, which encapsulates these asynchronous callbacks. Concrete use cases include attaching logging or side-effect actions to specific events within a test context, such as tracking updates or errors during repository operations.",
-      "description_length": 401,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.History.V",
-      "library": "irmin-layers",
-      "description": "This module defines vertices in a directed acyclic graph (DAG) representing commit history, where each vertex is uniquely labeled and supports comparison, hashing, and equality checks. It operates on types `t` representing commits and `label` identifying each vertex. Concrete use cases include tracking versioned data in a persistent store, managing branching histories, and enabling efficient lookups in a DAG-based revision control system.",
-      "description_length": 442,
-      "index": 47,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make.History.E",
-      "library": "irmin-layers",
-      "description": "This module defines directed edges in a version-controlled graph, where each edge connects two vertices and carries a label. It provides operations to create edges, retrieve source and destination vertices, and access edge labels. Concrete use cases include modeling dependencies between versioned nodes and tracking labeled transitions in a DAG-based history.",
-      "description_length": 360,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Commit",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for commit data, using hash-derived keys to ensure content integrity and uniqueness. It provides core operations like `mem`, `find`, `add`, and `unsafe_add` for managing commit entries, and supports three-way merging of commit histories. The store relies on submodules for key generation, commit value construction, and node management, enabling tasks such as building versioned trees, resolving merge conflicts, and verifying cryptographic proofs. For example, users can store a commit with its dependencies, retrieve it by its computed hash, or merge divergent commit chains using custom strategies.",
-      "description_length": 652,
-      "index": 49,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Slice",
-      "library": "irmin-layers",
-      "description": "This module implements slice management for Irmin backends, providing operations to create empty slices, add values (contents, nodes, or commits), and iterate over stored values. It works with slice containers holding structured data like key-value pairs for contents, nodes, and commits. It is used to build and traverse partial repository states, such as during export or filtering operations.",
-      "description_length": 395,
-      "index": 50,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make.Tree.Proof",
-      "library": "irmin-layers",
-      "description": "This module generates and manipulates proofs that compactly represent changes to Irmin trees, enabling clients to verify state transitions without accessing the full store. It works with tree structures containing hashes, metadata, and nodes, and supports concrete use cases like verifying computations over versioned file systems or authenticated data structures. Key operations include constructing proofs, extracting pre- and post-state hashes, and converting proofs to trees for validation.",
-      "description_length": 494,
-      "index": 51,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Branch",
-      "library": "irmin-layers",
-      "description": "This module provides an atomic-write store for managing named pointers to hash values, supporting thread-safe operations like test-and-set updates, key listing, and change notifications. It uses branch names as keys and hash values as stored data, with atomic guarantees for consistent updates and efficient lookups. The key module defines valid branch identifiers, including a predefined `master` branch, while the hash module generates deterministic hashes from strings for compact and consistent identifiers. You can use it to track branch heads in a version-controlled system or coordinate shared state across concurrent processes.",
-      "description_length": 635,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.History.E",
-      "library": "irmin-layers",
-      "description": "This module defines a directed edge structure with ordered comparison, supporting creation and access to edge labels and vertices. It works with vertices and labeled edges in a directed acyclic graph (DAG). Concrete use cases include representing version history relationships in a version control system, where edges track transitions between states with associated metadata.",
-      "description_length": 376,
-      "index": 53,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Sync",
-      "library": "irmin-layers",
-      "description": "This module implements low-level synchronization operations for remote stores using URIs. It provides `fetch` and `push` functions to transfer data between local and remote repositories, working with commits, branches, and endpoints. It is used to directly manage remote state synchronization in Irmin backends.",
-      "description_length": 311,
-      "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Tree.Env",
-      "library": "irmin-layers",
-      "description": "This module manages environment-specific tree operations for in-memory, immutable trees with lazy reads and delayed writes. It works with trees that represent transient, non-persistent key-value mappings, optimized for efficient modification and batch persistence. Concrete use cases include staging data changes before committing them to a durable store, such as buffering updates in a versioned key-value store or managing temporary state in a transactional workflow.",
-      "description_length": 469,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Node",
-      "library": "irmin-layers",
-      "description": "This module manages a content-addressable store for versioned node data, combining direct operations like `mem`, `find`, `add`, and `merge` with key derivation, metadata handling, and structured value encoding. It works with keys of type `Hash.t` and structured values that include metadata and contents, using deterministic hashing to index immutable nodes and support efficient retrieval, conflict resolution, and version tracking. Submodules define key generation, metadata merge strategies, value serialization, and tree-based representations, enabling use cases such as version control, cryptographic proofs, and structured data synchronization. Example operations include inserting a node with `add`, retrieving it by its computed key, merging branches with custom metadata rules, and traversing versioned trees with depth-limited caching.",
-      "description_length": 845,
-      "index": 56,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Slice",
-      "library": "irmin-layers",
-      "description": "This module implements operations for creating and manipulating slices, which store collections of versioned data values. It supports adding and iterating over contents, nodes, and commits, each represented as key-value pairs. Slices are used to serialize and manage subsets of repository data, such as during export or transfer operations.",
-      "description_length": 340,
-      "index": 57,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Tree.Env",
-      "library": "irmin-layers",
-      "description": "This module manages environment-specific tree operations for in-memory, immutable trees with lazy reads and delayed writes. It works with trees that represent transient, non-persistent key-value mappings, optimized for efficient modification staging before commit. Concrete use cases include buffering multiple updates to a store, tracking changes like Git's staging area, and ensuring only final writes are persisted on commit.",
-      "description_length": 428,
-      "index": 58,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Sync",
-      "library": "irmin-layers",
-      "description": "Implements low-level synchronization operations for remote stores using URIs. It provides `fetch` and `push` functions to transfer data between local and remote repositories, working with commits, branches, and endpoints. Useful for implementing custom sync workflows between distributed Irmin stores over networked backends.",
-      "description_length": 325,
-      "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private_layer.Hook",
-      "library": "irmin-layers",
-      "description": "This module defines hook values that wrap asynchronous actions, allowing them to be triggered with a value of a given type. It works with functions that take a generic argument and return an Lwt unit promise. Concrete use cases include attaching logging, validation, or side-effect actions to events within a layered Irmin store.",
-      "description_length": 329,
-      "index": 60,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Contents",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store where keys are derived from stored values using a hash function, enabling content integrity and deduplication. It supports operations like `mem`, `find`, `add`, and `merge`, working directly with hash-based keys and values, while its submodules define mergeable value types and key derivation logic. For example, it can store immutable data with guaranteed consistency, resolve conflicts during merges using descriptive logic, and generate compact hashes for efficient lookups. The combination allows building storage backends that ensure data integrity and efficient access through content-based addressing.",
-      "description_length": 659,
-      "index": 61,
-      "embedding_norm": 1.0
-    },
-    {
       "module_path": "Irmin_layers.Make_ext.Private.Contents",
       "library": "irmin-layers",
-      "description": "This module implements a content-addressable store where keys are derived from the content itself, enabling efficient storage and retrieval of immutable data. It provides core operations like `mem`, `find`, `add`, and `merge`, using hash-based keys and values defined by its submodules for deterministic identification and conflict resolution. The key module handles hash computation and representation, while the value module defines content structure and merging logic. Examples include storing versioned file contents or building Merkle trees with automatic deduplication and integrity checks.",
-      "description_length": 596,
-      "index": 62,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private.Repo",
-      "library": "irmin-layers",
-      "description": "This module manages the creation and lifecycle of private repository handles, providing functions to access associated content, node, commit, and branch stores. It works with repository configurations and handles asynchronous operations via Lwt, supporting batched updates across multiple store types. Concrete use cases include initializing a repository with a backend configuration, performing atomic batch operations, and safely closing resources after use.",
-      "description_length": 460,
-      "index": 63,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private.Commit",
-      "library": "irmin-layers",
-      "description": "This module manages a content-addressable store for immutable values, using deterministic hashes to ensure integrity and support efficient merging of versioned data. It provides core operations like `mem`, `find`, `add`, `merge`, and `clear`, working with values and their derived keys, enabling storage and conflict-free merging of structured data such as commit trees. Child modules handle commit construction and access, node storage with Merkle tree integration, and key generation via content-based hashing. You can use it to build versioned hierarchies, validate data integrity, and perform efficient lookups and merges based on cryptographic hashes.",
-      "description_length": 656,
-      "index": 64,
+      "description": "This module implements a content-addressable store where keys are cryptographic hashes of values, enabling efficient content-based addressing. It provides operations to check existence (`mem`), retrieve (`find`), insert (`add`), and merge (`merge`) values, with deterministic key generation and support for conflict resolution. Used in storage backends to manage content with immutable, hash-derived identifiers and handle value merging during concurrent updates.",
+      "description_length": 463,
+      "index": 40,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make.Private.Repo",
       "library": "irmin-layers",
-      "description": "This module manages the lifecycle and internal components of repositories, providing functions to create and close repositories, and access their contents, nodes, commits, and branches. It works with repository handles and associated storage types like `contents`, `node`, `commit`, and `branch`. Concrete use cases include initializing a repository with a backend-specific configuration, performing batch operations across multiple store types, and safely releasing resources when a repository is no longer needed.",
-      "description_length": 515,
+      "description": "This module manages low-level repository operations for Irmin backends, providing functions to create and close repositories, access underlying storage for contents, nodes, and commits, and perform batched read-write operations. It works with repository handles (`t`), configuration values (`Irmin__.Conf.t`), and typed storage references for contents, nodes, and commits. Concrete use cases include initializing a fresh repository with a given configuration, safely releasing resources after use, and executing atomic updates across multiple storage layers.",
+      "description_length": 558,
+      "index": 41,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Slice",
+      "library": "irmin-layers",
+      "description": "This module implements a slice structure for managing collections of versioned data values, including contents, nodes, and commits. It provides operations to create empty slices, add values, and iterate over stored elements. The slice is used to serialize and handle partial Git-like object graphs in Irmin backends.",
+      "description_length": 316,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Contents",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable store where keys are derived from the raw contents of values using a deterministic hash function. It provides operations to check existence (`mem`), retrieve (`find`), insert (`add`, `unsafe_add`), clear, and merge values based on their content-derived keys. It works directly with hash-based keys and user-defined content values, enabling use cases like version-controlled storage with content-based addressing and efficient in-memory indexing.",
+      "description_length": 490,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Sync",
+      "library": "irmin-layers",
+      "description": "This module implements low-level synchronization operations for remote stores using URIs. It provides `fetch` and `push` functions to transfer data between local and remote repositories, operating on commits, branches, and endpoints. Use this module to implement remote backup, distributed state replication, or cross-repository data transfer.",
+      "description_length": 343,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Tree.Contents",
+      "library": "irmin-layers",
+      "description": "This module handles lazy content values within a tree, providing operations to compute their hash, force their evaluation, and clear cached results. It works with `Tree.Contents.t`, an abstract type representing lazy content values, and interacts with `contents` and error types. Use cases include efficiently accessing and caching content values during tree traversal or modification, ensuring values are only computed when necessary.",
+      "description_length": 435,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Tree.Env",
+      "library": "irmin-layers",
+      "description": "This module manages environment-specific tree operations for in-memory, immutable trees with lazy reads and delayed writes. It works with trees that represent a partial view of the store, tracking changes efficiently before committing. Use it to stage modifications in a temporary, non-persistent context, such as buffering updates before persisting them to the underlying store.",
+      "description_length": 379,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private_layer.Hook",
+      "library": "irmin-layers",
+      "description": "This module defines hook values that wrap asynchronous actions, executed when triggered by specific events in a layered Irmin store. It works with functions taking a generic type `'a` and returning an Lwt unit promise. Concrete use cases include attaching logging, validation, or cleanup routines to store operations like merges or commits.",
+      "description_length": 340,
+      "index": 47,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Node",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable store for node contents in a Merkle tree structure, using hash-based keys derived from values. It provides operations to check existence (`mem`), retrieve (`find`), insert (`add`, `unsafe_add`), clear, and merge node contents, along with modules for key generation, metadata handling, and value manipulation. It is used to store and manage node values with deterministic identifiers, supporting cryptographic operations and efficient traversal in distributed systems.",
+      "description_length": 512,
+      "index": 48,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Repo",
+      "library": "irmin-layers",
+      "description": "This module manages the creation and lifecycle of private repository handles, providing access to internal storage components like contents, nodes, commits, and branches. It works with repository configurations and low-level store handles, enabling backends to instantiate and manipulate versioned data. Concrete use cases include initializing a fresh repository instance with a given configuration and performing batched updates across multiple store layers.",
+      "description_length": 459,
+      "index": 49,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.History.E",
+      "library": "irmin-layers",
+      "description": "This module defines directed edges for a version-controlled, persistent graph structure, where each edge connects two vertices and carries a label. It supports creating edges with specified source, destination, and label, as well as retrieving edge endpoints and labels. It is used to model relationships between versioned nodes in a directed acyclic graph (DAG), such as tracking commit ancestry or file changes in a repository.",
+      "description_length": 429,
+      "index": 50,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Sync",
+      "library": "irmin-layers",
+      "description": "This module implements low-level synchronization operations for remote Irmin stores, supporting push and fetch actions to transfer data between local and remote repositories. It works with commit and branch keys, and uses endpoints to represent remote store locations. It is used to directly manage remote data transfer, such as fetching a remote branch's head commit into a local store or pushing local changes to a remote store.",
+      "description_length": 430,
+      "index": 51,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Tree.Env",
+      "library": "irmin-layers",
+      "description": "This module manages environment configurations for tree operations, providing typed representations and emptiness checks. It works with `Tree.Env.t` values, which encapsulate contextual information needed for tree manipulations. Concrete use cases include tracking metadata or configuration state during tree transformations and validating whether an environment is uninitialized or reset.",
+      "description_length": 389,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Branch",
+      "library": "irmin-layers",
+      "description": "This module implements an atomic-write branch store with operations to manage branch keys and their associated hash values. It supports atomic reads, writes, and conditional updates, along with watch handlers to track changes to branches. It is used to store and synchronize named branches in a versioned key-value store backend.",
+      "description_length": 329,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private.Commit",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable store for commit data, where keys are cryptographic hashes derived from commit values. It provides operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) commit values, along with merging (`merge`) and clearing (`clear`) the store. Concrete use cases include storing versioned commit objects in a distributed system, enabling hash-based integrity checks, and supporting efficient lookups in a Merkle tree structure.",
+      "description_length": 495,
+      "index": 54,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Tree.Proof",
+      "library": "irmin-layers",
+      "description": "This module serializes and verifies proofs of transitions between tree states, capturing minimal data needed to validate changes without full I/O. It works with tree structures that include contents, nodes, inodes, and extenders, using hashes and metadata to represent state differences. Concrete use cases include generating succinct proof objects for blockchain light clients or offloading tree state validation to remote verifiers.",
+      "description_length": 434,
+      "index": 55,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.History.V",
+      "library": "irmin-layers",
+      "description": "This module defines vertices in a directed acyclic graph (DAG) representing commit history, where each vertex is uniquely labeled and supports comparison, hashing, and equality checks. It works with commit data types, using labels to identify and distinguish vertices. Concrete use cases include tracking and comparing commit nodes in version control systems or persistent data structures.",
+      "description_length": 389,
+      "index": 56,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Tree.Contents",
+      "library": "irmin-layers",
+      "description": "This module handles lazy content values within a tree, providing operations to compute their hash, force their evaluation, and clear cached results. It works with `t` values representing deferred content reads and `contents` values once resolved. Use it to access or inspect stored content hashes, retrieve content values from the repository, or reset cached state when changes are no longer needed.",
+      "description_length": 399,
+      "index": 57,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.History.E",
+      "library": "irmin-layers",
+      "description": "This module defines a directed edge type for a version-control history graph, where each edge connects two vertices (commits) and carries a label representing metadata such as branch names or timestamps. It provides operations to construct edges, retrieve their source, destination, and label, and compare edges for ordering. Concrete use cases include tracking branch merges and traversing commit ancestry in a versioned data store.",
+      "description_length": 433,
+      "index": 58,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Branch",
+      "library": "irmin-layers",
+      "description": "This module implements an atomic-write branch store with hash values, supporting atomic read, write, and conditional update operations on branch keys. It provides functions to manage branch entries with strong consistency guarantees, track changes via watch handlers, and handle resource lifecycle with close and clear operations. Use cases include storing and manipulating versioned branch references in Irmin backends with atomicity and change notification.",
+      "description_length": 459,
+      "index": 59,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Commit",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable store for commit objects in a version control system, using cryptographic hashes as keys. It provides operations to check existence (`mem`), retrieve (`find`), insert (`add`, `unsafe_add`), merge, and clear commit values, all working directly with hash-determined keys and serialized commit data. Concrete use cases include storing and retrieving immutable commit history, enabling efficient 3-way merges of commit graphs, and supporting hash-based integrity checks in distributed storage backends.",
+      "description_length": 543,
+      "index": 60,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Slice",
+      "library": "irmin-layers",
+      "description": "This module implements slice management for Irmin backends, providing operations to create empty slices, add values of variant types (`Contents`, `Node`, `Commit`), and iterate over stored values. It works with key-value pair structures for contents, nodes, and commits, using Lwt for asynchronous handling. Concrete use cases include assembling or disassembling Irmin values for storage or transmission in custom backends.",
+      "description_length": 423,
+      "index": 61,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private.Node",
+      "library": "irmin-layers",
+      "description": "This module implements a content-addressable store for node contents with deterministic key generation. It supports operations to check existence (`mem`), retrieve (`find`), insert (`add`, `unsafe_add`), clear, and merge values based on their content. The store works with keys derived from values using the `Key` module and handles values conforming to the `Val` module's structure, specifically tailored for version-controlled content with optional and mergeable types.",
+      "description_length": 471,
+      "index": 62,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Tree.Proof",
+      "library": "irmin-layers",
+      "description": "This module handles the creation and manipulation of cryptographic proofs for Irmin trees, enabling verification of transitions between tree states without full I/O. It defines types and serializers for tree proofs, inodes, and extender structures, supporting efficient proof generation and validation. Concrete use cases include verifying integrity of tree updates in distributed systems and enabling light clients to validate changes without accessing the full store.",
+      "description_length": 469,
+      "index": 63,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private_layer.Hook",
+      "library": "irmin-layers",
+      "description": "This module defines hook values that wrap asynchronous functions accepting a generic argument and returning a unit Lwt promise. It works with `'a Private_layer.Hook.t`, where the wrapped functions are intended for injecting side effects during testing. Concrete use cases include setting up pre- or post-processing actions in test scenarios, such as logging or validation steps triggered during specific events in private layer operations.",
+      "description_length": 439,
+      "index": 64,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.History.V",
+      "library": "irmin-layers",
+      "description": "This module defines vertices in a directed acyclic graph (DAG) representing version history, where each vertex is uniquely labeled and supports comparison, hashing, and equality checks. It operates on commit data structures labeled with metadata, enabling precise tracking and manipulation of versioned states. Concrete use cases include managing branching histories in version control systems and implementing efficient merge strategies over persistent data.",
+      "description_length": 459,
       "index": 65,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_layers.Make.Repo",
+      "module_path": "Irmin_layers.Make_ext.Key",
       "library": "irmin-layers",
-      "description": "This module manages repositories containing branches, commits, nodes, and contents. It provides operations to connect to or close a repository, list heads and branches, export and import slices of history, and traverse elements with customizable predicates and traversal order. Concrete use cases include exporting partial repository history, importing data from backups, and traversing commit graphs for analysis or visualization.",
-      "description_length": 431,
+      "description": "This module implements path manipulation operations for store keys, including creating paths from step lists, checking emptiness, prepending/appending steps, and deconstructing paths. It works with abstract path (`t`) and step (`step`) types, supporting transformations via mapping functions. Concrete use cases include building and traversing hierarchical key structures in Irmin stores, such as versioned file paths or nested data references.",
+      "description_length": 444,
       "index": 66,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make.Commit",
-      "library": "irmin-layers",
-      "description": "This module implements immutable commit objects that represent store updates, with operations to create, retrieve, and inspect commits. It works with repositories, trees, hashes, and commit metadata (info), supporting concrete use cases like building versioned data structures, tracking changes in a repository, and reconstructing historical states. Functions include creating commits with parent hashes and a root tree, resolving commits from hashes, and accessing commit properties such as tree, parents, and metadata.",
-      "description_length": 520,
-      "index": 67,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make.Private_layer",
       "library": "irmin-layers",
-      "description": "This module manages internal repository state transitions and tracks upper layer usage through functions like `wait_for_freeze` and `upper_in_use`, primarily for testing layer switching and freezing behavior. It includes a child module that defines hook values wrapping asynchronous actions, enabling callbacks to be attached to events using the `Hook.t` type. These hooks allow triggering side effects like logging on specific test events, providing visibility into repository operations. Together, they support detailed testing and validation of layered repository dynamics.",
-      "description_length": 576,
-      "index": 68,
+      "description": "This module provides low-level operations for managing and observing internal state changes in a layered Irmin store. It includes functions to wait for freeze events and determine which upper layer is currently active. These capabilities support testing and debugging by enabling direct inspection and control of layer transitions and asynchronous behaviors.",
+      "description_length": 358,
+      "index": 67,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make.Key",
       "library": "irmin-layers",
-      "description": "This module implements path manipulation operations for key-value stores, handling creation, modification, and inspection of paths using step-based components. It works with abstract path (`t`) and step (`step`) types, enabling structured access to hierarchical data. Concrete use cases include building, splitting, and traversing paths in a store, such as prepending or appending steps to navigate nested structures, or mapping functions over path components for serialization or analysis.",
-      "description_length": 490,
-      "index": 69,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make.History",
-      "library": "irmin-layers",
-      "description": "This module manages directed acyclic graphs (DAGs) representing version histories, supporting traversal, querying, and transformation through operations like vertex/edge membership checks, degree calculations, and iterative updates. Vertices represent uniquely labeled commits with metadata, enabling precise comparison and tracking across branching histories, while edges model directed relationships between nodes, carrying labels to represent transitions such as parent-child commit links. It can be used to analyze causal relationships, merge divergent histories, or trace dependencies in distributed version control systems. The combination of graph-level transformations with fine-grained vertex and edge manipulation enables both high-level analysis and detailed inspection of versioned data.",
-      "description_length": 799,
-      "index": 70,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Contents",
-      "library": "irmin-layers",
-      "description": "This module defines the core operations for managing store contents, including merging values with conflict resolution and computing or retrieving content hashes. It works with the `contents` type, representing stored values, and uses `hash` for content-based addressing. Concrete use cases include handling concurrent updates to values and efficiently referencing content via cryptographic hashes.",
-      "description_length": 398,
-      "index": 71,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Status",
-      "library": "irmin-layers",
-      "description": "This module defines a type `t` representing the possible states of a store, including empty, branch, or commit states. It provides a value type `t` for serialization and a pretty-printer `pp` for human-readable output. It is used to inspect and display the current state of a repository in Irmin-based storage systems.",
-      "description_length": 318,
-      "index": 72,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Private",
-      "library": "irmin-layers",
-      "description": "This module coordinates version-controlled storage with content-addressable data, thread-safe branch management, and remote synchronization. It supports hash-derived keys, atomic branch updates, and structured node storage with merge strategies, enabling operations like adding versioned nodes, tracking branch heads, and transferring data via `fetch` and `push`. You can use it to build distributed systems with strong consistency, such as version control backends or decentralized data stores. Example workflows include inserting and merging nodes with metadata, exporting repository slices, and synchronizing state across remote endpoints.",
-      "description_length": 642,
-      "index": 73,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Status",
-      "library": "irmin-layers",
-      "description": "This module defines a type `t` representing the possible states of a store, including empty, branch, or commit states. It provides a value type `t` for serialization and a pretty-printer `pp` for human-readable output. Use this module to inspect or display the current state of a repository in a structured and readable format.",
-      "description_length": 327,
-      "index": 74,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Contents",
-      "library": "irmin-layers",
-      "description": "This module defines the core operations for managing store contents, including merging values with conflict resolution and computing or retrieving content hashes. It works with the `contents` type, representing stored values, and uses `hash` for content-based addressing. Concrete use cases include handling concurrent updates to versioned data and efficiently referencing immutable content via hashing.",
-      "description_length": 403,
-      "index": 75,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make.Tree",
-      "library": "irmin-layers",
-      "description": "This module manages immutable, in-memory trees that serve as efficient, partial mirrors of versioned key-value stores, combining lazy reads, delayed writes, and cryptographic proof generation. It supports tree construction, merging, and traversal, with operations optimized for staged updates and verifiable data management in distributed systems. The main data types include trees with hash-based nodes, deferred content values, and proof structures that capture state transitions. You can use it to stage changes in a non-persistent, in-memory layer, compute cryptographic proofs for verification, and manage lazy content evaluation and caching, enabling efficient workflows like buffered updates before final persistence or authenticated queries over versioned data.",
-      "description_length": 769,
-      "index": 76,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Branch",
-      "library": "irmin-layers",
-      "description": "This module provides operations to manage branches in a repository, including checking existence, retrieving or setting commit bindings, listing branches, and watching for changes. It works with branch names and commit values, supporting both individual branch monitoring and global branch event handling. Concrete use cases include tracking active development lines, managing branch creation and deletion, and synchronizing external systems with branch updates.",
-      "description_length": 462,
-      "index": 77,
+      "description": "This module implements path manipulation operations for key-value stores, supporting creation, modification, and inspection of hierarchical paths using step-based construction and decomposition. It works with abstract path (`t`) and step (`step`) types, enabling precise control over path traversal and transformation. Concrete use cases include building and dissecting nested storage paths in Irmin-based applications, such as versioned filesystems or distributed databases.",
+      "description_length": 475,
+      "index": 68,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make_ext.History",
       "library": "irmin-layers",
-      "description": "This module manages directed acyclic graphs (DAGs) representing version histories, where vertices model historical states and edges represent transitions between them. It supports operations like traversal, neighbor queries, edge manipulation, and transformation, working with persistent graph structures that ensure immutability. Vertices are uniquely labeled, support comparison and hashing, and are used to track versioned data and branching histories, while edges carry labels and maintain ordered relationships to represent transitions with metadata. Use cases include version control systems, collaborative editing, and audit trail tracking where complex dependencies and historical relationships must be analyzed and modified efficiently.",
-      "description_length": 745,
-      "index": 78,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Commit",
-      "library": "irmin-layers",
-      "description": "This module implements immutable commit objects for a version-controlled store, supporting creation with a repository, commit info, parent hashes, and a root tree. It provides accessors to retrieve a commit\u2019s tree, parents, info, and hash, along with functions to serialize and resolve commits via their hash. Concrete use cases include building and traversing version histories in a Git-like system, and reconstructing commit objects from hashes for inspection or branching.",
-      "description_length": 475,
-      "index": 79,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Tree",
-      "library": "irmin-layers",
-      "description": "This module manages hierarchical tree structures that act as transient, in-memory caches for versioned key-value stores, supporting lazy traversal, batch updates, and cryptographic proof generation. It provides core operations for building, modifying, and analyzing trees with atomic values or nested substructures, enabling efficient staging of changes, diffing, merging, and atomic persistence. The module handles lazy content evaluation and caching, allows constructing verifiable tree proofs for immutable structures, and supports environment-specific operations for buffering updates before commit. Example uses include version-controlled working directories, streaming Merkle trees with integrity checks, and optimized, in-memory staging areas for deferred writes.",
-      "description_length": 770,
-      "index": 80,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private",
-      "library": "irmin-layers",
-      "description": "This module suite provides a comprehensive system for managing versioned, content-addressable data with support for nodes, commits, branches, and slices. Core data types include hash-derived keys, versioned metadata, structured content, and commit histories, with operations for atomic writes, three-way merges, existence checks, and cryptographic validation. Functionality includes storing and merging node data, tracking branch references with hash identifiers, exporting partial repository states via slices, and synchronizing with remote stores over URIs. Example tasks include building Merkle trees, resolving concurrent branch updates, and transferring commit histories between distributed repositories.",
-      "description_length": 709,
-      "index": 81,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Private_layer",
-      "library": "irmin-layers",
-      "description": "This module exposes low-level controls for managing repository state transitions and freezing behavior in Irmin stores, working directly with `repo` types to wait for freeze events and inspect active upper layers. It includes a child module that defines hook values for wrapping asynchronous actions, enabling logging, validation, or side effects on events with typed triggers. Operations allow testing repository consistency under concurrent writes and validating layer switching logic under load. Specific use cases include attaching pre-freeze validation hooks and monitoring layer transitions during stress tests.",
-      "description_length": 617,
-      "index": 82,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make.Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type and operations for managing node metadata, including a default value and a merge function. It works with the `metadata` type, providing essential functionality for versioned data structures. Use it to attach and merge metadata in Irmin stores where node annotations are required.",
-      "description_length": 317,
-      "index": 83,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Head",
-      "library": "irmin-layers",
-      "description": "This module manages the heads of a version-controlled store, providing operations to list all heads, retrieve or set the current head, and perform safe updates through fast-forwarding or merging. It works with commit objects and branch references, supporting both persistent and temporary stores. Concrete use cases include resetting a store to a specific commit, merging changes from another commit while resolving conflicts, and ensuring atomic updates by testing the current head before modifying it.",
-      "description_length": 503,
-      "index": 84,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Key",
-      "library": "irmin-layers",
-      "description": "This module implements path manipulation operations for store keys, including creating paths from step lists, checking emptiness, prepending/appending steps, and deconstructing paths from either end. It works with abstract path (`t`) and step (`step`) types, supporting transformations through mapping functions. Concrete use cases include building and traversing hierarchical key structures in Irmin stores, such as organizing versioned data in a tree-like structure.",
-      "description_length": 468,
-      "index": 85,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Branch",
-      "library": "irmin-layers",
-      "description": "This module provides operations to manage branches in a repository, including checking existence, retrieving or setting commit bindings, listing branches, and watching for changes. It works with branch names and commit values, supporting both individual branch monitoring and global branch events. Concrete use cases include tracking active branches, synchronizing state across distributed nodes, and implementing version-controlled data stores.",
-      "description_length": 445,
-      "index": 86,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext.Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type and operations for handling node metadata, including merging and providing a default value. It works with the `metadata` type, offering a structured way to manage and combine metadata values. Use it when implementing or extending node metadata handling, such as in versioned data structures or mergeable file systems.",
-      "description_length": 355,
-      "index": 87,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make.Head",
-      "library": "irmin-layers",
-      "description": "This module manages the heads of a version-controlled store, providing operations to list all heads, retrieve or set the current head, and perform safe updates through fast-forwarding or merging. It works directly with commit objects and branch references, supporting both persistent and temporary stores. Concrete use cases include resetting a branch to a specific commit, merging changes from another branch, or checking out a new head while ensuring data consistency.",
-      "description_length": 470,
-      "index": 88,
+      "description": "This module provides operations for querying, navigating, and non-destructively modifying a labeled directed acyclic graph (DAG) representing version control commit history. It works with persistent graph structures composed of vertices (representing commits) and edges (modeling parent-child relationships), supporting functional traversal patterns and transformations. Use cases include tracking branching histories, merging paths, and analyzing relationships between commits while preserving historical integrity through immutable graph updates.",
+      "description_length": 548,
+      "index": 69,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make_ext.Hash",
       "library": "irmin-layers",
-      "description": "This module implements deterministic hash computation for sequences of strings, producing fixed-size hash values. It provides functions to generate a hash from string inputs, compute a shortened integer version of a hash, and access the size of hash outputs. Useful for creating consistent identifiers for data structures or content-based keys in storage systems.",
+      "description": "This module implements hash computation and manipulation for string sequences, producing fixed-size hash values. It provides functions to generate deterministic hashes, compute shorter integer representations for use in hash tables, and access the hash size in bytes. Useful for uniquely identifying sequences of strings in storage systems or ensuring data integrity.",
+      "description_length": 367,
+      "index": 70,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Branch",
+      "library": "irmin-layers",
+      "description": "This module provides operations to manage branches in a repository, including checking existence, retrieving or setting commit bindings, listing branches, and watching for changes. It works with branch names and commit identifiers, supporting both individual branch monitoring and global branch events. Concrete use cases include tracking active branches, synchronizing commit updates across distributed nodes, and implementing version-controlled data workflows.",
+      "description_length": 462,
+      "index": 71,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private",
+      "library": "irmin-layers",
+      "description": "This module implements core storage components for a version control system, providing content-addressable stores for contents, nodes, and commits, along with branch management, slice handling, repository lifecycle operations, and remote synchronization. It works with hash-based keys and versioned data structures that support merging, serialization, and atomic updates. Concrete use cases include building custom storage backends with content-based addressing, managing versioned references with atomic writes, and synchronizing distributed repositories via remote endpoints.",
+      "description_length": 577,
+      "index": 72,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Hash",
+      "library": "irmin-layers",
+      "description": "This module implements hash computation for sequences of strings, producing fixed-size digest values. It provides functions to generate a deterministic hash key and a shortened integer version of the hash for use in hash tables. The module works directly with string sequences and hash values, targeting use cases like content-based addressing in storage systems.",
       "description_length": 363,
-      "index": 89,
+      "index": 73,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Commit",
+      "library": "irmin-layers",
+      "description": "This module implements immutable commit objects that represent store updates, with operations to create, retrieve, and inspect commits. It works with commit values containing a root tree, parent hashes, and metadata info. Concrete use cases include building versioned data stores, tracking changes in distributed systems, and reconstructing historical states via hash references.",
+      "description_length": 379,
+      "index": 74,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Metadata",
+      "library": "irmin-layers",
+      "description": "This module defines the metadata type and operations for handling node metadata, including merging and providing a default value. It works with the `metadata` type, offering a structured way to manage and combine metadata values. Concrete use cases include attaching and merging metadata during tree operations or version control workflows.",
+      "description_length": 340,
+      "index": 75,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Contents",
+      "library": "irmin-layers",
+      "description": "This module defines the core operations for managing store contents, including merging values with conflict resolution and computing or retrieving content hashes. It works with the `contents` type, along with optional values and hashes. It is used to handle content identity and version merging in a repository.",
+      "description_length": 311,
+      "index": 76,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Head",
+      "library": "irmin-layers",
+      "description": "This module manages the heads of a version-controlled store, providing operations to list, retrieve, update, and merge commit heads. It works with commit objects and branch references, supporting both persistent and temporary stores. Concrete use cases include resetting a store to a specific commit, performing fast-forward updates, and merging changes from one commit into another with conflict detection.",
+      "description_length": 407,
+      "index": 77,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Repo",
+      "library": "irmin-layers",
+      "description": "This module manages repositories containing branches and commits, providing operations to connect to a repository, list heads and branches, and close resources. It supports importing and exporting slices of repository data, with control over history depth and bounds. Functions also allow traversal of repository elements like commits, nodes, and contents, with customizable predicates and filters for graph navigation.",
+      "description_length": 419,
+      "index": 78,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Commit",
+      "library": "irmin-layers",
+      "description": "This module implements immutable commit objects that represent store updates, with operations to create, retrieve, and inspect commits. It works with commit values containing a repository reference, commit info, parent hashes, and a root tree. Concrete use cases include constructing new commits with specified parents and tree state, resolving commits from their hash, and accessing a commit\u2019s tree or metadata for version tracking and history traversal.",
+      "description_length": 455,
+      "index": 79,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Head",
+      "library": "irmin-layers",
+      "description": "This module manages the heads of a version-controlled store, providing operations to list, retrieve, update, and merge commit heads. It works with commit objects and supports both persistent and temporary branches. Concrete use cases include resetting the current head to a specific commit, performing safe fast-forward updates, and merging changes from one commit into another with conflict detection.",
+      "description_length": 402,
+      "index": 80,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Make_ext.Repo",
       "library": "irmin-layers",
-      "description": "This module manages repositories containing branches, commits, nodes, and contents. It provides operations to connect to or close a repository, list heads and branches, export or import slices of history, and traverse repository elements with customizable predicates and traversal orders. Concrete use cases include exporting partial repository history, importing data slices into existing repositories, and walking commit graphs for analysis or visualization.",
-      "description_length": 460,
-      "index": 90,
-      "embedding_norm": 0.9999998807907104
+      "description": "This module manages repositories containing branches and commits, providing operations to connect to a repository, list heads and branches, and close resources. It supports importing and exporting slices of repository data, with control over history depth and bounds. Functions also allow traversal of repository elements\u2014commits, nodes, contents, and branches\u2014with customizable predicates and filters for graph navigation.",
+      "description_length": 423,
+      "index": 81,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_layers.Make.Hash",
+      "module_path": "Irmin_layers.Make.Branch",
       "library": "irmin-layers",
-      "description": "This module implements hash value operations for deterministic key generation and compact hashing. It provides functions to compute hashes from string sequences, generate short integer hashes for use in OCaml hashtables, and exposes the hash size constant. It works directly with string inputs and produces hash values of type `t`, which represents a fixed-size digest. Use cases include generating unique keys for storage systems and optimizing hash-based data structures with reduced hash representations.",
-      "description_length": 507,
+      "description": "This module manages branch-to-commit mappings in a repository, providing operations to query, update, and monitor branches. It supports data types such as `repo`, `branch`, and `commit`, with functions like `mem`, `find`, `set`, and `remove` for direct manipulation, and `watch` and `watch_all` for change tracking. Concrete use cases include implementing version control workflows, tracking active branches in a distributed system, and synchronizing state changes across replicas.",
+      "description_length": 481,
+      "index": 82,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Tree",
+      "library": "irmin-layers",
+      "description": "This module manages in-memory, immutable tree structures that act as a staging area for version-controlled data, supporting lazy reads, deferred writes, and cryptographic proof generation. It provides operations for key-based updates, subtree manipulations, structural inspections, and conversions between in-memory and concrete representations, working with `tree` and `Tree.concrete` types to enable efficient versioning and merging. Use cases include temporary state management in distributed systems, verifiable incremental data traversal, and integrity-preserving interactions with persistent stores through proof-verified transitions.",
+      "description_length": 640,
+      "index": 83,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Private",
+      "library": "irmin-layers",
+      "description": "This module provides low-level storage and synchronization primitives for Irmin backends, including content-addressable stores for contents, nodes, and commits, atomic branch management, slice handling for versioned data, repository lifecycle operations, and direct synchronization with remote stores. It works with hash-based keys, versioned values, and repository configurations, enabling concrete use cases such as building custom Irmin backends with content-based addressing, managing distributed versioned state, and implementing efficient data transfer between stores.",
+      "description_length": 574,
+      "index": 84,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Status",
+      "library": "irmin-layers",
+      "description": "This module defines a type `t` representing the possible status states of a store, including empty, branch, or commit states. It provides a value type `t` for serialization and a pretty-printer `pp` for human-readable status output. Use this module to inspect or display the current state of a repository in a structured and readable format.",
+      "description_length": 341,
+      "index": 85,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Tree",
+      "library": "irmin-layers",
+      "description": "This module manages immutable, in-memory tree structures that act as partial views of a store, supporting lazy reads, delayed writes, and cryptographic integrity verification. It provides operations for key-based updates, subtree manipulation, merging, and proof generation/verification, working with data structures like hashed trees, stream proofs, and metadata-aware nodes. These capabilities are particularly useful for staging transient changes before persistent commits or ensuring data consistency in distributed systems through verifiable cryptographic proofs.",
+      "description_length": 568,
+      "index": 86,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make.History",
+      "library": "irmin-layers",
+      "description": "This module enables operations for managing a directed acyclic graph (DAG) representing version history, where vertices model labeled commits and edges encode directed transitions between states. It provides persistent graph manipulation capabilities, including traversal, vertex/edge iteration, successor/predecessor queries, and edge removal to support tasks like history pruning or dependency analysis. The structure is particularly suited for version control systems or distributed ledger applications requiring immutable, branching history tracking with efficient navigation and modification of causal relationships.",
+      "description_length": 621,
+      "index": 87,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Contents",
+      "library": "irmin-layers",
+      "description": "This module defines the core operations for managing store contents, including merging values with conflict resolution and computing or retrieving content hashes. It works with the `contents` type, along with optional values and hashes. It is used to handle content identity and version merging in distributed stores.",
+      "description_length": 317,
+      "index": 88,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make.Status",
+      "library": "irmin-layers",
+      "description": "This module defines a type `t` representing the possible states of a store, including empty, branch, or commit states. It provides a value type `t` for serialization and a pretty-printer `pp` for human-readable output. Use this module to inspect or display the current state of a repository in a structured and type-safe manner.",
+      "description_length": 328,
+      "index": 89,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_layers.Make_ext.Private_layer",
+      "library": "irmin-layers",
+      "description": "This module provides low-level operations for managing internal state transitions and visibility in a private layer, including waiting for freeze events and checking active upper layers. It works with repository types to control layer usage states, specifically tracking which upper layer (`Upper0` or `Upper1`) is currently active. These functions are used internally for synchronization during testing and are not intended for production use.",
+      "description_length": 444,
+      "index": 90,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Make.Metadata",
+      "library": "irmin-layers",
+      "description": "This module defines the metadata type and operations for handling node metadata, including merging and providing a default value. It works with the `metadata` type, offering a structured way to manage and combine metadata values. Concrete use cases include attaching and merging metadata during tree operations or version control workflows.",
+      "description_length": 340,
       "index": 91,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Node-Contents",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable storage system for commit node contents, using hash-based keys derived from stored values. It supports operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) values, along with merging values using a key-based strategy. The module is designed for use in version-controlled systems where content integrity and deterministic addressing are critical.",
-      "description_length": 427,
-      "index": 92,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Node-Contents",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable storage system for node contents, where keys are derived from stored values using a hashing function. It supports operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) values, along with merging values based on keys. It is used to manage immutable content in a way that ensures key consistency based on value contents, suitable for versioned or distributed data systems.",
-      "description_length": 451,
-      "index": 93,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Commit",
-      "library": "irmin-layers",
-      "description": "This module creates immutable commit objects that track store updates with associated metadata, parent hashes, and root trees. It supports operations to construct commits, retrieve their tree and parent data, and resolve commits by hash within a repository. Use cases include building and traversing version histories in a Git-like storage system.",
-      "description_length": 347,
-      "index": 94,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Slice",
-      "library": "irmin-layers",
-      "description": "This module implements private slices for storing and iterating over versioned data values, including contents, nodes, and commits. It provides operations to create an empty slice, add values to it, and iterate over its contents asynchronously. Use cases include managing transient sets of versioned data during Irmin operations like merges or checkouts.",
-      "description_length": 354,
-      "index": 95,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Node-Path",
-      "library": "irmin-layers",
-      "description": "This module implements path manipulation operations for node hierarchies, supporting creation, modification, and inspection of paths through list-based steps. It works with abstract path (`t`) and step (`step`) types, enabling precise navigation and transformation of hierarchical data structures. Concrete use cases include building and decomposing file system paths, managing nested document structures, or tracking traversal routes in tree-like data models.",
-      "description_length": 460,
-      "index": 96,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Tree",
-      "library": "irmin-layers",
-      "description": "This module provides operations for constructing, modifying, and merging in-memory immutable trees that act as staging areas for store changes, supporting lazy reads, delayed writes, and hash-based diffing/pruning. It works with tree structures containing nested nodes or leaf values with metadata, enabling efficient key-based updates, content listing, and statistics gathering. Specific use cases include managing transient state for versioned data stores, generating cryptographic proofs for verifiable persistence, and optimizing merge operations through cached tree representations.",
-      "description_length": 587,
-      "index": 97,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Repo",
-      "library": "irmin-layers",
-      "description": "This module manages private repositories by creating and closing store handles, and providing access to versioned contents, nodes, commits, and branches. It supports operations like batch transactions that act on mutable versions of contents, nodes, and commits. Concrete use cases include initializing a repository with a specific configuration, performing atomic updates across multiple data types, and cleanly shutting down repository resources.",
-      "description_length": 448,
-      "index": 98,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Node",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for managing private node data, where keys are derived from the contents of values using a hash function. It supports operations to check existence (`mem`), retrieve (`find`), insert (`add`), and merge (`merge`) values, with keys of type `Hash.t`. Concrete use cases include storing and retrieving versioned file contents or directory structures in a distributed system.",
-      "description_length": 421,
-      "index": 99,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Contents",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable storage system using cryptographic hashes as keys, supporting operations to check existence (`mem`), retrieve values (`find`), and store new values deterministically (`add`) or with explicit keys (`unsafe_add`). It works directly with hash keys and arbitrary contents values, providing atomic clearing and merge capabilities for conflict resolution. It is used to manage immutable data blobs in Irmin, such as storing file contents or serialized objects with guaranteed integrity.",
-      "description_length": 525,
-      "index": 100,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-History",
-      "library": "irmin-layers",
-      "description": "This module provides operations for analyzing and modifying directed acyclic graphs (DAGs) representing version control histories, focusing on vertex/edge traversal, structural inspection, and edge manipulation. It works with graphs composed of versioned nodes (vertices) and directed edges that represent transitions or dependencies between them, stored persistently in a DAG structure. Typical use cases include tracking commit histories, resolving merge conflicts, and querying lineage relationships in distributed version control systems.",
-      "description_length": 542,
-      "index": 101,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Node-Path",
-      "library": "irmin-layers",
-      "description": "This module implements path manipulation operations for node paths, composed of steps, with support for construction, decomposition, and transformation. It handles path traversal by allowing prepending, appending, and mapping over steps, as well as checking emptiness. Concrete use cases include building and dissecting hierarchical node paths in a version-controlled store, such as tracking nested data structures or directory-like hierarchies.",
-      "description_length": 445,
-      "index": 102,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private_layer",
-      "library": "irmin-layers",
-      "description": "This module includes operations to monitor and control repository state transitions, specifically `wait_for_freeze` to block until a repository is frozen and `upper_in_use` to determine which upper layer is active. It works with the `repo` type representing layered Irmin repositories. These functions are used internally for managing concurrent access and layer switching during tests.",
-      "description_length": 386,
-      "index": 103,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Node-Contents-Val",
-      "library": "irmin-layers",
-      "description": "This module defines the type and merge function for content values stored in a version-controlled, mergeable key-value store. It supports operations for reading, writing, and merging values with conflict resolution, specifically handling optional values to represent absent keys. Concrete use cases include managing versioned documents, logs, or configuration files where concurrent updates must be reconciled.",
-      "description_length": 410,
-      "index": 104,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Val",
-      "library": "irmin-layers",
-      "description": "This module creates and manipulates commit values, providing functions to construct commits with node references, parent hashes, and metadata. It handles data types `t` for commit values and `hash` for node identifiers, along with their respective type serializers. Concrete use cases include building immutable commit objects in a version-controlled store and extracting metadata or dependencies from existing commits.",
-      "description_length": 419,
-      "index": 105,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Branch",
-      "library": "irmin-layers",
-      "description": "This module manipulates branch-to-commit mappings in a repository, offering operations to query, set, and remove branches, as well as watch for changes on specific branches or across all branches. It works with `repo`, `branch`, and `commit` types, where branches represent named pointers to commits. Concrete use cases include tracking the current head of a branch, implementing branch-based workflows, and reacting to branch updates in real time.",
-      "description_length": 448,
-      "index": 106,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Contents",
-      "library": "irmin-layers",
-      "description": "This module defines the core operations for managing content values in a store, including merging strategies and hash-based serialization. It works with content types that can be hashed and merged, supporting conflict resolution during merges. It is used to handle content identity and equivalence checks in version-controlled stores.",
-      "description_length": 334,
-      "index": 107,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Irmin_layers.Make",
       "library": "irmin-layers",
-      "description": "This module provides a comprehensive system for managing version-controlled, mergeable data structures with support for branching, merging, and atomic updates. It centers around repositories, commits, trees, contents, and hashes, enabling operations like tree traversal, merge strategies, commit creation, path manipulation, and DAG-based history analysis. Submodules handle repository lifecycle, commit metadata, branch management, and hash computation, while also supporting asynchronous operations, cryptographic proofs, and efficient layer transitions. You can use it to build collaborative systems, distributed storage backends, or version control tools with features like conflict resolution, content addressing, and history slicing.",
-      "description_length": 739,
-      "index": 108,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Node-Contents",
-      "library": "irmin-layers",
-      "description": "This module implements content-addressable storage operations for node contents, using hash-based keys derived from stored values. It provides functions to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) values, along with merging capabilities through the `merge` function. Designed for use in versioned data systems where content integrity and deterministic addressing are critical.",
-      "description_length": 411,
-      "index": 109,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Node-Contents-Val",
-      "library": "irmin-layers",
-      "description": "This module defines the type and merge function for user-defined contents values in a versioned store. It works with optional values of type `t` to handle presence or absence of data during merges. It is used to manage content changes across branches in a version-controlled system, such as tracking and resolving conflicts in file contents or structured data.",
-      "description_length": 360,
-      "index": 110,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Tree-Contents",
-      "library": "irmin-layers",
-      "description": "This module handles lazy evaluation and caching of tree contents in a version-controlled storage system. It provides operations to force evaluation of deferred content values, compute their hashes, and clear cached results. Use cases include efficiently accessing and validating stored content nodes in a Mercurial-like immutable tree structure.",
-      "description_length": 345,
-      "index": 111,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Node-Val",
-      "library": "irmin-layers",
-      "description": "This module enables structured manipulation of Merkle tree node values through operations like key-value pair insertion/removal, metadata handling, and conversions between proof and head representations, while supporting iteration, pagination, and effect-driven recursive reads. It operates on data structures such as hashes, steps, and proofs, with use cases in version control systems, distributed data integrity verification, and efficient synchronization workflows requiring cache management and hash validation. Core features include node construction/deconstruction, integrity-preserving hash computation (`hash_exn`), and cache-clearing mechanisms to optimize performance in hierarchical data models.",
-      "description_length": 707,
-      "index": 112,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Irmin_layers.S-Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for constructing, deconstructing, and transforming paths in a store, using steps as individual components. It supports creating paths from step lists, checking emptiness, prepending or appending steps, and deconstructing paths from either end. Concrete use cases include building and manipulating hierarchical keys for versioned data stores, such as tracking file paths or nested document structures.",
-      "description_length": 431,
-      "index": 113,
+      "description": "This module provides version-controlled storage operations with support for merging hierarchical trees and branches, atomic updates, and cryptographic integrity checks. It works with repositories containing keys, contents, nodes, commits, and branches, using hashes for data integrity and lazy reads for efficiency. Key use cases include conflict resolution in distributed systems, custom backend development with hash-based storage, and optimizing layered repository management through freezing and self-containment checks.",
+      "description_length": 524,
+      "index": 92,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_layers.S-Contents",
+      "module_path": "Irmin_layers.Make_ext",
       "library": "irmin-layers",
-      "description": "This module defines the core operations for managing store contents, including merging optional content values and computing or retrieving content hashes. It works with the `contents` type, along with optional values, hashes, and repositories. It is used to handle content merging during branch merges and to serialize or deserialize content via hashing.",
-      "description_length": 354,
-      "index": 114,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Slice",
-      "library": "irmin-layers",
-      "description": "This module implements private slices for storing and manipulating Irmin data values, including contents, nodes, and commits. It provides operations to create an empty slice, add values, and iterate over stored elements. Concrete use cases include managing transient data during Irmin repository operations, such as staging partial commits or handling internal node structures.",
-      "description_length": 377,
-      "index": 115,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Contents-Val",
-      "library": "irmin-layers",
-      "description": "This module defines the base type and merge function for content values stored in a key-value pair within a layered Irmin store. It works with optional values of type `Private.Contents.value` and supports merging conflicting states, returning `None` to indicate deletion. It is used to manage content evolution during branch merges in versioned key-value stores.",
-      "description_length": 362,
-      "index": 116,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Sync",
-      "library": "irmin-layers",
-      "description": "This module implements low-level synchronization for stores using URIs to identify remote endpoints. It supports fetching and pushing commits and branches between local and remote stores, enabling replication and distributed state management. Use cases include syncing distributed databases, versioned data transfer, and decentralized application state synchronization.",
-      "description_length": 369,
-      "index": 117,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Tree",
-      "library": "irmin-layers",
-      "description": "This module provides operations for managing hierarchical, immutable tree structures that act as transient in-memory views of a persistent key-value store. It supports lazy traversal, batched modifications, and efficient structural sharing through hash-based differencing, working with types like `tree`, `Tree.concrete`, and `Tree.stream_proof` to enable cryptographic verification and cache-aware optimizations. Typical applications include versioned data management with staged updates, Merkle tree-based proofs for distributed systems, and high-performance tree merging with minimal I/O overhead.",
-      "description_length": 600,
-      "index": 118,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Repo",
-      "library": "irmin-layers",
-      "description": "This module manages repositories containing branches and commits, providing operations to connect to a repository, list heads and branches, and close resources. It supports exporting and importing slices of the repository's history with configurable depth and bounds, and traversing the commit graph with customizable node and edge processing. Functions interact with hashes, commits, nodes, and branches, enabling precise control over versioned data storage and retrieval.",
-      "description_length": 473,
-      "index": 119,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-History",
-      "library": "irmin-layers",
-      "description": "This module provides operations for querying, traversing, and modifying persistent directed acyclic graphs (DAGs) representing version histories. It works with vertex and edge types to analyze graph structure, track dependencies, and manage relationships through functional transformations while preserving immutability. Key use cases include version control history analysis, branching/merging operations, and dependency resolution in distributed systems.",
-      "description_length": 456,
-      "index": 120,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Sync",
-      "library": "irmin-layers",
-      "description": "This module implements low-level synchronization for stores using URIs to identify remote endpoints. It provides `fetch` and `push` operations for transferring data between local and remote stores, working directly with commit and branch keys. It is used to implement remote backup, replication, and distributed state synchronization for Irmin-based applications.",
-      "description_length": 363,
-      "index": 121,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Hash",
-      "library": "irmin-layers",
-      "description": "This module defines hash operations for generating and manipulating fixed-size object hashes from sequences of strings. It provides functions to compute a deterministic hash value, produce a shortened integer version of a hash, and access the hash size in bytes. Concrete use cases include generating unique identifiers for versioned data in a store and using shortened hashes as keys in hash tables.",
-      "description_length": 400,
-      "index": 122,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Repo",
-      "library": "irmin-layers",
-      "description": "This module manages private repositories by creating and closing store handles, providing access to versioned data structures like contents, nodes, commits, and branches. It supports operations to retrieve typed stores for reading and writing versioned data, and to perform batched updates across multiple stores. Concrete use cases include initializing a private Irmin store with a backend configuration, performing atomic updates on contents and nodes, and managing commit and branch state in a private repository.",
-      "description_length": 516,
-      "index": 123,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Node-Contents",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable storage system for commit node contents, using hash-based keys derived from stored values. It provides operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) values, along with merging values using a key-based strategy. It is used to manage immutable data nodes in a version-controlled or persistent system where content integrity and deduplication are critical.",
-      "description_length": 442,
-      "index": 124,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for commit data, where keys are derived from the contents of stored values using a hash function. It supports operations to check existence (`mem`), retrieve values (`find`), and store new values with or without a specified key (`add`, `unsafe_add`), along with clearing the store and merging commit keys. It is used to manage immutable commit objects in a version-controlled system, ensuring efficient and deterministic access to stored data.",
-      "description_length": 494,
-      "index": 125,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type and operations for managing node metadata, including merging and default values. It works with the `metadata` type, providing a structured way to handle node annotations. Use it to attach and combine metadata in scenarios like versioned data structures or audit trails.",
-      "description_length": 307,
-      "index": 126,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Node-Contents-Key",
-      "library": "irmin-layers",
-      "description": "This module defines key and value types for content-addressed storage, along with hashing operations. It provides functions to compute deterministic keys from values and to generate short hashes for efficient lookups. It is used to manage content identifiers in a version-controlled, persistent store.",
-      "description_length": 301,
-      "index": 127,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Status",
-      "library": "irmin-layers",
-      "description": "Represents the state of a store with values indicating empty, branch, or commit statuses. Provides a type definition and serialization support for status values. Used to track and display the current state of a repository in Irmin-based storage systems.",
-      "description_length": 253,
-      "index": 128,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Node-Contents-Key",
-      "library": "irmin-layers",
-      "description": "This module defines key and value types for content-based addressing in a version-controlled store. It provides hashing operations to generate compact, deterministic keys from values and supports efficient hash table indexing via short hash codes. Concrete use cases include content-addressed storage in distributed systems and versioned data management with structural sharing.",
-      "description_length": 378,
-      "index": 129,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type used in node operations, including serialization, merging, and default value functions. It supports versioned data management by enabling metadata to be attached to nodes in a mergeable and type-safe way. Concrete use cases include tracking timestamps, authorship, or access control information in a distributed Irmin store.",
-      "description_length": 362,
-      "index": 130,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Branch-Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for working with private branch keys, including validation and the predefined master branch identifier. It handles keys of type `Private.Branch.Key.t`, ensuring they conform to expected formats. Use cases include checking the validity of branch names and referencing the master branch in version-controlled systems.",
-      "description_length": 346,
-      "index": 131,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Node-Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type used in commit nodes and provides a merge function for combining metadata values during operations like merging branches. It includes a default metadata value for use in contexts where metadata is optional or unspecified. This supports version control features like tracking changes and resolving conflicts in Irmin-based systems.",
-      "description_length": 368,
-      "index": 132,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Node-Contents-Key",
-      "library": "irmin-layers",
-      "description": "This module defines key and value types for content-addressed storage, using hashes of node contents as keys. It provides functions to compute deterministic hashes from values, generate shorter hashes for efficient lookup, and specifies the size of hash outputs. It is used to uniquely identify and efficiently reference node content in a version-controlled, persistent store.",
-      "description_length": 376,
-      "index": 133,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private_layer",
-      "library": "irmin-layers",
-      "description": "This module includes operations to monitor and control repository state transitions, specifically `wait_for_freeze` to block until a repository is frozen and `upper_in_use` to determine the active upper layer. It works with the `repo` type representing layered Irmin repositories. These functions are used in testing scenarios to coordinate concurrent access and verify layer switching behavior.",
-      "description_length": 395,
-      "index": 134,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Node-Contents-Val",
-      "library": "irmin-layers",
-      "description": "This module defines the base type and merge function for content values stored in a Irmin node. It supports operations for handling user-defined content types, including value comparison and conflict resolution during merges. It is used to manage content values directly in a Irmin-based store, enabling custom merge logic for versioned data.",
-      "description_length": 342,
-      "index": 135,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S",
-      "library": "irmin-layers",
-      "description": "This module enables managing versioned key-value stores and hierarchical data structures through atomic read-write operations, branching, and merge resolution. It provides structured access to repositories, commits, trees, and low-level storage layers, supporting use cases like distributed systems with conflict-free replicated data types, collaborative editing with history tracking, and persistent storage optimization via layer freezing and recovery mechanisms. Core operations include versioned updates, tree introspection, commit graph analysis, and type-safe serialization for structured data handling.",
-      "description_length": 609,
-      "index": 136,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Tree-Proof",
-      "library": "irmin-layers",
-      "description": "This module implements tree proofs for state transitions in an Irmin node, enabling clients to verify computations without accessing full storage. It defines data types like `tree`, `elt`, and `kinded_hash`, and functions to construct and validate proofs using before-and-after hashes. Concrete use cases include verifying content updates, node modifications, and subtree integrity in distributed Irmin systems.",
-      "description_length": 411,
-      "index": 137,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private",
-      "library": "irmin-layers",
-      "description": "This module includes low-level components for managing versioned data stores, handling operations on contents, nodes, commits, branches, and repositories. It supports concrete use cases like implementing custom storage backends, synchronizing distributed state, and manipulating versioned data structures directly. The submodules work with data types such as keys, values, hashes, and versioned trees, enabling fine-grained control over storage and retrieval.",
-      "description_length": 459,
-      "index": 138,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Head",
-      "library": "irmin-layers",
-      "description": "This module manages version-controlled commit heads in a repository, providing operations to list all heads, retrieve or set the current head, and perform atomic updates or merges. It works directly with commit objects and branch references, supporting actions like fast-forward updates and conflict-aware merges with configurable depth limits. Concrete use cases include resetting a branch to a specific commit, merging changes from another branch or commit, and safely updating heads with conditional checks.",
-      "description_length": 510,
-      "index": 139,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private",
-      "library": "irmin-layers",
-      "description": "This module defines core components for versioned, branchable storage including contents, nodes, commits, and branches. It provides operations for creating, merging, and traversing versioned data structures with support for slicing and repository synchronization. Used to implement distributed, append-only stores with conflict-free merges and efficient diffing.",
-      "description_length": 362,
-      "index": 140,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Node-Contents-Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for generating and handling content keys in a store. It provides functions to compute deterministic hashes from values and to create shortened hash representations. These keys are used to uniquely identify content nodes in a version-controlled storage system.",
-      "description_length": 290,
-      "index": 141,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Node-Val",
-      "library": "irmin-layers",
-      "description": "This module offers operations to construct and manipulate hierarchical node structures with key-value pairs, metadata, and path-aware steps, supporting version-controlled immutability. It provides functions for hashing, cache management, and depth-limited traversal, working with node values that represent tree states in a proof-based serialization context. Use cases include managing versioned tree data with efficient state reconstruction, recursive read operations with effect handling, and hash-driven cache invalidation.",
-      "description_length": 526,
-      "index": 142,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Hash",
-      "library": "irmin-layers",
-      "description": "This module implements hash computation for string sequences, producing fixed-size hash values. It provides functions to generate a deterministic hash from a sequence of strings, compute a shortened integer version of a hash, and access the size of hash outputs. Useful for creating compact identifiers from data streams or building hash-based data structures.",
-      "description_length": 360,
-      "index": 143,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Layer_id",
-      "library": "irmin-layers",
-      "description": "This module defines a type `t` representing three distinct layer identifiers used in layered Irmin stores. It provides functions to convert these identifiers to strings, format them, and handle them using Irmin's type system. This is primarily used to distinguish between lower and upper layers in a two-layer store setup, enabling operations like merges and rollbacks between layers.",
-      "description_length": 384,
-      "index": 144,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker",
-      "library": "irmin-layers",
-      "description": "This module provides version-controlled, layered storage operations with atomic read-modify-write semantics, tree and branch manipulation, and layer integrity management. It works with repositories, versioned trees, commits, and keys, supporting concurrent updates, conflict resolution via customizable strategies, and efficient storage through serialization and freezing. Use cases include building distributed systems requiring versioned key-value stores with merge capabilities, auditing historical data changes, or managing hierarchical data with layered persistence semantics.",
-      "description_length": 581,
-      "index": 145,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Node-Key",
-      "library": "irmin-layers",
-      "description": "This module implements hash computation and key manipulation functions for node values in a storage system. It provides operations to generate deterministic keys from strings, compute short hashes for efficient lookup, and access the size of hash outputs. These functions are used to manage node identifiers in a hash table or persistent storage context.",
-      "description_length": 354,
-      "index": 146,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Node-Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type used for nodes and provides a merge function for combining metadata values. It includes a default metadata value for use in APIs that do not require custom metadata. The merge function ensures consistent handling of metadata during operations like branching or merging.",
-      "description_length": 307,
-      "index": 147,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Node",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable storage system for versioned data nodes, using cryptographic hashes as keys. It supports operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) node values, along with merging conflicting node states. It is used to manage immutable tree structures in version-controlled repositories, enabling efficient diffing and merging of hierarchical data.",
-      "description_length": 424,
-      "index": 148,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Tree-Proof",
-      "library": "irmin-layers",
-      "description": "This module implements types and functions for constructing and verifying compact proofs of Irmin tree transformations. It works with tree structures that include contents, nodes, and inode-based representations, supporting proof generation and validation through hash comparisons and subset replay. Concrete use cases include enabling light clients to verify state transitions in a distributed Irmin node without full storage access.",
-      "description_length": 434,
-      "index": 149,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Contents-Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for generating and handling content keys in a store. It provides functions to compute deterministic hashes from values, produce shorter hashes for efficient lookup, and specifies the size of hash outputs. It works directly with string-based content values and their derived hash keys, enabling efficient content-based addressing in storage systems.",
-      "description_length": 379,
-      "index": 150,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Branch-Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for working with private branch keys, including validation and a constant for the master branch. It provides a type definition for branch keys and a function to check their validity. Use this module when managing branch identifiers in a private repository context, ensuring only valid branches are processed.",
-      "description_length": 339,
-      "index": 151,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Node",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for private nodes, where keys are derived from the raw contents of values using a hash function. It supports operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) private node values, along with merging node keys using a three-way merge strategy. The module is used for managing immutable, hash-based storage of private nodes in a version-controlled or distributed setting.",
-      "description_length": 460,
-      "index": 152,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Tree-Contents",
-      "library": "irmin-layers",
-      "description": "This module provides operations for working with lazy tree contents, including forcing evaluation, hashing, and cache management. It operates on `Tree.Contents.t`, representing deferred content values in a tree structure. Use cases include efficiently accessing and hashing content in a version-controlled or persistent storage system without unnecessary computation or I/O.",
-      "description_length": 374,
-      "index": 153,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Branch",
-      "library": "irmin-layers",
-      "description": "This module implements a private branch store with atomic write capabilities for managing mappings from branch keys to hash values. It supports operations like membership checks, value retrieval, atomic updates, conditional writes, and key removal, along with event watching at both key and store levels. It is used to maintain and synchronize private branch references in a version-controlled store, ensuring consistency during concurrent access.",
-      "description_length": 447,
-      "index": 154,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Key",
-      "library": "irmin-layers",
-      "description": "This module implements path manipulation operations for Irmin stores, handling hierarchical key structures as lists of steps. It supports creating, inspecting, and transforming paths with functions like `v`, `cons`, `rcons`, `decons`, and `map`. Concrete use cases include building and traversing directory-like structures in versioned data stores.",
-      "description_length": 348,
-      "index": 155,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Node-Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type used for nodes and provides a merge function for combining metadata values. It includes a default metadata value for use in APIs that do not require custom metadata handling. The merge function ensures consistent resolution of metadata conflicts during operations like branching or merging.",
-      "description_length": 328,
-      "index": 156,
+      "description": "This module supports version-controlled data manipulation through operations like merging trees and commits with conflict resolution, atomic updates, and history analysis. It works with immutable data structures such as cryptographic hashes, versioned trees, and content-addressable storage units, along with metadata-rich commits and branches. Specific use cases include building distributed systems requiring persistent, mergeable state (e.g., collaborative editors, blockchain ledgers) and managing hierarchical key-value data with transactional integrity.",
+      "description_length": 559,
+      "index": 93,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers.Stats",
       "library": "irmin-layers",
-      "description": "This module tracks performance metrics during a freeze operation, recording start and end times, code sections, and thread yields. It counts copied objects like nodes, contents, commits, and branches, along with additions and lookup tests during traversal. These statistics are used to analyze and optimize the freeze process in storage systems.",
+      "description": "Tracks and reports performance metrics for the freeze process in a version-controlled storage system. It records timing intervals, code section transitions, and yield events during freezing, while counting operations like node, content, commit, and branch copying. Exposes counters and timing data for analysis, enabling optimization of storage synchronization workflows.",
+      "description_length": 371,
+      "index": 94,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_layers.Layer_id",
+      "library": "irmin-layers",
+      "description": "This module defines a type `t` representing three distinct layer identifiers used in layered Irmin stores. It provides functions to convert these identifiers to strings, format them, and handle them using Irmin's type system. This is useful for managing and distinguishing between different storage layers in a layered repository implementation.",
       "description_length": 345,
-      "index": 157,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private_layer-Hook",
-      "library": "irmin-layers",
-      "description": "Creates a hook that applies a given function to values of type `'a` in a private layer, enabling side effects like logging or validation when values are accessed or modified. Works with private layers where each value is of type `'a`. Useful for tracking changes or enforcing invariants on specific data stored in a private Irmin layer.",
-      "description_length": 336,
-      "index": 158,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-History-V",
-      "library": "irmin-layers",
-      "description": "This module defines operations for managing version-controlled commit vertices, including creating vertices with labels, comparing and hashing them, and retrieving their labels. It works with commit data types that have associated labels, supporting efficient equality checks and ordering. Concrete use cases include tracking changes in distributed systems, managing branching histories, and enabling conflict-free merges in Irmin-based applications.",
-      "description_length": 450,
-      "index": 159,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private_layer-Hook",
-      "library": "irmin-layers",
-      "description": "This module defines a hook mechanism for private layers in Irmin, where the `v` function creates a hook that triggers an asynchronous action when a value of type `'a` is provided. It works with private layer data structures, allowing side effects to be attached to layer operations. Concrete use cases include logging changes or updating caches when private layer data is modified.",
-      "description_length": 381,
-      "index": 160,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-History-V",
-      "library": "irmin-layers",
-      "description": "This module defines a vertex type for a commit history graph, where each vertex represents a commit and carries a label. It provides operations to create vertices from labels, retrieve labels from vertices, and compare, hash, and check equality of vertices. It is used to model versioned data structures where each node corresponds to a version (e.g., Git commit history).",
-      "description_length": 372,
-      "index": 161,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Status",
-      "library": "irmin-layers",
-      "description": "This module defines a type `t` representing the status of a store as either empty, a branch, or a commit, along with a type representation and pretty-printer. It works with `repo`, `branch`, and `commit` types to describe and format store states. Concrete use cases include inspecting the current state of a repository before operations like merges or reads.",
-      "description_length": 358,
-      "index": 162,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Tree-Env",
-      "library": "irmin-layers",
-      "description": "This module represents a tree-based environment structure with a type `t` that supports checking if the environment is empty. It works with tree-like data structures where environments are used to manage contextual information. Concrete use cases include tracking hierarchical state in version-controlled data or managing scoped configurations in a tree-structured application.",
-      "description_length": 377,
-      "index": 163,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Node-Metadata",
-      "library": "irmin-layers",
-      "description": "This module defines the metadata type used in commit nodes and provides a merge function for combining metadata values during operations like merging branches. It includes a default metadata value for use in contexts where metadata is optional or unspecified. This supports tracking additional information, such as authorship or timestamps, directly within commit node structures.",
-      "description_length": 380,
-      "index": 164,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Make_ext",
-      "library": "irmin-layers",
-      "description": "This module offers a typed interface for versioned, hash-based storage with atomic updates, branch management, and DAG-based history tracking. It centers around trees (`t`), commits, branches, and hashes, enabling conflict-free concurrent updates, customizable merges, and persistent history traversal. Core operations include content-addressable storage via hashes, path manipulation, commit creation and resolution, and managing repository states with freezing and layer transitions. Submodules handle tree caching, DAG traversal, metadata merging, and low-level repository control, supporting use cases like Merkle trees, Git-like versioning, and distributed data synchronization.",
-      "description_length": 683,
-      "index": 165,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Repo",
-      "library": "irmin-layers",
-      "description": "This module manages repositories containing branches and commits, providing operations to connect to a repository, list heads and branches, and close resources. It supports importing and exporting slices of repository data, with control over history depth and bounds. Functions allow traversal of the commit graph with customizable node processing and filtering.",
-      "description_length": 362,
-      "index": 166,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Node-Key",
-      "library": "irmin-layers",
-      "description": "This module implements hash computation and key manipulation functions for node values in a storage system. It provides operations to generate deterministic keys from strings, compute short hashes for efficient lookup, and access the size of hash outputs. These functions are used to manage node identifiers in a hash table or persistent storage context.",
-      "description_length": 354,
-      "index": 167,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Branch",
-      "library": "irmin-layers",
-      "description": "This module manages branch-to-commit mappings in a repository, supporting operations like checking existence, retrieving, setting, and removing branches, as well as listing all branches and watching for changes. It works with branches and commits, providing precise control over branch state and history. Use cases include implementing version control workflows, tracking active branches, and reacting to branch updates in distributed systems.",
-      "description_length": 443,
-      "index": 168,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for commit data, where keys are derived from value contents using a hash function. It supports operations to check existence (`mem`), retrieve (`find`), and store (`add`, `unsafe_add`) commit values, along with merging commit keys using a three-way merge strategy. The store is designed for use in version control systems requiring deterministic, content-based addressing of commit objects.",
-      "description_length": 441,
-      "index": 169,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Head",
-      "library": "irmin-layers",
-      "description": "This module manages the heads of a version-controlled store, providing operations to list all heads, retrieve or set the current head, and perform atomic updates or merges. It works with commit objects and supports branching strategies like fast-forward and merge, ensuring consistency when modifying the store's state. Concrete use cases include resetting the store to a specific commit, safely updating the head with a test-and-set operation, or merging a commit into the current branch after resolving conflicts.",
-      "description_length": 515,
-      "index": 170,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Contents",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store where keys are derived from the contents of values. It supports operations to check existence (`mem`), retrieve (`find`), add (`add`), and directly insert (`unsafe_add`) values, along with clearing the store and merging values based on keys. It works with hash-based keys and arbitrary contents values, enabling use cases like deduplicated storage and versioned data management.",
-      "description_length": 429,
-      "index": 171,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Node-Val",
-      "library": "irmin-layers",
-      "description": "This module provides functions to construct, inspect, and hash node values in a version-controlled, immutable tree structure, which are composed of steps, hashes, metadata, and contents. Operations include converting node values to (step, value) pairs, modifying key-value entries, handling metadata, and converting to proof representations for serialization or verification. These capabilities support efficient traversal, caching, and depth-limited node loading, making it suitable for managing hierarchical data with versioning and partial storage requirements.",
-      "description_length": 564,
-      "index": 172,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Commit",
-      "library": "irmin-layers",
-      "description": "This module implements immutable commit objects for a version-controlled store, supporting creation with a repository, commit info, parent hashes, and a root tree. It provides accessors to retrieve a commit\u2019s tree, parents, info, and hash, along with functions to serialize and deserialize commits via their hash. Use cases include building and traversing version histories, reconstructing commit graphs, and managing branching structures in a distributed store.",
-      "description_length": 462,
-      "index": 173,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for generating and handling commit keys, including hashing values into keys and computing shorter hashes for use in data structures like hashtables. It works with commit key and value types specific to the store's internal representation. Concrete use cases include uniquely identifying commit values through deterministic hashing and efficiently comparing or indexing commit keys using their short hash values.",
-      "description_length": 442,
-      "index": 174,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Branch",
-      "library": "irmin-layers",
-      "description": "This module implements a private branch store with atomic write capabilities, managing mappings from branch keys to hash values. It supports operations like checking existence, reading, setting, and removing branch entries, along with conditional updates via test-and-set semantics. The store enables watching specific keys or the entire key space for changes, making it suitable for coordinating distributed state or versioned data in concurrent systems.",
-      "description_length": 455,
-      "index": 175,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Node-Key",
-      "library": "irmin-layers",
-      "description": "This module implements hash computation and key manipulation functions for node values in a storage system. It provides operations to generate deterministic keys from values, compute short hashes for efficient lookups, and access the size of hash outputs. These functions are used to uniquely identify and manage node entries within a version-controlled, persistent data store.",
-      "description_length": 377,
-      "index": 176,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Node-Key",
-      "library": "irmin-layers",
-      "description": "This module implements hash functions and type definitions for node keys in a content-addressable storage system. It provides operations to compute deterministic keys from values, generate compact hashes for efficient lookups, and defines the structure of node keys and values. It is used to manage unique identifiers for nodes in an immutable, versioned data store.",
-      "description_length": 366,
-      "index": 177,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Val",
-      "library": "irmin-layers",
-      "description": "This module creates and manipulates commit values, providing functions to construct commits with node references, parent hashes, and metadata. It operates on commit values (`t`) and hash values (`hash`), allowing access to a commit's node, parents, and associated info. Concrete use cases include building immutable commit objects in a version-controlled store and serializing commit data for storage or transmission.",
-      "description_length": 417,
-      "index": 178,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-History-E",
-      "library": "irmin-layers",
-      "description": "This module defines a directed edge structure with ordered comparison, supporting creation of edges between vertices with labels. It provides functions to retrieve the source and destination vertices of an edge, as well as its label. Concrete use cases include representing and manipulating directed labeled graphs, such as dependency graphs or version control history graphs.",
-      "description_length": 376,
-      "index": 179,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Contents-Val",
-      "library": "irmin-layers",
-      "description": "This module defines the base type and merge function for content values stored in a key-value pair within a layered Irmin store. It supports operations for handling optional content values during merges, allowing deletion by returning `None`. It is used to manage structured data values that can be merged with conflict resolution in distributed settings.",
-      "description_length": 355,
-      "index": 180,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Contents-Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for generating and handling content keys in a storage system. It provides functions to compute deterministic hashes from values and to create shortened hash representations. These keys are used to uniquely identify stored content, enabling efficient lookups and ensuring content integrity.",
-      "description_length": 320,
-      "index": 181,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Key",
-      "library": "irmin-layers",
-      "description": "This module defines operations for working with commit keys, including hashing values into keys and computing shorter hashes for use in structures like OCaml's Hashtbl. It handles types `t` and `value`, representing commit keys and their associated values, and includes constants like `hash_size` for key size in bytes. Concrete use cases include generating deterministic keys from commit data and efficiently identifying keys with reduced hash sizes.",
-      "description_length": 451,
-      "index": 182,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Branch-Val",
-      "library": "irmin-layers",
-      "description": "This module implements hash computation and manipulation for private branch values in a key-value store context. It provides functions to generate deterministic hashes from string sequences, compute short integer hashes for efficient lookup, and defines the structure for handling hash values. Concrete use cases include indexing and fast retrieval of branch values using compact hash representations.",
-      "description_length": 401,
-      "index": 183,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Branch-Val",
-      "library": "irmin-layers",
-      "description": "This module implements hash computation and manipulation for private branch values in a key-value store context. It provides functions to generate deterministic hashes from string sequences, compute short integer hashes for use in OCaml hashtables, and exposes the size of hash outputs in bytes. Concrete use cases include efficiently identifying and comparing private branch values through hashing.",
-      "description_length": 399,
-      "index": 184,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.S-Private-Commit-Node-Contents-Val",
-      "library": "irmin-layers",
-      "description": "This module defines the type and operations for handling user-defined content values in a version-controlled store. It includes a merge function that resolves conflicts between different versions of a value, supporting deletion by returning `None`. It is used to manage structured data stored under keys, ensuring consistency during merges in distributed environments.",
-      "description_length": 368,
-      "index": 185,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-History-E",
-      "library": "irmin-layers",
-      "description": "This module defines a directed edge structure with ordered comparison, supporting creation of edges between vertices with labels. It provides operations to retrieve the source, destination, and label of an edge, as well as a comparison function for ordering edges. It is used to represent and manipulate labeled directed edges in a graph, enabling applications such as version control history tracking or dependency graph construction.",
-      "description_length": 435,
-      "index": 186,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_layers.Maker-Private-Commit-Node",
-      "library": "irmin-layers",
-      "description": "This module implements a content-addressable store for versioned data, where keys are derived from the contents of values using a deterministic hashing function. It provides operations to check existence (`mem`), retrieve (`find`), and insert (`add`, `unsafe_add`) values, along with merging conflicting node states and clearing the store. It is used to manage immutable node structures in a version-controlled repository, supporting efficient storage and retrieval of hierarchical data.",
-      "description_length": 487,
-      "index": 187,
+      "index": 95,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_layers",
       "library": "irmin-layers",
-      "description": "This module implements layered, mergeable persistent data structures with content-addressable storage, versioned trees, and DAG-based history tracking. It provides core abstractions for versioned contents, commits, branches, and hierarchical paths, supporting operations like atomic updates, three-way merges, and cryptographic proofs over immutable trees. You can build version-controlled data stores that track hierarchical state changes, perform efficient diffs between tree versions, and manage concurrent updates with customizable merge strategies, all while ensuring content integrity through hash-based addressing. Submodules handle low-level storage, path manipulation, commit graph traversal, and private layer management, enabling use cases like collaborative editing, distributed state synchronization, and Merkle tree-based verification.",
-      "description_length": 849,
-      "index": 188,
+      "description": "This module implements layered Irmin store abstractions with support for version-controlled storage synchronization. It provides operations for managing layer identifiers, tracking freeze process metrics, and defining store interfaces tailored to hierarchical data versioning. Concrete use cases include optimizing commit freezing performance and coordinating multi-layered storage backends in distributed systems.",
+      "description_length": 414,
+      "index": 96,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 191,
-    "meaningful_modules": 189,
-    "filtered_empty_modules": 2,
-    "retention_rate": 0.9895287958115183
+    "total_modules_in_package": 97,
+    "meaningful_modules": 97,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 849,
-    "min_description_length": 253,
-    "avg_description_length": 446.9047619047619,
-    "embedding_file_size_mb": 0.6869964599609375
+    "max_description_length": 640,
+    "min_description_length": 270,
+    "avg_description_length": 415.5979381443299,
+    "embedding_file_size_mb": 1.4058294296264648
   }
 }

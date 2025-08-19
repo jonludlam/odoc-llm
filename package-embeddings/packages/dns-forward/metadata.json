@@ -1,317 +1,253 @@
 {
   "package": "dns-forward",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 37,
-  "creation_timestamp": "2025-07-15T23:13:34.039808",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 29,
+  "creation_timestamp": "2025-08-15T12:29:24.158665",
   "modules": [
     {
       "module_path": "Dns_forward.Rpc.Client.Persistent.Make",
       "library": "dns-forward",
-      "description": "This module implements a persistent, multiplexing RPC client that sends and receives DNS messages over a Flow using a specified Framing method. It provides connection management, request-response handling, and asynchronous message callbacks for inspecting traffic. Concrete use cases include forwarding DNS queries to remote resolvers and managing long-lived connections in a DNS proxy or load balancer.",
-      "description_length": 403,
+      "description": "This module implements a persistent, multiplexing RPC client over a flow-based transport with message framing. It handles connection setup, concurrent request-response multiplexing, and disconnection, using transaction IDs to match responses to requests. It works directly with network flows, DNS messages in Cstruct buffers, and time-based timeouts, specifically for DNS forwarding scenarios where multiple queries may be in flight over a single connection.",
+      "description_length": 458,
       "index": 0,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Dns_forward.Rpc.Client.Nonpersistent.Make",
       "library": "dns-forward",
-      "description": "This module constructs an RPC client that sends one message per connection over a provided flow, using framing for message boundaries and time for timeouts. It supports asynchronous DNS request-response interactions with transaction ID generation and message callbacks for handling incoming data. Concrete use cases include making DNS queries over TCP or TLS connections where each query requires a new connection.",
-      "description_length": 414,
+      "description": "This module implements a non-persistent DNS RPC client that establishes a new connection for each request. It handles message framing, transaction ID generation, and response correlation over a provided flow interface. Use it to send DNS queries over protocols like UDP where maintaining a persistent connection is not feasible.",
+      "description_length": 328,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_forward.Config.Server.Map",
+      "module_path": "Dns_forward.Config.Domain.Set",
       "library": "dns-forward",
-      "description": "This module provides a polymorphic map implementation with ordered keys of type `Dns_forward.Config.Server.t`, supporting functional operations like insertion, deletion, lookup, and transformation, along with ordered traversal, filtering, and structural analysis. It maintains key ordering using a comparator, enabling efficient retrieval of min/max bindings, conditional searches, and ordered iteration over key-value pairs stored in a balanced tree-like structure. Typical use cases include managing DNS server configurations with ordered priorities, dynamically updating server mappings, and performing ordered failover sequence operations.",
-      "description_length": 643,
+      "description": "This set implementation provides standard functional operations for managing immutable collections of domain names, including membership checks, union/intersection/difference calculations, and ordered iteration. It works with domain elements encapsulated in `Dns_forward.Config.Domain.t` and supports conversions to lists and sequences while preserving ordering via comparator functions. Typical use cases involve DNS configuration tasks requiring efficient domain set manipulation, such as validating domain inclusion in allowlists, merging domain policies, or processing domain collections in sorted order for consistent rule application.",
+      "description_length": 640,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_forward.Config.Server.Set",
+      "module_path": "Dns_forward.Rpc.Client.Persistent",
       "library": "dns-forward",
-      "description": "This module provides a comprehensive set API for managing DNS forwarder server configurations, supporting standard set operations like union, intersection, and difference, as well as ordered traversal, filtering, and conversion to/from sequences. It operates on sets of `Dns_forward.Config.Server.t` values, leveraging a total ordering of elements for efficient membership testing, element selection (min/max), and deterministic iteration. Typical use cases include dynamically maintaining collections of DNS servers, applying configuration updates, and querying subsets based on properties like IP addresses or priorities.",
-      "description_length": 623,
+      "description": "Implements persistent DNS query handling over RPC with connection management and retry logic. It works with DNS message structures and network endpoints, enabling reliable query submission and response retrieval. This module is used to maintain long-lived DNS forwarder clients that can survive transient network failures.",
+      "description_length": 322,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Rpc.Server.Make",
       "library": "dns-forward",
-      "description": "Constructs an RPC server that binds to an address, listens for incoming connections, and processes requests using a user-defined callback. It works with network flows and message framing to handle DNS request and response packets. Useful for implementing DNS proxy or forwarding services that require custom request handling logic.",
-      "description_length": 331,
+      "description": "Constructs an RPC server that binds to a network address, listens for incoming connections, and processes DNS requests using a user-defined handler. It works with `Cstruct.t` for request and response payloads, and interacts with a flow-based network interface and time module for timeouts. Concrete use cases include implementing DNS forwarders or custom DNS services over TCP/UDP.",
+      "description_length": 381,
       "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Dns_forward.Config.Address.Set",
+      "module_path": "Dns_forward.Config.Domain.Map",
       "library": "dns-forward",
-      "description": "This module supports efficient union, intersection, difference, and subset checks on sets of DNS forwarder addresses, while providing ordered iteration and element selection (min, max). It operates on sets containing `Dns_forward.Config.Address.t` elements, enabling transformations like filtered mapping, partitioning, and predicate-based searches. Typical use cases involve managing DNS configuration hierarchies, validating address overlaps, or processing ordered address lists for load balancing and failover scenarios.",
-      "description_length": 523,
+      "description": "This module provides standard associative map operations such as insertion, deletion, and lookup, along with functional transformations and set-like operations (union, merge) for ordered mappings. It operates on immutable maps with keys of type `Dns_forward.Config.Domain.t` and values of arbitrary type, maintaining key ordering and structural immutability. These capabilities are utilized in DNS forwarder configurations to manage domain-specific routing rules, enforce policies, and initialize mappings from sequences of domain-value pairs.",
+      "description_length": 543,
       "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Rpc.Server.S",
-      "library": "dns-forward",
-      "description": "Implements a DNS forwarder RPC server that binds to a specific network address, listens for incoming DNS query requests, and processes them using a callback function. It works with DNS query packets represented as Cstruct.t buffers and network addresses defined by Dns_forward.Config.Address.t. This module is used to set up and manage a DNS forwarding service that routes queries to upstream resolvers.",
-      "description_length": 403,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dns_forward.Config.Address.Map",
-      "library": "dns-forward",
-      "description": "This module implements a sorted associative map for DNS address configurations, offering insertion, deletion, and ordered traversal operations over key-value pairs where keys are network addresses. It supports functional transformations with key-order control, set-like merging of address ranges, and sequence-based construction of maps for bulk configuration updates. Typical use cases include managing dynamic DNS resolver settings, maintaining ordered address whitelists/blacklists, and handling hierarchical network address mappings with efficient lookup capabilities.",
-      "description_length": 572,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Rpc.Client.Persistent",
-      "library": "dns-forward",
-      "description": "This module enables DNS message exchange over a Flow with a chosen Framing strategy, supporting asynchronous request-response patterns and multiplexed RPC. It manages persistent connections, allowing concurrent DNS queries and callbacks for traffic inspection. Key data types include flows, framed readers/writers, and multiplexed request IDs. You can use it to build DNS proxies, forward queries to remote resolvers, or implement load-balanced DNS clients with custom framing.",
-      "description_length": 477,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Rpc.Client.S",
-      "library": "dns-forward",
-      "description": "Implements asynchronous DNS forwarding clients that send requests to remote servers and handle responses. Works with Cstruct buffers for DNS messages, address configurations, and transaction IDs. Used to perform parallel DNS queries over network connections with proper response correlation.",
-      "description_length": 291,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Config.Domain.Set",
-      "library": "dns-forward",
-      "description": "This module enables efficient manipulation of immutable sets of DNS domains through standard set operations like membership testing, union, intersection, and element transformations, alongside traversal functions for filtering, folding, and ordered iteration. It operates on sets of ordered domain values, supporting conversions to and from lists and sequences for integration with external data sources or streaming processing. Common applications include DNS configuration analysis, domain set aggregation for routing policies, and validation workflows requiring precise domain inclusion or exclusion checks.",
-      "description_length": 610,
-      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Rpc.Client.Nonpersistent",
       "library": "dns-forward",
-      "description": "This module implements an RPC client for asynchronous request-response interactions over arbitrary flows, using framing to delimit messages and time-based timeouts for reliability. It generates transaction IDs to correlate responses with requests and invokes message callbacks upon receipt of replies. Key operations include sending a message and handling the corresponding response asynchronously. For example, it can be used to perform DNS queries over TCP or TLS, where each query establishes a new connection and awaits a response with a matching transaction ID.",
-      "description_length": 566,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "description": "Implements non-persistent DNS forwarding clients that perform lookup operations over RPC. Works with DNS query and response data structures, handling transport-level interactions for each request. Suitable for stateless DNS resolution workflows where connections are established per query.",
+      "description_length": 289,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_forward.Flow.Server",
+      "module_path": "Dns_forward.Config.Address.Set",
       "library": "dns-forward",
-      "description": "Implements a server interface for handling incoming DNS flows over BSD sockets. It allows binding to an address, listening for connections, and shutting down the server. Use this module to create a DNS server that processes incoming queries asynchronously using Lwt callbacks.",
-      "description_length": 276,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module supports creation, modification, and querying of immutable sets containing DNS forwarder addresses, with operations like union, intersection, filtering, and ordered traversal. It works with sets of `Dns_forward.Config.Address.t` values, enabling efficient membership checks, bulk updates from sequences, and conversion to ordered lists for deterministic processing. Typical use cases include managing DNS resolver configurations where ordered address sets must be dynamically updated, queried, or combined while preserving immutability.",
+      "description_length": 548,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_forward.Config.Server.Map",
+      "library": "dns-forward",
+      "description": "This module implements a key-value map with ordered keys of type `Dns_forward.Config.Server.t`, supporting insertion, deletion, lookup, and functional transformations like `map`, `filter`, and `fold`. It provides ordered traversal via min/max queries, sequence conversions, and combinators such as `merge` and `union` for combining maps while preserving key ordering. Typical use cases include managing server configurations with ordered lookups, aggregating settings from multiple sources, and transforming maps through sequence-based workflows.",
+      "description_length": 546,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_forward.Config.Address.Map",
+      "library": "dns-forward",
+      "description": "This module implements a functional map structure for managing key-value associations with ordered `Dns_forward.Config.Address.t` keys, supporting operations like insertion, deletion, filtering, and traversal. It provides idiomatic transformations (`map`, `fold`, `filter`), ordered key-based queries (min/max bindings, range splits), and sequence conversion via `of_seq`, ensuring immutable updates and safe/unsafe lookup variants. It is suited for DNS configuration scenarios requiring ordered address mappings, such as routing table management or policy-driven request handling.",
+      "description_length": 581,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_forward.Rpc.Client",
+      "library": "dns-forward",
+      "description": "Implements DNS query forwarding over RPC with support for both persistent and non-persistent client behaviors. It handles DNS message serialization, transport-level communication, and response deserialization for submitting queries to remote DNS servers. Used to integrate DNS resolution into RPC-based networking stacks with precise control over connection lifetime and retry policies.",
+      "description_length": 386,
+      "index": 10,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Rpc.Server",
       "library": "dns-forward",
-      "description": "This module implements a DNS forwarding RPC server that binds to a network address, processes incoming DNS query requests, and routes them to configured upstream resolvers. It manages concurrent query processing using network flows and message framing, ensuring request/response integrity through structured DNS message handling with Cstruct.t buffers and Dns_forward.Config.Address.t. The server supports starting, stopping, and customizing request handling via user-defined callbacks, enabling scalable DNS proxy services. Specific use cases include building high-performance forwarding layers that integrate with custom resolution logic or existing resolver infrastructures.",
-      "description_length": 677,
-      "index": 13,
+      "description": "Implements a DNS forwarder RPC server that handles query resolution requests. It processes incoming DNS queries, forwards them to upstream servers, and returns resolved responses. Works with DNS message structures and network endpoints for query routing.",
+      "description_length": 254,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_forward.Resolver.S",
+      "module_path": "Dns_forward.Config.Unix",
       "library": "dns-forward",
-      "description": "Implements a DNS resolver that processes queries by checking local name mappings or forwarding to upstream servers based on configuration. It handles DNS message construction, transaction ID generation, and asynchronous response handling via a callback interface. This module is used to resolve domain names in a networked environment where queries may be answered locally or by external DNS servers.",
-      "description_length": 400,
-      "index": 14,
+      "description": "Parses Unix-style `/etc/resolv.conf` files into DNS forwarder configurations. It converts resolver settings like nameservers and search domains into a structured configuration type used for DNS query routing. Useful for initializing DNS forwarders in network-aware applications using system resolver settings.",
+      "description_length": 309,
+      "index": 12,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_forward.Config.Server",
+      "library": "dns-forward",
+      "description": "This module defines a server configuration with fields for domain zones, network address, timeout, and priority order. It supports comparing servers based on their priority and provides set and map structures for managing collections of servers. Use this module to organize and prioritize DNS forwarding targets, associate domains with specific servers, and manage routing policies based on domain and address criteria.",
+      "description_length": 419,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Dns_forward.Config.Domain",
       "library": "dns-forward",
-      "description": "This module represents DNS domains as lists of strings and provides direct operations for converting domains to strings and comparing them. It includes standard set and map implementations for managing collections of domains efficiently, enabling operations like membership testing, union, intersection, and element transformations. Concrete use cases include DNS configuration analysis, domain set aggregation for routing policies, and validation workflows requiring precise domain inclusion or exclusion checks. The module supports conversions to and from lists and sequences, facilitating integration with external data sources or streaming processing.",
-      "description_length": 655,
+      "description": "This module defines domain names as lists of strings and provides direct operations for comparing and converting domain representations. It supports precise domain set manipulations and ordered mappings for DNS configuration tasks. Use cases include validating domain allowlists, merging routing policies, and processing domain collections in a defined order.",
+      "description_length": 359,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_forward.Error.Infix",
+      "library": "dns-forward",
+      "description": "This module defines the `>>=` operator for sequencing computations that may fail with a `Dns_forward.Error.t` result. It allows chaining functions that take a successful value and return a potentially failing computation, handling error propagation automatically. This is useful when writing DNS forwarding logic that requires multiple steps, each of which can fail with a specific error.",
+      "description_length": 388,
       "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Framing.Tcp",
       "library": "dns-forward",
-      "description": "This module implements TCP-based framing for DNS messages, handling the serialization and deserialization of DNS packets over a byte stream. It works with `Cstruct.t` values representing DNS requests and responses, and manages message boundaries to ensure complete message transmission. Concrete use cases include reading and writing DNS messages over a TCP connection, ensuring proper framing and error handling during transmission.",
-      "description_length": 433,
+      "description": "This module implements TCP-based framing for DNS messages, handling the conversion between byte streams and complete DNS packets. It provides functions to connect to a flow, read and write DNS messages with proper framing, and close the connection. Use this when transmitting DNS queries and responses over TCP, ensuring correct message boundaries are maintained.",
+      "description_length": 363,
       "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dns_forward.Config.Server",
-      "library": "dns-forward",
-      "description": "This module organizes DNS server configurations by domain zones, network address, timeout, and priority, enabling structured management of forwarders based on specificity and order. It includes set and map modules that support efficient, ordered operations\u2014such as insertion, lookup, union, and traversal\u2014using `Dns_forward.Config.Server.t` as keys or elements. These submodules allow for dynamic updates to server mappings, failover sequencing, and filtering based on IP or priority. For example, you can maintain a priority-ordered map of servers for failover or a set of unique servers by domain specificity.",
-      "description_length": 611,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Resolver.Make",
-      "library": "dns-forward",
-      "description": "This module constructs a DNS resolver using a client implementation for upstream communication and a time implementation for managing timeouts. It processes DNS queries by first checking local name mappings, then forwarding to upstream servers if necessary, and supports asynchronous message handling with customizable transaction IDs. The resolver works with DNS packets, configuration structures, and clock interfaces, providing concrete operations for query resolution, response handling, and resource cleanup.",
-      "description_length": 513,
-      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Framing.Udp",
       "library": "dns-forward",
-      "description": "This module implements UDP framing for DNS messages, enabling the reading and writing of complete DNS packets over a UDP flow. It operates on `Cstruct.t` values for both requests and responses, managing message boundaries according to the DNS over UDP protocol. It is used to handle DNS message exchange over UDP, ensuring proper framing for network transmission.",
-      "description_length": 363,
-      "index": 19,
+      "description": "This module implements UDP framing for DNS messages, handling the conversion between byte streams and complete DNS packets. It provides functions to read and write DNS messages over a UDP flow, ensuring proper framing for reliable transmission. Use this when sending or receiving DNS queries and responses over UDP, where each message must be self-contained and length-prefixed.",
+      "description_length": 378,
+      "index": 17,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dns_forward.Server.Make",
+      "library": "dns-forward",
+      "description": "This module implements a DNS forwarding server that processes incoming requests using a provided resolver. It supports creating a server instance, binding it to a network address to handle queries indefinitely, and cleanly shutting it down. The server works with DNS request streams and leverages the resolver to obtain responses for forwarded queries.",
+      "description_length": 352,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_forward.Rpc.Client",
+      "module_path": "Dns_forward.Resolver.Make",
       "library": "dns-forward",
-      "description": "This module enables DNS query forwarding over RPC with support for both persistent and non-persistent connections, handling serialization, transmission, timeouts, and retries per request. It provides data types such as flows, framed readers/writers, and Cstruct buffers, along with operations for sending DNS messages, correlating responses using transaction IDs, and managing multiplexed RPC. Child modules extend this functionality to support asynchronous DNS forwarding, custom framing strategies, and load-balanced clients. Use it to build DNS proxies, remote resolvers, or secure DNS clients over TCP/TLS with concurrent query handling and traffic inspection.",
-      "description_length": 664,
-      "index": 20,
+      "description": "This module constructs a DNS resolver that processes queries by first checking local name mappings and forwarding unresolved queries to upstream servers using a provided `Client`. It handles timeouts with a `Time` implementation and manages DNS message exchanges with configurable callbacks. Use it to implement custom DNS resolution logic with control over transport, timing, and message handling.",
+      "description_length": 398,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Config.Address",
       "library": "dns-forward",
-      "description": "This module represents DNS server addresses with structured ordering and string serialization, supporting direct manipulation through `t` values. Its `Set` submodule enables set algebra operations and ordered traversal on address collections, while the `Map` submodule provides sorted key-value associations for configuration mapping. You can perform tasks like validating overlapping address ranges, constructing ordered failover lists, or maintaining dynamic resolver configurations with efficient lookups. Operations such as filtered mapping, partitioning, and bulk updates allow for flexible handling of network address logic in hierarchical or policy-driven setups.",
-      "description_length": 670,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Error.Infix",
-      "library": "dns-forward",
-      "description": "This module defines the `>>=` operator for chaining DNS forward error computations. It works with values wrapped in the `Dns_forward.Error.t` type, allowing sequential composition of operations that may fail. Use it to handle DNS query forwarding errors in a concise, monadic style.",
-      "description_length": 282,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Server.Make",
-      "library": "dns-forward",
-      "description": "This module implements a DNS forwarding server that processes incoming requests using a provided resolver. It supports creating a server instance with a resolver, binding to an address to serve requests indefinitely, and cleanly shutting down the server. The module works with DNS addresses and resolver configurations to handle query forwarding in networked environments.",
-      "description_length": 372,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dns_forward.Flow.Client",
-      "library": "dns-forward",
-      "description": "This module implements client-side network communication over a flow-based interface, supporting operations to read data from and write data to a connected endpoint. It works with buffers (`Cstruct.t`) and structured flows, handling errors related to transmission failures or connection closure. It is used to establish outbound connections to well-known addresses, enabling applications like DNS resolution over UDP or TCP.",
-      "description_length": 424,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dns_forward.Config.Unix",
-      "library": "dns-forward",
-      "description": "Parses Unix-style `/etc/resolv.conf` files into DNS forwarder configurations. It converts file content into a structured configuration type, handling common resolver directives like nameservers and search domains. Useful for initializing DNS forwarding setups from standard Unix resolver files.",
-      "description_length": 294,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Framing.S",
-      "library": "dns-forward",
-      "description": "This module handles reading and writing complete DNS messages over a byte-stream flow. It works with `Cstruct.t` for DNS requests and responses, and manages framing state with type `t` and a `flow`. Use it to implement DNS message exchange over TCP or other stream protocols.",
-      "description_length": 275,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Server.S",
-      "library": "dns-forward",
-      "description": "This module defines the interface for a DNS forwarding server that processes incoming requests using a provided resolver. It includes operations to create a server instance, bind it to a network address for handling queries, and gracefully shut it down. The server works with DNS request streams and resolver configurations to forward and resolve domain queries in networked environments.",
-      "description_length": 388,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dns_forward.Error",
-      "library": "dns-forward",
-      "description": "This module provides a monadic interface for handling DNS query forwarding errors through the `>>=` operator, which sequences computations that may fail. It operates on values wrapped in `Dns_forward.Error.t`, enabling clean error propagation and composition of fallible DNS operations. For example, you can chain DNS query handlers where each step depends on the success of the previous, automatically short-circuiting on any error.",
-      "description_length": 433,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_forward.Flow",
-      "library": "dns-forward",
-      "description": "This module provides a socket-like interface for managing bidirectional network flows, enabling both client and server implementations using BSD-style operations. It supports key operations such as connecting to remote endpoints, listening for incoming connections, and handling data transmission using structured flows and `Cstruct.t` buffers. The server interface allows binding to addresses and asynchronous processing of DNS queries via Lwt callbacks, while the client interface facilitates outbound DNS resolution over UDP or TCP with robust error handling for transmission issues. Together, these components enable building complete DNS clients and servers with structured, bidirectional communication.",
-      "description_length": 708,
-      "index": 29,
+      "description": "This module defines a DNS forwarder address with `ip` and `port` fields, providing direct string representation and comparison operations. It supports concrete use cases such as uniquely identifying and ordering DNS resolver endpoints, and is used in managing sets and maps of addresses for configuration and routing purposes. The `Set` and `Map` submodules build on this definition to enable efficient, immutable collection operations tailored to DNS forwarding logic.",
+      "description_length": 469,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Resolver",
       "library": "dns-forward",
-      "description": "This module provides a resolver interface that processes DNS queries and returns optional DNS responses, enabling custom resolution strategies such as caching, local name mapping, or forwarding to upstream servers. It works with DNS query and response data structures, supporting operations like message construction, transaction ID management, and asynchronous handling via callbacks. The resolver integrates a client implementation for upstream communication and a time module for timeout control, allowing concrete use cases such as network-based domain resolution and response caching. Example usage includes implementing a forwarding resolver that checks local mappings first, then sends queries to configured DNS servers and handles responses asynchronously.",
-      "description_length": 764,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dns_forward.Config",
-      "library": "dns-forward",
-      "description": "This module manages DNS forwarder configurations by organizing upstream servers, search domains, and failure policies, supporting operations like parsing, comparison, and string representation. It includes submodules for domain sets with efficient membership and transformation operations, server configurations with ordered mappings by domain and priority, and network address handling with set algebra and ordered traversal. You can load configurations from `/etc/resolv.conf`, compare runtime settings, or build failover sequences based on domain specificity and priority. Structured types and submodules enable tasks like validating domain inclusions, managing dynamic resolver updates, or converting configurations to diagnostic logs.",
-      "description_length": 739,
-      "index": 31,
+      "description": "This module defines a resolver interface that processes DNS queries and returns an optional DNS response. It works with DNS query and response data structures to perform resolution logic. Concrete use cases include implementing custom DNS resolution strategies, such as forwarding queries to upstream servers or handling cached responses.",
+      "description_length": 338,
+      "index": 21,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Server",
       "library": "dns-forward",
-      "description": "This module implements a DNS forwarder server that listens for incoming DNS query streams over TCP and UDP, processing them using a provided DNS client. It provides core operations for request parsing, response generation, and connection management, while its child modules define the server interface and support creating, binding, and shutting down server instances with resolver configurations. Concrete use cases include building DNS proxies, caching layers, or forwarding services that integrate with upstream resolvers. The module works with DNS addresses and streams to enable custom handling of domain queries in networked applications.",
-      "description_length": 644,
-      "index": 32,
+      "description": "This module implements a DNS forwarder server that listens for incoming DNS queries over TCP or UDP and forwards them to a specified upstream DNS client for resolution. It handles request parsing, response generation, and manages the communication between the client and the upstream resolver. Concrete use cases include building custom DNS proxies, implementing DNS filtering, or adding logging and monitoring to DNS traffic.",
+      "description_length": 426,
+      "index": 22,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_forward.Rpc",
+      "module_path": "Dns_forward.Error",
       "library": "dns-forward",
-      "description": "This module implements a DNS forwarding RPC system that processes queries over network connections using structured message handling and transaction IDs. It provides data types for DNS messages, framed I/O, and connection flows, with operations to send queries, manage responses, and handle timeouts or retries. The system supports building scalable DNS proxies, remote resolvers, and secure clients with customizable framing, asynchronous handling, and load balancing. Examples include forwarding DNS traffic over TLS, inspecting queries in-flight, or integrating with custom resolution backends.",
-      "description_length": 597,
-      "index": 33,
+      "description": "This module defines the `>>=` operator for sequencing error-aware computations in DNS forwarding scenarios. It enables chaining functions that return results with `Dns_forward.Error.t` failures, automatically propagating errors through each step. Use this to handle multi-step DNS operations like query resolution or response validation, where each step may fail with a specific error type.",
+      "description_length": 390,
+      "index": 23,
+      "embedding_norm": 0.9999998807907104
+    },
+    {
+      "module_path": "Dns_forward.Config",
+      "library": "dns-forward",
+      "description": "This module defines DNS forwarder configurations with sets of servers, search domains, and failure handling policies. It supports parsing and serializing configurations, comparing server priorities, and converting Unix resolver settings into structured data. Use it to manage DNS routing logic with prioritized servers, domain-specific resolution rules, and resilient failover behavior.",
+      "description_length": 386,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_forward.Comparable",
+      "module_path": "Dns_forward.Flow",
       "library": "dns-forward",
-      "description": "This module defines a comparable type `t` and a `compare` function for ordering values. It supports use cases like sorting or deduplicating DNS-related data structures such as domain names or resource records. The `compare` function enables direct integration with standard library containers like `Set` or `Map` for efficient lookups and management.",
-      "description_length": 350,
-      "index": 34,
+      "description": "This module defines a socket-like interface for establishing network flows, providing client and server operations for connecting to or listening on well-known addresses. It works with network endpoints and stream-based communication, enabling concrete use cases like implementing DNS clients that query remote servers or setting up DNS servers that accept incoming requests. The module supports direct interaction with network connections using standard system calls.",
+      "description_length": 468,
+      "index": 25,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward.Framing",
       "library": "dns-forward",
-      "description": "This module handles the framing and deframing of DNS messages over TCP and UDP, converting between byte streams and structured DNS messages while maintaining message boundaries. It uses `Cstruct.t` for representing DNS packets and provides operations for reading and writing complete messages, ensuring reliable transmission. The TCP submodule manages streaming DNS messages over TCP with proper framing, while the UDP submodule handles message exchange over UDP with boundary management according to the DNS protocol. Together with the flow submodule, which provides shared framing logic for stream-based protocols, it supports parsing incoming DNS packets from sockets and serializing responses for network delivery.",
-      "description_length": 718,
-      "index": 35,
+      "description": "This module handles the framing of DNS messages over byte-stream protocols, ensuring proper message boundaries during transmission. It provides functions to read and write DNS packets over TCP and UDP, where each message is prefixed with its length to enable reliable parsing. Use it to implement DNS clients or servers that communicate over TCP or UDP, ensuring correct framing for query and response exchanges.",
+      "description_length": 412,
+      "index": 26,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dns_forward.Rpc",
+      "library": "dns-forward",
+      "description": "This module implements DNS query forwarding over RPC, providing client and server components for handling DNS resolution in distributed systems. It works with DNS message structures and network endpoints to serialize queries, manage transport-level communication, and route responses through upstream servers. Concrete use cases include integrating DNS resolution into RPC-based services with custom retry policies and connection management, and deploying scalable DNS forwarders in network infrastructure.",
+      "description_length": 506,
+      "index": 27,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_forward",
       "library": "dns-forward",
-      "description": "This module orchestrates DNS message handling, forwarding, and resolution by integrating packet manipulation, network communication, and query processing into a unified system. It defines core data types like DNS messages, flows, and resolvers, supporting operations such as query parsing, response serialization, and transaction management, while its submodules enable structured error handling, socket-like I/O, and custom resolution strategies. You can build DNS proxies that forward queries over TCP or UDP, implement recursive resolvers with caching, or create secure DNS-over-TLS servers by combining framing, flow management, and resolver configurations. The module enables end-to-end DNS server and client implementations with support for timeouts, retries, domain-specific routing, and structured data comparison for efficient domain set operations.",
-      "description_length": 858,
-      "index": 36,
+      "description": "This module implements DNS query forwarding with support for TCP and UDP transport, structured configuration, and error handling. It provides components for building DNS forwarders that route queries through upstream servers, handle message framing, and manage network connections. Concrete use cases include DNS proxies, custom DNS servers with failover logic, and RPC-based DNS resolution services.",
+      "description_length": 400,
+      "index": 28,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 38,
-    "meaningful_modules": 37,
+    "total_modules_in_package": 30,
+    "meaningful_modules": 29,
     "filtered_empty_modules": 1,
-    "retention_rate": 0.9736842105263158
+    "retention_rate": 0.9666666666666667
   },
   "statistics": {
-    "max_description_length": 858,
-    "min_description_length": 275,
-    "avg_description_length": 512.5405405405405,
-    "embedding_file_size_mb": 0.13481426239013672
+    "max_description_length": 640,
+    "min_description_length": 254,
+    "avg_description_length": 415.0689655172414,
+    "embedding_file_size_mb": 0.4206962585449219
   }
 }

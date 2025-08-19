@@ -1,95 +1,95 @@
 {
   "package": "fat-filesystem",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 11,
-  "creation_timestamp": "2025-07-15T23:06:30.567701",
+  "creation_timestamp": "2025-08-14T23:11:45.208767",
   "modules": [
+    {
+      "module_path": "Fat.KV_RO",
+      "library": "fat-filesystem",
+      "description": "This module implements a read-only key-value store interface over a FAT filesystem residing on a block device. It provides operations to check key existence, retrieve values, list directory entries, and obtain metadata such as last modification time and value digests. It is used to access immutable data stored in a FAT-formatted disk image, such as configuration files or precomputed assets.",
+      "description_length": 393,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "Fat_entry.Chain",
       "library": "fat-filesystem",
-      "description": "This module operates on FAT file system chains, represented as lists of integers, to manage sequences of clusters. It provides functions to follow an existing chain, extend it with new clusters, and convert cluster chains to sector numbers. These operations are used when reading or modifying file data in a FAT file system.",
-      "description_length": 324,
-      "index": 0,
+      "description": "This module operates on chains of clusters in a FAT file system, providing functions to follow, extend, and convert cluster sequences. It works with integer lists representing cluster chains and interacts with FAT structures like the FAT table and boot sector. Use cases include file data allocation and sector mapping in FAT-based storage systems.",
+      "description_length": 348,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Fat.Make",
       "library": "fat-filesystem",
-      "description": "This module implements a filesystem interface for managing files and directories on a block device. It supports operations such as reading, writing, creating, and deleting files and directories, as well as listing directory contents and retrieving file metadata. It works with block devices via the `B` module and uses `Cstruct.t` for data buffers, returning results with detailed error types for both read and write operations.",
-      "description_length": 428,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fat.KV_RO",
-      "library": "fat-filesystem",
-      "description": "This module implements a read-only key-value store interface over a FAT filesystem residing on a block device. It supports operations to retrieve values, check key existence, list directory entries, and obtain metadata such as last modification time and content digest. Typical use cases include booting unikernels with precompiled configuration data or serving static assets from a read-only filesystem.",
-      "description_length": 404,
+      "description": "This module implements a filesystem interface for reading, writing, and managing files and directories on a block device. It supports operations such as `read`, `write`, `create`, `mkdir`, `destroy`, `listdir`, and `stat`, working with paths as strings and data as `Cstruct.t` buffers. It handles errors specific to filesystem operations, including directory and file existence constraints, block device errors, and space limitations.",
+      "description_length": 434,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Fat_format",
       "library": "fat-filesystem",
-      "description": "Handles conversion of FAT file system format types to their string representations. Works with the variant type `t` representing FAT12, FAT16, and FAT32 formats. Used when displaying or logging the specific FAT format in use.",
-      "description_length": 225,
+      "description": "This module defines a type `t` representing different FAT file system formats (FAT12, FAT16, FAT32) and provides a function `to_string` to convert these values to their string representations. It works directly with the variant type `t` and string values. Use this module when handling file system metadata or formatting output for disk analysis tools.",
+      "description_length": 352,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Fat_path",
+      "module_path": "Fat_entry",
       "library": "fat-filesystem",
-      "description": "This module represents file paths as structured values, allowing precise manipulation of directory hierarchies and filenames. It supports operations like parsing from and converting to string representations, extracting directory or filename components, and navigating paths via concatenation or changing context. Concrete use cases include building and traversing directory structures, handling file paths in a platform-agnostic way, and constructing valid paths from components.",
-      "description_length": 480,
+      "description": "This module represents and manipulates FAT (File Allocation Table) entries, supporting operations to read, write, and interpret individual entries within a FAT structure. It works with `Cstruct.t` for binary representation and uses integer indices to track clusters, handling states like free, used, end-of-chain, and bad sectors. Use cases include managing cluster allocation in FAT file systems and implementing low-level storage operations such as finding free clusters and updating chain links.",
+      "description_length": 498,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Fat_name",
-      "library": "fat-filesystem",
-      "description": "This module provides operations for managing FAT filesystem directory entries, including conversion between long file names (LFN) and 8.3 DOS names, checksum computation, metadata extraction (e.g., file size, timestamps, deletion status), and time-to-integer conversions. It works with `Cstruct.t` for raw directory data, custom datetime representations, and entry structures to support directory manipulation tasks like listing, adding, or modifying entries, with applications in disk image management and file system recovery tools.",
-      "description_length": 534,
-      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Fat_sector_map",
       "library": "fat-filesystem",
-      "description": "This module implements a mapping between virtual and physical sectors in a FAT file system, using a list of integers to represent the mapping. It supports operations to create and compose sector maps, compute byte ranges, and transform virtual addresses to physical addresses. Key use cases include translating file offsets to disk locations and clipping sector data to specific byte ranges.",
-      "description_length": 391,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fat_update",
-      "library": "fat-filesystem",
-      "description": "This module handles buffer updates with precise offset tracking, supporting operations to create, modify, and apply updates to Cstruct buffers. It works with string and Cstruct data types, providing functions to serialize, clip, split, and map updates for use in virtual-to-physical address translation scenarios. Concrete use cases include managing file allocation table updates and preparing disk write operations in storage systems.",
-      "description_length": 435,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Fat_entry",
-      "library": "fat-filesystem",
-      "description": "This module represents and manipulates FAT entries using a discriminated union type that includes states like `Free`, `Used`, `End`, and `Bad`, enabling precise modeling of cluster allocation. It provides operations to read, write, and find free clusters in a FAT structure, working directly with `Cstruct.t` for low-level memory access. The chain module extends this functionality by managing sequences of clusters as lists of integers, supporting operations to follow, extend, or convert cluster chains into sector numbers. Together, they enable tasks like allocating new file clusters or traversing existing file data in a FAT volume.",
-      "description_length": 637,
-      "index": 8,
+      "description": "This module maps virtual sectors to physical sectors using a functional representation, allowing for precise translation and manipulation of disk image data. It supports operations to construct and compose sector mappings, compute byte ranges for reading specific portions of disk images, and transform virtual addresses into physical offsets. Key use cases include interpreting FAT file system structures, extracting file contents from disk images, and handling disk-level data transformations.",
+      "description_length": 495,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Fat",
       "library": "fat-filesystem",
-      "description": "This module provides a read-only key-value store backed by a FAT filesystem, allowing access to files and directories with metadata such as size, type, and modification time. It enables embedding immutable data like configurations or assets into a FAT-formatted image and accessing them by filename. The filesystem interface supports operations like reading files, listing directories, and retrieving metadata, while the key-value interface allows checking key existence, retrieving values, and obtaining content digests. Example uses include booting unikernels with precompiled data or serving static assets from a read-only store.",
-      "description_length": 632,
+      "description": "This module implements a filesystem interface for interacting with FAT-formatted block devices, providing operations to read, write, create, and manage files and directories using paths and `Cstruct.t` buffers. It works with a `stat` type that describes file metadata such as size, read-only status, and whether the entity is a directory. Concrete use cases include managing persistent storage on SD cards or disk images, and exposing FAT filesystems as read-only key-value stores for immutable data retrieval.",
+      "description_length": 510,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Fat_path",
+      "library": "fat-filesystem",
+      "description": "This module represents file paths as structured values, supporting operations to construct, manipulate, and query paths. It works with a private type `t` that encodes directory hierarchies, allowing splitting into components, navigating directories, and checking path properties. Concrete use cases include safely building and traversing filesystem paths, extracting filenames, and determining directory structure.",
+      "description_length": 414,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Fat_name",
+      "library": "fat-filesystem",
+      "description": "This module provides operations for handling FAT directory entries, including long filenames and 8.3 DOS names. It works with timestamp data, directory entry structures, and binary buffers to enable parsing, validation, checksum computation, and format conversion. Use cases include managing filesystem records, performing name-based entry matching, and maintaining directory consistency through free slot management and composite entry handling.",
+      "description_length": 446,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Fat_update",
+      "library": "fat-filesystem",
+      "description": "This module represents and manipulates updates to a FAT (File Allocation Table) structure, primarily working with `Cstruct.t` buffers and custom `data` types that encapsulate either string or buffer-based payloads. It provides operations to construct, modify, and apply updates at specific offsets, calculate required buffer sizes, split updates into sectors, and map virtual to physical offsets. Concrete use cases include applying partial updates to disk images, handling FAT table modifications, and managing buffer-based data patching in storage systems.",
+      "description_length": 558,
       "index": 9,
-      "embedding_norm": 1.0000001192092896
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Fat_boot_sector",
       "library": "fat-filesystem",
-      "description": "This module defines a data structure representing a FAT boot sector, including fields like OEM name, sector size, and FAT table layout. It provides functions to create, serialize, and parse boot sectors, along with utilities to compute sector ranges for clusters, the root directory, and FAT tables. Use cases include disk image creation, file system inspection, and boot sector generation for FAT-formatted storage.",
-      "description_length": 416,
+      "description": "This module defines a data structure for parsing and manipulating FAT boot sectors, including operations to calculate disk geometry, map clusters to sectors, and determine file system parameters. It works with fixed-size binary data representations using `Cstruct.t` and provides direct access to sector mappings for the FAT, root directory, and data clusters. Use cases include low-level disk image creation, file system inspection, and boot sector generation for FAT-formatted storage devices.",
+      "description_length": 495,
       "index": 10,
       "embedding_norm": 1.0
     }
@@ -101,9 +101,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 637,
-    "min_description_length": 225,
-    "avg_description_length": 446.0,
-    "embedding_file_size_mb": 0.04033470153808594
+    "max_description_length": 558,
+    "min_description_length": 348,
+    "avg_description_length": 449.3636363636364,
+    "embedding_file_size_mb": 0.15979385375976562
   }
 }

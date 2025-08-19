@@ -1,117 +1,109 @@
 {
   "package": "resto",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:08:10.673843",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 11,
+  "creation_timestamp": "2025-08-14T23:17:45.889711",
   "modules": [
     {
       "module_path": "Resto.MakeService.Internal.Ty",
       "library": "resto",
-      "description": "This module defines and manipulates type representations and equality for service endpoints. It works with abstract type identifiers and supports checking structural equivalence between different types. Concrete use cases include ensuring type consistency across distributed service interfaces and enabling type-safe routing decisions.",
-      "description_length": 335,
+      "description": "This module defines and manipulates type representations and equality witnesses for building type-safe service interfaces. It provides operations to construct, compare, and deconstruct type identifiers and their associated metadata. Concrete use cases include validating type consistency in RPC endpoints and enabling type-driven serialization logic.",
+      "description_length": 350,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resto.MakeService.Internal",
       "library": "resto",
-      "description": "This module handles conversions between internal and public representations of services, paths, arguments, and queries, while its child module ensures structural type equivalence and safe routing decisions. It supports extracting metadata like name, description, and kind from query fields, and works with abstract type identifiers to maintain consistency across distributed interfaces. Examples include mapping internal service definitions to external APIs and validating query parameters during routing. Together, they enable robust type inspection, transformation, and interface alignment.",
-      "description_length": 592,
+      "description": "This module provides direct conversions between internal and external representations of service components such as arguments, paths, and query parameters. It supports data types including service methods, paths, query fields, and type equality witnesses, enabling precise type manipulation and metadata access. Concrete use cases include translating internal service definitions into public interfaces and validating query field properties like name, description, and kind during RPC setup.",
+      "description_length": 491,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resto.Arg",
-      "library": "resto",
-      "description": "This module defines bidirectional converters for command-line or configuration parameters, supporting parsing and serialization of values from/to strings. It includes predefined converters for primitive types like booleans, integers, and floats, using standard OCaml parsing functions, and allows creating custom converters with `make` or duplicating existing ones with `like`. Use cases include parsing CLI arguments, validating configuration inputs, and mapping string-based data to typed values with precise error handling.",
-      "description_length": 526,
-      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Resto.ENCODING",
+      "module_path": "Resto.Path",
       "library": "resto",
-      "description": "This module defines conversions between values and their encoded representations, supporting bidirectional transformations. It works with a generic type `'a t` representing encodings, along with schemas and descriptions for structured data. Concrete use cases include serializing and deserializing values to formats like JSON, and defining request and response formats for an API with associated schema metadata.",
-      "description_length": 412,
+      "description": "This module constructs and manipulates URI/URL paths with support for both static and dynamic segments. It provides functions to append literal suffixes, add parameterized segments using typed arguments, and combine paths through concatenation or prefixing. Concrete use cases include building RESTful API endpoints with variable parts like `/user/<user-name>` or versioned paths such as `/api/v1/resource`.",
+      "description_length": 407,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Resto.StringMap",
+      "library": "resto",
+      "description": "This module provides operations for managing ordered string-keyed maps, supporting standard manipulations like addition, removal, and lookup, as well as advanced transformations such as merging, filtering, and structural comparisons. It handles maps with values of arbitrary types, including list-valued entries for accumulation, and facilitates conversions to ordered sequences and lists while preserving key ordering. Use cases include configuration management, hierarchical data processing, and scenarios requiring precise control over iteration order or merging of keyed datasets.",
+      "description_length": 584,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resto.Description",
       "library": "resto",
-      "description": "This module handles the representation and pretty-printing of service directories, specifically working with a `request` type that includes a `recurse` boolean to control traversal depth. It provides the `pp_print_directory` function for formatting directory structures according to a given schema. A concrete use case is generating human-readable output of nested service hierarchies for documentation or debugging purposes.",
-      "description_length": 425,
+      "description": "This module describes service directories, providing a function to pretty-print directory structures using a formatter. It works with directory types parameterized over a schema type and includes a `request` type with a `recurse` boolean field. A concrete use case is generating human-readable representations of nested service directories during debugging or logging.",
+      "description_length": 368,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resto.MethMap",
       "library": "resto",
-      "description": "This module implements a sorted map structure for `Resto.meth` keys paired with arbitrary values, offering insertion, deletion, and lookup operations alongside transformations like merging, filtering, and mapping. It supports ordered traversal (ascending/descending), aggregation (cardinality, bindings), extremal key access, and sequence-based construction/iteration, enabling efficient ordered data manipulation. Typical use cases include managing method-value associations requiring ordered traversal, bulk sequence transformations, or conditional key-range operations while preserving structural integrity.",
-      "description_length": 610,
+      "description": "This module implements a sorted key-value map structure specialized for `Resto.meth` keys, enabling efficient insertion, lookup, and ordered traversal operations like folds, filters, and conditional searches. It supports transformations through sequence conversions with customizable iteration order, alongside advanced querying for first/last matches or key-bound partitions. Designed for scenarios requiring method-based routing or ordered association management, such as REST API endpoint handling, it leverages a custom comparator to maintain key ordering during operations like merge, split, or equality checks.",
+      "description_length": 616,
       "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Resto.Query",
+      "library": "resto",
+      "description": "This module defines and manipulates query parameter specifications for URLs, supporting operations to declare required, optional, flag, and multi-value fields. It works with key-value pairs in URI query strings, mapping them to typed OCaml values using `Resto.Arg.t` converters. Concrete use cases include defining API endpoints that extract and validate query parameters from HTTP requests, such as filtering or sorting options in a RESTful service.",
+      "description_length": 450,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resto.Utils",
       "library": "resto",
-      "description": "Splits a string path into a list of components using platform-specific directory separators. Decodes and splits a string path into a list of components, handling URL-encoded characters. Useful for parsing file paths or REST API endpoints into segments for routing or processing.",
-      "description_length": 278,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "description": "Splits a string path into a list of components using platform-specific directory separators. Decodes and splits a string path into a list of components, handling URL-encoded characters. Useful for parsing file system paths or URL paths into segments for routing or traversal.",
+      "description_length": 275,
+      "index": 7,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Resto.MakeService",
       "library": "resto",
-      "description": "This module enables type-safe construction of HTTP services by defining routes with methods like GET and POST, handling input/output/error encodings, and parsing query parameters. It supports RESTful APIs and RPC endpoints with strict type validation and structured error responses, operating on parameterized service structures that encapsulate HTTP methods, paths, and data encodings. The child module handles conversions between internal and public service representations, ensuring structural type equivalence and safe routing, while extracting metadata like name and description from query fields. Together, they enable mapping internal definitions to external APIs, validating parameters during routing, and maintaining consistency across distributed interfaces using abstract type identifiers.",
-      "description_length": 800,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Resto.Query",
-      "library": "resto",
-      "description": "This module handles parsing and constructing query parameters in URLs, focusing on key-value pairs. It provides functions to define required fields, optional fields, flags, and multi-value fields, each associated with a specific type using `Resto.Arg.t`. Use it to describe and validate query parameters for REST services, such as filtering results or configuring request behavior.",
-      "description_length": 381,
+      "description": "This module enables the construction and transformation of RESTful HTTP services with typed methods, path/query parameters, and input/output encodings, ensuring strict error handling. It operates on data structures representing HTTP methods, paths, query fields, and type equality proofs, facilitating use cases like generating validated RPC interfaces and composing services through path parameter substitution or metadata translation. The internal machinery bridges external service definitions with runtime representations, enforcing correctness during interface generation.",
+      "description_length": 577,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Resto.StringMap",
+      "module_path": "Resto.Arg",
       "library": "resto",
-      "description": "This module provides ordered string-keyed maps with operations for key-based binding manipulation, ordered iteration, and structural transformations. It supports ordered queries (e.g., first/last key matching), sequence conversions for bulk updates, and order-preserving map-filter-reduce patterns, working with associative data requiring stable key ordering. Typical applications include configuration management, ordered dictionary processing, and scenarios needing deterministic traversal over string-indexed data.",
-      "description_length": 517,
+      "description": "This module defines bidirectional converters for command-line or configuration parameters, handling parsing and serialization with documented names and descriptions. It supports scalar types like integers, floats, and booleans, using standard OCaml conversion functions, and allows creating derived arguments with distinct names but same behavior. Concrete use cases include parsing CLI flags, validating config values, and mapping string-based inputs to typed values with descriptive error handling.",
+      "description_length": 500,
       "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resto.Path",
-      "library": "resto",
-      "description": "This module constructs and manipulates URI/URL paths with support for both static and dynamic segments. It provides functions to append string suffixes, add parameterized segments using infix operators, and combine paths with prefixing. Concrete use cases include building RESTful API endpoints with variable parts like `/user/<user-name>` or versioned paths such as `/api/v1/resource`.",
-      "description_length": 386,
-      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resto",
       "library": "resto",
-      "description": "This module provides utilities for string manipulation, option processing, and result traversal, while integrating converters for CLI/config parameters, encodings for structured data, and path handling for REST services. It supports key data types such as bidirectional converters, encodings, sorted maps, and URI paths, enabling operations like parsing typed values from strings, serializing data to JSON, and constructing versioned API endpoints. You can define HTTP routes with strict type validation, split paths into segments for routing, and generate human-readable service directory output. Submodules enhance this functionality with ordered maps for method-value associations, query parameter handling, and type-safe service construction and transformation.",
-      "description_length": 765,
-      "index": 11,
+      "description": "This module provides operations for constructing and manipulating RESTful services with typed methods, paths, and query parameters. It works with HTTP methods, URI paths, and query strings, using converters to handle typed data extraction and validation. Concrete use cases include defining API endpoints that require strict parameter handling, such as routing HTTP requests to specific functions based on method and path, and extracting and validating query parameters for filtering or sorting resources.",
+      "description_length": 505,
+      "index": 10,
       "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 12,
-    "meaningful_modules": 12,
+    "total_modules_in_package": 11,
+    "meaningful_modules": 11,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 800,
-    "min_description_length": 278,
-    "avg_description_length": 502.25,
-    "embedding_file_size_mb": 0.04399585723876953
+    "max_description_length": 616,
+    "min_description_length": 275,
+    "avg_description_length": 465.72727272727275,
+    "embedding_file_size_mb": 0.15976810455322266
   }
 }

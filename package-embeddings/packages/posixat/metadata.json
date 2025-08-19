@@ -1,71 +1,71 @@
 {
   "package": "posixat",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:05:34.862494",
+  "creation_timestamp": "2025-08-14T23:04:19.389757",
   "modules": [
     {
-      "module_path": "Posixat.Stats",
+      "module_path": "Posixat.File_perm",
       "library": "posixat",
-      "description": "Handles file metadata retrieval and manipulation using POSIX `*at` system calls. Provides functions to access file attributes like permissions, ownership, size, and timestamps through the `t` type. Useful for implementing file system operations that require precise control over file descriptors and path resolution.",
-      "description_length": 316,
+      "description": "This module represents file permission bits as integers and provides operations to manipulate and query these permissions using bitwise flags. It works directly with the `t` type, which is an alias for `Base.int`, and includes functions to check or set read, write, and execute permissions for user, group, and others. Concrete use cases include constructing permission masks for file creation or modification, and decoding the permission bits from system calls like `fstatat`.",
+      "description_length": 477,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Posixat.File_perm",
+      "module_path": "Posixat.Stats",
       "library": "posixat",
-      "description": "Represents file permission bits as integers, with functions to convert to and from symbolic representations. Works directly with Unix file descriptors and path operations that require permission settings. Used when creating or modifying files through functions like `openat` or `fchmodat` to specify access modes like read, write, execute for owner, group, and others.",
-      "description_length": 368,
+      "description": "This module directly provides operations to retrieve and manipulate file metadata through the `t` type, which mirrors the structure of `Unix.LargeFile.stats`. It includes functions to access specific fields like file size, permissions, timestamps, and device information. Concrete use cases include checking file modification times, determining file types, and inspecting ownership or size attributes for system-level file operations.",
+      "description_length": 434,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Posixat.Open_flag",
-      "library": "posixat",
-      "description": "This module defines flags for file operations like read-only, write-only, create, and truncate. It works with Unix file descriptors and integrates with system calls for opening or manipulating files. Use cases include specifying file access modes when opening files with `openat` or similar functions.",
-      "description_length": 301,
-      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Posixat.Fd",
       "library": "posixat",
-      "description": "Handles file descriptor operations for interacting with the filesystem using the `*at` family of POSIX functions. Works directly with `Unix.file_descr` to enable relative path resolution and file descriptor management. Useful for implementing secure, path-independent file operations like opening, linking, or renaming files within a directory tree.",
-      "description_length": 349,
-      "index": 3,
+      "description": "Handles file descriptor operations for interacting with the `*at` family of POSIX functions. Works directly with `Unix.file_descr` values, providing functions to manipulate and query file descriptors relative to specific directories. Useful for implementing system calls like `openat`, `fstatat`, and `unlinkat` with precise control over file access paths.",
+      "description_length": 356,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Posixat.File_kind",
       "library": "posixat",
-      "description": "Defines and manipulates file type identifiers such as regular files, directories, and sockets. Provides the `sexp_of_t` function to convert file kind values to S-expressions for serialization or debugging. Useful when inspecting or logging the type of a file in system-level applications.",
-      "description_length": 288,
-      "index": 4,
+      "description": "Defines and serializes file kind types such as regular files, directories, and sockets. Works directly with Unix.file_kind values. Used to inspect or transmit file type metadata from system calls like `fstatat`.",
+      "description_length": 211,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Posixat.At_flag",
+      "module_path": "Posixat.Open_flag",
       "library": "posixat",
-      "description": "This module defines flags used with *at system calls to control file access and symlink behavior. It includes operations to convert flag values to S-expressions for serialization or debugging. Use cases include specifying options for functions like `faccessat`, `unlinkat`, and `readlinkat` in systems programming.",
-      "description_length": 314,
-      "index": 5,
+      "description": "This module defines flags for file operations like read-only, write-only, append, create, and truncate. It works with Unix file descriptors and integrates with system calls for opening or manipulating files. Use cases include specifying file access modes when opening files with `openat` or similar functions.",
+      "description_length": 309,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Posixat.Access_permission",
       "library": "posixat",
-      "description": "This module defines an enumerated type representing file access permissions (read, write, execute/search, existence check) used in POSIX access checks. It includes a function to convert these permission values into S-expressions, typically for serialization or debugging. This module is used to specify the desired access mode when checking file permissions with functions like `accessat`.",
-      "description_length": 389,
+      "description": "This module defines and serializes access permission flags for file operations, such as read, write, execute, and existence checks. It works with the `t` type representing individual access modes and converts them to S-expressions. Used when specifying or inspecting file access rights in system-level programming tasks.",
+      "description_length": 320,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Posixat.At_flag",
+      "library": "posixat",
+      "description": "This module defines flags used with *at family functions for controlling file operation behavior. It supports operations like `faccessat`, `fchmodat`, and `fchownat` by specifying options such as symlink handling and directory removal. Concrete use cases include checking file access permissions relative to a directory file descriptor or modifying file metadata with precise control over symbolic link resolution.",
+      "description_length": 414,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Posixat",
       "library": "posixat",
-      "description": "This module provides direct access to POSIX `*at` system calls for file operations relative to file descriptors, enabling precise control over path resolution and access modes. It includes types for file metadata, permissions, and flags, along with functions to manipulate these values when working with file descriptors and paths. For example, you can open a file with specific access modes using `openat`, change its permissions with `fchmodat`, or inspect its type and attributes. Submodules handle low-level details like permission bit manipulation, flag settings, and file kind identification, making it suitable for secure and fine-grained filesystem interactions.",
-      "description_length": 670,
+      "description": "This module provides low-level file manipulation operations with precise control over directory-relative access, symlink handling, and permission checks. It works with file descriptors, access flags, permission modes, and metadata structures to enable secure file operations like opening, unlinking, or inspecting files relative to a directory descriptor. Specific use cases include avoiding path-based race conditions via directory file descriptors, checking feature availability (e.g., `mkfifoat`), and managing directory traversal streams safely.",
+      "description_length": 549,
       "index": 7,
       "embedding_norm": 1.0
     }
@@ -77,9 +77,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 670,
-    "min_description_length": 288,
-    "avg_description_length": 374.375,
-    "embedding_file_size_mb": 0.02948760986328125
+    "max_description_length": 549,
+    "min_description_length": 211,
+    "avg_description_length": 383.75,
+    "embedding_file_size_mb": 0.11630535125732422
   }
 }

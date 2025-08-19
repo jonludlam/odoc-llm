@@ -1,39 +1,39 @@
 {
   "package": "timed",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:05:40.417972",
+  "creation_timestamp": "2025-08-14T23:00:23.165534",
   "modules": [
     {
       "module_path": "Timed.Time",
       "library": "timed",
-      "description": "The Time module implements an abstract timeline for imperative state management, allowing the program to save and restore points in time. It works with a custom type `t` to represent saved states, with `save` capturing the current state and `restore` reverting to a previously saved state. This is useful for implementing undo/redo functionality in applications like interactive editors or stateful simulations, where precise control over state changes is required.",
-      "description_length": 465,
+      "description": "This module implements an abstract timeline for imperative state management, providing `save` to capture the current state in constant time and `restore` to revert to a saved state. It works with an abstract type `t` representing points in time, internally tracking changes to timed references. Use cases include implementing undo/redo functionality in interactive applications or rolling back state changes during debugging and testing.",
+      "description_length": 437,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Timed",
       "library": "timed",
-      "description": "This module implements timed references with support for undo/redo operations using an abstract timeline. It provides standard reference operations (`ref`, `!`, `:=`, `incr`, `decr`) with minimal overhead, along with time-aware functions like `pure_apply` and `pure_test` to control state transitions. The Time submodule manages the timeline, offering `save` to capture and `restore` to revert to previous states, enabling precise rollback in interactive systems like editors or debuggers. For example, a user can increment a reference, save the time point, and later restore the reference to its previous value.",
-      "description_length": 612,
+      "description": "This module implements timed references with support for undo/redo operations through an abstract timeline. It provides reference operations such as `ref`, `!`, `:=`, `incr`, and `decr`, which behave like standard references but track changes over time. The `Time` submodule allows saving and restoring the state of references, enabling features like transactional updates, interactive undo/redo in editors, or speculative execution in debuggers. Additional functions like `pure_apply` and `pure_test` allow controlled execution of functions with automatic state rollback based on the result.",
+      "description_length": 592,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Timed_compat.Time",
       "library": "timed.compat",
-      "description": "This module provides time points for tracking reference updates, allowing the program to save and restore reference states. It works with an abstract type `t` representing a point in time, created by `save` and used by `restore` to revert changes. Concrete use cases include implementing undo/redo functionality for reference modifications and debugging by rolling back to previous program states.",
-      "description_length": 397,
+      "description": "This module provides time points for versioning reference updates, enabling save and restore operations to track and revert changes. It works with an abstract time type `t` and monitored references. Use cases include implementing undo/redo functionality for reference modifications and checkpointing program states efficiently.",
+      "description_length": 327,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Timed_compat",
       "library": "timed.compat",
-      "description": "This module extends standard reference operations with time-based state tracking, enabling atomic-like updates and selective rollbacks using saved time points. It introduces functions to modify references while maintaining a history of changes, which can be reverted using the `save` and `restore` operations provided by its child module. The primary data type is `Stdlib.ref` augmented with internal state tracking, alongside an abstract time point type `t` used to mark and return to specific update points. You can use it to implement transactional logic in mutable code, such as speculative computations with controlled backtracking or undo systems for reference changes.",
-      "description_length": 675,
+      "description": "This module provides timed reference operations with state restoration capabilities, redefining standard reference updates to support time-point tracking and efficient checkpointing. It works with `Stdlib.ref` types and an abstract `Time.t` type to manage versioned reference states. Concrete use cases include implementing undo/redo functionality for reference modifications and safely testing state changes with conditional reversion.",
+      "description_length": 436,
       "index": 3,
       "embedding_norm": 1.0
     }
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 675,
-    "min_description_length": 397,
-    "avg_description_length": 537.25,
-    "embedding_file_size_mb": 0.014939308166503906
+    "max_description_length": 592,
+    "min_description_length": 327,
+    "avg_description_length": 448.0,
+    "embedding_file_size_mb": 0.05840587615966797
   }
 }

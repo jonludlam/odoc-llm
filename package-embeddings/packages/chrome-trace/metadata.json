@@ -1,73 +1,73 @@
 {
   "package": "chrome-trace",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:05:47.031566",
+  "creation_timestamp": "2025-08-14T23:01:43.772211",
   "modules": [
     {
-      "module_path": "Chrome_trace.Stack_frame.Raw",
+      "module_path": "Chrome_trace.Event.Timestamp",
       "library": "chrome-trace",
-      "description": "Handles raw stack frame data for trace events by converting a list of strings into a structured format suitable for Chrome's trace viewer. It works directly with string lists and the internal `t` type representing a stack frame. This module is used to construct stack traces in trace events, enabling visualization of call stacks in performance profiling tools like Chrome Tracing.",
-      "description_length": 381,
+      "description": "This module defines a timestamp type and conversion functions for working with time values in floating-point seconds. It supports precise time representations required by Chrome's trace event format, enabling accurate event timing in performance traces. Use this module to convert timestamps to and from float values for logging events in `chrome://tracing`.",
+      "description_length": 358,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Chrome_trace.Event.Timestamp",
+      "module_path": "Chrome_trace.Stack_frame.Raw",
       "library": "chrome-trace",
-      "description": "This module defines a timestamp type and conversions to and from floating-point seconds. It supports precise time measurements for trace events, enabling accurate timing data to be recorded and exported in Chrome's trace_event format. Use cases include logging event start and end times for performance analysis in tracing tools.",
-      "description_length": 329,
+      "description": "Handles raw stack frame data for trace events by converting a list of strings into a structured format suitable for Chrome's trace viewer. It works directly with string lists and the internal `t` type representing stack frames. This module is used to construct stack traces in trace events, enabling visualization of call stacks in performance profiling tools.",
+      "description_length": 360,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Chrome_trace.Event",
+      "module_path": "Chrome_trace.Stack_frame",
       "library": "chrome-trace",
-      "description": "This module creates and manipulates trace events in Chrome's trace_event format, supporting counters, async events with start/instant/end phases, and complete events with duration. It works with timestamps, process/thread identifiers, stack frames, and JSON-formatted arguments, enabling detailed performance tracing of systems with hierarchical and asynchronous operations. The timestamp submodule provides precise time measurements, converting to and from floating-point seconds for accurate timing data in trace logs. Use cases include logging event start and end times, tracking asynchronous operations across threads, and analyzing performance in tracing tools.",
-      "description_length": 666,
+      "description": "Handles construction and representation of stack frames for Chrome trace events, including parent relationships and metadata like name and category. Works with string identifiers and structured frame data to build hierarchical call stacks. Used to generate detailed stack traces that visualize execution flow in performance analysis tools like Chrome Tracing.",
+      "description_length": 359,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Chrome_trace.Output_object",
       "library": "chrome-trace",
-      "description": "This module constructs trace data objects in the Chrome trace_event format, supporting the creation of structured traces with events, stack frames, and custom metadata. It works with trace events, identifier-to-stack-frame mappings, and JSON values to represent trace data. Concrete use cases include generating performance traces for visualization in Chrome's tracing tool, such as profiling application execution or analyzing asynchronous workflows.",
-      "description_length": 451,
+      "description": "This module constructs trace data objects in the Chrome trace-event format, supporting creation with events, optional display time units, custom fields, and stack frames. It works with trace events, JSON values, and identifier-stack frame pairs to build structured output. Use it to generate trace files for performance analysis in tools like `chrome://tracing`.",
+      "description_length": 362,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Chrome_trace.Stack_frame",
+      "module_path": "Chrome_trace.Id",
       "library": "chrome-trace",
-      "description": "This module organizes stack frame records for trace events, using identifiers and descriptive fields like name and category to represent execution contexts. It supports hierarchical call stack construction for performance profiling, particularly in tools like Chrome Tracing. The core `t` type holds frame data, while operations convert string lists into structured frames and build traces. For example, it can transform a list like `[\"main\"; \"parse\"; \"tokenize\"]` into a sequence of linked stack frames for visualization.",
-      "description_length": 522,
+      "description": "This module generates and manages identifiers used in trace events, supporting both string and integer-based IDs. It provides the `create` function to construct an identifier from a string or integer value. These identifiers are used to uniquely label events in the Chrome trace viewer for performance analysis.",
+      "description_length": 311,
       "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chrome_trace.Event",
+      "library": "chrome-trace",
+      "description": "This module creates and manipulates Chrome trace events such as complete, counter, async, and instant events. It works with timestamps, process and thread identifiers, and JSON-formatted arguments to represent performance data in the Chrome trace_event format. Concrete use cases include logging function durations, tracking asynchronous operations, and marking instantaneous events for visualization in `chrome://tracing`.",
+      "description_length": 423,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Chrome_trace.Json",
       "library": "chrome-trace",
-      "description": "This module defines a JSON AST type and functions to construct and serialize values in the Chrome trace event format. It supports basic types like integers, floats, strings, booleans, and nested lists and associations. Use this module to build structured trace events with timestamps, durations, and metadata for visualization in Chrome's tracing tool.",
-      "description_length": 352,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Chrome_trace.Id",
-      "library": "chrome-trace",
-      "description": "This module generates unique identifiers for trace events using either string or integer values. It provides the `create` function to construct an identifier from a string or integer, ensuring compatibility with the Chrome trace event format. Use this module to assign distinct IDs to asynchronous operations or concurrent tasks when producing traces for visualization in tools like Chrome's tracing viewer.",
-      "description_length": 407,
+      "description": "This module implements functions to construct and manipulate JSON values according to the Chrome trace event format. It supports data types such as integers, floats, strings, lists, booleans, associative lists, and null, enabling precise representation of trace events. Concrete use cases include serializing profiling data, logging asynchronous operations, and generating structured timelines for visualization in the Chrome tracing tool.",
+      "description_length": 439,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Chrome_trace",
       "library": "chrome-trace",
-      "description": "This module generates performance traces in Chrome's trace_event format, supporting detailed logging of synchronous and asynchronous operations with timestamps, durations, and hierarchical stack frames. It provides data types for trace events, stack frames, JSON values, and unique identifiers, along with operations to construct and link them into structured traces. Use it to profile application execution, visualize asynchronous workflows, or analyze performance bottlenecks in Chrome's tracing tool by building traces with nested call stacks, counter events, or async event sequences. Example: track a multi-threaded operation by creating async events with start/instant/end phases, associate them with stack frames, and output the result to a JSON file for analysis.",
-      "description_length": 771,
+      "description": "This module writes performance trace data in Chrome's trace_event format for visualization in tools like `chrome://tracing`. It supports creating and organizing trace events with timestamps, identifiers, stack frames, and structured metadata. Concrete use cases include profiling function execution, tracking asynchronous workflows, and generating hierarchical call stacks for detailed performance analysis.",
+      "description_length": 407,
       "index": 7,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -77,9 +77,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 771,
-    "min_description_length": 329,
-    "avg_description_length": 484.875,
-    "embedding_file_size_mb": 0.029476165771484375
+    "max_description_length": 439,
+    "min_description_length": 311,
+    "avg_description_length": 377.375,
+    "embedding_file_size_mb": 0.11635303497314453
   }
 }

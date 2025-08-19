@@ -1,71 +1,71 @@
 {
   "package": "capnp-rpc-lwt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:06:22.664945",
+  "creation_timestamp": "2025-08-14T23:06:29.388024",
   "modules": [
     {
       "module_path": "Capnp_rpc_lwt.Service.Response",
       "library": "capnp-rpc-lwt",
-      "description": "This module constructs and manages response objects for Capnp RPC service handlers using Lwt. It provides functions to create responses with or without initial content and to explicitly release resources when needed. Use cases include building return values for RPC method implementations and managing reference lifetimes during message transmission.",
-      "description_length": 350,
+      "description": "This module provides functions to construct and manage response objects for RPC service implementations. It works with Cap'n Proto message buffers and exported capability references, enabling precise control over response initialization and resource management. Use `create` to build a response with structured data, `create_empty` for responses without content, and `release` to explicitly free associated resources when needed.",
+      "description_length": 429,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Capnp_rpc_lwt.Capability.Request",
       "library": "capnp-rpc-lwt",
-      "description": "This module constructs and manages capability invocation requests with Lwt-compatible APIs. It provides functions to create request payloads with or without arguments, initialize their content using Capn'Proto message builders, and explicitly release resources. These operations support building and sending method calls to remote objects represented as capabilities, particularly during client-server interactions in distributed systems.",
-      "description_length": 438,
+      "description": "This module constructs and manages capability invocation requests with Lwt-compatible APIs. It provides functions to create request payloads with or without arguments, using Cap\u2019n Proto message buffers, and to explicitly release associated resources. Typical use cases include initiating remote method calls on capabilities and handling their response promises within Lwt-based applications.",
+      "description_length": 391,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Capnp_rpc_lwt.Service",
+      "module_path": "Capnp_rpc_lwt.Persistence",
       "library": "capnp-rpc-lwt",
-      "description": "This module provides functions for constructing and managing service responses in a Cap'n Proto RPC implementation, particularly tailored for use with Lwt-based asynchronous programming. It supports direct operations on `StructRef.t` and `Response.t` types, allowing implementors to wrap results as promises, return empty or immediate responses, and manage error handling. The child module extends this by enabling explicit resource management and response creation with or without initial content. Together, they facilitate implementing RPC methods that produce structured results, handle asynchronous computation, and manage reference lifetimes during message transmission.",
-      "description_length": 675,
+      "description": "This module extends capabilities with persistence and sturdy reference functionality. It provides functions to wrap services with persistence logic, associate them with sturdy references, and save capabilities to URIs. Use it to implement durable services that can be restored across restarts by handling the Cap\u2019n Proto persistence protocol.",
+      "description_length": 342,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Capnp_rpc_lwt.Capability",
       "library": "capnp-rpc-lwt",
-      "description": "This module enables managing remote object references and their asynchronous interactions through Lwt-based concurrency primitives, supporting method invocation pipelining, reference counting, and lifecycle management. It introduces core types like capability references and operations such as `with_ref` for automatic cleanup and `pp` for introspection, allowing method calls on both local and remote objects or unresolved promises. Child modules handle the construction and management of invocation requests, enabling creation of Capn'Proto-based payloads and explicit resource release during client-server communication. Example usage includes invoking remote methods while chaining unresolved promises, or inspecting capability state during distributed system interactions.",
-      "description_length": 777,
+      "description": "The module enables asynchronous remote procedure calls and capability lifecycle management in concurrent environments, supporting operations like method invocation, promise resolution, and reference counting. It operates on capability references (`Capability.t`), method identifiers, and Cap\u2019n Proto message structures, with utilities for safe resource handling and error propagation. This facilitates distributed system development where capabilities represent transient or remote services, requiring precise control over asynchronous interactions and resource ownership.",
+      "description_length": 572,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Capnp_rpc_lwt.Sturdy_ref",
       "library": "capnp-rpc-lwt",
-      "description": "This module manages durable references to remote capabilities using the Lwt concurrency model. It provides functions to connect to services, invoke methods with automatic reference management, and serialize/deserialize sturdy references within Cap\u2019n Proto messages. Use cases include building and accessing distributed services where references must survive across serialization or be invoked safely in an async context.",
-      "description_length": 420,
+      "description": "This module handles connecting to and using capabilities via sturdy references, supporting operations to establish live connections, invoke functions with capability references, and serialize/deserialize sturdy refs in Cap\u2019n Proto messages. It works with `Sturdy_ref.t`, `Capability.t`, and Cap\u2019n Proto message builders and readers. Concrete use cases include deserializing a sturdy reference from a message, invoking a remote method using a capability, and embedding a sturdy reference into a message.",
+      "description_length": 502,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Capnp_rpc_lwt.StructRef",
       "library": "capnp-rpc-lwt",
-      "description": "Handles reference counting for promises of response structures, allowing pipelined access to capabilities within unresolved responses. Works with `'a t` values representing pending response structures. Use to manage lifetime of asynchronous result pointers and pipeline dependent operations before results arrive.",
-      "description_length": 313,
+      "description": "This module manages reference counting for promises to response structures, allowing pipelined access to capabilities within those responses. It provides `inc_ref` and `dec_ref` to control the lifetime of a promise, ensuring proper cleanup and cancellation when references reach zero. Concrete use cases include safely chaining asynchronous operations on remote capabilities without blocking for the full response.",
+      "description_length": 414,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Capnp_rpc_lwt.Persistence",
+      "module_path": "Capnp_rpc_lwt.Service",
       "library": "capnp-rpc-lwt",
-      "description": "This module provides functions to integrate Cap\u2019n Proto services with persistence and sturdy reference capabilities. It enables saving capabilities to URIs and restoring them, supporting distributed object references across sessions. Key operations include `with_persistence`, `with_sturdy_ref`, and `save` for managing long-lived service instances.",
-      "description_length": 349,
+      "description": "This module provides functions to construct and manage RPC service responses using Cap'n Proto message buffers and capability references. It supports creating responses with structured data, returning empty responses, handling Lwt-based asynchronous results, and raising failures with precise error handling. Concrete use cases include implementing RPC methods that return immediate or asynchronous results, manage resource lifetimes, or signal errors with formatted messages.",
+      "description_length": 476,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Capnp_rpc_lwt",
       "library": "capnp-rpc-lwt",
-      "description": "This module bridges Cap'n Proto RPC with Lwt, enabling asynchronous service implementations that manage structured responses, remote capability references, and durable object persistence. It centers around `Response.t`, `StructRef.t`, and capability references, offering operations to wrap results in promises, pipeline method calls, and manage reference lifetimes across distributed interactions. Users can implement RPC methods that return structured or empty responses, invoke remote capabilities with automatic cleanup, and serialize sturdy references for long-lived service access. Example workflows include asynchronous result handling with explicit resource management and chaining remote method calls over Cap'n Proto messages.",
-      "description_length": 735,
+      "description": "This module wraps `Capnp_rpc` to provide Lwt-based APIs for asynchronous remote procedure calls, capability management, and message handling. It supports operations like method invocation, reference counting, sturdy reference serialization, service response construction, and capability persistence, working with types such as `Capability.t`, `Sturdy_ref.t`, and Cap\u2019n Proto messages. Concrete use cases include implementing and invoking remote methods asynchronously, embedding and restoring sturdy references in messages, and managing the lifecycle of distributed capabilities with precise resource control.",
+      "description_length": 609,
       "index": 7,
       "embedding_norm": 1.0
     }
@@ -77,9 +77,9 @@
     "retention_rate": 0.8888888888888888
   },
   "statistics": {
-    "max_description_length": 777,
-    "min_description_length": 313,
-    "avg_description_length": 507.125,
-    "embedding_file_size_mb": 0.029473304748535156
+    "max_description_length": 609,
+    "min_description_length": 342,
+    "avg_description_length": 466.875,
+    "embedding_file_size_mb": 0.11633682250976562
   }
 }

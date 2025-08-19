@@ -1,117 +1,101 @@
 {
   "package": "secp256k1-internal",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:08:49.347020",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 10,
+  "creation_timestamp": "2025-08-14T23:13:58.353264",
   "modules": [
+    {
+      "module_path": "Libsecp256k1.Internal.Group.Storage",
+      "library": "secp256k1-internal",
+      "description": "This module manages the storage and manipulation of elliptic curve group elements, specifically for the secp256k1 curve. It provides functions to convert between internal storage format and Cstruct buffers, construct elements from field values, and perform constant-time conditional moves. Use cases include handling public keys, signatures, and cryptographic operations requiring secure group element representation.",
+      "description_length": 417,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "Libsecp256k1.Internal.Field.Storage",
       "library": "secp256k1-internal",
-      "description": "This module directly handles low-level storage operations for field elements represented as 32-byte sequences. It provides functions to convert between `Cstruct.t` buffers and field storage structures, construct constant field elements from 32-bit limbs, and conditionally copy field values in constant time. Concrete use cases include parsing field elements from binary data, initializing curve constants, and performing constant-time conditional moves during cryptographic operations.",
-      "description_length": 486,
-      "index": 0,
+      "description": "This module directly handles low-level storage operations for field elements, providing functions to convert between field elements and byte buffers (`Cstruct.t`), construct elements from explicit integer components, and conditionally copy values in constant time. It operates on the abstract type `t`, representing field elements with internal storage optimized for the secp256k1 curve. Concrete use cases include deserializing field elements from network data, initializing constants for cryptographic operations, and performing secure conditional assignments during signature verification or scalar multiplication.",
+      "description_length": 617,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libsecp256k1.Internal.Group.Jacobian",
       "library": "secp256k1-internal",
-      "description": "This module implements Jacobian coordinate operations for elliptic curve points, supporting affine and Jacobian conversions, point addition, doubling, negation, comparison, and scalar multiplication. It works directly with Jacobian-typed group elements, field elements, and affine coordinates. These operations are used in cryptographic computations such as ECDSA signing and verification, key derivation, and zero-knowledge proofs where efficient and secure curve arithmetic is required.",
-      "description_length": 488,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libsecp256k1.Internal.Group.Storage",
-      "library": "secp256k1-internal",
-      "description": "This module manages the storage and manipulation of elliptic curve group elements for cryptographic operations. It provides functions to convert between internal representations and Cstruct buffers, construct elements from field components, and perform constant-time conditional moves. It works directly with `Cstruct.t` and `Libsecp256k1.Internal.Field.Storage.t` to support low-level cryptographic computations such as key serialization and elliptic curve arithmetic.",
-      "description_length": 469,
+      "description": "This module implements Jacobian coordinate operations for elliptic curve points, supporting arithmetic such as point addition, doubling, negation, and scalar multiplication. It works directly with Jacobian-formatted group elements and interacts with affine coordinates through conversion and mixed-coordinate operations. Concrete use cases include efficient cryptographic operations in ECDSA and Schnorr signatures, where Jacobian coordinates enable faster computations without requiring costly field inversions at each step.",
+      "description_length": 525,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libsecp256k1.Internal.Scalar",
-      "library": "secp256k1-internal",
-      "description": "This module implements cryptographic scalar arithmetic for elliptic curve operations, focusing on precise modular computations and constant-time safety. It provides functions for scalar addition, multiplication, inversion, bitwise manipulation, parity checks, and equality comparisons, along with conversions between scalars and byte arrays (`Cstruct.t`). These operations are critical for secure digital signature schemes, key derivation protocols, and zero-knowledge proof systems requiring strict adherence to curve order constraints and side-channel resistance.",
-      "description_length": 565,
-      "index": 3,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libsecp256k1.Internal.Field",
-      "library": "secp256k1-internal",
-      "description": "This module manages field elements for the secp256k1 elliptic curve, providing arithmetic operations, normalization, and magnitude tracking for values represented as type `t`. It supports addition, multiplication, square roots, inversion, and comparisons while handling elements in various normalization states, ensuring safe and efficient manipulation through explicit magnitude control. The module integrates low-level storage operations via child modules that convert between 32-byte encodings and internal representations, enabling binary parsing, constant initialization, and constant-time conditional moves critical for cryptographic protocols like signature verification and key generation.",
-      "description_length": 697,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libsecp256k1.Internal.Group",
-      "library": "secp256k1-internal",
-      "description": "This module provides operations for working with elliptic curve points in the secp256k1 group, supporting point creation, inversion, validation, and serialization using affine and Jacobian coordinates. It defines the core data type `t` for group elements, integrates coordinate operations from the Jacobian submodule for efficient arithmetic, and includes storage utilities for converting points to and from binary representations. Users can perform cryptographic tasks such as ECDSA signing, key serialization, and secure curve arithmetic by combining direct API functions with coordinate-specific and storage-level operations.",
-      "description_length": 628,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Libsecp256k1.External.Context",
-      "library": "secp256k1-internal",
-      "description": "This module manages cryptographic contexts for the secp256k1 elliptic curve, providing operations to create, clone, and randomize contexts. It works with the abstract type `t` representing a cryptographic context and uses `Bigstring.t` for entropy input during randomization. Concrete use cases include initializing signing or verification contexts and ensuring side-channel resistance through entropy injection.",
-      "description_length": 412,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Libsecp256k1.External.Sign",
-      "library": "secp256k1-internal",
-      "description": "This module provides functions for generating, encoding, and validating ECDSA signatures in both standard and recoverable formats, including DER and compact serialization, as well as converting between representations and recovering public keys from signatures. It works with bigstrings for message and signature data, secret keys for signing, public keys for verification, and buffers for efficient signature handling, making it suitable for blockchain applications like Bitcoin where secure transaction signing and signature verification are critical.",
-      "description_length": 553,
-      "index": 7,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Libsecp256k1.External.Key",
       "library": "secp256k1-internal",
-      "description": "This module provides cryptographic key manipulation operations like negation, tweaking, and public key derivation from secret keys, alongside serialization routines for converting keys to compressed or uncompressed byte formats. It operates on `Bigstring.t` buffers and abstract key types representing secret and public keys. These capabilities are particularly useful for blockchain applications requiring secure key management, compact key storage, or multi-party key aggregation workflows.",
-      "description_length": 492,
-      "index": 8,
-      "embedding_norm": 1.0000001192092896
+      "description": "This module provides cryptographic key management operations, including creation, transformation (e.g., negation, tweaking), serialization with compression options, and combining public keys. It operates on `Bigstring.t` buffers representing secret and public keys, using a cryptographic context for safe deserialization and format conversion. These capabilities are essential for blockchain protocols, multi-signature schemes, and secure key exchange mechanisms requiring efficient key manipulation and compact binary representations.",
+      "description_length": 535,
+      "index": 3,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Libsecp256k1.Internal",
+      "module_path": "Libsecp256k1.Internal.Field",
       "library": "secp256k1-internal",
-      "description": "This module provides low-level cryptographic operations for the secp256k1 elliptic curve, encompassing scalar arithmetic, field element manipulation, and point operations. It defines core data types `Scalar.t`, `Field.t`, and `Point.t`, enabling precise modular computations, constant-time arithmetic, and secure serialization of cryptographic primitives. Users can perform operations such as scalar inversion, field multiplication, point validation, and ECDSA signing, with support for conversions between internal representations and 32-byte encodings. Specific tasks include deriving keys, verifying signatures, and implementing zero-knowledge protocols using constant-time, side-channel-resistant primitives.",
-      "description_length": 712,
-      "index": 9,
+      "description": "This module provides low-level operations for arithmetic (addition, multiplication), normalization, magnitude management, and conversions between 32-byte representations and storage formats for field elements on the secp256k1 curve. It manipulates an abstract type `t` representing field elements, which encapsulates normalization states and magnitude constraints, ensuring cryptographic safety through constant-time execution where critical. These capabilities are vital for cryptographic protocols demanding precise control over field element representations, such as digital signature schemes and elliptic curve key derivation mechanisms.",
+      "description_length": 641,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libsecp256k1.External.Context",
+      "library": "secp256k1-internal",
+      "description": "This module manages cryptographic contexts for the secp256k1 elliptic curve, providing operations to create, clone, and randomize context instances. It works with the abstract type `t` representing a cryptographic context and uses `Bigstring.t` for entropy input during randomization. Concrete use cases include initializing signing or verification contexts for ECDSA operations and securely modifying context state using entropy.",
+      "description_length": 430,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libsecp256k1.Internal.Group",
+      "library": "secp256k1-internal",
+      "description": "This module represents and manipulates elliptic curve group elements for the secp256k1 curve, providing operations such as point initialization, validation, inversion, and serialization. It works with internal group element types, field values, and Cstruct buffers, supporting both affine and Jacobian coordinate systems through submodules. Use cases include cryptographic key handling, signature verification, and secure serialization of public keys in blockchain applications.",
+      "description_length": 478,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libsecp256k1.External",
       "library": "secp256k1-internal",
-      "description": "This module provides cryptographic operations for working with the secp256k1 elliptic curve, including context management, signature generation and verification, and key manipulation. It centers around abstract types for cryptographic contexts, secret keys, and public keys, with core operations such as signing, verifying, deriving keys, and serializing cryptographic data using `Bigstring.t` and buffers. You can initialize and randomize cryptographic contexts, generate ECDSA signatures in DER or compact format, recover public keys from signatures, and perform key transformations like negation and tweaking. These capabilities support secure blockchain workflows such as transaction signing, key derivation, and compact key storage.",
-      "description_length": 737,
-      "index": 10,
+      "description": "This module implements digital signature operations using the secp256k1 elliptic curve, offering functions to sign and verify messages with cryptographic keys. It works with `Bigstring.t` for message and signature data, and uses a cryptographic context to ensure secure signature generation and validation. Concrete use cases include producing and validating ECDSA signatures in blockchain transactions and secure messaging protocols requiring deterministic signature schemes.",
+      "description_length": 476,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Libsecp256k1.Internal",
+      "library": "secp256k1-internal",
+      "description": "This module implements low-level cryptographic operations for scalars, field elements, and group elements on the secp256k1 elliptic curve. It provides precise arithmetic, normalization, and conversion functions for 32-byte scalars and field elements, along with point operations and serialization for group elements in affine and Jacobian coordinates. These capabilities enable secure digital signature generation, public key serialization, and cryptographic key derivation in blockchain protocols.",
+      "description_length": 498,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Libsecp256k1",
       "library": "secp256k1-internal",
-      "description": "This module implements cryptographic operations for the secp256k1 elliptic curve, supporting scalar arithmetic, field computations, point operations, and ECDSA functionality. It provides data types `Scalar.t`, `Field.t`, `Point.t`, and abstractions for keys and contexts, enabling tasks like signature generation, verification, key derivation, and secure serialization. Users can perform operations such as signing transactions, recovering public keys from signatures, and manipulating cryptographic values in constant time. Example workflows include blockchain transaction signing, zero-knowledge protocol implementation, and secure key management.",
-      "description_length": 649,
-      "index": 11,
+      "description": "This module implements digital signature operations and low-level cryptographic primitives for the secp256k1 elliptic curve. It provides functions to sign and verify messages, manipulate scalars, field elements, and group elements, and serialize cryptographic data, working primarily with `Bigstring.t` for binary representations. Concrete use cases include securing blockchain transactions, generating ECDSA signatures, and handling cryptographic key operations in decentralized systems.",
+      "description_length": 488,
+      "index": 9,
       "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
     "total_modules_in_package": 12,
-    "meaningful_modules": 12,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "meaningful_modules": 10,
+    "filtered_empty_modules": 2,
+    "retention_rate": 0.8333333333333334
   },
   "statistics": {
-    "max_description_length": 737,
-    "min_description_length": 412,
-    "avg_description_length": 574.0,
-    "embedding_file_size_mb": 0.044036865234375
+    "max_description_length": 641,
+    "min_description_length": 417,
+    "avg_description_length": 510.5,
+    "embedding_file_size_mb": 0.14530277252197266
   }
 }

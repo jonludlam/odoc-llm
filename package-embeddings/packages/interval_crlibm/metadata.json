@@ -1,77 +1,69 @@
 {
   "package": "interval_crlibm",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:05:55.680023",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 6,
+  "creation_timestamp": "2025-08-14T23:07:30.018808",
   "modules": [
     {
       "module_path": "Interval_crlibm.I.Precision",
       "library": "interval_crlibm",
-      "description": "This module sets and retrieves the decimal precision used by the `pr` and `pp` functions in the interval arithmetic module. It controls how many decimal places are used when printing intervals, with an option to use as many digits as needed for accuracy. Use this module to configure interval output formatting for debugging or reporting.",
-      "description_length": 338,
+      "description": "This module sets and retrieves the decimal precision used by the `pr` and `pp` functions for printing intervals. It controls how many decimal digits are displayed when formatting intervals, with an option to use as many digits as needed for accuracy. Use it to adjust output verbosity or ensure consistent interval display in debugging and logging scenarios.",
+      "description_length": 358,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Interval_crlibm.I.U",
       "library": "interval_crlibm",
-      "description": "This module restores the standard integer and floating-point arithmetic and comparison operators that are redefined by the parent interval arithmetic module. It provides basic operations like addition, subtraction, multiplication, division, and comparisons for integers and floats, ensuring correct behavior when temporarily needed within expressions involving interval operations. Use this module to mix regular arithmetic with interval computations without reopening other modules.",
-      "description_length": 483,
+      "description": "This module restores the standard integer and floating-point arithmetic and comparison operators that are redefined by the parent module for interval arithmetic. It provides basic operations like addition, subtraction, multiplication, division, and comparisons for integers and floats, allowing mixed use of interval and scalar computations in the same expression. Use this module when embedding integer or floating-point operations within interval expressions, such as incrementing a scalar integer before applying an interval function.",
+      "description_length": 537,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Interval_crlibm.RoundUp",
-      "library": "interval_crlibm",
-      "description": "This module provides upward-rounded arithmetic operations (addition, multiplication, square root, etc.) and mathematical functions (logarithmic, trigonometric, hyperbolic) for floating-point values and intervals. It ensures strict upper bounds in computations, making it critical for verified numerical methods where overestimation guarantees safety, such as formal verification of mathematical proofs or error analysis in scientific computing. The functions directly operate on `float` and interval types to support rigorous approximation frameworks.",
-      "description_length": 551,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Interval_crlibm.I",
       "library": "interval_crlibm",
-      "description": "This module enables interval arithmetic with floating-point bounds, offering operations to create, compare, and compute on intervals with guaranteed error bounds. It redefines arithmetic operators for intervals, supports transcendental functions, and includes topological checks like disjointness and inclusion. The `P` submodule configures printing precision for readable or accurate interval output, while `B` restores standard arithmetic operators for seamless integration of regular and interval computations. Use it to verify numerical algorithms, debug with controlled precision, or combine interval and scalar operations safely.",
-      "description_length": 635,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides rigorous interval arithmetic operations, comparisons, and mathematical functions (e.g., logarithmic, trigonometric, hyperbolic) with correct rounding guarantees, operating on intervals represented as `t` type with bounds in floating-point. It supports interval creation, manipulation, and analysis through constructors, accessors, and operations like hull, intersection, and width computation, targeting applications in verified numerical computations, error-bound analysis, and formal verification of continuous mathematical problems.",
+      "description_length": 556,
+      "index": 2,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Interval_crlibm.DIRECTED",
+      "module_path": "Interval_crlibm.RoundUp",
       "library": "interval_crlibm",
-      "description": "This module provides directed rounding operations for interval arithmetic, focusing on precise upper and lower bound calculations for scalar floating-point values. It supports fundamental arithmetic (addition, multiplication, exponentiation), transcendental functions (logarithms, trigonometric variants with \u03c0-scaled arguments), and specialized accuracy-preserving operations like `log1p` and `expm1`. These capabilities are particularly useful in numerical analysis and formal verification contexts where rigorous error bounds and correct rounding behavior are critical.",
-      "description_length": 572,
-      "index": 4,
+      "description": "This module provides upward-rounded arithmetic and mathematical operations for floating-point values, including addition, multiplication, square roots, logarithms, trigonometric functions, and their inverses. It operates on OCaml's `float` type to compute upper bounds for intervals with strict rounding guarantees, ensuring correctness in interval analysis. These functions are critical for applications requiring rigorous error bounds, such as formal verification of numerical algorithms or safety-critical systems where directed rounding prevents underestimation of possible ranges.",
+      "description_length": 585,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Interval_crlibm.RoundDown",
       "library": "interval_crlibm",
-      "description": "This module provides rounding-down operations for floating-point interval arithmetic, encompassing basic arithmetic, power functions, mathematical constants, and transcendental functions like logarithms, trigonometric, and hyperbolic operations. It operates on `float` and interval types to compute lower bounds with strict numerical accuracy, specifically for applications in formal verification, numerical analysis, and safety-critical systems requiring guaranteed error bounds.",
-      "description_length": 480,
-      "index": 5,
+      "description": "This module provides downward-rounded arithmetic operations (addition, subtraction, multiplication, division), power functions (square, cube, integer exponents), square root, hypotenuse, exponential functions, and a comprehensive set of logarithmic, trigonometric, inverse trigonometric, and hyperbolic functions. It operates on `float` values representing interval lower bounds to ensure strict containment of true mathematical results. These functions are critical for verified numerical computations in scientific computing, formal verification, and safety-critical systems where rigorous error bounds are required.",
+      "description_length": 618,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Interval_crlibm",
       "library": "interval_crlibm",
-      "description": "This module implements precise interval arithmetic using the CRlibm library, ensuring mathematically proved rounding behavior for floating-point operations. It provides core data types for intervals as records with lower and upper bounds, along with basic arithmetic, trigonometric, and comparison operations, enabling reliable numerical computations in safety-critical applications such as scientific simulations or formal verification. Child modules refine this functionality with directed rounding modes\u2014offering strict upper and lower bound calculations, transcendental functions, and configurable printing\u2014supporting verified numerical methods, error analysis, and rigorous approximation frameworks. Specific capabilities include guaranteed error bounds, safe overestimation for formal proofs, and seamless integration of scalar and interval computations.",
-      "description_length": 860,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements rigorous interval arithmetic with correct rounding guarantees using the CRlibm library. It provides operations for creating and manipulating intervals, including arithmetic, comparisons, and advanced mathematical functions like logarithms, trigonometric, and hyperbolic functions, all operating on a `t` type representing intervals with floating-point bounds. It is used for verified numerical computations, error-bound analysis, and formal verification of continuous mathematical problems where strict correctness is required.",
+      "description_length": 550,
+      "index": 5,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 7,
-    "meaningful_modules": 7,
+    "total_modules_in_package": 6,
+    "meaningful_modules": 6,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 860,
-    "min_description_length": 338,
-    "avg_description_length": 559.8571428571429,
-    "embedding_file_size_mb": 0.02585124969482422
+    "max_description_length": 618,
+    "min_description_length": 358,
+    "avg_description_length": 534.0,
+    "embedding_file_size_mb": 0.08739566802978516
   }
 }

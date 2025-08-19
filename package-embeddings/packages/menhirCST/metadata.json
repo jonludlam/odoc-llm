@@ -1,49 +1,49 @@
 {
   "package": "menhirCST",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:28.690174",
+  "creation_timestamp": "2025-08-14T22:58:24.298646",
   "modules": [
     {
-      "module_path": "MenhirCST.Settle.Make.DCST",
+      "module_path": "MenhirCST.Settle.Make.CST",
       "library": "menhirCST",
-      "description": "This module defines an abstract type `dcst` for disjunctive concrete syntax trees and provides low-level constructors to build terminal, nonterminal, and choice nodes. It works directly with arrays of `dcst` values and `A.token` and `A.production` from the applied automaton description. Concrete use cases include constructing ambiguous parse trees with choice points that are later resolved into valid CSTs using the resolution algorithm.",
-      "description_length": 440,
+      "description": "This module defines an algebraic data type for concrete syntax trees (CSTs) composed of terminal and nonterminal nodes, where terminals wrap tokens and nonterminals pair productions with arrays of child CSTs. It provides direct access to the structure of parsed programs, enabling manipulation and transformation of syntax trees in a grammar-agnostic way. Use cases include implementing custom pretty-printers, performing syntax-directed transformations, and analyzing parse trees for semantic validation.",
+      "description_length": 505,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "MenhirCST.Settle.Make.CST",
+      "module_path": "MenhirCST.Settle.Make.DCST",
       "library": "menhirCST",
-      "description": "The module defines an algebraic data type for concrete syntax trees (CSTs) composed of terminal and nonterminal nodes, each annotated with grammar productions and tokens. It supports operations to compute the fringe of a tree and check its viability, ensuring the parser round-trips correctly. This is used to validate and manipulate parsed structures in a grammar-agnostic way, particularly in disambiguating expressions with operator precedence.",
-      "description_length": 447,
+      "description": "This module defines an abstract type `dcst` for disjunctive concrete syntax trees and provides low-level constructors for building terminal, nonterminal, and choice nodes. It works directly with arrays of `dcst` values and assumes correctness of grammar structure without runtime checks. Concrete use cases include manually constructing ambiguous parse trees that can later be resolved into valid CSTs using the settlement algorithm.",
+      "description_length": 433,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "MenhirCST.Settle.Make",
       "library": "menhirCST",
-      "description": "This module implements a resolution algorithm that converts disjunctive concrete syntax trees into viable concrete syntax trees, using an LR(1) automaton state and terminal symbol to resolve ambiguity. It operates on `CST.cst` and `DCST.dcst` types, which represent structured parse trees with annotations for productions and tokens, and supports operations like fringe computation and viability checking. The `DCST` submodule provides constructors for building ambiguous trees with choice nodes, while the `CST` submodule defines the resolved tree structure and validation logic. A typical use case involves constructing a DCST with multiple parenthesization options and resolving it into a valid CST that satisfies the parser's round-trip property.",
-      "description_length": 750,
+      "description": "This module implements a resolution algorithm that converts disjunctive concrete syntax trees (DCSTs) into valid concrete syntax trees (CSTs) based on a given LR(1) automaton. It works with terminal and nonterminal nodes, using grammar productions and arrays of child trees to represent parse structures. It is used to insert parentheses or disambiguation tokens automatically, ensuring the resulting CST is parser-valid when processed from a specific state with a lookahead terminal.",
+      "description_length": 484,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "MenhirCST.Settle",
       "library": "menhirCST",
-      "description": "This module provides types for concrete syntax trees (CST) and disjunctive concrete syntax trees (DCST), along with a resolution algorithm that transforms DCSTs into viable CSTs by inserting parentheses based on LR(1) automaton states and terminal symbols. The core operations include building ambiguous trees with choice nodes using DCST, validating and inspecting resolved trees with CST, and computing the fringe of a tree to check its viability. An example workflow involves constructing a DCST with multiple parenthesization options, then resolving it into a CST that round-trips correctly through the parser.",
-      "description_length": 614,
+      "description": "This module defines data structures for concrete syntax trees (CSTs) and disjunctive concrete syntax trees (DCSTs), along with a resolution algorithm that selects a valid CST from a DCST by determining where to insert disambiguation tokens like parentheses. It operates on grammar productions, terminal and nonterminal nodes, and arrays of child trees, using an LR(1) automaton to ensure parser validity. It is used to automatically correct ambiguous parse trees so that they round-trip correctly through the parser.",
+      "description_length": 516,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "MenhirCST",
       "library": "menhirCST",
-      "description": "This module defines data structures for representing ambiguous and resolved syntax trees, enabling the construction and validation of concrete syntax trees derived from parsing. It supports operations to build disjunctive trees with choice nodes, resolve ambiguities using LR(1) automaton states and terminal symbols, and inspect the structure of resolved trees. The fringe of a tree can be computed to verify that it matches expected parser input. For example, a user can construct a DCST with multiple parenthesization options and resolve it into a CST that correctly round-trips through the parser.",
-      "description_length": 601,
+      "description": "This module provides algorithms to resolve disambiguated concrete syntax trees (DCSTs) into valid concrete syntax trees (CSTs) by inserting necessary disambiguation tokens such as parentheses. It works with grammar productions, terminal and nonterminal symbols, and tree structures representing parsed input. It is used to ensure that parsed trees can be re-parsed unambiguously, preserving parser validity through an LR(1) automaton.",
+      "description_length": 434,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -53,9 +53,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 750,
-    "min_description_length": 440,
-    "avg_description_length": 570.4,
-    "embedding_file_size_mb": 0.01858806610107422
+    "max_description_length": 516,
+    "min_description_length": 433,
+    "avg_description_length": 474.4,
+    "embedding_file_size_mb": 0.07288074493408203
   }
 }

@@ -26,15 +26,23 @@ class UnifiedSearchEngine:
     """Combines semantic and keyword-based search for OCaml modules."""
     
     def __init__(self, embedding_dir: Path, index_dir: Path, 
-                 api_url: str = 'http://localhost:8080'):
+                 api_url: str = 'http://localhost:8080', 
+                 package_description_embeddings_dir: Path = None):
         self.embedding_dir = Path(embedding_dir)
         self.index_dir = Path(index_dir)
+        self.package_description_embeddings_dir = Path(package_description_embeddings_dir) if package_description_embeddings_dir else None
         
         # Storage for loaded data
         self.embeddings: Dict[str, np.ndarray] = {}
         self.metadata: Dict[str, Dict] = {}
         self.bm25_indexes: Dict[str, bm25s.BM25] = {}
         self.bm25_module_paths: Dict[str, List[str]] = {}
+        
+        # Package description embeddings for boosting
+        self.package_description_embeddings: Dict[str, np.ndarray] = {}
+        
+        # Module type information for filtering
+        self.module_type_info: Dict[str, bool] = {}
         
         # Initialize embedding API
         self.api_url = api_url
@@ -66,6 +74,77 @@ class UnifiedSearchEngine:
                     
         return sorted(packages)
         
+    def load_module_type_info(self, package_names: List[str]) -> None:
+        """Load module type information for the specified packages."""
+        descriptions_dir = Path("module-descriptions")
+        if not descriptions_dir.exists():
+            print("Warning: module-descriptions directory not found")
+            return
+            
+        loaded_count = 0
+        module_type_count = 0
+        
+        for package in package_names:
+            json_file = descriptions_dir / f"{package}.json"
+            if not json_file.exists():
+                continue
+                
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    
+                # Extract module type info from each library
+                for library_data in data.get('libraries', {}).values():
+                    for module_path, module_info in library_data.get('modules', {}).items():
+                        if isinstance(module_info, dict) and 'is_module_type' in module_info:
+                            is_module_type = module_info['is_module_type']
+                            self.module_type_info[module_path] = is_module_type
+                            loaded_count += 1
+                            if is_module_type:
+                                module_type_count += 1
+                        elif isinstance(module_info, str):
+                            # Old format - assume not a module type
+                            self.module_type_info[module_path] = False
+                            loaded_count += 1
+                    
+            except Exception as e:
+                print(f"Warning: Failed to load module type info from {json_file}: {e}")
+                
+        print(f"Loaded module type info for {loaded_count} modules ({module_type_count} module types)")
+    
+    def load_package_description_embeddings(self, package_names: List[str]) -> None:
+        """Load pre-computed package description embeddings for the specified packages."""
+        if not self.package_description_embeddings_dir or not self.package_description_embeddings_dir.exists():
+            print("Warning: package-description-embeddings directory not found")
+            return
+            
+        packages_dir = self.package_description_embeddings_dir / "packages"
+        if not packages_dir.exists():
+            print("Warning: package-description-embeddings/packages directory not found")
+            return
+            
+        loaded_count = 0
+        
+        for package in package_names:
+            package_dir = packages_dir / package
+            if not package_dir.exists():
+                continue
+                
+            try:
+                # Load embedding
+                embeddings_file = package_dir / "embeddings.npz"
+                if embeddings_file.exists():
+                    data = np.load(embeddings_file)
+                    # Package embeddings have shape (1, embedding_dim)
+                    package_embedding = data['embeddings'][0]
+                    self.package_description_embeddings[package] = package_embedding
+                    loaded_count += 1
+                    
+            except Exception as e:
+                print(f"Warning: Failed to load package description embedding for {package}: {e}")
+                
+        print(f"Loaded {loaded_count} package description embeddings")
+    
     def load_package_data(self, package_names: Optional[List[str]] = None) -> None:
         """Load embeddings and BM25 indexes for specified packages or all available."""
         if package_names is None:
@@ -138,6 +217,14 @@ class UnifiedSearchEngine:
                     
         print(f"\nLoaded {loaded_embeddings} package embeddings and {loaded_indexes} BM25 indexes")
         print(f"Total modules: {len(self.embeddings)}")
+        
+        # Load module type information for filtering
+        if package_names:
+            self.load_module_type_info(package_names)
+            
+        # Load package description embeddings for boosting
+        if package_names and self.package_description_embeddings_dir:
+            self.load_package_description_embeddings(package_names)
     
     def embed_query(self, query: str) -> np.ndarray:
         """Generate embedding for query using llama-server API."""
@@ -180,20 +267,48 @@ class UnifiedSearchEngine:
             print(f"Failed to generate embedding: {e}")
             raise
     
-    def semantic_search(self, query: str, top_k: int = 10) -> List[Tuple[str, float]]:
-        """Search using semantic similarity."""
+    def semantic_search(self, query: str, top_k: int = 10, package_boost_weight: float = 0.2) -> List[Tuple[str, float]]:
+        """Search using semantic similarity with package description boosting."""
         query_embedding = self.embed_query(query)
         
-        # Calculate similarities
+        # Calculate base similarities
         similarities = []
+        package_names = []
+        
         for module_path, module_embedding in self.embeddings.items():
             similarity = np.dot(query_embedding, module_embedding)
-            similarities.append((module_path, float(similarity)))
+            similarities.append(similarity)
+            
+            # Extract package name from module path (format: "package::module.path")
+            if "::" in module_path:
+                package_name = module_path.split("::")[0]
+            else:
+                package_name = "unknown"
+            package_names.append(package_name)
         
-        # Sort by similarity
-        similarities.sort(key=lambda x: x[1], reverse=True)
+        # Calculate package boosts if available
+        package_boosts = {}
+        if self.package_description_embeddings and package_boost_weight > 0:
+            package_boosts = self.calculate_package_boost(query_embedding, package_names)
         
-        return similarities[:top_k]
+        # Combine scores
+        combined_similarities = []
+        module_paths = list(self.embeddings.keys())
+        
+        for i, (module_path, base_sim, package_name) in enumerate(zip(module_paths, similarities, package_names)):
+            if package_boosts:
+                package_boost = package_boosts.get(package_name, 0.0)
+                # Weighted combination
+                combined_score = (1 - package_boost_weight) * base_sim + package_boost_weight * package_boost
+            else:
+                combined_score = base_sim
+                
+            combined_similarities.append((module_path, float(combined_score)))
+        
+        # Sort by combined similarity
+        combined_similarities.sort(key=lambda x: x[1], reverse=True)
+        
+        return combined_similarities[:top_k]
     
     def keyword_search(self, query: str, top_k: int = 10) -> List[Tuple[str, float]]:
         """Search using BM25 keyword matching."""
@@ -235,25 +350,63 @@ class UnifiedSearchEngine:
         
         return all_results[:top_k]
     
-    def search(self, query: str, top_k: int = 10) -> Dict[str, List[Dict]]:
-        """Perform unified search combining semantic and keyword approaches."""
-        # Get results from both methods
-        semantic_results = self.semantic_search(query, top_k)
-        keyword_results = self.keyword_search(query, top_k)
+    def calculate_package_boost(self, query_embedding: np.ndarray, package_names: List[str]) -> Dict[str, float]:
+        """Calculate package description similarity boost using pre-computed embeddings."""
+        if not self.package_description_embeddings:
+            return {}
         
-        # Convert to detailed format
+        # Only calculate for unique packages that have embeddings
+        unique_packages = set(package_names)
+        
+        package_boosts = {}
+        boost_count = 0
+        
+        for package in unique_packages:
+            if package in self.package_description_embeddings:
+                # Use pre-computed package embedding
+                package_embedding = self.package_description_embeddings[package]
+                
+                # Calculate similarity
+                similarity = float(np.dot(query_embedding, package_embedding))
+                package_boosts[package] = similarity
+                boost_count += 1
+            else:
+                package_boosts[package] = 0.0
+        
+        print(f"Calculated package boosts for {boost_count} packages (using pre-computed embeddings)")
+        return package_boosts
+    
+    def search(self, query: str, top_k: int = 10, package_boost_weight: float = 0.2) -> Dict[str, List[Dict]]:
+        """Perform unified search combining semantic and keyword approaches."""
+        # Get more results initially to account for filtering (estimate ~10% module types)
+        initial_k = max(top_k * 2, 20)
+        semantic_results = self.semantic_search(query, initial_k, package_boost_weight)
+        keyword_results = self.keyword_search(query, initial_k)
+        
+        # Convert to detailed format, filtering out module types
         def format_results(results: List[Tuple[str, float]]) -> List[Dict]:
             formatted = []
             for module_path, score in results:
                 if module_path in self.metadata:
                     meta = self.metadata[module_path]
+                    raw_module_path = meta['module_path']
+                    
+                    # Skip module types
+                    is_module_type = self.module_type_info.get(raw_module_path, False)
+                    if is_module_type:
+                        continue
+                        
                     formatted.append({
                         'package': meta['package'],
-                        'module_path': meta['module_path'],
+                        'module_path': raw_module_path,
                         'description': meta['description'][:150] + '...' if len(meta['description']) > 150 else meta['description'],
                         'score': score,
                         'library': meta.get('library', '')
                     })
+                    
+                    # Stop when we have enough results
+                    if len(formatted) >= top_k:
+                        break
             return formatted
         
         return {

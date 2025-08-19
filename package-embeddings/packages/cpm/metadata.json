@@ -1,85 +1,69 @@
 {
   "package": "cpm",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:06:24.754901",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 6,
+  "creation_timestamp": "2025-08-14T23:01:56.557157",
   "modules": [
     {
-      "module_path": "Cpm.MakeROC.SCORE_LABEL",
+      "module_path": "Cpm.MakeROC.Make",
       "library": "cpm",
-      "description": "This module defines a data type `t` representing labeled data points with an associated score. It provides accessors `get_score` and `get_label` to retrieve the numeric score and boolean label of a data point. This structure is useful in machine learning evaluation for tasks like calculating ROC curves or precision-recall metrics.",
-      "description_length": 332,
+      "description": "This module provides operations for ranking, sorting, and statistically evaluating scored classification labels (SL.t) to assess binary classification performance. It computes metrics like ROC/PR curves, AUC values, BEDROC scores, enrichment factors, and calibration-adjusted probabilities via Platt scaling, handling both sorted and unsorted array/list inputs. These tools are specifically used for model evaluation, hyperparameter tuning, and probability calibration in machine learning workflows involving binary outcomes.",
+      "description_length": 525,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Cpm.MakeROC.Make",
-      "library": "cpm",
-      "description": "This module provides functions for ranking, sorting, and computing binary classification metrics\u2014such as ROC, AUC, PR curves, BEDROC, and MCC\u2014on lists and arrays of score-label pairs. It supports curve generation, area-under-curve calculations, and Platt scaling for calibrating raw scores into probabilities, with optimizations for both pre-sorted and unsorted input. These tools are critical for evaluating and refining binary classification models, particularly in applications requiring precise metric computation and probabilistic score calibration.",
-      "description_length": 554,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cpm.MakeROC.ROC_FUNCTOR",
-      "library": "cpm",
-      "description": "This module provides operations for ranking, sorting, and evaluating binary classification models using score-label pairs, with support for computing metrics like ROC, PR, BEDROC curves, AUC variants, enrichment factors, and calibration via Platt's method. It operates on lists and arrays of numerical scores paired with boolean labels, optimized for both pre-sorted and mutable data. These tools are particularly useful in machine learning evaluation, drug discovery, and scenarios requiring precise model calibration or analysis of early recognition performance.",
-      "description_length": 564,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
       "module_path": "Cpm.TopKeeper",
       "library": "cpm",
-      "description": "Maintains a collection of the top-scoring elements up to a specified limit, evicting lower scores when capacity is exceeded. It supports adding elements with scores, retrieving the list of elements in descending score order, and querying the current and maximum size of the collection. Useful for tracking high scores in games, maintaining leaderboards, or selecting top results from a stream of data.",
-      "description_length": 401,
-      "index": 3,
+      "description": "Maintains a collection of up to `n` highest-scoring elements, dynamically updating as new elements are added. It stores elements along with their associated float scores, automatically discarding lower-scoring entries when capacity is reached. Useful for tracking top results in search algorithms, recommendation systems, or performance rankings.",
+      "description_length": 346,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cpm.MakeROC",
       "library": "cpm",
-      "description": "This module fits and evaluates binary classifiers using ROC curves, computing true positive and false positive rates across thresholds and selecting the optimal threshold for classification. It processes labeled data where each label is a boolean and each instance includes a score indicating predicted class membership. The core functionality works with score-label pairs, which are defined and manipulated using the child modules for ranking, sorting, and computing metrics such as AUC, PR curves, BEDROC, and Platt-scaled probabilities. These tools enable precise model evaluation and calibration in machine learning and drug discovery, handling both sorted and unsorted input efficiently.",
-      "description_length": 692,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cpm.RegrStats",
-      "library": "cpm",
-      "description": "This module calculates regression evaluation metrics including root mean squared error, mean absolute error, standard deviation of residuals, and coefficient of determination (R\u00b2) for both lists and arrays. It also generates raw Regression Error Characteristic (REC) curves for visualizing model performance across error thresholds. These functions are used to assess and compare regression models in machine learning tasks.",
-      "description_length": 424,
-      "index": 5,
+      "description": "This module ranks, sorts, and evaluates scored classification labels to assess binary classification performance. It computes ROC and PR curves, AUC values, BEDROC scores, enrichment factors, and applies Platt scaling for probability calibration. Designed for use with arrays or lists of scored labels, it supports model evaluation, hyperparameter tuning, and calibrated probability estimation in binary machine learning tasks.",
+      "description_length": 427,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cpm.Utls",
       "library": "cpm",
-      "description": "This module handles file input/output, list manipulation, and data partitioning for machine learning workflows. It provides functions to read from and write to files, execute shell commands and capture their output, split and shuffle lists for training/test sets, create cross-validation folds, and divide lists into parts. Concrete use cases include preprocessing data files, evaluating models with different train/test splits, and organizing data for k-fold cross-validation.",
-      "description_length": 477,
-      "index": 6,
-      "embedding_norm": 1.0
+      "description": "This module handles file input/output, list manipulation, and data partitioning for machine learning workflows. It provides functions to read from and write to files, execute shell commands, split and shuffle lists, and generate cross-validation folds. Concrete use cases include loading data from disk, dividing datasets into training and testing subsets, and creating stratified splits for model evaluation.",
+      "description_length": 409,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cpm.RegrStats",
+      "library": "cpm",
+      "description": "This module computes regression evaluation metrics including RMSE, MAE, R\u00b2, and standard deviation of residuals, comparing expected and predicted float lists. It generates raw regression error characteristic curves for visualizing model performance across error thresholds. These functions are used to assess regression models in machine learning tasks like numerical prediction and model comparison.",
+      "description_length": 400,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cpm",
       "library": "cpm",
-      "description": "This module provides tools for managing high-score collections, evaluating binary classifiers and regression models, and handling data preprocessing for machine learning. It supports operations such as maintaining bounded, sorted element collections, computing ROC and REC curves, fitting models with optimal thresholds, and partitioning or transforming data lists and files. Examples include tracking top game scores, selecting classification thresholds using AUC or BEDROC, evaluating regression performance with R\u00b2 or MAE, and preparing cross-validation folds from input data. Key data types include score-labeled pairs, bounded collections, and file or list-based datasets.",
-      "description_length": 677,
-      "index": 7,
+      "description": "This module provides tools for evaluating machine learning models, handling data structures, and managing file operations. It includes functions for computing classification metrics like AUC and BEDROC, maintaining top-scoring elements dynamically, calculating regression statistics, and performing list manipulations. Concrete use cases include model evaluation, result tracking in search algorithms, and dataset preparation for training and testing.",
+      "description_length": 451,
+      "index": 5,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 8,
-    "meaningful_modules": 8,
+    "total_modules_in_package": 6,
+    "meaningful_modules": 6,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 692,
-    "min_description_length": 332,
-    "avg_description_length": 515.125,
-    "embedding_file_size_mb": 0.029480934143066406
+    "max_description_length": 525,
+    "min_description_length": 346,
+    "avg_description_length": 426.3333333333333,
+    "embedding_file_size_mb": 0.08747386932373047
   }
 }

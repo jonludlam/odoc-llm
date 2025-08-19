@@ -1,77 +1,61 @@
 {
   "package": "carton-git",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:06:22.921537",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 5,
+  "creation_timestamp": "2025-08-14T23:01:27.521777",
   "modules": [
+    {
+      "module_path": "Carton_git.Make",
+      "library": "carton-git",
+      "description": "This module implements Git object storage and retrieval for a custom UID type, using a backing store and I/O scheduler. It supports creating a Git object database, adding and retrieving objects by UID, checking existence, listing known UIDs, and accessing file descriptors for stored objects. Concrete use cases include building custom Git backends for specialized storage or implementing version-controlled data systems with unique identifiers.",
+      "description_length": 445,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Carton_git",
+      "library": "carton-git",
+      "description": "Handles low-level storage and input/output operations for Git repositories. Works with Git objects and packfiles, providing functions to read, write, and manage repository data. Used for implementing custom Git backends or tools that interact directly with Git's internal data formats.",
+      "description_length": 285,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
     {
       "module_path": "Carton_git_unix.Store",
       "library": "carton-git.unix",
-      "description": "This module implements a Git object store backed by a Unix file system, providing functions to create, read, and list Git objects stored as files. It operates on file paths (`Fpath.t`) and file descriptors, supporting asynchronous I/O operations like `map` for memory-mapped file access and `create` for initializing new object files. Concrete use cases include direct on-disk storage and retrieval of Git commit, tree, and blob objects during repository operations.",
-      "description_length": 466,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements a Unix-based storage backend for handling file paths as unique identifiers, supporting operations to create, map, list, and close file descriptors. It works with file paths (`Fpath.t`), bigstrings for memory-mapped file data, and result-bearing fibers for asynchronous error handling. Concrete use cases include managing on-disk Git object storage with precise control over file truncation, access modes, and position-based reads.",
+      "description_length": 453,
+      "index": 2,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Carton_git_unix.Make",
       "library": "carton-git.unix",
-      "description": "This module implements Git object storage and retrieval operations for a Unix environment using Lwt for asynchronous I/O. It provides functions to create a Git store, add objects with indexing, fetch objects by UID, list stored objects, and access file descriptors associated with stored objects. It works with file paths (Fpath.t), Unix file descriptors (Lwt_unix.file_descr), and a user-defined UID type, handling low-level interactions with the filesystem and Git object encoding.",
-      "description_length": 483,
-      "index": 1,
+      "description": "This module implements a Git object store interface using Unix file descriptors and paths. It provides operations to create a store, add objects with indexing, retrieve objects by ID, list stored object IDs, and access file descriptors associated with objects. It works with file paths, Git object IDs, and Lwt-based file descriptors for asynchronous I/O operations.",
+      "description_length": 366,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Carton_git_unix",
       "library": "carton-git.unix",
-      "description": "This module provides a Unix-based Git object store with asynchronous I/O using Lwt, enabling creation, retrieval, and listing of Git objects stored on disk. It operates on file paths (`Fpath.t`), file descriptors (`Lwt_unix.file_descr`), and UIDs, supporting memory-mapped access, object indexing, and direct filesystem interaction. You can use it to store and fetch Git commits, trees, and blobs by UID, or list all stored objects. Example operations include initializing a new object file, memory-mapping a blob for efficient access, or fetching a commit by its hash.",
-      "description_length": 569,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Carton_git.STORE",
-      "library": "carton-git",
-      "description": "This module implements low-level storage operations for handling Git objects in a carton-based system. It provides functions to create, map, list, and close file descriptors associated with Git object storage, working directly with custom file types (`fd`), unique identifiers (`uid`), and error types specialized for Git operations. Concrete use cases include managing memory-mapped Git object files and handling concurrent access to storage resources.",
-      "description_length": 453,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Carton_git.Make",
-      "library": "carton-git",
-      "description": "This module implements Git object storage and retrieval for a custom UID type, using a backing store and IO scheduler. It supports operations to create a repository handle, add and retrieve objects by UID, check existence, list stored UIDs, and access file descriptors with offsets. Concrete use cases include building custom Git-backed storage systems with precise control over object serialization and access patterns.",
-      "description_length": 420,
+      "description": "This module implements a Unix-specific backend for storing and managing Git objects using file paths and descriptors. It supports creating, indexing, and retrieving objects by ID, along with low-level operations like memory mapping, truncation, and position-based reads. Use cases include on-disk Git object storage with precise control over file access and asynchronous I/O handling.",
+      "description_length": 384,
       "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Carton_git.IO",
-      "library": "carton-git",
-      "description": "This module provides low-level I/O operations for handling Git object serialization and deserialization, including exception handling and sequential composition of asynchronous actions. It works with Git objects such as commits, trees, and blobs, managing their encoding and decoding during read/write operations. Concrete use cases include streaming Git data from disk or network, reconstructing Git history, and implementing custom Git transport protocols.",
-      "description_length": 458,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Carton_git",
-      "library": "carton-git",
-      "description": "This module manages low-level Git storage and I/O, handling Git objects like commits, trees, and blobs with functions to read, write, and traverse repository data. It supports direct operations on file descriptors, UIDs, and custom error types, enabling tasks such as memory-mapping object files and managing concurrent access. Submodules provide storage backends for UID-based object retrieval, repository handles for object management, and streaming I/O for serialization and transport. Specific uses include building custom Git tools, inspecting raw repository contents, and implementing specialized Git storage or network protocols.",
-      "description_length": 636,
-      "index": 6,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 7,
-    "meaningful_modules": 7,
+    "total_modules_in_package": 5,
+    "meaningful_modules": 5,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 636,
-    "min_description_length": 420,
-    "avg_description_length": 497.85714285714283,
-    "embedding_file_size_mb": 0.02585601806640625
+    "max_description_length": 453,
+    "min_description_length": 285,
+    "avg_description_length": 386.6,
+    "embedding_file_size_mb": 0.07285404205322266
   }
 }

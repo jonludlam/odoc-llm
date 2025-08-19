@@ -1,47 +1,47 @@
 {
   "package": "ppx_bench",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:34.543353",
+  "creation_timestamp": "2025-08-14T22:59:35.274869",
   "modules": [
-    {
-      "module_path": "Ppx_bench_lib.Benchmark_accumulator.Entry",
-      "library": "ppx_bench.runtime-lib",
-      "description": "This module defines the structure and operations for individual benchmark entries registered in the global benchmarking system. It supports storing metadata such as unique identifiers, source locations, and test specifications, which include either regular or parameterized benchmark functions. These entries are used to represent and organize benchmarks for analysis by Core_bench when running inline benchmarks.",
-      "description_length": 413,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Ppx_bench_lib.Benchmark_accumulator.Current_libname",
       "library": "ppx_bench.runtime-lib",
-      "description": "This module manages the current library name used for registering inline benchmarks in a global hashtable. It provides `set` to specify the library name and `unset` to remove it, controlling whether benchmarks are collected based on command-line arguments. These operations directly influence which benchmarks are retained for analysis by Core_bench during execution of inline benchmark runners.",
-      "description_length": 395,
+      "description": "This module tracks the current library name for inline benchmark registration using a global state. It provides `set` to assign the library name and `unset` to clear it, controlling whether benchmarks are registered based on command-line arguments. It is used to conditionally collect benchmarks when running `inline_benchmarks_runner.exe`.",
+      "description_length": 340,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ppx_bench_lib.Benchmark_accumulator.Entry",
+      "library": "ppx_bench.runtime-lib",
+      "description": "This module represents individual benchmark entries registered via inline macros, storing metadata like unique identifiers, source locations, and test specifications. It supports operations to update test specifications, compare entries, and retrieve associated module names. These entries are used by `Core_bench` to execute and analyze benchmarks when running in an `inline_benchmarks_runner.exe` context.",
+      "description_length": 407,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Ppx_bench_lib.Benchmark_accumulator",
       "library": "ppx_bench.runtime-lib",
-      "description": "This module coordinates the registration and management of inline benchmarks using a global hashtable indexed by library name, inspecting command-line arguments to determine whether benchmarks should be collected. It provides functions to add benchmarks and modules with source location metadata, and to retrieve benchmarks by library, enabling analysis with Core_bench via macros like `BENCH` and `BENCH_MODULE`. The module works with child modules that define benchmark entry structures and manage the current library name, allowing fine-grained control over benchmark collection. For example, setting a library name with `set` ensures subsequent benchmarks are registered under that name, while command-line inspection skips registration when benchmark runners are not in use.",
-      "description_length": 779,
+      "description": "This module manages global registration of inline benchmarks using a hashtable indexed by library name, with conditional collection based on command-line arguments. It provides functions to add benchmarks (`add_bench`, `add_bench_module`), retrieve benchmarks by library (`lookup_lib`), and control registration state via `Current_libname`. Concrete use cases include collecting and organizing benchmarks defined with `BENCH`, `BENCH_INDEXED`, and `BENCH_MODULE` macros for analysis by `Core_bench` in `inline_benchmarks_runner.exe`.",
+      "description_length": 533,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Ppx_bench_lib.Export",
       "library": "ppx_bench.runtime-lib",
-      "description": "`Ppx_bench_lib.Export` defines the `ignore` function, which accepts any value and returns `unit`, effectively discarding the input. It operates on values of any type, making it useful for suppressing unused variable warnings or intentionally omitting results in benchmarking contexts. This function is commonly used when writing performance tests where certain expressions must be evaluated but their results are irrelevant.",
-      "description_length": 424,
+      "description": "Binds a value to unit, ensuring it is not optimized away by the compiler. Useful for benchmarking code where the result of a computation must be used to prevent dead-code elimination.",
+      "description_length": 183,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ppx_bench_lib",
       "library": "ppx_bench.runtime-lib",
-      "description": "This module manages the registration and retrieval of inline benchmarks using a global hashtable indexed by library name, coordinating with command-line argument inspection to control collection. It supports adding benchmarks and modules with source location metadata, and enables benchmark analysis via macros like `BENCH` and `BENCH_MODULE`. The `ignore` function from `Ppx_bench_lib.Export` discards values of any type, commonly used to suppress unused results in performance tests. For example, setting a library name with `set` directs subsequent benchmarks to that library, while command-line flags determine whether benchmarks are collected or skipped.",
-      "description_length": 659,
+      "description": "Manages inline benchmark registration and execution with global state tracking via hashtables, supporting selective collection based on command-line arguments. Provides functions to add benchmarks, retrieve them by library, and bind values to unit to prevent compiler optimization. Used to organize and run benchmarks defined with specific macros for performance analysis in test executables.",
+      "description_length": 392,
       "index": 4,
       "embedding_norm": 1.0
     }
@@ -53,9 +53,9 @@
     "retention_rate": 0.8333333333333334
   },
   "statistics": {
-    "max_description_length": 779,
-    "min_description_length": 395,
-    "avg_description_length": 534.0,
-    "embedding_file_size_mb": 0.01862049102783203
+    "max_description_length": 533,
+    "min_description_length": 183,
+    "avg_description_length": 371.0,
+    "embedding_file_size_mb": 0.0728759765625
   }
 }

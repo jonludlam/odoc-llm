@@ -1,55 +1,55 @@
 {
   "package": "kcas",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:05:56.453907",
+  "creation_timestamp": "2025-08-14T23:02:48.089082",
   "modules": [
     {
       "module_path": "Kcas.Mode",
       "library": "kcas",
-      "description": "This module defines the operational behavior of concurrent memory transactions by specifying whether read-only operations should be treated as lock-free or obstruction-free. It directly affects how conflicts between concurrent transactions are resolved, impacting both progress guarantees and performance characteristics. Use `Lock_free` for scenarios requiring guaranteed forward progress across domains and `Obstruction_free` when optimizing for lower overhead in read-heavy, low-contention environments.",
-      "description_length": 506,
+      "description": "This module defines operating modes for the MCAS algorithm, specifically `Lock_free` and `Obstruction_free`, which determine how concurrent operations handle progress guarantees and interference. It works with the domain state and memory operations tracked by the STM system. Use cases include selecting an appropriate concurrency strategy for transaction execution based on desired progress properties and performance trade-offs.",
+      "description_length": 430,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kcas.Timeout",
-      "library": "kcas",
-      "description": "This module provides functions to create, manage, and trigger timeouts for transactions that await changes in shared memory locations. It works with STM transactions and time-based predicates to allow precise control over blocking operations with deadline enforcement. Concrete use cases include implementing time-bounded waits in concurrent data structures and ensuring progress in distributed coordination algorithms.",
-      "description_length": 419,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Kcas.Xt",
-      "library": "kcas",
-      "description": "This module enables transactional manipulation of shared memory locations (`Loc.t`) through composable sequences of reads, writes, and atomic updates (e.g., `get`, `set`, `compare_and_set`), with explicit transaction logs tracking changes. It supports advanced control flow via blocking/nonblocking modes, retries, and timeouts, while ensuring isolation and atomicity by validating and committing changes as a single unit. Typical use cases include concurrent data structures like linked lists or trees where multi-location atomic operations are required, and scenarios needing side-effect deferral until successful transaction completion.",
-      "description_length": 639,
-      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Kcas.Loc",
       "library": "kcas",
-      "description": "This module creates and manipulates shared memory locations that support atomic operations such as compare-and-set, exchange, and conditional updates. It works with any value type `'a`, offering fine-grained control over concurrency through non-blocking primitives and optional timeouts or backoff strategies. Concrete use cases include implementing thread-safe counters, concurrent data structures, and coordinating state changes across multiple threads without locks.",
-      "description_length": 469,
-      "index": 3,
+      "description": "This module creates and manages shared memory locations supporting atomic operations like compare-and-set, exchange, and conditional updates. It works with arbitrary values of type `'a`, including integers for increment/decrement operations. Use cases include implementing fine-grained concurrent data structures, coordinating state changes across threads, and building higher-level transactional constructs.",
+      "description_length": 408,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kcas.Timeout",
+      "library": "kcas",
+      "description": "This module defines an exception for timeout conditions during transactional operations. It handles scenarios where functions like `Loc.get_as`, `Loc.update`, `Loc.modify`, or `Xt.commit` exceed a specified time limit. Users can catch this exception to manage or respond to timeouts explicitly during STM execution.",
+      "description_length": 315,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kcas.Retry",
       "library": "kcas",
-      "description": "This module provides direct control over transactional retry and failure behavior through `later`, `unless`, and `invalid`. It works with boolean conditions and is used to signal retry or invalidation within transactional contexts. Concrete use cases include conditional synchronization on shared memory states, enforcing transactional constraints, and implementing custom blocking logic based on dynamic conditions.",
-      "description_length": 416,
+      "description": "This module provides functions to signal retry behavior in transactional operations, primarily used when shared memory conditions prevent immediate progress. It works with unit values and raises exceptions like `Later` and `Invalid` to control flow in STM transactions. Concrete use cases include retrying a transaction when a `Loc.get_as` returns an unexpected value or when an `Xt.commit` fails due to concurrent modifications.",
+      "description_length": 429,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kcas.Xt",
+      "library": "kcas",
+      "description": "This module provides transactional operations for reading, writing, and conditionally modifying shared memory locations (`Loc.t`) with atomicity guarantees. It supports composable transactions through explicit log management, enabling actions like swapping values between locations, atomic increments, and validating transaction states, while deferring side effects to `post_commit` for single execution post-successful commit. The module works with transaction logs (`xt`) to track memory accesses, ensuring atomic updates across multiple locations, which is useful for implementing concurrent data structures like doubly-linked lists where shared pointers require coordinated modifications.",
+      "description_length": 692,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kcas",
       "library": "kcas",
-      "description": "The library implements a high-performance, lock-free software transactional memory system using an enhanced multi-word compare-and-set algorithm, supporting composable transactions with read-only operations and blocking await capabilities. It provides shared memory locations (`Loc.t`) with atomic updates, transactional reads and writes, and time-controlled blocking on state changes, enabling efficient coordination across concurrent domains. Users can build thread-safe data structures, implement conditional synchronization, and manage time-bounded waits while benefiting from non-blocking progress guarantees and disjoint-access parallelism. Example uses include atomic multi-location updates in concurrent trees, obstruction-free read operations under low contention, and timeout-enforced coordination in distributed algorithms.",
-      "description_length": 834,
+      "description": "This module implements a software transactional memory system using a lock-free multi-word compare-and-set algorithm, allowing atomic updates across multiple shared memory locations. It provides transactional operations through the `Xt` module for coordinating changes to `Loc.t` values, supporting conditionals, swaps, and deferred side effects, with blocking and retry mechanisms for concurrency control. Concrete use cases include building concurrent data structures like linked lists and hash tables where coordinated updates to multiple pointers or values are required.",
+      "description_length": 574,
       "index": 5,
       "embedding_norm": 1.0
     }
@@ -61,9 +61,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 834,
-    "min_description_length": 416,
-    "avg_description_length": 547.1666666666666,
-    "embedding_file_size_mb": 0.022202491760253906
+    "max_description_length": 692,
+    "min_description_length": 315,
+    "avg_description_length": 474.6666666666667,
+    "embedding_file_size_mb": 0.08736991882324219
   }
 }

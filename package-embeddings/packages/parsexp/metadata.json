@@ -1,24 +1,88 @@
 {
   "package": "parsexp",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 77,
-  "creation_timestamp": "2025-07-15T23:18:24.530932",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 68,
+  "creation_timestamp": "2025-08-15T15:10:55.993223",
   "modules": [
     {
       "module_path": "Parsexp.Private.Automaton.Stack.Just_positions",
       "library": "parsexp",
-      "description": "This module implements a stack-based automaton that tracks positions during parsing without storing the actual position data. It provides an `empty` value representing an initial, empty stack state. Use this module when parsing S-expressions where position tracking is needed but the positions themselves are managed externally.",
-      "description_length": 328,
+      "description": "This module implements a stack structure that tracks parsing positions implicitly, without storing them directly in the stack itself. It provides operations like `empty` to initialize the stack and supports push and pop actions tied to external position records. This is used during parsing to manage nested structures where position tracking is needed but handled separately.",
+      "description_length": 376,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp.Private.Automaton.Stack.For_cst",
       "library": "parsexp",
-      "description": "This module implements a stack structure used to track the parsing state when constructing concrete syntax trees (CSTs) from S-expressions. It supports operations to build and deconstruct nested structures, handling cases like open parentheses, comments, and sexp comments, while ensuring correct nesting and position tracking. The stack allows retrieving fully formed S-expressions and comments in order, enforcing validity by raising errors if the stack contains incomplete expressions.",
-      "description_length": 488,
+      "description": "This module implements a stack structure used to track the parsing state when constructing concrete syntax trees (CSTs) from S-expressions. It supports operations like pushing and inspecting elements such as opened parentheses, comments, and completed S-expressions, with specific handling for nested structures and sexp comments. It is used internally during parsing to manage context and ensure correct nesting and commenting behavior.",
+      "description_length": 437,
       "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Private.Automaton.For_cst",
+      "library": "parsexp",
+      "description": "This module implements a tokenizer for parsing S-expressions by managing token buffer state and tracking token start positions during lexing. It works with `Buffer.t` for efficient string accumulation and `Position.t` to record source locations. It is used internally by the parser to construct concrete syntax trees with accurate token positions.",
+      "description_length": 347,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_cst.State.Read_only",
+      "library": "parsexp",
+      "description": "This module provides access to the current parsing state during an s-expression parse, including the offset, line, and column positions. It works with the internal state type `t` and position tracking structures. Use it to track or report precise location information within an input stream as s-expressions are parsed.",
+      "description_length": 319,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Private.Automaton.Stack",
+      "library": "parsexp",
+      "description": "This module implements a stack-based structure for managing parsing states during S-expression parsing, supporting operations to push and inspect elements like opened parentheses, comments, and completed S-expressions. It works with nested structures and includes specialized submodules for handling concrete syntax trees and position tracking. Use cases include tracking parsing context for correct nesting and comment handling, and managing implicit position data during sexp traversal.",
+      "description_length": 488,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Private.Automaton_state.Context",
+      "library": "parsexp",
+      "description": "This module defines a simple state type used during parsing to track whether the parser is processing a regular s-expression or a comment. It includes basic operations to transition between these states, such as entering and exiting a comment context. The state is used internally to manage parsing behavior in the presence of comments and nested structures.",
+      "description_length": 358,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Private.Automaton_stack.Just_positions",
+      "library": "parsexp",
+      "description": "This module implements a stack-like structure that tracks positions during parsing operations. It provides an `empty` value representing an initial state with no positions recorded. The module is used internally to manage positional information when parsing s-expressions, where positions are stored externally from the stack itself.",
+      "description_length": 333,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_just_positions.State.Read_only",
+      "library": "parsexp",
+      "description": "This module provides access to the current parsing position, including offset, line, and column numbers, as well as a full position object. It works with the internal state of the parser to track where in the input stream the parsing currently is. Concrete use cases include reporting precise error locations or logging progress when parsing s-expressions from a stream.",
+      "description_length": 370,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Parsexp.Private.Automaton_stack.For_cst",
+      "library": "parsexp",
+      "description": "This module implements a stack-based automaton for constructing concrete syntax trees (CSTs) during S-expression parsing. It tracks parsing state with variants like `Open`, `In_sexp_comment`, and `T_or_comment`, enabling precise handling of nested structures and comments. Use cases include recovering exact source positions and comment placement in parsed S-expressions.",
+      "description_length": 371,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager.State.Read_only",
+      "library": "parsexp",
+      "description": "This module provides access to the current parsing position, including offset, line, and column numbers, as well as a full position object. It works with the internal state of an eager s-expression parser. Use it to track or report precise locations in input streams when parsing s-expressions incrementally.",
+      "description_length": 308,
+      "index": 9,
       "embedding_norm": 0.9999999403953552
     },
     {
@@ -26,246 +90,182 @@
       "library": "parsexp",
       "description": "This module manages the state of a token during parsing, specifically tracking the token's buffer and its starting position. It provides operations to update and retrieve the token's position and buffer content. Useful for constructing concrete syntax trees by capturing token metadata during parsing.",
       "description_length": 301,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Private.Automaton_state.Context",
-      "library": "parsexp",
-      "description": "This module defines a context type used during parsing to track whether the parser is processing a regular s-expression or a comment. It includes functions to transition between these states based on input, ensuring correct handling of nested comments and s-expressions. Use cases include implementing comment-aware s-expression parsers and managing parsing modes in custom language processors.",
-      "description_length": 394,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_just_positions.State.Read_only",
-      "library": "parsexp",
-      "description": "This module provides access to the current parsing position during s-expression parsing, including offset, line, and column numbers. It works with the internal state of the parser to track positional information as input is processed. Concrete use cases include reporting precise error locations or logging progress when parsing streams incrementally.",
-      "description_length": 351,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Private.Automaton_stack.For_cst",
-      "library": "parsexp",
-      "description": "This module implements a stack-based automaton for constructing concrete syntax trees (CSTs) during S-expression parsing. It tracks parsing state with variants like `Open` for unclosed parentheses and `In_sexp_comment` for handling sexp comments, and supports operations to accumulate and retrieve parsed elements. It is used internally to manage nested structure and comment contexts when building CSTs from token streams.",
-      "description_length": 423,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Eager.State.Read_only",
-      "library": "parsexp",
-      "description": "This module provides access to the current parsing position, including offset, line, and column numbers, as well as a full position object. It works with the internal state of an eager S-expression parser. Use it to track or report precise locations in input streams while parsing S-expressions on demand.",
-      "description_length": 305,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_and_positions.State.Read_only",
-      "library": "parsexp",
-      "description": "This module provides access to the current parsing state during s-expression parsing, including the offset, line number, column number, and full position in the input. It works with the internal state type `t` and the position type `Parsexp.Positions.pos`. Use this module to track or report precise locations in the input stream when parsing s-expressions eagerly.",
-      "description_length": 365,
-      "index": 7,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp.Private.Automaton.Context",
       "library": "parsexp",
-      "description": "This module defines a context type used during parsing to track whether the parser is processing a regular s-expression or a comment. It includes functions to transition between these states and determine valid parsing behaviors. The context is essential for correctly handling nested comments and s-expressions in the parser.",
-      "description_length": 326,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Private.Automaton_stack.Just_positions",
-      "library": "parsexp",
-      "description": "This module provides a minimal stack implementation that tracks positions during parsing. It supports operations to push, pop, and retrieve the current position, with positions stored externally. It is used internally to manage location tracking in the parser without duplicating position data.",
-      "description_length": 294,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Private.Automaton.For_cst",
-      "library": "parsexp",
-      "description": "This module implements a token buffer and position tracking mechanism for parsing S-expressions into concrete syntax trees (CSTs). It manages the accumulation of token characters and records the starting position of each token during parsing. This is used internally during the lexing and parsing of S-expressions to build accurate source position information in the resulting CST.",
-      "description_length": 381,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Private.Automaton.Stack",
-      "library": "parsexp",
-      "description": "This module manages the incremental parsing of S-expressions using a stack-based structure, supporting operations to build, track, and extract nested S-expressions and related elements like comments. It defines core data types representing stack states\u2014empty, open, or completed\u2014and operations to push, pop, and finalize expressions, enabling the assembly of valid, nested S-expressions from a stream. The first child module provides a position-agnostic stack automaton ideal for external position tracking, while the second extends the stack to handle CST construction with support for comments and strict validity checks. Example uses include parsing multi-expression files incrementally or reconstructing structured S-expressions with accurate nesting and associated metadata.",
-      "description_length": 779,
+      "description": "This module defines a context type used during parsing to track whether the parser is processing a regular s-expression or a comment. It includes functions to transition between these states and determine valid parsing behaviors based on the current context. The primary data type is a variant with two constructors: `Sexp` and `Sexp_comment`.",
+      "description_length": 343,
       "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Eager_cst.State.Read_only",
+      "module_path": "Parsexp.Eager_and_positions.State.Read_only",
       "library": "parsexp",
-      "description": "This module provides access to the current parsing state during eager s-expression parsing, allowing inspection of the input stream's position. It supports data types representing the offset, line, and column numbers, along with a position record combining these. Use it to track or report precise locations in the input when parsing s-expressions incrementally.",
-      "description_length": 362,
+      "description": "This module provides access to the current parsing state, including the character offset, line number, column position, and full position information within the input stream. It works with the internal parsing state type `t` and the position type `Parsexp.Positions.pos`. Use this module to retrieve precise location metadata during s-expression parsing, such as reporting error positions or tracking the progress of a parser over a stream.",
+      "description_length": 440,
       "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Private.Automaton_state",
-      "library": "parsexp",
-      "description": "This module manages the internal state of a parsing automaton, tracking position, mode, and structural context during parsing. It directly provides operations to create and reset the state, query positions and offsets, check for unclosed parentheses, and set error states, while its child modules enhance this functionality with token state tracking and context-aware parsing modes. The token state module captures buffer content and position metadata for constructing syntax trees, and the context module handles transitions between s-expression and comment parsing, enabling robust handling of nested structures. Together, these components support low-level parsing tasks requiring precise control over context, recovery, and mode switching.",
-      "description_length": 743,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Positions.Iterator",
-      "library": "parsexp",
-      "description": "This module provides an iterator for efficiently traversing a compact set of positions. It supports advancing through positions by a specified count or over entire s-expressions, returning the corresponding position ranges. Useful for parsing and analyzing structured data where precise position tracking is required.",
-      "description_length": 317,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Many.State",
-      "library": "parsexp",
-      "description": "This module manages the internal state of a multi-expression parser, tracking position and progress through the input. It provides functions to create, reset, and inspect the parser's current position in terms of line, column, and character offset. Use this module when implementing custom parsing logic that requires precise location tracking or incremental input processing.",
-      "description_length": 376,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Single_and_positions.State",
-      "library": "parsexp",
-      "description": "This module manages the state of a parser, tracking the current position in terms of line, column, and character offset. It provides operations to create, reset, and query the parser's position, as well as to stop further input processing. It is used when implementing custom parsers that need to maintain and manipulate their own position tracking during input consumption.",
-      "description_length": 374,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager.Lexbuf_consumer",
-      "library": "parsexp",
-      "description": "This module processes lexing buffers to extract s-expressions eagerly, providing `parse` and `parse_opt` to consume exactly one s-expression from a buffer. It works directly with `Lexing.lexbuf` and returns parsed values or options when an s-expression is found. Use it to incrementally parse input streams, stopping at the first complete s-expression encountered.",
-      "description_length": 364,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Single_just_positions.Stack",
-      "library": "parsexp",
-      "description": "This module provides a stack-like structure for managing positions during parsing, specifically tracking a single position context. It supports operations to push, pop, and retrieve the current position, enabling precise error reporting and context tracking in parsers. Concrete use cases include maintaining source code location information while parsing expressions or handling nested structures.",
-      "description_length": 398,
-      "index": 18,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Parsexp.Positions.Builder",
       "library": "parsexp",
-      "description": "This module builds a compact set of positions by tracking offsets and newline characters in a stream. It supports adding positions at specific offsets, duplicating the last added position, and marking newlines, all while maintaining strict offset order. It is used to construct position data incrementally for parsing and error reporting in lexers and parsers.",
-      "description_length": 360,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Private.Automaton_stack",
-      "library": "parsexp",
-      "description": "This module implements a stack-based automaton for parsing S-expressions, tracking either full sexps or their positions, and provides operations to extract completed S-expressions or lists, raising errors on partial input. Its core functionality is complemented by a submodule that manages parsing state for CST construction, handling nested structures and sexp comments, and another that implements a minimal stack for external position tracking. Together, they enable precise, incremental assembly of S-expressions with accurate location information in low-level parsing workflows. Example uses include extracting a list of fully parsed S-expressions from a token stream or tracking positions during CST construction without duplicating data.",
-      "description_length": 744,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Single_and_positions.Stack",
-      "library": "parsexp",
-      "description": "This module provides a stack data structure specifically designed to track positions during parsing operations. It supports operations like pushing and popping elements with associated positions, ensuring accurate location tracking in parsed expressions. It is used internally during the parsing of s-expressions to maintain context and error reporting accuracy.",
-      "description_length": 362,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Many_cst.Stack",
-      "library": "parsexp",
-      "description": "This module provides a stack data structure specifically designed to hold multiple S-expression parse trees (`Parsexp.Many_cst.t`). It supports standard stack operations such as pushing, popping, and checking if empty, tailored for managing nested or sequential parsing contexts. A concrete use case includes tracking and reconstructing the structure of deeply nested S-expressions during parsing or transformation passes.",
-      "description_length": 422,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Many_just_positions.State",
-      "library": "parsexp",
-      "description": "This module manages the internal state of a parser that tracks character positions during multi-expression parsing. It provides functions to create, reset, and query the parser's current position in terms of line, column, and character offset. Use this when implementing custom parsers that require precise tracking of input positions for error reporting or source mapping.",
-      "description_length": 373,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_and_positions.State",
-      "library": "parsexp",
-      "description": "This module manages the internal state of an eager S-expression parser, tracking positional information such as offset, line, and column during incremental parsing. It provides direct access to the current state through values like `pos`, `offset`, `line`, and `column`, and allows control over parsing flow with `stop`. The child module exposes detailed position data using `Parsexp.Positions.pos`, enabling precise location reporting for error handling or analysis. You can use these capabilities to extract S-expressions from a stream while maintaining accurate source positions for debugging or tooling purposes.",
-      "description_length": 616,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Eager_just_positions.Stack",
-      "library": "parsexp",
-      "description": "This module provides a stack-based interface for tracking positions during the parsing of s-expressions. It supports operations to push, pop, and inspect positions on the stack, corresponding to the structure of nested s-expressions. It works with internal position data to enable precise location tracking in input streams during eager parsing.",
-      "description_length": 345,
-      "index": 25,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Parsexp.Many_cst.State",
-      "library": "parsexp",
-      "description": "This module manages the internal state of a multi-expression parser, tracking position and progress through the input. It provides functions to create, reset, and query the parser's current position in terms of line, column, and character offset. Use this module when implementing or controlling a streaming parser that needs to handle multiple s-expressions incrementally while maintaining accurate source positions.",
-      "description_length": 417,
-      "index": 26,
+      "description": "This module incrementally constructs compact position data by tracking absolute offsets, adding positions or newline markers with strict ordering constraints. It supports efficient updates through `add`, `add_twice`, and `add_newline`, all requiring increasing offset values. Use it to build line and column mappings during parsing, particularly when handling structured text formats like S-expressions.",
+      "description_length": 403,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp.Eager_just_positions.State",
       "library": "parsexp",
-      "description": "This module manages the internal state of an eager S-expression parser, tracking offset, line, and column positions as input is processed. It supports immediate handling of parsed S-expressions via a callback and allows halting parsing after the first valid expression. The position submodule gives access to the current parsing location, enabling precise error reporting and incremental parsing progress tracking. Example uses include logging position during stream parsing or stopping after the first complete S-expression is read.",
-      "description_length": 533,
-      "index": 27,
+      "description": "This module manages the internal state of an eager s-expression parser, tracking the current position in the input stream using character offset, line, and column numbers. It provides functions to reset the state, retrieve position information, and halt parsing to prevent further input. Use cases include logging parsing progress, reporting precise error locations, and controlling parser lifecycle during stream processing.",
+      "description_length": 425,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Many_and_positions.State",
+      "library": "parsexp",
+      "description": "This module manages the internal state of a parser that tracks both the progress of input consumption and positional information. It provides operations to create, reset, and query the parser's current position in terms of line, column, and character offset, as well as to halt further input processing. It is used when implementing custom parsers that need to maintain and manipulate precise source location metadata during parsing.",
+      "description_length": 433,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Cst.Forget",
+      "library": "parsexp",
+      "description": "Converts concrete syntax trees of s-expressions into their corresponding s-expression values, handling both full expressions and comments. It operates on types representing raw s-expression nodes, including sequences and comments, and produces simplified s-expressions by discarding positional and formatting details. Useful for transforming parsed s-expression files into a normalized form suitable for further processing or analysis.",
+      "description_length": 435,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_and_positions.Stack",
+      "library": "parsexp",
+      "description": "This module provides a stack-based interface for incrementally parsing s-expressions with positional tracking. It supports operations to push, pop, and inspect elements on the stack, enabling precise control over parsing state. Use it to build custom parsers that require immediate access to partially parsed s-expressions and their positions in the input.",
+      "description_length": 356,
+      "index": 17,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Parsexp.Eager_cst.Lexbuf_consumer",
       "library": "parsexp",
-      "description": "This module provides functions to consume s-expressions from a `Lexing.lexbuf` input buffer, returning each parsed s-expression immediately upon completion. It supports parsing with `parse`, which reads exactly one s-expression, and `parse_opt`, which does the same but returns `None` at end of input. It is useful for incrementally parsing streams where s-expressions are processed one at a time, such as reading from a file or network socket.",
-      "description_length": 444,
+      "description": "This module provides functions to consume s-expressions from a `Lexing.lexbuf` input buffer, returning each parsed s-expression immediately upon completion. It supports parsing with `parse`, which consumes exactly one s-expression, and `parse_opt`, which returns `None` if the end of input is reached before an s-expression is fully read. It is useful for incrementally parsing streams where s-expressions are expected one at a time, such as reading from a file or network socket.",
+      "description_length": 480,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Positions.Iterator",
+      "library": "parsexp",
+      "description": "This module provides functions to iterate over a compact set of positions, allowing precise navigation through position data. It supports advancing by a specified number of positions or over entire s-expressions, returning the corresponding position ranges. Use cases include parsing and traversing structured text data where exact position tracking is required, such as in compilers or syntax analyzers.",
+      "description_length": 404,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_just_positions.Lexbuf_consumer",
+      "library": "parsexp",
+      "description": "This module provides functions to consume s-expressions from a `Lexing.lexbuf` input buffer, returning each parsed value immediately upon completion. It supports parsing a single s-expression with `parse` or attempting to parse one with `parse_opt`, which handles end-of-input gracefully. Use this to process streaming input where s-expressions are read incrementally, such as reading from a file or network stream one expression at a time.",
+      "description_length": 440,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_and_positions.State",
+      "library": "parsexp",
+      "description": "This module manages the internal state of an eager s-expression parser with position tracking. It provides functions to reset the state, retrieve character offset, line, column, and full position information, and to stop further parsing. Use it to monitor parsing progress and report precise error locations when parsing s-expressions from a stream.",
+      "description_length": 349,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_just_positions.Stack",
+      "library": "parsexp",
+      "description": "This module provides a stack-based interface for tracking positions during parsing. It supports operations to push, pop, and inspect position information associated with s-expressions. It is used to maintain context when parsing nested expressions, allowing precise location tracking within input streams.",
+      "description_length": 305,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Parsexp.Many_and_positions.Stack",
+      "library": "parsexp",
+      "description": "This module provides a stack data structure with support for tracking positions in parsed expressions. It includes operations to push and pop elements while maintaining positional information, which is essential for accurate error reporting during parsing. The stack is specifically used to manage nested structures in S-expressions, ensuring correct context is maintained during traversal.",
+      "description_length": 390,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Many_just_positions.Stack",
+      "library": "parsexp",
+      "description": "This module provides a stack-like structure for managing parsing contexts during the processing of s-expressions. It supports operations like pushing and popping context frames to track positions in the input. Use cases include maintaining accurate source location information while parsing nested or recursive s-expression structures.",
+      "description_length": 335,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager.Lexbuf_consumer",
+      "library": "parsexp",
+      "description": "This module provides functions to consume s-expressions from a `Lexing.lexbuf` input buffer, returning each parsed s-expression immediately upon completion. It supports parsing with `parse`, which reads exactly one s-expression, and `parse_opt`, which returns `None` if the input ends prematurely. Use this to incrementally parse a stream of s-expressions, stopping at the first valid one or handling optional input.",
+      "description_length": 416,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager.State",
+      "library": "parsexp",
+      "description": "This module manages the state of an incremental s-expression parser that returns expressions as soon as they are parsed. It provides functions to track position (offset, line, column), reset parsing state, and control input consumption. Use it to parse s-expressions from a stream and handle partial or malformed input with precise location tracking.",
+      "description_length": 350,
+      "index": 26,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Parsexp.Many_cst.State",
+      "library": "parsexp",
+      "description": "This module manages the internal state of a multi-expression parser, tracking position and progress during parsing. It provides functions to create, reset, and query the parser's current position in terms of line, column, and character offset. It is used when incrementally parsing multiple S-expressions from a stream, ensuring accurate error reporting and position tracking.",
+      "description_length": 376,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Single_and_positions.Stack",
+      "library": "parsexp",
+      "description": "This module provides a stack data structure specifically designed to track positions during parsing operations. It supports operations like pushing and popping elements with associated positions, ensuring accurate location tracking in parsed expressions. Use cases include managing nested expression contexts and error reporting with precise positional information.",
+      "description_length": 365,
       "index": 28,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Eager.Stack",
+      "module_path": "Parsexp.Single.Stack",
       "library": "parsexp",
-      "description": "This module provides a stack-based interface for incrementally parsing S-expressions from a character stream, allowing partial input to be processed and resumed. It supports operations to push characters onto the stack, extract completed S-expressions, and check for valid S-expression boundaries. Use it when streaming or processing input in chunks, such as reading from a file or network socket, to efficiently parse S-expressions as they become available.",
-      "description_length": 458,
+      "description": "A stack data structure for managing nested s-expression parsing contexts. It supports operations like pushing and popping elements to track hierarchical structure during parsing. Useful for implementing custom s-expression parsers that require context-sensitive handling of nested expressions.",
+      "description_length": 293,
       "index": 29,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Eager_and_positions.Lexbuf_consumer",
-      "library": "parsexp",
-      "description": "This module consumes s-expressions from a `Lexing.lexbuf` input stream, providing immediate parsing results. It supports incremental parsing with `parse` and `parse_opt` functions that extract one s-expression at a time, allowing early termination when needed. It is useful for processing input streams where s-expressions are read sequentially, such as in network protocols or file formats with line-separated values.",
-      "description_length": 418,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Many_and_positions.State",
-      "library": "parsexp",
-      "description": "This module manages the state of a parser that tracks positions in the input, providing functions to create, reset, and query the current parsing position in terms of line, column, and character offset. It works with the `Parsexp.Positions.pos` type to represent source code positions and maintains internal state to track progress through the input. Concrete use cases include feeding input to a parser while accurately tracking where in the source file the parsing occurs, and reporting precise error locations based on the current state.",
-      "description_length": 540,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Parsexp.Eager_cst.Stack",
       "library": "parsexp",
-      "description": "This module provides a stack-based structure for incrementally parsing S-expressions from a character stream, allowing partial parsing and resumption. It works with character streams and S-expression syntax trees, tracking parsing state across multiple invocations. Concrete use cases include parsing multi-line input in a REPL or extracting individual S-expressions from a larger input buffer without fully consuming it.",
-      "description_length": 421,
+      "description": "This module provides a stack-based structure for managing the parsing state when extracting s-expressions eagerly from an input stream. It supports operations like pushing and popping parsing contexts to track nested expressions efficiently. Concrete use cases include incremental parsing of large input streams where early termination or partial results are needed, such as reading s-expressions from a file or network socket one at a time.",
+      "description_length": 441,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Private.Automaton_state",
+      "library": "parsexp",
+      "description": "This module manages parsing states for handling s-expressions and comments, tracking token buffers, positions, and nesting levels. It supports operations to create, reset, and query parser state, including checking for unclosed parentheses and retrieving line/column positions. Used internally during parsing to maintain context and construct syntax trees with precise token metadata.",
+      "description_length": 384,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Single_just_positions.State",
+      "library": "parsexp",
+      "description": "This module manages the internal state of a parser that tracks character positions during parsing. It provides functions to create, reset, and query the state, including current line, column, and offset positions. Use this module when implementing custom parsers that require precise tracking of input positions for error reporting or source mapping.",
+      "description_length": 350,
       "index": 32,
       "embedding_norm": 0.9999999403953552
     },
@@ -278,360 +278,288 @@
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Many_just_positions.Stack",
-      "library": "parsexp",
-      "description": "This module provides a stack-like structure for managing parsing positions in a multi-expression context. It supports operations to push and pop positions, tracking the context of nested expressions. Concrete use cases include handling recursive parsing scenarios where precise position tracking is required across multiple expressions.",
-      "description_length": 336,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Cst.Forget",
-      "library": "parsexp",
-      "description": "Converts concrete syntax trees of s-expressions into their corresponding abstract syntax tree representations. It handles both complete s-expressions and commented forms, allowing selective extraction of meaningful s-expressions from source files. Useful for tools that analyze or transform s-expression-based configurations or data files.",
-      "description_length": 339,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_just_positions.Lexbuf_consumer",
-      "library": "parsexp",
-      "description": "This module processes lexing buffers to extract s-expressions immediately upon detection, using functions like `parse` and `parse_opt`. It operates on `Lexing.lexbuf` input sources and returns parsed values or options when s-expressions are fully read. Useful for streaming scenarios where you need to parse and handle one s-expression at a time from a continuous input source.",
-      "description_length": 377,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
       "module_path": "Parsexp.Eager_cst.State",
       "library": "parsexp",
-      "description": "This module manages the internal state of an eager S-expression parser, tracking position and progress through the input stream. It provides operations to reset parsing, retrieve the current offset, line, and column numbers, and halt parsing when needed. The state includes a position record that combines these metrics, enabling precise location tracking during incremental parsing. Use it to process input streams incrementally and extract S-expressions while maintaining accurate position information for error reporting or debugging.",
-      "description_length": 537,
-      "index": 37,
+      "description": "This module manages the internal state of an eager s-expression parser, providing functions to track position (offset, line, column) and control parsing flow (reset, stop). It works with the abstract state type `t` and position structures to enable precise location tracking during incremental parsing. Concrete use cases include implementing custom s-expression stream parsers that report accurate error positions or extract s-expressions one at a time from a larger input.",
+      "description_length": 474,
+      "index": 34,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Parsexp.Many_cst.Stack",
+      "library": "parsexp",
+      "description": "This module provides a stack data structure specifically designed to hold multiple `Parsexp` concrete syntax trees (CSTs). It supports operations like pushing and popping CSTs onto the stack, enabling efficient manipulation and tracking of nested or sequential parse results. Concrete use cases include managing recursive descent parsers or handling multi-expression input streams where individual expressions are parsed and stored incrementally.",
+      "description_length": 446,
+      "index": 35,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp.Single.State",
       "library": "parsexp",
-      "description": "This module manages the internal state of a single-line s-expression parser, tracking position and offset as characters are processed. It provides functions to create, reset, and query the parser's current position, as well as to stop further input. It is used when implementing custom parsers that consume s-expressions from a stream, ensuring accurate position tracking and input control.",
-      "description_length": 390,
+      "description": "This module manages the internal state of a single-line parser, tracking position and progress through input data. It provides functions to create, reset, and query the parser's current offset, line number, column position, and full position record. Use this module when implementing custom parsers that require precise tracking of input consumption and location reporting.",
+      "description_length": 373,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Single_and_positions.State",
+      "library": "parsexp",
+      "description": "This module manages the state of a parser that tracks positions in the input. It provides operations to create, reset, and query the parser's current position, including line, column, and character offset. Use it when implementing custom parsers that need to report precise source locations for errors or analysis.",
+      "description_length": 314,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Many_just_positions.State",
+      "library": "parsexp",
+      "description": "This module manages the state of a parser that tracks character positions during multi-expression parsing. It provides functions to create, reset, and query the parser's current position in terms of line, column, and character offset. Use this when implementing custom parsers that need precise location tracking for error reporting or source mapping.",
+      "description_length": 351,
       "index": 38,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Single.Stack",
+      "module_path": "Parsexp.Eager.Stack",
       "library": "parsexp",
-      "description": "This module provides a stack data structure specifically designed for parsing S-expressions in a single pass. It supports operations like `push`, `pop`, and `peek` to manage nested S-expression nodes during parsing. The stack works with S-expression elements, tracking the current parsing context to build structured values incrementally.",
-      "description_length": 338,
+      "description": "This module provides a stack-based parser for incrementally processing s-expressions from a character stream. It allows parsing to pause and resume, returning the first complete s-expression found at any step. The stack maintains partial parsing states, enabling efficient, line-by-line or chunked input processing, such as reading from a file or network stream.",
+      "description_length": 362,
       "index": 39,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Private.Automaton",
+      "module_path": "Parsexp.Eager_and_positions.Lexbuf_consumer",
       "library": "parsexp",
-      "description": "The module implements a parsing automaton for S-expressions that processes input streams, manages nested contexts with stacks, and tracks positional information for error reporting and CST construction. It supports core operations like incremental parsing, continuation-based resumption, and substring initialization, using data types such as state trackers, stacks, and token buffers. The context module enables state transitions between regular expressions and comments, while the stack module provides position-aware and CST-specific variants for assembling nested expressions. Together, these components allow parsing multi-expression streams, reconstructing structured S-expressions with metadata, and building accurate syntax trees with full support for comments and strict validity checks.",
-      "description_length": 796,
+      "description": "This module processes s-expressions from a lexing buffer, providing functions to parse a single s-expression immediately upon encountering it. It works directly with `Lexing.lexbuf` and returns parsed values or options when an s-expression is successfully read. Use it to incrementally parse input streams, such as reading s-expressions from standard input or a file one at a time.",
+      "description_length": 381,
       "index": 40,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Eager.State",
+      "module_path": "Parsexp.Many.State",
       "library": "parsexp",
-      "description": "This module manages the state of an eager S-expression parser, tracking character offset, line, and column counts as input streams are processed. It provides operations to reset parsing, halt execution, and retrieve precise position information through its core API and dedicated position-tracking submodule. You can use it to parse text incrementally, extract completed S-expressions immediately, and report accurate error locations using the current position object. The combination of direct state control and detailed positional data enables fine-grained parsing workflows and robust error handling.",
-      "description_length": 603,
+      "description": "Tracks parsing position and state for multi-expression input streams. It provides functions to create, reset, and query the current position in terms of line, column, and character offset. Use this module when implementing custom parsers that need to maintain and update input position information dynamically during parsing.",
+      "description_length": 325,
       "index": 41,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Many_and_positions.Stack",
+      "module_path": "Parsexp.Single_just_positions.Stack",
       "library": "parsexp",
-      "description": "This module provides a stack data structure specifically designed to track positions during parsing operations. It supports operations like pushing and popping elements while maintaining associated position information. Concrete use cases include managing nested expressions and tracking source code locations during recursive descent parsing.",
-      "description_length": 343,
+      "description": "This module provides a stack-like structure for managing positions during parsing, specifically tracking a single position context. It supports operations to push and pop positions, enabling precise error reporting and context tracking in parsers. Concrete use cases include maintaining the current parsing location in recursive descent parsers or error handlers that require contextual information.",
+      "description_length": 399,
       "index": 42,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Parsexp.Single_just_positions.State",
+      "module_path": "Parsexp.Private.Automaton",
       "library": "parsexp",
-      "description": "This module manages the state of a parser that tracks character positions during parsing. It provides functions to create, reset, and query the parser's current position, including offset, line, and column numbers, as well as operations to stop further input processing. It works with the `Parsexp.Positions.pos` type to represent positions and is used when parsing input where precise location tracking is required, such as in compilers or linters.",
-      "description_length": 449,
+      "description": "This module supports incremental parsing of S-expressions through stack-based state management and context tracking, enabling precise handling of nested structures and comments. It operates on automata with customizable modes and kinds, processing character or byte input streams while maintaining position tracking and error handling. Typical applications include error recovery during lexing, parsing from substrings, and extracting continuation states for incremental parsing workflows.",
+      "description_length": 489,
       "index": 43,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Parsexp.Eager_and_positions.Stack",
+      "module_path": "Parsexp.Private.Automaton_stack",
       "library": "parsexp",
-      "description": "This module provides a stack-based interface for incrementally parsing s-expressions with positional tracking. It allows pushing and popping s-expression nodes while maintaining their source positions, enabling precise error reporting or analysis. Use it to build custom parsers that need to track the structure and location of s-expressions in the input stream.",
-      "description_length": 362,
+      "description": "This module implements a stack-based automaton for managing the state of S-expression parsing, supporting operations to construct and validate nested expressions. It works with variants representing empty, open, or completed S-expressions, and is used to recover precise source positions and comment placement during parsing. Concrete use cases include parsing multi-expression files and tracking partial or complete S-expression states.",
+      "description_length": 437,
       "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Parse_error",
-      "library": "parsexp",
-      "description": "This module defines a data type `t` for representing parsing errors, including the position and message of the error. It provides functions to access the error's position in the input, retrieve its message, and report it in a human-readable format. A concrete use case is displaying detailed error messages during the parsing of S-expressions, indicating both the location and cause of the failure.",
-      "description_length": 398,
-      "index": 45,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Parsexp.Conv_many_at_once",
-      "library": "parsexp",
-      "description": "This module parses and converts lists of S-expressions from strings or pre-parsed input, supporting structured data extraction with combined error handling. It works with S-expressions paired with positional information, applying conversion functions to produce typed results. Use it to load and validate configuration files or data formats that consist of multiple S-expressions in a single input source.",
-      "description_length": 405,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_and_positions",
-      "library": "parsexp",
-      "description": "This module parses s-expressions from incremental input sources like streams or buffers, returning each expression immediately upon completion along with its positional data. It maintains parsing state, including offset, line, and column information, and supports early termination through control functions like `stop`. The module works with various input types\u2014strings, substrings, byte sequences, and lexing buffers\u2014and enables precise error reporting or analysis through position tracking. You can use it to extract the first s-expression from a stream, parse line-separated values, or build custom structured parsers with detailed source location tracking.",
-      "description_length": 661,
-      "index": 47,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Eager_parser-Stack",
-      "library": "parsexp",
-      "description": "This module provides a stack-based structure for managing nested parsing contexts during the processing of S-expressions. It supports operations like pushing and popping elements to track hierarchical data structures in a last-in-first-out manner. Concrete use cases include handling nested parentheses or tracking context depth when parsing complex expressions.",
-      "description_length": 362,
-      "index": 48,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Old_parser_cont_state",
-      "library": "parsexp",
-      "description": "This module represents the state of a parser for S-expressions, tracking stages like whitespace, atoms, lists, and comments. It provides functions to convert state values to S-expressions and strings. Useful for debugging and logging parser transitions during S-expression parsing.",
-      "description_length": 281,
-      "index": 49,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Many",
-      "library": "parsexp",
-      "description": "This module implements a streaming parser for S-expressions that handles incremental input through character-by-character or buffer-based feeding, producing a list of parsed S-expressions while supporting partial input with stack-based state management. It manages parsing state through a position tracker that records line, column, and character offset, and uses a mutable stack to handle nested S-expression states during incremental parsing. Main data types include the parser state and position, with operations to feed input, retrieve parsed expressions, and inspect location. Example uses include parsing multi-expression streams from files, network sockets, or interactive input sources where data arrives in chunks, enabling custom parsing logic with precise location tracking and support for recursive structures.",
-      "description_length": 822,
-      "index": 50,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Parser",
-      "library": "parsexp",
-      "description": "This module implements a parser for S-expressions by processing input character by character or in batches, using a stateful stack-based approach. It supports parsing from strings, substrings, bytes, and subbytes, with both low-level feeding operations and high-level functions that return parsed results or raise exceptions on error. It is suitable for applications that need to parse structured textual data in formats like configuration files or Lisp-like expressions.",
-      "description_length": 471,
-      "index": 51,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Of_sexp_error",
-      "library": "parsexp",
-      "description": "This module defines an error type for failed S-expression conversions, providing access to the original exception, the problematic S-expression, and its location in the source. It includes functions to raise and report these errors, with support for formatting error messages with source positions. Use cases include handling and reporting errors during parsing of configuration files or data encoded in S-expressions.",
-      "description_length": 418,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Conv",
-      "library": "parsexp",
-      "description": "This module parses and converts S-expressions from strings or pre-parsed chunks, producing structured values of arbitrary type `'a` via user-supplied conversion functions. It operates on `chunk_to_conv` and `parsed_sexp` types, handling both successful and error results with precise position tracking. Use it to load and validate configuration files or data formats that follow S-expression syntax, with detailed error reporting on malformed input.",
-      "description_length": 449,
-      "index": 53,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp.Conv_many_and_locations",
       "library": "parsexp",
-      "description": "This module parses and converts s-expressions with positional information, producing lists of structured values. It processes strings or pre-parsed s-expressions, applying a conversion function to each element paired with its source range. Useful for configuration files or data formats where precise error reporting and location tracking are required during parsing.",
-      "description_length": 367,
-      "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_parser-State",
-      "library": "parsexp",
-      "description": "This module manages the internal state of an eager S-expression parser, tracking position and progress during parsing. It provides functions to reset the state, retrieve current line/column positions, and stop further input processing. Use cases include parsing streaming input into S-expressions and handling incremental parsing errors by halting or restarting the parser state.",
-      "description_length": 379,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_parser",
-      "library": "parsexp",
-      "description": "This module processes input incrementally to extract s-expressions immediately upon completion. It operates on character streams, strings, and byte sequences, using state and stack structures to track parsing progress. Use it to parse structured data from partial input, such as reading s-expressions from a network stream or file buffer.",
-      "description_length": 338,
-      "index": 56,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_parser-State-Read_only",
-      "library": "parsexp",
-      "description": "This module provides access to the current parsing state during expression parsing, allowing inspection of the input stream's position. It works with the read-only state type `t` to retrieve the character offset, line number, and column number. Concrete use cases include error reporting with precise source locations and tracking progress through the input stream.",
-      "description_length": 365,
-      "index": 57,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Eager_parser-Lexbuf_consumer",
-      "library": "parsexp",
-      "description": "This module provides functions to parse s-expressions from a lexing buffer, consuming input incrementally. It maintains internal state to track parsing progress and supports both mandatory and optional parsing modes. Concrete use cases include reading s-expressions from a file or network stream one at a time.",
-      "description_length": 310,
-      "index": 58,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager_cst",
-      "library": "parsexp",
-      "description": "This module parses input streams and returns s-expressions immediately upon detection, supporting incremental parsing from sources like files or network sockets. It processes character streams, strings, bytes, and substrings, maintaining parsing state and position information across partial inputs. Functions like `parse` and `parse_opt` extract individual s-expressions on demand, while a stack-based structure allows resuming parsing after interruptions. Concrete uses include reading s-expressions one at a time from a stream or handling multi-line input in interactive environments.",
-      "description_length": 587,
-      "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Cst",
-      "library": "parsexp",
-      "description": "This module represents s-expressions as a concrete syntax tree (CST), capturing full source structure including location ranges, comments, and atom formatting. It enables precise rewriting and structural comparison of s-expression files, distinguishing between quoted and unquoted atoms. The child module converts CSTs into abstract syntax trees (ASTs), selectively extracting meaningful expressions while preserving source fidelity. Together, they support tools that analyze, transform, or process s-expression-based formats with exactness.",
-      "description_length": 541,
-      "index": 60,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Single_and_positions",
-      "library": "parsexp",
-      "description": "This module parses S-expressions character by character while tracking positional information through integrated state and stack structures. It processes input incrementally using `feed` and `feed_eoi`, building parsed expressions with precise line, column, and offset data. The state module allows creation and manipulation of position-aware parser states, while the stack module supports contextual tracking during nested expression parsing. You can parse strings, substrings, or bytes, handle errors with positional details, and implement custom parsers with fine-grained control over input consumption and state transitions.",
-      "description_length": 628,
-      "index": 61,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Positions",
-      "library": "parsexp",
-      "description": "This module tracks and manipulates positions and ranges in input data, providing precise line, column, and byte offset information for tasks like source code parsing and error reporting. It supports operations like shifting positions, constructing ranges, and mapping S-expressions to their physical locations, with a builder submodule that accumulates positions incrementally by tracking offsets and newlines. An iterator submodule enables efficient traversal of position sets, allowing advancement by count or over entire S-expressions to analyze structured data. Together, these components enable precise position handling, from building and traversing to mapping complex input structures.",
-      "description_length": 692,
-      "index": 62,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Parsexp.Single_just_positions",
-      "library": "parsexp",
-      "description": "This module implements a character-based parser for S-expressions that tracks positional information through incremental input processing, maintaining internal state and stack structures to report precise positions on success or errors on malformed input. It includes a stack module for managing single position contexts with push, pop, and current position retrieval, enabling accurate error reporting and context tracking during nested parsing operations. The state module extends this functionality by providing detailed position tracking with offset, line, and column numbers using the `pos` type, supporting operations to create, reset, and query the parser's current location. Together, these components allow parsing of structured text while maintaining detailed source position data, useful for applications like compilers or linters where precise location tracking is essential.",
-      "description_length": 887,
-      "index": 63,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Parser-Stack",
-      "library": "parsexp",
-      "description": "This module manages a stack used during the parsing of S-expressions. It provides operations to push, pop, and inspect elements on the stack, maintaining the parsing context as the input is processed. The stack holds intermediate parsing states, enabling correct handling of nested expressions in formats like OCaml's syntax trees or configuration files.",
-      "description_length": 354,
-      "index": 64,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Conv_many",
-      "library": "parsexp",
-      "description": "This module parses and converts lists of S-expressions from strings or pre-parsed input, applying a conversion function to each element. It handles errors during parsing or conversion, combining them into a unified error type, and supports both safe and exception-raising variants. Use it to load and transform structured configuration files or data encoded in S-expressions with precise error reporting.",
-      "description_length": 404,
-      "index": 65,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Eager",
-      "library": "parsexp",
-      "description": "This module processes input streams character by character or in chunks, building and returning s-expressions immediately upon completion using a state and stack-based approach. It supports incremental parsing for streaming sources like network sockets or large files, allowing partial input to be processed and resumed, with precise control over parsing state and position tracking. The main data types include lexing buffers, character stacks, and position objects, with operations to push input, extract completed s-expressions, reset parsing, and retrieve location information. You can use it to parse a stream and stop at the first s-expression, track line and column numbers for error reporting, or process input in arbitrary chunks while maintaining correct s-expression boundaries.",
-      "description_length": 789,
-      "index": 66,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Conv_single",
-      "library": "parsexp",
-      "description": "This module parses and converts S-expressions from strings or pre-parsed input, producing values wrapped in `Parsexp.id` along with position information. It supports error handling through `result` types, with both safe and exception-raising variants for conversion. Use it to load and validate configuration files or structured data where precise error locations are needed.",
-      "description_length": 375,
-      "index": 67,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Single",
-      "library": "parsexp",
-      "description": "This module implements a single-pass parser for S-expressions, processing input character by character or in chunks while maintaining parsing state and a stack-based structure to build nested S-expressions incrementally. It provides direct access to parsing functions that consume input and update internal state, while the state module tracks position and offset for accurate input handling, and the stack module supports `push`, `pop`, and `peek` operations to manage nested structures during parsing. Together, these components enable incremental parsing of S-expressions from streams or interactive sources, such as network protocols or REPLs, with precise control over input consumption and context tracking. For example, users can implement custom parsers that pause or stop input based on current state, or build complex nested S-expressions by leveraging the stack's context-aware operations during traversal.",
-      "description_length": 917,
-      "index": 68,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Parsexp.Conv_error",
-      "library": "parsexp",
-      "description": "This module defines a combined error type for parsing and S-expression conversion errors, supporting precise error handling during input processing. It provides functions to convert errors to S-expressions and report them with context, including filename information. Concrete use cases include validating and debugging malformed input files in applications that use Parsexp for parsing S-expressions.",
-      "description_length": 401,
-      "index": 69,
+      "description": "This module parses and converts s-expressions with positional information into typed values, handling both string inputs and pre-parsed s-expressions. It works with s-expressions paired with source positions, applying a conversion function to each element and accumulating errors. Use it to load and process configuration files or structured data where precise error locations are needed.",
+      "description_length": 388,
+      "index": 45,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp.Many_just_positions",
       "library": "parsexp",
-      "description": "This module parses multiple s-expressions from input while tracking detailed position information through a stateful, incremental parser. It uses an internal state module to manage line, column, and offset data, and a stack-based structure to handle nested expression contexts, enabling precise source mapping and error reporting. You can feed input character by character or in chunks, retrieve structured position data for each parsed expression, and manage context-sensitive parsing states in recursive formats.",
-      "description_length": 514,
-      "index": 70,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Parsexp.Many_cst",
-      "library": "parsexp",
-      "description": "This module parses s-expressions character by character, handling interleaved comments and maintaining state through incremental feeding operations like `feed` and `feed_eoi`. It uses a stack module to manage nested or sequential parse trees and a state module to track line, column, and offset positions during parsing. Together, these components support structured, incremental parsing of multi-expression files with precise source location tracking. Example use cases include streaming parsers for configuration files or compilers that require accurate error reporting and comment preservation.",
-      "description_length": 597,
-      "index": 71,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Parsexp.Eager_just_positions",
-      "library": "parsexp",
-      "description": "This module processes input streams to extract s-expressions as soon as they are completed, supporting immediate parsing from character streams, strings, bytes, and lexing buffers. It uses a state module to track offset, line, and column positions during parsing, and a stack module to manage nested structure locations, enabling precise error reporting and incremental progress. Operations like `parse` and `parse_opt` handle one s-expression at a time, making it suitable for streaming applications such as reading configuration files or network data. The combined interface allows stopping after the first complete expression or continuing through structured input with accurate position tracking.",
-      "description_length": 700,
-      "index": 72,
+      "description": "Tracks character positions during multi-expression s-expression parsing, producing precise location data for each parsed value. It processes input character by character or in bulk using state and stack modules to maintain context, handling nested structures and reporting errors with exact positions. Use to implement custom s-expression parsers requiring accurate source location tracking for error reporting or tooling like IDEs and linters.",
+      "description_length": 444,
+      "index": 46,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Parsexp.Parser-State",
+      "module_path": "Parsexp.Single_and_positions",
       "library": "parsexp",
-      "description": "This module manages the internal state of a parser, tracking position and progress through input data. It provides operations to create, reset, and query the parser's current position in terms of offset, line, and column numbers, and allows setting a fixed starting position. Concrete use cases include maintaining accurate location information during the parsing of structured text formats like S-expressions.",
-      "description_length": 410,
-      "index": 73,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides functions to parse S-expressions while tracking positional information in the input. It processes characters, strings, or bytes incrementally using a parser state and stack, returning parsed S-expressions paired with position data. Use it to implement precise error reporting or source analysis in custom parsers.",
+      "description_length": 334,
+      "index": 47,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Many",
+      "library": "parsexp",
+      "description": "This module implements an incremental parser for s-expressions that can handle multiple top-level values in a single input stream. It processes character streams using a state machine that tracks line and column positions, and a stack-based structure to manage nested s-expression parsing contexts. Feed characters one at a time using `feed`, or use `feed_string` and similar functions to process larger chunks, then call `feed_eoi` to finalize parsing and retrieve the list of parsed s-expressions.",
+      "description_length": 499,
+      "index": 48,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Parse_error",
+      "library": "parsexp",
+      "description": "This module defines a type `t` for representing parsing errors, along with functions to extract the position, message, and S-expression representation of an error. It works with parsed input streams and source positions to provide precise error diagnostics. Concrete use cases include reporting syntax errors in configuration files or data formats with accurate location information.",
+      "description_length": 383,
+      "index": 49,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Cst",
+      "library": "parsexp",
+      "description": "This module defines a concrete syntax tree (CST) for s-expressions, capturing detailed structure including atoms, lists, and comments with their source positions. It supports precise manipulation of s-expression files, such as rewriting or transforming code while preserving formatting and comments. Key operations include converting CST nodes to s-expressions and comparing nodes for structural equality.",
+      "description_length": 405,
+      "index": 50,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp.Private",
       "library": "parsexp",
-      "description": "This module implements a stack-based parsing automaton for S-expressions, managing nested contexts, tracking positional data, and supporting precise error handling and CST construction. It provides data types for state tracking, token buffering, and context-aware stacks, enabling operations like incremental parsing, continuation resumption, and extraction of fully parsed S-expressions or lists. Users can parse multi-expression streams, reconstruct structured syntax trees with metadata, and handle nested structures with seamless transitions between parsing modes. Example uses include building a list of parsed S-expressions from a token stream or tracking positions during CST assembly without data duplication.",
-      "description_length": 717,
-      "index": 74,
+      "description": "This module provides low-level components for incremental S-expression parsing, enabling precise control over state transitions, error recovery, and position tracking. It works with stack-based automata and parser states to handle nested structures, comments, and token buffering, supporting input streams such as characters or bytes. Concrete use cases include parsing S-expressions from substrings, recovering from syntax errors during lexing, and maintaining context for multi-expression files with accurate source positioning.",
+      "description_length": 530,
+      "index": 51,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Parsexp.Old_parser_cont_state",
+      "library": "parsexp",
+      "description": "This module represents parser states for handling different stages of S-expression parsing, including whitespace, atoms, lists, and comments. It provides functions to convert state values to S-expressions and strings. Useful for debugging or logging the current parsing context during lexing and parsing operations.",
+      "description_length": 315,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Many_cst",
+      "library": "parsexp",
+      "description": "This module parses multiple S-expressions from a stream, handling incremental input one character or chunk at a time. It tracks parsing state and position, and builds up a stack of concrete syntax trees (CSTs) as expressions are parsed. Use it to implement custom S-expression parsers with precise error reporting and support for partial or streaming input.",
+      "description_length": 357,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Single",
+      "library": "parsexp",
+      "description": "This module provides low-level parsing operations for s-expressions, including character-by-character input processing, stack-based context management, and error handling. It works with s-expression syntax trees, character streams, and position-tracking state. Use it to build custom s-expression parsers with precise control over input consumption and nested structure handling.",
+      "description_length": 379,
+      "index": 54,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_cst",
+      "library": "parsexp",
+      "description": "This module parses s-expressions from an input stream, returning each s-expression immediately upon completion. It works with character streams, strings, and lexing buffers, supporting incremental parsing through state and stack management. Concrete use cases include reading s-expressions one at a time from a file or network socket, and implementing custom parsers that require precise error reporting and partial results.",
+      "description_length": 424,
+      "index": 55,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Parsexp.Positions",
+      "library": "parsexp",
+      "description": "This module tracks and manipulates source code positions during parsing, providing precise line, column, and byte offset information. It supports structured data like S-expressions by mapping positions to specific ranges and enabling efficient lookup of sub-expressions. Key operations include building and navigating position data, finding ranges within parsed input, and calculating memory usage for position sets.",
+      "description_length": 416,
+      "index": 56,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Conv_error",
+      "library": "parsexp",
+      "description": "This module defines a combined error type for parsing and S-expression conversion errors, supporting precise error handling during input processing. It provides functions to convert errors to S-expressions and report them with context, including filename information. Concrete use cases include validating and debugging malformed input files in configuration or data serialization workflows.",
+      "description_length": 391,
+      "index": 57,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Conv_single",
+      "library": "parsexp",
+      "description": "This module parses and converts S-expressions from strings or pre-parsed input, producing values wrapped in `Parsexp.id` along with position information. It works directly with S-expressions, conversion functions, and error types for parsing and conversion. Use cases include loading and validating configuration files or data formats that use S-expressions with precise error reporting and source positions.",
+      "description_length": 408,
+      "index": 58,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Conv_many_at_once",
+      "library": "parsexp",
+      "description": "This module parses and converts multiple S-expressions from a string or pre-parsed input, producing values of a specified type wrapped in `Parsexp.id`. It works with S-expression lists and optional position information, supporting error handling during parsing and conversion. Use it to load and process configuration files or data formats that contain multiple S-expressions in a single input source.",
+      "description_length": 401,
+      "index": 59,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp.Many_and_positions",
       "library": "parsexp",
-      "description": "This module parses sequences of S-expressions with support for incremental input and precise source position tracking. It records line, column, and character offsets for each parsed expression, enabling accurate error reporting and location-based analysis. The core API allows feeding input as characters or strings and retrieving fully parsed expressions along with their positions, while the position state submodule manages current parsing location and the position stack submodule supports tracking nested structures. Example usage includes parsing a multi-expression file in chunks, reporting syntax errors at exact line numbers, and reconstructing source locations for individual parsed elements.",
-      "description_length": 702,
-      "index": 75,
+      "description": "This module parses S-expressions while tracking precise positional information for each parsed element. It provides low-level character feeding operations and higher-level string parsing functions, all maintaining detailed source positions through its state and stack modules. It is used to implement custom S-expression parsers that require accurate error reporting with line and column numbers.",
+      "description_length": 396,
+      "index": 60,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager",
+      "library": "parsexp",
+      "description": "This module parses s-expressions from character input incrementally, returning each complete s-expression immediately upon detection. It operates on streams of characters, strings, or bytes, using a stateful stack-based parser that supports partial input and resumable parsing. Concrete use cases include reading s-expressions from a file or network socket one at a time, handling incomplete or malformed input with position tracking, and parsing a stream where each s-expression is processed as it becomes available.",
+      "description_length": 517,
+      "index": 61,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Parsexp.Conv_many",
+      "library": "parsexp",
+      "description": "This module parses and converts lists of S-expressions from strings or pre-parsed input, applying a conversion function to each element. It handles errors in both parsing and conversion, combining them when necessary, and works directly with Sexp.t, position data, and custom result types. Use it to load and process multi-expression S-expression files or strings into typed OCaml values with precise error reporting.",
+      "description_length": 417,
+      "index": 62,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_and_positions",
+      "library": "parsexp",
+      "description": "This module parses s-expressions from character streams, strings, or bytes incrementally, returning each s-expression immediately upon completion along with its positional information in the input. It supports precise tracking of parsing progress through state and stack operations, enabling custom parser logic and accurate error reporting. Concrete use cases include reading s-expressions one-by-one from standard input, network streams, or large files without waiting for full input consumption.",
+      "description_length": 498,
+      "index": 63,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Single_just_positions",
+      "library": "parsexp",
+      "description": "This module parses input while tracking character positions, providing precise error reporting and source location data. It processes strings or byte sequences through stateful parsing functions, returning structured position data on success or errors. Use it to implement parsers that need exact input positioning, such as compilers or linters mapping errors to source locations.",
+      "description_length": 380,
+      "index": 64,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Eager_just_positions",
+      "library": "parsexp",
+      "description": "This module parses s-expressions from input streams, returning each expression immediately upon completion. It tracks character offsets, lines, and columns to provide precise position information during parsing. Use it to process input incrementally, such as reading s-expressions one at a time from a file or network stream.",
+      "description_length": 325,
+      "index": 65,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Parsexp.Of_sexp_error",
+      "library": "parsexp",
+      "description": "This module handles errors during S-expression parsing, providing detailed information about conversion failures. It includes functions to access the original exception, the problematic S-expression, and its location in the source. Use it to diagnose and report structured parse errors in configuration files or data serialization workflows.",
+      "description_length": 341,
+      "index": 66,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Parsexp",
       "library": "parsexp",
-      "description": "This module parses S-expressions with precise error reporting, position tracking, and support for incremental input, enabling structured data extraction, configuration parsing, and domain-specific language implementations. It provides core types like S-expressions with location metadata, parsing states, and conversion functions, while submodules handle streaming input, nested parsing contexts, and error diagnostics with source positions. You can parse and convert S-expressions from strings or streams, extract structured values with detailed error messages, or build custom parsers that track and report precise source locations during incremental parsing. The module supports both one-shot and streaming use cases, with utilities for handling nested expressions, preserving comments, and reconstructing source structure through concrete syntax trees.",
-      "description_length": 856,
-      "index": 76,
+      "description": "This module supports parsing S-expressions into typed OCaml values through incremental and batched operations, with robust error handling for both syntactic and semantic conversion failures. It operates on structured representations like concrete syntax trees (CSTs) and tracks source positions (lines, columns, offsets) to enable precise error diagnostics. Typical use cases include processing configuration files, serializing data formats, and building tools that require reliable parsing with actionable error feedback.",
+      "description_length": 522,
+      "index": 67,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 83,
-    "meaningful_modules": 77,
+    "total_modules_in_package": 74,
+    "meaningful_modules": 68,
     "filtered_empty_modules": 6,
-    "retention_rate": 0.927710843373494
+    "retention_rate": 0.918918918918919
   },
   "statistics": {
-    "max_description_length": 917,
+    "max_description_length": 530,
     "min_description_length": 277,
-    "avg_description_length": 472.2857142857143,
-    "embedding_file_size_mb": 0.28006839752197266
+    "avg_description_length": 391.45588235294116,
+    "embedding_file_size_mb": 0.985753059387207
   }
 }

@@ -1,73 +1,73 @@
 {
   "package": "fuseau-lwt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:06:31.546368",
+  "creation_timestamp": "2025-08-14T23:07:31.353241",
   "modules": [
     {
-      "module_path": "Fuseau_lwt.Iostream.Out",
+      "module_path": "Fuseau_lwt.Net.TCP_server",
       "library": "fuseau-lwt",
-      "description": "This module implements output streams compatible with Lwt, handling byte-level output to various destinations including buffers, file descriptors, and custom output functions. It supports writing characters, strings, integers, and sequences of lines, with facilities for flushing, closing, and multiplexing output across multiple streams. Concrete use cases include logging to files, sending formatted data over network sockets, and capturing output into in-memory buffers.",
-      "description_length": 473,
+      "description": "Implements TCP servers that accept connections and handle them with fibers using Fuseau's Iostreams. Works directly with Unix.sockaddr and Lwt_io.server, managing connection streams for network services. Use to build concurrent network servers handling protocols like HTTP or custom binary services.",
+      "description_length": 299,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Fuseau_lwt.Iostream.In",
+      "module_path": "Fuseau_lwt.Iostream.Out",
       "library": "fuseau-lwt",
-      "description": "This module implements input streams that can be used to read from various sources such as strings, bytes, or Unix file descriptors. It provides functions for reading exact amounts of data, consuming the entire stream, and chaining multiple streams together. These streams integrate with Lwt for asynchronous I/O, enabling efficient handling of network protocols, file parsing, and data processing pipelines.",
-      "description_length": 408,
+      "description": "This module implements output streams that accept bytes and strings for writing to buffers, file descriptors, or multiple destinations. It supports writing individual characters, byte slices, strings, integers, and line sequences, with operations like flush and close to control output behavior. Concrete use cases include logging to memory buffers, writing to network sockets via Unix file descriptors, and broadcasting output to multiple streams using tee.",
+      "description_length": 458,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Fuseau_lwt.Net.TCP_server",
+      "module_path": "Fuseau_lwt.Iostream.In",
       "library": "fuseau-lwt",
-      "description": "Handles TCP server creation and management using Lwt, with each incoming connection processed in a separate fiber. Works with Unix socket addresses and Fuseau's Iostreams for structured input/output handling. Useful for building concurrent network services that integrate with Lwt-based libraries and event loops.",
-      "description_length": 313,
+      "description": "This module implements input byte streams with precise control over reading, buffering, and source composition. It supports reading from memory buffers, strings, and Unix file descriptors, offering operations like partial reads, exact reads, and stream concatenation. Concrete use cases include parsing network payloads, consuming file contents incrementally, and bridging Lwt-based IO with fiber-driven processing.",
+      "description_length": 415,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Fuseau_lwt.Net.TCP_client",
       "library": "fuseau-lwt",
-      "description": "Implements TCP client connections using Lwt, providing a `with_connect` function that establishes a socket connection to a given address and supplies input/output streams for communication. Works with Unix socket addresses and Lwt-based IO streams for reading and writing data. Useful for building network clients that interact with TCP servers, such as HTTP clients or custom protocol implementations.",
-      "description_length": 402,
+      "description": "Implements TCP client connections using Lwt for asynchronous IO, providing a `with_connect` function that establishes a socket connection to a given address and supplies input/output streams to a callback. Works with Unix socket addresses and Lwt-managed IO streams. Useful for initiating network communication with servers, such as sending requests and receiving responses over TCP.",
+      "description_length": 383,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fuseau_lwt.IO_lwt",
-      "library": "fuseau-lwt",
-      "description": "This module provides direct Lwt-based IO operations for reading from and writing to file descriptors, using Fuseau fibers. It supports structured concurrency by integrating with Lwt's event loop, allowing seamless use of Fuseau fibers alongside Lwt libraries. Concrete use cases include handling network sockets, file IO, and other Unix file descriptors within a concurrent application.",
-      "description_length": 386,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Fuseau_lwt.Net",
       "library": "fuseau-lwt",
-      "description": "This module provides TCP networking capabilities using Lwt for asynchronous I/O, supporting both server and client operations. The main data types include Unix socket addresses and Lwt I/O streams, with operations for accepting connections, handling communication, and sending requests. Servers can manage concurrent clients via separate fibers, while clients can connect to services and exchange structured data using input/output streams. Example uses include implementing an HTTP server handling multiple requests concurrently or a client fetching data from a remote TCP service.",
-      "description_length": 582,
+      "description": "Handles TCP networking with Lwt-based IO streams, providing server and client implementations for asynchronous network communication. Works with Unix socket addresses and Fuseau fibers to manage concurrent connections and structured IO operations. Use to build network services handling protocols like HTTP or custom TCP-based clients and servers.",
+      "description_length": 347,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Fuseau_lwt.IO_lwt",
+      "library": "fuseau-lwt",
+      "description": "This module bridges Fuseau fibers with Lwt's event loop for handling asynchronous IO operations on file descriptors. It provides direct access to Lwt-driven read and write operations, allowing precise control over byte buffers and non-blocking behavior. Concrete use cases include implementing custom network protocols or streaming data over sockets without relying on higher-level Lwt IO abstractions.",
+      "description_length": 402,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Fuseau_lwt.Iostream",
       "library": "fuseau-lwt",
-      "description": "This module provides Lwt-compatible input and output streams for asynchronous byte-level I/O operations across diverse sources and sinks such as memory buffers, files, and network sockets. It supports reading exact data amounts, consuming streams, writing primitive values, and multiplexing output, enabling tasks like network protocol handling, file parsing, and logging. Examples include reading from a Unix file descriptor into a byte buffer, writing formatted strings to a network socket, or chaining multiple input streams for sequential processing. Key data types include input and output stream abstractions with operations for asynchronous reading, writing, and stream composition.",
-      "description_length": 689,
+      "description": "This module provides streaming abstractions for handling byte input and output in Lwt-driven applications. It supports reading from and writing to memory buffers, strings, and Unix file descriptors with precise control over buffering, partial reads, exact writes, and stream composition. Concrete use cases include parsing network data incrementally, logging to memory or files, and bridging Lwt-based IO with fiber-structured concurrency.",
+      "description_length": 439,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Fuseau_lwt",
       "library": "fuseau-lwt",
-      "description": "This module bridges Fuseau fibers with the Lwt event loop, enabling structured concurrency alongside Lwt's asynchronous I/O and timer management. It supports direct interaction with file descriptors, Lwt threads, and events, allowing concurrent execution of tasks such as network communication and stream processing using both Fuseau's fiber-based model and Lwt libraries. Submodules extend this integration with TCP networking, Lwt-based IO operations, and flexible stream handling for byte-level I/O across multiple sources. For example, a server can accept and handle multiple TCP clients concurrently in separate fibers, while reading and writing structured data through Lwt-backed streams.",
-      "description_length": 694,
+      "description": "This module integrates cooperative fibers with an event-driven IO system, enabling precise control over asynchronous operations like timed waits, file descriptor readiness, and structured concurrency. It operates on fibers, event loops, buffered byte streams, and network sockets, combining low-level resource management with high-level concurrency primitives. Typical applications include building networked services that require fine-grained coordination between concurrent tasks and Lwt-based IO operations, such as handling TCP connections with backpressure or implementing protocol parsers over asynchronous streams.",
+      "description_length": 621,
       "index": 7,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -77,9 +77,9 @@
     "retention_rate": 0.8
   },
   "statistics": {
-    "max_description_length": 694,
-    "min_description_length": 313,
-    "avg_description_length": 493.375,
-    "embedding_file_size_mb": 0.02943897247314453
+    "max_description_length": 621,
+    "min_description_length": 299,
+    "avg_description_length": 420.5,
+    "embedding_file_size_mb": 0.11637210845947266
   }
 }

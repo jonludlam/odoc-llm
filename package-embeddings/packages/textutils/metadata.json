@@ -1,40 +1,104 @@
 {
   "package": "textutils",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 21,
-  "creation_timestamp": "2025-07-15T23:10:33.032338",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 15,
+  "creation_timestamp": "2025-08-15T12:10:07.837868",
   "modules": [
     {
-      "module_path": "Console.Make.Ansi",
-      "library": "textutils.console",
-      "description": "This module provides direct control over ANSI terminal behavior, including cursor movement, screen clearing, and visual alerts. It supports operations like resetting the screen, positioning the cursor, and saving cursor state. Functions also allow text output with specified attributes, enabling colored or styled terminal output.",
-      "description_length": 330,
+      "module_path": "Ascii_table",
+      "library": "textutils.ascii_table",
+      "description": "This module renders tabular data into ASCII format with customizable alignment, spacing, and display attributes. It operates on lists of rows and columns, where each column specifies how to extract and format data from a row. Concrete use cases include printing formatted logs, displaying query results in the terminal, and generating readable output for command-line tools.",
+      "description_length": 374,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Console.Io-Let_syntax",
-      "library": "textutils.console",
-      "description": "This module provides monadic operations including `return`, bind (`>>=`), and map (`>>|`) for sequencing effectful computations. It works with monadic types `'a t`, allowing chaining of operations where each step depends on the result of the previous. Concrete use cases include handling asynchronous I/O, error propagation, and stateful computations in a concise, compositional manner.",
-      "description_length": 386,
-      "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Console.Io",
-      "library": "textutils.console",
-      "description": "This module provides monadic combinators for sequencing I/O actions and terminal capability detection mechanisms. It operates on monadic values within a deferred context, handles output to `out_channel` streams like `stdout`/`stderr`, and checks terminal features through deferred boolean queries. Its utilities are particularly useful for building interactive console applications that adapt behavior based on terminal properties while managing complex I/O workflows compositionally.",
-      "description_length": 484,
+      "module_path": "Ascii_table_kernel.Column.Align",
+      "library": "textutils.ascii_table_kernel",
+      "description": "This module defines alignment options for table columns, supporting left, right, and center alignment. It includes a function to convert alignment values to S-expressions for serialization. Use this module when specifying or serializing column formatting in ASCII table generation.",
+      "description_length": 281,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ascii_table_kernel.Private.Utf8_text_chunks",
+      "library": "textutils.ascii_table_kernel",
+      "description": "Splits UTF-8 encoded text into line chunks not exceeding a specified width, optionally preferring to split at spaces. Works directly with `Core.String.Utf8.t` values and returns a list of UTF-8 chunks. Useful for formatting long text into fixed-width columns when rendering ASCII tables.",
+      "description_length": 287,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Console.Io-Let_syntax-Let_syntax",
-      "library": "textutils.console",
-      "description": "This module implements monadic operations for composing asynchronous or effectful computations. It provides `return`, `bind`, `map`, and `both` to sequence and transform values within a monadic context, enabling clean pipelines of operations. It is used to handle asynchronous I/O or effect tracking where dependencies between actions must be explicitly ordered.",
-      "description_length": 362,
+      "module_path": "Ascii_table_kernel.Column.Show",
+      "library": "textutils.ascii_table_kernel",
+      "description": "This module defines an enumerated type `t` with values `Yes`, `No`, and `If_not_empty`, representing display options for table columns. It includes the function `sexp_of_t` for converting these values to S-expressions. This module is useful for controlling column visibility in ASCII table rendering based on content presence or user preference.",
+      "description_length": 345,
       "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ascii_table_kernel.Column.Of_field",
+      "library": "textutils.ascii_table_kernel",
+      "description": "This module creates columns for ASCII tables from record fields, allowing customization of alignment, width, visibility, and headers. It supports both regular and optional fields, with variants to handle ANSI attributes for styled output. Use it to generate tabular representations of records by mapping each field to a column with specific formatting rules.",
+      "description_length": 358,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ascii_table_kernel.Private",
+      "library": "textutils.ascii_table_kernel",
+      "description": "Splits UTF-8 encoded strings into line chunks up to a given width, preferring splits at spaces. Works with `Core.String.Utf8.t` and returns lists of UTF-8 chunks. Used for wrapping text in fixed-width table columns during ASCII table rendering.",
+      "description_length": 244,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ascii_table_kernel.Column",
+      "library": "textutils.ascii_table_kernel",
+      "description": "This module constructs and manipulates columns for ASCII tables, supporting alignment settings, width constraints, and visibility controls. It works with data types like strings, optional values, and ANSI-styled text elements to format table columns with headers and per-cell styling. Concrete use cases include rendering structured data records as formatted text tables with customizable alignment, conditional display, and multi-line cells.",
+      "description_length": 442,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ascii_table_kernel.Table_char",
+      "library": "textutils.ascii_table_kernel",
+      "description": "Represents characters used to draw ASCII tables, with separate fields for ASCII and UTF-8 encodings. Provides the `connect` function to create border characters for table cells based on specified top, bottom, left, and right connections. Useful for rendering tabular data with customizable borders in terminal output.",
+      "description_length": 317,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ascii_table_kernel.Display",
+      "library": "textutils.ascii_table_kernel",
+      "description": "This module defines display styles for formatting ASCII tables, controlling how table cells and headers are rendered. It provides specific configurations like `short_box`, `tall_box`, `line`, `blank`, and `column_titles` to customize table appearance. Use cases include generating readable tabular output for logs, reports, or command-line interfaces with precise visual formatting.",
+      "description_length": 382,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ascii_table_kernel.Screen",
+      "library": "textutils.ascii_table_kernel",
+      "description": "This module represents a screen buffer for rendering ASCII or Unicode tables with styled text. It provides `render` to output a styled table to a buffer using custom output and closing functions, and `to_string` to convert the table to a string with attribute annotations. It works with `Attr.t` lists for text styling and `Core.Buffer.t` for efficient string building, supporting concrete use cases like terminal table display or formatted text generation.",
+      "description_length": 457,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ascii_table_kernel",
+      "library": "textutils.ascii_table_kernel",
+      "description": "This module builds and renders ASCII tables with customizable display styles, column alignment, and text styling. It works with string data, optional values, and attribute-annotated text to generate formatted tables for terminal output or log files. Concrete use cases include displaying query results in command-line tools, formatting structured data reports, and rendering aligned, styled tabular output with configurable borders and spacing.",
+      "description_length": 444,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Console.Make.Ansi",
+      "library": "textutils.console",
+      "description": "This module provides direct control over ANSI terminal behavior, including cursor movement, screen clearing, and visual alerts. It supports operations like resetting the screen, positioning the cursor, and saving its state. Functions also allow text output with specified attributes, enabling colored or formatted console output.",
+      "description_length": 329,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
@@ -42,148 +106,36 @@
       "library": "textutils.console",
       "description": "This module handles ANSI escape codes for terminal manipulation, providing functions to control cursor movement, screen clearing, and text attributes. It works with output channels and strings, allowing styled text rendering using attribute lists. Concrete use cases include building interactive command-line interfaces, formatting colored output, and managing terminal display behavior during user interaction or logging.",
       "description_length": 422,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Console.S",
-      "library": "textutils.console",
-      "description": "Handles output to the terminal with support for colored text and terminal-aware formatting. Works with strings, lists of styled text elements, and output channels. Useful for rendering command-line interface output, such as directory listings or status reports, with visual enhancements like colors and columns.",
-      "description_length": 311,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Console.S-Ansi",
-      "library": "textutils.console",
-      "description": "This module handles ANSI escape codes for terminal manipulation, providing operations to control cursor movement, screen erasure, and text attributes. It works with output channels, strings, and ANSI attribute lists to format and emit styled text or control terminal behavior. Concrete use cases include clearing lines or screens, positioning the cursor, saving and restoring cursor positions, and printing colored or styled text to the terminal.",
-      "description_length": 446,
-      "index": 6,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Console.Make",
       "library": "textutils.console",
-      "description": "This module manages terminal output formatting and capability detection, combining core utilities for string manipulation and attribute handling with advanced terminal control. It supports operations like determining terminal width, applying color and style attributes to text, and rendering aligned or columnized output. The child module extends this functionality with low-level ANSI commands for cursor movement, screen clearing, and visual effects. Together, they enable tasks such as building interactive command-line interfaces, formatting log output with colors, and creating full-screen terminal applications.",
-      "description_length": 617,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Console.Io-Monad_infix",
-      "library": "textutils.console",
-      "description": "This module defines monadic sequencing operations for handling effectful computations in a console-based environment. It provides the `>>=` operator to chain computations where the output of one determines the next, and `>>|` to apply a pure transformation to the result of a computation. These operations are used to build complex interactions like reading input followed by conditional output, or composing sequences of input/output actions.",
-      "description_length": 443,
-      "index": 8,
-      "embedding_norm": 1.0
+      "description": "This module provides direct control over terminal output, including ANSI attribute manipulation, cursor positioning, and screen management. It works with output channels and attribute-styled string lists, enabling formatted console display. Concrete use cases include rendering colored text, creating terminal-based UI elements, and formatting command-line tool output similar to `ls`.",
+      "description_length": 385,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Console",
       "library": "textutils.console",
-      "description": "This module orchestrates terminal interaction by coordinating output formatting, terminal capability detection, and structured I/O sequencing. It supports styled text rendering with ANSI attributes, columnized layouts, and terminal property queries, while integrating monadic combinators for chaining I/O actions and deferred computations. For example, it can render a colored, aligned list of files, conditionally use wide-format output based on terminal width, or sequence cursor movements with styled prompts. Submodules refine this behavior with low-level ANSI control, monadic composition tools, and deferred I/O handling to build responsive, visually rich command-line interfaces.",
-      "description_length": 686,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ascii_table",
-      "library": "textutils.ascii_table",
-      "description": "This module renders tabular data into ASCII format with customizable layout, spacing, and column alignment. It operates on lists of rows and columns, where each column specifies how to extract and format data from a row. Concrete use cases include displaying query results in a terminal, formatting log data, and generating readable output for command-line tools.",
-      "description_length": 363,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ascii_table_kernel.Column.Align",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module defines alignment options for table columns, supporting left, right, and center alignment. It includes a function to convert alignment values to S-expressions for serialization. Used to specify how cell content should be aligned within a column when rendering ASCII tables.",
-      "description_length": 285,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ascii_table_kernel.Column.Show",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module defines an enumerated type `t` with values `Yes`, `No`, and `If_not_empty`, representing display options for table columns. It includes the function `sexp_of_t` for converting these values to S-expressions. This module is useful for controlling the visibility of table columns when generating output, particularly in contexts like command-line interfaces or log formatting.",
-      "description_length": 385,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ascii_table_kernel.Column.Of_field",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module creates columns for ASCII tables from record fields, supporting optional formatting with alignment, width constraints, and visibility rules. It handles both plain string fields and fields with ANSI attributes, with special treatment for optional fields that default to empty values. Use it to generate tabular representations of record data structures with customizable display properties.",
-      "description_length": 401,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ascii_table_kernel.Private.Utf8_text_chunks",
-      "library": "textutils.ascii_table_kernel",
-      "description": "Splits UTF-8 encoded strings into line chunks not exceeding a specified width, optionally preferring to split at spaces. Works directly with `Core.String.Utf8.t` values. Useful for formatting text output in terminal displays or log viewers where line wrapping is needed.",
-      "description_length": 270,
+      "description": "This module provides terminal output formatting with support for ANSI attributes, cursor positioning, and screen management. It operates on output channels and styled string lists to produce colored and structured console output. Use it to render command-line UI elements, format log output, or generate columnized listings like file listings in a shell.",
+      "description_length": 354,
       "index": 14,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ascii_table_kernel.Display",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module defines display styles for formatting ASCII tables, controlling how cells and headers are rendered. It provides specific configurations like `short_box`, `tall_box`, `line`, `blank`, and `column_titles` to customize table appearance. Use cases include generating readable tabular output for command-line tools or logs with varying levels of visual separation and truncation.",
-      "description_length": 386,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ascii_table_kernel.Column",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module constructs and manipulates table columns with support for alignment, width constraints, and conditional display rules. It provides data types for column content\u2014including plain strings, attributed strings, and multi-line content\u2014along with operations to format, align, and control visibility based on content. The alignment submodule defines left, right, and center options with serialization, while the display submodule offers visibility rules like `Yes`, `No`, and `If_not_empty`. You can build columns from record fields, apply formatting functions, and render structured terminal tables with precise layout control.",
-      "description_length": 632,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ascii_table_kernel.Private",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module handles line wrapping of UTF-8 strings for terminal display, splitting text into chunks that fit within a given width, with optional preference for splitting at spaces. It operates directly on `Core.String.Utf8.t` values, providing precise control over text layout. Example usage includes formatting log output or aligning text in console interfaces where wrapping is required. Key operations allow specifying width limits and space-based split points for cleaner visual breaks.",
-      "description_length": 490,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ascii_table_kernel.Screen",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module represents a screen buffer for rendering tabular data with support for ASCII or Unicode borders. It provides functions to render the table to a buffer with customizable attribute application and string conversion. Use it to generate formatted text tables in terminals or documents with precise control over styling and output encoding.",
-      "description_length": 347,
-      "index": 18,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ascii_table_kernel.Table_char",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module represents characters used to draw ASCII tables, with fields for the ASCII character and its UTF-8 equivalent. It provides the `connect` function to create connection characters for table borders, allowing optional specification of top, bottom, left, and right connections. Use this module to define and construct the visual components of ASCII tables, such as corners and intersections.",
-      "description_length": 399,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ascii_table_kernel",
-      "library": "textutils.ascii_table_kernel",
-      "description": "This module renders structured tabular data into ASCII or Unicode tables, supporting customizable layouts, column formatting, and text wrapping for terminal output. It combines column definitions, display styles, and character sets to control alignment, visibility, and border appearance, with operations to format rows, wrap text, and construct tables with precise visual rules. You can generate tables from lists of records, apply conditional display logic, wrap multi-line content, and render with styles like `short_box` or custom borders. The module handles both layout logic and final rendering, including buffer management and character encoding for terminal-friendly output.",
-      "description_length": 682,
-      "index": 20,
-      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 22,
-    "meaningful_modules": 21,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9545454545454546
+    "total_modules_in_package": 15,
+    "meaningful_modules": 15,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 686,
-    "min_description_length": 270,
-    "avg_description_length": 434.6190476190476,
-    "embedding_file_size_mb": 0.07675933837890625
+    "max_description_length": 457,
+    "min_description_length": 244,
+    "avg_description_length": 361.4,
+    "embedding_file_size_mb": 0.21785354614257812
   }
 }

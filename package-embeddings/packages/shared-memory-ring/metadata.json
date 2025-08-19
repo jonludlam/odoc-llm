@@ -1,325 +1,213 @@
 {
   "package": "shared-memory-ring",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 38,
-  "creation_timestamp": "2025-07-15T23:13:41.196465",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 24,
+  "creation_timestamp": "2025-08-15T12:30:33.480947",
   "modules": [
     {
-      "module_path": "Xenstore_ring.Ring.Back.Writer",
+      "module_path": "Xenstore_ring.Ring.Front.Writer",
       "library": "shared-memory-ring",
-      "description": "This module manages a stream of writable items in a ring buffer, providing precise control over buffer positions. It allows writing data at a specific position and advancing the stream to indicate processing completion. Use it when implementing efficient, position-aware data transmission or logging systems where buffer recycling and exact write positions are critical.",
-      "description_length": 370,
+      "description": "This module manages a stream of writable buffers in shared memory, allowing clients to write data at a specific position. It provides `write` to obtain a buffer at the current position and `advance` to update the stream's position after writing. It works directly with `Cstruct.t` buffers and 32-bit integer positions, commonly used in low-level networking or inter-process communication where precise memory control is required.",
+      "description_length": 429,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Xenstore_ring.Ring.Front.Reader",
       "library": "shared-memory-ring",
-      "description": "This module provides functions to read and advance through a stream of data represented as a `Cstruct.t`, tracking the current position with an `int32`. The `read` function retrieves data at the current position without modifying it, while `advance` updates the stream's position to indicate data has been processed. It is used for consuming data from a ring buffer in a frontend Xenstore implementation, where precise position tracking and buffer recycling are required.",
-      "description_length": 471,
+      "description": "This module provides functions to read and advance through a stream of data represented as a `Cstruct.t`, tracking the current position with an `int32`. The `read` function retrieves data at the current position without modifying the stream state, while `advance` updates the stream to indicate that data up to a given position has been processed. It is used for consuming data from a shared memory ring buffer in a frontend Xenstore implementation, where precise tracking and recycling of processed buffers are required.",
+      "description_length": 521,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Console_ring.Ring.Back.Writer",
+      "module_path": "Xenstore_ring.Ring.Back.Writer",
       "library": "shared-memory-ring",
-      "description": "Handles writing to a ring buffer stream by providing direct access to writable memory regions and managing buffer recycling. Works with `Cstruct.t` streams and 32-bit integer positions to track write locations. Useful for high-performance logging or network data transmission where data must be written incrementally and buffers reused efficiently.",
-      "description_length": 348,
+      "description": "This module manages a stream of writable buffers, allowing data to be written at a specific position without automatically advancing the stream. It works with `Cstruct.t` buffers and 32-bit integer positions, providing precise control over buffer recycling and data placement. It is used in low-level networking or storage code where exact buffer management and position tracking are required.",
+      "description_length": 393,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Xenstore_ring.Ring.Back.Reader",
+      "module_path": "Console_ring.Ring.Back.Writer",
       "library": "shared-memory-ring",
-      "description": "This module provides functions to read and advance through a stream of data represented as a `Cstruct.t`, tracking the current position with an `int32`. It allows reading data at the current position without modifying state, and explicitly advancing the stream to indicate processed data. Use this when implementing protocols that require precise control over data consumption and buffer recycling, such as parsing network packets or handling shared memory communication.",
-      "description_length": 471,
+      "description": "Handles writing data to a ring buffer stream by providing direct access to writable memory regions. It allows writing chunks of data at a specific position without automatically advancing the stream, enabling precise control over buffer updates. Useful for logging systems or network packet assembly where data must be written incrementally at known offsets.",
+      "description_length": 358,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Console_ring.Ring.Front.Writer",
-      "library": "shared-memory-ring",
-      "description": "Handles writing to a circular buffer stream by providing direct access to writable memory regions. It allows writing data into a `Cstruct.t` buffer at a given position and advancing the stream to mark data as processed. Useful for efficiently logging or transmitting sequential binary data in fixed-size buffers without unnecessary copying.",
-      "description_length": 340,
-      "index": 4,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xenstore_ring.Ring.Front.Writer",
-      "library": "shared-memory-ring",
-      "description": "This module manages a stream of writable items in a ring buffer, providing precise control over buffer positions. It allows writing data into a `Cstruct.t` buffer at a specific position and advancing the stream to indicate processed data. Concrete use cases include efficient network packet buffering and inter-process communication where data must be written incrementally and memory buffers reused safely.",
-      "description_length": 407,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Console_ring.Ring.Back.Reader",
       "library": "shared-memory-ring",
-      "description": "Handles reading from a ring buffer stream by providing direct access to the current data chunk and advancing the read position. It works with `Cstruct.t` buffers and 32-bit integer positions to track progress. Useful for consuming data from a ring buffer in a controlled, non-destructive way, where the reader explicitly controls when to advance and reuse buffers.",
-      "description_length": 364,
-      "index": 6,
+      "description": "This module provides a way to read from a ring buffer stream, allowing consumers to access and process data at a specific position without modifying the stream state. It works with `Cstruct.t` buffers and 32-bit integer positions to track read locations. Use this when implementing log readers, network packet processors, or event stream consumers that need to inspect data at a known offset and explicitly signal when it's safe to reuse underlying memory.",
+      "description_length": 456,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Xenstore_ring.Ring.Back.Reader",
+      "library": "shared-memory-ring",
+      "description": "This module provides functions to read and advance through a stream of data represented as a `Cstruct.t`. It allows reading the current data chunk without modifying the stream's position, and explicitly advancing the stream to a given position to signal processed data. This is used for consuming data from a shared memory ring buffer in a Xenstore backend, where precise control over buffer recycling is required.",
+      "description_length": 414,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Console_ring.Ring.Front.Writer",
+      "library": "shared-memory-ring",
+      "description": "Handles writing data to a ring buffer stream by providing direct access to writable memory regions and managing buffer recycling. It works with `Cstruct.t` buffers and 32-bit integer positions to track write locations. Useful for efficiently logging binary data to a circular buffer while ensuring older data can be reused once processed.",
+      "description_length": 338,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Console_ring.Ring.Front.Reader",
       "library": "shared-memory-ring",
-      "description": "This module provides functions to read and advance through a stream of structured data buffers. It works with `Cstruct.t` streams and 32-bit integer positions to track the current read location. Use it to process data incrementally from a ring buffer, reading chunks without modifying the stream state until explicitly advanced.",
-      "description_length": 328,
+      "description": "This module provides a way to read from a circular buffer stream by returning the current data chunk and allowing explicit advancement of the read position. It works with `Cstruct.t` streams and `int32` positions to manage where data has been processed. It is used when consuming data from a ring buffer in a controlled, manual fashion, such as in event processing or network packet handling.",
+      "description_length": 392,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ring.Pipe.Reader",
-      "library": "shared-memory-ring",
-      "description": "Handles reading from a shared memory ring buffer by providing precise control over stream position and data retrieval. It works with `Cstruct.t` for buffer manipulation and `int32` for positions, allowing efficient access to raw data. Useful for consuming data from a ring buffer in Xen domain communication scenarios where explicit buffer recycling is required.",
-      "description_length": 362,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Console_ring.Ring.Back",
-      "library": "shared-memory-ring",
-      "description": "This module provides low-level streaming I/O operations for byte buffers, with `read` and `write` functions that transfer data between `Cstruct.t` streams and raw `bytes` buffers using offset and length parameters. It handles partial transfers gracefully, making it suitable for network communication, file streaming, and device I/O where precise control over byte transfer is required. The first child module enables efficient writing to ring buffers by exposing writable memory regions and managing buffer recycling using 32-bit positions, ideal for high-performance logging and incremental data transmission. The second child module facilitates controlled reading from ring buffers by exposing current data chunks and allowing explicit advancement of read positions, enabling non-destructive consumption of buffered data.",
-      "description_length": 824,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Xenstore_ring.Ring.Front",
-      "library": "shared-memory-ring",
-      "description": "This module implements a ring buffer interface for efficient data transfer between front-end and back-end systems using shared memory. It provides `Reader` and `Writer` submodules to manage access to a shared `Cstruct.t` buffer, enabling communication between domains in a Xen environment through byte-level operations like `read`, `write`, `advance`, and their unsafe variants. The `Reader` tracks read positions with an `int32` to allow precise consumption of data streams, such as processing incoming network packets, while the `Writer` manages incremental writes and buffer reuse, supporting use cases like packet buffering and inter-process communication. Direct API functions handle low-level data transfer, while the submodules provide structured access to reading and writing streams.",
-      "description_length": 792,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Ring.Rpc.Front",
       "library": "shared-memory-ring",
-      "description": "This module manages the front-end interface of a shared ring for inter-domain communication, handling request and response slots as Cstruct.t buffers. It provides operations to retrieve free request slots, send requests, acknowledge responses, and check notification requirements. Concrete use cases include coordinating asynchronous RPCs between Xen domains by managing shared memory ring buffers.",
-      "description_length": 398,
-      "index": 11,
+      "description": "This module manages the front-end interface of a shared ring for inter-domain communication, providing operations to read responses, allocate request slots, and track available space. It works with shared rings containing request and response slots, represented as Cstruct.t buffers, and maintains producer/consumer pointers. Concrete use cases include sending remote procedure calls by writing to request slots, acknowledging received responses, and checking available request capacity to avoid overflow.",
+      "description_length": 505,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ring.Rpc.Back",
       "library": "shared-memory-ring",
-      "description": "This module manages the backend of a shared ring for inter-domain communication, handling request retrieval, response production, and event notification checks. It operates on a shared ring structure with typed slots, allowing access to individual slots, iteration over pending requests, and coordination of response submission. Concrete use cases include processing incoming RPC requests from a remote Xen domain and sending back structured responses via the shared ring.",
-      "description_length": 472,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xenstore_ring.Ring.Back",
-      "library": "shared-memory-ring",
-      "description": "This module implements low-level read and write operations for a ring buffer using `Cstruct.t` and `bytes`, enabling efficient communication between a guest and a backend in virtualized environments. It offers both safe and unsafe functions for data transfer, with return values indicating partial operations, while its child modules provide stream abstractions for precise position control during reading and writing. The first child module manages a writable stream, allowing data to be written at specific positions and advancing the stream to signal processing progress, ideal for position-aware transmission or logging systems. The second child module enables reading from and advancing through a `Cstruct.t` stream with explicit position tracking, suitable for protocol parsing or shared memory handling where exact data consumption control is required.",
-      "description_length": 859,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Console_ring.Ring.Front",
-      "library": "shared-memory-ring",
-      "description": "This module implements a ring buffer interface for stream-based I/O, allowing efficient `read` and `write` operations between a `Cstruct.t` ring buffer and `bytes` data buffers, handling partial transfers and end-of-file conditions. The first child module enables direct writes to contiguous regions of the ring buffer, supporting efficient sequential logging or transmission without extra copies, while the second facilitates structured reading from the buffer stream using 32-bit positions to track progress independently of the buffer state. Together, they enable bidirectional communication over fixed-size buffers, ideal for network sockets or inter-process channels where data must be staged before sending or after receiving. Example usage includes streaming binary protocols with precise control over buffer consumption and production, such as parsing length-prefixed messages or implementing custom serialization formats.",
-      "description_length": 930,
-      "index": 14,
+      "description": "This module manages the backend of a shared ring communication interface, providing direct access to request/response slots, tracking available entries, and handling response production. It works with `Cstruct.t` buffers and ring metadata to facilitate low-level interaction with shared memory rings. Concrete use cases include retrieving specific request slots by index, acknowledging incoming requests, and determining whether to notify the remote domain after pushing responses.",
+      "description_length": 481,
+      "index": 9,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Ring.Pipe.Writer",
       "library": "shared-memory-ring",
-      "description": "Handles writing to a stream of buffer items in a ring buffer, providing `advance` to update the stream position and `write` to obtain a writable buffer at the current position. Works with `Cstruct.t` buffers and 32-bit integer positions. Useful for writing data to shared memory rings in Xen domains, where precise control over buffer positions and recycling is required.",
-      "description_length": 371,
+      "description": "Handles writing data into a stream by providing direct access to writable buffers and managing buffer recycling. Works with `Cstruct.t` streams and 32-bit integer positions to track progress. Useful for efficiently writing network packets or disk data blocks where precise control over memory buffers and stream advancement is required.",
+      "description_length": 336,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Console_ring.Ring.Front",
+      "library": "shared-memory-ring",
+      "description": "This module implements low-level read and write operations for interacting with circular buffers using `Cstruct.t` values. It provides precise control over data transfer through functions like `read`, `write`, and their `unsafe_` variants, enabling efficient handling of binary data streams. Typical applications include manual processing of network packets or event logs where direct memory management is required.",
+      "description_length": 415,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xenstore_ring.Ring.Front",
+      "library": "shared-memory-ring",
+      "description": "This module implements a bidirectional streaming interface for reading from and writing to shared memory buffers in a ring structure, using `Cstruct.t` and `int32` position tracking. It provides `read` and `write` operations that transfer data to and from byte buffers, with safe and unsafe variants for performance-critical paths. It is used in Xenstore frontend drivers to exchange data with the backend over shared memory rings, ensuring correct buffer recycling and synchronization.",
+      "description_length": 486,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ring.Pipe.Reader",
+      "library": "shared-memory-ring",
+      "description": "Handles reading from a shared memory ring buffer by providing direct access to raw data segments and managing the current read position. It works with `Cstruct.t` buffers and 32-bit integer positions to track progress within a fixed-size stream. Useful for consuming network packets or inter-domain messages where data must be processed and acknowledged explicitly after inspection.",
+      "description_length": 382,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Console_ring.Ring.Back",
+      "library": "shared-memory-ring",
+      "description": "This module implements low-level ring buffer stream operations for direct memory manipulation using `Cstruct.t` buffers and 32-bit integer positions. It provides precise read and write capabilities at specific offsets, supporting both safe and unsafe variants for performance-critical scenarios. Concrete use cases include implementing custom log readers, network packet processors, and event stream consumers requiring explicit memory reuse control.",
+      "description_length": 450,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xenstore_ring.Ring.Back",
+      "library": "shared-memory-ring",
+      "description": "This module implements low-level stream manipulation for `Cstruct.t` buffers with explicit position control, using 32-bit integers to track offsets. It provides precise reading and writing operations with both safe and unsafe variants, allowing partial transfers and EOF detection. Designed for use in Xenstore backend implementations where manual buffer management and exact control over shared memory ring buffer recycling are required.",
+      "description_length": 438,
       "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ring.Bidirectional_byte_stream-Back-Reader",
-      "library": "shared-memory-ring",
-      "description": "Handles reading from a bidirectional byte stream in a shared memory ring buffer. It provides `advance` to update the stream's position after processing data and `read` to access the current data chunk without modifying the position. This is used to consume data from a Xen domain communication channel.",
-      "description_length": 302,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ring.STREAM",
-      "library": "shared-memory-ring",
-      "description": "Handles streaming data buffers and position tracking for efficient communication between Xen domains. Provides functions to advance the stream position, indicating processed data boundaries for buffer recycling. Works directly with `Cstruct.t` streams and `int32` positions, enabling precise control over data flow and memory management in inter-domain communication scenarios.",
-      "description_length": 377,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ring.Bidirectional_byte_stream-Front",
-      "library": "shared-memory-ring",
-      "description": "This module implements bidirectional byte stream operations for communicating with Xen domains, providing `read`, `write`, and unsafe variants for direct buffer manipulation. It works with `Cstruct.t` and `bytes` to transfer raw data efficiently. Concrete use cases include low-level networking and inter-domain communication where precise control over byte streams is required.",
-      "description_length": 378,
-      "index": 18,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ring.S",
-      "library": "shared-memory-ring",
-      "description": "Implements low-level ring buffer operations for inter-domain communication in Xen, handling data transfer between Cstruct.t buffers and byte arrays. Provides `read`, `write`, `unsafe_read`, and `unsafe_write` functions to manage stream data with offset and length parameters. Used to efficiently send and receive packets between virtual domains without memory copying in performance-critical paths.",
-      "description_length": 398,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ring.WRITABLE",
-      "library": "shared-memory-ring",
-      "description": "This module manages a stream of writable buffers, allowing clients to write data at a specific position without automatically advancing the stream. It provides `write` to obtain a writable buffer at the current position and `advance` to update the stream's position after data has been processed. It works with `Cstruct.t` for buffers and `int32` for positions, commonly used in low-level networking or inter-domain communication scenarios where precise buffer management is required.",
-      "description_length": 484,
-      "index": 20,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Xenstore_ring.Ring",
       "library": "shared-memory-ring",
-      "description": "This module implements a ring buffer protocol for inter-domain communication using shared memory, providing initialization from a memory buffer and conversion of its state into key-value pairs for debugging. It supports producer-consumer patterns through front and back submodules that manage `Cstruct.t` buffers, enabling byte-level operations like `read`, `write`, and `advance` for handling data streams such as network packets or log entries. The `Reader` submodule tracks consumption with an `int32` position, allowing precise parsing of protocols, while the `Writer` manages incremental writes and buffer reuse for efficient transmission. Safe and unsafe variants of operations allow flexibility in performance-critical contexts like virtualized networking or inter-process communication.",
-      "description_length": 794,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ring.Bidirectional_byte_stream-Back-Writer",
-      "library": "shared-memory-ring",
-      "description": "Handles bidirectional byte stream writing within a ring buffer context, specifically for communication between Xen domains. It provides `advance` to update the stream's position and `write` to insert data at the current position without moving it. This enables efficient, position-controlled data transmission in shared memory environments.",
-      "description_length": 340,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ring.S-Writer",
-      "library": "shared-memory-ring",
-      "description": "Handles writing to a stream of structured data buffers, providing precise control over stream position. Works with `Cstruct.t` buffers and 32-bit integer positions to manage data placement and recycling. Useful for low-level network or inter-domain communication where data must be written incrementally and buffer reuse is critical for performance.",
-      "description_length": 349,
-      "index": 23,
+      "description": "This module implements bidirectional ring buffer operations for shared memory communication using `Cstruct.t` buffers and `int32` position tracking. It provides `read` and `write` functions with safe and unsafe variants, enabling efficient data transfer between frontend and backend components in Xenstore drivers. The `Front` and `Back` submodules handle stream-based I/O with explicit buffer management for synchronization and recycling in virtualization contexts.",
+      "description_length": 466,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ring.Rpc",
       "library": "shared-memory-ring",
-      "description": "This module facilitates inter-domain RPC communication in Xen environments using shared memory rings, coordinating request and response exchange between frontend and backend parties. It operates on `sring` structures backed by `Cstruct.t` buffers, providing core operations for slot management, data transmission, and event notification. The frontend interface allows claiming request slots, sending requests, and acknowledging responses, while the backend interface enables retrieving and processing incoming requests and submitting structured responses. Together, they enable efficient, typed, asynchronous RPC coordination between Xen domains using shared memory.",
-      "description_length": 666,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Console_ring.Ring",
-      "library": "shared-memory-ring",
-      "description": "This module manages circular buffers using `Cstruct.t` for efficient memory handling, supporting initialization and conversion of buffer contents into string pairs for inspection. It enables low-level streaming I/O with `read` and `write` operations between byte buffers and ring structures, handling partial transfers and tracking positions with 32-bit offsets for precise control. The submodules allow direct manipulation of writable regions for high-speed logging and structured consumption of buffered data, supporting non-destructive reads and sequential writes. Example uses include implementing network protocol parsers, streaming data processors, and bidirectional communication channels with strict memory constraints.",
-      "description_length": 727,
-      "index": 25,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ring.RW",
-      "library": "shared-memory-ring",
-      "description": "This module implements bidirectional ring buffer communication between Xen domains, providing direct access to input and output rings via shared memory. It allows reading and writing data through `Cstruct.t` buffers and manipulating consumer and producer indices for flow control. Concrete use cases include inter-domain messaging and device emulation where low-latency, synchronized data transfer is required.",
-      "description_length": 410,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ring.Pipe",
-      "library": "shared-memory-ring",
-      "description": "This module implements low-level streaming operations for transferring data between Xen domains using shared memory ring buffers. It provides `read`, `write`, `unsafe_read`, and `unsafe_write` functions for working with `Cstruct.t` streams and `bytes` buffers, handling partial transfers and end-of-file conditions with precise control over buffer positions using `int32`. The reading submodule enables efficient data consumption by managing stream positions and buffer recycling, while the writing submodule allows controlled data production through buffer allocation and position updates. Examples include reading from or writing to a Xen ring buffer without intermediate copying, enabling efficient inter-domain communication.",
-      "description_length": 729,
-      "index": 27,
+      "description": "This module implements shared ring communication for inter-domain RPC, providing functions to initialize rings from buffers, summarize ring state, and coordinate request/response slots. It operates on `sring` structures backed by `Cstruct.t` buffers, managing producer/consumer pointers to synchronize access. Use cases include allocating request slots for outgoing RPCs, acknowledging responses, and checking available space to prevent overflow in virtualized environments.",
+      "description_length": 474,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ring.Reverse",
       "library": "shared-memory-ring",
-      "description": "This module provides direct access to shared ring buffer input and output regions for communication between Xen domains. It allows reading and updating consumer and producer indices for both input and output rings, as well as retrieving the corresponding Cstruct.t regions. It is used to manage data flow in virtualized environments where precise ring buffer coordination is required.",
-      "description_length": 384,
-      "index": 28,
+      "description": "This module provides direct access to the input and output rings of a shared memory buffer, allowing reading and writing of ring pointers and data regions. It operates on `Cstruct.t` values representing the shared memory buffer, and manipulates ring state via get and set operations on consumer and producer indices. Concrete use cases include managing communication channels between virtual domains by reading from or writing to the appropriate ring buffer regions.",
+      "description_length": 466,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ring.READABLE",
+      "module_path": "Ring.Pipe",
       "library": "shared-memory-ring",
-      "description": "This module handles reading from a stream of structured data by providing `read` to access the current data and `advance` to update the stream position, ensuring buffers can be reused after processing. It operates on `stream` as `Cstruct.t` and `position` as `int32`. Use it when consuming data incrementally from a shared ring buffer, such as processing network packets or inter-domain messages.",
-      "description_length": 396,
-      "index": 29,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ring.Bidirectional_byte_stream-Front-Writer",
-      "library": "shared-memory-ring",
-      "description": "Handles bidirectional byte stream operations for communication between Xen domains. It provides `advance` to update the stream's position and recycle buffers, and `write` to insert data at the current position without moving it. Works directly with `Cstruct.t` streams and `int32` positions, suitable for low-level network or inter-domain data transmission where precise buffer control is required.",
-      "description_length": 398,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ring.Bidirectional_byte_stream-Front-Reader",
-      "library": "shared-memory-ring",
-      "description": "Handles reading from a bidirectional byte stream in a shared memory ring buffer. It provides `advance` to update the stream's position after processing data and `read` to access the current data chunk without modifying the position. This is used to consume data from a Xen domain communication channel incrementally and efficiently.",
-      "description_length": 332,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ring.Bidirectional_byte_stream",
-      "library": "shared-memory-ring",
-      "description": "Handles bidirectional byte streams for communication between Xen domains. Provides functions to initialize a stream buffer, convert it to a debug map, and manage data flow in both directions. Works directly with `Cstruct.t` buffers and produces key-value string pairs for debugging. Useful for low-level network communication and diagnostics in virtualized environments.",
-      "description_length": 370,
-      "index": 32,
+      "description": "This module implements low-level streaming operations for shared memory communication, offering direct buffer manipulation with precise read/write semantics. It works with `Cstruct.t` buffers and 32-bit positions to manage data transfer in fixed-size streams. Concrete use cases include handling network packet I/O and inter-domain message passing where explicit data inspection and acknowledgment are required.",
+      "description_length": 411,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ring.Bidirectional_byte_stream-Back",
+      "module_path": "Console_ring.Ring",
       "library": "shared-memory-ring",
-      "description": "Handles bidirectional byte stream communication with Xen domains using ring buffers. Provides `read`, `write`, `unsafe_read`, and `unsafe_write` operations for transferring data between Cstruct buffers and byte arrays. Designed for low-level inter-domain communication where precise control over data transfer is required.",
-      "description_length": 322,
-      "index": 33,
+      "description": "This module manages circular buffers using `Cstruct.t` values, offering low-level read and write operations with explicit memory control. It provides functions for initializing buffers, converting them to debug representations, and handling data streams with precise offset management. Concrete use cases include implementing network packet buffers, event log processors, and memory-constrained data streaming applications.",
+      "description_length": 423,
+      "index": 20,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ring.S-Reader",
-      "library": "shared-memory-ring",
-      "description": "This module provides operations to read and advance through a stream of data represented as a `Cstruct.t`, tracking the current position with an `int32`. It allows consumers to access data at the current position without modifying state, and explicitly advance the stream to indicate processed data. Useful for parsing network packets or shared memory buffers where controlled, manual advancement is required.",
-      "description_length": 409,
-      "index": 34,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Xenstore_ring",
-      "library": "shared-memory-ring",
-      "description": "This module implements a ring buffer protocol for inter-domain communication using shared memory, supporting producer-consumer patterns through front and back submodules that manage `Cstruct.t` buffers. It provides `read`, `write`, and `advance` operations for byte-level data streams, with a `Reader` tracking consumption via an `int32` position and a `Writer` managing incremental writes and buffer reuse. Safe and unsafe variants enable efficient handling of network packets or log entries in performance-critical contexts like virtualized networking. Examples include parsing incoming data streams at precise offsets or streaming logs with controlled buffer advancement.",
-      "description_length": 674,
-      "index": 35,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Ring",
       "library": "shared-memory-ring",
-      "description": "This module implements shared memory ring buffers for inter-domain communication in Xen, providing low-level operations to read, write, and manage bidirectional byte streams using `Cstruct.t` and `bytes`. It defines stream endpoints with precise control over buffer positions via `int32` indices, supporting both safe and unsafe data manipulation for performance-critical paths. Submodules handle stream reading and writing with explicit `advance` and `read`/`write` operations, enabling efficient data transfer and buffer recycling. Concrete uses include low-level networking, inter-domain RPC coordination, and device emulation where synchronized, zero-copy communication is essential.",
-      "description_length": 687,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module handles shared memory communication between virtual domains using ring buffers. It provides direct manipulation of ring pointers and data regions with operations for initializing rings, managing request/response slots, and streaming data with precise read/write control. Concrete use cases include inter-domain RPC coordination, network packet I/O, and message passing in virtualized environments.",
+      "description_length": 409,
+      "index": 21,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Console_ring",
       "library": "shared-memory-ring",
-      "description": "This module provides circular buffer management using `Cstruct.t` for efficient memory handling, supporting initialization and conversion of buffer contents into string pairs. It enables low-level streaming I/O with `read` and `write` operations between byte buffers and ring structures, handling partial transfers and tracking positions with 32-bit offsets. Submodules allow direct manipulation of writable regions for high-speed logging and structured consumption of buffered data, supporting non-destructive reads and sequential writes. Example uses include network protocol parsers, streaming data processors, and bidirectional communication channels under strict memory constraints.",
-      "description_length": 687,
-      "index": 37,
+      "description": "This module implements circular buffer operations using `Cstruct.t` for efficient memory management, supporting initialization, reading, and writing with explicit offset control. It is designed for handling data streams in fixed-size memory regions, with direct applications in network packet buffering, event log processing, and constrained streaming systems. The module exposes functions to manipulate buffer state and convert buffers to readable debug formats.",
+      "description_length": 463,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xenstore_ring",
+      "library": "shared-memory-ring",
+      "description": "This module implements bidirectional ring buffer operations for shared memory communication using `Cstruct.t` buffers and `int32` position tracking. It provides `read` and `write` functions with safe and unsafe variants, enabling efficient data transfer between frontend and backend components in Xenstore drivers. The `Front` and `Back` submodules handle stream-based I/O with explicit buffer management for synchronization and recycling in virtualization contexts.",
+      "description_length": 466,
+      "index": 23,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 38,
-    "meaningful_modules": 38,
+    "total_modules_in_package": 24,
+    "meaningful_modules": 24,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 930,
-    "min_description_length": 302,
-    "avg_description_length": 492.63157894736844,
-    "embedding_file_size_mb": 0.13847923278808594
+    "max_description_length": 521,
+    "min_description_length": 336,
+    "avg_description_length": 432.1666666666667,
+    "embedding_file_size_mb": 0.3481874465942383
   }
 }

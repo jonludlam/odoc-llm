@@ -1,93 +1,85 @@
 {
   "package": "talaria-bibtex",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 9,
-  "creation_timestamp": "2025-07-15T23:06:56.789478",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 8,
+  "creation_timestamp": "2025-08-14T23:09:53.970457",
   "modules": [
     {
       "module_path": "Bibtex.Fields.StrSet",
       "library": "talaria-bibtex",
-      "description": "This module implements ordered string sets with efficient membership checks, unions, intersections, and ordered traversal, using a comparator-based sorted representation. It provides transformations like mapping, filtering, and sequence conversion, along with bulk operations for set construction and decomposition. These sets are used to manage collections of BibTeX field names while preserving alphabetical order and enabling canonical comparisons during bibliography processing tasks.",
-      "description_length": 488,
+      "description": "This module offers functional set operations for managing ordered collections of strings, including membership checks, union/intersection/difference calculations, and ordered transformations like `map` and `filter`. It works with a concrete ordered string set type, supporting conversions to lists and sequences, and emphasizes ordered traversal with functions like `find_first`, `find_last`, and bidirectional iteration. These capabilities are particularly useful for handling BibTeX fields that require maintaining sorted string collections, such as normalized author lists or categorized entry tags, where set operations must preserve lexical ordering.",
+      "description_length": 655,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bibtex.Field_types.self",
+      "module_path": "Bibtex.Fields.Database",
       "library": "talaria-bibtex",
-      "description": "This module defines data types and variants for representing bibliographic information, including page ranges, author names, publication kinds, and states. It provides structured types like `pages` for handling single or interval page numbers, `name` records for author details, and enumerated types for publication categories and statuses. Concrete use cases include parsing and storing metadata from BibTeX entries, tracking publication status in academic workflows, and structuring citation data for rendering or analysis.",
-      "description_length": 525,
+      "description": "This module implements a persistent key-value store with ordered string keys and generic values, supporting modifications through immutable updates and functional combinators. It provides ordered traversal, filtering, and transformation operations alongside structural queries, enabling efficient merging, range iteration, and bidirectional access. Designed for managing structured bibliographic data, it facilitates tasks like merging citation databases, extracting subsets by field criteria, and ordered serialization for output.",
+      "description_length": 531,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bibtex.Fields.Database",
+      "module_path": "Bibtex.Field_parsers",
       "library": "talaria-bibtex",
-      "description": "This module implements ordered key-value maps for BibTeX field-value pairs, supporting deterministic insertion, deletion, and lookup operations alongside higher-order transformations like `map`, `fold`, and `filter`. It provides ordered traversal mechanisms (e.g., `find_first_opt`, descending iteration) and structural manipulations (splitting, partitioning) while ensuring physical equality optimizations for efficient merging. Use cases include canonicalizing BibTeX entries, computing field dependencies, and generating ordered output for citation processing pipelines.",
-      "description_length": 573,
+      "description": "This module defines parsers for specific BibTeX field formats using a token type that includes words, numbers, and separators. It provides functions to parse tags, file paths, page ranges, and author/editor names from lexing buffers. These parsers are used to extract structured data from BibTeX entries, such as splitting author lists into individual names or interpreting page number ranges.",
+      "description_length": 393,
       "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bibtex.Field_lexers",
+      "library": "talaria-bibtex",
+      "description": "This module provides lexer functions for parsing specific fields in BibTeX entries, such as pages, author names, tags, and file paths. It operates on `Lexing.lexbuf` input and produces tokens consumed by the `Field_parsers` module. Each lexer handles a distinct field type, enabling precise parsing of structured data from BibTeX files.",
+      "description_length": 336,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bibtex.Field_types",
+      "library": "talaria-bibtex",
+      "description": "This module defines core data types and variants for representing bibliographic information, including structured types for names, page ranges, publication kinds, and states. It provides functions to manipulate and deconstruct these types, enabling precise modeling of academic references. Concrete use cases include parsing and validating BibTeX entries, representing author names with first and last name components, and encoding publication metadata with status tracking.",
+      "description_length": 474,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bibtex.Lexer",
       "library": "talaria-bibtex",
-      "description": "This module implements a lexer for parsing BibTeX input, providing functions to convert character streams into lexical tokens. It operates on `Lexing.lexbuf` input buffers and produces tokens consumed by the associated parser. Concrete use cases include reading BibTeX entries from files or strings, enabling further processing like bibliography extraction or formatting.",
-      "description_length": 371,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bibtex.Field_types",
-      "library": "talaria-bibtex",
-      "description": "This module defines core data types for representing bibliographic information, including structured types for author names, publication kinds, and status states. It provides a `pages` type to represent either single locations or intervals, supporting precise modeling of academic publications such as articles, books, and conference talks. Submodules extend this foundation with additional data structures and operations for parsing, storing, and manipulating citation metadata, enabling tasks like workflow tracking and citation rendering. Examples include handling BibTeX entries, managing publication states, and structuring author data with detailed fields.",
-      "description_length": 662,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bibtex.Field_lexers",
-      "library": "talaria-bibtex",
-      "description": "This module defines lexers for parsing specific fields in BibTeX entries, such as pages, author names, tags, and file paths. It processes input using `Lexing.lexbuf` and produces tokens consumed by the `Field_parsers` module. These lexers are used during the parsing of BibTeX files to extract and tokenize individual field values according to their specific syntax rules.",
-      "description_length": 372,
+      "description": "This module processes Bibtex input by tokenizing character streams using a lexbuf. It provides entry points for lexing Bibtex content into structured tokens consumed by a parser. Typical use includes reading and analyzing Bibtex files or strings during bibliography processing.",
+      "description_length": 277,
       "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bibtex.Fields",
       "library": "talaria-bibtex",
-      "description": "This module organizes BibTeX field handling through typed, composable operations, combining structured entry manipulation with ordered data structures for efficient processing. It defines core types like raw entries, typed fields (strings, integers, sets), and validated records, offering transformations, default handling, and integrity checks during parsing and normalization. The integrated set module manages ordered collections of field names with efficient membership and bulk operations, while the map module structures field-value pairs with ordered traversal and deterministic updates. Examples include parsing BibTeX strings into typed entries, validating required fields like author and year, and canonicalizing output by ordering fields or merging duplicates through set and map operations.",
-      "description_length": 802,
+      "description": "This module provides operations for constructing, transforming, and validating structured bibliographic records through type-safe field manipulations. It works with entry types like `entry` and `raw_entry`, leveraging lenses for precise access to typed fields (strings, integers, custom types) and bijections for reversible conversions between representations. Use cases include parsing raw BibTeX data into validated structured entries, maintaining consistent metadata in databases with ordered string sets, and safely updating fields like author lists or page ranges while preserving data integrity.",
+      "description_length": 601,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bibtex.Field_parsers",
-      "library": "talaria-bibtex",
-      "description": "This module parses BibTeX field values into structured data using custom token streams. It processes strings into lists of tags, file paths, page ranges, or author names, handling BibTeX-specific syntax like name lists and page separators. It is used to extract and normalize fields such as author names, journal paths, or page numbers from BibTeX entries.",
-      "description_length": 356,
-      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bibtex",
       "library": "talaria-bibtex",
-      "description": "This module parses BibTeX input into structured bibliographic data using customizable lexers and typed field processors. It supports reading from `Lexing.lexbuf`, transforming raw entries into validated records with typed fields such as strings, integers, and sets, while allowing custom key mappings and schema validation. Core data types represent authors, publication kinds, and page ranges, with submodules handling field-specific lexing and structured parsing of values like tags, file paths, and name lists. Use cases include extracting metadata from BibTeX files, validating required fields, and canonicalizing entries through ordered set and map operations.",
-      "description_length": 665,
-      "index": 8,
+      "description": "This module implements a BibTeX parser with type-safe field manipulation, structured entry validation, and precise data extraction. It operates on `entry` and `raw_entry` types, using lenses and bijections to access and transform fields like author lists, page ranges, and publication metadata. Concrete use cases include parsing BibTeX files into validated entries, maintaining structured bibliographic databases, and safely updating typed fields during reference processing.",
+      "description_length": 476,
+      "index": 7,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 9,
-    "meaningful_modules": 9,
+    "total_modules_in_package": 8,
+    "meaningful_modules": 8,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 802,
-    "min_description_length": 356,
-    "avg_description_length": 534.8888888888889,
-    "embedding_file_size_mb": 0.033172607421875
+    "max_description_length": 655,
+    "min_description_length": 277,
+    "avg_description_length": 467.875,
+    "embedding_file_size_mb": 0.11633586883544922
   }
 }

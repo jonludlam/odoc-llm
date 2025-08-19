@@ -1,73 +1,73 @@
 {
   "package": "dune-configurator",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:05:50.147692",
+  "creation_timestamp": "2025-08-14T23:02:21.904008",
   "modules": [
-    {
-      "module_path": "Configurator.V1.C_define.Value",
-      "library": "dune-configurator",
-      "description": "Handles parsing and representation of configuration values from preprocessor directives. Supports boolean, integer, and string literals extracted during preprocessing. Useful for interpreting `#define` constants in C headers during build-time configuration.",
-      "description_length": 257,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
     {
       "module_path": "Configurator.V1.C_define.Type",
       "library": "dune-configurator",
       "description": "Represents C preprocessor define types with three variants: `Switch` for defined/undefined macros, `Int` for integer values, and `String` for string literals. Used to model configuration options in C header files. Enables precise parsing and manipulation of `#define` directives during build-time configuration checks.",
       "description_length": 318,
-      "index": 1,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Configurator.V1.Pkg_config",
+      "module_path": "Configurator.V1.C_define.Value",
       "library": "dune-configurator",
-      "description": "This module searches for and interacts with `pkg-config` or `pkgconf` executables to query package metadata. It provides functions to retrieve library and compiler flags for specific packages, supporting both simple package names and versioned expressions. The module works with package names and environment variables like `PKG_CONFIG` and `PKG_CONFIG_PATH` to locate and configure packages during build setup.",
-      "description_length": 411,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Configurator.V1.C_define",
-      "library": "dune-configurator",
-      "description": "This module processes C preprocessor definitions by extracting and representing configuration values from header files using custom types and parsing logic. It supports boolean, integer, and string literals from `#define` directives, enabling programmatic management of C macros for build systems or code generation. The module models preprocessor defines with three variants\u2014`Switch`, `Int`, and `String`\u2014allowing precise manipulation and evaluation of configuration options during preprocessing. Users can parse header files, modify define values, and generate new headers with updated constants programmatically.",
-      "description_length": 615,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Configurator.V1.Flags",
-      "library": "dune-configurator",
-      "description": "This module handles string parsing and file writing tasks for configuration files. It provides functions to extract words from strings based on custom or standard separators and write string lists to files in formats compatible with Dune. Use cases include generating include files for build configurations and processing command-line flag lists.",
-      "description_length": 346,
-      "index": 4,
+      "description": "This module represents and manipulates configuration values that can be boolean flags, integers, or strings. It provides operations to construct, inspect, and convert these values, primarily for use in build configuration and feature toggling. Concrete use cases include parsing command-line arguments, enabling/disabling features, and setting numeric or string-based configuration parameters.",
+      "description_length": 393,
+      "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Configurator.V1.Process",
       "library": "dune-configurator",
-      "description": "This module executes external programs, capturing their exit code, standard output, and standard error. It provides functions to run commands with optional working directory and environment variables, and to check success or capture output. Concrete use cases include invoking system tools during configuration, scripting build steps, or interacting with version control systems.",
-      "description_length": 379,
+      "description": "This module executes external programs, capturing their exit code, standard output, and standard error. It provides functions to run commands, check success status, and capture output while logging the execution. It is used for invoking system tools during configuration checks, such as testing compiler flags or detecting library versions.",
+      "description_length": 340,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Configurator.V1.Flags",
+      "library": "dune-configurator",
+      "description": "This module handles string parsing and file output for configuration data used in Dune build files. It provides functions to write string lists to files in formats compatible with Dune's `(:include ...)` and `%{read-lines:...}` syntax, and to split strings into words based on various separator rules. Use cases include generating flag lists for compilation and preprocessing configuration strings into usable file-based inputs.",
+      "description_length": 428,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Configurator.V1.C_define",
+      "library": "dune-configurator",
+      "description": "This module processes C preprocessor definitions for build-time configuration by parsing header files and extracting `#define` values as typed data. It supports operations to import macros as structured values\u2014handling switches, integers, and strings\u2014and generates C header files with configured `#define` statements. It is used to automate feature detection, enable conditional compilation, and generate configuration headers during builds.",
+      "description_length": 441,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Configurator.V1.Pkg_config",
+      "library": "dune-configurator",
+      "description": "This module locates and queries `pkg-config` or `pkgconf` executables to retrieve compilation and linking flags for specific C libraries. It works with package names and version constraints, returning structured data containing `cflags` and `libs` lists. It is used to integrate C libraries into OCaml build configurations by resolving dependencies at compile time.",
+      "description_length": 365,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Configurator.V1",
       "library": "dune-configurator",
-      "description": "This module sets up and manages OCaml project environments by accessing compiler variables, compiling C code, and locating system programs. It works with strings and lists to store configuration values and compilation flags, supporting tasks like checking library availability and scripting build steps. Submodules extend this by handling `pkg-config` queries, parsing C preprocessor definitions into typed values, processing configuration file formats, and running external commands with full output control. For example, you can detect C libraries via `pkg-config`, extract `#define` values from headers, generate Dune-compatible include files, and run system tools during builds.",
-      "description_length": 682,
+      "description": "This module creates and manages configuration contexts for build-time detection of system properties. It supports operations to test C code compilation, locate executables, query `pkg-config`, and parse or generate C preprocessor definitions. Use cases include detecting library versions, enabling conditional compilation, and generating configuration headers for Dune-based builds.",
+      "description_length": 382,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Configurator",
       "library": "dune-configurator",
-      "description": "This module configures OCaml projects by integrating compiler settings, C code compilation, and system tool detection. It uses strings and lists to manage compilation flags and configuration values, enabling tasks like library detection, header parsing, and build scripting. Specific capabilities include querying `pkg-config`, extracting C preprocessor values, generating Dune include files, and executing system commands with controlled output handling. Examples include detecting C libraries, parsing version macros from headers, and invoking external tools during configuration.",
-      "description_length": 582,
+      "description": "This module creates and manages configuration contexts for build-time detection of system properties. It supports operations to test C code compilation, locate executables, query `pkg-config`, and parse or generate C preprocessor definitions. Use cases include detecting library versions, enabling conditional compilation, and generating configuration headers for Dune-based builds.",
+      "description_length": 382,
       "index": 7,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -77,9 +77,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 682,
-    "min_description_length": 257,
-    "avg_description_length": 448.75,
-    "embedding_file_size_mb": 0.02944660186767578
+    "max_description_length": 441,
+    "min_description_length": 318,
+    "avg_description_length": 381.125,
+    "embedding_file_size_mb": 0.10203742980957031
   }
 }

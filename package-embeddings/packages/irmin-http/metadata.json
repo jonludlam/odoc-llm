@@ -1,533 +1,501 @@
 {
   "package": "irmin-http",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 64,
-  "creation_timestamp": "2025-07-15T23:16:42.952247",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 60,
+  "creation_timestamp": "2025-08-15T14:57:03.987930",
   "modules": [
     {
-      "module_path": "Irmin_http.Client.Backend.Commit.Node.Contents.Val",
-      "library": "irmin-http",
-      "description": "This module defines the value type and merge operation for content stored in a node within a commit store. It provides a type `t` representing stored values and a `merge` function that resolves conflicts during merges, handling deletions and missing keys. It is used to manage content values in a version-controlled, distributed key-value store.",
-      "description_length": 345,
+      "module_path": "Irmin_http_unix.Server",
+      "library": "irmin-http.unix",
+      "description": "Implements an HTTP server configuration for serving the contents of a Git repository using Irmin. It provides the `v` function to create a server instance from a repository, with optional strict header checking. Works with Irmin repositories and Cohttp server types, enabling direct access to repository data over HTTP.",
+      "description_length": 319,
       "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http_unix",
+      "library": "irmin-http.unix",
+      "description": "This module implements HTTP client and server functionality for interacting with Git repositories over HTTP. It provides functions for sending standard HTTP requests with custom headers and bodies, and for serving repository contents via a RESTful HTTP interface. Concrete use cases include syncing Irmin repositories with remote storage, exposing versioned data through HTTP APIs, and implementing webhooks for repository events.",
+      "description_length": 430,
+      "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_http.Client.Backend.Commit.Node.Contents.Hash",
       "library": "irmin-http",
-      "description": "This module computes and manages hash values for content in a commit node store. It provides operations to generate deterministic hashes from values, compute shorter hashes for efficient lookup, and access the size of hash outputs. It works directly with content values and hash identifiers, enabling content-based addressing and integrity checks in distributed versioning systems.",
-      "description_length": 381,
-      "index": 1,
-      "embedding_norm": 1.0
+      "description": "This module computes and manages hash values for content stored in the node store, providing deterministic keys for content-addressable storage. It includes functions to generate full hashes from values, compute shorter hashes for use in hashtables, and access the size of hash outputs. Concrete use cases include deduplicating stored content and efficiently indexing content by its cryptographic hash.",
+      "description_length": 402,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_http.Client.Backend.Commit.Node.Contents.Key",
       "library": "irmin-http",
-      "description": "This module represents and manipulates keys for content items stored in a node within a commit. It provides conversion from keys to hashes and defines the structure for referencing specific content entries. Use cases include content addressing and hash-based lookups when interacting with versioned data trees.",
-      "description_length": 310,
-      "index": 2,
+      "description": "This module handles key-to-hash conversion for content addressing in a REST-based Irmin backend. It works with keys and hashes tied to content storage, enabling efficient lookups and references. Use it to map content keys to their cryptographic hashes for version-controlled data operations.",
+      "description_length": 291,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Commit.Node.Contents.Val",
+      "library": "irmin-http",
+      "description": "This module defines the value type and merge operation for content stored within a node of a commit. It provides a type `t` representing stored values and a `merge` function that resolves conflicts during three-way merges, returning `None` to delete a key or a merged value. It is used directly in content-addressed storage systems where values must be combined or compared during version control operations.",
+      "description_length": 408,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_http.Client.Backend.Commit.Node.Val.Metadata",
       "library": "irmin-http",
-      "description": "This module defines the metadata type used in node values and provides a default value, a merge function for combining metadata instances, and a representation type for serialization. It works with the metadata component of node values in a commit store. Concrete use cases include handling custom metadata during node operations and merging conflicting metadata in distributed updates.",
-      "description_length": 386,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Commit.Node.Val",
-      "library": "irmin-http",
-      "description": "This module handles the metadata associated with node values, offering a core type to represent metadata along with operations to merge and serialize it. It includes a default metadata value, a function to combine conflicting metadata, and a representation type for encoding and decoding. Use cases include managing custom metadata during node creation or updates and resolving metadata conflicts in distributed systems. The module works closely with node value operations to ensure metadata consistency and interoperability.",
-      "description_length": 525,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Node.Contents.Key",
-      "library": "irmin-http",
-      "description": "This module defines the key type for the contents store, including serialization and conversion to hash. It provides the `to_hash` function to convert keys into their corresponding hash values. Used to uniquely identify and reference content entries within the node store's contents structure.",
-      "description_length": 293,
+      "description": "This module defines and manages metadata associated with node values in a commit store. It provides operations to represent, merge, and set default metadata values. It works directly with metadata type `t`, used in the context of node value manipulation and version control operations.",
+      "description_length": 285,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_http.Client.Backend.Commit.Node.Hash",
-      "library": "irmin-http",
-      "description": "This module computes and manages hash values for node contents in a commit store. It provides operations to generate deterministic hashes from node values, compute compact hash integers for use in data structures like hashtables, and retrieve the fixed size of hash outputs. Concrete use cases include uniquely identifying node states and enabling efficient hash-based lookups within the commit store.",
-      "description_length": 401,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Node.Contents.Val",
-      "library": "irmin-http",
-      "description": "This module defines the value type and merge operation for content stored in a node store. It provides a type `t` representing content values and a `merge` function that resolves conflicts during merges, returning `None` to delete a key or `Conflict` if merging fails. It is used directly in content addressable storage operations where values must be combined or compared.",
-      "description_length": 373,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Irmin_http.Client.Backend.Commit.Node.Contents",
       "library": "irmin-http",
-      "description": "This module provides a read-only contents store with hash-based indexing, supporting existence checks, value retrieval, and direct access to stored data. It works with content hashes as keys and structured values, enabling efficient lookups and integrity verification in version-controlled systems. The value module defines mergeable content types for conflict resolution, the hash module generates and manages content identifiers, and the key module structures references for hash-based navigation. Example uses include fetching verified content by hash, resolving merge conflicts in distributed stores, and constructing content-addressed trees.",
-      "description_length": 646,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Node.Contents.Hash",
-      "library": "irmin-http",
-      "description": "This module computes and manages hash values for content in a node store. It provides operations to generate deterministic hashes from content values, produce shortened hash integers for efficient lookup, and defines the structure of hash-based keys. Concrete use cases include content-based addressing in a hash table or ensuring data integrity for stored values.",
-      "description_length": 364,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Node.Val.Metadata",
-      "library": "irmin-http",
-      "description": "This module defines and manages metadata associated with node values in a JSON REST/CRUD interface. It includes operations for representing, defaulting, and merging metadata values. It is used to handle per-node metadata in a way that supports versioning and conflict resolution in distributed contexts.",
-      "description_length": 303,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Commit.Node.Key",
-      "library": "irmin-http",
-      "description": "This module handles key-to-hash conversion for nodes in a commit store. It provides the `to_hash` function to map node keys to their corresponding hash values. It works with the `Backend.Commit.Node.key` and `Backend.Commit.Node.hash` types, primarily used when interacting with node data in a REST-based Irmin backend.",
-      "description_length": 319,
-      "index": 11,
+      "description": "This module implements a content-addressable key-value store with read and write permissions, using cryptographic hashes to uniquely identify stored values. It supports operations to check existence (`mem`), retrieve (`find`), insert (`add`, `unsafe_add`), and index content by hash, along with batched writes and merge resolution. Concrete use cases include deduplicating versioned file contents and managing immutable data blobs in a REST-based Irmin backend.",
+      "description_length": 461,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.Backend.Commit.Node.Metadata",
       "library": "irmin-http",
-      "description": "This module defines the metadata type for nodes in a commit store, including its default value and a merge function for combining metadata instances. It works with the `t` type representing node metadata and supports operations necessary for managing and merging metadata during node manipulation. Concrete use cases include handling custom annotations or timestamps associated with nodes in a distributed version control system.",
-      "description_length": 429,
-      "index": 12,
+      "description": "This module defines the metadata type for nodes in a commit store, including its default value and a merge function for combining metadata instances. It works with the `t` type, representing node metadata, and provides essential operations for managing metadata in a version-controlled context. Concrete use cases include tracking and merging changes to node metadata during commit operations in a Git-like repository.",
+      "description_length": 418,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Node.Contents.Val",
+      "library": "irmin-http",
+      "description": "This module defines the value type and merge operation for content stored under nodes in a JSON REST-based Irmin backend. It provides a structured way to handle content values with a merge function that resolves conflicts during version merges, returning `None` to indicate deletion. It is used directly in content-addressed storage scenarios where values must be reconciled across different branches or states.",
+      "description_length": 411,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Node.Contents.Key",
+      "library": "irmin-http",
+      "description": "This module defines the key type for the contents store in a node store, providing conversion to a hash representation. It works with the `Backend.Node.Contents.key` and `hash` types. Used to uniquely identify and hash content entries within the node store.",
+      "description_length": 257,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.Backend.Commit.Node.Path",
       "library": "irmin-http",
-      "description": "This module manipulates node paths in a commit store using operations like `cons`, `rcons`, `decons`, and `rdecons` to build and decompose paths step by step. It works with path and step types, enabling precise traversal and modification of hierarchical node structures. Concrete use cases include constructing relative paths for node updates and extracting components for path-based routing in the REST interface.",
-      "description_length": 414,
+      "description": "This module implements path manipulation operations for node structures, using a list of steps to represent paths. It supports creating paths from step lists, checking emptiness, and modifying paths by adding or removing steps at either end. These operations are used to construct and traverse hierarchical node paths in a commit store.",
+      "description_length": 336,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Node.Contents.Hash",
+      "library": "irmin-http",
+      "description": "This module computes and manages hash values for content in a node store. It provides operations to generate deterministic hashes from values, compute shorter hashes for efficient lookups, and access the size of hash outputs. It works directly with content values and hash identifiers, enabling content-based addressing and integrity checks in storage operations.",
+      "description_length": 363,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Node.Val.Metadata",
+      "library": "irmin-http",
+      "description": "This module defines and manipulates metadata associated with node values in a JSON REST/CRUD interface. It includes operations for representing, defaulting, and merging metadata values. Use cases include handling custom annotations or versioning information during node value operations.",
+      "description_length": 287,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Commit.Node.Hash",
+      "library": "irmin-http",
+      "description": "This module computes and manipulates hash values for node data in a commit store. It provides functions to generate deterministic hashes from node values, produce shortened hash integers, and retrieve the fixed size of hash outputs. These operations support efficient keying and comparison of node structures within the store.",
+      "description_length": 326,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_http.Client.Backend.Branch.Key",
+      "module_path": "Irmin_http.Client.Backend.Commit.Node.Key",
       "library": "irmin-http",
-      "description": "This module defines the key type for branch names and provides validation operations. It includes a function to check if a branch key is valid and a constant for the main branch name. It is used to manage branch identifiers in a JSON REST/CRUD interface for versioned data stores.",
-      "description_length": 280,
+      "description": "This module handles key-to-hash conversion for node identifiers in a commit store. It provides operations to transform keys into their corresponding hash values, ensuring integrity and consistency in node referencing. Useful when resolving node identities during commit traversal or storage operations.",
+      "description_length": 302,
       "index": 14,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_http.Client.Backend.Contents.Hash",
+      "module_path": "Irmin_http.Client.Backend.Commit.Node.Val",
       "library": "irmin-http",
-      "description": "This module computes deterministic store keys from string values and provides utilities for hashing and shortening those keys. It works with string values to generate fixed-size hash digests, along with producing smaller integer hashes suitable for use in OCaml hashtables. It is used when implementing content-based addressing in a store where hash collisions must be minimized and efficient lookups are required.",
-      "description_length": 414,
+      "description": "This module offers operations to construct, traverse, and manipulate hierarchical node values in a paginated key-value store, supporting transformations between lists, sequences, and structured node representations. It works with atomic types like steps, keys, hashes, and metadata, as well as composite node values that map steps to sub-nodes or content. Typical use cases include building versioned directory-like structures, managing content-addressed storage with metadata, and handling incremental updates in a REST-backed commit system.",
+      "description_length": 542,
       "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Commit.Node",
-      "library": "irmin-http",
-      "description": "This module implements a content-addressed node store with typed keys and values, supporting efficient read, write, and batch operations, along with indexed lookups by hash and merging of node states. It works with metadata, hashes, and paths through dedicated submodules that handle conflict resolution, hash computation, and hierarchical navigation, respectively. Main data types include keys, hashes, node values, and metadata, with operations such as `to_hash`, `cons`, `decons`, and merge combinators. You can use it to store versioned tree nodes, resolve merge conflicts using custom metadata, navigate node hierarchies via structured paths, and uniquely identify node contents through deterministic hashing.",
-      "description_length": 714,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Node.Hash",
-      "library": "irmin-http",
-      "description": "This module computes deterministic hashes for node values in a store and provides utilities for working with these hashes. It handles types `t` and `value`, supporting operations like full and short hash computation, and exposes the size of hash outputs. It is used to generate consistent keys from node data and to adapt hashes for use in structures like OCaml's `Hashtbl`.",
-      "description_length": 374,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Commit.Hash",
-      "library": "irmin-http",
-      "description": "This module computes and manipulates commit hashes for a deterministic store key system. It provides operations to generate a hash from a commit value, produce a shortened integer hash, and access the fixed size of hash outputs. Concrete use cases include uniquely identifying commits in a hash table or persistent store using their hash values.",
-      "description_length": 345,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Branch.Val",
-      "library": "irmin-http",
-      "description": "This module defines operations for working with branch values in a JSON REST/CRUD interface. It provides a type `t` representing branch values, a serialization type `t Irmin.Type.t`, and a hashing function `to_hash`. Concrete use cases include serializing branch values for transmission over HTTP and generating unique identifiers for branch state comparisons.",
-      "description_length": 360,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Node.Contents",
-      "library": "irmin-http",
-      "description": "This module implements a content-addressed storage system that uses HTTP-based REST endpoints for reading and writing versioned data objects, such as file contents or serialized structures. It supports key-value operations, hash-based indexing, and atomic batch writes, with built-in hash verification for consistency. The key module handles hash generation and conversion, the value module provides conflict resolution during merges, and the hash module ensures data integrity through deterministic hashing. Example uses include storing versioned files and synchronizing content across distributed nodes using hash-based references.",
-      "description_length": 633,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Node.Key",
-      "library": "irmin-http",
-      "description": "This module defines and manipulates key types used in a node store, providing conversion to hash representations. It works with abstract key and hash types tied to node data structures. Concrete use cases include key serialization and hash-based identification of nodes in a distributed or persistent store.",
-      "description_length": 307,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Contents.Val",
-      "library": "irmin-http",
-      "description": "This module defines the value type and merge operation for a contents store in a JSON-based REST backend. It supports reading, writing, and merging values with conflict resolution, handling deletions by returning `None`. It is used to manage versioned key-value data over HTTP, where values may be absent (`None`) to indicate non-existence or deletion.",
-      "description_length": 352,
-      "index": 22,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.Tree.Private.Env",
       "library": "irmin-http",
-      "description": "This module defines an environment type `t` for working with tree structures in the Irmin HTTP client, specifically handling tree node operations over a JSON REST/CRUD interface. It includes functions to check if a tree environment is empty and to serialize or deserialize tree environments using `Irmin.Type.t`. It is used internally to manage tree state during interactions with remote Irmin stores via HTTP.",
-      "description_length": 410,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
+      "description": "Handles environment configuration for tree operations in a JSON REST/CRUD interface. It works with the `t` type to provide checks like emptiness, enabling conditional logic based on tree state. Used internally to manage tree environments during remote store interactions.",
+      "description_length": 271,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Commit.Val",
+      "library": "irmin-http",
+      "description": "This module defines and manipulates commit values, including their creation with associated node keys, parent commit keys, and metadata. It provides accessors to retrieve the node key, parent keys, and metadata from a commit value. Useful for constructing and inspecting commit objects in a JSON-based REST interface for versioned data stores.",
+      "description_length": 343,
+      "index": 17,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.Backend.Commit.Key",
       "library": "irmin-http",
-      "description": "This module defines the key type for commit identifiers in a JSON-based REST backend. It provides operations to convert commit keys to hashes and includes typed representations for working with commit data. It is used to manage and reference commit objects in a remote Irmin store via HTTP.",
-      "description_length": 290,
-      "index": 24,
-      "embedding_norm": 1.0
+      "description": "This module defines the key type for commit identifiers in a JSON REST/CRUD interface. It provides operations to convert commit keys to their corresponding hash values. It is used to uniquely reference and retrieve commit data in a remote Irmin store via HTTP.",
+      "description_length": 260,
+      "index": 18,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_http.Client.Backend.Contents.Key",
+      "module_path": "Irmin_http.Client.Backend.Node.Hash",
       "library": "irmin-http",
-      "description": "This module defines the key type for a contents store, including operations to convert keys to hashes. It works with content keys and hash types, enabling direct mapping between content identifiers and their cryptographic hashes. Use it to manage key-hash relationships in content-addressed storage systems.",
-      "description_length": 307,
-      "index": 25,
+      "description": "This module computes deterministic hashes for node values in a store and provides utilities to generate and handle hash representations. It works with `t` as the hash type and `value` as the node type, supporting operations like full hash computation, short hash derivation, and hash size retrieval. Concrete use cases include generating unique identifiers for nodes and producing compact hash values for efficient in-memory lookups via structures like `Hashtbl`.",
+      "description_length": 463,
+      "index": 19,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Node.Key",
+      "library": "irmin-http",
+      "description": "This module defines key types and conversion functions for node identifiers in a JSON-based REST backend. It provides operations to convert keys to hashes and specifies the structure of node keys used in the node store. Concrete use cases include managing node identifiers during CRUD operations over HTTP.",
+      "description_length": 306,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.Backend.Node.Val",
       "library": "irmin-http",
-      "description": "This module handles structured data serialization, metadata management, and hash computation for version-controlled key-value stores. It provides core operations like `add`, `find`, and `hash_exn` on node values, which include metadata, keys, and hashes, supporting efficient pagination and cache-aware manipulation. The metadata submodule enables representation, merging, and versioning of per-node metadata, crucial for conflict resolution in CRDTs and distributed state synchronization. Use cases include building versioned hierarchies in REST APIs and implementing distributed consensus mechanisms.",
-      "description_length": 602,
-      "index": 26,
+      "description": "This module supports operations to construct, inspect, and serialize node values in version-controlled storage systems, focusing on structured data transformations and pagination. It works with hash-based data structures, exposing types for keys, metadata, and step-value sequences to model hierarchical node relationships. These capabilities enable building RESTful HTTP interfaces for Irmin backends, handling merge operations, and optimizing distributed storage workflows with caching and efficient binary serialization.",
+      "description_length": 523,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Branch.Key",
+      "library": "irmin-http",
+      "description": "This module defines operations for working with branch keys, including validation and accessing the main branch. It provides the type `t` for branch keys, a type representation for serialization, and a function to check key validity. Use cases include ensuring branch names conform to expected formats and referencing the primary branch in a repository.",
+      "description_length": 353,
+      "index": 22,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_http.Client.Backend.Commit.Val",
+      "module_path": "Irmin_http.Client.Backend.Branch.Val",
       "library": "irmin-http",
-      "description": "This module defines and manipulates commit values, including their creation with associated node keys, parent commit keys, and metadata. It provides direct access to the node, parents, and info of a commit, using types tied to the backend's key representations. Concrete use cases include constructing and inspecting commits for storage or transmission over a network via JSON serialization.",
+      "description": "This module defines operations for working with branch values in a JSON REST/CRUD interface. It includes types and functions for converting branch values to hashes and handling their serialization via Irmin's type system. Concrete use cases include managing branch state over HTTP and ensuring consistent value hashing for version tracking.",
+      "description_length": 340,
+      "index": 23,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Contents.Hash",
+      "library": "irmin-http",
+      "description": "This module computes deterministic hashes from string values and provides utilities for working with hash sizes and shortened versions. It operates on `t` and `value` types, which represent hashed keys and their input data. Use it to generate fixed-size identifiers for content-addressed storage or create compact hashes for efficient lookups in hashtables.",
+      "description_length": 357,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Contents.Val",
+      "library": "irmin-http",
+      "description": "Handles content values in a JSON-based key-value store, providing a merge function for resolving conflicts during data synchronization. Works with optional `Backend.Contents.value` types to represent stored data. Useful for merging divergent content states in a distributed system using JSON over HTTP.",
+      "description_length": 302,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Commit.Hash",
+      "library": "irmin-http",
+      "description": "This module computes and manipulates commit hashes for a JSON-based REST/CRUD interface. It provides functions to generate deterministic hashes from commit values, produce shortened integer hashes for use with hash tables, and defines the size of hash outputs in bytes. Concrete use cases include uniquely identifying commits and optimizing hash-based data structures in client-side storage.",
       "description_length": 391,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Contents.Key",
+      "library": "irmin-http",
+      "description": "This module defines the key type for addressing content in a JSON-based REST contents store. It includes operations to convert keys to hashes and provides typed keys for structured access. Use it to uniquely identify and retrieve content elements via HTTP in a type-safe manner.",
+      "description_length": 278,
       "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Node.Contents",
+      "library": "irmin-http",
+      "description": "This module implements a content-addressed key-value store with read and write operations tied to content hashes. It supports checking existence (`mem`), retrieving values (`find`), adding new content (`add`, `unsafe_add`), and batched writes, all centered around content-based addressing via hashes. It is used to store and retrieve immutable content in a version-controlled node structure, where values are uniquely identified by their cryptographic hash.",
+      "description_length": 457,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Commit.Node",
+      "library": "irmin-http",
+      "description": "This module implements a content-addressed node store with read and write operations keyed by hash-derived identifiers. It supports existence checks, value retrieval, hash-controlled writes, and batched updates, working with hierarchical node structures that include metadata and content. Concrete use cases include storing and retrieving versioned directory trees, handling node merges during commits, and managing structured data in a REST-accessible Irmin backend.",
+      "description_length": 467,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Tree.Proof",
+      "library": "irmin-http",
+      "description": "This module handles tree proofs in a Merkle-like structure, enabling compact representations of tree states for efficient peer-to-peer sharing. It defines types and serializers for proof elements, trees, and streams, supporting operations to construct, validate, and convert proofs between different representations. Concrete use cases include verifying tree state transitions without full tree traversal and securely exchanging proof data between distributed nodes.",
+      "description_length": 466,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Tree.Contents",
+      "library": "irmin-http",
+      "description": "This module provides operations to manipulate and query lazy-loaded contents in a tree structure, specifically handling tasks like forcing evaluation, retrieving keys and hashes, and managing caching. It works with `Tree.Contents.t`, an abstract type representing lazy content values, and interacts with underlying storage to fetch or compute values on demand. Concrete use cases include efficiently accessing and managing content hashes and keys, controlling memory usage via caching, and ensuring content is present in the repository when needed.",
+      "description_length": 548,
+      "index": 31,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Client.Tree.Private",
+      "library": "irmin-http",
+      "description": "This module provides functions to manipulate and query tree environments in a JSON REST/CRUD setup. It works with the `t` type and the `Env` submodule to perform checks such as emptiness, supporting conditional logic based on tree state. It is used internally to manage environment configurations during tree operations in remote store interactions.",
+      "description_length": 349,
+      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.Backend.Remote",
       "library": "irmin-http",
-      "description": "Implements low-level remote synchronization for Irmin stores over HTTP, providing `fetch` and `push` operations to transfer data between local and remote repositories. It works with commit and branch keys, interacting with a remote endpoint to synchronize store contents. Useful for syncing distributed Irmin databases via REST APIs, such as in collaborative editing or decentralized data systems.",
-      "description_length": 397,
-      "index": 28,
+      "description": "Implements remote store synchronization over HTTP with push and fetch operations. Works with commit, branch, and endpoint types tied to a backend repository. Enables syncing local and remote Irmin stores via URIs, handling branch heads and detached states during push.",
+      "description_length": 268,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Repo",
+      "library": "irmin-http",
+      "description": "This module manages repository handles for remote stores, providing functions to create, close, and access typed stores for contents, nodes, commits, and branches. It works with configuration data, repository resources, and permission-scoped store types. Concrete use cases include initializing a remote store with a backend configuration, accessing read-only or read-write store instances for versioned data, and performing batch operations across multiple store types.",
+      "description_length": 470,
+      "index": 34,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_http.Client.Backend.Branch",
       "library": "irmin-http",
-      "description": "This module provides a branch store with atomic write capabilities over HTTP, enabling clients to manage branch keys and associated commit values. It supports operations like membership checks, value retrieval, atomic updates, conditional writes, and key removal, along with watch mechanisms to track changes to branches. The key type for branch names includes validation functions and a constant for the main branch, while the value module handles serialization, hashing, and transport of branch state. Use cases include synchronizing distributed clients with remote Irmin repositories and implementing versioned data stores with HTTP-based CRDTs.",
-      "description_length": 648,
-      "index": 29,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.Client.Tree.Proof",
-      "library": "irmin-http",
-      "description": "This module implements tree proofs for verifying computations on Irmin stores without full access to remote storage. It provides types and functions to construct and validate proofs that capture the minimal necessary data to replay operations on a tree, ensuring the resulting state matches expected hashes. Concrete use cases include securely sharing verifiable computation results between peers in distributed systems, such as confirming state transitions in a decentralized ledger or validating partial updates in a version-controlled dataset.",
-      "description_length": 546,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Commit",
-      "library": "irmin-http",
-      "description": "This module provides a content-addressed commit store with typed keys and values, supporting read, write, and merge operations for versioned commit data. It uses hash-based indexing to enable efficient lookups, deterministic hashing via a dedicated hash module, and structured key representations for REST-based backends. You can store and retrieve commits by hash, construct commits from node and parent keys with metadata, and manage commit graphs using merge combinators. The module integrates with node and hash submodules to support conflict resolution, hierarchical navigation, and JSON serialization for network transmission.",
-      "description_length": 632,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.History.E",
-      "library": "irmin-http",
-      "description": "This module represents directed edges in a version-controlled graph, where each edge connects two vertices (commits) and carries a label. It defines operations to create edges, retrieve source and destination vertices, and access edge labels. Concrete use cases include tracking parent-child relationships between commits and annotating edges with metadata such as branch names or timestamps.",
-      "description_length": 392,
-      "index": 32,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Irmin_http.Client.Tree.Private",
-      "library": "irmin-http",
-      "description": "This module manages private environment data for tree nodes in a remote Irmin store, integrating directly with the `tree` type and the `Env` submodule. The core operations allow reading, writing, and inspecting environment metadata during remote tree manipulations, such as tracking internal state or custom annotations. The `Env` submodule defines the environment type `t` and provides utilities like checking emptiness and serializing environments using `Irmin.Type.t`, particularly over HTTP JSON interfaces. Together, they enable precise control and persistence of tree node metadata in distributed Irmin setups.",
-      "description_length": 616,
-      "index": 33,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Node",
-      "library": "irmin-http",
-      "description": "This module implements a content-addressed node store with REST-based persistence, supporting key-value operations, hash indexing, and versioned data storage. It provides direct access to node values through operations like `mem`, `find`, `add`, and `index`, while submodules handle hash computation, key conversion, metadata management, and conflict resolution. You can store versioned files, serialize node data with hash-based keys, and synchronize distributed nodes using hash references. The module enables efficient retrieval, atomic batch writes, and deterministic hashing for data integrity and version control.",
-      "description_length": 619,
-      "index": 34,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Contents",
-      "library": "irmin-http",
-      "description": "This module implements a contents store with typed keys and values, supporting hash-based addressing, membership checks, indexed lookups, and batched writes. It includes a submodule for deterministic key hashing and shortening, a submodule for managing JSON-backed values with merge operations over HTTP, and a submodule for defining key-to-hash conversions. Together, these enable versioned content storage with integrity checks, efficient lookups, and conflict-resolved updates\u2014ideal for distributed systems handling immutable data blobs or versioned files. Example use cases include storing hash-addressed file contents with collision-resistant keys and managing REST-based key-value data with safe deletions and merges.",
-      "description_length": 723,
+      "description": "This module implements a branch store with atomic write capabilities over HTTP, allowing clients to perform atomic read, update, and removal operations on branch keys. It works with branch keys (`Schema.Branch.t`) and maps them to commit keys, supporting operations like conditional updates (`test_and_set`), listing branches, and watching for changes on specific branches or keys. Concrete use cases include synchronizing distributed Irmin repositories over HTTP and managing concurrent access to branch heads in a client-server setup.",
+      "description_length": 536,
       "index": 35,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Repo",
-      "library": "irmin-http",
-      "description": "This module manages repository handles for remote stores, providing functions to access typed stores for contents, nodes, and commits, both in read-only and read-write modes. It works with repository configurations and branch stores, enabling concrete operations like fetching configured stores, performing batch updates, and retrieving versioned data types. Use cases include initializing remote repositories, executing atomic batch operations, and managing branch-specific data.",
-      "description_length": 480,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.Client.Tree.Contents",
-      "library": "irmin-http",
-      "description": "This module provides operations to manipulate and inspect lazy contents in a tree, including forcing evaluation, hashing, and key retrieval. It works with `Tree.Contents.t`, representing lazy content values, and interacts with `contents` and `hash` types. Use cases include efficiently accessing and identifying content values in a remote Irmin store via HTTP, with control over caching behavior.",
-      "description_length": 396,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend.Slice",
-      "library": "irmin-http",
-      "description": "This module implements a slice abstraction for managing collections of versioned data values, including contents, nodes, and commits, using Irmin's typed and version-controlled structures. It provides operations to create empty slices, add individual values, and iterate over all stored values asynchronously. Concrete use cases include building and manipulating partial snapshots of repository data for efficient transfer or processing in a RESTful context.",
-      "description_length": 458,
-      "index": 38,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.History.V",
       "library": "irmin-http",
-      "description": "This module defines operations for managing vertices in a directed acyclic graph (DAG) representing commit history. It supports creating, labeling, and comparing vertices, with hashing and equality checks based on vertex identity. Concrete use cases include tracking commit nodes in a version-controlled system where each vertex corresponds to a specific commit.",
-      "description_length": 362,
+      "description": "This module defines operations for managing vertices in a directed acyclic graph (DAG) representing version history. It supports creating, labeling, and comparing vertices, with `t` representing commit vertices and `label` capturing metadata associated with each vertex. It is used to track and manipulate commit nodes in a persistent, versioned data structure.",
+      "description_length": 361,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Commit",
+      "library": "irmin-http",
+      "description": "This module implements a read-write commit store with operations to check existence, retrieve, and add commit values using keys derived from hashes. It supports commit management tasks like indexing hashes to keys, performing batched writes, and merging commits with provided metadata. Concrete use cases include storing versioned commit data over HTTP, resolving commit dependencies, and synchronizing distributed Irmin repositories through REST endpoints.",
+      "description_length": 457,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend.Contents",
+      "library": "irmin-http",
+      "description": "This module implements a content-addressed key-value store with support for reading, writing, and indexing values via HTTP. It works with typed keys and JSON-encoded content values, using hashes to uniquely identify stored elements. It is used to manage content storage in a distributed system where values are synchronized across nodes using hash-based addressing and merge operations.",
+      "description_length": 386,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.History.E",
+      "library": "irmin-http",
+      "description": "This module represents directed edges in a version-controlled graph, where each edge connects two vertices (commits) and carries a label. It provides operations to create edges between vertices, retrieve their source and destination vertices, and access their labels. Concrete use cases include tracking parent-child relationships between Git commits and annotating edges with metadata like commit timestamps or author information.",
+      "description_length": 431,
       "index": 39,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_http.Client.Commit",
+      "module_path": "Irmin_http.Client.Backend.Slice",
       "library": "irmin-http",
-      "description": "This module manages immutable commit objects in a repository, supporting creation with specified parents and root trees, and provides access to commit properties like hash, tree, parents, and associated info. It works with commit keys, hashes, and trees to track and retrieve commit data. Concrete use cases include constructing new commits with metadata, resolving commits by key or hash, and inspecting commit ancestry and content.",
-      "description_length": 433,
+      "description": "This module implements a slice abstraction for managing collections of versioned data values, including contents, nodes, and commits, using Lwt for asynchronous operations. It provides functions to create empty slices, add individual values, and iterate over all values in a slice. It is used to handle structured data transfer in a RESTful context, where slices represent serialized Irmin store elements.",
+      "description_length": 405,
       "index": 40,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irmin_http.Client.Info",
+      "module_path": "Irmin_http.Client.Backend.Node",
       "library": "irmin-http",
-      "description": "This module defines commit metadata with fields for author, message, and timestamp. It provides constructors to create commit info values, accessors to retrieve individual fields, and a function to generate empty commit info. Useful for managing commit history in a JSON-based Irmin HTTP API client.",
-      "description_length": 299,
+      "description": "This module implements a node store with read and write operations tied to content-based addressing via hashes. It provides functions to check existence (`mem`), retrieve values (`find`), write new content (`add`, `unsafe_add`), and perform batched writes, all centered around keys derived from node hashes. Concrete use cases include storing and retrieving versioned node data over HTTP, supporting merge operations and content-addressed storage workflows.",
+      "description_length": 457,
       "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Head",
-      "library": "irmin-http",
-      "description": "This module manages the heads of a store, providing operations to list all heads, retrieve or update the current head, perform conditional updates, and merge commits. It works with commit objects and handles both persistent and temporary branches. Concrete use cases include resetting a store to a specific commit, safely updating heads with test-and-set, and merging commits while resolving conflicts.",
-      "description_length": 402,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Repo",
-      "library": "irmin-http",
-      "description": "This module manages remote repositories over HTTP, providing operations to connect to a repository, list branches and commit heads, and close the connection. It supports data types like `repo`, `commit`, `branch`, and `slice`, with functions to export and import repository slices. Concrete use cases include synchronizing distributed Irmin stores, backing up repository state, and initializing new repositories from exported data.",
-      "description_length": 431,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Backend",
-      "library": "irmin-http",
-      "description": "This module provides a comprehensive backend for distributed version control using content-addressed storage and HTTP-based synchronization. It supports typed key-value stores for commits, nodes, and contents, with operations for atomic writes, hash-based indexing, merge resolution, and remote replication through `fetch` and `push`. You can manage versioned data with integrity checks, synchronize distributed repositories via REST, and handle branching with conditional updates and change tracking. Example workflows include syncing collaborative document trees, transferring versioned file contents, and implementing CRDTs over HTTP with Irmin.",
-      "description_length": 648,
-      "index": 44,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.Client.Tree",
-      "library": "irmin-http",
-      "description": "This module orchestrates tree management in Irmin stores by integrating core operations with specialized submodules for proofs, environment metadata, and lazy content handling. It centers around the `tree` type, supporting state verification through compact proofs, annotating nodes with environment data via the `Env` submodule, and managing deferred content evaluation with `Contents`. Users can confirm distributed state transitions, track custom metadata during tree updates, or retrieve and hash content values over HTTP. The combination of direct tree manipulation and structured access to proofs, environments, and lazy values enables precise, secure, and efficient remote tree operations.",
-      "description_length": 696,
-      "index": 45,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Path",
-      "library": "irmin-http",
-      "description": "This module manipulates path structures used to identify values in a store, supporting operations like construction, deconstruction, and transformation of paths. It works with path and step types, where a path is a list of steps, and each step represents a component of the path. Concrete use cases include building and traversing hierarchical keys for data stored in a version-controlled, JSON-based REST interface.",
-      "description_length": 416,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Conf.Key",
-      "library": "irmin-http",
-      "description": "Manages configuration keys for HTTP endpoints, including URI settings. Works with `Uri.t` values and configuration objects. Used to set and retrieve endpoint addresses in REST/CRUD interfaces.",
-      "description_length": 192,
-      "index": 47,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.Contents",
       "library": "irmin-http",
-      "description": "This module handles content storage and retrieval operations for a repository, providing functions to merge content values, compute hashes, and fetch content by key or hash. It works with content objects, hashes, and repository structures. Concrete use cases include resolving content conflicts during merges, indexing content by hash, and retrieving stored content for inspection or reconstruction.",
-      "description_length": 399,
-      "index": 48,
+      "description": "This module handles content retrieval and merging for a key-value store using hashes. It supports operations to fetch content by key or hash, and provides a merge function for resolving conflicts during updates. Use cases include synchronizing distributed content stores and managing versioned data with conflict resolution.",
+      "description_length": 324,
+      "index": 42,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.Hash",
-      "library": "irmin-http",
-      "description": "This module computes and manipulates fixed-size cryptographic hashes, primarily used for generating deterministic keys in a store. It provides functions to convert hashes to and from raw byte strings, compute short hashes for use in OCaml hashtables, and calculate hashes from sequences of strings. Concrete use cases include generating unique identifiers for stored objects and efficiently comparing hash values using their raw byte representations.",
-      "description_length": 450,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Client.History",
-      "library": "irmin-http",
-      "description": "This module manages directed acyclic graphs (DAGs) representing version control histories, enabling functional traversal and manipulation through operations like adding or removing edges and inspecting graph structure. It builds on vertices and edges defined in its submodules, where vertices represent commits with identity-based equality and edges encode parent-child relationships with labels such as branch names or timestamps. You can use it to analyze ancestry, manage dependencies, or track changes across a graph of commits. Specific operations include traversing predecessors and successors, annotating edges with metadata, and comparing or hashing commits based on their unique identity.",
-      "description_length": 697,
-      "index": 50,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Irmin_http.Client.Branch",
       "library": "irmin-http",
-      "description": "This module provides operations to manage branches in a repository, including checking existence, retrieving or setting commit bindings, listing branches, and watching for changes. It works with branch names and commit values, supporting both individual branch monitoring and global branch events. Concrete use cases include tracking active development lines, managing commit history associations, and synchronizing external systems with branch updates.",
-      "description_length": 453,
-      "index": 51,
-      "embedding_norm": 1.0
+      "description": "This module provides operations to manage branches in a repository, including checking existence, retrieving or setting commit associations, listing branches, and watching for changes. It works with branch names and commit identifiers, supporting both individual branch monitoring and global branch event handling. Concrete use cases include tracking active development lines, managing branch-specific commit histories, and synchronizing external systems with branch updates.",
+      "description_length": 475,
+      "index": 43,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Irmin_http.Client.Status",
+      "module_path": "Irmin_http.Client.Commit",
       "library": "irmin-http",
-      "description": "This module defines and serializes status values for a JSON REST/CRUD interface, supporting operations to represent and format store states as `Empty`, `Branch`, or `Commit`. It works with repository status types and provides a type definition, a serializer for communication over HTTP, and a pretty-printer for human-readable output. Concrete use cases include reporting the current state of a repository in HTTP responses and logging.",
-      "description_length": 436,
-      "index": 52,
+      "description": "This module manages immutable commit objects in a repository, providing operations to create commits with associated metadata, parent commits, and root trees. It supports querying commit properties such as hash, tree, parents, and info, and allows resolving commits from keys or hashes. Concrete use cases include building and inspecting versioned data structures in a distributed store, and tracking changes with cryptographic hashes for integrity.",
+      "description_length": 449,
+      "index": 44,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Client.Metadata",
       "library": "irmin-http",
-      "description": "This module defines the metadata type used to store and manage node metadata, such as timestamps or user-defined annotations. It includes functions to retrieve a default metadata value and merge conflicting metadata instances. It is used when manipulating node metadata through the Irmin HTTP interface, ensuring consistency during concurrent updates.",
-      "description_length": 351,
+      "description": "This module defines the metadata type used for nodes in the JSON REST/CRUD interface and provides its default value and merge function. It includes operations to represent, initialize, and combine metadata values during store synchronization. Concrete use cases include handling node metadata in a distributed Irmin store over HTTP.",
+      "description_length": 332,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Backend",
+      "library": "irmin-http",
+      "description": "This module provides backend implementations for HTTP-based Irmin stores, enabling content-addressed storage, versioned data management, and distributed synchronization. It works with keys derived from hashes, JSON-encoded values, and typed stores for contents, nodes, commits, and branches. Concrete use cases include building RESTful interfaces for Irmin repositories, handling merge operations over HTTP, and managing remote version-controlled datasets with atomic branch updates and content synchronization.",
+      "description_length": 511,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Tree",
+      "library": "irmin-http",
+      "description": "This module enables manipulation of immutable, in-memory tree structures representing remote Irmin store contents via HTTP, supporting operations like construction, diffing, lazy loading, and cryptographic proof handling. It operates on `tree` and `Tree.Contents.t` types with auxiliary support for repository keys, hashes, and proof types, offering path-based traversal, mutation, and cache management. Use cases include versioned data synchronization, partial store replication, and verifiable distributed systems requiring efficient tree differencing and cryptographic audit trails.",
+      "description_length": 585,
+      "index": 47,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Client.Path",
+      "library": "irmin-http",
+      "description": "This module manipulates path values used in the JSON REST/CRUD interface, offering operations to construct, inspect, and transform paths through functions like `v`, `cons`, `rcons`, `decons`, and `map`. It works with two core types: `t` representing a full path and `step` representing an individual component of a path. Concrete use cases include building hierarchical keys for store operations, traversing paths in a tree-like structure, and converting path components to and from serialized formats using the provided `t` and `step_t` value types.",
+      "description_length": 550,
+      "index": 48,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Client.Status",
+      "library": "irmin-http",
+      "description": "This module defines and serializes status values for a JSON REST/CRUD interface, supporting three states: empty, branch, and commit. It works with custom variant types representing repository statuses and provides a type definition and pretty-printing function for those values. It is used to communicate the current state of a repository in HTTP responses.",
+      "description_length": 357,
+      "index": 49,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Conf.Key",
+      "library": "irmin-http",
+      "description": "Manages configuration keys for HTTP endpoints, including URI settings. Works with `Uri.t` and Irmin's configuration system. Used to set and retrieve HTTP server addresses in Irmin stores.",
+      "description_length": 187,
+      "index": 50,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Info",
+      "library": "irmin-http",
+      "description": "This module defines commit metadata with functions to create and access author, message, and date fields. It works with commit info records containing an optional author string, optional message string, and a 64-bit integer date. Concrete use cases include constructing commit metadata for version tracking and extracting author or message details from existing commits.",
+      "description_length": 370,
+      "index": 51,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Head",
+      "library": "irmin-http",
+      "description": "This module manages the heads of a version-controlled store, providing operations to list all heads, retrieve or update the current head, and perform safe or forced updates. It works with commit objects and branch references, supporting actions like resetting to a specific commit, fast-forwarding only if the target is a descendant, and merging changes from another commit. Concrete use cases include implementing branch switching, ensuring merge safety, and synchronizing local state with remote commits.",
+      "description_length": 506,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irmin_http.Client.Repo",
+      "library": "irmin-http",
+      "description": "This module manages repositories in a remote Irmin store over HTTP, providing operations to connect to a repository, list branches and commit heads, and close the connection. It supports importing and exporting repository slices, which include commits, nodes, contents, and branches, with configurable depth and bounds. Functions for traversing repository elements via topological or breadth-first iteration are included, allowing filtering and custom processing of branches, commits, and associated keys.",
+      "description_length": 505,
       "index": 53,
       "embedding_norm": 0.9999999403953552
     },
     {
+      "module_path": "Irmin_http.Client.Hash",
+      "library": "irmin-http",
+      "description": "This module computes deterministic hashes from sequences of strings and provides utilities to convert and manipulate hash values. It works with `Hash.t` values, which represent fixed-size digest hashes, and supports operations like generating raw byte representations, converting from raw strings, and computing smaller hash values for use in OCaml hashtables. Concrete use cases include generating unique store keys, hashing content for versioned data stores, and optimizing hash-based lookups in memory-constrained contexts.",
+      "description_length": 526,
+      "index": 54,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Client.History",
+      "library": "irmin-http",
+      "description": "This module provides operations to manipulate and traverse directed acyclic graphs (DAGs) representing version histories, focusing on managing vertices (commits) and labeled edges (parent-child relationships or metadata). It works with persistent graph structures built from commit vertices and edges, using the `History.t` type to model version control histories. Specific use cases include modifying graph topology by adding/removing edges between commits, inspecting relationships via predecessor/successor queries, and transforming version history data through iterative or recursive traversal.",
+      "description_length": 598,
+      "index": 55,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Irmin_http.Conf",
+      "library": "irmin-http",
+      "description": "Manages configuration keys for HTTP endpoints, including URI settings. Works with `Uri.t` and Irmin's configuration system. Used to set and retrieve HTTP server addresses in Irmin stores.",
+      "description_length": 187,
+      "index": 56,
+      "embedding_norm": 1.0
+    },
+    {
       "module_path": "Irmin_http.Client",
       "library": "irmin-http",
-      "description": "This module builds versioned, transactional key-value stores with atomic updates, history tracking, and conflict resolution over content-addressable trees, commits, and branches. It supports path-based access, hash-based keys, and type-safe serialization for use in distributed version control, collaborative editing, and auditable data systems. Core operations include conditional writes, merge resolution, commit construction, and remote synchronization via HTTP, with data types like trees, commits, branches, and hashes managed through submodules handling metadata, paths, content, and status serialization. You can create commits with metadata, track branch heads, verify tree state with proofs, resolve content conflicts, and sync repositories over HTTP with push and fetch operations.",
-      "description_length": 791,
-      "index": 54,
+      "description": "This module enables version-controlled data management through RESTful HTTP interactions, supporting operations like atomic updates, tree traversal, merge resolution, and hash-based content integrity checks. It works with hierarchical data structures including versioned trees, commits with metadata, branches, and key-value stores, while tracking directed acyclic graph histories. Typical applications include distributed version control systems, collaborative document editing with conflict resolution, and remote repository synchronization with offline clients.",
+      "description_length": 564,
+      "index": 57,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http.Server",
       "library": "irmin-http",
-      "description": "This module creates an HTTP server that serves the contents of an Irmin database via a JSON REST/CRUD interface. It handles repository access over HTTP, using the provided `HTTP` module for transport and the `S` module to define the Irmin store implementation. A concrete use case is exposing a Git-like versioned data store over HTTP for remote querying and updates.",
-      "description_length": 367,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.HTTP_CLIENT",
-      "library": "irmin-http",
-      "description": "This module implements HTTP client operations for interacting with RESTful services, supporting standard methods like GET, POST, PUT, DELETE, and PATCH. It works with URIs, HTTP headers, and Cohttp_lwt body streams, enabling direct manipulation of HTTP requests and responses. It is used to build clients that communicate with JSON-based APIs, handle form submissions, and manage streaming requests and responses.",
-      "description_length": 413,
-      "index": 56,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http.Conf",
-      "library": "irmin-http",
-      "description": "This module organizes configuration structures for JSON REST/CRUD endpoints, combining core definitions with specialized submodules for handling HTTP-specific settings. It provides data types like configuration objects and operations for mapping endpoint parameters to typed values, using `Uri.t` to manage route addresses. You can define endpoint configurations with typed request parameters, set URI paths, and retrieve structured configuration values for request handling. Submodules extend functionality by managing HTTP keys and enabling precise endpoint address control.",
-      "description_length": 576,
-      "index": 57,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irmin_http.SERVER",
-      "library": "irmin-http",
-      "description": "Implements HTTP server endpoints for interacting with an Irmin repository via JSON-encoded requests and responses. It provides operations to read, write, and manage repository contents over HTTP, including handling version headers when strict mode is enabled. Designed for serving Irmin stores through RESTful APIs, enabling remote clients to perform CRUD operations on stored values.",
-      "description_length": 384,
+      "description": "Implements an HTTP server that exposes read and write access to an Irmin database via JSON REST/CRUD endpoints. It operates on Irmin repositories and handles HTTP requests to query, update, and manage database contents. Useful for building web services that need version-controlled, persistent storage with Git-like semantics over HTTP.",
+      "description_length": 336,
       "index": 58,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irmin_http",
       "library": "irmin-http",
-      "description": "This module provides a JSON-based REST/CRUD interface for interacting with versioned, mergeable data stores over HTTP. It allows configuration of endpoints, definition of client and server behaviors, and handling of HTTP requests for operations like reading, writing, and merging stored values. You can expose a Git-like versioned key-value store over HTTP, create commits with metadata, track branch heads, resolve conflicts, and sync repositories remotely using standard HTTP methods. Submodules handle server setup, client communication, endpoint routing, and configuration mapping, enabling both server-side repository access and client-side manipulation of JSON-encoded store contents via URIs and typed request parameters.",
-      "description_length": 728,
+      "description": "This module provides functions to configure HTTP endpoints for Irmin stores using URIs, enabling remote access via JSON-based REST/CRUD operations. It works with `Uri.t` and Irmin's configuration system to set and retrieve server addresses. Concrete use cases include exposing Irmin stores over HTTP and integrating with web services for remote data synchronization.",
+      "description_length": 366,
       "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http_unix.Sock",
-      "library": "irmin-http.unix",
-      "description": "This module provides a concrete implementation of a socket address as a string, used for configuring network endpoints in Unix-based systems. It works with string values representing socket paths or network addresses. A typical use case involves setting up communication endpoints for HTTP servers or clients that require Unix domain sockets or TCP/IP addresses.",
-      "description_length": 362,
-      "index": 60,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http_unix.Http_client",
-      "library": "irmin-http.unix",
-      "description": "This module implements HTTP client operations for interacting with remote servers, supporting standard methods like GET, POST, PUT, DELETE, and PATCH with customizable headers, request bodies, and streaming capabilities. It works with URIs, HTTP requests/responses, and Cohttp bodies, allowing fine-grained control over network communication. Concrete use cases include making authenticated API requests, uploading data to remote endpoints, and implementing custom HTTP-based protocols with streaming request/response handling.",
-      "description_length": 527,
-      "index": 61,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Irmin_http_unix.Server",
-      "library": "irmin-http.unix",
-      "description": "Implements an HTTP server for exposing Irmin repositories over the network. It provides a function `v` to create a server instance from a repository, supporting version header checks for strict compatibility. Works with `Cohttp_lwt_unix.Server.t` and `S.Repo.t`, handling incoming HTTP requests to read and write repository contents. Useful for sharing Irmin stores across distributed systems via HTTP APIs.",
-      "description_length": 407,
-      "index": 62,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irmin_http_unix",
-      "library": "irmin-http.unix",
-      "description": "This module enables HTTP-based interaction with Irmin stores over Unix sockets or TCP/IP, supporting both client and server configurations. It provides data types for socket addresses, HTTP clients with full request/response control, and servers that expose Irmin repositories via HTTP. Operations include creating servers from repositories, making authenticated HTTP requests, and handling streaming data over network connections. Example uses include exposing a local Irmin store as a REST API or synchronizing distributed version-control data across networked nodes.",
-      "description_length": 569,
-      "index": 63,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 64,
-    "meaningful_modules": 64,
+    "total_modules_in_package": 60,
+    "meaningful_modules": 60,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 791,
-    "min_description_length": 192,
-    "avg_description_length": 452.5625,
-    "embedding_file_size_mb": 0.23285865783691406
+    "max_description_length": 598,
+    "min_description_length": 187,
+    "avg_description_length": 396.85,
+    "embedding_file_size_mb": 0.8696804046630859
   }
 }

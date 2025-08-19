@@ -1,47 +1,47 @@
 {
   "package": "sexps-rewriter",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:38.384256",
+  "creation_timestamp": "2025-08-14T23:00:04.029234",
   "modules": [
-    {
-      "module_path": "Sexps_rewriter.Private",
-      "library": "sexps-rewriter",
-      "description": "This module provides direct access to the parsed S-expression values and their positional information from the original file content. It exposes the internal representation used during rewriting, allowing custom transformations that require detailed parsing artifacts. Use this when implementing advanced linting rules or structural modifications that depend on precise location data or intermediate parse results.",
-      "description_length": 414,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Sexps_rewriter.Visitor_decision",
       "library": "sexps-rewriter",
-      "description": "This module defines a decision type used during traversal of S-expressions to control rewriting behavior. It supports three operations: halting traversal, continuing to process child nodes, or skipping the current node. It is used to implement selective rewriting of S-expressions in files, such as modifying specific sections of Dune configuration files while preserving structure.",
-      "description_length": 382,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Sexps_rewriter.Parse_error",
-      "library": "sexps-rewriter",
-      "description": "This module defines a `t` type to represent structured parse errors encountered when rewriting S-expressions in files. It includes a location (`loc`) and an error message, enabling precise reporting of issues during linting or transformation processes. It is used internally to handle and propagate errors when parsing or rewriting dune files.",
-      "description_length": 343,
-      "index": 2,
+      "description": "This module defines a decision type used during the traversal of S-expression files to control whether to break, continue, or skip processing at each node. It works with S-expressions, guiding how a rewriter processes nested structures or skips specific elements. Concrete use cases include selectively rewriting or linting parts of Dune files while preserving the structure of the remaining expressions.",
+      "description_length": 404,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sexps_rewriter.Position",
       "library": "sexps-rewriter",
-      "description": "Transforms positions and ranges from parsed S-expressions into location information compatible with error reporting and file rewriting tools. Works directly with `Parsexp.Positions.range` and converts them to `Loc.t` and `Loc.Range.t` types. Useful for mapping syntax errors or rewrite operations in S-expression files, such as dune files, to precise file locations during linting or transformation tasks.",
-      "description_length": 405,
+      "description": "This module maps positions and ranges from parsed S-expressions to source file locations. It transforms `Parsexp.Positions.range` values into `Loc.t` and `Loc.Range.t` representations, enabling precise error reporting and file rewriting. Useful when linting or modifying `.dune` files, where accurate location tracking is necessary for transformations and diagnostics.",
+      "description_length": 368,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Sexps_rewriter.Private",
+      "library": "sexps-rewriter",
+      "description": "Handles the parsing and rewriting of S-expression files by exposing the internal parsed values and positions. Works directly with `Parsexp.Many_and_positions.parsed_value` to enable custom transformations based on the structured representation of S-expressions. Useful for implementing linting rules or automated refactoring tools that require precise manipulation of dune file contents.",
+      "description_length": 387,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sexps_rewriter.Parse_error",
+      "library": "sexps-rewriter",
+      "description": "This module defines a data structure for representing parsing errors in S-expression files, including the location and message of each error. It provides functions to create and format these error instances specifically for use in linting and rewriting workflows. Concrete use cases include reporting malformed syntax or invalid constructs during automated dune file analysis.",
+      "description_length": 376,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sexps_rewriter",
       "library": "sexps-rewriter",
-      "description": "This module rewrites S-expressions in files by parsing them into trees with positional metadata and applying visitor functions to transform nodes. It supports precise edits by tracking source locations, enabling automated linting or formatting of Dune files, and includes operations to visit nodes, reset changes, or extract modified content. The child modules expose parsed values with location data, define traversal decisions to control rewriting, handle structured parse errors, and convert positions into tool-compatible location types, allowing fine-grained transformations and accurate error reporting. For example, it can selectively modify specific sections of a Dune file while preserving overall structure or report syntax errors at exact file positions.",
-      "description_length": 765,
+      "description": "This module processes and rewrites S-expression files, primarily for automated linting and refactoring of Dune files in large codebases. It provides structured access to parsed S-expressions, tracks their positions, and allows selective transformations using visitor functions that can skip or modify specific nodes. Key operations include parsing with error handling, visiting and rewriting expressions with positional awareness, and generating updated file contents while preserving original structure and formatting.",
+      "description_length": 519,
       "index": 4,
       "embedding_norm": 1.0
     }
@@ -53,9 +53,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 765,
-    "min_description_length": 343,
-    "avg_description_length": 461.8,
-    "embedding_file_size_mb": 0.018587112426757812
+    "max_description_length": 519,
+    "min_description_length": 368,
+    "avg_description_length": 410.8,
+    "embedding_file_size_mb": 0.07292366027832031
   }
 }

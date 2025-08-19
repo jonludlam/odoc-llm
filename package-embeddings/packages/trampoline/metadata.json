@@ -1,45 +1,37 @@
 {
   "package": "trampoline",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 3,
-  "creation_timestamp": "2025-07-15T23:05:09.276249",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 2,
+  "creation_timestamp": "2025-08-14T22:54:57.686067",
   "modules": [
     {
       "module_path": "Trampoline.Not_a_trampoline",
       "library": "trampoline",
-      "description": "This module provides direct stack-based computation handling without trampolining, working with suspended computations represented as `t` values. It supports operations like `bind`, `map`, `return`, and `suspend` to compose and manipulate delayed computations, with `execute` running the final result. Useful for scenarios where deep recursion isn't expected and direct stack execution is preferred, especially when interfacing with functors that abstract over trampoline implementations.",
-      "description_length": 488,
+      "description": "This module provides direct execution of suspended computations without trampolining, working with the same trampoline-compatible type as the main Trampoline module. It includes functions for binding, mapping, recursion, and suspension, enabling continuation-passing style while using the native call stack. Use this when targeting environments with sufficient stack size, avoiding trampoline overhead in recursive functions like tree traversals or expression evaluation.",
+      "description_length": 471,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trampoline.Trampoline",
-      "library": "trampoline",
-      "description": "This module provides a mechanism to execute deeply recursive computations without consuming stack space, using `return`, `suspend`, and `bind` to build suspended computations. It supports operations like `map` and `recursive_call` to manipulate and chain computations, enabling stack-safe recursion patterns. Concrete use cases include implementing interpreters or compilers with deep recursion, particularly for bytecode or JavaScript targets where stack limits are restrictive.",
-      "description_length": 479,
-      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Trampoline",
       "library": "trampoline",
-      "description": "This module implements a trampoline for deeply recursive functions, particularly useful in environments with limited stack depth such as bytecode interpreters and JavaScript targets. It provides data types representing suspended computations, with core operations like `bind`, `map`, `return`, and `suspend` to compose and manipulate recursive logic iteratively rather than directly. The first child module offers a stack-based variant for non-trampolined execution, ideal for shallow recursion and functor compatibility, while the second child module focuses on stack-safe, deeply recursive execution using trampolining. Examples include writing recursive parsers, interpreters, or algorithms that would otherwise risk stack overflow when run directly.",
-      "description_length": 753,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides two implementations for managing recursive computations. The `Trampoline` submodule handles deeply nested recursion by suspending and resuming evaluations to avoid stack overflow, working with trampolined values (`'a t`) and supporting chaining through `bind` and `map`. It is used in interpreters or JavaScript targets where deep recursion would otherwise fail. The `Not_a_trampoline` submodule offers the same interface but executes computations directly, leveraging the native call stack, making it suitable for environments with adequate stack size, such as in tree traversals or recursive expression evaluation where trampolining overhead is unnecessary.",
+      "description_length": 680,
+      "index": 1,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 3,
-    "meaningful_modules": 3,
+    "total_modules_in_package": 2,
+    "meaningful_modules": 2,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 753,
-    "min_description_length": 479,
-    "avg_description_length": 573.3333333333334,
-    "embedding_file_size_mb": 0.011316299438476562
+    "max_description_length": 680,
+    "min_description_length": 471,
+    "avg_description_length": 575.5,
+    "embedding_file_size_mb": 0.02943706512451172
   }
 }

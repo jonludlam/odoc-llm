@@ -1,325 +1,317 @@
 {
   "package": "metadata",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 38,
-  "creation_timestamp": "2025-07-15T23:11:39.374159",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 37,
+  "creation_timestamp": "2025-08-15T12:23:37.299066",
   "modules": [
     {
-      "module_path": "Metadata.Make.Any",
+      "module_path": "Metadata.Make.OGG",
       "library": "metadata",
-      "description": "This module provides generic metadata parsing operations for extracting key-value pairs from file or string inputs. It supports parsing through customizable converters and works with character streams or byte buffers using the `Reader.t` type. Concrete use cases include extracting ID3 tags from MP3 files, EXIF data from JPEGs, or metadata from text formats like CSV or XML.",
-      "description_length": 375,
+      "description": "Parses OGG file metadata into key-value pairs using a custom or default parser. Works with raw byte readers and string-based file paths. Useful for extracting artist, title, and comment fields directly from OGG audio files.",
+      "description_length": 223,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Metadata.Make.JPEG",
+      "module_path": "Metadata.Make.Audio",
       "library": "metadata",
-      "description": "This module parses JPEG metadata from files or custom input, extracting key-value pairs such as EXIF, IPTC, and XMP data. It operates on JPEG file structures using a low-level reader interface and supports optional custom parsing handlers. Use it to inspect or extract metadata like camera settings, geolocation, or copyright information directly from JPEG files.",
-      "description_length": 363,
+      "description": "Reads metadata from audio files by parsing tags in formats like ID3 or Vorbis. Works with raw byte streams and file paths, extracting key-value pairs such as artist, title, and album. Directly used to retrieve embedded metadata from audio files during processing or indexing.",
+      "description_length": 275,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Metadata.Make.Image",
       "library": "metadata",
-      "description": "Implements metadata extraction for image files using a provided charset conversion function. Parses metadata from image formats like JPEG, PNG, and TIFF, returning key-value pairs such as EXIF data. Useful for retrieving camera settings, timestamps, and geolocation from image files.",
-      "description_length": 283,
+      "description": "Reads metadata from image files using a provided charset conversion function. It processes formats like JPEG, PNG, and GIF, extracting key-value pairs such as EXIF or IPTC data. Use to retrieve embedded metadata directly from image file contents or via a custom parser.",
+      "description_length": 269,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Make.RIFF",
-      "library": "metadata",
-      "description": "Parses RIFF metadata from a reader or file, extracting key-value pairs. Works with RIFF file structures, handling format-specific parsing through optional parameters. Use to extract metadata from RIFF-based files like WAV or AVI.",
-      "description_length": 229,
-      "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Metadata.Make.Video",
       "library": "metadata",
-      "description": "Parses metadata from video files using a provided charset conversion function. Works with raw byte readers and file paths, returning key-value pairs of metadata fields. Useful for extracting information like resolution, codec, and duration from video containers.",
-      "description_length": 262,
+      "description": "Parses video file metadata into key-value pairs using a provided charset conversion function. Works with video file formats by extracting textual metadata such as title, artist, and encoding details. Useful for reading embedded metadata from video files directly into structured lists of tags and values.",
+      "description_length": 304,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.Make.ID3v2",
+      "library": "metadata",
+      "description": "This module parses and constructs ID3v2 metadata tags from MP3 files, supporting text and binary frame data, charset recoding, and specific frame types like APIC and PIC for album art. It operates on raw byte streams and strings, handling ID3v2 headers with customizable charset conversion between ISO-8859-1, UTF-8, and UTF-16 variants. Concrete use cases include extracting track metadata (e.g., title, artist, year) and embedding or modifying album artwork in MP3 files.",
+      "description_length": 473,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Metadata.CharEncoding.T",
-      "library": "metadata",
-      "description": "This module defines the interface for charset conversion operations. It includes a function `convert` that transforms text between different character encodings. It works with string data and is used when processing metadata from files that use non-standard or varying character sets.",
-      "description_length": 284,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Make.Audio",
-      "library": "metadata",
-      "description": "This module parses metadata from audio files using a provided character set conversion function. It supports operations like `parse` for reading metadata from a stream and `parse_file` for extracting metadata from a file path. It works with audio file formats such as MP3, FLAC, and WAV, returning key-value pairs like artist, title, and album.",
-      "description_length": 344,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Make.FLAC",
-      "library": "metadata",
-      "description": "This module parses FLAC metadata, extracting tags as key-value pairs and handling embedded pictures with specific attributes like type, dimensions, and binary data. It operates on FLAC file streams or raw strings, producing structured metadata and picture records. Use it to read FLAC file tags or extract album art with precise format details.",
-      "description_length": 344,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Make.ID3v1",
-      "library": "metadata",
-      "description": "Parses ID3v1 metadata tags from MP3 files, extracting key-value pairs like title, artist, and genre. Works directly with raw byte streams and string-encoded character sets during parsing. Useful for reading legacy ID3v1 tag data from audio files while handling charset conversions explicitly.",
-      "description_length": 292,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.CharEncoding.Naive",
-      "library": "metadata",
-      "description": "This module provides a `convert` function for charset conversion using a simple, direct approach that does not include encoding detection. It operates on byte sequences and assumes the source and target encodings are known in advance. Use this module when working with raw binary data where encoding is already specified, such as processing text headers or fixed-format binary files.",
-      "description_length": 383,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Make.AVI",
-      "library": "metadata",
-      "description": "Parses AVI file metadata into key-value pairs using a custom or default parser. Works with raw byte readers and string-based file paths. Useful for extracting format-specific tags like video codec, frame rate, or audio properties directly from AVI headers.",
-      "description_length": 256,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Make.OGG",
-      "library": "metadata",
-      "description": "Parses OGG file metadata into key-value pairs using a custom or default parser. Works with raw byte readers and string-based file paths. Useful for extracting artist, title, and comment fields directly from OGG audio files.",
-      "description_length": 223,
-      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Metadata.Make.ID3",
       "library": "metadata",
-      "description": "Reads ID3v1 and ID3v2 metadata tags from audio files. Parses raw byte streams into key-value pairs representing tag fields like title, artist, and album. Useful for extracting embedded metadata from MP3 files during media processing or library management tasks.",
-      "description_length": 261,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Metadata.Make.ID3v2",
-      "library": "metadata",
-      "description": "This module parses and constructs ID3v2 metadata headers, handling text encoding conversions between different character sets. It processes ID3v2 frames such as text tags, binary data, and embedded album art (APIC and PIC tags), supporting operations like reading from and writing to files. Specific use cases include extracting track information (e.g., title, artist, album), modifying metadata, and embedding or extracting album art from MP3 files.",
-      "description_length": 450,
-      "index": 13,
+      "description": "Reads ID3v1 and ID3v2 metadata tags from audio files. It provides `parse` and `parse_file` functions to extract key-value pairs such as title, artist, and album from MP3 files. Uses `Reader.t` for in-memory parsing and supports custom charset handling through an optional parser argument.",
+      "description_length": 288,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Metadata.Make.MP4",
+      "module_path": "Metadata.Make.FLAC",
       "library": "metadata",
-      "description": "Parses metadata tags from MP4 files using a custom or default charset conversion handler. Works directly with raw MP4 file data to extract key-value pairs such as artist, album, and track information. Useful for media management tools that require reading or indexing MP4 metadata.",
-      "description_length": 281,
-      "index": 14,
+      "description": "This module parses FLAC metadata, extracting tags as key-value pairs and handling embedded pictures with specific attributes like MIME type, dimensions, and pixel data. It processes raw FLAC file streams or files, converting metadata into structured values. Use it to read FLAC file tags or extract embedded album art.",
+      "description_length": 318,
+      "index": 6,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Metadata.Make.AVI",
+      "library": "metadata",
+      "description": "Parses AVI file metadata into key-value pairs using a custom or default parser. Works with raw byte readers and string-based file paths. Useful for extracting format-specific metadata like video codec, frame rate, or audio stream details from AVI containers.",
+      "description_length": 258,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.Make.WAV",
+      "library": "metadata",
+      "description": "Reads metadata from WAV audio files by parsing RIFF chunks. Extracts key-value pairs such as title, artist, and album from the file's metadata section. Supports custom parsing logic through an optional handler function.",
+      "description_length": 219,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Metadata.Make.RIFF",
+      "library": "metadata",
+      "description": "Parses RIFF metadata from a reader or file, extracting key-value pairs. Works with RIFF file structures, handling format-specific parsing through optional parameters. Useful for extracting metadata from audio files like WAV or AVI where RIFF is the container format.",
+      "description_length": 266,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Metadata.Make.ID3v1",
+      "library": "metadata",
+      "description": "Parses ID3v1 metadata tags from MP3 files, extracting key-value pairs like title, artist, and genre. Works directly with raw byte streams and string-encoded character sets during parsing. Useful for reading legacy ID3v1 tags in audio file browsers or media indexing tools.",
+      "description_length": 272,
+      "index": 10,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Metadata.Make.PNG",
       "library": "metadata",
       "description": "This module parses PNG file metadata into key-value pairs. It works with PNG image files, extracting textual metadata chunks according to the PNG specification. Use it to read authorship, description, or copyright information embedded in PNG images.",
       "description_length": 249,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Make.WAV",
-      "library": "metadata",
-      "description": "Parses metadata from WAV audio files using a provided character set conversion function. It operates on raw byte streams or file paths, extracting ID3 tags and other embedded metadata. Concrete use cases include reading artist, title, and album information from WAV files for media indexing or playlist generation.",
-      "description_length": 314,
-      "index": 16,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Metadata.Make.Reader",
       "library": "metadata",
-      "description": "This module provides functions to read and parse metadata from files or strings using customizable parsers. It supports operations like resetting the read position, seeking to specific offsets, and determining the size of the input source. Concrete use cases include extracting EXIF data from image files or parsing ID3 tags in MP3s.",
-      "description_length": 333,
-      "index": 17,
+      "description": "This module provides functions to read and parse metadata from byte streams using a structured reader interface. It supports operations like reading bytes, seeking within the stream, resetting to the start, and parsing from files or strings. Concrete use cases include extracting metadata from binary file formats or encoded strings by implementing format-specific parsing logic.",
+      "description_length": 379,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Metadata.ID3",
+      "module_path": "Metadata.Make.JPEG",
       "library": "metadata",
-      "description": "Reads ID3v1 and ID3v2 metadata tags from audio files. It extracts tag information as key-value pairs, such as title, artist, and album. Use this module to retrieve metadata directly from MP3 files or through a custom parser for integration with broader metadata workflows.",
-      "description_length": 272,
-      "index": 18,
+      "description": "Reads metadata from JPEG files by parsing EXIF, IPTC, and XMP segments. Works with raw byte streams and file paths, producing key-value pairs of metadata fields. Useful for extracting camera settings, timestamps, and embedded tags from image files.",
+      "description_length": 248,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Metadata.ID3v2",
+      "module_path": "Metadata.CharEncoding.Naive",
       "library": "metadata",
-      "description": "This module parses and constructs ID3v2 metadata headers, specifically handling operations like reading and writing frames, converting text encodings, and extracting structured data such as album art from APIC and PIC tags. It works directly with binary and text-encoded data within ID3v2 headers, supporting specific frame types like `TPE1`, `TIT2`, and `APIC`, and provides utilities to handle frame flags and binary/text content distinctions. Concrete use cases include reading artist and title information from MP3 files, extracting embedded album art, and modifying or injecting ID3v2 metadata into audio files.",
-      "description_length": 616,
-      "index": 19,
+      "description": "This module provides a basic charset conversion function that requires explicit encoding specification. It operates on string data and performs direct character mapping without encoding detection. Use it for simple text transcoding tasks where source and target encodings are known and limited to common character sets.",
+      "description_length": 319,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Metadata.Make",
+      "module_path": "Metadata.Make.MP4",
       "library": "metadata",
-      "description": "This module enables metadata extraction from binary and text inputs by combining charset conversion with format-specific parsers. It supports key operations like selecting the first successful parser for a given format, converting string encodings during metadata extraction, and working with byte streams or string-based inputs through the `Reader.t` type. The module directly handles generic metadata parsing while coordinating with specialized submodules for formats like ID3 tags, EXIF data, and RIFF structures. For example, it can extract camera settings from JPEGs, read FLAC tags with embedded pictures, parse ID3v2 frames with album art, or retrieve metadata from WAV, OGG, or MP4 files.",
-      "description_length": 696,
-      "index": 20,
+      "description": "Reads metadata from MP4 files by parsing atoms in the file structure. It extracts key-value pairs representing metadata fields such as title, artist, and album. Use this module to inspect or process metadata directly from MP4 audio or video files, such as for media indexing or tag editing.",
+      "description_length": 290,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Metadata.MIME",
+      "module_path": "Metadata.Make.Any",
       "library": "metadata",
-      "description": "Guesses MIME types from file contents or filenames. Uses string analysis to determine the type, raising `Not_found` if undetermined. Useful for identifying file formats without relying on extensions.",
-      "description_length": 199,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides generic metadata parsing operations for extracting key-value pairs from files or strings. It supports parsing with optional custom parsers and handles various character encodings. Use it to extract metadata from file contents directly or through custom parsing logic.",
+      "description_length": 288,
+      "index": 16,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Metadata.Any",
       "library": "metadata",
-      "description": "This module provides functions to parse metadata into key-value pairs from files or strings, supporting custom parsers. It operates on strings and file paths, returning lists of string pairs. Use it to extract metadata from file contents or paths when the format isn't known ahead of time.",
-      "description_length": 289,
-      "index": 22,
+      "description": "This module provides functions to parse metadata into key-value pairs from files or strings, supporting any format through optional custom parsers. It operates on input data such as file paths, raw file contents, and reader objects, returning lists of string pairs representing metadata fields. Use cases include extracting EXIF data from images, reading ID3 tags from audio files, or parsing metadata from document formats like PDF or Office files.",
+      "description_length": 449,
+      "index": 17,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Metadata.MP4",
+      "library": "metadata",
+      "description": "Reads metadata tags from MP4 files, returning key-value pairs such as artist, title, and album. It processes data from a file path or custom parser input using the MP4 metadata structure. Useful for extracting embedded metadata from video or audio files in formats like .m4a or .mp4.",
+      "description_length": 283,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.JPEG",
+      "library": "metadata",
+      "description": "Reads metadata from JPEG files by parsing EXIF, IPTC, and XMP data. Works with raw file readers and file paths, returning key-value pairs of metadata fields. Useful for extracting camera settings, timestamps, and embedded tags from image files.",
+      "description_length": 244,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.ID3v1",
+      "library": "metadata",
+      "description": "Reads ID3v1 metadata tags from audio files, extracting fields like title, artist, and genre into key-value pairs. Works directly with raw byte streams or file contents, handling string encoding conversions between common character sets. Useful for quickly inspecting or migrating legacy music metadata stored in MP3 files.",
+      "description_length": 322,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.FLAC",
+      "library": "metadata",
+      "description": "Reads FLAC file metadata, extracting tags as key-value pairs and parsing embedded pictures into structured data. It handles FLAC-specific metadata blocks, including custom headers and picture types. Use to extract artist, title, or album art from FLAC audio files.",
+      "description_length": 264,
+      "index": 21,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Metadata.MIME",
+      "library": "metadata",
+      "description": "Guesses MIME types from file contents or filenames. Uses string analysis to determine the type without relying on file extensions. Useful for validating file types in uploads or processing pipelines.",
+      "description_length": 199,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.RIFF",
+      "library": "metadata",
+      "description": "Handles parsing RIFF metadata from files or input streams using customizable format specifications. It extracts metadata as key-value pairs, supporting operations like reading from a file path or a reader instance with optional custom parsing logic. Commonly used for extracting metadata from audio files like WAV or AVI that use the RIFF container format.",
+      "description_length": 356,
+      "index": 23,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Metadata.PNG",
+      "library": "metadata",
+      "description": "Reads metadata chunks from PNG files, extracting key-value pairs such as text annotations and image properties. It processes raw PNG data using a custom parser or defaults to standard metadata extraction. Useful for retrieving authorship, creation time, or descriptive tags embedded in PNG images.",
+      "description_length": 297,
+      "index": 24,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Metadata.WAV",
       "library": "metadata",
       "description": "Reads metadata from WAV audio files by parsing RIFF chunks. It extracts key-value pairs such as artist, title, and date from the file's metadata section. Use cases include extracting track information for media indexing or batch renaming of audio files.",
       "description_length": 253,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.OGG",
-      "library": "metadata",
-      "description": "Reads metadata from OGG files by parsing comment headers. It extracts key-value pairs representing metadata fields such as title, artist, and genre. Use to inspect or process audio file metadata directly from OGG streams or files.",
-      "description_length": 230,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.PNG",
-      "library": "metadata",
-      "description": "Reads metadata chunks from PNG files, extracting key-value pairs such as text annotations and image properties. It processes raw PNG data using a custom parser or defaults to standard metadata extraction. Useful for retrieving authorship, creation dates, or embedded descriptions from PNG images.",
-      "description_length": 296,
       "index": 25,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Metadata.RIFF",
+      "module_path": "Metadata.ID3",
       "library": "metadata",
-      "description": "Reads RIFF metadata from files or input streams, extracting key-value pairs. Works with RIFF file structures, handling format-specific parsing through optional custom handlers. Useful for extracting metadata from audio files like WAV or AVI where RIFF is the container format.",
-      "description_length": 276,
+      "description": "Reads ID3v1 and ID3v2 metadata tags from audio files. Parses raw metadata into key-value pairs like artist, title, and album. Use to extract track information from MP3 files directly or through custom parsers.",
+      "description_length": 209,
       "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.CharEncoding",
-      "library": "metadata",
-      "description": "This module handles charset conversion between common encodings like ISO 8859-1, UTF-8, and UTF-16 variants, directly supporting string and byte sequence transformations. It provides a core `convert` function that transcodes text when source and target encodings are known, useful for normalizing file metadata or processing text from binary formats. The interface module defines the general contract for charset conversion, while the direct implementation offers a streamlined path for cases where encoding detection is unnecessary. Example usage includes converting ISO 8859-1 strings read from legacy files to UTF-8 for consistent handling in modern systems.",
-      "description_length": 661,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.FLAC",
-      "library": "metadata",
-      "description": "Reads FLAC file metadata, including tags and embedded picture data. Parses tag-value pairs from a FLAC stream or file and extracts structured picture metadata like cover art. Useful for retrieving and processing audio metadata and embedded images from FLAC files.",
-      "description_length": 263,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Image",
-      "library": "metadata",
-      "description": "Reads metadata from image files using a provided parser. It extracts key-value pairs from formats like JPEG, PNG, and GIF. Use to retrieve EXIF, IPTC, or XMP data from images.",
-      "description_length": 175,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.JPEG",
-      "library": "metadata",
-      "description": "Reads metadata from JPEG files by parsing EXIF, IPTC, and XMP data. It provides `parse` to extract key-value pairs from a reader and `parse_file` to process a file path, optionally using a custom parser. This module is used to retrieve image metadata such as camera model, date, and geolocation directly from JPEG file content.",
-      "description_length": 327,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Audio",
-      "library": "metadata",
-      "description": "Reads metadata from audio files by parsing tags such as ID3, Vorbis, or metadata from formats like MP3, FLAC, and WAV. It provides direct access to tag keys and values through `parse` and `parse_file`, allowing extraction of artist, title, album, and other specific metadata fields. Useful for media indexing, tagging tools, or audio processing pipelines where specific tag data is required.",
-      "description_length": 391,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Metadata.Video",
-      "library": "metadata",
-      "description": "Reads metadata from video files by parsing format-specific information. It extracts key-value pairs such as resolution, codec, and duration directly from video containers. Useful for inspecting or validating video file properties without full decoding.",
-      "description_length": 252,
-      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Metadata.AVI",
       "library": "metadata",
-      "description": "Reads metadata from AVI files by parsing RIFF chunks and extracting key-value pairs. Works directly with file paths and low-level reader structures to retrieve format-specific metadata. Used to inspect video file properties like codec, resolution, and duration without external tools.",
-      "description_length": 284,
-      "index": 33,
+      "description": "Reads metadata from AVI files by parsing RIFF chunks and extracting key-value pairs. Works directly with file paths and low-level parser handlers to access format-specific metadata. Useful for retrieving video properties like codec, resolution, and frame rate from AVI containers.",
+      "description_length": 280,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.Image",
+      "library": "metadata",
+      "description": "Reads metadata from image files using a provided parser, returning key-value pairs. Works with common image formats like JPEG, PNG, and GIF. Useful for extracting EXIF, IPTC, or XMP data such as camera settings, geolocation, or copyright information.",
+      "description_length": 250,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.Video",
+      "library": "metadata",
+      "description": "Reads metadata from video files using a provided parser, returning key-value pairs such as resolution, duration, and codec. Works directly with video file formats through file paths or custom parser configurations. Useful for extracting technical details like frame rate, audio format, and encoding parameters from MP4, AVI, or MKV files.",
+      "description_length": 338,
+      "index": 29,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Metadata.ID3v1",
+      "module_path": "Metadata.OGG",
       "library": "metadata",
-      "description": "Reads ID3v1 metadata tags from audio files, extracting fields like title, artist, and genre as key-value pairs. Works directly with raw byte streams or file paths, handling string encoding conversions during parsing. Useful for retrieving basic track information from MP3 files without relying on more complex metadata formats.",
-      "description_length": 327,
-      "index": 34,
+      "description": "Reads metadata from OGG files by parsing comment headers. It extracts key-value pairs representing metadata fields such as title, artist, and genre. Use cases include retrieving track information from OGG Vorbis files or inspecting metadata in OGG streams.",
+      "description_length": 256,
+      "index": 30,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.ID3v2",
+      "library": "metadata",
+      "description": "This module parses and constructs ID3v2 metadata headers, specifically handling operations like reading from a file, extracting tags such as text and binary frames, and converting frame identifiers to and from strings. It works with structured types representing ID3v2 frames, text encodings, and flags, including specialized types for album art (`apic`, `pic`). Concrete use cases include extracting album art from MP3 files, reading track metadata like title and artist, and modifying or writing custom ID3v2 headers with specific frame data and encodings.",
+      "description_length": 558,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Metadata.CharEncoding",
+      "library": "metadata",
+      "description": "This module provides charset conversion functions that transcode strings between explicit source and target encodings such as UTF-8, UTF-16, and ISO-8859-1. It operates directly on string data, requiring manual specification of encodings without automatic detection. Use it to handle text transcoding in scenarios like reading legacy file formats or preparing data for systems expecting specific encodings.",
+      "description_length": 406,
+      "index": 32,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Metadata.Reader",
       "library": "metadata",
-      "description": "This module provides functions to read and parse metadata from byte streams, supporting operations like reading bytes, seeking, and resetting the stream. It works with byte arrays, strings, and custom parsers to extract metadata from files or in-memory data. Concrete use cases include parsing file headers, extracting embedded metadata, and processing binary data with user-defined parsers.",
-      "description_length": 391,
+      "description": "This module provides functions to read and parse metadata from byte streams, supporting both file and string inputs. It works with a custom type `t` that includes operations for reading bytes, seeking, resetting, and retrieving the size of the input. Concrete use cases include parsing file headers, extracting metadata from binary data in memory, and handling custom metadata formats through user-defined parsers.",
+      "description_length": 414,
+      "index": 33,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Metadata.Audio",
+      "library": "metadata",
+      "description": "Reads metadata from audio files by parsing tags such as ID3, Vorbis comments, or metadata blocks. Works with file paths or custom parsers to extract key-value pairs like artist, title, album, and genre. Useful for media indexing, tagging tools, or audio library management.",
+      "description_length": 273,
+      "index": 34,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Metadata.Make",
+      "library": "metadata",
+      "description": "This module generates metadata parsers that extract structured key-value data from binary files using customizable charset conversion and format-specific rules. It operates on raw byte streams, file paths, or encoded content across audio, image, and container formats like ID3v1/v2, FLAC, JPEG, and MP4, supporting features such as embedded images and binary frame decoding. Typical use cases include media file analysis, tag extraction with encoding handling, and extensible metadata processing for heterogeneous file types.",
+      "description_length": 525,
       "index": 35,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Metadata.MP4",
-      "library": "metadata",
-      "description": "Reads metadata tags from MP4 files, returning key-value pairs such as artist, title, and album. It processes data from a file path or custom parser input, handling atoms in the MP4 container format. Use to extract embedded metadata from video or audio files in formats like .m4a or .mp4.",
-      "description_length": 287,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Metadata",
       "library": "metadata",
-      "description": "This module reads and processes structured metadata from multimedia files, converting it into key-value representations using format-specific parsers and generic utilities. It supports a wide range of data types including audio tags (ID3, Vorbis, FLAC), image metadata (EXIF, XMP, PNG), and video properties (RIFF, AVI, MP4), with operations for parsing, charset conversion, and MIME type detection. You can extract album art from MP3s, camera settings from JPEGs, or track information from WAV and OGG files, while combining parsers to handle unknown formats or custom binary streams. Submodules provide direct access to specific metadata structures like ID3v2 frames, RIFF chunks, and charset transcoding for robust metadata handling across heterogeneous file types.",
-      "description_length": 768,
-      "index": 37,
+      "description": "This library provides utilities for extracting metadata and converting character encodings from audio, image, and container formats like ID3 tags in MP3s, EXIF data in JPEGs, and metadata in FLAC or MP4 files. It processes raw byte streams, files, and encoded strings through customizable parsers, yielding structured key-value pairs and supporting operations such as embedded image extraction or binary frame parsing. Typical applications include media file analysis, tag editing, and transcoding workflows where format-specific metadata needs to be accessed or transformed.",
+      "description_length": 575,
+      "index": 36,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 38,
-    "meaningful_modules": 38,
+    "total_modules_in_package": 37,
+    "meaningful_modules": 37,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 768,
-    "min_description_length": 175,
-    "avg_description_length": 336.2894736842105,
-    "embedding_file_size_mb": 0.13855457305908203
+    "max_description_length": 575,
+    "min_description_length": 199,
+    "avg_description_length": 315.9189189189189,
+    "embedding_file_size_mb": 0.5365848541259766
   }
 }

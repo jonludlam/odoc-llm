@@ -1,149 +1,141 @@
 {
   "package": "current_github",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 16,
-  "creation_timestamp": "2025-07-15T23:08:30.686268",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 15,
+  "creation_timestamp": "2025-08-14T23:20:45.727035",
   "modules": [
-    {
-      "module_path": "Current_github.Api.Anonymous",
-      "library": "current_github",
-      "description": "This module provides a function to retrieve the head commit of a public GitHub repository's branch without authentication. It operates on repository identifiers and reference names, returning a commit identifier within the Current.t context. It is used to track changes in public repositories by polling the latest commit hash, requiring external webhook setup for notifications.",
-      "description_length": 379,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Current_github.Api.Status",
-      "library": "current_github",
-      "description": "This module constructs and manipulates GitHub commit status objects. It provides the `v` function to create a status with a state, optional description, and optional target URL. The supported states are `Error`, `Failure`, `Pending`, and `Success`, used to represent the outcome of checks in CI/CD workflows.",
-      "description_length": 308,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Current_github.Api.Repo",
-      "library": "current_github",
-      "description": "This module represents GitHub repositories and provides operations to retrieve repository metadata and associated commits. It works with repository identifiers and commit data structures to support queries like fetching CI references (branches and PRs) and resolving the head commit of the default branch. It is used to implement repository-specific logic in CI workflows, such as tracking active development branches or validating the latest code changes.",
-      "description_length": 456,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Current_github.Api.Ref",
-      "library": "current_github",
-      "description": "Handles GitHub references, including branches and pull requests, by providing conversions to Git-formatted strings, pretty-printing, and comparison operations. Works with the `t` type representing either a Git reference string or a pull request with associated metadata. Used to manage and manipulate GitHub refs in a type-safe way when interacting with Git repositories or the GitHub API.",
-      "description_length": 389,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Current_github.Api.Ref_map",
-      "library": "current_github",
-      "description": "This module implements an ordered map structure for GitHub reference identifiers, supporting insertion, removal, and conflict-resolving merges with polymorphic values, alongside ordered traversal and sequence-based transformations. It provides utilities like list-valued aggregations and structural sharing optimizations, designed for tracking repository branches, tags, or versioned API metadata where efficient key-based updates and ordered data processing are required.",
-      "description_length": 472,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
     {
       "module_path": "Current_github.Api.CheckRunStatus",
       "library": "current_github",
-      "description": "This module represents the status of a GitHub check run, including its state, optional description, summary, URL, and actions. It provides functions to construct a check run status with fields like `text`, `summary`, `url`, and `actions`, and to define custom actions with labels, descriptions, and identifiers. It is used to report build statuses and actionable items directly to GitHub via the API, such as indicating success, failure, or skip conditions with detailed reasoning.",
-      "description_length": 481,
-      "index": 5,
+      "description": "This module represents the status of a GitHub Check Run, including its state, optional description, summary, URL, and actions. It defines values to construct check run statuses with details like text, summary, and actions that can be triggered, along with the identifier used for job rebuilds. It is used to report build outcomes such as success, failure, or skip, and to associate actionable items like \"Re-run\" or \"Cancel\" with check runs in GitHub.",
+      "description_length": 451,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Current_github.Api.Monitor",
       "library": "current_github",
-      "description": "Monitors a GraphQL query for changes using webhooks, providing a way to observe and cache query results. Works with GitHub API instances and repository identifiers to track specific resources. Useful for detecting updates to GitHub repositories through GraphQL queries, such as changes to issues, pull requests, or other repository metadata.",
-      "description_length": 341,
-      "index": 6,
+      "description": "Monitors a GraphQL query for changes using webhooks, providing a `get` function to observe the query result for a specific repository. Works with `Current_github.Api.t` and `Current_github.Repo_id.t` to track and cache results over time. Useful for detecting and reacting to state changes in GitHub repositories via GraphQL subscriptions.",
+      "description_length": 338,
+      "index": 1,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Current_github.Api.CheckRun",
-      "library": "current_github",
-      "description": "Handles GitHub check runs by setting their status for specific commits. Works with `Current_github.Api.Commit.t` and `CheckRunStatus.t` types. Used to update the outcome of continuous integration checks on GitHub commits.",
-      "description_length": 221,
-      "index": 7,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Current_github.Api.Commit",
       "library": "current_github",
-      "description": "This module provides operations to access and manipulate GitHub commit data, including retrieving commit metadata such as hash, message, and timestamp, and setting commit statuses. It works with commit objects that represent Git commits in a GitHub repository, along with associated references like branches and pull requests. Concrete use cases include displaying commit details, linking commits to their source branches or forks, and updating commit status checks on GitHub.",
-      "description_length": 476,
+      "description": "This module provides operations to access and manipulate GitHub commit data, including retrieving commit metadata such as hash, message, and timestamp, and setting commit statuses. It works with commit objects that represent GitHub commits, along with associated data types like repository identifiers and URIs. Concrete use cases include displaying commit details, updating CI status on GitHub, and linking commits to pull requests or branches.",
+      "description_length": 445,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_github.Api.Anonymous",
+      "library": "current_github",
+      "description": "This module provides the `head_of` function to retrieve the head commit of a public GitHub repository's branch without authentication. It operates on repository identifiers and branch references, returning a promise for the commit ID. Use this to track changes in public repositories where webhook notifications are configured to update the commit reference.",
+      "description_length": 358,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_github.Api.Repo",
+      "library": "current_github",
+      "description": "This module represents GitHub repositories accessed via the API, providing operations to retrieve repository identifiers, compare and format repository values, and fetch version control data. It supports concrete interactions such as listing CI references (branches and open PRs) and resolving the head commit of the default branch. These capabilities enable tracking and building specific repository states in continuous integration workflows.",
+      "description_length": 444,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Current_github.Api.Ref_map",
+      "library": "current_github",
+      "description": "This module implements a functional map structure optimized for GitHub reference keys (`Ref.t`), offering ordered key traversal and physical equality checks. It supports standard map operations like insertion, deletion, and merging, along with transformations (e.g., `map`, `filter_map`), ordered queries (e.g., `min_binding`, `find_last_opt`), and bulk conversions to/from sequences. It is particularly useful for tracking versioned GitHub resources like branches or tags, enabling efficient merging of reference states, ordered iteration over repository hierarchies, or bulk updates from API responses.",
+      "description_length": 604,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_github.Api.Status",
+      "library": "current_github",
+      "description": "This module creates and manages GitHub commit status objects, representing build or test outcomes with states like success, failure, pending, or error. It works with `state` and `t` types to encapsulate status details including optional descriptions and target URLs. Used to report job results directly to GitHub via the API, enabling status checks on commits.",
+      "description_length": 360,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_github.Api.CheckRun",
+      "library": "current_github",
+      "description": "This module manages GitHub check runs, providing functions to update their status for specific commits. It works with `Current_github.Api.Commit.t` and `Current_github.Api.CheckRunStatus.t` to track and report build or test outcomes. Use it to notify GitHub of continuous integration results, such as passing or failing pipeline stages.",
+      "description_length": 336,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_github.Api.Ref",
+      "library": "current_github",
+      "description": "This module defines types and operations for representing Git references and GitHub pull requests. It includes functions to convert references to Git-formatted strings, compare reference values, and format reference data for display. It is used to identify and manipulate specific branches or pull requests in GitHub repositories during CI/CD workflows.",
+      "description_length": 353,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Current_github.Api.GRAPHQL_QUERY",
+      "module_path": "Current_github.Installation",
       "library": "current_github",
-      "description": "This module defines a GraphQL query structure used to monitor changes in GitHub repositories. It includes parsing logic for converting JSON responses into typed results and provides the query string with placeholders for repository owner and name. It is used to execute and track specific GraphQL queries against the GitHub API for repository-specific data.",
-      "description_length": 357,
+      "description": "This module represents a GitHub application installation, providing access to the associated account name, API client, and repository list. It works with GitHub installation data, including repositories and account metadata. Use it to interact with repositories configured for a specific installation, authenticate API requests, and manage installation-specific resources.",
+      "description_length": 372,
       "index": 9,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Current_github.Api",
       "library": "current_github",
-      "description": "This module provides direct access to the GitHub API, enabling authenticated GraphQL queries, repository data retrieval, and commit status management. It supports key data types such as repository references, commit statuses, check runs, and refs, with operations to fetch head commits, construct status updates, and monitor changes via webhooks or GraphQL. Submodules extend this functionality with type-safe ref handling, ordered reference maps, commit metadata manipulation, and check run reporting, enabling workflows like CI automation, webhook validation, and repository tracking. Specific capabilities include setting commit statuses with URLs, querying pull request metadata, and defining custom check run actions with labels and descriptions.",
-      "description_length": 751,
+      "description": "This module provides operations for interacting with GitHub's API, focusing on commit status management, check run creation, and repository reference tracking. It works with data structures representing commits, repository references, CI metadata, and GraphQL responses, using asynchronous promises for API communication. Typical use cases include synchronizing version control states, reporting CI pipeline results, and monitoring repository activity through GraphQL subscriptions.",
+      "description_length": 482,
       "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Current_github.Repo_id",
+      "module_path": "Current_github.App",
       "library": "current_github",
-      "description": "This module defines a type `t` representing a GitHub repository identifier with `owner` and `name` fields. It provides functions for pretty-printing (`pp`), comparing repository IDs (`compare`), and parsing them from command-line arguments (`cmdliner`). It is used to uniquely identify and manipulate GitHub repositories within command-line tools and formatting contexts.",
-      "description_length": 371,
+      "description": "This module represents a GitHub Application, providing access to its webhook secret and command-line configuration options. It supports creating installation-specific API clients and retrieving the list of installations for the app. Use it to configure and authenticate a GitHub App, manage its installations, or validate webhook payloads.",
+      "description_length": 339,
       "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Current_github.Installation",
-      "library": "current_github",
-      "description": "This module represents a GitHub application installation, providing access to the associated account name, API client, and repository list. It supports operations to retrieve repositories configured for the installation, compare installations by ID, and format installation data. Concrete use cases include managing per-organization app settings and accessing GitHub resources on behalf of an installed app.",
-      "description_length": 407,
-      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Current_github.Auth",
       "library": "current_github",
-      "description": "Handles GitHub OAuth authentication by creating configuration values, generating login URIs, and providing a web endpoint for login callbacks. It works with `Uri.t` for redirect URLs and integrates command-line configuration via `Cmdliner`. Use this to set up secure GitHub-based user authentication in a web application.",
-      "description_length": 321,
-      "index": 13,
-      "embedding_norm": 1.0000001192092896
+      "description": "Handles GitHub OAuth authentication by creating configuration values, generating login URIs, and providing a web endpoint for login callbacks. It works with `Uri.t` and `Current_web.Resource.t`, using client credentials and scopes to manage user authentication. Use this module to integrate GitHub login into a web application, validate users, and handle OAuth flow securely.",
+      "description_length": 375,
+      "index": 12,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Current_github.App",
+      "module_path": "Current_github.Repo_id",
       "library": "current_github",
-      "description": "This module represents a GitHub Application, providing access to its webhook secret and command-line configuration options. It supports creating installation-specific API access tokens and retrieving the list of installations associated with the app. Use this to configure and authenticate a GitHub App for handling webhooks or managing installations programmatically.",
-      "description_length": 368,
-      "index": 14,
-      "embedding_norm": 1.0
+      "description": "This module defines a type `t` representing a GitHub repository identifier with `owner` and `name` fields. It provides functions for pretty-printing (`pp`), comparing (`compare`), and parsing (`cmdliner`) repository identifiers. It is used to uniquely identify and manipulate GitHub repositories within command-line interfaces and data processing pipelines.",
+      "description_length": 357,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Current_github",
       "library": "current_github",
-      "description": "This module integrates with GitHub to automate workflows by processing webhook events and interacting with repositories through `Current.Engine`. It supports handling authentication, repository and installation management, and direct API access for tasks like setting commit statuses, querying pull request data, and managing check runs. Key data types include repository identifiers, installation records, and application configurations, with operations for parsing, comparing, and authenticating access. Specific workflows enabled by this module include CI/CD automation triggered by commits or pull requests, secure OAuth login flows, and programmatic management of GitHub App installations and their associated repositories.",
-      "description_length": 728,
-      "index": 15,
-      "embedding_norm": 1.0
+      "description": "Handles GitHub integration with functions for processing webhooks, managing commit statuses, and querying repository data via GraphQL. Works with repository identifiers, installation records, and CI metadata to support continuous integration workflows. Used to synchronize repository states, authenticate GitHub Apps, and report build results to GitHub.",
+      "description_length": 353,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 16,
-    "meaningful_modules": 16,
+    "total_modules_in_package": 15,
+    "meaningful_modules": 15,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 751,
-    "min_description_length": 221,
-    "avg_description_length": 426.625,
-    "embedding_file_size_mb": 0.05857658386230469
+    "max_description_length": 604,
+    "min_description_length": 336,
+    "avg_description_length": 397.8,
+    "embedding_file_size_mb": 0.21774768829345703
   }
 }

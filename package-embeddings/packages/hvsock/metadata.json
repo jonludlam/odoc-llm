@@ -1,293 +1,261 @@
 {
   "package": "hvsock",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 34,
-  "creation_timestamp": "2025-07-15T23:13:49.635433",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 30,
+  "creation_timestamp": "2025-08-15T12:32:18.572069",
   "modules": [
-    {
-      "module_path": "Hvsock_lwt_unix.Flow.Socket",
-      "library": "hvsock.lwt-unix",
-      "description": "This module implements Hyper-V socket operations for Lwt-based asynchronous networking. It supports creating, binding, listening, and connecting sockets with Hyper-V addresses, along with standard I/O operations like read, write, and close. Concrete use cases include inter-partition communication in virtualized environments and building custom network protocols over Hyper-V sockets.",
-      "description_length": 385,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
     {
       "module_path": "Hvsock_lwt_unix.Flow_shutdown.Socket",
       "library": "hvsock.lwt-unix",
-      "description": "This module implements Hyper-V socket communication primitives for Lwt-based asynchronous networking. It supports operations like binding, listening, accepting connections, and bidirectional data transfer with `Cstruct.t` buffers, while providing explicit control over socket shutdown states. Typical use cases include guest-host communication in virtualized environments and building custom network protocols over Hyper-V sockets.",
-      "description_length": 431,
+      "description": "This module implements Hypervisor socket operations for Lwt-based asynchronous networking, supporting binding, listening, accepting connections, and full-duplex communication over `Cstruct` buffers. It works with Hypervisor-specific socket addresses and file descriptors, enabling direct communication between partitions with blocking I/O support. Concrete use cases include setting up inter-partition TCP-like communication channels, handling incoming connections, and performing asynchronous reads and writes with explicit control over socket shutdown.",
+      "description_length": 554,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hvsock_lwt_unix.Flow.Socket",
+      "library": "hvsock.lwt-unix",
+      "description": "This module implements low-level socket operations for Hyper-V communication, including creating unbound sockets, binding to addresses, listening for connections, and handling connection acceptance. It supports reading from and writing to connected sockets, with explicit control over connection shutdown and file descriptor access. Use cases include building custom network protocols for virtualization environments and managing inter-partition communication.",
+      "description_length": 460,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hvsock_lwt_unix.Time",
+      "module_path": "Hvsock_lwt_unix.Flow",
       "library": "hvsock.lwt-unix",
-      "description": "Implements precise sleep operations using Lwt for asynchronous timing. Works with `int64` values representing nanoseconds and returns Lwt promises. Useful for implementing delays in event-driven networking code.",
-      "description_length": 211,
+      "description": "This module implements network communication flows for Hyper-V sockets, providing functions to read and write data using `Cstruct` buffers, with support for error handling and connection management. It works with `flow` types representing connected sockets, and includes operations for single and vectorized writes, reading into buffers, and closing connections. Concrete use cases include transmitting data over virtualized network interfaces and implementing custom communication protocols between virtual machine partitions.",
+      "description_length": 527,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock_lwt_unix.Flow_shutdown",
       "library": "hvsock.lwt-unix",
-      "description": "This module provides bidirectional communication flows over Unix and Hyper-V sockets for Lwt-based asynchronous I/O, supporting precise control over connection shutdown and data transmission. It includes operations to read from and write to flows using `Cstruct.t` buffers, with explicit direction-specific shutdown and graceful close handling. Concrete use cases include implementing network protocols like HTTP or custom RPC systems, particularly in virtualized environments requiring guest-host communication over Hyper-V sockets. Key data types include flow handles and buffer structures, enabling efficient, low-level network interaction with asynchronous concurrency.",
-      "description_length": 673,
+      "description": "This module implements bidirectional communication flows over Hypervisor sockets with Lwt-based asynchronous I/O. It provides operations for reading, writing, and shutting down socket connections, along with error handling for I/O operations. Concrete use cases include establishing and managing inter-partition communication channels, performing non-blocking reads and writes with `Cstruct` buffers, and gracefully closing connection endpoints.",
+      "description_length": 445,
       "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hvsock_lwt_unix.Flow",
+      "module_path": "Hvsock_lwt_unix.Time",
       "library": "hvsock.lwt-unix",
-      "description": "This module provides Lwt-based asynchronous network communication primitives using Unix sockets, enabling efficient, non-blocking I/O with `Cstruct.t` buffers for precise memory management. It supports core operations such as reading, writing, connection termination, and error handling, with concrete applications in network clients and servers. The Hyper-V socket submodule extends this functionality to virtualized environments, allowing creation, binding, and communication over Hyper-V addresses. Together, they enable building robust, custom network protocols with support for both standard and virtualization-specific socket operations.",
-      "description_length": 643,
+      "description": "Implements precise time-based delays using nanosecond-resolution sleeping. Works with `int64` values representing durations in nanoseconds and returns Lwt promises. Useful for implementing rate limiting, backoff strategies, or timed waits in asynchronous network code.",
+      "description_length": 268,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock_lwt_unix.Preemptive_detach",
       "library": "hvsock.lwt-unix",
-      "description": "This module implements a mechanism to detach synchronous functions into preemptive threads, allowing non-blocking execution of otherwise blocking operations. It works with functions that take a request type and return a response type, wrapping them in Lwt threads. Concrete use cases include offloading CPU-bound tasks like cryptographic operations or data processing to prevent event loop stalls in networked applications.",
-      "description_length": 423,
+      "description": "This module creates and manages detached preemptive threads to handle synchronous functions asynchronously. It works with functions that take a request and return a response, allowing them to be executed in a non-blocking way using Lwt. Concrete use cases include offloading CPU-bound tasks like compression or cryptographic operations without blocking the main event loop.",
+      "description_length": 373,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock_lwt_unix",
       "library": "hvsock.lwt-unix",
-      "description": "This module enables asynchronous network communication and concurrency control through Lwt, supporting precise timing, bidirectional flows, and preemptive threading. It provides data types like `Cstruct.t` buffers, flow handles, and Lwt promises, with operations for non-blocking read/write, connection management, and offloading synchronous tasks. You can implement custom network protocols over Unix or Hyper-V sockets, manage delays with nanosecond precision, and run blocking computations without stalling the event loop. Examples include building HTTP servers, RPC systems, or virtualized guest-host communication layers with fine-grained control over I/O and concurrency.",
-      "description_length": 677,
+      "description": "This module implements network communication and concurrency primitives for Hyper-V sockets using Lwt. It provides functions for managing socket flows with `Cstruct` buffers, asynchronous I/O operations, preemptive thread detachment for synchronous tasks, and high-resolution timing. Use cases include virtualized network data transmission, inter-partition communication in virtual machines, offloading CPU-bound operations, and precise timing control in asynchronous code.",
+      "description_length": 473,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hvsock.Af_common.S",
+      "module_path": "Hvsock.Hyperkit",
       "library": "hvsock",
-      "description": "This module defines core socket operations including creating, binding, listening, accepting, and connecting sockets, along with reading, writing, and shutting down connections. It works with socket file descriptors (`t`) and socket addresses (`sockaddr`), providing direct control over network communication. Concrete use cases include implementing custom network servers and clients, managing TCP connections with timeouts, and handling low-level data transmission using buffer lists.",
-      "description_length": 486,
+      "description": "This module implements low-level socket operations for the Hyperkit AF_VSOCK interface, enabling communication with virtual machines. It works with Unix file descriptors and custom sockaddr structures that include a path and port. Concrete use cases include binding to a VM socket, accepting incoming connections, and sending or receiving data over virtual machine channels.",
+      "description_length": 374,
       "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hvsock.Af_common",
+      "library": "hvsock",
+      "description": "This module provides low-level socket I/O operations using bigarrays and cstructs for efficient data transmission. It includes functions for sending and receiving data with precise buffer management, such as `writev` for scattering writes and `read_into` for reading into a structured buffer. Concrete use cases involve high-performance network communication where direct memory manipulation and zero-copy data handling are required.",
+      "description_length": 433,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hvsock.Hyperkit",
+      "module_path": "Hvsock.Af_vsock",
       "library": "hvsock",
-      "description": "This module implements low-level operations for managing AF_VSOCK sockets in Hyperkit, including creating, binding, listening, accepting, and connecting sockets with specific port and address configurations. It works directly with Hyperkit virtual machine sockets using file descriptors and structured socket addresses that include a path and port. Concrete use cases include establishing communication channels between a host and a Hyperkit virtual machine, handling incoming connections, and transferring data over virtual sockets with precise control over timeouts and connection lifecycles.",
-      "description_length": 594,
-      "index": 8,
+      "description": "This module implements low-level operations for managing AF_VSOCK sockets on Linux, enabling communication between virtual machines and the hypervisor. It supports creating, binding, listening, and connecting to VSOCK sockets using specific CID and port addresses, along with reading, writing, and shutting down connections. Use cases include building VM-specific network services, hypervisor-host communication, and virtualized environment monitoring tools.",
+      "description_length": 458,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock.Af_hyperv",
       "library": "hvsock",
-      "description": "This module implements low-level operations for AF_HYPERV sockets on Windows, enabling communication between Hyper-V partitions. It provides functions to create, bind, listen, accept, and connect sockets using virtual machine identifiers (vmid) and service identifiers (serviceid), along with I/O operations like read, write, and shutdown. Concrete use cases include setting up inter-partition communication channels and implementing custom networking services within a Hyper-V environment.",
-      "description_length": 490,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hvsock.Af_common",
-      "library": "hvsock",
-      "description": "This module combines low-level socket I/O operations with core networking functionality, enabling efficient data transmission using bigarrays and cstructs. It provides direct access to socket file descriptors and address types, supporting vectorized reads and writes for high-performance network communication. With functions for creating, binding, and managing sockets alongside fine-grained control over data transfer, it allows implementing custom TCP servers and clients that handle binary protocols and memory-efficient I/O. Example use cases include building event-driven network services and optimizing data pipelines with zero-copy techniques.",
-      "description_length": 651,
+      "description": "This module implements low-level operations for working with AF_HYPERV sockets on Windows, enabling communication between Hyper-V partitions. It provides functions to create, bind, connect, listen, and accept connections using virtual machine identifiers (vmid) and service identifiers (serviceid), along with utilities to convert addresses to strings and manage socket I/O. Concrete use cases include building inter-partition communication services, such as guest-to-host control channels or virtual machine monitoring tools.",
+      "description_length": 526,
       "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock.Socket",
       "library": "hvsock",
-      "description": "This module implements a cross-platform interface for working with hypervisor sockets, supporting operations such as socket creation, binding, listening, accepting connections, and data transmission. It handles socket addresses parsed from URIs and provides access to specific hypervisor address families like AF_HYPERV, AF_VSOCK, and Hyperkit. Use cases include building or managing virtual machine communication channels that work consistently across Linux, Windows, and macOS.",
-      "description_length": 479,
+      "description": "This module implements a cross-platform interface for hypervisor sockets, supporting operations like binding, listening, accepting connections, and reading or writing data using Cstruct buffers. It works with socket addresses parsed from URIs and abstracts platform-specific address families like AF_HYPERV, AF_VSOCK, and Hyperkit. Concrete use cases include establishing and managing connections to hypervisor services across different operating systems, handling connection timeouts on Windows, and implementing server or client logic for virtualized environments.",
+      "description_length": 566,
       "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hvsock.Af_vsock",
-      "library": "hvsock",
-      "description": "This module implements low-level operations for AF_VSOCK sockets on Linux, enabling communication between virtual machines and the hypervisor. It supports creating, binding, listening, and connecting sockets using VM-specific addresses (CID) and ports, with functions for sending and receiving data over established connections. Use cases include inter-VM networking and host-to-guest service interaction in virtualized environments.",
-      "description_length": 433,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Hvsock",
       "library": "hvsock",
-      "description": "This module provides low-level networking capabilities for hypervisor-based communication, supporting AF_VSOCK on Linux and Hyperkit, and AF_HYPERV on Windows. It enables socket creation, binding, listening, accepting, and connecting using identifiers such as VM CID, port, vmid, and serviceid, with support for efficient I/O operations using bigarrays and cstructs. Developers can implement custom network services, manage inter-VM or host-to-guest communication, and build cross-platform virtual machine networking solutions. Example use cases include setting up a TCP server in a virtualized environment, handling incoming connections from a Hyper-V partition, or transferring data with zero-copy techniques over a Hyperkit socket.",
-      "description_length": 734,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hvsock_lwt.Flow_shutdown.Make.Socket",
-      "library": "hvsock.lwt",
-      "description": "This module implements a Mirage FLOW over Hyper-V sockets with a protocol layer to handle unidirectional shutdowns and prevent data loss during shutdown or close operations. It works with `Socket.t`, `sockaddr`, and `Cstruct.t`, providing concrete operations like `read`, `write`, `shutdown_read`, and `shutdown_write` for reliable communication over hypervisor sockets. Use cases include secure, in-kernel communication between virtual machines and the host, where precise control over socket shutdown and data integrity is required.",
-      "description_length": 534,
-      "index": 14,
+      "description": "This module provides low-level socket operations for hypervisor and virtual machine communication across multiple platforms. It includes functions for creating, binding, connecting, and managing sockets using address families like AF_HYPERV, AF_VSOCK, and Hyperkit, with support for precise buffer handling via Cstruct and direct VM identifiers such as CID, vmid, and serviceid. Concrete use cases include implementing guest-to-host control channels, virtual machine monitoring, and cross-partition networking services.",
+      "description_length": 519,
+      "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Hvsock_lwt.Flow.Make.Socket",
       "library": "hvsock.lwt",
-      "description": "This module implements a buffered Mirage FLOW interface over hypervisor sockets, providing Lwt-based asynchronous I/O operations for network communication. It works with `Socket.t` as the primary socket handle and `sockaddr` for addressing, supporting connection setup, data transmission, and socket lifecycle management. Concrete use cases include building network servers with `bind`, `listen`, and `accept`, or clients that establish connections with `connect`, enabling efficient read/write operations over virtualized network interfaces.",
-      "description_length": 542,
-      "index": 15,
-      "embedding_norm": 1.0
+      "description": "This module implements a buffered Mirage FLOW interface over hypervisor sockets, providing Lwt-based asynchronous I/O operations for network communication. It works with `Socket.t` and `Cstruct.t` for managing connections and data transfer, supporting operations like `connect`, `accept`, `read`, and `write` with optional timeouts and partial I/O handling. Concrete use cases include building network servers and clients that communicate over Unix domain sockets or TCP/IP with non-blocking semantics.",
+      "description_length": 502,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hvsock_lwt.In_main_thread.MAIN",
+      "module_path": "Hvsock_lwt.Flow_shutdown.Make.Socket",
       "library": "hvsock.lwt",
-      "description": "This module provides a function `run_in_main` that executes Lwt promises in the main thread, ensuring safe interaction with thread-unsafe resources. It works with Lwt threads and OCaml's concurrency model to serialize asynchronous operations. Concrete use cases include handling GUI updates, managing shared state in a single-threaded context, or coordinating asynchronous I/O operations that must not run concurrently.",
-      "description_length": 419,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hvsock_lwt.Buffering.Make",
-      "library": "hvsock.lwt",
-      "description": "This module implements a buffering layer for network flows using Lwt for asynchronous operations, managing read and write buffers with configurable sizes and tracking buffer usage statistics via histograms. It works with file descriptors from the RW module, Cstruct.t buffers, and standard Lwt concurrency primitives like mutexes and condition variables. Concrete use cases include efficient handling of network I/O in MirageOS applications, such as buffering incoming data until a message is complete or batching outgoing writes to reduce system calls.",
-      "description_length": 553,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hvsock_lwt.Flow_shutdown.Make",
-      "library": "hvsock.lwt",
-      "description": "This module implements a Mirage FLOW over Hyper-V sockets with an added protocol layer to handle in-flight data loss during shutdowns. It provides functions for reading, writing, and managing bidirectional communication with proper shutdown signaling, using `Cstruct.t` buffers and lists of buffers for data transfer. The child module extends this functionality to unidirectional shutdowns, working with `Socket.t`, `sockaddr`, and `Cstruct.t` to ensure reliable communication in scenarios like secure in-kernel VM-to-host interactions. Specific operations include `read`, `write`, `shutdown_read`, and `shutdown_write`, all tailored to prevent data loss in buggy Hyper-V socket implementations.",
-      "description_length": 695,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hvsock_lwt.Flow.Make",
-      "library": "hvsock.lwt",
-      "description": "This module implements a buffered Mirage FLOW layer over hypervisor sockets, enabling asynchronous read and write operations with Lwt-based I/O and `Cstruct.t` buffers for efficient data transmission. It provides core functions for managing connection lifecycles, including shutdown and close, while its child module extends functionality with socket-specific operations using `Socket.t` and `sockaddr` for binding, listening, accepting, and connecting. Use it to build network clients and servers that require reliable byte-stream communication over virtualized interfaces, handling tasks like asynchronous data transfer and flow control.",
-      "description_length": 639,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hvsock_lwt.Buffering.Histogram",
-      "library": "hvsock.lwt",
-      "description": "This module implements a histogram data structure using a hash table to track frequency counts of integer keys. It provides operations to create an empty histogram and add values to it, incrementing their corresponding frequency count. It is useful for aggregating and analyzing discrete numerical data distributions, such as tracking request latencies or event occurrences.",
-      "description_length": 374,
-      "index": 20,
+      "description": "This module implements a Mirage FLOW-compliant interface over Hyper-V sockets with support for unidirectional shutdown signaling, using a protocol compatible with the `virtsock` implementation. It provides functions for binding, listening, accepting connections, connecting to remote partitions, and performing asynchronous reads and writes using Lwt, while ensuring in-flight data is preserved during shutdown or close operations. It works directly with `Cstruct.t` buffers and `Socket.sockaddr` addresses, and is suitable for secure, low-level communication between virtualized partitions.",
+      "description_length": 591,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock_lwt.Buffering.Log",
       "library": "hvsock.lwt",
-      "description": "This module provides direct logging functions for emitting messages at various severity levels, including debug, info, error, and warning, using the Logs library. It supports logging formatted messages and handling result values by logging errors when they occur, with customizable output and error propagation. Concrete use cases include logging network communication errors, tracing execution flow in asynchronous applications, and reporting malformed data during parsing or I/O operations.",
-      "description_length": 492,
-      "index": 21,
+      "description": "This module provides functions for logging messages at various severity levels, including specialized logging for `result` type errors. It supports `Logs.level`, `Logs.Tag.set`, and `result` values, with formatters for structured output. Use it to record application events, handle error results, and emit diagnostic information with customizable levels and tags.",
+      "description_length": 363,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hvsock_lwt.Buffering.Histogram",
+      "library": "hvsock.lwt",
+      "description": "This module implements a histogram data structure using a hash table to track frequency counts of integer keys. It provides operations to create an empty histogram and increment the count for a specific key. It is useful for aggregating and analyzing discrete numerical data, such as measuring request latencies or event frequencies in network applications.",
+      "description_length": 357,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hvsock_lwt.Flow.Make",
+      "library": "hvsock.lwt",
+      "description": "This module implements a buffered Mirage FLOW interface over hypervisor sockets, providing Lwt-based asynchronous I/O operations for network communication. It works with `Socket.t` and `Cstruct.t` for managing connections and data transfer, supporting operations like `connect`, `accept`, `read`, and `write` with optional timeouts and partial I/O handling. Concrete use cases include building network servers and clients that communicate over Unix domain sockets or TCP/IP with non-blocking semantics.",
+      "description_length": 502,
+      "index": 17,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hvsock_lwt.Flow_shutdown.Make",
+      "library": "hvsock.lwt",
+      "description": "This module implements a Mirage FLOW-compliant interface over Hyper-V sockets with support for unidirectional shutdown signaling, using a protocol compatible with the `virtsock` implementation. It provides functions for binding, listening, accepting connections, connecting to remote partitions, and performing asynchronous reads and writes using Lwt, while ensuring in-flight data is preserved during shutdown or close operations. It works directly with `Cstruct.t` buffers and `Socket.sockaddr` addresses, and is suitable for secure, low-level communication between virtualized partitions.",
+      "description_length": 591,
+      "index": 18,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock_lwt.Socket.Make",
       "library": "hvsock.lwt",
-      "description": "This module implements Lwt-based socket operations for environments where asynchronous I/O is not available, requiring blocking calls to run in background threads. It works with `Cstruct.t` buffers and socket addresses, supporting standard operations like bind, listen, accept, connect, read, and write, along with control functions like close and shutdown. Concrete use cases include managing hypervisor sockets that require thread-backed I/O due to lack of `select()` support.",
-      "description_length": 478,
-      "index": 22,
+      "description": "This module implements Lwt-based socket operations for asynchronous communication using a customizable socket family. It supports creating, binding, listening, accepting, connecting, reading, and writing over sockets, with concrete handling for hypervisor-level communication. Use cases include building asynchronous network servers and clients that require low-level socket control and integration with Lwt's event loop.",
+      "description_length": 421,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hvsock_lwt.S.SOCKET",
+      "module_path": "Hvsock_lwt.Buffering.Make",
       "library": "hvsock.lwt",
-      "description": "This module implements hypervisor socket operations for inter-partition communication. It supports creating unbound sockets, binding to addresses, listening for connections, and asynchronous accept, connect, read, and write operations using Lwt. The module works directly with file descriptors, Cstruct buffers, and socket addresses for low-level network interactions in a virtualized environment.",
-      "description_length": 397,
-      "index": 23,
+      "description": "This module implements a buffering layer for network flows using Lwt for asynchronous operations, managing read and write buffers with configurable sizes and providing functions for controlled data transfer. It works with Cstruct.t for buffer manipulation, Mirage_flow.write_error for handling write failures, and Unix.error for system-level issues. Concrete use cases include efficient handling of network protocols requiring precise flow control, such as implementing custom TCP-based communication layers or managing chunked data transfers with backpressure.",
+      "description_length": 561,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock_lwt.In_main_thread.Make",
       "library": "hvsock.lwt",
-      "description": "This module wraps a blocking function into an Lwt-compatible asynchronous function, allowing it to be safely called from Lwt threads. It manages a dedicated thread for executing the blocking function, ensuring that calls to it are serialized and non-blocking to the Lwt event loop. Use this when integrating synchronous, potentially blocking code\u2014like file I/O or legacy libraries\u2014into an Lwt-based application without disrupting concurrency.",
-      "description_length": 442,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hvsock_lwt.S.FN",
-      "library": "hvsock.lwt",
-      "description": "This module wraps a blocking function into an Lwt-compatible asynchronous interface. It manages the lifecycle of a function that converts requests to responses, allowing it to be applied in a non-blocking context. Use this when integrating synchronous functions into an Lwt-based network service or pipeline.",
-      "description_length": 308,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hvsock_lwt.Flow_shutdown",
-      "library": "hvsock.lwt",
-      "description": "This module implements a Mirage FLOW over Hyper-V sockets with a protocol layer to handle in-flight data loss during unidirectional shutdowns. It provides `read`, `write`, `shutdown_read`, and `shutdown_write` operations using `Cstruct.t` buffers and `Socket.t` to ensure reliable communication, particularly in VM-to-host scenarios. The design simulates graceful shutdown signaling as in the referenced Go implementation, preventing data loss even with buggy Hyper-V socket behavior. Example usage includes secure bidirectional communication where one side cleanly signals end-of-stream without losing pending data.",
-      "description_length": 616,
-      "index": 26,
+      "description": "This module wraps a blocking function into an Lwt-compatible asynchronous function, allowing it to be safely called from within an Lwt thread. It works with any function that takes a request value and returns a response value, encapsulating it in a thread-safe structure. Concrete use cases include exposing synchronous I/O or computation-heavy functions to an Lwt-based network service without blocking the event loop.",
+      "description_length": 419,
+      "index": 21,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Hvsock_lwt.Socket",
       "library": "hvsock.lwt",
-      "description": "This module provides Lwt-based socket operations using blocking system calls in environments without asynchronous I/O support. It operates on `Cstruct.t` buffers and socket addresses, offering standard socket functionality such as bind, listen, accept, connect, read, and write, along with close and shutdown. These operations enable handling of hypervisor sockets and similar use cases where thread-backed I/O is necessary. For example, it allows asynchronous network communication over TCP or Unix domain sockets in environments lacking `select()` or Lwt's native async support.",
-      "description_length": 580,
-      "index": 27,
+      "description": "Implements asynchronous socket communication using Lwt for non-blocking I/O operations. Works with Unix file descriptors and Lwt threads to handle connection setup, data transmission, and event handling. Useful for building network clients and servers that require asynchronous behavior, such as HTTP servers or real-time messaging systems.",
+      "description_length": 340,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hvsock_lwt.Flow",
+      "library": "hvsock.lwt",
+      "description": "Implements asynchronous network I/O operations over Lwt, handling socket connections and data transmission. Works with Lwt-wrapped file descriptors and network addresses to send and receive byte streams. Used for building non-blocking network clients and servers that interface with low-level system sockets.",
+      "description_length": 308,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hvsock_lwt.Flow_shutdown",
+      "library": "hvsock.lwt",
+      "description": "This module provides functions to initiate and detect unidirectional shutdowns on Hyper-V socket connections, simulating TCP-like shutdown behavior. It works with Lwt-based flow implementations to signal end-of-stream in one or both directions independently. Concrete use cases include gracefully terminating communication channels in virtualized networking stacks or inter-VM communication protocols.",
+      "description_length": 401,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hvsock_lwt.Buffering",
+      "library": "hvsock.lwt",
+      "description": "This module manages buffered socket communication with support for asynchronous I/O operations using Lwt. It works with socket descriptors and buffers to handle reading, writing, and framing of data streams. Use it to implement network protocols that require efficient, non-blocking data transfer over TCP or Unix domain sockets.",
+      "description_length": 329,
+      "index": 25,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hvsock_lwt.In_main_thread",
+      "library": "hvsock.lwt",
+      "description": "This module wraps blocking functions into Lwt-compatible asynchronous functions, enabling safe execution within Lwt threads. It works with functions that take a request and return a response, ensuring thread-safe invocation. Use it to integrate synchronous I/O or CPU-intensive operations into Lwt-based network services without blocking the event loop.",
+      "description_length": 353,
+      "index": 26,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock_lwt.Cstructs",
       "library": "hvsock.lwt",
-      "description": "This module provides operations for manipulating lists of Cstruct.t values, including shifting, calculating length, and extracting sublists. It works directly with Cstruct.t lists and integers to manage data slicing and traversal. Concrete use cases include handling fragmented network data buffers and implementing custom binary protocol parsers.",
-      "description_length": 347,
-      "index": 28,
+      "description": "This module manipulates lists of Cstruct.t values, providing operations to shift, measure, and slice the combined data. It supports efficient handling of network buffers by allowing byte-level access and modification across multiple Cstructs. Use cases include packet parsing, buffer management, and I/O operations where contiguous memory views are required.",
+      "description_length": 358,
+      "index": 27,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hvsock_lwt.In_main_thread",
-      "library": "hvsock.lwt",
-      "description": "This module enables safe execution of Lwt threads in the main thread context, ensuring compatibility with thread-unsafe operations and external event loops. It provides `run_in_main` for serializing asynchronous operations in a single-threaded context, ideal for GUI updates or shared state management, and wraps blocking functions into Lwt-compatible ones for non-blocking integration of synchronous code like file I/O. By abstracting execution context handling and managing dedicated threads, it coordinates Lwt concurrency with external systems and prevents race conditions in thread-unsafe scenarios.",
-      "description_length": 604,
-      "index": 29,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hvsock_lwt.Buffering",
-      "library": "hvsock.lwt",
-      "description": "This module coordinates efficient buffering for network data streams using Lwt-based asynchronous I/O, integrating histogram-based metrics tracking and structured logging for observability. It exposes buffered channels for reading and writing Cstruct.t buffers with backpressure control, while submodules manage histogram aggregation of performance data and logging of operational events at various severity levels. You can use it to batch network writes, measure latency distributions, and log errors during I/O processing\u2014all within a single cohesive interface for high-volume network applications.",
-      "description_length": 600,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hvsock_lwt.Flow",
-      "library": "hvsock.lwt",
-      "description": "This module provides a buffered Mirage FLOW implementation over hypervisor sockets, supporting asynchronous read and write operations using Lwt and `Cstruct.t` buffers. It includes core operations for managing connection lifecycles\u2014such as shutdown and close\u2014and extends these with socket-specific functionality for binding, listening, accepting, and connecting using `Socket.t` and `sockaddr`. Developers can use it to implement network clients and servers that perform reliable, efficient byte-stream communication over virtualized interfaces. Example use cases include asynchronous data transfer between virtual machines and managing flow control in a MirageOS-based network stack.",
-      "description_length": 684,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Hvsock_lwt.S",
       "library": "hvsock.lwt",
-      "description": "This module provides interfaces for asynchronous socket programming with Lwt, enabling non-blocking network I/O operations such as connect, read, and write using cooperative threads. It supports both high-level interactions through `Lwt_io.channel` and low-level control via `Lwt_unix.file_descr`, making it suitable for building clients and servers. The first child module extends this functionality to hypervisor-level sockets, allowing inter-partition communication with operations like bind, listen, and async accept over Cstruct buffers and socket addresses. The second child module bridges synchronous functions into Lwt pipelines, enabling non-blocking use of blocking request-response functions within the same network framework.",
-      "description_length": 737,
-      "index": 32,
+      "description": "This module defines interfaces for asynchronous socket operations using Lwt, including functions for connecting, reading, and writing over network sockets. It works with Lwt-based concurrency types like `Lwt_unix.file_descr` and `Lwt_io.channel`. Concrete use cases include implementing network clients and servers that require non-blocking I/O with Lwt cooperative threads.",
+      "description_length": 374,
+      "index": 28,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hvsock_lwt",
       "library": "hvsock.lwt",
-      "description": "This module combines Lwt-driven asynchronous I/O with Hyper-V and hypervisor socket abstractions to enable reliable, buffered communication in virtualized environments. It centers around `Cstruct.t` buffers and `Socket.t` types, offering `read`, `write`, `shutdown`, and `accept` operations alongside utilities for managing execution contexts and integrating blocking I/O into non-blocking pipelines. You can build resilient network clients and servers that handle in-flight data during shutdowns, batch I/O with backpressure, and safely coordinate thread-unsafe operations\u2014all while capturing performance metrics and structured logs for observability. Example applications include MirageOS-based VM-to-host communication stacks and async network services over Unix or TCP sockets with precise flow control.",
-      "description_length": 807,
-      "index": 33,
+      "description": "This module implements asynchronous network communication with Hyper-V sockets, providing non-blocking I/O operations for reading, writing, and managing connections. It works with Lwt threads, file descriptors, and Cstruct buffers to support efficient data transfer and protocol implementation. Concrete use cases include building virtualized network services, inter-VM communication layers, and low-level network proxies with precise control over socket behavior and buffering.",
+      "description_length": 478,
+      "index": 29,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 34,
-    "meaningful_modules": 34,
+    "total_modules_in_package": 30,
+    "meaningful_modules": 30,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 807,
-    "min_description_length": 211,
-    "avg_description_length": 534.0588235294117,
-    "embedding_file_size_mb": 0.12394905090332031
+    "max_description_length": 591,
+    "min_description_length": 268,
+    "avg_description_length": 440.8,
+    "embedding_file_size_mb": 0.4352731704711914
   }
 }

@@ -1,61 +1,53 @@
 {
   "package": "arp",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:14.566679",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 4,
+  "creation_timestamp": "2025-08-14T22:55:45.998249",
   "modules": [
     {
-      "module_path": "Arp.Make",
-      "library": "arp.mirage",
-      "description": "This module implements an ARP layer that manages IP-to-MAC address resolution, supporting operations to add, remove, and query IP addresses, as well as handle incoming ARP frames. It works with `Ipaddr.V4.t` for IP addresses, `Macaddr.t` for MAC addresses, and uses `Cstruct.t` for frame input handling. Concrete use cases include responding to ARP requests, sending GARP packets when IP bindings change, and maintaining an address cache for network communication over Ethernet.",
-      "description_length": 478,
+      "module_path": "Arp_handler",
+      "library": "arp",
+      "description": "This module manages ARP cache operations and network interactions for IPv4 and Ethernet addresses. It supports creating and modifying static and dynamic ARP entries, handling incoming ARP packets, generating replies, and sending gratuitous ARP frames. Concrete use cases include resolving IPv4 addresses to MAC addresses for network communication, managing ARP cache timeouts and retries, and handling ARP queries with customizable merge logic.",
+      "description_length": 444,
       "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Arp_packet",
+      "library": "arp",
+      "description": "This module handles ARP frame decoding and encoding for Ethernet and IPv4, providing operations to convert between byte buffers and a structured representation. It supports parsing raw data into typed ARP packets, including error handling for malformed input, and serializing packets into network-ready bytes. Use cases include network stack implementations and packet analysis tools where ARP messages must be constructed or inspected.",
+      "description_length": 436,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Arp.S",
+      "module_path": "Arp.Make",
       "library": "arp.mirage",
-      "description": "This module implements the Address Resolution Protocol (ARP) for translating IPv4 addresses into MAC addresses. It provides functions to manage a list of bound IP addresses, send GARP packets on changes, and query or update the ARP cache. Operations include adding, removing, or querying IP-MAC mappings, handling incoming ARP frames, and disconnecting from the ARP layer.",
-      "description_length": 372,
-      "index": 1,
+      "description": "This module implements an ARP layer that manages IP-to-MAC address resolution over Ethernet. It allows binding and unbinding IPv4 addresses, sending and responding to ARP requests, and querying resolved MAC addresses while handling GARP packets on IP changes. Use cases include configuring virtual interfaces with multiple IPs, resolving MAC addresses for network communication, and managing ARP responses in a network stack.",
+      "description_length": 425,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Arp",
       "library": "arp.mirage",
-      "description": "This module implements the Address Resolution Protocol (ARP) to map IPv4 addresses to MAC addresses, managing a cache of resolved addresses and supporting operations to add, remove, and query IP-MAC mappings. It processes incoming ARP frames, sends requests and responses, and handles GARP packets when IP bindings change, using `Ipaddr.V4.t`, `Macaddr.t`, and `Cstruct.t` for frame handling. It works with network interfaces and Ethernet frames to establish and maintain connectivity in local networks, enabling tasks like responding to ARP queries and updating address bindings dynamically.",
-      "description_length": 592,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Arp_handler",
-      "library": "arp",
-      "description": "This module implements an ARP protocol handler for resolving IPv4 addresses to Ethernet addresses, maintaining a cache of mappings and managing dynamic and static entries. It supports operations to query, update, and remove cache entries, process incoming ARP packets, generate ARP requests and replies, and handle timeouts and retries for unresolved queries. Concrete use cases include network stack implementations where IPv4 address resolution over Ethernet is required, such as in TCP/IP stacks or virtual networking components.",
-      "description_length": 532,
+      "description": "This module implements an ARP layer for managing IP-to-MAC address resolution over Ethernet. It supports binding and unbinding IPv4 addresses, sending and responding to ARP requests, and handling GARP packets on IP changes. It works with Ethernet frames and IPv4 addresses, providing concrete operations for network configuration tasks such as setting up virtual interfaces and resolving MAC addresses for communication.",
+      "description_length": 420,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Arp_packet",
-      "library": "arp",
-      "description": "This module handles ARP packet encoding and decoding for Ethernet and IPv4. It converts between a structured representation of ARP messages and their byte-level wire format, supporting operations like `decode` to parse packets from buffers and `encode` to serialize them. Use cases include network stack implementations and packet analysis tools where precise ARP handling is required.",
-      "description_length": 385,
-      "index": 4,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 5,
-    "meaningful_modules": 5,
+    "total_modules_in_package": 4,
+    "meaningful_modules": 4,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 592,
-    "min_description_length": 372,
-    "avg_description_length": 471.8,
-    "embedding_file_size_mb": 0.018607139587402344
+    "max_description_length": 444,
+    "min_description_length": 420,
+    "avg_description_length": 431.25,
+    "embedding_file_size_mb": 0.058363914489746094
   }
 }

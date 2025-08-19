@@ -1,63 +1,63 @@
 {
   "package": "charrua-client",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:06:23.456094",
+  "creation_timestamp": "2025-08-14T23:06:24.192004",
   "modules": [
     {
-      "module_path": "Dhcp_client_lwt.Make",
-      "library": "charrua-client.lwt",
-      "description": "This module implements a DHCP client that communicates over a network interface to obtain and optionally renew IP leases. It returns a stream of lease packets, where each lease contains the configuration data received from the server. It is used to acquire dynamic IP addresses and network settings from a DHCP server, with control over whether to renew the lease automatically.",
-      "description_length": 378,
+      "module_path": "Dhcp_ipv4.Make",
+      "library": "charrua-client.mirage",
+      "description": "This module handles IPv4 packet input, output, and configuration using a connected network device, ARP table, and Ethernet interface. It provides functions to send and receive IP packets with support for fragmentation, TTL, and checksum pseudoheaders, along with querying IP addresses, prefixes, and MTU. Concrete use cases include sending UDP or TCP packets over IPv4 and processing incoming IP traffic by protocol.",
+      "description_length": 416,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dhcp_client_lwt",
-      "library": "charrua-client.lwt",
-      "description": "This module provides a DHCP client implementation that interacts with network interfaces to acquire, renew, and manage IP leases. It exposes a stream-based interface for receiving lease updates, where each lease includes network configuration details such as IP address, subnet mask, and gateway. Users can control automatic lease renewal and inspect configuration data as it changes over time. Example usage includes monitoring lease changes or configuring network interfaces dynamically based on received DHCP responses.",
-      "description_length": 522,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dhcp_client",
-      "library": "charrua-client",
-      "description": "This module manages DHCP client state transitions and packet generation for acquiring and renewing IP leases. It works with MAC addresses, transaction IDs, and DHCP wire-format packets, producing formatted output and handling responses to progress lease negotiations. Use it to implement a DHCP client that can initiate lease requests, process server responses, and renew existing leases.",
-      "description_length": 388,
-      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dhcp_client_mirage.Make",
       "library": "charrua-client.mirage",
-      "description": "This module provides a `connect` function that interacts with a network device to obtain a DHCP lease, returning a stream of lease information that includes an IPv4 address and optional prefix. It works with network devices conforming to the `Network` module type and handles DHCP request configuration through optional parameters. Concrete use cases include initializing network interfaces in MirageOS unikernels to acquire dynamic IP configuration for IPv4 connectivity.",
-      "description_length": 472,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dhcp_ipv4.Make",
-      "library": "charrua-client.mirage",
-      "description": "This module handles IPv4 packet demultiplexing, transmission, and address management for a network device. It processes incoming IP frames by dispatching to protocol-specific handlers, constructs IP headers for outgoing packets, and provides source address selection, pseudoheader generation, and MTU handling. It is used to integrate IPv4 networking with TCP, UDP, and other protocols over a connected network interface.",
-      "description_length": 421,
-      "index": 4,
-      "embedding_norm": 1.0
+      "description": "This module provides a `connect` function that interacts with a network stack to obtain a DHCP lease, optionally requesting specific DHCP option codes. It works with IPv4 prefixes and addresses, returning a stream of lease information that includes the network configuration and optional gateway. A concrete use case is configuring a virtual machine's network interface with a dynamically assigned IP address and subnet mask in a MirageOS unikernel.",
+      "description_length": 449,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Dhcp_ipv4",
       "library": "charrua-client.mirage",
-      "description": "This module implements IPv4 networking over a network interface, handling packet demultiplexing, transmission, and address management. It provides core operations for processing incoming IP frames, constructing outgoing IP headers, selecting source addresses, generating pseudoheaders, and managing MTU constraints. It enables integration of IPv4 with higher-level protocols like TCP and UDP. Example usage includes sending and receiving IP packets, handling fragmented frames, and binding to specific source addresses for transmission.",
-      "description_length": 536,
-      "index": 5,
+      "description": "This module handles DHCPv4 packet parsing, construction, and validation. It operates on raw network buffers and DHCPv4 message structures, providing functions to extract, modify, and serialize fields such as transaction IDs, client and server addresses, and option values. Use it to implement DHCP clients or servers, or to analyze and manipulate DHCP traffic in network tools.",
+      "description_length": 377,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dhcp_client_mirage",
       "library": "charrua-client.mirage",
-      "description": "This module enables dynamic IPv4 configuration by connecting to a network device and acquiring a DHCP lease, which includes an IP address and optional prefix. It provides a `connect` function that streams lease updates and supports optional configuration parameters for customizing DHCP requests. It is used to initialize network interfaces in MirageOS unikernels, allowing them to obtain and react to changes in IP configuration automatically. For example, it can be used to set up a network interface with a dynamically assigned IP address and handle lease renewals in response to network events.",
-      "description_length": 598,
+      "description": "This module's `Make` functor provides a `connect` function that obtains a DHCP lease from a network stack, optionally requesting specific DHCP options. It operates on IPv4 prefixes and addresses, producing a stream of lease details including network configuration and gateway. It is used to dynamically assign IP addresses and subnet masks to virtual machine interfaces in MirageOS unikernels.",
+      "description_length": 393,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dhcp_client_lwt.Make",
+      "library": "charrua-client.lwt",
+      "description": "This module implements a DHCP client that communicates over a network interface to obtain and optionally renew DHCP leases. It returns a stream of lease packets, each representing a successful DHCP response, and allows configuration of the transaction ID and requested options. It is used to acquire network configuration details like IP addresses and server information from a DHCP server.",
+      "description_length": 390,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dhcp_client_lwt",
+      "library": "charrua-client.lwt",
+      "description": "This module implements a DHCP client that sends and receives DHCP messages over a network interface, handling lease acquisition and renewal. It works with network interface descriptors and DHCP packet structures, producing a stream of lease responses. It is used to dynamically obtain IP configuration, including addresses, subnet masks, and gateway information, from a DHCP server.",
+      "description_length": 382,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dhcp_client",
+      "library": "charrua-client",
+      "description": "This module implements a DHCP client state machine for acquiring and renewing IP leases via network packets. It operates on a stateful client type `t`, using MAC addresses and DHCP wire protocol packets to track transactions and generate appropriate responses. Concrete use cases include initiating DHCP requests with custom transaction IDs, processing incoming server responses to progress lease acquisition, and renewing existing leases by generating subsequent request packets.",
+      "description_length": 480,
       "index": 6,
       "embedding_norm": 1.0
     }
@@ -69,9 +69,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 598,
-    "min_description_length": 378,
-    "avg_description_length": 473.57142857142856,
-    "embedding_file_size_mb": 0.02582550048828125
+    "max_description_length": 480,
+    "min_description_length": 377,
+    "avg_description_length": 412.42857142857144,
+    "embedding_file_size_mb": 0.10190010070800781
   }
 }

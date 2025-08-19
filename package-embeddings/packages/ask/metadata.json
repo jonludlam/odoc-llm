@@ -1,9 +1,9 @@
 {
   "package": "ask",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 11,
-  "creation_timestamp": "2025-07-15T23:07:02.952804",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:10:22.384612",
   "modules": [
     {
       "module_path": "Ask.MariaDb.Questionnaire",
@@ -14,96 +14,80 @@
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ask.Model.Event",
+      "module_path": "Ask.Model.Questionnaire",
       "library": "ask",
-      "description": "This module defines a polymorphic variant type `t` representing events related to questionnaire answers, including creation, update, and deletion of text and asset answers. It provides functions for converting events to and from JSON, pretty-printing, equality checking, and string representation. Concrete use cases include serializing events for logging, transmitting answer changes over an API, and comparing event data for synchronization.",
-      "description_length": 443,
+      "description": "This module defines a data structure for representing a questionnaire, including operations to access and modify its properties such as questions, description, label, and UUID. It supports working with lists of question-answer pairs and provides functions to convert to and from JSON, compare instances, and construct or update questionnaires. Specific use cases include building and validating structured forms, managing dynamic question sets, and handling user responses with optional fields.",
+      "description_length": 494,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Ask.Model.Question",
+      "module_path": "Ask.Model.Event",
       "library": "ask",
-      "description": "This module provides functions to define structured form questions with type-specific validation rules and validate user inputs against them. It operates on a sum type representing questions with metadata (labels, required status) and constraints (regex, allowed options, file size limits), offering serialization, comparison, field extraction, and validation operations. These capabilities support use cases like dynamic form generation, data integrity enforcement, and handling diverse input types such as files, dates, or selections.",
-      "description_length": 536,
+      "description": "This module defines a polymorphic variant type `t` representing events related to questionnaire answers, including creation, update, and deletion of text and asset answers. It provides functions for converting events to and from JSON, pretty-printing, comparing for equality, and generating string representations. Concrete use cases include serializing answer events for logging, transmitting over a network, or reconstructing state changes in a questionnaire system.",
+      "description_length": 468,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ask.Model.Questionnaire",
-      "library": "ask",
-      "description": "This module defines a data structure representing a questionnaire, with operations to access and modify its properties, including its questions, label, description, and UUIDs. It supports working with lists of question-answer pairs and provides functions to convert to and from JSON, compare instances, and format for display. Specific use cases include constructing questionnaires with required fields, updating questions to optional status, validating readiness for submission, and processing answers to generate events.",
-      "description_length": 522,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ask.Model.QuestionAnswer",
-      "library": "ask",
-      "description": "This module handles structured question-answer pairs, providing serialization, comparison, and manipulation functions. It works with lists of question-answer tuples to manage form-like data, supporting operations like filtering, updating, and checking submission readiness. Concrete use cases include processing user input forms, tracking answered questions, and generating events based on changes in answers.",
-      "description_length": 409,
-      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Ask.Model.AnswerInput",
       "library": "ask",
-      "description": "This module defines a sum type for representing either text or asset-based answers, where text answers are strings and asset answers include metadata like filename, size, MIME type, and encoded data. It provides functions to convert values to and from JSON, display them as strings, extract text content, compare for equality, and map MIME types to file extensions. Concrete use cases include handling user-submitted answers with optional file uploads and serializing or deserializing answer data for storage or transmission.",
-      "description_length": 525,
+      "description": "This module defines a sum type for representing either text or asset-based answers, where text answers are strings and asset answers include metadata like filename, size, and MIME type along with the raw data. It provides functions to convert values to and from JSON, pretty-print them, extract text content, compare for equality, and map MIME types to file extensions. Concrete use cases include handling user-submitted answers that may include both text responses and uploaded files with associated metadata.",
+      "description_length": 510,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ask.Model.Question",
+      "library": "ask",
+      "description": "This module defines a variant type for form questions with metadata like labels, constraints, and validation rules (e.g., text fields with regex, select inputs with options, file uploads with MIME type limits). It supports operations to validate answers against these constraints, check required status, and modify question properties, working in tandem with answer input types to enforce data integrity. Use cases include dynamic form generation, user input validation pipelines, and structured data collection workflows.",
+      "description_length": 522,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ask.Model.QuestionAnswer",
+      "library": "ask",
+      "description": "This module handles question-answer pairs, providing serialization to and from JSON, pretty-printing, equality checks, and string representation. It includes functions to filter and update question-answer lists, check submission readiness, and generate events based on changes to specific question-answer entries. Use cases include managing interactive questionnaires, validating user input, and tracking changes for audit logging.",
+      "description_length": 431,
       "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ask.Model",
-      "library": "ask",
-      "description": "This module handles the core data structures and operations for managing questionnaires, including events, questions, answers, and structured form data. It defines key types such as polymorphic variants for answer events, sum types for questions with validation rules, and data structures for questionnaires and answer pairs. Operations include JSON serialization, validation, comparison, filtering, and event generation, supporting tasks like form submission, dynamic question updates, and handling text or file-based answers with metadata. Specific use cases include synchronizing answer changes, validating user input against constraints, and transmitting structured questionnaire data over an API.",
-      "description_length": 701,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ask.Sig",
-      "library": "ask",
-      "description": "This module manages the lifecycle and registration of a questionnaire service, providing functions to initialize and manage service dependencies. It operates on service containers and lifecycle hooks, specifically integrating with Sihl's container system. Concrete use cases include setting up questionnaire workflows and ensuring service readiness during application startup.",
-      "description_length": 376,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ask.Sig-Questionnaire",
-      "library": "ask",
-      "description": "This module manages the lifecycle of questionnaires and templates, supporting operations to create templates, add questions, instantiate questionnaires from templates, and handle events. It works with questionnaire and question data structures, allowing answers to be submitted or modified for specific questionnaires. Concrete use cases include building dynamic surveys, managing user responses, and deleting asset-related answers.",
-      "description_length": 432,
-      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ask.MariaDb",
       "library": "ask",
-      "description": "This module orchestrates the lifecycle of a MariaDB-backed questionnaire service, starting and stopping it within a container using Lwt for asynchronous control. It coordinates with its child module for database interactions, which handles creating and modifying questionnaire templates, recording answers, and managing events. Key data types include questionnaires, events, and answers, with operations to instantiate, update, and persist them in MariaDB. Examples include initializing a service on startup, defining a questionnaire from a template, and logging user responses asynchronously.",
-      "description_length": 593,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides database integration for managing questionnaires and events in MariaDB. It supports operations like creating questionnaire templates, adding and modifying questions, recording user answers, and handling lifecycle events. Concrete use cases include persisting questionnaire structures, storing user responses, and managing template versions in a MariaDB database.",
+      "description_length": 383,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ask.Model",
+      "library": "ask",
+      "description": "This module implements a structured questionnaire system with rich data modeling for questions, answers, and events. It supports operations such as validation of user inputs against constraints, handling text and asset-based answers with metadata, and tracking changes through event logging. Use cases include dynamic form validation, structured data collection with file uploads, and audit trail generation for questionnaire responses.",
+      "description_length": 436,
+      "index": 7,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Ask",
       "library": "ask",
-      "description": "This module coordinates the construction of database queries and mapping of results for a question-answering system, translating user input models into parameterized SQL and converting result sets into structured data. It works with polymorphic variants for events, sum types for validated questions, and structured forms, offering operations to generate queries, decode rows, and handle dynamic updates or submissions. Child modules manage questionnaire data lifecycles, service initialization with Sihl, template-driven survey creation, and MariaDB-backed persistence, enabling use cases like form validation, dynamic question updates, and asynchronous logging of user responses. Together, they support building, managing, and persisting complex surveys with validation, structured answers, and event-driven workflows.",
-      "description_length": 820,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements a structured questionnaire system with rich data modeling for questions, answers, and events. It supports validation of user inputs, handling text and asset-based answers with metadata, and tracking changes through event logging. Use cases include dynamic form validation, structured data collection with file uploads, and audit trail generation for questionnaire responses.",
+      "description_length": 397,
+      "index": 8,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 11,
-    "meaningful_modules": 11,
+    "total_modules_in_package": 9,
+    "meaningful_modules": 9,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 820,
-    "min_description_length": 376,
-    "avg_description_length": 529.8181818181819,
-    "embedding_file_size_mb": 0.04039478302001953
+    "max_description_length": 522,
+    "min_description_length": 383,
+    "avg_description_length": 456.8888888888889,
+    "embedding_file_size_mb": 0.13088417053222656
   }
 }

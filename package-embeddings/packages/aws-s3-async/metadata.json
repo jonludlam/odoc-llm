@@ -1,31 +1,31 @@
 {
   "package": "aws-s3-async",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 15,
-  "creation_timestamp": "2025-07-15T23:08:24.151737",
+  "creation_timestamp": "2025-08-14T23:19:53.544507",
   "modules": [
-    {
-      "module_path": "Aws_s3_async.Io.Deferred.Or_error",
-      "library": "aws-s3-async",
-      "description": "This module combines deferred computation with error handling, allowing asynchronous operations to return either a value or an exception. It provides functions to create successful or failed deferred results, chain operations with error propagation using bind (`>>=`), and catch exceptions within deferred contexts. Concrete use cases include handling asynchronous S3 requests where errors need to be gracefully managed without blocking, such as uploading or downloading files with potential network failures.",
-      "description_length": 509,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Aws_s3_async.S3.Multipart_upload.Stream",
       "library": "aws-s3-async",
-      "description": "Handles streaming data uploads for S3 multipart uploads in an asynchronous context. It provides the `upload_part` function to send data chunks from a pipe reader, specifying part number, data length, and chunk size. This module is used to efficiently upload large files to S3 by breaking them into manageable parts.",
-      "description_length": 315,
-      "index": 1,
-      "embedding_norm": 1.0
+      "description": "Handles streaming data uploads for S3 multipart uploads using asynchronous pipes. It provides the `upload_part` function to send data chunks to S3, working with multipart upload handles, byte streams, and configurable chunk sizes. Useful for uploading large files from sources like file readers or network streams without loading the entire content into memory.",
+      "description_length": 361,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Aws_s3_async.S3.Ls",
+      "module_path": "Aws_s3_async.Io.Deferred.Or_error",
       "library": "aws-s3-async",
-      "description": "Performs asynchronous listing of S3 bucket contents, returning paginated results. It handles `content list` and continuation tokens for large listings. Use to retrieve objects from a bucket efficiently in an async workflow.",
-      "description_length": 223,
+      "description": "This module combines deferred computation with error handling, allowing asynchronous operations to return either a value or an exception. It provides functions to create successful or failed results, chain operations with `>>=`, and catch exceptions within asynchronous workflows. Concrete use cases include handling asynchronous S3 requests where errors must be propagated or recovered without blocking execution.",
+      "description_length": 414,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Aws_s3_async.Credentials.Iam",
+      "library": "aws-s3-async",
+      "description": "This module retrieves IAM role names and temporary credentials for AWS S3 operations. It works with strings for role identifiers and `Aws_s3__Credentials.t` for credential data. Concrete use cases include fetching an IAM role name and obtaining time-limited access keys for secure S3 access.",
+      "description_length": 291,
       "index": 2,
       "embedding_norm": 1.0
     },
@@ -38,90 +38,90 @@
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Aws_s3_async.Io.Pipe",
+      "module_path": "Aws_s3_async.S3.Multipart_upload",
       "library": "aws-s3-async",
-      "description": "This module provides functions to create and manage unidirectional data pipes with readers and writers. It supports operations like writing and reading elements, transferring data between pipes, and closing ends of the pipe explicitly or implicitly when operations complete. Concrete use cases include streaming data between asynchronous components, such as uploading or downloading data in chunks, or implementing custom communication channels between concurrent tasks.",
-      "description_length": 470,
+      "description": "This module manages multipart uploads to S3, providing operations to initialize an upload, upload or copy individual parts, complete the upload, and abort it. It works with multipart upload handles, string data, and byte ranges, supporting streaming through the Stream submodule. Concrete use cases include uploading large files in chunks from disk or network streams, and copying parts of existing S3 objects into a new multipart upload.",
+      "description_length": 438,
       "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Aws_s3_async.Credentials.Local",
+      "library": "aws-s3-async",
+      "description": "Reads AWS credentials from local configuration files, such as `~/.aws/credentials`, supporting asynchronous operations. It parses and returns credential data structured as `Aws_s3__Credentials.t`, including access key, secret key, and optional session token. Useful for loading stored credentials to authenticate S3 requests without manual input.",
+      "description_length": 346,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Aws_s3_async.Io.Deferred",
       "library": "aws-s3-async",
-      "description": "This module enables asynchronous I/O with error-aware deferred execution, supporting operations like chaining, timeouts, and result handling through `Or_error`. It integrates deferred computation with error handling, allowing creation of successful or failed deferred values, binding operations with error propagation, and catching exceptions in asynchronous contexts. Use cases include non-blocking S3 API calls, file uploads with error recovery, and delayed task execution with timeout handling. Key data types include `Deferred.t` and `Or_error.t`, with operations like `bind`, `catch`, and `map` shaping asynchronous workflows.",
-      "description_length": 631,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Aws_s3_async.Credentials.Local",
-      "library": "aws-s3-async",
-      "description": "Loads AWS credentials from local configuration files, environment variables, or instance metadata. It supports asynchronous retrieval of credentials using the `get_credentials` function, which optionally takes a profile name. This module is used to authenticate S3 requests when running in environments like EC2 instances or local development setups with AWS CLI configured.",
-      "description_length": 374,
+      "description": "This module implements asynchronous computation primitives for non-blocking I/O operations, particularly for interacting with S3 services. It supports deferred execution through combinators like `>>=`, `>>|`, and `>>=?`, and handles time-based scheduling with `after`. Use cases include composing asynchronous S3 requests with error handling, scheduling retries after delays, and running background operations without blocking the main execution flow.",
+      "description_length": 451,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Aws_s3_async.Credentials.Iam",
+      "module_path": "Aws_s3_async.S3.Ls",
       "library": "aws-s3-async",
-      "description": "This module retrieves IAM role names and associated temporary credentials asynchronously. It interacts with IAM services to obtain short-lived credentials for a specified role. Use this module to securely access AWS resources without long-term keys, particularly in serverless or role-based environments.",
-      "description_length": 304,
+      "description": "Performs asynchronous listing operations on S3 buckets, returning paginated results. It handles `content list` and continuation tokens, allowing traversal of large bucket contents beyond standard API limits. Use to enumerate objects in a bucket with support for pagination and filtering by prefix.",
+      "description_length": 297,
       "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Aws_s3_async.S3.Multipart_upload",
-      "library": "aws-s3-async",
-      "description": "This module coordinates multipart uploads to S3, managing the full lifecycle from initialization to completion or abortion. It supports uploading or copying individual parts, enabling reliable and resumable transfers of large files. The main operations include initializing an upload, processing parts via streaming with `upload_part` from the child module, and finalizing the upload. Use it to upload data in chunks from a pipe reader or copy parts from existing S3 keys efficiently.",
-      "description_length": 484,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Aws_s3_async.S3.Stream",
-      "library": "aws-s3-async",
-      "description": "Handles streaming data to and from Amazon S3 using asynchronous pipes. It provides `put` for uploading data from a pipe reader and `get` for downloading data into a pipe writer, supporting operations like partial content retrieval and metadata handling. This module is ideal for efficiently transferring large files or continuous data streams without loading entire contents into memory.",
-      "description_length": 387,
-      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Aws_s3_async.Credentials.Helper",
       "library": "aws-s3-async",
-      "description": "This module provides an asynchronous function to retrieve AWS credentials, specifically loading them from a specified profile in the AWS configuration file. It works with the `Aws_s3__Credentials.t` type and returns a deferred result wrapped in an error-aware monad. A typical use case involves authenticating S3 requests by loading credentials dynamically from disk during async execution.",
-      "description_length": 390,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "Handles credential retrieval for AWS S3 operations asynchronously. It provides a function to load credentials from a specified profile, returning them in a deferred result. Useful for authenticating S3 requests without blocking the main execution thread.",
+      "description_length": 254,
+      "index": 8,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Aws_s3_async.Credentials",
+      "module_path": "Aws_s3_async.Io.Pipe",
       "library": "aws-s3-async",
-      "description": "This module handles AWS S3 credential management in asynchronous applications, supporting credential retrieval from IAM, local sources, or custom providers. It defines core data types like `Aws_s3__Credentials.t` representing access keys and tokens, and offers operations to load, refresh, and authenticate using these credentials. The module enables use cases such as authenticating S3 requests on EC2 instances, rotating temporary credentials from IAM roles, and loading credentials from local AWS configuration profiles. Submodules provide specific async functions like `get_credentials` for profile-based loading, IAM role assumption, and environment-based credential resolution.",
-      "description_length": 683,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements asynchronous pipes for streaming data between S3 operations, allowing bidirectional communication between readers and writers. It supports creating connected reader-writer pairs, writing and reading values through deferred I/O, and transferring data between endpoints until closure. Concrete use cases include streaming file uploads or downloads from S3 without fully buffering data in memory.",
+      "description_length": 416,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Aws_s3_async.S3.Stream",
+      "library": "aws-s3-async",
+      "description": "Handles streaming data to and from Amazon S3 using asynchronous pipes. It provides `put` for uploading data from a pipe reader and `get` for downloading data to a pipe writer, supporting operations like partial content retrieval and metadata handling. This module is ideal for efficiently transferring large files or continuous data streams without loading entire content into memory.",
+      "description_length": 384,
+      "index": 10,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Aws_s3_async.Io",
       "library": "aws-s3-async",
-      "description": "This module combines unidirectional data pipes with asynchronous I/O to enable efficient, error-aware data streaming between concurrent components. It provides core data types like pipes for managing data flow and `Deferred.t` with `Or_error.t` for handling asynchronous operations and errors. Operations include reading from and writing to pipes, chaining deferred actions, and handling timeouts or exceptions during I/O. Examples include streaming file uploads in chunks, transferring data between asynchronous tasks, and implementing resilient network communication with error recovery.",
-      "description_length": 589,
-      "index": 12,
+      "description": "This module provides asynchronous I/O primitives tailored for non-blocking interaction with S3 services. It includes deferred computation combinators for composing and sequencing S3 requests with error handling, and pipes for streaming data between S3 endpoints without full in-memory buffering. Use cases include scheduling retry logic with time delays, executing background S3 operations, and transferring large files in a memory-efficient manner.",
+      "description_length": 449,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Aws_s3_async.S3",
       "library": "aws-s3-async",
-      "description": "This module enables asynchronous interaction with Amazon S3, supporting core operations like put, get, head, delete, and multipart uploads. It works with strings, custom metadata types, and range-based partial downloads to handle object content and properties efficiently. Child modules extend functionality to list bucket contents with pagination, delete multiple objects or versions in bulk, stream data via pipes, and manage multipart uploads with resumable transfers. Use it to upload large files in chunks, retrieve partial content, list scalable buckets, or delete versioned objects in async workflows.",
-      "description_length": 608,
+      "description": "This module implements asynchronous S3 operations for interacting with Amazon S3 buckets and objects, including uploading, downloading, listing, and deleting content with support for advanced features like multipart uploads and versioned deletes. It works directly with S3 buckets, object keys, byte ranges, and metadata, handling paginated responses, continuation tokens, and error conditions specific to S3 such as redirects and throttling. Concrete use cases include streaming large files to and from S3 using pipes, performing bulk deletions of objects, uploading data in chunks via multipart uploads, and retrieving partial object content with byte range requests.",
+      "description_length": 669,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Aws_s3_async.Credentials",
+      "library": "aws-s3-async",
+      "description": "This module manages AWS S3 credential retrieval through three submodules. It works with string identifiers and `Aws_s3__Credentials.t` structures containing access keys, secrets, and tokens. It supports concrete use cases like loading IAM role credentials, reading local AWS config files, and retrieving profile-based credentials asynchronously.",
+      "description_length": 345,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Aws_s3_async",
       "library": "aws-s3-async",
-      "description": "This module provides asynchronous tools for managing AWS S3 credentials, streaming data efficiently, and interacting with S3 objects. It supports credential handling through `Aws_s3__Credentials.t`, data streaming via pipes and `Deferred.t` with `Or_error.t`, and core S3 operations like put, get, and multipart uploads. Use cases include rotating IAM credentials on EC2, streaming file uploads in chunks, and listing or deleting S3 objects asynchronously. It enables resilient, error-aware data transfer and integrates with async workflows for scalable S3 interactions.",
-      "description_length": 570,
+      "description": "This module provides asynchronous operations for working with AWS S3, including credential management, I/O primitives, and direct interaction with S3 resources. It handles data types such as S3 object keys, byte ranges, metadata, and AWS credentials, supporting concrete workflows like streaming large files, multipart uploads, and paginated object listings. Use cases include efficient data transfer with pipes, secure credential retrieval, and non-blocking S3 operations with robust error handling.",
+      "description_length": 500,
       "index": 14,
       "embedding_norm": 1.0
     }
@@ -133,9 +133,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 683,
-    "min_description_length": 223,
-    "avg_description_length": 456.06666666666666,
-    "embedding_file_size_mb": 0.054904937744140625
+    "max_description_length": 669,
+    "min_description_length": 254,
+    "avg_description_length": 394.6,
+    "embedding_file_size_mb": 0.21779632568359375
   }
 }

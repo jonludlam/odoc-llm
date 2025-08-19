@@ -1,157 +1,93 @@
 {
   "package": "ke",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 17,
-  "creation_timestamp": "2025-07-15T23:09:48.873809",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:25:22.765306",
   "modules": [
     {
-      "module_path": "Ke.Rke.Weighted.N",
+      "module_path": "Ke.Fke.Weighted.N",
       "library": "ke",
-      "description": "This module provides low-level operations for efficiently transferring elements between a weighted queue and external storage using blitting. It supports pushing elements from a source buffer into the queue, peeking at queued elements, and removing elements from the queue after copying them to a destination buffer. These functions are useful for high-performance data streaming and batch processing where direct memory manipulation is required.",
-      "description_length": 446,
+      "description": "This module implements high-performance queue operations for handling weighted data streams using bigarrays. It provides functions to bulk push and pop elements with customizable blit and length operations, ensuring efficient data transfer without intermediate allocations. Use cases include network packet buffering, streaming data processing, and memory-backed queue management where direct memory manipulation is required.",
+      "description_length": 425,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ke.Sigs.Weighted.F-N",
+      "module_path": "Ke.Rke.Weighted.N",
       "library": "ke",
-      "description": "This module implements high-performance queue operations for managing elements in bigarrays. It supports pushing data from a source to the queue\u2019s end, extracting elements to a destination, and shifting the queue\u2019s contents by a specified count, with both exception-raising and option-returning variants. These operations are useful for zero-copy data processing pipelines, such as network packet buffering or streaming data transformations, where direct memory manipulation and precise error handling are required.",
-      "description_length": 515,
+      "description": "This module provides operations for efficiently pushing, peeking, and shifting elements in a weighted queue using bigarrays. It supports data types involving `('a, 'b) Ke.Rke.Weighted.t` and bigarray-based sources or destinations, with blit and length functions for custom memory management. Concrete use cases include high-performance data streaming and buffer manipulation where direct memory control is required.",
+      "description_length": 415,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ke.Fke.Weighted.N",
-      "library": "ke",
-      "description": "This module provides low-level operations for efficiently pushing, keeping, and shifting elements in a weighted queue using bigarrays. It works directly with weighted queues and external bigarray-like structures, enabling fast bulk data transfers without intermediate allocations. Concrete use cases include high-performance data streaming, batch processing, and direct memory manipulation where precise control over queue operations and memory layout is required.",
-      "description_length": 464,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ke.Sigs.Weighted.R-N",
-      "library": "ke",
-      "description": "This module implements a queue with weighted elements, supporting efficient bulk operations for pushing and popping data. It works directly with bigarrays and custom blit functions to manage memory, enabling high-performance data streaming and buffering. Use cases include network packet handling, real-time data processing, and memory-efficient data pipelines where elements are consumed in batches.",
-      "description_length": 400,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ke.Sigs.Weighted.F",
-      "library": "ke",
-      "description": "This module implements a bounded queue with dual-ended operations (push/pop at front/back) and a weighted array type convertible to C-layout Bigarrays, both emphasizing memory-efficient, low-level manipulation. It works with Bigarray-backed structures supporting custom memory layouts and provides unsafe conversions for direct array interfacing, prioritizing performance over safety checks. Use cases include high-throughput stream processing with size-constrained buffers and systems requiring precise memory control, such as numerical computing or hardware interfacing via raw arrays.",
-      "description_length": 587,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ke.Sigs.Weighted.R",
-      "library": "ke",
-      "description": "This module provides bounded queue operations using a circular buffer implementation, supporting state inspection, element insertion/removal, and traversal, alongside utilities for converting weighted structures to C-layout Bigarrays and formatting them for diagnostics. It works with FIFO buffers of fixed capacity, Bigarray representations of weighted data, and leverages the `Fmt` module for structured output. Use cases include managing finite-size data streams with predictable memory usage, serializing weighted structures for storage or C interop, and generating human-readable logs of complex data layouts.",
-      "description_length": 614,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ke.Rke.N",
-      "library": "ke",
-      "description": "This module provides low-level operations for manipulating a queue structure with direct memory blitting and shifting. It works with bigarrays and custom blit functions to efficiently transfer data in and out of the queue, supporting both safe and unsafe operations. Concrete use cases include high-performance data streaming, buffer management, and network packet handling where direct memory access and efficiency are critical.",
-      "description_length": 429,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ke.Sigs.R-N",
-      "library": "ke",
-      "description": "This module implements efficient batch operations for managing a queue backed by a bigarray, allowing direct memory manipulation. It supports pushing data from a source buffer to the queue, peeking at readable segments, and shifting or keeping elements with optional error handling. These operations are ideal for high-performance networking or I/O tasks where zero-copy and memory efficiency are critical.",
-      "description_length": 406,
-      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ke.Fke.Weighted",
       "library": "ke",
-      "description": "This module implements a priority-based queue with bidirectional enqueuing and dequeuing, supporting elements tagged with comparable weights. It introduces a polymorphic weighted queue type that pairs values with ordered priority tags, offering both bounded and unbounded variants with explicit capacity management, and includes operations for efficient priority propagation and memory-optimized array conversion. The integrated child module enhances performance by enabling direct manipulation of weighted queues with bigarrays, supporting high-speed bulk transfers and memory-efficient processing. Together, they allow building and managing weighted queues, pushing or shifting elements with priority-based ordering, converting queues to and from external memory layouts, and handling large-scale data streams with minimal overhead.",
-      "description_length": 834,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ke.Rke.Weighted",
-      "library": "ke",
-      "description": "This module implements a mutable, weighted queue with bounded capacity, using a circular buffer optimized for efficient insertion, removal, and in-place updates at both ends. It pairs elements of type `'a` with weights of type `'b` and supports conversion to and from 1-dimensional Bigarrays for serialization or memory-efficient storage. The main operations include adding or removing weighted elements, modifying elements in place, and compressing the buffer to optimize capacity. The child module enhances this functionality by enabling direct memory transfers between the queue and external buffers, allowing high-performance streaming and batch processing through blitting operations.",
-      "description_length": 689,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ke.Sigs.R",
-      "library": "ke",
-      "description": "This module implements a queue data structure with support for standard operations such as `push`, `pop`, `peek`, and `cons`, allowing elements to be added and removed from both ends. It works with polymorphic elements stored in a typed container, supporting operations like `length`, `capacity`, and `is_empty` to inspect the queue's state. Concrete use cases include managing buffered data streams, implementing task scheduling with priorities, and handling FIFO buffers in network or I/O processing pipelines.",
-      "description_length": 512,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ke.Sigs.F",
-      "library": "ke",
-      "description": "This module implements a purely functional queue with operations to add elements to the front or back, inspect or remove elements from either end, and traverse or fold over elements in insertion order. It supports standard operations like `push`, `pop`, `peek`, and their exception-raising variants, along with bidirectional iteration and pretty-printing. Concrete use cases include managing ordered tasks, processing streams of data, and implementing breadth-first search in graph algorithms.",
-      "description_length": 493,
-      "index": 11,
+      "description": "This implementation provides a weighted queue built on bigarrays, enabling efficient element manipulation at both ends, state inspection (e.g., emptiness checks, length), and memory-optimized operations through safe and unsafe push/pop variants. It works with custom weighted arrays and facilitates conversions to and from Bigarray.Array1.t, supporting applications in streaming data processing and network buffering where performance and resource management are critical. The module includes utilities for iteration, copying, and pretty-printing, balancing low-level memory control with safety-critical abstractions.",
+      "description_length": 617,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ke.Sigs.Weighted",
       "library": "ke",
-      "description": "This module provides interfaces for working with weighted elements, enabling comparison, combination, and transformation of values based on their associated numerical weights. It supports priority-based processing and aggregation, making it suitable for scoring systems, priority queues, and weighted averages. The module\u2019s submodules implement high-performance queue structures over bigarrays, offering push/pop operations, bulk transfers, and memory-efficient streaming with support for both bounded and circular buffers. These features enable use cases such as real-time data buffering, network packet handling, and numerical computing where precise memory control and performance are critical.",
-      "description_length": 697,
-      "index": 12,
+      "description": "This module defines interfaces for working with weighted values and functions over them, primarily through two module types `R` and `F`. It supports operations such as combining weights, applying weighted transformations, and aggregating results based on weight-based strategies. Concrete use cases include implementing weighted averages, prioritized task scheduling, and probabilistic sampling where each element has an associated weight influencing its selection likelihood.",
+      "description_length": 476,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ke.Rke.N",
+      "library": "ke",
+      "description": "This module provides low-level operations for manipulating a queue structure with direct memory management using bigarrays. It supports efficient bulk data transfers to and from the queue, with functions to push data, peek at queued elements, and shift or keep elements with optional bounds checking. These operations are particularly useful for high-performance networking or I/O processing where direct memory access and batch data handling are critical.",
+      "description_length": 456,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ke.Fke",
+      "library": "ke",
+      "description": "This module implements a double-ended queue with operations for adding or removing elements from both ends, checking emptiness and length, and safely or unsafely accessing elements. It supports iteration, folding, and pretty-printing, working with a custom queue type that internally optimizes memory usage. Concrete use cases include managing streaming data buffers, handling asynchronous I/O operations, and implementing schedulers where efficient queue manipulation is essential.",
+      "description_length": 482,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ke.Sigs",
       "library": "ke",
-      "description": "This module defines interfaces for functions and reducers that support weighted computations over generic types, enabling custom reduction strategies and aggregations. It integrates a family of submodules that implement various queue structures, including functional and mutable queues, as well as high-performance bigarray-backed buffers for zero-copy I/O and numerical computing. Core operations include pushing, popping, peeking, and transforming elements with support for polymorphic containers, priority-based processing, and memory-efficient batch transfers. Examples include managing network packet buffers, computing weighted averages, and implementing task schedulers with priority or FIFO semantics.",
-      "description_length": 709,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines interfaces for working with weighted values through the `R` and `F` module types. It supports operations like combining weights, applying transformations, and aggregating results based on weight-driven strategies. Use cases include weighted averages, prioritized task scheduling, and probabilistic sampling where elements have associated weights affecting their selection probability.",
+      "description_length": 404,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Ke.Rke",
       "library": "ke",
-      "description": "This module implements a high-performance ring buffer queue with support for efficient element insertion, removal, and traversal over a fixed-size storage using Bigarray. It pairs elements with optional weights, enabling use cases like streaming data processing, sliding window analysis, and real-time buffer management. The module provides both safe and unsafe low-level memory operations through a child module, allowing direct blitting and optimized data transfers for performance-critical applications. Another child module extends this with weighted elements and in-place updates, supporting advanced operations like buffer compression and batch processing through direct memory interaction.",
-      "description_length": 696,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ke.Fke",
-      "library": "ke",
-      "description": "This module provides a double-ended queue with efficient insertion, removal, and inspection at both ends, along with ordered iteration and folding. It supports weighted queues through its `Weighted` submodule, which pairs elements with comparable priorities, enabling priority-based enqueuing and dequeuing, bounded and unbounded queue variants, and memory-efficient bulk transfers using bigarrays. You can process elements in strict order, manage task queues with varying priorities, or convert queues to compact array representations for high-speed processing. The combined interface allows both direct queue manipulation and fine-grained control over priority propagation and capacity limits.",
-      "description_length": 695,
-      "index": 15,
+      "description": "This module implements a high-performance queue structure using bigarrays for efficient memory management, supporting operations like `push`, `pop`, `peek`, and in-place element manipulation. It provides direct access to queue elements for iteration, folding, and pretty-printing, with optional low-level memory control through the `N` sub-module for bulk data transfers and memory compression. Concrete use cases include network packet buffering, streaming data processing, and I/O scheduling where predictable memory usage and fast element access are critical.",
+      "description_length": 562,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ke",
       "library": "ke",
-      "description": "This module family provides efficient, polymorphic queue structures with support for weighted elements, priority-based processing, and zero-copy memory operations. Core data types include ring buffers, double-ended queues, and priority queues, with operations for insertion, removal, transformation, and batch memory transfers using Bigarray. It enables real-time data processing, task scheduling with custom priorities, sliding window computations, and high-performance buffer management through direct memory manipulation. Examples include streaming analytics, network packet handling, and priority-driven job queues with bounded or dynamic capacity.",
-      "description_length": 652,
-      "index": 16,
-      "embedding_norm": 1.0
+      "description": "This module provides weighted value operations through `R` and `F` module types, enabling weighted averages, prioritized scheduling, and probabilistic sampling. It includes a double-ended queue implementation with efficient front and back manipulation, suitable for streaming buffers and schedulers. Additionally, it offers a high-performance queue using bigarrays for memory-sensitive tasks like network buffering and data streaming.",
+      "description_length": 434,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 17,
-    "meaningful_modules": 17,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 10,
+    "meaningful_modules": 9,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9
   },
   "statistics": {
-    "max_description_length": 834,
-    "min_description_length": 400,
-    "avg_description_length": 578.7058823529412,
-    "embedding_file_size_mb": 0.062221527099609375
+    "max_description_length": 617,
+    "min_description_length": 404,
+    "avg_description_length": 474.55555555555554,
+    "embedding_file_size_mb": 0.1308135986328125
   }
 }

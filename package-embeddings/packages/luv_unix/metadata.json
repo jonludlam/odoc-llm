@@ -1,41 +1,41 @@
 {
   "package": "luv_unix",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:50.056085",
+  "creation_timestamp": "2025-08-14T22:51:50.989211",
   "modules": [
     {
-      "module_path": "Luv_unix.Os_fd.Socket",
+      "module_path": "Luv_unix.Os_fd.Fd",
       "library": "luv_unix",
-      "description": "This module provides functions to convert between Unix file descriptors and libuv socket descriptors. It works with `Unix.file_descr` and `Luv_c_types.Os_socket.t` types. Use this module when integrating Unix-level sockets with libuv-based networking code, ensuring proper type compatibility across platforms.",
-      "description_length": 309,
+      "description": "This module provides direct conversions between `Unix.file_descr` and `uv_os_fd_t` types, handling platform-specific compatibility checks. It works with file descriptors and OS-specific handle types, primarily used in libuv and Unix system programming. Concrete use cases include adapting file descriptors for use with libuv APIs on non-Windows systems and ensuring correct handle types on Windows.",
+      "description_length": 398,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Luv_unix.Os_fd.Fd",
+      "module_path": "Luv_unix.Os_fd.Socket",
       "library": "luv_unix",
-      "description": "This module converts file descriptors between Unix and libuv representations. It supports conversion from a Unix file descriptor to a libuv-compatible descriptor and vice versa. Use this module when interfacing with system-level I/O operations that require compatible descriptor types, such as integrating Unix-based file handles with libuv-based networking code.",
-      "description_length": 363,
+      "description": "This module provides functions to convert between Unix file descriptors and libuv socket descriptors. It supports converting a Unix file descriptor to a libuv socket descriptor with `from_unix`, which may fail on Windows if the descriptor is not a valid socket, and converting a libuv socket descriptor back to a Unix file descriptor with `to_unix`. Use this when interoperating with low-level networking code that requires passing socket descriptors between Unix and libuv APIs.",
+      "description_length": 479,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Luv_unix.Os_fd",
       "library": "luv_unix",
-      "description": "This module bridges Unix and libuv file descriptor representations, enabling seamless integration between Unix system calls and libuv-based I/O operations. It supports conversions between `Unix.file_descr` and `Luv_c_types.Os_socket.t`, allowing developers to pass file descriptors between these two environments. For example, a Unix socket can be converted into a libuv-compatible descriptor for use with libuv's event loop, or a libuv socket can be converted back into a Unix file descriptor for further system-level manipulation. This facilitates interoperability in hybrid networking or I/O codebases that span both Unix and libuv abstractions.",
-      "description_length": 648,
+      "description": "This module handles conversions between Unix file descriptors and libuv-compatible types, specifically `uv_os_fd_t` and socket descriptors. It provides direct mappings through its `Fd` and `Socket` submodules, ensuring correct type handling across platforms. Use it to interface system-level file and socket descriptors with libuv-based libraries or system calls requiring specific descriptor types.",
+      "description_length": 399,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Luv_unix",
       "library": "luv_unix",
-      "description": "This module integrates Unix file descriptors with libuv's I/O model, enabling bidirectional conversion between `Unix.file_descr` and `Luv_c_types.Os_socket.t`. It allows passing open sockets or file handles between Unix system calls and libuv-based asynchronous operations. For instance, a Unix domain socket can be imported into libuv for non-blocking I/O, or a libuv TCP handle can be exported to a Unix file descriptor for use with standard system APIs. This enables fine-grained control over I/O resources in mixed concurrency or networking stacks.",
-      "description_length": 552,
+      "description": "This module converts Unix file descriptors to libuv-compatible types, specifically mapping between `Unix.file_descr` and `uv_os_fd_t` or socket descriptors. It provides `Fd` and `Socket` submodules for precise type conversions, ensuring cross-platform compatibility. Use it when passing file or socket descriptors between OCaml code and libuv-based libraries or system APIs expecting specific descriptor types.",
+      "description_length": 410,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 648,
-    "min_description_length": 309,
-    "avg_description_length": 468.0,
-    "embedding_file_size_mb": 0.014937400817871094
+    "max_description_length": 479,
+    "min_description_length": 398,
+    "avg_description_length": 421.5,
+    "embedding_file_size_mb": 0.05835151672363281
   }
 }

@@ -1,125 +1,85 @@
 {
   "package": "um-abt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 13,
-  "creation_timestamp": "2025-07-15T23:08:52.533860",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 8,
+  "creation_timestamp": "2025-08-14T23:18:40.697201",
   "modules": [
     {
       "module_path": "Abt.Make.Unification.Subst",
       "library": "um-abt",
-      "description": "This module implements substitutions for unification variables in an abstract binding tree. It supports operations to look up variable bindings, list all bound variable-term pairs, and convert substitutions to string representations. It works with variables from `Abt.Var` and terms from the enclosing `Abt.Make` module, enabling concrete tasks like tracking variable assignments during unification or displaying substitution state for debugging.",
-      "description_length": 446,
+      "description": "This module implements substitutions for unification variables in an abstract binding tree. It supports operations to look up variable bindings, list all bindings, and convert substitutions to string representations. It works with variables and terms from the enclosing ABT module to represent partial assignments during unification.",
+      "description_length": 333,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Abt.Make.Unification",
-      "library": "um-abt",
-      "description": "This module unifies abstract syntax trees built from operators and variables, using functions like `unify`, `=.=`, and `=?=` to compute most general unifiers or test for unifiability. It handles errors such as occurs checks and term mismatches, supporting use cases in type inference and symbolic manipulation. The substitution module manages variable bindings during unification, offering operations to query, list, and display substitutions, using variables and terms from the associated `Abt` implementation. Together, they enable precise term rewriting and constraint solving under variable substitution.",
-      "description_length": 608,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Abt.Var.Set",
-      "library": "um-abt",
-      "description": "This module provides ordered set operations for managing collections of variables, including union, intersection, difference, filtering, and mapping, alongside utilities for ordered traversal, sequence-based construction, and structural analysis. It operates on sets of `Abt.Var.t` elements, leveraging `Ord.compare` to enforce a consistent ordering that ensures deterministic iteration and transformation behaviors. These capabilities are particularly useful for symbolic computation tasks requiring precise variable tracking, such as analyzing free variable dependencies, implementing substitution systems, or orchestrating ordered variable bindings in formal languages.",
-      "description_length": 672,
-      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Abt.Var.Binding",
       "library": "um-abt",
-      "description": "This module implements immutable variable bindings identified by string names. It provides operations to create bindings, retrieve their names, and compare or check equality between bindings. Direct use cases include managing variable scopes and tracking bound identifiers in formal language implementations.",
-      "description_length": 308,
+      "description": "This module implements immutable variable bindings identified by string names. It provides operations to create bindings with `v`, retrieve their names with `name`, and compare or check equality between bindings. Concrete use cases include managing variable scopes and tracking bound variables in abstract syntax trees.",
+      "description_length": 319,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Abt.Make.Unification",
+      "library": "um-abt",
+      "description": "This module provides algorithms for unifying terms in an abstract binding tree, producing a most general unifier when possible. It operates on terms and variables from the enclosing ABT structure, using substitutions to resolve variable assignments during unification. Concrete use cases include type inference, logic programming, and symbolic manipulation where term equivalence under variable substitution is required.",
+      "description_length": 420,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Abt.Var.Set",
+      "library": "um-abt",
+      "description": "The module implements ordered set operations for managing collections of variables, supporting union, intersection, difference, and membership checks while maintaining elements via a comparison-based ordering. It provides ordered traversal, sequence conversion, and transformation capabilities\u2014such as mapping, filtering, and folding\u2014specifically for handling variable sets in abstract binding tree manipulations. These tools are particularly useful for tasks like tracking free variables, analyzing binding structures, or performing ordered iteration during term traversal.",
+      "description_length": 574,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Abt.Var.Map",
       "library": "um-abt",
-      "description": "This module implements ordered associative maps for binding variables to arbitrary data, supporting key-based operations like insertion, modification, and querying, as well as ordered traversal, transformation, and combination of maps. It works with variable keys (`Abt.Var.t`) and associated values, maintaining strict ordering during iterations, folds, and sequence conversions. Typical applications include managing variable environments in formal systems, tracking bindings during term manipulation, and processing ordered key-value pairs in symbolic computation pipelines.",
-      "description_length": 577,
+      "description": "This module implements a key-ordered finite map structure using variables as keys, supporting efficient insertion, deletion, and lookup operations alongside functional transformations like mapping, filtering, and folding over variable-value pairs. It works with variable bindings that maintain physical equality and order, enabling applications such as managing lexical scopes in compilers or interpreters where variable names must be uniquely resolved and traversed in a consistent order. Use cases include symbol table management, environment tracking in evaluators, and bulk operations over variable mappings via sequence conversions.",
+      "description_length": 637,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Abt.Syntax-Unification",
+      "module_path": "Abt.Var",
       "library": "um-abt",
-      "description": "This module implements unification for abstract binding trees, providing algorithms to find the most general unifier between two terms and detect unification failures such as cycles or occurs-check violations. It operates on the `t` type representing ABTs and uses substitutions defined in the `Subst` submodule to track variable bindings during unification. Concrete use cases include type inference, logic programming, and symbolic manipulation where term equivalence under substitution is required.",
-      "description_length": 501,
+      "description": "This module represents variables that are either free (named by strings) or bound to a variable binding, with operations to create, compare, bind, and inspect variables. It supports concrete tasks like binding a free variable to a specific binding, checking if a variable is bound to a particular identifier, and converting variables to strings or sexps. The associated `Set` and `Map` modules enable ordered collections and key-based mappings of variables, useful for managing free variable sets and lexical environments in language processing tasks.",
+      "description_length": 551,
       "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Abt.Make",
       "library": "um-abt",
-      "description": "This module provides a framework for building and manipulating abstract binding trees with operators, variables, and scoped bindings, supporting core operations like substitution, alpha-equivalence, and traversal. It enables precise representation and transformation of languages with binding structures, such as lambda calculi, through direct construction and analysis of terms. The unification submodule extends this capability by allowing constraint solving and term matching via unification, while the substitution module tracks and applies variable bindings during these operations. Together, they support advanced use cases like type inference and symbolic rewriting where binding correctness and variable management are critical.",
-      "description_length": 736,
+      "description": "This module implements an abstract binding tree (ABT) structure for representing and manipulating formal language syntax with support for variables, scoped bindings, and custom operators. It provides operations for binding variables, substituting terms, checking alpha equivalence, and analyzing free variables, enabling precise handling of name binding and scope. Concrete use cases include formal language implementation, type system modeling, and symbolic computation where variable capture and substitution must be carefully managed.",
+      "description_length": 537,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Abt.Operator",
-      "library": "um-abt",
-      "description": "This module defines the structure and operations for working with language operators, including parsing and serialization to S-expressions, mapping over operator values, equality checking, and folding. It operates on a polymorphic type `'a t` representing operators, which can be converted to and from strings. Concrete use cases include defining custom operator syntax, traversing and transforming operator expressions, and supporting serialization for debugging or storage.",
-      "description_length": 475,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Abt.Syntax",
-      "library": "um-abt",
-      "description": "This module defines an abstract syntax tree (AST) structure for representing terms with variables, bindings, and operators. It supports operations such as variable binding, substitution, case analysis, and equality checking up to alpha equivalence, working with data types like variables, bound terms, and operator applications. Concrete use cases include parsing and manipulating formal languages with binding constructs, performing substitutions in lambda-like expressions, and analyzing syntactic structure with precise handling of free and bound variables.",
-      "description_length": 560,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Abt.Var",
-      "library": "um-abt",
-      "description": "Variables are either free, identified by string names, or bound to a binding, supporting equality checks, ordering, and conversion between string and variable representations. The module provides core operations for binding and unbinding variables, while its submodules offer ordered sets for managing variable collections, immutable bindings for tracking bound identifiers, and ordered maps for associating variables with arbitrary data. These tools enable precise variable scoping, substitution systems, and ordered environment management in formal language implementations. For example, you can track free variables in lambda terms, create immutable variable bindings, or maintain ordered mappings from variables to types in a type checker.",
-      "description_length": 743,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Abt.Syntax-Unification-Subst",
-      "library": "um-abt",
-      "description": "This module implements substitutions for unification variables in abstract binding trees. It provides operations to look up variable bindings, list all bindings, and convert substitutions to string representations. It works with unification substitutions mapping variables to terms, where terms are defined in the `Abt.Syntax` module. Use cases include managing variable assignments during unification and displaying substitution state for debugging.",
-      "description_length": 450,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Abt.Syntax-Op",
-      "library": "um-abt",
-      "description": "This module provides functions for transforming and analyzing abstract syntax trees with optional values. It supports operations like mapping over optional syntax elements, folding to accumulate values, and converting to strings. Use cases include parsing and pretty-printing syntax trees where nodes may be absent or require custom string representations.",
-      "description_length": 356,
-      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Abt",
       "library": "um-abt",
-      "description": "This module implements abstract binding trees with support for variable binding, scope management, and nominal unification, enabling precise representation and manipulation of formal languages with binding constructs. It provides core data types such as terms with variables, operators, and bindings, along with operations including substitution, alpha-equivalence, unification, and traversal. The unification submodule solves term constraints and detects unification failures, while the substitution module tracks variable bindings during unification and transformation. Submodules also handle operator manipulation, optional syntax transformations, and variable scoping, supporting advanced use cases like type inference, symbolic rewriting, and lambda calculus implementations.",
-      "description_length": 780,
-      "index": 12,
+      "description": "This module implements abstract binding trees with support for variable binding, substitution, and alpha equivalence checks, working with variables and custom syntax operators. It provides operations to construct and manipulate formal language syntax, including binding variables, substituting terms, and analyzing free variables. Concrete use cases include implementing formal languages, modeling type systems, and performing symbolic computations where precise handling of variable scope and capture is required.",
+      "description_length": 514,
+      "index": 7,
       "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 13,
-    "meaningful_modules": 13,
+    "total_modules_in_package": 8,
+    "meaningful_modules": 8,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 780,
-    "min_description_length": 308,
-    "avg_description_length": 554.7692307692307,
-    "embedding_file_size_mb": 0.047692298889160156
+    "max_description_length": 637,
+    "min_description_length": 319,
+    "avg_description_length": 485.625,
+    "embedding_file_size_mb": 0.11641120910644531
   }
 }

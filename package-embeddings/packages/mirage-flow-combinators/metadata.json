@@ -1,69 +1,61 @@
 {
   "package": "mirage-flow-combinators",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:05:59.324770",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 5,
+  "creation_timestamp": "2025-08-14T22:58:24.014919",
   "modules": [
     {
       "module_path": "Mirage_flow_combinators.Copy",
       "library": "mirage-flow-combinators",
-      "description": "Implements data transfer between two flow endpoints, copying bytes from a source flow to a destination flow while measuring transfer statistics. It handles errors from both the source and destination flows, returning a combined error type. This is useful for streaming data between network connections, files, or devices with real-time rate monitoring.",
-      "description_length": 352,
+      "description": "Implements efficient data transfer between two flow endpoints, handling errors from both source and destination. Works with `A.flow` and `B.flow` types, combining their error variants into a unified result type. Useful for streaming data between network connections, files, or devices while tracking transfer statistics.",
+      "description_length": 320,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Mirage_flow_combinators.Proxy",
       "library": "mirage-flow-combinators",
-      "description": "Mirage_flow_combinators.Proxy connects two flow interfaces, shuttling data bidirectionally between them until both close cleanly or one fails. It tracks and returns I/O statistics on success, or propagates errors encountered during transfer. This module directly links flow endpoints, enabling transparent relays or tunneling between different network or stream implementations.",
-      "description_length": 378,
+      "description": "This module implements bidirectional data proxying between two flow interfaces, transferring data until both ends close. It tracks I/O statistics during the proxy operation and returns them on success, or propagates errors encountered in either direction. The proxy function connects two flow endpoints, making it suitable for scenarios like network tunneling or stream bridging where transparent data forwarding is required.",
+      "description_length": 425,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_flow_combinators.Concrete",
-      "library": "mirage-flow-combinators",
-      "description": "This module transforms a flow interface with polymorphic error types into one with concrete error representations, handling message conversion and formatting. It provides functions for reading from and writing to flows with explicit error types like `Msg of string`, supporting operations such as `read`, `write`, `writev`, `shutdown`, and `close`. It works directly with `Cstruct.t` buffers and flow types from the Mirage_flow module, enabling precise error handling and I/O operations for network protocols.",
-      "description_length": 509,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_flow_combinators.CONCRETE",
-      "library": "mirage-flow-combinators",
-      "description": "This module implements concrete error types and I/O operations for network flows, including reading data into buffers, writing single or vectorized buffers, and managing flow lifecycle with shutdown and close. It works with `flow` handles and uses `Cstruct.t` for buffer management, along with custom error types for reporting I/O failures. It is used to implement network protocols that require precise control over data transmission and error handling, such as TCP-based services with streaming or packetized communication.",
-      "description_length": 525,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_flow_combinators.F",
       "library": "mirage-flow-combinators",
-      "description": "This module enables the creation of in-memory data flows that support reading and writing operations using buffers such as strings, bytes, and `Cstruct.t` structures, with specialized handling for lists of `Cstruct.t` buffers to optimize low-level memory efficiency. It includes mechanisms for managing flow state transitions, such as shutdown and closure, and allows constructing flows with custom data generation through refill functions. These capabilities are particularly useful for simulating network streams, processing in-memory data payloads, or implementing protocol layers without relying on external I/O sources.",
-      "description_length": 624,
-      "index": 4,
-      "embedding_norm": 0.9999998807907104
+      "description": "This module enables in-memory I/O operations using function-based flows that manipulate buffers such as `string`, `bytes`, and `Cstruct.t`. It supports reading, writing, and lifecycle control (shutdown, close) with customizable buffer refill strategies for both single-buffer and collection-based data handling. The combinators are particularly useful for testing network protocols, simulating device interactions, or implementing memory-backed I/O pipelines without relying on external hardware or system calls.",
+      "description_length": 512,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_flow_combinators.Concrete",
+      "library": "mirage-flow-combinators",
+      "description": "This module transforms a flow interface with polymorphic error types into one that uses concrete error representations, including message-based errors and standard flow operations. It provides functions for reading from and writing to a flow, handling shutdown and close operations, and includes typed errors for failed writes. Concrete use cases include implementing network protocols where precise error handling and flow control are required, such as TCP-based communication layers.",
+      "description_length": 485,
+      "index": 3,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_flow_combinators",
       "library": "mirage-flow-combinators",
-      "description": "This module provides flow-based I/O combinators for asynchronous data transfer in MirageOS, enabling bidirectional communication between endpoints with support for error handling, statistics tracking, and lifecycle management. It includes operations for reading, writing, forwarding, and transforming flows, with concrete implementations for network and memory-based transports. The combinators allow building proxies, tunneling between flow interfaces, converting between error types, and simulating I/O with in-memory buffers. Specific capabilities include streaming data between connections, measuring transfer rates, handling protocol-specific errors, and implementing custom flow logic with `Cstruct.t` buffers.",
-      "description_length": 716,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements flow-based I/O combinators for MirageOS using Lwt, enabling operations such as reading, writing, and bidirectional forwarding between flows. It works with `Cstruct.t` buffers and provides typed errors for failed I/O operations, supporting in-memory testing and simulation of network protocols. Concrete use cases include building and testing TCP-based services, implementing protocol proxies, and simulating device I/O without hardware dependencies.",
+      "description_length": 472,
+      "index": 4,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 6,
-    "meaningful_modules": 6,
+    "total_modules_in_package": 5,
+    "meaningful_modules": 5,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 716,
-    "min_description_length": 352,
-    "avg_description_length": 517.3333333333334,
-    "embedding_file_size_mb": 0.022238731384277344
+    "max_description_length": 512,
+    "min_description_length": 320,
+    "avg_description_length": 442.8,
+    "embedding_file_size_mb": 0.07288646697998047
   }
 }

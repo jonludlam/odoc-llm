@@ -1,1229 +1,821 @@
 {
   "package": "regular",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 151,
-  "creation_timestamp": "2025-07-15T23:33:45.158833",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 100,
+  "creation_timestamp": "2025-08-15T16:49:36.507017",
   "modules": [
     {
-      "module_path": "Regular.Std.Data.Cache.Digest.Set.Elt",
+      "module_path": "Regular.Std.Data.Cache.Digest.Table.Provide_of_sexp",
       "library": "regular",
-      "description": "This module represents individual elements within a set of digests used for caching data. It provides serialization and deserialization functions for digest elements, including S-expression and binary format support. It is used when managing sets of digests to track cached data versions efficiently.",
-      "description_length": 300,
+      "description": "This module provides a function `t_of_sexp` that constructs a cache table from S-expressions, using a provided conversion function. It works with cache tables parameterized by a key type and supports deserialization of cached values. A concrete use case is loading cached data structures from disk in a type-safe manner using S-expressions for configuration or persistence.",
+      "description_length": 373,
       "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Data.Cache.Digest.Set.Named",
+      "library": "regular",
+      "description": "This module provides operations to check if one named digest set is a subset of another and to test equality between two named digest sets, both returning results as `Or_error.t`. It works with named digest sets, which are used to uniquely identify and compare data representations in a versioned manner. Concrete use cases include validating cache dependencies and ensuring data consistency across different versions of stored values.",
+      "description_length": 435,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data.Cache.Digest.Set.Provide_of_sexp",
+      "library": "regular",
+      "description": "This module provides a function `t_of_sexp` that constructs a digest set from an S-expression, specifically for caching purposes. It operates on `Regular.Std.Data.Cache.Digest.Set.t`, a set structure used to represent digests of data elements. A concrete use case is parsing cached digest sets from configuration or state files during application initialization or reloading.",
+      "description_length": 375,
+      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std.Data.Cache.Digest.Map.Provide_bin_io",
       "library": "regular",
-      "description": "This module implements binary serialization and deserialization for a digest-based cache map structure, where keys are mapped to cached values with associated digests. It provides functions for reading, writing, and sizing binary representations of these maps, ensuring compatibility with explicit versioning. It is used when persisting or transmitting cache data efficiently over a network or storage medium.",
-      "description_length": 409,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Digest.Hash_set.Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a hash set from an S-expression, enabling the creation of digests for caching purposes. It operates on data types that conform to the `Regular.Std.Data.Cache.Digest.Hash_set` structure, which are used to represent sets of data values for efficient comparison and storage. A concrete use case is parsing cached digest sets from configuration files or persistent storage to manage versioned data representations.",
-      "description_length": 470,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Digest.Set.Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides functions for serializing and deserializing sets of digested cache data using binary protocols. It works with sets of digests, where each digest is parameterized by the `Elt` module. Concrete use cases include persisting and retrieving sets of cached digests to and from disk or transmitting them over a network.",
-      "description_length": 333,
+      "description": "This module implements binary serialization and deserialization for cache digest maps indexed by a `Key` type. It provides functions to compute binary shapes, sizes, and to read/write values of the map type, ensuring version-safe persistence. It is used when storing or transmitting cache digests of keyed data structures in binary format.",
+      "description_length": 339,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Data.Cache.Digest.Hash_set.Provide_bin_io",
       "library": "regular",
-      "description": "This module implements binary serialization and deserialization for hash sets used in data caching. It provides functions to compute binary size, read and write hash set values, and define binary shape and type classes. These operations support efficient storage and retrieval of cached hash sets using the Bin_prot protocol.",
-      "description_length": 325,
+      "description": "This module provides binary serialization and deserialization operations for hash sets used in data caching. It works with `Regular.Std.Data.Cache.Digest.Hash_set.t`, enabling efficient storage and retrieval of cached data digests. Concrete use cases include persisting hash sets of digests to disk or transmitting them over a network.",
+      "description_length": 335,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Data.Cache.Digest.Map.Key",
+      "module_path": "Regular.Std.Data.Cache.Digest.Map.Provide_hash",
       "library": "regular",
-      "description": "This module provides serialization and deserialization functions for digest-based cache keys, including binary and S-expression conversions. It works with digest values used for uniquely identifying cached data representations. Concrete use cases include persisting cache keys to disk, transmitting them across processes, or comparing them using a built-in comparator.",
-      "description_length": 368,
+      "description": "This module provides a function `hash_fold_t` that integrates hash folding for values wrapped in a digest-based cache map. It operates on the type `'a Regular.Std.Data.Cache.Digest.Map.t`, enabling efficient and versioned serialization of cached data structures. Use this when persisting or comparing complex, versioned data values that require caching with digest tracking.",
+      "description_length": 374,
       "index": 5,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Regular.Std.Data.Cache.Digest.Set.Provide_hash",
+      "module_path": "Regular.Std.Data.Cache.Digest.Set.Provide_bin_io",
       "library": "regular",
-      "description": "This module computes hash values for sets of cached data digests, enabling efficient equality checks and hash-based data integrity verification. It works with `Regular.Std.Data.Cache.Digest.Set.t`, a set structure where elements are digests of cached data. Concrete use cases include validating cache consistency and detecting changes in stored data sets using cryptographic hashes.",
-      "description_length": 382,
+      "description": "This module provides functions for serializing and deserializing sets of digested cache data using Bin_prot. It works with sets of values of type `Regular.Std.Data.Cache.Digest.Set.t`, built from the provided `Elt` module. Concrete use cases include persisting and transmitting cached data digests to and from storage or network interfaces.",
+      "description_length": 340,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Digest.Set.Provide_of_sexp",
-      "library": "regular",
-      "description": "Converts S-expressions into digest-based cache sets for efficient data caching. Works with any data type that supports S-expression conversion, organizing elements into a set structure for fast membership checks. Useful for caching intermediate results where digest comparison ensures version-safe data retrieval.",
-      "description_length": 313,
-      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Data.Cache.Digest.Table.Provide_bin_io",
       "library": "regular",
-      "description": "This module implements binary serialization and deserialization for a digest-based cache table, enabling efficient disk or network storage and retrieval of cached values. It works with generic data types wrapped in a cache structure, using digests to uniquely identify stored entries. Concrete use cases include persisting precomputed or expensive-to-obtain data values with versioned binary representations, ensuring compatibility across sessions.",
-      "description_length": 448,
+      "description": "This module implements binary serialization and deserialization for cache tables keyed by a specific type. It provides functions to compute binary shapes, sizes, and to read/write values of table type with versioned serialization. It is used when persisting or transmitting cached digests of data that require efficient binary encoding and decoding.",
+      "description_length": 349,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data.Cache.Digest.Set.Provide_hash",
+      "library": "regular",
+      "description": "This module provides hashing operations for digest sets, specifically `hash_fold_t` and `hash`, which generate hash values for set structures. It works with `Regular.Std.Data.Cache.Digest.Set.t`, a set type used to represent digests of data elements. Use this module when you need to compute and compare hash values of digest sets for caching or equality checks.",
+      "description_length": 362,
       "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Regular.Std.Data.Cache.Digest.Map.Provide_hash",
+      "module_path": "Regular.Std.Data.Cache.Digest.Hash_set.Provide_of_sexp",
       "library": "regular",
-      "description": "This module provides a function `hash_fold_t` that computes a hash digest for values of type `'a Regular.Std.Data.Cache.Digest.Map.t`, enabling efficient and consistent hashing of cacheable data structures. It works with hashable data types that conform to the `Regular.Std.Data` interface, particularly those wrapped in a cache-aware map structure. Concrete use cases include generating unique identifiers for cached results based on their content, ensuring cache coherence across different runs or systems.",
-      "description_length": 508,
+      "description": "This module provides a function `t_of_sexp` that constructs a hash set from an S-expression, working specifically with types that support sexp conversion. It operates on hash sets using data digests for efficient caching and versioned storage. A concrete use case is reconstructing cached hash set data from serialized S-expressions during deserialization, ensuring correct version interpretation.",
+      "description_length": 397,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Data.Cache.Digest.Table.Provide_of_sexp",
+      "module_path": "Regular.Std.Data.Cache.Digest.Map.Key",
       "library": "regular",
-      "description": "This module creates and manipulates digest-based cache tables from S-expressions, using a provided `of_sexp` function to parse values. It works with any data type that can be represented as an S-expression and supports explicit versioning through its digest mechanism. A concrete use case is reconstructing versioned cached data structures from serialized configurations or persisted state.",
-      "description_length": 390,
+      "description": "This module provides serialization and deserialization functions for digest-based cache keys, including binary and S-expression conversions. It supports efficient comparison and storage operations, enabling use cases like persistent caching of computed values where key integrity and versioning are critical. The module works directly with digest values to facilitate fast lookups and reliable disk or network representation.",
+      "description_length": 425,
       "index": 10,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Data.Cache.Digest.Set.Named",
+      "module_path": "Regular.Std.Data.Cache.Digest.Set.Elt",
       "library": "regular",
-      "description": "This module provides operations to compare digest sets for equality and subset relationships, returning results in a fallible context. It works with named digest sets used to uniquely identify and validate data versions in caching scenarios. Concrete use cases include verifying cache consistency and ensuring data integrity when loading precomputed values from storage.",
-      "description_length": 370,
+      "description": "This module represents individual elements within a set used for caching digests of data. It provides serialization and deserialization functions for these elements, supporting operations like converting to and from S-expressions and binary formats. It works with digest values that uniquely identify data for caching purposes, enabling efficient storage and retrieval in set structures.",
+      "description_length": 387,
       "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Data.Cache.Digest.Map.Provide_of_sexp",
       "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a cacheable digest map from S-expressions, using a given parser for the value type. It works with types that support S-expression conversion and caching via digest-based versioning. A concrete use case is deserializing versioned cache data structures from configuration files or persistent storage.",
-      "description_length": 358,
+      "description": "This module provides a function `t_of_sexp` that constructs a cacheable digest map from S-expressions, using a provided conversion function. It operates on digest maps where keys are determined by the `Key` parameter and values are cacheable data types. A concrete use case is deserializing versioned cache data structures from configuration files or persistent storage.",
+      "description_length": 370,
       "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make.Map.Provide_hash",
-      "library": "regular",
-      "description": "This module provides a function `hash_fold_t` that enables hashing of map values by folding over their elements, specifically for maps with a given key type. It works with map data structures where the key type is opaque, allowing controlled hashing without exposing internal structure. A concrete use case is hashing complex, nested map-based data structures in a type-safe manner while preserving abstraction boundaries.",
-      "description_length": 422,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Digest.Hash_set",
-      "library": "regular",
-      "description": "This module manages hash sets of data digests for caching, offering creation, equality checks, S-expression and binary conversion, and efficient membership and insertion operations. It supports parsing hash sets from S-expressions and serializing them using Bin_prot, enabling use cases like loading cached digests from configuration files or persisting versioned data. The module handles data types conforming to `Regular.Std.Data.Cache.Digest.Hash_set`, providing functions for binary size computation, reading, writing, and shape definition. These capabilities facilitate efficient storage, retrieval, and comparison of cached data across different representations.",
-      "description_length": 668,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Set.Provide_hash",
-      "library": "regular",
-      "description": "This module provides hash-related operations for a set data structure, specifically `hash_fold_t` and `hash`, which allow folding and computing hash values for set instances. It works with the `Set.t` type parameterized over an element type `Elt`. Concrete use cases include enabling sets to be used in hash-based containers or as keys in hash tables, where value comparison and hashing are required.",
-      "description_length": 400,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make.Hash_set.Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that parses an S-expression into a hash set. It works with hash sets represented as `Hash_set.t` and S-expressions via `Sexplib0.Sexp.t`. A concrete use case is deserializing a hash set from an S-expression representation, such as when loading configuration data from a file.",
-      "description_length": 319,
-      "index": 16,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std.Regular.Make.Table.Provide_of_sexp",
       "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a hash table from S-expressions, using a provided function to convert S-expressions into values. It operates on hash tables where keys are of a type that supports conversion from S-expressions. A concrete use case is parsing configuration data structured as S-expressions into a hash table for efficient lookup.",
-      "description_length": 371,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Map.Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a map from S-expressions, using a provided function to convert S-expressions into values. It operates on maps where keys conform to the Key module and values are of a type that can be derived from S-expressions. A concrete use case is parsing configuration or data files into typed maps where keys are known and structured.",
-      "description_length": 383,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Hash_set.Provide_of_sexp",
-      "library": "regular",
-      "description": "Implements conversion from S-expressions to hash sets for a given data type `X`. Provides the function `t_of_sexp` which parses an S-expression into a hash set value. Useful for deserializing hash sets stored in configuration files or input data streams.",
-      "description_length": 254,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make.Set.Named",
-      "library": "regular",
-      "description": "This module implements a set data structure with named elements, supporting operations like subset checking and equality comparison. It works with opaque types that cannot be serialized or directly inspected, ensuring data integrity while allowing logical comparisons. Concrete use cases include managing collections of unique identifiers or enforcing constraints on data structures where element identity is significant but internal representation must remain hidden.",
-      "description_length": 468,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Set.Named",
-      "library": "regular",
-      "description": "This module implements set operations for named values, providing functions to check subset and equality relationships between sets. It works with `Set.named` data structures, which represent sets of values that support comparison and printing. Concrete use cases include validating hierarchical relationships between named entities and ensuring consistency in configuration management systems.",
-      "description_length": 394,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Digest.Replace_polymorphic_compare",
-      "library": "regular",
-      "description": "This module implements comparison operators and ordering functions for digest values used in caching. It works directly with `Regular.Std.Data.Cache.Digest.t` values, enabling precise equality checks, inequality comparisons, and ordering operations. These functions are specifically used when determining digest equivalence or ordering in cache eviction policies or version comparisons.",
-      "description_length": 386,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make.Hash_set.Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides functions for serializing and deserializing hash sets using the Bin_prot protocol. It supports operations like computing the binary size, writing to a buffer, and reading from a buffer for hash sets of type `X`. Concrete use cases include persisting hash sets to disk or transmitting them over a network in a binary format.",
-      "description_length": 344,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Hash_set.Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides binary serialization and deserialization functions for hash sets, enabling efficient storage and transmission of hash set data structures. It works with hash sets parameterized over a module X that supports regular operations, including comparison and pretty-printing. Concrete use cases include persisting hash sets to disk, sending them over a network, or reconstructing hash sets from binary data in a type-safe manner.",
-      "description_length": 443,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Digest.Set",
-      "library": "regular",
-      "description": "This module manages sets of ordered digest elements, supporting efficient membership checks, set algebra, and element selection, with operations optimized for caching and data versioning workflows. It integrates serialization via binary and S-expression formats, hash computation for integrity verification, and comparison operations that handle equality and subset checks in fallible contexts. The module works with `Elt.t` values, enabling cache key management, deduplication of data streams, and structured set persistence to disk or across networks. Specific capabilities include converting S-expressions into digest sets, computing cryptographic hashes for cache validation, and comparing named digest sets to ensure data consistency.",
-      "description_length": 739,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Table.Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides functions for serializing and deserializing hash tables using the Bin_prot protocol. It supports data types that conform to the Regular interface, specifically working with key-value structures stored in hash tables. Concrete use cases include persisting hash table contents to disk or transmitting them over a network in a binary format.",
-      "description_length": 359,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make.Map.Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that parses S-expressions into maps with values of a deserialized type, using a provided deserializer function. It works with map data structures where keys are defined by the `Key` module and values are of a type that can be constructed from an S-expression. A concrete use case is deserializing nested S-expression data into typed map structures when the value type is not directly serializable but can be parsed from S-expressions.",
-      "description_length": 478,
-      "index": 27,
+      "description": "This module provides the `t_of_sexp` function to convert S-expressions into hash tables, using a provided function to parse values. It works with `Table.t` structures where keys conform to the `Key` module's requirements and values are derived from the input parsing function. A concrete use case is deserializing complex, nested data structures from S-expressions into hash tables for efficient lookups and manipulation.",
+      "description_length": 421,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Regular.Make.Map.Key",
       "library": "regular",
-      "description": "This module provides functions for defining and working with comparable and serializable key types for maps, including binary serialization, S-expression conversion, and comparison operations. It operates on a type `t` defined by a minimal implementation, supporting efficient printing via the `pp` function and enabling use in map keys with proper ordering and hashing. Concrete use cases include creating custom key types for maps that require binary storage, deterministic comparison, or structured printing, such as identifiers or structured data keys.",
-      "description_length": 556,
-      "index": 28,
+      "description": "This module provides comparison, serialization, and pretty-printing operations for a custom key type used in maps. It defines functions for binary and S-expression (de)serialization, a comparator for ordering, and requires a `pp` function for efficient string representation. Concrete use cases include using custom types as keys in map data structures, enabling persistent storage via bin_prot, and structured logging or debugging through sexp and pretty-printing support.",
+      "description_length": 473,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.Make.Set.Provide_of_sexp",
+      "module_path": "Regular.Std.Data.Cache.Digest.Replace_polymorphic_compare",
       "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that parses S-expressions into a set structure, using the element conversion function from the `Elt` submodule. It works with immutable, finite sets represented as `Set.t`, where elements are built from S-expressions. A concrete use case is deserializing nested S-expression data into a set of structured values, such as reading configuration entries from a file into a set for fast lookup.",
-      "description_length": 434,
-      "index": 29,
+      "description": "This module implements comparison operations and equality checks for digest values used in caching. It works directly with `Regular.Std.Data.Cache.Digest.t`, enabling precise ordering and equivalence testing between digests. Use this module when implementing cache eviction policies, version comparisons, or consistency checks based on digest values.",
+      "description_length": 350,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.Make.Set.Provide_hash",
+      "module_path": "Regular.Std.Opaque.Make.Set.Provide_bin_io",
       "library": "regular",
-      "description": "This module provides hash folding and hashing operations for a set of elements. It works with the `Set.t` data structure, where elements conform to the `Elt` module's type. Use this module to compute hash values and fold over set elements for efficient equality checks or hash-based data management.",
-      "description_length": 299,
-      "index": 30,
+      "description": "This module provides functions for serializing and deserializing sets using the Bin_prot protocol. It supports reading and writing set values to binary formats, including full and incremental reads. Concrete use cases include persisting sets to disk or transmitting them over a network.",
+      "description_length": 286,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.Make.Set.Elt",
+      "module_path": "Regular.Std.Regular.Make.Set.Elt",
       "library": "regular",
-      "description": "This module represents elements of a set with opaque type semantics, providing serialization to and from S-expressions and a comparator for ordering. It works with abstract data types that cannot be directly inspected or serialized, ensuring they can still be used in set operations. Concrete use cases include managing sets of values with hidden internal representations, such as handles or identifiers, where comparison and persistence via S-expressions are required.",
-      "description_length": 469,
-      "index": 31,
+      "description": "This module provides comparison, serialization, and pretty-printing operations for a data type, enabling its use in sets, maps, and hashtables. It works with any regular data type that supports conversion to and from S-expressions, binary serialization, and a custom comparator. Concrete use cases include defining efficient equality checks, creating printable and serializable identifiers for use in data structures, and ensuring consistent ordering for keys in associative containers.",
+      "description_length": 486,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Hash_set.Provide_bin_io",
+      "library": "regular",
+      "description": "This module provides functions for serializing and deserializing hash sets using the Bin_prot binary protocol. It supports data types that are hash sets, enabling efficient binary encoding and decoding. Concrete use cases include persisting hash set data to disk or transmitting it over a network in a compact, efficient format.",
+      "description_length": 328,
+      "index": 18,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std.Data.Cache.Digest.Hash_queue",
       "library": "regular",
-      "description": "This module combines hash tables with doubly linked lists to enable efficient key-based lookups and positional access for digest-keyed caches. It operates on hash queues that map digests to arbitrary data, supporting atomic updates, ordered traversal, and bulk transformations. Use cases include implementing LRU eviction policies, incremental cache population with positional tracking, and scenarios requiring both fast access and ordered iteration over cached values.",
-      "description_length": 469,
-      "index": 32,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Digest.Map",
-      "library": "regular",
-      "description": "This module manages digest-based cache maps with support for versioned serialization, hashing, and S-expression conversion. It provides core operations for mapping keys to cached values with digests, along with functions to serialize, deserialize, and hash these structures in binary or S-expression formats. Submodules handle binary encoding, key serialization, hash folding, and S-expression parsing, enabling use cases like persistent caching, network transmission, and versioned configuration loading. For example, you can hash a cache map for content-based identifiers, read it from an S-expression config, or serialize it for storage with versioned compatibility.",
-      "description_length": 669,
-      "index": 33,
+      "description": "This module provides operations for managing hash queues that associate digest keys (`Digest.t`) with arbitrary data values, combining hash tables and doubly-linked lists to enable efficient insertion, lookup, and reordering (e.g., enqueueing/dequeueing at either end, key-based removal, and bulk modifications). It supports use cases requiring ordered caching of data with unique identifiers derived from their content, such as implementing LRU eviction policies or maintaining insertion-ordered digests for versioned data storage. Key features include O(1) access for common operations, indexed traversal, and serialization to S-expressions for persistence or debugging.",
+      "description_length": 672,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.Make.Map.Provide_bin_io",
+      "module_path": "Regular.Std.Regular.Make.Set.Named",
       "library": "regular",
-      "description": "Implements binary serialization and deserialization for map types where keys conform to the provided `Key` module. It exposes functions to compute binary shapes, size, and perform low-level read/write operations on maps. This module is useful when working with persistent storage or network transmission of key-value collections where the key type is fixed and known.",
-      "description_length": 367,
-      "index": 34,
+      "description": "This module implements set operations for named regular data types, providing functions to check subset and equality relationships between sets. It works with `Set.named` data structures, which are used to represent sets of values with a named type. Concrete use cases include validating hierarchical permissions, comparing collections of unique identifiers, and enforcing set-based invariants in configurations.",
+      "description_length": 412,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Set.Named",
+      "library": "regular",
+      "description": "This module implements a set data structure for opaque named elements, supporting operations to check subset relationships and equality between sets. It works with opaque types that cannot be serialized or inspected directly, ensuring integrity of the abstraction. Concrete use cases include managing collections of abstract identifiers where structural comparison or introspection is not required.",
+      "description_length": 398,
+      "index": 21,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Data.Cache.Digest.Table",
       "library": "regular",
-      "description": "This module manages digest-keyed tables for caching versioned data with integrity guarantees, combining imperative operations like insertion and in-place updates with functional transformations over structured values such as lists. It supports serialization through two submodules: one for binary encoding and decoding of cache entries, enabling efficient storage and transport, and another for constructing tables from S-expressions, allowing structured configuration-based initialization. Together, these features facilitate use cases like versioned result caching, persistent storage of digest-verified data, and cross-session compatibility of cached structures. Example workflows include storing computation outputs keyed by their digest, transforming cached lists in place, and reloading versioned data from disk using either binary or S-expression formats.",
-      "description_length": 862,
-      "index": 35,
+      "description": "This module implements hash table operations for digest-based caching, using `Digest.t` keys to map to arbitrary values with support for handling duplicate keys during construction through error reporting, grouping, or transformation. It provides imperative manipulation of cache entries, including reference counting (`incr`/`decr`), multi-value storage, conditional lookups, and in-place filtering, alongside serialization via S-expressions and binary protocols for persistent storage. Designed for scenarios requiring efficient caching of hard-to-recompute data, versioned persistence, and resource management with type-safe deserialization.",
+      "description_length": 644,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Map.Provide_hash",
+      "library": "regular",
+      "description": "Implements hash folding for map types where keys are of a regular but opaque type. Provides the `hash_fold_t` function to combine hash states of map contents into a single hash value. Useful for hashing dictionaries with keys that cannot be fully inspected or serialized, such as function identifiers or internal state tokens.",
+      "description_length": 326,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data.Cache.Digest.Set",
+      "library": "regular",
+      "description": "This module implements a versioned, named set structure for managing immutable collections of digest elements derived from regular data types. It supports set-theoretic operations like union, intersection, and difference, along with ordered traversal, element selection, and serialization via S-expressions and binary protocols. The structure is optimized for cache management scenarios requiring efficient persistence, data consistency validation, and binary encoding/decoding of versioned datasets.",
+      "description_length": 500,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Set.Provide_of_sexp",
+      "library": "regular",
+      "description": "This module provides a function `t_of_sexp` that constructs a set from an S-expression, using the element conversion function from the `Elt` submodule. It works with sets represented as `Set.t`, where elements are opaque types that support S-expression parsing. A concrete use case is deserializing sets of complex, opaque data structures from configuration files or external data sources.",
+      "description_length": 389,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Set.Provide_of_sexp",
+      "library": "regular",
+      "description": "This module provides a function `t_of_sexp` that parses an S-expression into a set value, enabling direct deserialization of set structures from sexp representations. It operates on `Set.t` data types built from a specified element type `Elt`. This functionality is particularly useful when loading configuration data or persisted sets from external sources like files or network streams.",
+      "description_length": 388,
+      "index": 26,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Data.Cache.Digest.Hash_set",
+      "library": "regular",
+      "description": "This module implements hash sets of data digests for caching purposes, providing operations like creation, equality checking, and serialization. It works with `Digest.t` elements and supports efficient set manipulations and version-aware data handling. Concrete use cases include managing collections of cached digests for fast lookup and persisting them to disk or reconstructing them from S-expressions or binary formats.",
+      "description_length": 423,
+      "index": 27,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Regular.Make.Map.Provide_bin_io",
       "library": "regular",
-      "description": "This module provides functions for serializing and deserializing map values using the Bin_prot protocol. It works with map data structures where keys conform to the Key module's interface. Concrete use cases include persisting maps to disk, transmitting them over networks, or storing them in binary formats.",
-      "description_length": 308,
-      "index": 36,
+      "description": "Implements binary serialization and deserialization for map types where keys conform to a regular interface. It provides functions to compute binary shapes, size, read, and write map values, specifically working with `Map.t` structures parameterized over key and value types. Enables efficient binary I/O operations for persistent storage or network transmission of structured map data.",
+      "description_length": 386,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data.Cache.Digest.Map",
+      "library": "regular",
+      "description": "This module provides a suite of operations for constructing, transforming, and querying immutable maps with digest-based keys (e.g., SHA-1 hashes), supporting functional workflows like folding, filtering, and merging while ensuring deterministic key serialization. It works with versioned data representations through `Digest.Key.t`-keyed maps, enabling safe persistence and cache-friendly operations such as bulk conversion from sequences, error-aware lookups, and indexed range queries. Designed for scenarios requiring explicit versioning of cached or stored data, it facilitates use cases like persistent storage, cache key management, and structured data testing with S-expression or binary serialization.",
+      "description_length": 710,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Table.Provide_bin_io",
+      "library": "regular",
+      "description": "This module provides functions for serializing and deserializing hash tables where keys conform to a regular type interface. It supports operations like `bin_write_t` and `bin_read_t` to convert table values to and from binary format, enabling efficient storage or transmission. Concrete use cases include persisting typed key-value stores to disk or sending structured data over a network.",
+      "description_length": 390,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Set.Provide_hash",
+      "library": "regular",
+      "description": "This module provides hash-related operations for a set data structure, specifically `hash_fold_t` and `hash`, which enable efficient hashing of set values. It works with the `Set.t` type, where elements conform to the `Regular.Std.Regular` interface. Concrete use cases include using sets as keys in hash tables or in memoization, where value-based hashing is required for equality or storage.",
+      "description_length": 393,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Hash_set.Provide_of_sexp",
+      "library": "regular",
+      "description": "Implements conversion from S-expressions to hash sets for regular data types. Works with any data type that supports the `Regular` interface, enabling structured parsing of sets from serialized representations. Useful for deserializing configuration data or persisted sets of values into hash sets for efficient membership checks and manipulation.",
+      "description_length": 347,
+      "index": 32,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Hash_set.Provide_bin_io",
+      "library": "regular",
+      "description": "This module implements binary serialization and deserialization for hash sets of regular values. It provides functions to compute binary size, read and write hash sets in binary format, and define binable type classes for these operations. It works specifically with `Hash_set.t` structures parameterized over regular data types that support comparison and pretty-printing. Concrete use cases include persisting hash sets to disk or transmitting them over a network in a compact binary representation.",
+      "description_length": 501,
+      "index": 33,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Regular.Make.Set.Provide_bin_io",
       "library": "regular",
-      "description": "This module provides functions for serializing and deserializing sets using binary protocols, including operations for computing binary size, reading and writing binary data, and defining binary shape and type classes. It works with sets (`Set.t`) whose elements conform to the `Regular.Std.Regular` interface. Concrete use cases include persisting sets to disk, transmitting them over networks, or enabling interoperability with systems expecting binary representations of structured data.",
-      "description_length": 490,
+      "description": "This module provides functions for serializing and deserializing sets using the Bin_prot protocol. It supports operations like `bin_write_t`, `bin_read_t`, and `bin_size_t` for converting set values to and from binary representations. The module works specifically with `Set.t`, enabling efficient binary I/O for sets of elements that conform to the `Regular` interface. Use cases include persisting sets to disk or transmitting them over a network in a compact binary format.",
+      "description_length": 476,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Set.Provide_hash",
+      "library": "regular",
+      "description": "This module provides hash folding and hashing operations for a set of elements. It works with the `Set.t` data structure, where elements are of the type specified by the `Elt` module. It enables efficient hashing of sets for use in hash tables or other structures requiring hash values.",
+      "description_length": 286,
+      "index": 35,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Table.Provide_bin_io",
+      "library": "regular",
+      "description": "Implements binary serialization and deserialization for hash tables where keys conform to the provided `Key` module. It exposes functions to compute binary shapes, size, and perform low-level read/write operations on tables. This module is useful when working with persistent storage or network transmission of key-value maps with custom key types.",
+      "description_length": 348,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Map.Provide_bin_io",
+      "library": "regular",
+      "description": "This module provides binary serialization and deserialization functions for map data structures where keys are of a specified type. It supports operations like calculating the size of a map in binary format, writing a map to a binary buffer, and reading a map from a binary input. Concrete use cases include persisting maps to disk or transmitting them over a network in a binary format.",
+      "description_length": 387,
       "index": 37,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Regular.Make.Map.Provide_hash",
       "library": "regular",
-      "description": "Implements hash folding for map values by leveraging a key module's hash function. Works with generic map data structures where keys conform to a regular type interface. Enables efficient hashing of maps for use in hash tables or equality checks.",
-      "description_length": 246,
+      "description": "Implements hash folding for map values using a key module that supports regular operations. It provides the `hash_fold_t` function to combine hash states of map keys and values efficiently. This enables using maps with custom key types in hash-based data structures like hash tables or sets.",
+      "description_length": 291,
       "index": 38,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.Make.Set.Provide_bin_io",
+      "module_path": "Regular.Std.Opaque.Make.Set.Elt",
       "library": "regular",
-      "description": "This module provides functions for serializing and deserializing sets using binary protocols. It supports reading, writing, and measuring the size of set values in binary format. Concrete use cases include persisting sets to disk or transmitting them over a network.",
-      "description_length": 266,
+      "description": "This module represents elements of a set with opaque type semantics, providing serialization to and from S-expressions and a comparator for ordering. It works with abstract data types that cannot be directly inspected or serialized, ensuring they can still be used in set structures. Concrete use cases include managing sets of values with hidden internal representations, such as handles or identifiers, where comparison and S-expression conversion are necessary for storage or communication.",
+      "description_length": 493,
       "index": 39,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Regular.Make.Set.Provide_of_sexp",
+      "module_path": "Regular.Std.Opaque.Make.Map.Key",
       "library": "regular",
-      "description": "Implements conversion from S-expressions to set values for a given element type. Works with sets where elements support S-expression parsing. Useful for deserializing sets from configuration files or data streams.",
-      "description_length": 213,
+      "description": "This module defines a key type for maps with opaque semantics, supporting comparison and S-expression conversion. It works with map keys that cannot be directly inspected or serialized, enabling usage in contexts like persistent storage or hashing. Concrete use cases include managing abstract identifiers or handles where only equality and ordering matter, such as symbol tables or indexed collections.",
+      "description_length": 403,
       "index": 40,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Opaque.Make.Table.Provide_of_sexp",
       "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a table from S-expressions, using a provided function to convert S-expressions into values. It works with tables where keys are of a specified type and values are derived from S-expression parsing. A concrete use case is deserializing nested S-expression data into structured tables with typed keys and values.",
-      "description_length": 370,
+      "description": "This module provides a function `t_of_sexp` that constructs a table from S-expressions, using a provided function to convert S-expressions into values. It works with tables where keys are of a specified type and values are derived from S-expression parsing. A concrete use case is deserializing structured configuration data into a typed table representation from an S-expression format.",
+      "description_length": 387,
       "index": 41,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Regular.Make.Set.Elt",
+      "module_path": "Regular.Std.Opaque.Make.Hash_set.Provide_of_sexp",
       "library": "regular",
-      "description": "This module provides comparison, serialization, and pretty-printing operations for a custom data type, enabling its use in sets, maps, and hash tables. It defines functions for converting values to and from S-expressions and binary formats, along with a comparator for ordering. Concrete use cases include persisting structured data to disk, transmitting values over a network, and efficiently managing collections of custom-typed elements in containers like sets and maps.",
-      "description_length": 473,
+      "description": "Implements conversion from S-expressions to hash sets, specifically for opaque data types. Works with `Sexplib0.Sexp.t` and `Hash_set.t` structures. Useful when parsing configuration or input data into efficient membership-checking collections.",
+      "description_length": 244,
       "index": 42,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.Make.Map.Key",
+      "module_path": "Regular.Std.Regular.Make.Map.Provide_of_sexp",
       "library": "regular",
-      "description": "Implements an opaque type for map keys with support for S-expression conversion and comparison. Works with map key types that require controlled serialization and ordering. Enables creating map keys from S-expressions and comparing them while preserving abstraction boundaries.",
-      "description_length": 277,
+      "description": "This module provides a function `t_of_sexp` that constructs a map from S-expressions, using a provided function to convert S-expressions into values. It operates on maps where keys are of a type that supports S-expression conversion. A concrete use case is parsing configuration data stored in S-expression format into a map structure for further processing.",
+      "description_length": 358,
       "index": 43,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.Make.Table.Provide_bin_io",
+      "module_path": "Regular.Std.Opaque.Make.Map.Provide_of_sexp",
       "library": "regular",
-      "description": "Implements binary serialization and deserialization for hash tables where keys are of a specified type. It provides functions to compute binary shapes, size, read, and write operations for table values. This module is used when efficiently storing or transmitting hash table contents in binary format is required.",
-      "description_length": 313,
+      "description": "This module provides a function `t_of_sexp` that parses S-expressions into maps, using a provided function to convert values. It works with map data structures where keys are defined by the `Key` module and values are of a regular type. A concrete use case is deserializing nested S-expression data into typed maps with custom value parsing.",
+      "description_length": 341,
       "index": 44,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Regular.Std.Regular.Make.Cache",
+      "module_path": "Regular.Std.Data.Cache.Service",
       "library": "regular",
-      "description": "Implements a persistent weak key-value cache using digests as keys and values of type `M.t`. Provides `load` and `save` operations to retrieve and store data, where digests are derived from input arguments to uniquely identify cached results. Designed for scenarios like caching expensive computations (e.g., control flow graphs) where persistence is optional and data loss is tolerable.",
-      "description_length": 387,
+      "description": "This module enables the registration and retrieval of caching services for data types, allowing plugins to provide persistent caching implementations. It works with any type `'a` by combining reader and writer functions to create a cache instance for that type. Use it to integrate custom caching logic into data handling workflows, such as disk or memory-backed caches for expensive-to-recompute values.",
+      "description_length": 404,
       "index": 45,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std.Bytes.Hash_set.Provide_bin_io",
       "library": "regular",
-      "description": "This module implements binary serialization and deserialization for hash sets of bytes. It provides functions to compute binary size, read and write hash sets in binary format, and defines the necessary type class instances for integration with Bin_prot. Concrete use cases include persisting byte hash sets to disk or transmitting them over a network in a compact, efficient binary representation.",
-      "description_length": 398,
+      "description": "This module provides serialization and deserialization operations for hash sets of bytes using the Bin_prot format. It includes functions to compute binary size, read and write hash sets in binary form, and supports versioned deserialization. Concrete use cases include persisting byte hash sets to disk or transmitting them over a network in a binary protocol.",
+      "description_length": 361,
       "index": 46,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Service",
-      "library": "regular",
-      "description": "This module enables the registration and retrieval of caching services for arbitrary data types, using explicit versioning to ensure safe storage and retrieval. It works with any OCaml value by leveraging reader and writer functions to serialize and deserialize cached data. Concrete use cases include implementing persistent caching layers for expensive-to-compute values or integrating external caching plugins with versioned data representations.",
-      "description_length": 449,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Hash_set",
-      "library": "regular",
-      "description": "This module implements hash sets for regular data types, supporting creation, membership testing, conversion from lists, and efficient equality checks. It enables serialization through S-expressions and Bin_prot, with optimized printing using the element type's `pp` function, making it suitable for managing custom data type collections, persisting sets to disk, or integrating with systems expecting serialized data. The first child module adds S-expression parsing via `t_of_sexp`, allowing hash sets to be read from configuration files or input streams. The second child module enhances functionality with binary serialization and deserialization, supporting efficient storage, transmission, and reconstruction of hash sets parameterized over modules with comparison and pretty-printing.",
-      "description_length": 791,
-      "index": 48,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Io",
-      "library": "regular",
-      "description": "This module implements input/output operations for a specific data type, enabling reading from and writing to files and channels, with support for versioning and formatting. It provides functions to serialize and deserialize values, handle streams of data, and print to standard output or custom formatters. Concrete use cases include loading and saving structured data from disk, transmitting data over network channels, and logging values in a customizable textual representation.",
-      "description_length": 482,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Hash_queue",
-      "library": "regular",
-      "description": "This module provides operations for hash queues that combine a hash table with a doubly-ended queue to maintain insertion order while enabling efficient key-based lookups and in-place reordering. It supports key-data pairs of regular types (supporting comparison, hashing, and structured printing) through functions for ordered traversal, modification (enqueueing/dequeueing at both ends, moving elements), and safe/exception-raising access, ideal for ordered caches, priority queues, or pipelines requiring key-based access and insertion-order preservation.",
-      "description_length": 558,
-      "index": 50,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Bytes.Set.Named",
       "library": "regular",
-      "description": "This module implements named byte sequence sets with operations for checking subset and equality relations. It works with byte sequences organized into named sets, supporting precise comparisons and inclusion tests. Concrete use cases include managing collections of binary identifiers or validating byte sequence containment in configuration data.",
-      "description_length": 348,
-      "index": 51,
+      "description": "This module implements set operations for named byte sequences, supporting membership checks and equality comparisons between sets. It works with `Bytes.Set.named` data structures, which associate byte sequences with unique identifiers. Concrete use cases include managing collections of uniquely named binary identifiers and validating subset relationships in binary data processing tasks.",
+      "description_length": 390,
+      "index": 47,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Bytes.Map.Provide_bin_io",
+      "module_path": "Regular.Std.Regular.Make.Cache",
       "library": "regular",
-      "description": "This module provides binary serialization and deserialization functions for maps with byte string values. It supports operations like `bin_write_t` and `bin_read_t` to convert map data to and from binary format, using a specified key module. Concrete use cases include persisting byte string maps to disk or transmitting them over a network in a compact, efficient format.",
-      "description_length": 372,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Set.Elt",
-      "library": "regular",
-      "description": "This module provides comparison and serialization operations for byte sequences, including functions for converting to and from S-expressions, binary encoding and decoding, and defining a comparator for ordering. It works directly with `t` as a type alias for `Regular.Std.Bytes.t`, representing immutable byte arrays. Concrete use cases include efficiently managing sets of byte sequences, persisting byte data in binary or S-expression format, and ensuring correct ordering for key-based data structures.",
-      "description_length": 506,
-      "index": 53,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Replace_polymorphic_compare",
-      "library": "regular",
-      "description": "This module replaces polymorphic comparison operators with type-specific ones derived from a provided `compare` function. It implements standard comparison operations like `=`, `<`, `>`, `min`, `max`, and `compare` for a given type `M.t`, ensuring consistent and efficient ordering. It is used to derive full comparison interfaces for custom types based on a single `compare` function.",
-      "description_length": 385,
-      "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Versioned.S",
-      "library": "regular",
-      "description": "This module defines a versioned data type with an associated version string, ensuring explicit versioning for data representations. It provides operations to retrieve the version and handle data serialization or deserialization in a type-safe manner. Concrete use cases include managing persisted data formats and handling schema evolution across different versions of stored values.",
-      "description_length": 383,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Table.Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a hash table from an S-expression, using a provided function to parse values. It works with bytes as keys and arbitrary regular data types as values. A concrete use case is parsing configuration or serialized data into a hash table where keys are byte strings and values follow a structured format.",
-      "description_length": 358,
-      "index": 56,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make.Hash_set",
-      "library": "regular",
-      "description": "This module manages hash sets of opaque elements, supporting creation, equality checks, and set operations like union and intersection. It includes functions for converting hash sets to and from S-expressions, enabling configuration parsing, and provides Bin_prot serialization for efficient binary storage and transmission. You can, for example, load a hash set from an S-expression, modify it, and then serialize it to disk in binary format. The combination of direct API operations and submodule support for serialization makes it suitable for handling abstract value collections in both text and binary contexts.",
-      "description_length": 616,
-      "index": 57,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Map.Key",
-      "library": "regular",
-      "description": "This module provides comparison and serialization functions for using byte sequences as keys in maps. It supports operations like binary and S-expression encoding/decoding, and defines a comparator for ordering. Concrete use cases include storing and retrieving byte-based keys in persistent data structures or transmitting them over a network in a serialized format.",
-      "description_length": 367,
-      "index": 58,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Data.Make.Cache",
-      "library": "regular",
-      "description": "Implements caching operations using digests as keys to store and retrieve arbitrary data values. It provides `load` and `save` functions to access a persistent, weak key-value store where entries may be lost at any time. This module is used to cache results of expensive computations, such as building control flow graphs, by associating them with a digest of their input parameters.",
-      "description_length": 383,
-      "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Hash_set.Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a hash set of bytes from an S-expression. It works with `Sexplib0.Sexp.t` input and produces a `Regular.Std.Bytes.Hash_set.t`. A concrete use case is parsing byte string sets from configuration files or serialized data representations.",
-      "description_length": 295,
-      "index": 60,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Make.Io",
-      "library": "regular",
-      "description": "This module implements input/output operations for serializing and deserializing a regular data type to and from files and channels. It supports versioned data formats, reading and writing single values, lists of values, and streaming data via input and output channels. Concrete use cases include loading and saving structured data files, processing binary or text-encoded data streams, and implementing version-aware data storage and retrieval.",
-      "description_length": 446,
-      "index": 61,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Map.Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a map from an S-expression, using a provided function to convert the values. It works with maps where the key type is defined by the `Key` submodule and the value type is regular. A concrete use case is parsing structured configuration data stored in S-expressions into a map for efficient lookup and manipulation.",
-      "description_length": 374,
-      "index": 62,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make.Hash_queue",
-      "library": "regular",
-      "description": "This module implements a hybrid data structure combining hash table key-value associations with queue ordering semantics, supporting key-based insertion, lookup, and removal while preserving element order. It provides operations to manipulate key-value pairs with control over enqueue positions (front/back), aggregate values via folds or sums, and serialize to S-expressions, with variants handling exceptions or optional returns. Typical applications include ordered key-value stores requiring efficient lookups and positional adjustments, such as LRU caches, event queues with keyed entries, or processing pipelines maintaining insertion order.",
-      "description_length": 647,
-      "index": 63,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Set.Provide_hash",
-      "library": "regular",
-      "description": "This module provides hash folding and hashing operations for sets of bytes. It works with `Regular.Std.Bytes.Set.t` data structures, enabling efficient hash computation for byte sets. Concrete use cases include hashing collections of binary data for integrity checks or inclusion in hash-based data structures.",
-      "description_length": 310,
-      "index": 64,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Set.Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that parses an S-expression into a set of bytes. It works with `Sexplib0.Sexp.t` input and produces a `Regular.Std.Bytes.Set.t` as output. A concrete use case is deserializing byte sets from S-expressions during configuration or data loading tasks.",
-      "description_length": 292,
-      "index": 65,
+      "description": "Implements a persistent weak key-value cache using digests as keys, where values are of a regular type `M.t`. Provides `load` and `save` operations to retrieve or store values based on a digest of input parameters. Useful for caching expensive-to-compute values like control flow graphs, where recomputation is acceptable if cached data is lost.",
+      "description_length": 345,
+      "index": 48,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Opaque.Make.Table",
       "library": "regular",
-      "description": "This module manages key-value associations with polymorphic or opaque keys, supporting imperative and functional operations like creation from lists, grouping, mapping, filtering, merging, and in-place updates. It includes multi-value entry handling through `find_multi` and `remove_multi`, and enables conditional logic based on keys, making it suitable for symbol tables, caches, and configuration stores. Child modules provide `t_of_sexp` for constructing tables from S-expressions and binary serialization functions for efficient storage or transmission of table data. These capabilities allow working with structured, typed tables derived from external formats while maintaining efficient keyed access and transformation.",
-      "description_length": 726,
-      "index": 66,
+      "description": "This module provides hash table operations for opaque data types, focusing on key uniqueness management, functional transformations, and serialization. It works with tables where keys are fixed to a specific type (`M.t`) and values are generic (`'b`), supporting imperative and functional manipulation of key-value pairs. Use cases include data processing pipelines requiring strict key handling, configuration management with custom data types, and systems needing binary/S-expression serialization of structured tables.",
+      "description_length": 521,
+      "index": 49,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Regular.Std.Regular.Make.Table",
+      "module_path": "Regular.Std.Opaque.Make.Hash_queue",
       "library": "regular",
-      "description": "This module manages hash tables with specialized support for conversion from S-expressions and binary serialization. It provides direct access to hash table operations while integrating functionality from its submodules to handle structured data parsing and efficient data transmission. The main data types include hash tables with keys and values that support S-expression and binary protocol conversions. You can parse configuration files into hash tables using `t_of_sexp`, or serialize and persist hash tables to disk using Bin_prot for fast and compact data exchange.",
-      "description_length": 572,
-      "index": 67,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Map.Provide_hash",
-      "library": "regular",
-      "description": "This module provides a function `hash_fold_t` that extends hash folding to byte maps, enabling efficient hashing of map values using a specified key hashing function. It operates on `Regular.Std.Bytes.Map.t` data structures, which are maps with byte-based keys. A concrete use case includes hashing large collections of byte-indexed data, such as in persistent storage systems or content-addressable caches.",
-      "description_length": 407,
-      "index": 68,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Data.Cache.Digest",
-      "library": "regular",
-      "description": "This module enables digest creation, hashing, and comparison for caching, working with data structures like maps, sets, and queues to manage versioned, hash-verified data. It supports serialization to binary and S-expressions, equality and ordering checks, and efficient membership and transformation operations. You can hash a data structure to uniquely identify it, compare digests to validate cache entries, or serialize a versioned cache map for storage. Submodules handle set algebra on digest elements, LRU eviction with hash queues, and persistent caching with digest-keyed tables that support in-place updates and structured reloading.",
-      "description_length": 643,
-      "index": 69,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Set",
-      "library": "regular",
-      "description": "This module manages polymorphic ordered sets parameterized by a comparator, enabling efficient membership checks, insertion, and functional transformations like mapping and filtering. It supports set-theoretic operations such as union and intersection, ordered traversal via min/max or indexed access, and conversions to and from lists, arrays, and trees. The module integrates hashing for use in hash tables, named set comparisons for configuration validation, and binary and S-expression serialization for persistence and communication. It also includes utilities for defining custom data types that can be used as set elements, supporting comparison, serialization, and pretty-printing.",
-      "description_length": 689,
-      "index": 70,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Table.Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides binary serialization and deserialization operations for byte tables indexed by a specific key type. It supports reading, writing, and measuring the size of byte tables in binary format, enabling efficient storage and transmission. Concrete use cases include persisting byte-based key-value mappings to disk or sending them over a network.",
-      "description_length": 359,
-      "index": 71,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make.Replace_polymorphic_compare",
-      "library": "regular",
-      "description": "This module provides comparison operators and ordering functions for an opaque type `M.t`, including equality checks, relational comparisons, and functions to compute minimum and maximum values. It supports types that can be compared but not inspected or serialized, ensuring operations are based on value identity rather than structure. Concrete use cases include defining orderings for abstract data types like handles, identifiers, or internal state objects where structural comparison is not applicable.",
-      "description_length": 507,
-      "index": 72,
+      "description": "This module provides operations to manipulate a hybrid hash table and queue structure, enabling O(1) insertion, keyed lookups, and reordering while maintaining insertion order. It supports ordered traversal, indexed folding, and atomic updates like moving elements to front/back on access, dequeuing by position, and replacing values. Such functionality is ideal for scenarios requiring both fast keyed access and sequential processing, such as LRU eviction policies or ordered data pipelines.",
+      "description_length": 493,
+      "index": 50,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Bytes.Set.Provide_bin_io",
       "library": "regular",
-      "description": "This module provides functions for serializing and deserializing sets of bytes using the Bin_prot protocol. It supports operations like calculating the binary size, writing to and reading from binary formats, and defining binary shapes and type classes. Concrete use cases include efficiently storing or transmitting byte sets in a binary format for applications like caching, networking, or persistent storage.",
-      "description_length": 411,
-      "index": 73,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make.Map",
-      "library": "regular",
-      "description": "This module manages key-value maps with robust error handling, ordered traversal, and combinatorial operations like fold, filter, and merge, centered around the `Map.t` type parameterized by ordered keys and arbitrary values. It supports map construction from sequences and S-expressions, enables custom key types with proper ordering and serialization, and allows binary encoding and decoding via Bin_prot, with utilities for efficient hashing and structured printing. You can parse configuration files into typed maps, serialize maps for storage or transmission, compute symmetric differences, or fold over ranges of ordered keys. Submodules enhance key type definition, S-expression parsing, binary serialization, and hash support, integrating seamlessly with the core map operations.",
-      "description_length": 787,
-      "index": 74,
+      "description": "This module provides binary serialization and deserialization functions for sets of bytes, including size calculation, direct reading and writing, and type class instances. It works with `Regular.Std.Bytes.Set.t`, representing sets of byte sequences. Concrete use cases include persisting byte sets to disk, transmitting them over networks, or reconstructing them from binary data streams.",
+      "description_length": 389,
+      "index": 51,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.Make.Set",
+      "module_path": "Regular.Std.Regular.Make.Hash_set",
       "library": "regular",
-      "description": "This module manages sets of opaque elements with standard operations like union, intersection, and filtering, while ensuring elements remain abstract and\u4e0d\u53ef\u5e8f\u5217\u5316. It supports conversions from lists, arrays, and S-expressions, enables hashing and binary serialization through dedicated submodules, and allows logical comparisons like equality and subset checks. You can use it to handle unique identifiers with hidden structure, efficiently compare or persist sets, and integrate with configuration or network data flows using S-expressions or binary protocols. Key data types include `Set.t` and the opaque `Elt.t`, with operations such as `mem`, `add`, `remove`, `fold`, `hash`, and `t_of_sexp`.",
-      "description_length": 693,
-      "index": 75,
-      "embedding_norm": 0.9999999403953552
+      "description": "Implements hash sets for regular data types with operations for creation, equality checking, and S-expression and binary serialization. Works with `Hash_set.t` structures parameterized over regular elements, supporting efficient membership checks and set manipulation. Useful for managing sets of custom data types in configurations, persisted storage, or network transmission scenarios.",
+      "description_length": 387,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Table.Provide_bin_io",
+      "library": "regular",
+      "description": "This module provides binary serialization and deserialization operations for byte tables indexed by a specific key type. It supports efficient size computation, reading, and writing of byte tables in binary format, specifically for use cases involving persistent storage or network transmission. The module works directly with `Bytes` and key-indexed table structures, enabling precise handling of byte-based data representations.",
+      "description_length": 430,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Set.Provide_hash",
+      "library": "regular",
+      "description": "This module provides hash folding and hashing operations for sets of bytes. It works with `Regular.Std.Bytes.Set.t`, enabling efficient hash computation over sets where elements are byte sequences. Concrete use cases include hashing collections of binary data for integrity checks or inclusion in hash-based data structures.",
+      "description_length": 324,
+      "index": 54,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data.Make.Cache",
+      "library": "regular",
+      "description": "Implements caching functionality using digests as keys to store and retrieve values of arbitrary data types. Provides `load` and `save` operations to access a persistent, weak key-value storage where entries may be lost at any time. Useful for expensive computations such as building control flow graphs, where re-computation is costly and cached results provide performance benefits.",
+      "description_length": 384,
+      "index": 55,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Set.Provide_of_sexp",
+      "library": "regular",
+      "description": "This module provides a function `t_of_sexp` that parses an S-expression into a set of bytes. It works with `Sexplib0.Sexp.t` as input and produces a `Regular.Std.Bytes.Set.t`. A concrete use case is deserializing byte sets from S-expressions during configuration or data loading.",
+      "description_length": 279,
+      "index": 56,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Opaque.Make.Map",
       "library": "regular",
-      "description": "This module manages maps with opaque keys and arbitrary values, supporting construction from lists or sequences, error-resilient updates, merging, partitioning, and range queries. It enables hashing, serialization, and S-expression parsing through specialized submodules, handling key types with defined comparison and conversion behaviors. You can build a map from a sequence of key-value pairs, merge two maps while handling key conflicts, or hash a nested map structure for use in caching or equality checks. Additionally, it supports deserializing maps from S-expressions or binary formats, making it suitable for configuration parsing or persistent storage.",
-      "description_length": 662,
+      "description": "This module provides operations for constructing and manipulating immutable maps with opaque keys that support comparison and ordered traversal, enabling transformations like merging, partitioning, and folding with custom logic. It works with key-value pairs stored in `Map.t` structures, offering conversions from lists, arrays, and hashtables while handling duplicate keys and maintaining invariants. Use cases",
+      "description_length": 412,
+      "index": 57,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data.Cache.Digest",
+      "library": "regular",
+      "description": "This module provides operations for generating and managing data digests as stable identifiers for caching, supporting content-based versioning and namespace isolation. It works with the `Digest.t` type, enabling efficient comparison, serialization, and integration with hash tables, sets, and ordered queues to handle resource-constrained caching scenarios. Specific use cases include deduplication of expensive computations, persistent cache key management, and hierarchical cache organization using versioned data representations.",
+      "description_length": 533,
+      "index": 58,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Hash_set",
+      "library": "regular",
+      "description": "This module implements hash sets for opaque data types, providing operations like `create`, `of_list`, and equality checks. It supports efficient membership testing and set manipulation with opaque elements that cannot be serialized or directly inspected. Use cases include managing collections of unserializable identifiers or handles where fast lookup and set operations are required.",
+      "description_length": 386,
+      "index": 59,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Replace_polymorphic_compare",
+      "library": "regular",
+      "description": "This module replaces polymorphic comparison functions with type-specific ones for a given ordered type. It provides comparison operators (`=`, `<`, `>`, etc.), `min`, `max`, and `compare` for use with data types that require ordered values, such as integers, strings, or custom comparable types. It is used to derive efficient, correct comparisons in contexts like sorting, set membership, and ordered collections.",
+      "description_length": 414,
+      "index": 60,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Io",
+      "library": "regular",
+      "description": "This module provides input/output operations for reading and writing values of type `M.t` to files and channels, supporting versioned and formatted data exchange. It includes functions for loading and saving single values, lists of values, and streaming data via input/output channels. Use cases include persisting structured data to disk, transmitting serialized values over network connections, or processing large datasets through streaming interfaces.",
+      "description_length": 455,
+      "index": 61,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Map.Provide_hash",
+      "library": "regular",
+      "description": "This module provides a function `hash_fold_t` for folding over byte sequences in a map structure, specifically handling values of type `Regular.Std.Bytes.Map.t`. It works with byte sequences organized in a map where keys are defined by the `Key` module and supports hashing operations through the `Base__Ppx_hash_lib` library. A concrete use case is enabling efficient, hash-based comparisons or summaries of byte sequence maps, such as when verifying data integrity or building hash tables indexed by byte sequences.",
+      "description_length": 517,
+      "index": 62,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Map",
+      "library": "regular",
+      "description": "This module provides a comprehensive toolkit for constructing, transforming, and querying key-value maps with custom key types that adhere to the `Regular` interface. It supports operations like safe insertion, folding with early termination, key-based filtering, and merging with conflict resolution, while emphasizing functional purity and error handling through `Or_error` and result types. The module is particularly suited for scenarios involving configuration parsing, property-based testing, and persistent storage where structured key-value relationships require robust manipulation, serialization, or validation against domain-specific invariants.",
+      "description_length": 656,
+      "index": 63,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Table",
+      "library": "regular",
+      "description": "This module provides a comprehensive set of operations for hash tables keyed by values of a regular type, supporting construction from lists, bulk transformations, in-place modifications, and advanced queries like grouping, filtering, and merging. It works with generic hash tables (`('a, 'b) Table.t_`) where keys adhere to the `Regular` interface (enabling comparison, hashing, and efficient printing) and values can be arbitrary types, including multi-value entries. Specific use cases include data aggregation pipelines, persistent storage with custom serialization (via S-expressions or binary I/O), and managing stateful mappings with conditional updates or complex key-value relationships.",
+      "description_length": 696,
+      "index": 64,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Table.Provide_of_sexp",
+      "library": "regular",
+      "description": "This module provides a function `t_of_sexp` that constructs a hash table from an S-expression, using a provided function to parse values. It works with `Bytes`-based hash tables where keys are of a type that can be converted from S-expressions. A concrete use case is parsing configuration or structured data from S-expressions into a hash table mapping string-like keys to custom data types.",
+      "description_length": 392,
+      "index": 65,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Hash_queue",
+      "library": "regular",
+      "description": "This module provides a hybrid data structure combining a hash table with a doubly-linked queue, enabling efficient key-based lookups paired with ordered traversal and modification. It supports operations like enqueueing/dequeueing elements at either end, safe and unsafe removal by key, and folding over elements with guaranteed ordering, all while maintaining O(1) access complexity for hash table operations. The structure is particularly useful for implementing caches, queues with priority eviction policies, or any scenario requiring both keyed data access and sequential processing.",
+      "description_length": 588,
+      "index": 66,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Map.Provide_bin_io",
+      "library": "regular",
+      "description": "This module provides binary serialization and deserialization functions for maps with byte-based keys and values. It supports operations like `bin_write_t`, `bin_read_t`, and `bin_size_t` to handle map data in binary format efficiently. Concrete use cases include persisting byte-oriented maps to disk or transmitting them over a network in a compact, typed binary representation.",
+      "description_length": 380,
+      "index": 67,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Hash_set.Provide_of_sexp",
+      "library": "regular",
+      "description": "This module provides a function `t_of_sexp` that parses an S-expression into a hash set of bytes, enabling direct deserialization of byte-based hash sets from symbolic expressions. It operates specifically on `Sexplib0.Sexp.t` input and produces values of type `Regular.Std.Bytes.Hash_set.t`. A concrete use case is loading byte-oriented hash set data structures from configuration files or external representations in network protocols.",
+      "description_length": 437,
+      "index": 68,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Map.Provide_of_sexp",
+      "library": "regular",
+      "description": "This module provides a function `t_of_sexp` that constructs a map from an S-expression, using a provided function to convert the values. It works with maps where the keys are determined by the `Key` module and the values are of a type that can be parsed from an S-expression. A concrete use case is deserializing a map stored in S-expression format, such as reading configuration data or structured text files where keys are bytes.",
+      "description_length": 431,
+      "index": 69,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Set",
+      "library": "regular",
+      "description": "This module implements set operations for abstract, orderable elements that support serialization and comparison, enabling union, intersection, difference, subset checks, and transformations through iteration, folding, and conversion to lists or arrays. It works with opaque element types encapsulated in the `Set.t` structure, leveraging the `Elt` module for ordering and serialization, and supports use cases like managing abstract identifiers or collections of non-inspectable data requiring efficient set-theoretic operations and persistence via S-expressions or binary formats.",
+      "description_length": 582,
+      "index": 70,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Map.Key",
+      "library": "regular",
+      "description": "This module provides comparison and serialization operations for byte sequences, specifically supporting efficient binary and S-expression encoding/decoding. It works with `Bytes` type to enable use in map keys and persistent storage scenarios. Concrete use cases include using byte sequences as keys in binary protocols, checksum handling, and structured logging where byte data must be serialized or compared efficiently.",
+      "description_length": 423,
+      "index": 71,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make.Replace_polymorphic_compare",
+      "library": "regular",
+      "description": "This module provides comparison operators and ordering functions for an opaque type `M.t`, including equality checks, relational operators, and utilities like `min` and `max`. It enables direct value comparisons without exposing the internal structure of the type. This is useful when working with abstract data types where ordering semantics are needed but serialization or inspection is not required.",
+      "description_length": 402,
+      "index": 72,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data.Make.Io",
+      "library": "regular",
+      "description": "This module provides functions for reading, writing, loading, and saving typed data values to files or channels, with support for versioning and format specification. It operates on a generic data type `T.t` that adheres to the `Data.S` interface, enabling structured I/O operations for serialization and deserialization. Concrete use cases include persisting application state to disk, transmitting structured data over network streams, and version-aware data migration between systems.",
+      "description_length": 487,
+      "index": 73,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Bytes.Set.Elt",
+      "library": "regular",
+      "description": "This module provides comparison and serialization operations for byte sequences, including S-expression and binary format conversions. It supports efficient binary encoding with functions for reading, writing, and measuring byte sequence sizes. Concrete use cases include persisting byte sequences to disk, transmitting them over networks, and using them as keys in sets or maps with proper ordering and serialization support.",
+      "description_length": 426,
+      "index": 74,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Regular.Std.Regular.Make.Set",
+      "library": "regular",
+      "description": "Supports standard set operations, set-theoretic operations (union, intersection, difference), and serialization via Bin_prot for `Set.t` structures containing regular elements (`Set.Elt.t`). Use cases include permission validation, configuration management, data persistence, and testing with QuickCheck, enabled by utilities for converting data from lists, arrays, maps, and efficient binary transmission.",
+      "description_length": 406,
+      "index": 75,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque.Make",
+      "library": "regular",
+      "description": "This module enables comparison-based operations and collection manipulations for an abstract data type, supporting relational checks (equality, ordering, bounds validation), min/max selection, and clamping. It works with opaque values of type `M.t` through structured interfaces like maps, sets, hash tables, and queues, ensuring internal representations remain hidden while enabling efficient data processing pipelines and configuration systems. Key applications include managing unserializable keys in hashed/ordered collections and enforcing type abstraction boundaries in domain-specific data models.",
+      "description_length": 604,
       "index": 76,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Data.S",
+      "module_path": "Regular.Std.Printable.Make",
       "library": "regular",
-      "description": "This module provides versioned serialization and deserialization operations for arbitrary data types, enabling conversion between values and bytes/bigstrings while enforcing explicit version control. It supports multiple formats (e.g., Marshal, sexp, bin_io), dynamic reader/writer registration, and size measurement for buffer management. Use cases include persistent data storage with format evolution, cross-version data migration, and caching computationally expensive values via version-aware serialization.",
-      "description_length": 512,
+      "description": "Implements the Printable interface for a given type `M.t` by leveraging a provided `pp` function. Provides operations to convert values to strings (`to_string`, `str`), print them to output channels (`ppo`), and format sequences of values (`pp_seq`). Useful for integrating custom types with logging, debugging, and formatted output functions like `sprintf`, `Lwt_io.printf`, and `Core_kernel.Sequence` printers.",
+      "description_length": 412,
       "index": 77,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.S-Hash_queue",
+      "module_path": "Regular.Std.Bytes.Replace_polymorphic_compare",
       "library": "regular",
-      "description": "This module provides operations for managing hash queues, which combine hash tables with doubly linked lists to preserve insertion order while enabling efficient key-based lookups and modifications. It supports enqueueing, dequeuing, element replacement, membership checks, and indexed traversal/folding, working with key-data pairs stored in `('key, 'data) Core__.Hash_queue.t` structures. Typical use cases include maintaining ordered collections with fast access to elements, such as LRU caches or sequences requiring stable iteration with dynamic reordering.",
-      "description_length": 562,
+      "description": "This module provides comparison operators and ordering functions for byte sequences, enabling direct value comparisons between `Bytes.t` values. It supports standard relational operations like equality, less-than, and greater-than checks, along with `compare`, `min`, and `max` functions for sorting and decision logic. Concrete use cases include implementing ordered collections of byte sequences, validating binary data ordering, and supporting key-based comparisons in persistent data structures.",
+      "description_length": 499,
       "index": 78,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Regular.S-Map-Key",
+      "module_path": "Regular.Std.Bytes.Unsafe",
       "library": "regular",
-      "description": "This module defines a key type for maps with support for comparison, serialization, and pretty-printing. It includes functions for binary and S-expression conversion, enabling efficient storage, transmission, and human-readable output. It is used to create map keys that can be compared, serialized, and printed efficiently, suitable for persistent data structures or inter-process communication.",
-      "description_length": 396,
+      "description": "This module provides low-level, unsafe conversion functions between `bytes` and `string` without copying data. It directly works with `bytes` and `string` types, enabling direct memory sharing between them. These functions are intended for advanced use cases where performance is critical and the programmer can guarantee that the immutability of strings will not be violated.",
+      "description_length": 376,
       "index": 79,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.S-Table-Provide_bin_io",
+      "module_path": "Regular.Std.Regular.Make",
       "library": "regular",
-      "description": "This module implements binary serialization and deserialization for hash tables where keys are of a specified type and values are of the same type as the table's mapped values. It provides functions to compute binary size, read and write table data in binary format, and supports versioned serialization through `__bin_read_t__`. Concrete use cases include persisting hash tables to disk or transmitting them over a network in a binary protocol.",
-      "description_length": 445,
+      "description": "This module equips user-defined types with serialization (via Bin_prot and Sexplib), comparison logic, and hashing, alongside derived formatted printing (`str`, `pps`, `ppo`). It enables building ordered collections (maps, sets",
+      "description_length": 227,
       "index": 80,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Bytes.Hash_queue",
       "library": "regular",
-      "description": "This interface manages ordered key-value collections using a hybrid hash table and doubly-linked list structure, enabling efficient insertion-order preservation, key-based lookups, and positional adjustments like moving elements to front or back. It supports operations for functional and imperative manipulation, including enqueuing/dequeuing with exception handling, indexed traversal, and S-expression serialization, working with keys of type `Regular.Std",
-      "description_length": 458,
+      "description": "This module implements a hybrid data structure combining a hash table with a doubly-linked list to enable efficient key-based lookups alongside ordered traversal and modification. It supports operations like insertion at either end, membership checks, element reordering, bulk removal, and conversion to lists or arrays, all while maintaining insertion order and allowing value retrieval by key or position. Typical use cases include managing ordered collections with frequent updates (e.g., caches, queues with fast key access) and processing sequences where both positional and associative operations are required.",
+      "description_length": 616,
       "index": 81,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Unsafe",
-      "library": "regular",
-      "description": "This module provides unsafe, low-level conversion functions between bytes and strings without copying internal data. It works directly with `bytes` and `string` types, enabling advanced users to convert between them while bypassing immutability guarantees. Use cases include performance-critical code where data ownership is manually managed, such as zero-copy parsing or interfacing with C libraries.",
-      "description_length": 401,
-      "index": 82,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Set",
-      "library": "regular",
-      "description": "This module provides a comprehensive suite of set-theoretic operations (union, intersection, difference, symmetric difference) and element-level manipulations (search, filtering, grouping) for immutable, ordered sets of comparable elements. It operates on sets of type `t` containing elements of type `Elt.t`, leveraging comparator witnesses to ensure efficient, invariant-preserving transformations and structural queries. Use cases include data analysis pipelines, algorithmic workflows requiring precise set semantics, and integration with serialization frameworks or property-based testing tools via binary protocol support and Quickcheck generation.",
-      "description_length": 654,
-      "index": 83,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Map-Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides binary serialization and deserialization functions for map-like structures where keys are provided by the `Key` module. It supports operations like measuring the binary size, writing to and reading from binary formats, and fully handles versioned serialization with shape tracking. Concrete use cases include persisting or transmitting key-value mappings efficiently in binary form, especially when working with custom key types that require structured serialization.",
-      "description_length": 488,
-      "index": 84,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Hash_set-Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a hash set from an S-expression, using the structure and values defined by the parameter module `X`. It works specifically with hash sets and S-expressions, enabling direct parsing of set data from serialized forms. A concrete use case is loading predefined sets of custom regular types from configuration files or external data sources.",
-      "description_length": 397,
-      "index": 85,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Hash_set-Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides binary serialization and deserialization functions for hash sets, enabling efficient storage and transmission of hash set data structures. It works with hash sets parameterized over a specific type `X`, supporting operations like size calculation, reading, and writing in binary format. Concrete use cases include persisting hash sets to disk or sending them over a network in a distributed system.",
-      "description_length": 419,
-      "index": 86,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Table",
-      "library": "regular",
-      "description": "This module manages byte-keyed hash tables with arbitrary values, supporting imperative updates, iteration, folding, and in-place transformations. It includes submodules for parsing tables from S-expressions and serializing them to binary formats, enabling structured data workflows. Main operations include creating tables from lists, filtering, merging, and transforming entries, with concrete applications in configuration parsing, data serialization, and network communication. The API handles keys as byte strings (`Bytes.t`) and supports custom value types through user-provided conversion functions.",
-      "description_length": 606,
-      "index": 87,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Hash_queue",
-      "library": "regular",
-      "description": "This module provides ordered key-value storage combining hash table efficiency with queue-based insertion order preservation, supporting operations like conditional enqueuing (with duplicate checks), positional element access (front/back), and ordered traversal. It works with polymorphic key and data types (`'a`, `'b`) through a container that maps keys to values while maintaining insertion sequence, enabling use cases like LRU caches or ordered processing pipelines where both fast lookups and sequence-based operations (e.g., iteration, bulk removal) are required. Functionality extends to indexed folding, S-expression serialization, and atomic updates with exception-safe variants for robust state management.",
-      "description_length": 717,
-      "index": 88,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Replace_polymorphic_compare",
-      "library": "regular",
-      "description": "This module provides comparison operators and ordering functions for byte sequences, enabling direct value comparisons between `Bytes.t` values. It supports standard operations like equality checks, less-than/greater-than comparisons, and utilities like `min` and `max` to determine byte sequence order. Concrete use cases include sorting collections of byte sequences or implementing conditional logic based on byte content.",
-      "description_length": 425,
-      "index": 89,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Hash_set",
-      "library": "regular",
-      "description": "This module manages hash sets of byte sequences with operations for creation, equality checking, membership testing, and set manipulation. It includes a submodule for binary serialization, enabling efficient storage and transmission of byte hash sets using Bin_prot, and another submodule that supports parsing byte hash sets from S-expressions. Use cases include tracking unique binary identifiers, persisting sets to disk, and parsing byte string collections from configuration files.",
-      "description_length": 486,
-      "index": 90,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Replace_polymorphic_compare",
-      "library": "regular",
-      "description": "This module provides polymorphic comparison operators and functions like `compare`, `equal`, `min`, and `max` for a given type `t`. It works with any regular data type that supports ordering and equality checks. Concrete use cases include implementing efficient comparisons for custom types in maps, sets, and sorting operations.",
-      "description_length": 329,
-      "index": 91,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Map-Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides serialization and deserialization functions for map data structures using the Bin_prot protocol. It supports reading, writing, and measuring the binary representation of maps, enabling efficient storage and transmission of map values. Concrete use cases include persisting map-based data to disk or sending map contents over a network in a compact binary format.",
-      "description_length": 383,
-      "index": 92,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Hash_set-Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides functions for serializing and deserializing hash sets using the Bin_prot protocol. It supports operations like computing the binary size, writing to and reading from binary formats, and defining the binary shape of a hash set. It works specifically with `Hash_set.t` structures, enabling efficient binary encoding and decoding for storage or transmission.",
-      "description_length": 376,
-      "index": 93,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Set",
-      "library": "regular",
-      "description": "This module manages sets of byte sequences with standard set operations like union, intersection, and membership testing, while supporting conversions to and from lists, arrays, and hash structures. It enables binary and S-expression serialization, hashing, and comparison operations, with submodules handling named set comparisons, structured parsing, and efficient persistence. You can compute the difference between two byte sets, verify subset relations in configuration data, or hash a set of bytes for integrity checks. Additional utilities allow parsing sets from S-expressions, comparing byte sequences, and serializing data for storage or network transmission.",
-      "description_length": 669,
-      "index": 94,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Make",
-      "library": "regular",
-      "description": "This module enables version-aware binary serialization and deserialization of arbitrary data types, using efficient buffer manipulation and explicit format versioning. It supports operations over byte buffers and bigstrings, allowing data representation changes while maintaining backward compatibility, with use cases including structured data storage and caching. The child modules extend this functionality by providing digest-based caching for expensive computations and I/O operations for reading and writing versioned data to files and channels. Together, they support tasks like saving and loading control flow graphs, streaming binary data, and managing persistent, versioned data stores.",
-      "description_length": 696,
-      "index": 95,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.With_instance-Io",
-      "library": "regular",
-      "description": "This module handles reading, writing, and streaming of data to and from files or channels, supporting versioned and formatted data representations. It operates on a generic data type `t`, allowing storage and retrieval of sequences, individual values, and streams. Concrete use cases include loading versioned configuration data from disk, serializing complex data structures to binary formats, and streaming large datasets without full in-memory representation.",
-      "description_length": 462,
-      "index": 96,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Printable.S",
-      "library": "regular",
-      "description": "This module defines a standard interface for converting values to human-readable string representations and printing them to output channels or format specifiers. It includes functions like `to_string` for direct string conversion, `str` and `ppo` for formatted output compatible with `Format.printf` and similar functions, and utilities for printing sequences. It is widely used across BAP types to enable consistent textual output in logging, debugging, and user-facing messages.",
-      "description_length": 481,
-      "index": 97,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S",
-      "library": "regular",
-      "description": "This module supports comparison and hashing operations for opaque types, enabling their use in ordered and hash-based data structures. It works with an opaque type `t` and provides modules like maps, sets, hash tables, and queues that leverage these capabilities. Specific use cases include managing collections of opaque values where ordering, uniqueness, or efficient lookups are required, such as in custom type-safe containers or state management systems.",
-      "description_length": 459,
-      "index": 98,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Set-Provide_hash",
-      "library": "regular",
-      "description": "This module provides hash-related operations for a set type, specifically `hash_fold_t` and `hash`, enabling efficient and consistent hashing of set values. It works with the `Set.t` data structure, parameterized over elements of type `Elt`. Concrete use cases include using sets as keys in hash tables or ensuring structural integrity in persistent data structures.",
-      "description_length": 366,
-      "index": 99,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.S-Io",
-      "library": "regular",
-      "description": "This module provides functions for reading, writing, loading, and saving data to and from files and channels, supporting versioned and formatted data representations. It works with any regular data type that can be serialized, using input/output channels or file paths. Use cases include persisting structured data to disk, streaming data from network sources, and version-controlled data serialization for compatibility across system updates.",
-      "description_length": 443,
-      "index": 100,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Table-Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides serialization and deserialization functions for hash tables where keys conform to the `Key` module's interface. It supports operations like computing binary representations, reading and writing table values in binary format, and defining binable type classes for table instances. Concrete use cases include persisting hash tables to disk or transmitting them over a network in a binary format.",
-      "description_length": 414,
-      "index": 101,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Set-Named",
-      "library": "regular",
-      "description": "This module provides operations to check if one set is a subset of another and to compare sets for equality, both returning results wrapped in an `Or_error` type. It works with named sets, leveraging their ordering and comparison capabilities. These functions are useful in scenarios requiring strict validation of set relationships, such as configuration checks or data integrity tests.",
-      "description_length": 387,
-      "index": 102,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Table-Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a table from an S-expression, using a provided function to convert values. It works with tables where keys are of a specified type and values are derived from S-expression parsing. A concrete use case is deserializing a structured configuration format into a typed table representation where keys are known and values need custom parsing.",
-      "description_length": 398,
-      "index": 103,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.S-Cache",
-      "library": "regular",
-      "description": "This module provides `load` and `save` operations to retrieve and store data using a digest-based key, where the digest is an MD5 hash derived from input arguments. It works with any regular data type that can be represented as a collection of bits, allowing arbitrary OCaml values to be cached. A concrete use case is caching the result of expensive computations, such as building control flow graphs from string and integer parameters, where the cache key is derived from those parameters.",
-      "description_length": 491,
-      "index": 104,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Bytes.To_string",
       "library": "regular",
-      "description": "This module provides functions for converting byte sequences to strings, including `sub` and `subo` for creating string slices from byte sequences. It works directly with `Regular.Std.Bytes.t` and `string` types. Concrete use cases include extracting substrings from byte buffers without allocation, such as parsing binary data or handling network packets.",
-      "description_length": 356,
-      "index": 105,
+      "description": "This module provides functions for converting byte sequences to strings and efficiently copying byte ranges. It works with `Bytes.t` and string types, offering operations like `sub` and `subo` to extract substrings from byte sequences. Concrete use cases include parsing binary data buffers into string segments and handling network protocol payloads.",
+      "description_length": 351,
+      "index": 82,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Seq.Step",
-      "library": "regular",
-      "description": "This module implements serialization and deserialization for lazy sequences using binary and S-expression formats. It provides functions to convert sequence elements to and from binary representations, supporting size computation, reading, and writing operations. These capabilities are particularly useful when persisting or transmitting sequence-based data structures across different systems or storage mediums.",
-      "description_length": 414,
-      "index": 106,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Map-Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a map from S-expressions, using a provided function to convert values. It works with maps where keys are of a specified type and values are regular data types. A concrete use case is parsing configuration data from S-expressions into a structured map for program settings.",
-      "description_length": 332,
-      "index": 107,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Cache",
-      "library": "regular",
-      "description": "This module provides `load` and `save` operations to retrieve and store values using a digest-based key, where the key is an MD5 hash of input arguments. It works with any regular type `t` that supports comparison, hashing, and pretty-printing, allowing efficient and type-safe caching. Concrete use cases include memoizing results of expensive computations, such as building control flow graphs from string and integer parameters, with the ability to persist and reuse results across runs when a caching service is available.",
-      "description_length": 526,
-      "index": 108,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.Minimal",
-      "library": "regular",
-      "description": "This module defines core operations for regular data types, including comparison, hashing, binary serialization, S-expression parsing and generation, and pretty-printing. It works with a single abstract type `t` and requires implementations for `compare`, `pp`, `hash`, `sexp_of_t`, and `t_of_sexp`, along with binary protocol functions. It is used to enable consistent and efficient data manipulation, storage, and communication across different systems and formats.",
-      "description_length": 467,
-      "index": 109,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Table-Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a hash table from S-expressions, using a provided function to parse values. It operates on `Table.t` structures with a specified `Key` type that must support parsing from S-expressions. A concrete use case is deserializing complex data structures from configuration files or persistent storage into hash tables keyed by regular types.",
-      "description_length": 394,
-      "index": 110,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Data.With_instance-Cache",
-      "library": "regular",
-      "description": "Implements persistent weak key-value caching with explicit versioning, using MD5 digests as keys. Provides `load` and `save` operations to retrieve or store arbitrary data values from a cache, where keys are derived from input arguments of computations. Useful for accelerating repeated expensive computations, such as building control flow graphs, by reusing previously computed results when available.",
-      "description_length": 403,
-      "index": 111,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Map-Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a map from S-expressions, using a given parser for the values and a key module that supports parsing from S-expressions. It works with maps where keys conform to the requirements of the `Key` module and values can be parsed from S-expressions. A concrete use case is deserializing complex configuration data stored in S-expression format into typed maps for further processing.",
-      "description_length": 437,
-      "index": 112,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std.Data.Versioned",
       "library": "regular",
-      "description": "This module provides an interface for working with versioned data, allowing arbitrary OCaml values to be loaded, stored, and validated across different versions. It ensures type-safe serialization and deserialization while maintaining backward compatibility, making it suitable for managing evolving configuration files, persisted state, or binary formats. A versioned data type pairs values with explicit version strings, supporting operations to inspect versions and convert data between representations. For example, users can define a versioned configuration type, store it to disk, and later load and migrate it transparently as the schema evolves.",
-      "description_length": 653,
-      "index": 113,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Replace_polymorphic_compare",
-      "library": "regular",
-      "description": "This module replaces polymorphic comparison operations with type-specific comparisons for opaque types. It provides comparison operators like `(<)`, `(>)`, `(=)`, and functions like `compare`, `equal`, `min`, and `max` tailored for use with opaque type values. These operations enable ordering and equality checks in contexts such as sorting collections or implementing data structures like sets and maps over opaque types.",
-      "description_length": 423,
-      "index": 114,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Set-Provide_hash",
-      "library": "regular",
-      "description": "This module provides hash folding and hashing operations for a set data structure, specifically for opaque element types. It enables computing hash values for sets where elements are of an opaque type that cannot be directly inspected or serialized. This is useful in scenarios like memoization or hash-based collections where sets of abstract values must be uniquely identified by their contents without exposing internal representations.",
-      "description_length": 439,
-      "index": 115,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Io",
-      "library": "regular",
-      "description": "This module provides functions for reading and writing structured data to files and channels, supporting versioned and formatted input/output. It works with regular data types that implement comparison, printing, and serialization operations. Use cases include loading and saving single values or sequences from disk, streaming data from input channels, and printing structured values to standard output or custom formatters.",
-      "description_length": 425,
-      "index": 116,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Hash_set-Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a hash set from an S-expression, using the `X` module's type for the set elements. It works with hash sets and S-expressions, specifically handling the deserialization of hash sets when element types are opaque. A concrete use case is parsing hash sets from configuration files or serialized data where the element type is not directly inspectable.",
-      "description_length": 408,
-      "index": 117,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Map-Provide_hash",
-      "library": "regular",
-      "description": "This module provides a function `hash_fold_t` for folding over the elements of a map structure to compute a hash value. It works with map data structures where the key type is abstracted and the values are of a regular type. A concrete use case is enabling hashing of map values when serialization or equality checks are needed, such as in memoization or caching systems.",
-      "description_length": 371,
-      "index": 118,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Hash_set",
-      "library": "regular",
-      "description": "This module implements a hash set data structure for elements of type `t`, providing operations to create sets from lists, check equality, and serialize/deserialize sets using s-expressions. It supports concrete data types that can be stored in a hash set, enabling efficient membership testing and set manipulation. Use cases include tracking unique elements, filtering duplicates, and managing collections where fast lookups are critical.",
-      "description_length": 440,
-      "index": 119,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Map-Key",
-      "library": "regular",
-      "description": "This module defines a key type for use in map structures, providing serialization to and from S-expressions and a comparator for ordering. It works with opaque types that cannot be directly inspected or serialized, ensuring keys can be compared and converted to and from S-expressions. Concrete use cases include building maps with keys that are logically comparable but not directly inspectable, such as abstract identifiers or handles.",
-      "description_length": 437,
-      "index": 120,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Bytes.Map",
-      "library": "regular",
-      "description": "This module manages maps with byte-based keys and arbitrary values, supporting both functional and imperative operations for construction, transformation, and conversion. It enables efficient querying, filtering, and serialization via S-expressions or binary I/O, with utilities for converting to and from lists, arrays, and hashtables. Submodules enhance this functionality with byte-specific key comparison, S-expression parsing, hash folding for byte maps, and binary serialization, enabling use cases like network transmission, disk persistence, and configuration parsing. Specific operations include `bin_read_t` and `bin_write_t` for binary I/O, `t_of_sexp` for structured parsing, and `hash_fold_t` for efficient hashing of byte-indexed data.",
-      "description_length": 749,
-      "index": 121,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Set-Elt",
-      "library": "regular",
-      "description": "This module defines a set element type with opaque semantics, supporting creation from and conversion to S-expressions. It works with opaque types that cannot be directly inspected or serialized, ensuring controlled manipulation through defined functions. Concrete use cases include managing elements in a set structure where type abstraction is necessary while maintaining compatibility with S-expression serialization.",
-      "description_length": 420,
-      "index": 122,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Set-Provide_bin_io",
-      "library": "regular",
-      "description": "This module provides functions for serializing and deserializing sets using the Bin_prot protocol. It supports reading, writing, and determining the size of set values in binary format, along with defining the necessary type class instances. Concrete use cases include persisting sets to disk, transmitting sets over a network, or reconstructing sets from binary data in a type-safe manner.",
-      "description_length": 390,
-      "index": 123,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Map-Provide_hash",
-      "library": "regular",
-      "description": "This module provides a function `hash_fold_t` for computing hash values for map data structures, specifically those using a custom key type. It works with map types (`Map.t`) where keys are of a type that supports hashing via the `Key` module. A concrete use case is enabling efficient hash-based equality or storage in hash tables for maps with complex key types.",
+      "description": "The module defines a versioned data interface with functions to save, load, and manage data representations using explicit versioning. It works with arbitrary OCaml values, ensuring safe serialization and deserialization across different versions. Concrete use cases include persisting application state, managing configuration files, and handling data migrations.",
       "description_length": 364,
-      "index": 124,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Opaque.Make",
-      "library": "regular",
-      "description": "This module equips an abstract type with comparison, ordering, and hashing capabilities, enabling safe use in containers like sets and maps while preserving data abstraction. It provides core operations such as equality checks, min/max computations, and validated bounds, working in tandem with submodules that implement hash sets, ordered key-value stores, and polymorphic maps. You can, for example, build a set of opaque identifiers from an S-expression, manage a queue-backed symbol table with positional control, or merge maps with complex conflict resolution. The combination of direct type-level operations and structured submodules supports use cases ranging from configuration parsing to efficient in-memory data management with abstract keys.",
-      "description_length": 752,
-      "index": 125,
+      "index": 83,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Regular.S-Set-Provide_of_sexp",
+      "module_path": "Regular.Std.Bytes.Hash_set",
       "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a set from an S-expression, enabling parsing of set values from external representations. It works with sets whose elements conform to the `Elt` module's type and sexp conversion capabilities. A concrete use case includes deserializing configuration data or persisted sets stored in S-expression format.",
-      "description_length": 363,
-      "index": 126,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Set-Elt",
-      "library": "regular",
-      "description": "This module defines a comparable and serializable element type for use in sets, supporting operations like comparison, binary serialization, and S-expression conversion. It works with a concrete type `t` that can be used in set structures, with derived printers and hashable representations. Concrete use cases include building efficient, persistent sets with custom types that require comparison, binary encoding, or structured printing.",
-      "description_length": 438,
-      "index": 127,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Set-Provide_of_sexp",
-      "library": "regular",
-      "description": "This module provides a function `t_of_sexp` that constructs a set from an S-expression, using the element conversion function from the `Elt` submodule. It works with sets represented as `Set.t` and S-expressions of type `Sexplib0.Sexp.t`. A concrete use case is parsing a predefined set structure from a configuration file expressed in S-expressions.",
-      "description_length": 350,
-      "index": 128,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Hash_set",
-      "library": "regular",
-      "description": "This module implements a hash set data structure for elements that conform to a regular type interface, enabling efficient membership testing, insertion, and iteration. It provides operations to create hash sets from lists, compare sets for equality, and serialize/deserialize sets using S-expressions and binary protocols. Concrete use cases include managing collections of unique values with fast lookup, such as tracking visited nodes in a graph or deduplicating data streams.",
-      "description_length": 479,
-      "index": 129,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.S-Table",
-      "library": "regular",
-      "description": "This module provides hash table operations for key-value stores where keys conform to a `Regular` type, enabling efficient construction from lists, in-place updates, and bulk transformations. It supports tables with arbitrary value types, list-valued tables for multi-value storage, and integrates serialization via S-expressions and binary formats. Typical use cases include managing associative data with robust equality, hashing, and pretty-printing, handling duplicate keys during table construction, or implementing caches and accumulators with atomic updates and versioned persistence.",
-      "description_length": 591,
-      "index": 130,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data.Read",
-      "library": "regular",
-      "description": "This module defines a typeclass for values that can be deserialized from various binary sources like bytes, channels, or bigstrings, with explicit versioning support. It provides operations to construct and use reader instances for deserializing data representations, primarily used when implementing new deserialization protocols. Concrete use cases include reading structured data from files, network streams, or memory buffers in a type-safe and version-aware manner.",
-      "description_length": 470,
-      "index": 131,
+      "description": "This module implements hash sets of byte sequences with operations for creation, equality checking, and S-expression and binary serialization. It provides concrete functions like `create`, `of_list`, and `sexp_of_t`, along with direct parsing and serialization via `t_of_sexp`, `bin_read_t`, and `bin_write_t`. Use cases include managing collections of binary identifiers, efficiently storing unique byte sequences from network data, and serializing them for storage or transmission.",
+      "description_length": 483,
+      "index": 84,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Data.Write",
       "library": "regular",
-      "description": "This module enables serialization of regular data types into bytes, bigstrings, or output channels, providing precise control over memory layout via explicit versioning. It supports operations like writing to buffers with offset positioning, dumping to files, or formatting for display, all while ensuring safe and predictable binary representations. Concrete use cases include persisting structured data to disk, transmitting serialized values over networks, or generating binary payloads for external systems.",
-      "description_length": 511,
-      "index": 132,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module enables serialization of regular data types into byte-level representations. It supports writing values to channels, formatters, byte strings, and bigstrings, with precise control over memory layout via blit operations. Use cases include persisting structured data to disk, transmitting values over networks, or precomputing serialized payloads for efficient storage.",
+      "description_length": 379,
+      "index": 85,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Opaque.S-Set-Provide_bin_io",
+      "module_path": "Regular.Std.Bytes.Table",
       "library": "regular",
-      "description": "This module provides functions for serializing and deserializing sets using the Bin_prot protocol. It supports reading, writing, and measuring the binary representation of set values. Concrete use cases include persisting sets to disk or transmitting them over a network in a binary format.",
-      "description_length": 290,
-      "index": 133,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module supports creation, manipulation, and querying of hash tables using byte sequences as keys, with operations for iteration, mapping, filtering, merging, and multi-value management. It handles arbitrary value types and includes utilities for binary serialization, S-expression conversion, and reference counting, designed for use cases like configuration parsing, data serialization, and high-performance binary I/O operations. The module also enables conditional lookups, in-place transformations, and validation for byte-keyed tables with complex data relationships.",
+      "description_length": 577,
+      "index": 86,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Regular.S-Map",
+      "module_path": "Regular.Std.Bytes.Set",
       "library": "regular",
-      "description": "This module offers a comprehensive set of operations for creating, transforming, and combining polymorphic maps with typed keys (`Map.Key.t`) and arbitrary values (`'a Map.t`). It supports construction from lists or sequences, safe key manipulation, merging with custom logic, folding/reducing over key-value pairs, filtering, partitioning, and serialization via S-expressions or binary protocols. Key use cases include managing associative data structures with precise key ordering, handling key collisions during map combination, and enabling structured data generation or I/O operations for typed maps.",
-      "description_length": 605,
-      "index": 134,
+      "description": "This module provides efficient set operations for byte sequences, including union, intersection, difference, membership testing, and ordered iteration. It operates on sets of `Bytes.t` elements structured as `Regular.Std.Bytes.Set.t`, utilizing a `comparator_witness` for element comparison. Key use cases include binary serialization with `Bin_prot`, property-based testing with `QuickCheck`, and managing structured data requiring efficient querying and persistence.",
+      "description_length": 468,
+      "index": 87,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data.Make",
+      "library": "regular",
+      "description": "This module provides versioned serialization, deserialization, and I/O operations for arbitrary data types, along with mechanisms to manage and dynamically select readers and writers based on versioned identifiers. It operates on byte sequences, bigstrings, and file-backed storage while supporting cacheable representations for efficiently persisting or retrieving complex data. Typical use cases include version-aware data interchange, durable storage with backward compatibility, and caching results of expensive computations with explicit version control.",
+      "description_length": 559,
+      "index": 88,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular.Std.Data.Cache",
       "library": "regular",
-      "description": "This module implements generic caching mechanisms using versioned data representations, allowing creation of cache providers with custom load and save strategies, generation of data digests for keys, and direct management of cached values via digest identifiers. It supports arbitrary OCaml types through explicit versioning, enabling safe storage and retrieval via registered caching services, and integrates with data structures like maps, sets, and queues for hash-verified operations. You can cache results of expensive computations, hash and compare cache entries, or serialize versioned structures for persistent storage. Submodules handle set algebra, LRU eviction, and structured reloading, supporting advanced caching patterns with digest-keyed tables and hash queues.",
-      "description_length": 777,
-      "index": 135,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Map",
-      "library": "regular",
-      "description": "This module provides operations for creating, transforming, and querying immutable maps with opaque keys, emphasizing safe construction with duplicate key detection, key-value mapping, and folding/reduction over ordered structures. It works with polymorphic map types (`Map.t`) that associate arbitrary data values with typed, ordered keys, supporting both standard key-value manipulations and advanced ordered-key operations like subrange extraction and binary search. Use cases include managing key-value collections where keys require custom equality checks, handling multi-value mappings with precise error handling, and leveraging ordered keys for efficient traversal or property-based testing with Quickcheck observers and hashers.",
-      "description_length": 737,
-      "index": 136,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque.S-Set-Named",
-      "library": "regular",
-      "description": "This module implements set operations for named opaque types, providing functions to check if one set is a subset of another and to compare sets for equality. It works with opaque data structures that represent named sets, ensuring operations respect their opaque nature. Concrete use cases include validating hierarchical name constraints and enforcing uniqueness in configurations where direct set inspection is not required.",
-      "description_length": 427,
-      "index": 137,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Regular.Std.Printable.Make",
-      "library": "regular",
-      "description": "Implements the Printable interface for a given data type `M.t` by leveraging a provided `pp` function. It offers operations to convert values to strings (`to_string`, `str`), print them to output channels (`ppo`), and format sequences of values (`pp_seq`). This module is used to enable consistent, formatted output for custom data types in logging, debugging, and user-facing messages.",
-      "description_length": 386,
-      "index": 138,
+      "description": "This module implements generic caching mechanisms using versioned data digests as stable identifiers. It provides operations to create cache instances with custom load/save strategies, generate content-based digests for arbitrary data, and manage type-specific caching services. Concrete use cases include persisting compiled artifacts keyed by source digests, caching parsed configurations with content-addressing, and versioning serialized data representations for incremental computation.",
+      "description_length": 491,
+      "index": 89,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std.Seq.Merge_with_duplicates_element",
       "library": "regular",
-      "description": "This module implements operations for merging lazy sequences while preserving duplicate elements. It works with pairs of lazy sequences and provides functions for binary serialization, comparison, hashing, and S-expression conversion. Concrete use cases include combining log streams, merging sorted inputs with repeated values, and handling infinite or large datasets where duplicates must be retained.",
-      "description_length": 403,
-      "index": 139,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Regular.Make",
-      "library": "regular",
-      "description": "This module equips data types with serialization via S-expressions and Bin_prot, total ordering for maps and sets, and hashing for hash tables, alongside structured formatting functions like `pp` and `str`. It supports versioned binary protocols and efficient human-readable representations, enabling use cases such as persistent storage, ordered collections, and type-safe interoperability with libraries requiring regular value semantics. Child modules extend this foundation with specialized data structures like versioned hash sets, ordered maps, and insertion-preserving queues, along with utilities for comparison, caching, and IO. For example, you can serialize custom types to disk, define type-specific comparisons, or manage ordered collections with efficient lookups and transformations.",
-      "description_length": 798,
-      "index": 140,
+      "description": "This module implements operations for merging lazy sequences while preserving duplicate elements based on a comparison function. It works with pairs of lazy sequences (`('a, 'b) Regular.Std.Seq.t`) and supports binary serialization, S-expression conversion, and structural comparison. Concrete use cases include combining log streams with timestamped entries or merging sorted input files while retaining all records.",
+      "description_length": 417,
+      "index": 90,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Regular.Std.Seq.Heap",
+      "module_path": "Regular.Std.Seq.Step",
       "library": "regular",
-      "description": "Implements a priority queue with a heap structure, allowing efficient insertion and extraction of elements based on a custom comparison function. Works with any ordered data type that supports a total ordering via a provided comparator. Useful for tasks like maintaining a dynamic collection of prioritized items, such as scheduling events or managing a queue of tasks with varying urgency.",
-      "description_length": 390,
-      "index": 141,
+      "description": "This module provides functions for serializing and deserializing lazy sequence steps using binary and S-expression formats. It operates on the `('a, 's) Regular.Std.Seq.Step.t` type, which represents individual steps in a lazy sequence. Concrete use cases include persisting sequence state to disk, transmitting sequence data over a network, or reconstructing sequences from external representations.",
+      "description_length": 400,
+      "index": 91,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Data.With_instance",
+      "module_path": "Regular.Std.Data.Read",
       "library": "regular",
-      "description": "This module provides **serialization, deserialization, and versioned data conversion** for generic data types, supporting efficient in-place memory operations between values and `bytes`/`bigstring` representations. It works with **versioned, named serialization backends** to manage readers and writers, enabling runtime configuration and temporary overrides for format compatibility. Key use cases include **persistent data storage with explicit versioning**, handling evolving data formats across software updates, and optimizing access to costly-to-recompute data via caching.",
-      "description_length": 579,
-      "index": 142,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Opaque",
-      "library": "regular",
-      "description": "This module enables the creation of abstract data types that hide internal representations, preventing direct inspection or serialization while supporting controlled manipulation through functors like `Make`. It integrates submodules for hash queues, binary serialization, S-expression parsing, and comparison/hashing of opaque values, enabling ordered and hashed collections like maps, sets, and queues over abstract types. You can, for example, build a hash queue that maintains insertion order while allowing fast lookups, parse a map from an S-expression with custom key types, or serialize a hash set in binary without exposing its elements. The combination of opaque abstraction with structured submodules supports use cases such as secure state management, typed configuration parsing, and efficient ordered collections with opaque keys or values.",
-      "description_length": 854,
-      "index": 143,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Seq",
-      "library": "regular",
-      "description": "This module extends the Core_kernel Sequence module to provide lazy evaluation of sequences through operations like serialization, transformation, merging, and filtering. It supports indexed traversals, stateful iterations, and monadic bindings, enabling efficient data processing pipelines and handling of infinite or large datasets. The module includes submodules for binary and S-expression serialization, duplicate-preserving sequence merging, and a heap-based priority queue for ordered element extraction. Examples include persisting sequences to disk, combining log streams with duplicates, and scheduling tasks by priority using custom comparison logic.",
-      "description_length": 661,
-      "index": 144,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Regular.Std.Data",
-      "library": "regular",
-      "description": "This module enables version-aware serialization and caching of arbitrary OCaml data types, supporting operations over bytes, bigstrings, and I/O channels. It provides direct access to format-specific serialization (Marshal, Sexp, Binprot), versioned data conversion, and digest-based caching, with core types including versioned values and serializable data representations. Submodules extend this with persistent caching via MD5 keys, streaming I/O for large datasets, and typeclass-based readers/writers for custom binary protocols. You can use it to load versioned configuration files, cache expensive computations using input-derived keys, or stream structured data to and from disk or network sources.",
-      "description_length": 706,
-      "index": 145,
+      "description": "This module defines a typeclass for values that can be deserialized from various binary sources such as bytes, channels, or bigstrings. It provides operations to construct and use reader instances, enabling structured input handling for custom data types. Concrete use cases include parsing binary file formats, decoding network protocols, or loading serialized data from storage.",
+      "description_length": 380,
+      "index": 92,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std.Printable",
       "library": "regular",
-      "description": "This module provides a framework for converting data types into human-readable strings, supporting customizable formatting and nested structures. It includes core operations like `to_string`, `str`, and `ppo` for direct conversion, formatted output, and printing to channels, enabling consistent representation across simple and complex types. The interface allows implementing modules to define how their values are displayed, while utilities for handling sequences make it possible to format collections such as lists and arrays. It is commonly used for debugging, logging, and generating user-facing output in a readable format.",
-      "description_length": 631,
-      "index": 146,
+      "description": "Implements string conversion and formatted printing for regular data types using a provided pretty-printing function. It supports operations like `to_string`, `ppo`, and `pp_seq` to integrate with logging, debugging, and output formatting tools. Useful for types that need customizable textual representations in contexts like `sprintf` or `Lwt_io.printf`.",
+      "description_length": 356,
+      "index": 93,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Opaque",
+      "library": "regular",
+      "description": "This module enables comparison-based operations and collection manipulations for an abstract data type, supporting equality checks, ordering, min/max selection, and clamping. It works with opaque values of type `M.t`, allowing their use in maps, sets, hash tables, and queues while preserving type abstraction. It is useful for handling unserializable data in collection types or enforcing strict type boundaries in domain models where internal representations must remain hidden.",
+      "description_length": 480,
+      "index": 94,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std.Regular",
       "library": "regular",
-      "description": "This module enables comparison, hashing, and structured printing for custom data types, supporting their use in maps, sets, and hash tables. It provides core operations like `compare`, `hash`, and `pp`, and integrates with submodules for advanced data manipulation. Submodules handle set-theoretic operations, binary serialization, S-expression parsing, and ordered key-value storage, enabling use cases such as persistent data structures, efficient caching, and typed configuration loading. You can define comparable types, serialize maps and sets, or build insertion-preserving tables with custom keys and values.",
-      "description_length": 615,
-      "index": 147,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides comparison, hashing, and serialization functions for user-defined data types, enabling their use in ordered collections like maps and sets. It works with any regular data type that can be converted to and from binary representations and supports efficient pretty-printing via the `pp` function. Concrete use cases include defining custom types that interoperate seamlessly with standard libraries for storage, comparison, and structured output formatting.",
+      "description_length": 476,
+      "index": 95,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Regular.Std.Bytes",
+      "module_path": "Regular.Std.Seq",
       "library": "regular",
-      "description": "This module extends byte sequence handling with comprehensive tools for manipulation, comparison, and structured data workflows. It provides operations on `Bytes.t` for in-place transformations, indexing, hashing, and serialization, while submodules support maps, sets, hashtables, and hybrid collections keyed by bytes, enabling efficient byte-based data processing and storage. You can serialize byte structures to binary or S-expressions, compare and order byte sequences, manage insertion-ordered key-value pairs, and work with byte-backed sets and maps for applications like network protocols, configuration parsing, and binary data analysis. Low-level utilities allow direct byte-string conversions and substring extraction, supporting performance-sensitive and system-level byte handling.",
-      "description_length": 795,
-      "index": 148,
+      "description": "This module enables efficient manipulation of lazy sequences through operations like element-wise transformations, monadic folding, and indexed processing, while supporting serialization, merging, and deduplication. It works with lazy sequences (`Base.Sequence.t`), steps (`Step.t`), and tuple-based sequences, facilitating use cases such as stream processing, data persistence, and merging sorted or infinite sequences with heap-based strategies. Key patterns include custom accumulation, aggregation (e.g., `sum`, `min_elt`), and generation via filters, ranges, or Cartesian products, alongside low-level control for memoization and heap-optimized merging.",
+      "description_length": 658,
+      "index": 96,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Regular.Std.Data",
+      "library": "regular",
+      "description": "This module provides versioned serialization and I/O operations for arbitrary OCaml data types, supporting explicit versioning to ensure safe persistence and retrieval. It works with byte sequences, bigstrings, and file-backed storage, offering concrete functionality for reading and writing data in formats like Marshal, Sexp, and Binprot. Use cases include persisting application state with version compatibility, managing configuration files across schema changes, and caching expensive computations with content-based digests.",
+      "description_length": 530,
+      "index": 97,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Regular.Std",
       "library": "regular",
-      "description": "This interface brings together type-class-driven serialization, sequence manipulation, and structural comparison with specialized submodules for abstract types, lazy sequences, versioned data, custom formatting, comparable structures, and byte-level operations. It centers on `bytes`, digests, sequences, and opaque types, offering direct access to low-level transformations, type-safe abstraction, and structured I/O through operations like `^::`, bin_prot and sexp conversion, versioned caching, and custom `pp`, `compare`, and `hash`. You can build insertion-preserving hash queues, serialize versioned configurations, format complex data for logging, or parse binary protocols incrementally, all while maintaining type safety and abstraction boundaries. Submodules enhance these capabilities with ordered collections, streaming pipelines, and byte-backed maps and sets, enabling efficient, typed handling of everything from in-memory data to network streams and persistent storage.",
-      "description_length": 985,
-      "index": 149,
+      "description": "This interface provides serialization, comparison, and sequence processing capabilities for binary and structured data formats, targeting types like byte sequences, cryptographic digests, and lazy sequences. It supports operations for versioned input/output, customizable data representation, and type-safe manipulation of abstract or unserializable values through specialized adapters. Key applications include data persistence in binary protocols, efficient traversal of lazily evaluated collections, and integrating opaque types into ordered containers while maintaining strict type boundaries.",
+      "description_length": 597,
+      "index": 98,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Regular",
       "library": "regular",
-      "description": "This module integrates type-driven serialization, sequence processing, and structural comparison with support for abstract types, lazy evaluation, versioned data, and custom formatting. It provides core data types like `bytes`, digests, sequences, and opaque types, along with operations for type-safe transformation, structured I/O, and low-level manipulation such as `^::`, bin_prot/sexp conversion, versioned caching, and custom `pp`, `compare`, and `hash`. You can implement insertion-preserving hash queues, serialize versioned configurations, format data for logging, or parse binary protocols incrementally. Submodules extend these with ordered collections, streaming pipelines, and byte-backed maps and sets for efficient typed handling of memory, streams, and storage.",
-      "description_length": 777,
-      "index": 150,
+      "description": "This module handles serialization, comparison, and sequence processing for binary and structured data, including types like byte sequences and cryptographic digests. It supports versioned I/O, custom data representations, and type-safe manipulation of abstract values through adapters. Concrete use cases include implementing binary protocols, working with lazy sequences, and storing opaque or unserializable types in ordered containers.",
+      "description_length": 438,
+      "index": 99,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 154,
-    "meaningful_modules": 151,
-    "filtered_empty_modules": 3,
-    "retention_rate": 0.9805194805194806
+    "total_modules_in_package": 102,
+    "meaningful_modules": 100,
+    "filtered_empty_modules": 2,
+    "retention_rate": 0.9803921568627451
   },
   "statistics": {
-    "max_description_length": 985,
-    "min_description_length": 213,
-    "avg_description_length": 474.33112582781456,
-    "embedding_file_size_mb": 0.5488405227661133
+    "max_description_length": 710,
+    "min_description_length": 227,
+    "avg_description_length": 429.66,
+    "embedding_file_size_mb": 1.449406623840332
   }
 }

@@ -1,33 +1,33 @@
 {
   "package": "dns-certify",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 3,
-  "creation_timestamp": "2025-07-15T23:05:20.233278",
+  "creation_timestamp": "2025-08-14T22:50:32.848956",
   "modules": [
     {
       "module_path": "Dns_certify",
       "library": "dns-certify",
-      "description": "This module handles DNS-based certificate management operations, specifically for creating and validating X.509 certificate signing requests (CSRs) and certificates using DNS TLSA records. It provides functions to encode CSRs and certificates into TLSA records, validate certificate-hostname matches, and construct DNS update packets for certificate requests. Concrete use cases include automating DNS challenges for Let's Encrypt certificate issuance and validating TLSA records against expected certificate properties.",
-      "description_length": 520,
+      "description": "This module handles the creation and validation of X.509 certificate signing requests and certificates, and their encoding as DNS TLSA records. It provides functions to generate signing requests with subject names and alternative hostnames, encode them into TLSA records, and validate certificates against signing requests based on public key and hostname matches. It also supports DNS-based certificate discovery and management via functions to construct DNS update packets and query for TLSA records that contain certificates or CAs.",
+      "description_length": 535,
       "index": 0,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Dns_certify_mirage.Make",
       "library": "dns-certify.mirage",
-      "description": "This module generates a private key and certificate signing request (CSR) for a given hostname and optional additional hostnames, then sends the CSR via DNS-TSIG update to a specified DNS server. It waits for a signed TLS certificate to be returned as a TLSA record, using MirageOS networking stack operations. It is used in unikernels needing automated certificate provisioning from a Let's Encrypt-compatible service before starting a TLS-dependent service like a web or mail server.",
-      "description_length": 485,
+      "description": "This module generates private keys and certificate signing requests, then securely submits them via DNS-TSIG to a configured server for signing. It works with domain names, DNS keys, IP addresses, and TLS certificates, supporting automated certificate retrieval during service startup. It is used in unikernels needing immediate TLS certificate availability, such as web or mail servers.",
+      "description_length": 387,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_certify_mirage",
       "library": "dns-certify.mirage",
-      "description": "This module automates the process of generating cryptographic keys, submitting certificate signing requests via DNS, and retrieving signed TLS certificates for use in secure services. It handles DNS-TSIG updates and TLSA record queries over MirageOS's networking stack, enabling unikernels to establish trust with a certificate authority programmatically. The core data types include hostnames, cryptographic keys, CSRs, and TLSA records, with operations for signing, submitting, and validating certificates. For example, it can generate a private key for \"example.com\", submit its CSR to a DNS server, and wait for a TLSA record containing a Let's Encrypt-signed certificate.",
-      "description_length": 676,
+      "description": "This module automates the generation of private keys and certificate signing requests, then securely submits them using DNS-TSIG to a designated server for signing. It handles domain names, DNS keys, IP addresses, and TLS certificates, enabling unikernels to obtain certificates at startup for services like web or mail servers.",
+      "description_length": 328,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -37,9 +37,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 676,
-    "min_description_length": 485,
-    "avg_description_length": 560.3333333333334,
-    "embedding_file_size_mb": 0.011308670043945312
+    "max_description_length": 535,
+    "min_description_length": 328,
+    "avg_description_length": 416.6666666666667,
+    "embedding_file_size_mb": 0.043888092041015625
   }
 }

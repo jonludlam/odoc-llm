@@ -1,181 +1,165 @@
 {
   "package": "caqti-miou",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 20,
-  "creation_timestamp": "2025-07-15T23:10:36.690390",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 18,
+  "creation_timestamp": "2025-08-14T23:32:06.094848",
   "modules": [
     {
       "module_path": "Caqti_miou_unix.System.System_core.Fiber.Infix",
       "library": "caqti-miou.unix",
-      "description": "This module provides infix operators `>>=` and `>|=`, which sequence and transform computations in the concurrency monad. It works with values of type `'a Fiber.t`, representing asynchronous operations. These operators enable chaining database connection setup and query execution steps in a clear, linear style.",
-      "description_length": 312,
+      "description": "This module provides infix operators for monadic bind and map operations on fibers, enabling sequential composition of concurrent computations. It works with values of type `'a Fiber.t`, representing asynchronous tasks in a concurrency monad. Concrete use cases include chaining database queries and processing results in sequence while handling effects like I/O or cancellation.",
+      "description_length": 379,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Caqti_miou_unix.System.System_core.Sequencer",
+      "module_path": "Caqti_miou_unix.System.Net.Sockaddr",
       "library": "caqti-miou.unix",
-      "description": "This module coordinates sequential execution of tasks by managing a queue of operations that process a shared state. It works with a state type `'a` and fibers representing asynchronous computations. Use it to ensure ordered handling of connection or resource management tasks where each operation depends on the previous state.",
-      "description_length": 328,
+      "description": "This module provides functions to create Unix domain and TCP socket addresses. It works with string paths for Unix sockets and IP address-port pairs for TCP. Concrete use cases include configuring endpoints for network connections in server or client applications using miou.unix.",
+      "description_length": 280,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Caqti_miou_unix.System.System_core.Log",
+      "module_path": "Caqti_miou_unix.System.Net.Socket",
       "library": "caqti-miou.unix",
-      "description": "This module provides functions for logging messages at different severity levels\u2014error, warning, info, and debug\u2014using the `Logs` library. It works with log sources (`Logs.src`) and supports formatted log messages. Concrete use cases include tracking connection events, diagnosing issues during network I/O operations, and monitoring system behavior in Unix-based applications.",
-      "description_length": 377,
+      "description": "This module provides functions for reading from and writing to network sockets, including character and string output, input operations, and socket closure. It works directly with socket descriptors and byte buffers for data transmission. Concrete use cases include implementing network protocols like HTTP clients or custom TCP-based communication.",
+      "description_length": 349,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou_unix.System.System_core.Condition",
       "library": "caqti-miou.unix",
-      "description": "This module provides condition variable primitives for managing concurrent execution in a fiber-based environment. It supports operations to wait on a condition, signal a single waiting fiber, and create condition variables, all designed to work with mutexes to coordinate access to shared resources. Concrete use cases include implementing synchronization barriers and resource availability notifications in concurrent applications.",
-      "description_length": 433,
+      "description": "This module provides condition variable primitives for concurrency control in a fiber-based system. It supports operations to wait on a condition with a mutex and to signal waiting fibers, enabling coordination between concurrent tasks. The module works with condition variables (`t`), mutexes, and fibers, specifically for synchronizing access to shared resources in a miou.unix-based runtime.",
+      "description_length": 394,
       "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Caqti_miou_unix.System.System_core.Log",
+      "library": "caqti-miou.unix",
+      "description": "This module provides functions for logging messages at different severity levels\u2014error, warning, info, and debug\u2014using the `Logs` library. It works with log sources and formatted message builders to generate contextual logs within a system. Concrete use cases include tracking connection states, diagnosing failed queries, and monitoring system behavior during database interactions.",
+      "description_length": 383,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Caqti_miou_unix.System.System_core.Fiber",
+      "module_path": "Caqti_miou_unix.System.System_core.Sequencer",
       "library": "caqti-miou.unix",
-      "description": "This module implements a concurrency monad for managing asynchronous operations with guaranteed resource cleanup and exception handling. It provides core primitives like `catch`, `finally`, and `return` to handle errors, run cleanup actions, and embed values into asynchronous computations of type `'a Fiber.t`. The included operator module allows chaining and transforming these computations using familiar infix syntax like `>>=` and `>|=`, making it straightforward to sequence network requests or database operations while preserving readability. Examples include safely opening and closing network connections, handling I/O errors, and composing asynchronous tasks with clean, linear data flow.",
-      "description_length": 699,
-      "index": 4,
+      "description": "This module provides a sequencer type that enqueues and serially executes effectful operations on a shared state. It works with a state type `'a` and fibers representing asynchronous operations. Concrete use cases include managing concurrent access to shared resources like network connections or stateful devices, ensuring operations execute in sequence without interleaving.",
+      "description_length": 376,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou_unix.System.System_core.Switch",
       "library": "caqti-miou.unix",
-      "description": "This module manages lifecycle and cleanup operations for asynchronous tasks, particularly during system shutdown or resource release. It provides functions to register and remove hooks that execute cleanup actions, ensuring resources are properly released. It works with switches and fibers to coordinate cancellable operations in contexts like connection handling or resource management.",
-      "description_length": 388,
-      "index": 5,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Caqti_miou_unix.System.Net.Sockaddr",
-      "library": "caqti-miou.unix",
-      "description": "Represents network addresses for establishing connections over TCP or Unix sockets. Provides functions to construct socket addresses from IP/port pairs or Unix domain socket paths. Used directly with connection setup operations in networking code.",
-      "description_length": 247,
+      "description": "This module manages lifecycle and cleanup operations for asynchronous tasks, particularly during system shutdown or resource release. It works with switches and hooks to register and execute cleanup actions, ensuring resources are properly finalized. Concrete use cases include gracefully closing network connections or releasing file handles when a server shuts down.",
+      "description_length": 368,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Caqti_miou_unix.System.Net.Socket",
-      "library": "caqti-miou.unix",
-      "description": "This module provides functions for reading from and writing to network sockets, including operations for sending and receiving characters and strings, as well as flushing and closing connections. It works directly with socket values and byte buffers for efficient data transmission. Concrete use cases include implementing custom network protocols, handling client-server communication, and streaming data over TCP connections.",
-      "description_length": 427,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou_unix.System.System_core.Mutex",
       "library": "caqti-miou.unix",
-      "description": "This module provides mutual exclusion primitives for managing concurrent access to shared resources in a fiber-based environment. It supports operations to create, lock, and unlock mutexes, ensuring serialized execution of critical sections. Concrete use cases include synchronizing database connection state or coordinating resource access across concurrent fibers in networked applications.",
-      "description_length": 392,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Caqti_miou_unix.System.Net",
-      "library": "caqti-miou.unix",
-      "description": "This module handles network communication using Unix sockets and TLS, offering tools to resolve addresses, establish connections, and manage secure flows. It supports constructing network addresses from IP/port pairs or Unix socket paths and provides low-level I/O operations for reading from and writing to sockets, including support for byte buffers and connection lifecycle management. You can use it to connect to PostgreSQL databases securely, implement custom TCP protocols, or manage bidirectional communication in client-server applications. The module integrates address handling and socket I/O to streamline tasks like sending requests over TLS, streaming data, or managing concurrent connections.",
-      "description_length": 707,
-      "index": 9,
+      "description": "This module provides mutual exclusion primitives for managing concurrent access to shared resources in a fiber-based environment. It supports operations to create, lock, and unlock mutexes, ensuring serialized execution across fibers. Concrete use cases include synchronizing access to shared state in concurrent network servers or resource pools.",
+      "description_length": 347,
+      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Caqti_miou_unix.System.Pool",
+      "module_path": "Caqti_miou_unix.System.System_core.Fiber",
       "library": "caqti-miou.unix",
-      "description": "This module manages a pool of resources, such as database connections, providing functions to create, use, and drain the pool. It supports asynchronous operations through fibers and allows for resource validation, custom logging, and switch-controlled lifecycle management. Concrete use cases include connection pooling for databases with dynamic resource allocation and health checking.",
-      "description_length": 387,
-      "index": 10,
+      "description": "This module implements core concurrency primitives for managing asynchronous computations as fibers. It supports operations like `return` for producing values, `catch` for error handling, `finally` for guaranteed post-processing, and `cleanup` for resource management with failure propagation. These functions work directly with `'a Fiber.t` values, representing concurrent tasks in a monadic structure, and are used to sequence database interactions, manage connection lifecycles, and handle I/O effects with proper error recovery.",
+      "description_length": 532,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou_unix.System.Alarm",
       "library": "caqti-miou.unix",
-      "description": "This module manages timed alarms using a condition variable and mutex pair. It allows scheduling a callback to execute after a specified delay and canceling pending alarms. Alarms are tied to a switch to control their lifecycle and use the `Mtime` type for time points.",
-      "description_length": 269,
-      "index": 11,
+      "description": "This module manages timed alarms using a condition variable and mutex pair. It allows scheduling a callback to run after a specified delay and canceling pending alarms. Alarms are tied to a switch for lifecycle management and use Mtime for time handling.",
+      "description_length": 254,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou_unix.System.System_core",
       "library": "caqti-miou.unix",
-      "description": "This module enables efficient concurrency and resource management in Unix environments through a suite of primitives for asynchronous execution, synchronization, and structured logging. It directly provides low-level system operations while organizing extended functionality into submodules that handle task sequencing, condition variables, mutexes, logging, resource cleanup, and a concurrency monad for structured asynchronous programming. Core data types include `'a Fiber.t` for asynchronous computations, mutex and condition variable handles, log sources, and stateful operation queues. You can use it to sequence network requests with shared state, log diagnostic messages at runtime, synchronize access to databases, coordinate concurrent fibers with condition variables, and ensure resource cleanup during task cancellation or shutdown.",
-      "description_length": 844,
-      "index": 12,
+      "description": "This module combines core concurrency primitives and system utilities for managing asynchronous operations, resource synchronization, and logging in a fiber-based environment. It provides structured concurrency through fibers, switches, mutexes, and condition variables, while supporting concrete use cases like sequencing database operations, synchronizing shared state in network servers, and logging runtime events with contextual information. The module works directly with fiber tasks, switches for lifecycle management, mutexes and conditions for synchronization, and log sources for diagnostic output.",
+      "description_length": 608,
+      "index": 10,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Caqti_miou_unix.System.Net",
+      "library": "caqti-miou.unix",
+      "description": "This module implements network connection setup and I/O operations for Unix sockets and TCP/IP endpoints, using `Unix.sockaddr` structures to represent addresses. It provides direct socket manipulation functions for sending, receiving, and managing both plain TCP and TLS-encrypted connections. Concrete use cases include building database drivers, networked services, and custom wire protocols that require low-level control over socket communication.",
+      "description_length": 452,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Caqti_miou_unix.System.Pool",
+      "library": "caqti-miou.unix",
+      "description": "This module manages a pool of resources, such as database connections, providing functions to create, use, and drain the pool. It supports asynchronous operations through fibers and allows prioritization during resource acquisition. Use cases include limiting concurrent access to external services and reusing expensive-to-create resources efficiently.",
+      "description_length": 353,
+      "index": 12,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou_unix.System",
       "library": "caqti-miou.unix",
-      "description": "This module coordinates system-level concurrency and resource management in Unix environments, integrating asynchronous task execution, alarms, connection pooling, and network communication. It centers on `Fiber.t` for asynchronous workflows, `Switch.t` for resource lifecycle control, and `socket` for low-level network I/O, while structured logging and synchronization primitives support robust concurrent applications. You can use it to manage secure PostgreSQL connections with TLS, schedule timed callbacks that integrate with system switches, or coordinate access to shared resources with mutexes and condition variables. Submodules extend these capabilities with address resolution, connection pooling, and alarm scheduling, enabling scalable network services and structured asynchronous logic.",
-      "description_length": 801,
+      "description": "This module implements system-level operations for managing asynchronous I/O, concurrency, and resource handling in a Unix environment. It provides direct access to socket operations, error handling specific to Unix system calls, and utilities for asynchronous task scheduling tied to switches. Concrete use cases include establishing and managing network connections, handling socket communication for database drivers, and coordinating asynchronous operations with precise system-level control.",
+      "description_length": 496,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou_unix",
       "library": "caqti-miou.unix",
-      "description": "This module enables database connection management using `miou.unix`, supporting connection pooling, post-connect hooks, and URI-based configuration via `Uri.t`. It coordinates with system-level concurrency through `Fiber.t`, `Switch.t`, and low-level sockets to handle asynchronous workflows and resource lifecycle control. You can establish and validate database connections securely, execute scoped logic with `with_connection`, and manage timed or concurrent operations using alarms and synchronization primitives. Specific uses include setting up reusable connection pools, scheduling TLS-secured PostgreSQL connections, and structuring asynchronous I/O with custom validation and logging.",
-      "description_length": 694,
+      "description": "This module implements connection handling for database drivers using `miou.unix`, providing direct integration with Unix sockets and asynchronous I/O. It includes functions to establish, manage, and pool connections with support for query substitution, environment resolution, and connection configuration. Concrete use cases involve setting up database connections over Unix domain sockets, executing parameterized queries with dialect-specific substitutions, and managing connection lifetimes in async applications.",
+      "description_length": 518,
       "index": 14,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Caqti_miou.CONNECTION",
+      "module_path": "Caqti_miou.Switch",
       "library": "caqti-miou",
-      "description": "This module enables managing database connections, executing SQL queries with prepared statements, and handling transaction lifecycles\u2014including atomic operations and timeouts\u2014while supporting result processing via folds, iterators, or single-row extraction. It operates on SQL requests, streams, and transactional contexts, facilitating use cases like bulk data insertion with `populate`, result aggregation into lists, and validated connection management for reliable query execution.",
-      "description_length": 486,
+      "description": "This module manages lifecycle-controlled resource cleanup through switches that track active contexts. It provides operations to create, release, and monitor switches, along with attaching and detaching cleanup handlers that execute when a switch is turned off. Use cases include managing connection pools and ensuring timely resource deallocation in asynchronous applications.",
+      "description_length": 377,
       "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou.Stream",
       "library": "caqti-miou",
-      "description": "This module processes streams of values with error handling, supporting operations like folding, iteration, and conversion to and from lists. It works with stream types that produce values of type `'a` or fail with errors of type `'err`, including congestion-aware variants. Concrete use cases include consuming query results from a database connection, transforming stream elements while handling I/O errors, and accumulating values in a controlled manner.",
-      "description_length": 457,
+      "description": "This module processes streams of values with functions to fold, iterate, and convert to and from lists, handling potential errors during traversal. It supports operations like `fold_s` for stateful accumulation with error propagation, `iter_s` for effectful iteration, and `to_list` for collecting stream elements in order. Concrete use cases include consuming database query results, processing network data packets, or handling sequences of I/O operations with error resilience.",
+      "description_length": 480,
       "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Caqti_miou.CONNECTION-Response",
-      "library": "caqti-miou",
-      "description": "This module handles result inspection and retrieval for database queries, providing operations like counting returned or affected rows and extracting query results. It works with response types parameterized by result row data and multiplicity. Use cases include checking for successful execution, mapping over result rows, and converting responses into streams for iterative processing.",
-      "description_length": 387,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Caqti_miou.Switch",
-      "library": "caqti-miou",
-      "description": "This module manages lifecycle-aware resource handling through switches that coordinate cleanup actions. It provides operations to create, release, and monitor switches, along with attaching and detaching cleanup hooks that execute when a switch is turned off. It is used to manage resources like database connections in a way that ensures proper cleanup when the switch is released.",
-      "description_length": 382,
-      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_miou",
       "library": "caqti-miou",
-      "description": "This module provides types and utilities for managing asynchronous connections using the Miou concurrency framework, centered around the `switch` and `connection` types. It integrates with submodules for stream-based communication, result processing, and resource management, enabling tasks like executing SQL queries, handling transactions, and consuming result streams with error-aware folds and iterators. Functions like `or_fail` assist in result handling, while the `Stream` and `Switch` submodules support value transformation and lifecycle-aware resource cleanup. Concrete use cases include establishing database connections over Unix, executing prepared statements, and aggregating query results into lists or streams with controlled error handling.",
-      "description_length": 757,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines types and utilities for managing connections and resources in asynchronous applications. It includes a `Stream` module for processing sequences of values with error handling, and a `Switch` module for lifecycle-controlled resource cleanup. Use cases include handling database query results, managing connection pools, and ensuring proper resource deallocation during I/O operations.",
+      "description_length": 402,
+      "index": 17,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 20,
-    "meaningful_modules": 20,
+    "total_modules_in_package": 18,
+    "meaningful_modules": 18,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 844,
-    "min_description_length": 247,
-    "avg_description_length": 488.7,
-    "embedding_file_size_mb": 0.07308769226074219
+    "max_description_length": 608,
+    "min_description_length": 254,
+    "avg_description_length": 408.22222222222223,
+    "embedding_file_size_mb": 0.26128292083740234
   }
 }

@@ -1,95 +1,95 @@
 {
   "package": "cohttp-async",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 11,
-  "creation_timestamp": "2025-07-15T23:07:09.737050",
+  "creation_timestamp": "2025-08-14T23:11:12.562459",
   "modules": [
     {
-      "module_path": "Cohttp_async.Io.IO",
+      "module_path": "Cohttp_async.Server.Expert",
       "library": "cohttp-async",
-      "description": "This module implements asynchronous input/output operations for handling network connections using low-level channel types `ic` and `oc`. It supports reading from and writing to connections with functions like `read`, `read_line`, `write`, and `flush`, along with buffer management via `with_input_buffer`. Concrete use cases include implementing HTTP clients and servers where precise control over network I/O is required, such as reading request headers or sending response bodies incrementally.",
-      "description_length": 497,
+      "description": "Handles HTTP server creation with low-level control over connection handling, using custom socket addresses, readers, and writers. It allows defining handlers that process HTTP requests and produce responses or response actions, including direct manipulation of the underlying I/O. Useful for integrating HTTP services into custom networking stacks or extending server behavior beyond standard interfaces.",
+      "description_length": 405,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cohttp_async.Client.Connection",
-      "library": "cohttp-async",
-      "description": "This module manages HTTP client connections, enabling asynchronous requests over established connections. It provides functions to connect to a URI, send HTTP requests with optional bodies, and handle responses, while supporting SSL configuration and connection lifecycle management. Concrete use cases include making HTTP GET/POST requests, managing persistent connections, and handling SSL-secured endpoints.",
-      "description_length": 410,
-      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_async.Io.Request",
       "library": "cohttp-async",
-      "description": "This module handles reading and writing HTTP request headers and bodies over asynchronous IO channels. It provides functions to parse incoming requests, stream request content in chunks, and serialize outgoing requests with optional flushing. Concrete use cases include implementing HTTP servers that process request payloads incrementally or generate responses dynamically.",
-      "description_length": 374,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module handles reading and writing HTTP request headers and bodies over asynchronous IO channels. It provides functions to parse incoming requests, stream request bodies in chunks, and serialize outgoing requests with optional flushing. Concrete use cases include implementing HTTP servers that process requests incrementally or clients that send large payloads efficiently.",
+      "description_length": 379,
+      "index": 1,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_async.Io.Response",
       "library": "cohttp-async",
-      "description": "This module handles reading and writing HTTP responses over asynchronous IO channels, including headers and body chunks. It works with `Http.Response.t` values, along with custom `reader` and `writer` types for streaming body content. Concrete use cases include parsing incoming HTTP responses from a network socket and constructing and sending HTTP responses to a client.",
-      "description_length": 372,
-      "index": 3,
+      "description": "This module handles reading and writing HTTP responses over asynchronous IO channels, including parsing response headers, streaming response bodies, and managing chunked transfers. It works with `Http.Response.t` values along with `reader` and `writer` types for handling body data. Concrete use cases include implementing HTTP servers that asynchronously send responses with headers and streaming content, or clients that read and process HTTP response streams.",
+      "description_length": 462,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_async.Body.Private",
       "library": "cohttp-async",
-      "description": "This module provides low-level operations for handling HTTP message bodies in an asynchronous context. It includes functions for writing body content to a writer, converting body data into a pipe, disabling chunked encoding while retrieving the body size, and draining unread body data. These operations are used when implementing custom HTTP message processing logic that requires direct manipulation of body streams.",
-      "description_length": 418,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module handles asynchronous body data transfer in HTTP requests and responses. It provides functions to write body content, convert bodies into readable pipes, disable chunked encoding with a content length, and drain unused body data. Concrete use cases include streaming large payloads, processing incoming data incrementally, and managing body content without relying on chunked encoding.",
+      "description_length": 396,
+      "index": 3,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Cohttp_async.Server.Expert",
+      "module_path": "Cohttp_async.Io.IO",
       "library": "cohttp-async",
-      "description": "This module provides low-level server creation functions that accept custom HTTP handlers, socket addresses, and I/O channels. It works directly with HTTP requests and responses, Async_unix readers and writers, and deferred values. Use it to implement custom server logic with fine-grained control over network I/O and HTTP processing.",
-      "description_length": 335,
+      "description": "This module implements asynchronous input/output operations for handling network connections using low-level channel types. It supports reading from input channels (`ic`) with operations like line-based or fixed-length reads, and writing to output channels (`oc`) with buffered writes and explicit flushing. Typical use cases include implementing custom network protocols over TCP where precise control over I/O buffering and connection state is required.",
+      "description_length": 455,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cohttp_async.Client.Connection",
+      "library": "cohttp-async",
+      "description": "This module manages HTTP client connections, enabling asynchronous requests over established connections. It provides functions to connect to a URI, send HTTP requests, and handle connection lifecycle events like closing and monitoring closure. Concrete use cases include making HTTP GET/POST requests, managing persistent connections to a server, and handling SSL-secured communication.",
+      "description_length": 387,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cohttp_async.Client",
+      "module_path": "Cohttp_async.Server",
       "library": "cohttp-async",
-      "description": "This module enables asynchronous HTTP client operations, supporting standard methods like GET, POST, PUT, DELETE, and PATCH with customizable headers, SSL configurations, and optional request bodies. It provides direct access to sending requests and handling responses with body streams, while its child module manages underlying connections, allowing persistent sessions and secure communication over SSL. You can use it to interact with REST APIs, submit forms, or stream large responses efficiently without loading the entire body into memory. Specific operations include sending a POST request with custom headers, reusing a connection for multiple requests, and configuring SSL settings for secure endpoints.",
-      "description_length": 713,
+      "description": "This module implements HTTP server functionality with support for handling requests and generating responses using the Async concurrency model. It provides functions to create servers with custom request handlers, manage connections, and generate responses from strings, files, or pipes, including redirect and error handling. Concrete use cases include building asynchronous web services, REST APIs, and file servers with precise control over HTTP interactions.",
+      "description_length": 462,
       "index": 6,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cohttp_async.Io",
       "library": "cohttp-async",
-      "description": "This module provides asynchronous HTTP communication capabilities using low-level input/output channels. It supports reading and writing HTTP requests and responses with streaming body content through types like `ic`, `oc`, `reader`, and `writer`, along with operations such as `read_line`, `write`, `flush`, and buffer management. You can use it to implement HTTP clients and servers that handle headers and chunked bodies incrementally, such as streaming large file uploads or generating dynamic responses. Specific examples include parsing incoming HTTP requests, sending response headers independently from body content, and managing bidirectional HTTP communication over network sockets.",
-      "description_length": 692,
+      "description": "This module provides asynchronous I/O primitives for handling network communication, including reading from and writing to low-level channels. It supports operations such as line-based reads, buffered writes, and explicit flushing, working directly with `ic` and `oc` channel types. It is used for implementing network protocols like HTTP, where precise control over connection state and data streaming is required.",
+      "description_length": 415,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cohttp_async.Server",
+      "module_path": "Cohttp_async.Client",
       "library": "cohttp-async",
-      "description": "This module builds HTTP servers that handle requests and generate responses using asynchronous I/O, supporting operations like serving static files, handling redirects, and streaming content through pipes. It provides core types such as HTTP requests, responses, TCP endpoints, and deferred values, along with functions to start, manage, and shut down servers. The child module enables fine-grained control by allowing custom HTTP handlers, socket configurations, and direct use of Async_unix readers and writers for low-level network processing. Together, they support both high-level server setup and detailed customization of request handling and I/O behavior.",
-      "description_length": 663,
+      "description": "This module implements asynchronous HTTP client operations for sending requests and receiving responses over network connections. It supports standard HTTP methods like GET, POST, PUT, DELETE, and PATCH, with options to configure SSL, headers, and request bodies. Concrete use cases include interacting with REST APIs, uploading data to web services, and fetching remote resources with asynchronous I/O.",
+      "description_length": 403,
       "index": 8,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cohttp_async.Body",
       "library": "cohttp-async",
-      "description": "This module handles HTTP message bodies in an asynchronous context, offering operations to create, transform, and consume bodies from strings, string lists, or pipes. It supports encoding and decoding form data, inspecting body properties like emptiness or transfer encoding, and converting body content into a pipe or string. The child module provides low-level utilities for writing body content to a writer, draining unread data, and managing chunked encoding, enabling efficient streaming and custom processing of large payloads. Examples include handling form submissions, streaming response bodies, and implementing custom HTTP message parsers.",
-      "description_length": 650,
+      "description": "This module handles HTTP message bodies in an asynchronous context. It supports creating bodies from strings, form data, or pipes, and converting them back into strings, lists, or pipes. Use cases include streaming large files, processing incremental data uploads, and handling form submissions in HTTP servers or clients.",
+      "description_length": 322,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_async",
       "library": "cohttp-async",
-      "description": "This module enables asynchronous HTTP communication with support for both client and server operations, handling requests, responses, and streaming bodies efficiently. It provides core data types like `ic`, `oc`, `reader`, `writer`, and deferred values, along with operations for sending and receiving HTTP messages, managing connections, and processing headers and body content incrementally. You can use it to build HTTP clients that stream large responses, implement servers that serve static files or handle custom request logic, and manage SSL configurations for secure communication. Specific examples include sending a POST request with custom headers, parsing incoming HTTP requests on a server, streaming a large file upload, and handling form data asynchronously.",
-      "description_length": 773,
+      "description": "This module provides asynchronous HTTP functionality, handling client and server operations with support for streaming data through customizable I/O primitives. It works with HTTP requests and responses, managing bodies, headers, and connections using Async's concurrency model. Concrete use cases include building and interacting with REST APIs, streaming large files, handling form submissions, and implementing custom HTTP servers with precise control over network communication.",
+      "description_length": 482,
       "index": 10,
       "embedding_norm": 1.0
     }
@@ -101,9 +101,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 773,
-    "min_description_length": 335,
-    "avg_description_length": 536.0909090909091,
-    "embedding_file_size_mb": 0.04037761688232422
+    "max_description_length": 482,
+    "min_description_length": 322,
+    "avg_description_length": 415.27272727272725,
+    "embedding_file_size_mb": 0.15975093841552734
   }
 }

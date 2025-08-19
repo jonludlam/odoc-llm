@@ -1,173 +1,165 @@
 {
   "package": "obatcher",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 19,
-  "creation_timestamp": "2025-07-15T23:10:46.357124",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 18,
+  "creation_timestamp": "2025-08-15T00:49:54.926356",
   "modules": [
-    {
-      "module_path": "Ds.Batched_btree.Make.Sequential",
-      "library": "obatcher.ds",
-      "description": "This module implements a batched B-tree data structure with operations for node manipulation, insertion, searching, and pretty-printing. It works with typed nodes and values, supporting concrete tasks like splitting overloaded nodes, inserting key-value pairs, and traversing ranges. Use cases include efficient storage and retrieval of ordered data with customizable node capacity.",
-      "description_length": 382,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds.Batched_btree.Make.Batched",
-      "library": "obatcher.ds",
-      "description": "This module implements batched operations for a B-tree structure, supporting parallel insertion, search, and rebuilding of nodes. It works with B-tree nodes and arrays of key-value pairs, handling tasks like splitting ranges, computing node heights, and flattening node contents. Concrete use cases include bulk loading sorted data into a B-tree, performing parallel lookups, and managing batched updates with configurable thresholds for parallelism.",
-      "description_length": 450,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ds.Batched_skiplist.Make.Sequential",
-      "library": "obatcher.ds",
-      "description": "This module implements a sequential batched skiplist with mutable nodes, supporting efficient insertion, membership testing, and validation. It works with a custom node type and a data type `V.t` for stored values, using comparisons and string conversions specific to `V.t`. Concrete use cases include maintaining a dynamically updated ordered collection with fast lookups and logging structural changes for debugging.",
-      "description_length": 418,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds.Batched_skiplist.Make.Batched",
-      "library": "obatcher.ds",
-      "description": "This module implements a concurrent, batched skiplist data structure with operations for parallel insertion, search, and size queries on arrays of values. It works with node arrays, integer arrays, and computation types to manage batched updates and intermediate state during skiplist modifications. Concrete use cases include high-throughput concurrent data ingestion and parallel membership testing in distributed systems.",
-      "description_length": 424,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds.Batched_hashtbl.Batched",
-      "library": "obatcher.ds",
-      "description": "This module implements a batched hash table with support for deferred operations and configuration options like randomized insertion order. It provides functions to initialize a hash table with a specified size and process an array of wrapped operations, which include computations to execute in a batched context. Concrete use cases include efficiently handling stateful batch updates and managing transient state in performance-sensitive workflows.",
-      "description_length": 450,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds.Batched_skiplist.Make",
-      "library": "obatcher.ds",
-      "description": "This module implements a batched skiplist optimized for concurrent insertions and lookups, supporting high-throughput scenarios through efficient batch processing. It provides core operations to initialize the structure, insert values, test membership, and retrieve size, while its child modules offer sequential and concurrent variants with specialized node and array-based implementations. The sequential version uses mutable nodes for ordered collections with logging capabilities, and the concurrent version enables parallel ingestion and querying using node arrays and intermediate state tracking. Example uses include maintaining ordered datasets with fast lookups and scaling membership checks across distributed services.",
-      "description_length": 729,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds.Batched_counter.Batched",
-      "library": "obatcher.ds",
-      "description": "This module implements a thread-safe counter with batched operations. It supports incrementing, decrementing, and retrieving the counter value through atomic operations. The counter is initialized with `init` and operations are applied in batches via `run`, ensuring atomicity and efficiency in concurrent contexts.",
-      "description_length": 315,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ds.Utils.Finite_vector",
-      "library": "obatcher.ds",
-      "description": "This module implements a mutable vector with fixed capacity, supporting efficient element access, insertion, and truncation. It works with polymorphic vectors backed by arrays, tracking both length and capacity. Concrete use cases include managing buffers with size limits, building sequences incrementally, and implementing sliding windows over data.",
-      "description_length": 351,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ds.Batched_counter",
-      "library": "obatcher.ds",
-      "description": "This module provides a thread-safe counter with atomic increment and decrement operations, organized into batches for efficiency. It supports immediate retrieval of the current value and groups updates using a batched operation type, minimizing overhead in high-concurrency environments. Operations are applied atomically through `run`, and the counter is initialized with `init`, enabling efficient and safe concurrent access.",
-      "description_length": 427,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ds.Utils",
-      "library": "obatcher.ds",
-      "description": "This module enables parallel iteration and reduction over integer ranges using fibers, ideal for compute-intensive tasks like numerical simulations. It includes a `Finite_vector` submodule that implements mutable, fixed-capacity vectors with efficient element access and dynamic resizing, suitable for buffers and sliding windows. Main operations include parallel mapping, folding, and vector manipulation. For example, you can concurrently process batches of data while managing intermediate results in a size-limited vector.",
-      "description_length": 526,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds.Batched_btree",
-      "library": "obatcher.ds",
-      "description": "This module implements a concurrent B-tree with dynamic batching for high-throughput key-value operations, supporting insertion, lookup, and size tracking with configurable thresholds. It combines sequential node management from the `Sequential` submodule for precise tree manipulation and debugging with the `Batched` submodule's parallel insertion and range search capabilities optimized for bulk operations. The structure uses `V.t` keys to maintain ordered storage, enabling scalable indexing and efficient traversal while adapting execution mode based on load and occupancy. Examples include bulk-loading datasets in parallel or performing concurrent lookups across key ranges while maintaining in-memory consistency.",
-      "description_length": 722,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds.Batched_hashtbl",
-      "library": "obatcher.ds",
-      "description": "This module implements a thread-safe, mutable hash table optimized for batched operations, supporting high-throughput updates and lookups in concurrent environments. It allows initialization with custom configuration, execution of arrays of wrapped operations, and access to internal state, with child modules extending functionality through deferred operations and randomized insertion order. Concrete operations include batched insertions, lookups, and computations over key-value pairs, enabling efficient handling of stateful updates and transient data in performance-sensitive workflows. Example use cases include caching layers and concurrent state management where bulk processing and low-latency access are critical.",
-      "description_length": 724,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds.Batched_skiplist",
-      "library": "obatcher.ds",
-      "description": "This module organizes a family of skiplist implementations designed for efficient ordered data management with support for batch operations and concurrency. It centers around a core interface providing insertion, membership testing, and size tracking, with underlying variants optimized for sequential or concurrent access patterns. The sequential implementation uses mutable nodes for ordered collections with logging, while the concurrent version leverages node arrays and intermediate states to enable parallel ingestion and querying. Example applications include high-throughput data processing pipelines and distributed systems requiring scalable ordered lookups.",
-      "description_length": 668,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ds",
-      "library": "obatcher.ds",
-      "description": "This module suite offers a set of concurrent and batch-optimized data structures tailored for high-throughput, parallel processing in compute-intensive and stateful applications. Core components include atomic counters, parallelizable vectors, B-trees, hash tables, and skiplists, each supporting thread-safe operations like batched insertion, atomic updates, and parallel traversal. These structures enable efficient handling of dynamic datasets with ordered access, scalable indexing, and in-memory consistency under concurrency. Example workflows include bulk data ingestion with concurrent B-trees, parallel numerical computation using fibers and vectors, and real-time state updates via atomic counters and batched hash tables.",
-      "description_length": 732,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Obatcher.Make",
       "library": "obatcher",
-      "description": "Implements a batching service wrapper that automatically groups individual operations for efficient execution. It works with a service type `S.t` and operation type `'a S.op`, handling initialization with optional configuration and execution of operations with implicit batching. Use this to reduce overhead in scenarios like database queries or network requests by batching multiple calls into fewer underlying operations.",
-      "description_length": 423,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Obatcher.Service",
-      "library": "obatcher",
-      "description": "This module implements a batching service that processes arrays of operations with suspended continuations, enabling parallel execution of bound computations. It works with service instances, configurations, and operation-wrapper tuples that pair operations with their continuations. Concrete use cases include handling batches of I/O-bound or parallelizable tasks efficiently, such as processing multiple network requests or computational jobs in parallel.",
-      "description_length": 457,
-      "index": 15,
+      "description": "Implements a batching service wrapper that automatically groups individual operations for efficient execution. It works with a service module S, using its operation type (`S.op`) and configuration (`S.cfg`) to initialize and execute batched operations. Use this to reduce overhead in scenarios like database queries or network requests by batching multiple calls into a single operation.",
+      "description_length": 387,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Obatcher.Make_Poly",
       "library": "obatcher",
-      "description": "Implements a batching service wrapper that automatically groups individual operations for efficient execution. It works with any service type `'a S.t` and operation type `('a, 'b) S.op`, managing internal state to batch and process operations in bulk. Concrete use cases include optimizing database writes, API request aggregation, or reducing system call overhead in performance-sensitive applications.",
-      "description_length": 403,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Obatcher.Service_Poly",
-      "library": "obatcher",
-      "description": "This module defines a service that batches and runs operations in parallel. It works with a service instance type `'a t` and an array of wrapped operations `'a wrapped_op array`. Concrete use cases include handling batches of tasks like network requests, file operations, or computations where parallel execution improves throughput.",
-      "description_length": 333,
-      "index": 17,
-      "embedding_norm": 0.9999998807907104
+      "description": "Implements a service wrapper that batches operations before execution. Works with any service type `'a S.t` and its associated operations `('a, 'b) S.op`. Use to reduce the number of individual service calls by grouping them into batches automatically.",
+      "description_length": 252,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Obatcher",
       "library": "obatcher",
-      "description": "This module enables efficient batched processing of asynchronous tasks with customizable scheduling and result aggregation, working with lists, promises, and custom batch types to optimize I/O-bound operations like HTTP requests or database queries. Its child modules provide batching service wrappers that group individual operations for bulk execution, handling service types and operation types with support for configurations, suspended continuations, and parallel processing. Main data types include service instances, operation wrappers, and arrays of operations, with operations for initialization, batching, and execution. Examples include aggregating multiple API requests into a single batch, parallelizing database queries, or optimizing file operations by reducing system call overhead.",
-      "description_length": 798,
-      "index": 18,
+      "description": "This module implements batching service wrappers that group individual operations for efficient execution. It works with service modules defining operations (`op`) and configurations (`cfg`), or polymorphic service types `'a S.t` with their operations. Use to reduce overhead in database queries, network requests, or similar tasks by automatically batching multiple calls into one.",
+      "description_length": 382,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ds.Batched_skiplist.Make.Sequential",
+      "library": "obatcher.ds",
+      "description": "This module implements a batched skiplist data structure with mutable nodes, supporting efficient insertion, membership testing, and validation. It works with a custom node type and a comparable value type `V.t`, maintaining multiple levels of linked nodes for fast traversal. Concrete use cases include managing ordered collections with frequent updates and correctness checks, such as in concurrent data processing or indexed storage systems.",
+      "description_length": 444,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ds.Batched_skiplist.Make.Batched",
+      "library": "obatcher.ds",
+      "description": "This module implements a concurrent, batched skiplist data structure with operations for parallel insertion, search, and size queries on arrays of values. It works with node arrays, integer arrays, and computation types to manage batched updates and maintain skiplist invariants during concurrent access. Concrete use cases include high-throughput concurrent set operations and parallel bulk data processing where efficient memory access and synchronization are critical.",
+      "description_length": 471,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ds.Batched_btree.Make.Batched",
+      "library": "obatcher.ds",
+      "description": "This module implements batched operations for a B-tree structure, supporting parallel insertion, search, and rebuilding of nodes. It works with B-tree nodes represented as arrays of key-value pairs and handles operations such as partitioning ranges, computing node heights, and flattening nodes into sequences. Concrete use cases include efficiently building a B-tree from a sorted array, performing parallel lookups, and inserting multiple key-value pairs while maintaining balance and structure.",
+      "description_length": 497,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ds.Batched_btree.Make.Sequential",
+      "library": "obatcher.ds",
+      "description": "This module implements a batched B-tree data structure with operations for node manipulation, insertion, searching, and pretty-printing. It works with B-tree nodes and values parameterized by a type `'a`, supporting concrete operations like splitting children, finding ranges, and formatting nodes with customizable value printers. Use cases include efficient storage and retrieval of ordered data with customizable node capacities and in-memory B-tree maintenance.",
+      "description_length": 465,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ds.Batched_counter.Batched",
+      "library": "obatcher.ds",
+      "description": "This module implements a thread-safe counter with batched operations, supporting atomic increments, decrements, and reads. It works with atomic integers and wraps operations along with their continuations for deferred execution. Concrete use cases include managing shared state in concurrent applications, such as tracking resource usage or event counts across multiple threads.",
+      "description_length": 378,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ds.Batched_btree.Make",
+      "library": "obatcher.ds",
+      "description": "This module implements a parameterized B-tree with batched updates, supporting insertion, search, and size tracking for values of type `'a` indexed by a key type from module `V`. It provides low-level node operations through `Sequential` and batched parallel-friendly operations through `Batched`, enabling efficient bulk construction and querying. Concrete use cases include in-memory B-tree maintenance with customizable node splitting and merging, and executing batched insertions or lookups on large sorted datasets.",
+      "description_length": 520,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ds.Utils.Finite_vector",
+      "library": "obatcher.ds",
+      "description": "This module implements a mutable vector with a fixed maximum capacity, supporting efficient element access, insertion, and truncation. It provides operations to initialize vectors with specified capacities, map over elements, and manipulate their contents in place, such as setting values at specific indices or splitting vectors at a given position. Use cases include managing dynamic collections with bounded sizes, like fixed-length buffers or sliding windows over data.",
+      "description_length": 473,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ds.Batched_hashtbl.Batched",
+      "library": "obatcher.ds",
+      "description": "This module implements a batched hash table with support for deferred operations and configuration options like randomization and initial size. It provides `init` to create a hash table with optional settings and `run` to execute an array of wrapped operations on the table. Concrete use cases include efficiently processing batches of hash table mutations, such as bulk inserts or updates, with control over initial allocation and behavior.",
+      "description_length": 441,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ds.Batched_skiplist.Make",
+      "library": "obatcher.ds",
+      "description": "This module implements a concurrent, batched skiplist with mutable nodes for efficient parallel insertion, membership testing, and size queries on comparable values. It supports operations over arrays of values and computation types, enabling high-throughput concurrent set operations and bulk data processing with efficient memory access. Use cases include indexed storage systems and concurrent data pipelines requiring correctness checks and fast traversal.",
+      "description_length": 460,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ds.Utils",
+      "library": "obatcher.ds",
+      "description": "Implements parallel iteration with configurable concurrency and a mutable vector with fixed capacity. Supports efficient indexed data processing and in-place manipulation. Useful for parallel computations over integer ranges and managing bounded-size dynamic collections like sliding windows or fixed-length buffers.",
+      "description_length": 316,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ds.Batched_skiplist",
+      "library": "obatcher.ds",
+      "description": "This module implements a concurrent, batched skiplist with mutable nodes for efficient parallel insertion, membership testing, and size queries on comparable values. It operates on arrays of values and supports computation types for bulk processing, enabling high-throughput concurrent set operations and fast traversal. Suitable for indexed storage systems and concurrent data pipelines requiring correctness checks and efficient memory access.",
+      "description_length": 445,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ds.Batched_hashtbl",
+      "library": "obatcher.ds",
+      "description": "This module implements a batched hash table with support for deferred operations and configuration options like randomization and initial size. It provides `init` to create a hash table with optional settings and `run` to execute an array of wrapped operations on the table. Concrete use cases include efficiently processing batches of hash table mutations, such as bulk inserts or updates, with control over initial allocation and behavior.",
+      "description_length": 441,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ds.Batched_counter",
+      "library": "obatcher.ds",
+      "description": "This module provides thread-safe batched operations for managing a shared integer counter, including atomic increments, decrements, and reads. It uses a continuation-based batching mechanism to defer execution of operations and improve concurrency performance. Concrete use cases include coordinating access to limited resources across multiple threads, such as tracking active connections or managing pooled resources.",
+      "description_length": 419,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ds.Batched_btree",
+      "library": "obatcher.ds",
+      "description": "This module implements a parameterized B-tree with batched updates, supporting insertion, search, and size tracking for values of type `'a` indexed by a key type from module `V`. It provides low-level node operations through `Sequential` and batched parallel-friendly operations through `Batched`, enabling efficient bulk construction and querying. Concrete use cases include in-memory B-tree maintenance with customizable node splitting and merging, and executing batched insertions or lookups on large sorted datasets.",
+      "description_length": 520,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ds",
+      "library": "obatcher.ds",
+      "description": "This module provides submodules for implementing efficient data structures with batched operations. It includes a parameterized B-tree, thread-safe counter, hash table, skiplist, and utility structures, each optimized for bulk processing and parallel execution. These components are used for tasks like concurrent resource management, bulk data indexing, and parallel computation over bounded or dynamic collections.",
+      "description_length": 416,
+      "index": 17,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 20,
-    "meaningful_modules": 19,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.95
+    "total_modules_in_package": 18,
+    "meaningful_modules": 18,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 798,
-    "min_description_length": 315,
-    "avg_description_length": 512.2105263157895,
-    "embedding_file_size_mb": 0.06940746307373047
+    "max_description_length": 520,
+    "min_description_length": 252,
+    "avg_description_length": 429.27777777777777,
+    "embedding_file_size_mb": 0.2613801956176758
   }
 }

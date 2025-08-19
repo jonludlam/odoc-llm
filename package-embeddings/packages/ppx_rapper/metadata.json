@@ -1,125 +1,61 @@
 {
   "package": "ppx_rapper",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 13,
-  "creation_timestamp": "2025-07-15T23:08:06.948572",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 5,
+  "creation_timestamp": "2025-08-14T23:22:45.632797",
   "modules": [
     {
       "module_path": "Ppx_rapper",
       "library": "ppx_rapper",
-      "description": "This module processes SQL query extensions in OCaml code, parsing query arguments and generating corresponding expressions for database operations. It works with SQL query strings embedded in OCaml syntax, converting them into executable code that interacts with a database. Concrete use cases include transforming `[%rapper get_one \"SELECT ...\"]` into a function that retrieves a single row, or `let%rapper` bindings that generate query execution code at compile time.",
-      "description_length": 469,
+      "description": "This module processes SQL query extensions in OCaml code, parsing arguments and generating corresponding expressions for database operations. It handles both labeled and record-style query parameters, producing executable code for queries like `get_one` or `execute`. It supports embedding SQL directly in OCaml source files, transforming it into appropriate function calls and data structure manipulations.",
+      "description_length": 407,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rapper.Make_helper.CONNECTION-Response",
-      "library": "ppx_rapper.runtime",
-      "description": "This module handles result inspection and retrieval for database responses. It provides operations to get row counts, extract single or multiple rows, and fold or iterate over results with support for error handling and streaming. Use cases include querying databases and processing result sets in a type-safe manner.",
-      "description_length": 317,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Rapper.Internal.Dynparam",
       "library": "ppx_rapper.runtime",
-      "description": "This module represents dynamic SQL query parameters using a GADT to store typed values. It supports creating and combining parameter values with their corresponding Caqti types. It is used to build parameterized SQL queries with type-safe values.",
-      "description_length": 246,
+      "description": "This module represents dynamic SQL query parameters using a GADT to store typed values. It supports creating and combining parameter packs with `add`, and provides an empty base case for building parameter lists. It is used to construct type-safe dynamic queries by accumulating typed parameters incrementally.",
+      "description_length": 310,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rapper.Make_helper",
+      "library": "ppx_rapper.runtime",
+      "description": "This module implements functions for transforming and handling I/O operations within a result context. It provides `map` to apply a function to a successful I/O value and `fail` to produce an I/O operation that immediately fails with a given error. These operations are useful for composing error-prone I/O actions, such as reading or writing data, where transformations and error injection are needed directly within the I/O monadic flow.",
+      "description_length": 439,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rapper.Internal",
       "library": "ppx_rapper.runtime",
-      "description": "This module represents dynamic SQL query parameters using a GADT to store typed values. It supports creating and combining parameter values with their corresponding Caqti types. The main data types include the GADT for typed parameters and operations for composing and extracting values. You can build type-safe, parameterized SQL queries by combining values with their database types and passing them to query functions.",
-      "description_length": 421,
+      "description": "This module implements a GADT-based system for representing and composing typed SQL query parameters. It provides operations to build and combine parameter packs incrementally, enabling type-safe dynamic query construction. Concrete use cases include safely assembling SQL queries with variable WHERE clauses or INSERT statements with optional fields.",
+      "description_length": 351,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rapper.RAPPER_HELPER-Stream",
-      "library": "ppx_rapper.runtime",
-      "description": "This module processes streams by folding, iterating, and converting to and from lists. It supports error handling with custom error types during stream consumption, distinguishing callback and stream provider errors via the `Congested constructor. Use cases include aggregating stream elements into a result, applying side effects to each element, and transforming streams to lists or lists to streams.",
-      "description_length": 402,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rapper.RAPPER_HELPER-module-type-CONNECTION",
-      "library": "ppx_rapper.runtime",
-      "description": "This module provides transaction management, query execution, and connection lifecycle operations for database interactions. It operates on `Caqti_request.t` queries and result handlers, supporting SQL execution with error handling, driver-specific extensions, and asynchronous result processing. Key use cases include bulk data insertion with `populate`, transactional consistency with `with_transaction`, and efficient result aggregation using reversed lists or streamed processing.",
-      "description_length": 484,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rapper.RAPPER_HELPER",
-      "library": "ppx_rapper.runtime",
-      "description": "Handles asynchronous transformations and error propagation in future-based computations. Provides `map` to apply functions to values within a future, and `fail` to create a failed future with a given error. Works with `'a future` and `('a, 'e) result` types, useful for composing non-blocking operations with explicit error handling. The `Stream` submodule processes asynchronous streams of values, enabling operations like mapping or filtering over sequences of future results.",
-      "description_length": 478,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rapper.CUSTOM",
-      "library": "ppx_rapper.runtime",
-      "description": "Represents and serializes a custom data type `t` for use with Caqti, a database interface. Enables storing and retrieving values of type `t` in a database by defining a corresponding Caqti type. Useful when working with custom OCaml types that need direct mapping to database columns.",
-      "description_length": 284,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rapper.Make_helper",
-      "library": "ppx_rapper.runtime",
-      "description": "This module transforms values within an `Io` context, enabling composition of asynchronous or effectful computations that may fail. It provides `map` to apply functions to values inside `Io` and `fail` to inject errors, supporting operations like chaining and error propagation. Its child module handles database result inspection, offering functions to retrieve row counts, extract rows, and process result sets with streaming and type safety. Together, they enable robust, error-aware data transformation and database interaction workflows.",
-      "description_length": 542,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rapper.IO-Stream",
-      "library": "ppx_rapper.runtime",
-      "description": "This module processes streams of values by consuming elements and applying functions to accumulate results, handle side effects, or convert to and from lists. It supports operations like `fold`, `fold_s`, and `iter_s` that process elements sequentially, with variants handling error conditions using `Stdlib.result`. Concrete use cases include aggregating stream data into a summary value, transforming stream elements into a list in original or reverse order, and performing effectful operations on each element while propagating errors.",
-      "description_length": 538,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rapper.RAPPER_HELPER-module-type-CONNECTION-Response",
-      "library": "ppx_rapper.runtime",
-      "description": "This module handles result inspection and retrieval from database responses. It provides operations to get row counts, extract single or multiple rows, and fold or iterate over results with support for error handling and asynchronous processing. Use cases include querying database responses for exact row counts, extracting optional or singular results, and streaming or processing large datasets incrementally.",
-      "description_length": 412,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rapper.IO",
-      "library": "ppx_rapper.runtime",
-      "description": "Handles asynchronous data streams with transformation capabilities. Works with stream types that produce values over time. Use for processing sequences of data like file reads or network events.",
-      "description_length": 194,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Rapper",
       "library": "ppx_rapper.runtime",
-      "description": "This module orchestrates data transformation workflows by mapping and aggregating relational rows into hierarchical structures, using key-extraction and accumulation functions to build linked parent-child models from flat data. It integrates with typed SQL parameters for query construction, stream processing for element aggregation and iteration, and database interaction for transaction control, result handling, and custom type serialization. You can convert database rows into nested data models, process asynchronous streams with error-aware folds, and execute type-safe queries with parameterized values. The module also supports composing effectful computations, inspecting query results, and managing I/O-bound operations with streaming and error propagation capabilities.",
-      "description_length": 781,
-      "index": 12,
-      "embedding_norm": 1.0
+      "description": "This module handles hierarchical data assembly from flat database rows using relational mapping combinators. It provides `load_many` to construct parent-child data trees by specifying row-to-parent and row-to-child conversion functions, supporting nested data aggregation. Useful for reconstructing polymorphic object graphs from SQL query results with joined associations.",
+      "description_length": 373,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 14,
-    "meaningful_modules": 13,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9285714285714286
+    "total_modules_in_package": 5,
+    "meaningful_modules": 5,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 781,
-    "min_description_length": 194,
-    "avg_description_length": 428.3076923076923,
-    "embedding_file_size_mb": 0.04769611358642578
+    "max_description_length": 439,
+    "min_description_length": 310,
+    "avg_description_length": 376.0,
+    "embedding_file_size_mb": 0.0728769302368164
   }
 }

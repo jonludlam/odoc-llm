@@ -1,77 +1,69 @@
 {
   "package": "dns-client",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:06:27.742926",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 6,
+  "creation_timestamp": "2025-08-14T23:01:55.200550",
   "modules": [
     {
-      "module_path": "Dns_resolvconf",
-      "library": "dns-client.resolvconf",
-      "description": "Parses a resolv.conf file, extracting nameserver IP addresses. Works with IP address strings and returns a list of parsed nameservers or an error message. Useful for configuring DNS clients from standard resolver configuration files.",
-      "description_length": 233,
+      "module_path": "Dns_client.Pure",
+      "library": "dns-client",
+      "description": "This module generates DNS queries and validates responses using a pure functional interface. It works with domain names, DNS resource record types, and raw string representations of packets. It supports DNSSEC and EDNS options, enabling precise control over query validation and response handling for applications like DNS resolvers or network diagnostic tools.",
+      "description_length": 361,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_client.S",
-      "library": "dns-client",
-      "description": "This module implements a DNS client with functions to create and manage DNS query sessions over a network stack. It provides operations to establish connections, send and receive DNS messages, and handle timeouts and random number generation for DNS operations. It is used to perform DNS resolution by interacting with network addresses and managing communication contexts.",
-      "description_length": 373,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Dns_client.Make",
       "library": "dns-client",
-      "description": "This module implements a DNS client with functions to query DNS resource records, resolve hostnames to IP addresses (IPv4 and IPv6), and retrieve raw DNS replies. It works with domain names, IP addresses, DNS resource record maps, and custom transport interfaces provided by the parameter module T. Concrete use cases include DNS resolution in networking applications, handling DNSSEC validation, and interacting with DNS servers over UDP or TCP with configurable timeouts and EDNS settings.",
-      "description_length": 491,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dns_client.Pure",
-      "library": "dns-client",
-      "description": "This module constructs DNS queries and validates responses using domain names and resource record types. It provides functions to serialize queries, parse raw responses, and handle reply data with support for DNSSEC and EDNS options. Use cases include implementing custom DNS clients, verifying response authenticity, and extracting resource records from DNS replies.",
-      "description_length": 367,
-      "index": 3,
+      "description": "This module implements a DNS client that performs domain name resolution using configurable transports and query types. It supports operations like `gethostbyname` for IPv4 lookups, `gethostbyname6` for IPv6, and `get_resource_record` for arbitrary DNS record queries, returning structured results or detailed error information. It works with domain names, IP addresses, and DNS resource records, using a provided transport stack for network communication.",
+      "description_length": 456,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_client",
       "library": "dns-client",
-      "description": "This module provides DNS resolution capabilities, enabling applications to query DNS servers for domain name and resource record information over UDP or TCP. It supports core operations like hostname-to-IP resolution, raw DNS reply handling, and configurable resolver behavior using custom transports and DNS server lists. Key data types include domain names, IP addresses, DNS resource records, and configurable contexts for managing timeouts, EDNS, and DNSSEC validation. Examples include resolving \"example.com\" to an IPv4 or IPv6 address, constructing and sending custom DNS queries, and parsing and validating DNS responses with DNSSEC support.",
-      "description_length": 649,
-      "index": 4,
+      "description": "This module implements a DNS client for domain name resolution with configurable transports, supporting IPv4, IPv6, and arbitrary DNS record queries. It provides structured result parsing, error handling, and DNSSEC-aware validation through a pure functional interface. Concrete use cases include DNS resolvers, network diagnostic tools, and applications requiring precise control over DNS query and response handling.",
+      "description_length": 418,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dns_resolvconf",
+      "library": "dns-client.resolvconf",
+      "description": "Parses a resolv.conf file, extracting nameserver IP addresses. Works with IP address strings and returns a list of nameserver entries or an error message. Useful for configuring DNS clients from standard resolver configuration files.",
+      "description_length": 233,
+      "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Dns_client_unix.Transport",
       "library": "dns-client.unix",
-      "description": "This module implements a DNS transport layer using blocking Unix socket I/O. It provides connection management, message sending and receiving, and resource cleanup via functions like `connect`, `send_recv`, and `close`, operating on DNS protocol sockets with timeout handling. It works with IP addresses, DNS protocol identifiers, and internal context/state types to facilitate DNS query execution over Unix-based systems.",
-      "description_length": 422,
-      "index": 5,
+      "description": "This module implements a DNS transport layer using blocking Unix socket I/O for sending and receiving DNS queries over UDP or TCP. It manages connection state, timeouts, and communication with nameservers, operating on IP addresses and ports via `io_addr`. Concrete use cases include initiating DNS lookups by connecting to configured nameservers, sending query packets, and receiving responses within a specified timeout window.",
+      "description_length": 429,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_client_unix",
       "library": "dns-client.unix",
-      "description": "This module provides DNS client functionality for Unix systems, enabling domain name resolution and DNS query execution over IPv4 or IPv6 using a transport layer based on blocking Unix sockets. It supports operations such as resolving domain names to IP addresses, querying resource records, and handling raw DNS responses, with cryptographic RNG for secure communication. The transport submodule manages socket connections, message exchange with timeouts, and resource cleanup, allowing concrete interactions with DNS servers via standard Unix networking. Example usage includes initiating a DNS lookup with `resolve` or sending a custom DNS query using `query`, with underlying transport handled automatically or configurable per connection.",
-      "description_length": 743,
-      "index": 6,
+      "description": "This module implements a DNS client transport layer using Unix sockets for synchronous DNS queries over UDP or TCP. It supports operations for initializing connections, sending queries, handling timeouts, and parsing responses, working directly with IP addresses, domain names, and DNS resource records. Concrete use cases include performing DNS resolution for A and AAAA records, querying specific resource records like MX or CNAME, and retrieving raw DNS replies for detailed inspection.",
+      "description_length": 489,
+      "index": 5,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 7,
-    "meaningful_modules": 7,
+    "total_modules_in_package": 6,
+    "meaningful_modules": 6,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 743,
+    "max_description_length": 489,
     "min_description_length": 233,
-    "avg_description_length": 468.2857142857143,
-    "embedding_file_size_mb": 0.02586841583251953
+    "avg_description_length": 397.6666666666667,
+    "embedding_file_size_mb": 0.08737659454345703
   }
 }

@@ -1,157 +1,109 @@
 {
   "package": "mirage-conduit",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 17,
-  "creation_timestamp": "2025-07-15T23:09:14.330632",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 11,
+  "creation_timestamp": "2025-08-14T23:25:38.901520",
   "modules": [
     {
       "module_path": "Resolver_mirage.Make_with_stack.R.DNS",
       "library": "mirage-conduit",
-      "description": "This module implements DNS resolution using a MirageOS network stack, providing functions to perform DNS queries and retrieve IP addresses or hostnames. It works with DNS packets, IP addresses, and domain names, supporting standard DNS operations like A record lookups and reverse lookups. Concrete use cases include resolving domain names to IP addresses for network connections or handling DNS-based service discovery in MirageOS applications.",
-      "description_length": 445,
+      "description": "This module implements DNS resolution using a Mirage network stack, providing functions to query DNS servers for domain name and IP address lookups. It works with DNS packets, IP addresses, and domain names, supporting standard DNS operations like A, AAAA, and PTR record queries. Concrete use cases include resolving hostnames to IP addresses in network applications and performing reverse DNS lookups for connection tracking.",
+      "description_length": 427,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resolver_mirage.Make_with_stack.R",
       "library": "mirage-conduit",
-      "description": "This module builds a DNS-based URI resolver using a custom network stack, allowing domain name resolution through a specified DNS server and integrating with Lwt for asynchronous operation. It centers on the `Resolver_lwt.rewrite_fn` and `Resolver_lwt.t` types, offering functions to configure resolvers with specific DNS endpoints and route queries through controlled network paths. The child module extends this by implementing DNS resolution over a MirageOS network stack, supporting standard operations like A record and reverse lookups, enabling concrete tasks such as translating domain names to IPs for connection setup or handling service discovery in MirageOS environments. Together, they provide a flexible system for customizing DNS resolution behavior in both general and MirageOS-specific contexts.",
-      "description_length": 811,
+      "description": "This module constructs a DNS-based resolver using a Mirage network stack, enabling URI resolution through domain name lookups. It operates on IP addresses, domain names, and DNS records, supporting concrete operations like A, AAAA, and PTR queries. It is used to configure and run a stub resolver that communicates with specified DNS servers over a provided network interface.",
+      "description_length": 376,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conduit_mirage.With_tcp",
-      "library": "mirage-conduit",
-      "description": "This module implements TCP-based connection establishment using the Mirage networking stack. It provides a `connect` function that initiates a TCP connection to a given Mirage-compatible endpoint and returns a connected conduit. It works with Mirage's `S.t` network stack and `Conduit_mirage.t` endpoints, enabling direct TCP communication in MirageOS applications.",
-      "description_length": 365,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resolver_mirage.S-DNS",
-      "library": "mirage-conduit",
-      "description": "This module implements DNS resolution operations using the MirageOS networking stack. It provides functions to perform DNS queries such as `resolve`, `gethostbyname`, and `gethostbyaddr`, which map domain names to IP addresses and vice versa. It works with DNS packets, IP addresses, and domain names, supporting asynchronous resolution over TCP or UDP.",
-      "description_length": 353,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conduit_mirage.Context",
-      "library": "mirage-conduit",
-      "description": "This module creates and manages contexts for establishing network connections with optional TLS support using MirageOS-compatible conduits. It combines a resolver and a conduit to handle connection setup, providing a single context type that supports both standard and TLS-secured connections. Use this when initializing network services that require TLS configuration flexibility, such as HTTPS servers or secure client connections.",
-      "description_length": 433,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conduit_mirage.VCHAN",
-      "library": "mirage-conduit",
-      "description": "This module implements a Mirage-compatible interface for establishing and managing Vchan connections, supporting both client and server roles. It provides functions to create flows for communication, send and receive data using buffers, and handle connection lifecycle operations like closing and error reporting. Concrete use cases include implementing secure inter-domain communication in Xen-based systems and streaming data between virtual machines using shared memory channels.",
-      "description_length": 482,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conduit_mirage.S",
-      "library": "mirage-conduit",
-      "description": "This module defines a conduit as a configuration for establishing network connections, supporting extensions for TCP, TLS, and VCHAN protocols. It provides functions to build and combine these configurations, including `with_tcp`, `with_tls`, and `with_vchan`, and to initiate client connections or set up servers via `connect` and `listen`. Concrete use cases include configuring secure and virtual channel network services in MirageOS-based applications.",
-      "description_length": 456,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conduit_mirage.Handler",
-      "library": "mirage-conduit",
-      "description": "This module defines runtime handlers for managing network connections in a MirageOS-compatible environment. It provides functions to establish outgoing connections and listen for incoming connections using client and server configurations, respectively. The module works with client and server types that can be serialized to and from S-expressions, enabling runtime configuration and debugging.",
-      "description_length": 395,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resolver_mirage.Make_with_stack",
-      "library": "mirage-conduit",
-      "description": "This module implements a DNS resolver for translating URIs into network endpoints using a MirageOS network stack, supporting configurable rewrite rules and service functions for domain-specific logic. It builds on the `Resolver_lwt.t` type and `rewrite_fn` to enable asynchronous resolution over custom network paths, with support for A records, reverse lookups, and service discovery. You can use it to resolve HTTP or TCP URIs, route queries through specific DNS servers, or implement virtual hosting with dynamic rewrite policies. The integration with Lwt and MirageOS stack allows seamless use in asynchronous, high-performance networking applications.",
-      "description_length": 656,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conduit_xenstore.Make",
-      "library": "mirage-conduit",
-      "description": "This module implements a conduit interface for establishing vchan connections using XenStore as the naming mechanism. It provides functions to register endpoints, listen for incoming connections, and initiate connections to remote endpoints by name and port. The module works with XenStore paths to manage endpoint registration and discovery, enabling communication between Xen domains via named vchan ports.",
-      "description_length": 408,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resolver_mirage.S",
-      "library": "mirage-conduit",
-      "description": "This module builds a `Resolver_lwt` for performing DNS lookups using MirageOS networking. It provides functions to create resolvers with configurable DNS servers and network stacks, including a stub resolver that queries a specified DNS server. It works with IP addresses, DNS interfaces, and Lwt-based resolvers, enabling concrete use cases like resolving HTTP endpoint addresses in MirageOS applications.",
-      "description_length": 406,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conduit_mirage.S-With_tcp",
-      "library": "mirage-conduit",
-      "description": "This module establishes network connections using Mirage-compatible interfaces, specifically handling TCP-based communication. It provides the `connect` function to initiate connections given a context and target configuration. Concrete use cases include setting up secure network clients or services within MirageOS-based applications.",
-      "description_length": 336,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resolver_mirage.Make",
-      "library": "mirage-conduit",
-      "description": "This module uses a DNS resolver implementation to create a Resolver_lwt for DNS lookups, producing endpoints from URIs. It provides functions like `dns_stub_resolver` to build resolvers using a stub DNS server, and `init` to configure and return a new resolver instance. It works directly with IP addresses, DNS modules, and Mirage-compatible network stacks to resolve domain names during network requests.",
-      "description_length": 406,
-      "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Conduit_mirage.Flow",
       "library": "mirage-conduit",
-      "description": "This module implements bidirectional data flows for network communication, supporting operations to read into buffers, write buffers, and write buffer lists. It works with dynamic buffers (`Cstruct.t`), flow handles, and error types for read and write failures. Concrete use cases include streaming data over network connections, handling partial writes, and managing end-of-stream signaling in MirageOS-based applications.",
-      "description_length": 423,
-      "index": 13,
+      "description": "This module implements bidirectional data transmission over network connections using buffers. It supports reading incoming data into fresh buffers, writing single or multiple buffers to the output stream, and closing the connection gracefully. Typical usage includes handling HTTP requests/responses or streaming binary data over TCP or TLS.",
+      "description_length": 342,
+      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Resolver_mirage",
+      "module_path": "Conduit_mirage.With_tcp",
       "library": "mirage-conduit",
-      "description": "This module provides URI resolution functionality using static mappings or localhost configurations, supporting asynchronous operations through Lwt and MirageOS networking. It enables direct creation of resolvers that map hostnames to endpoints, with integration points for DNS query handling and custom routing logic. The child modules implement DNS resolution with support for A records, reverse lookups, and service discovery, offering functions like `resolve`, `gethostbyname`, and `dns_stub_resolver` for use with Mirage network stacks. Users can configure resolvers to route requests through specific DNS servers, implement virtual hosting, or redirect URIs to predefined endpoints in asynchronous networking applications.",
-      "description_length": 728,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements TCP-based connection establishment compatible with MirageOS networking stacks. It provides a `connect` function that initiates a TCP connection to a given Mirage-compatible service configuration. The function returns a promise resolving to a connected conduit handle, enabling direct network communication setup for clients.",
+      "description_length": 347,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conduit_xenstore.Make",
+      "library": "mirage-conduit",
+      "description": "This module implements a conduit interface for establishing vchan connections using XenStore as the naming and configuration backend. It provides functions to register endpoints, listen for incoming connections, and initiate connections to remote endpoints by name and port. The module works directly with XenStore paths and vchan ports to enable communication between Xen domains.",
+      "description_length": 381,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conduit_mirage.Context",
+      "library": "mirage-conduit",
+      "description": "This module creates and manages contexts for establishing network connections using MirageOS-compatible conduits, supporting both TLS and non-TLS configurations. It operates on a resolver and a conduit, initializing them based on provided networking stack implementations. A typical use case involves setting up a secure or plaintext HTTP server endpoint within a MirageOS unikernel.",
+      "description_length": 383,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Resolver_mirage.Make_with_stack",
+      "library": "mirage-conduit",
+      "description": "This module implements a DNS-based resolver using a Mirage network stack to resolve URIs into endpoints via domain name lookups. It operates on URIs, domain names, and network configurations, supporting concrete operations like DNS A, AAAA, and PTR queries over a provided network interface. It is used to configure a resolver with custom rewrite rules and service functions for handling specific URI schemes or hostnames.",
+      "description_length": 422,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Resolver_mirage.Make",
+      "library": "mirage-conduit",
+      "description": "This module provides functions to create and configure DNS resolvers for translating URIs into endpoints using a given DNS implementation. It supports operations like `dns_stub_resolver` for creating a resolver that uses a specified DNS server, and `vchan_resolver` for resolving URIs via a virtual channel. The module works with IP addresses, DNS interfaces, and resolver functions, and is used to set up network services that require DNS lookups in MirageOS applications.",
+      "description_length": 473,
+      "index": 7,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Conduit_xenstore",
       "library": "mirage-conduit",
-      "description": "This module establishes virtual channel connections using named endpoints in XenStore, providing a `Make` functor to implement connection logic for direct vchan endpoints. It supports operations to register, listen, and connect to named endpoints by XenStore path and vchan port, enabling inter-domain communication in Xen environments. The child module extends this functionality with a conduit interface that abstracts endpoint management and connection handling. Together, they allow precise control over vchan session setup and data exchange through structured XenStore path operations.",
-      "description_length": 590,
-      "index": 15,
+      "description": "This module implements a conduit interface for establishing vchan connections using XenStore as the naming and configuration backend. It provides functions to register endpoints, listen for incoming connections, and initiate connections to remote endpoints by name and port. The module works directly with XenStore paths and vchan ports to enable communication between Xen domains.",
+      "description_length": 381,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Resolver_mirage",
+      "library": "mirage-conduit",
+      "description": "This module provides functions to create DNS resolvers that translate URIs into endpoints using configurable DNS implementations. It supports operations like `dns_stub_resolver` for creating resolvers that use a specific DNS server and `vchan_resolver` for resolving URIs over virtual channels. It works with IP addresses, DNS interfaces, and resolver functions, and is used to configure network services requiring DNS lookups in MirageOS applications.",
+      "description_length": 452,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Conduit_mirage",
       "library": "mirage-conduit",
-      "description": "This module provides a functorial interface for establishing Mirage-compatible network connections across TCP, TLS, and VCHAN protocols, enabling protocol-agnostic conduit management and dynamic layering. It defines core data types such as `Conduit_mirage.t` endpoints, configuration combinators like `with_tcp` and `with_tls`, and flow handles that support bidirectional communication with buffer operations. Operations include initiating and listening on connections, serializing configurations via S-expressions, and managing secure or virtualized communication channels. Use cases include building TLS-secured network services, streaming data over VCHAN in Xen environments, and orchestrating client-server interactions with Mirage network stacks.",
-      "description_length": 751,
-      "index": 16,
+      "description": "This module enables managing bidirectional network flows, resolving endpoints into client configurations, and serializing connection parameters via S-expressions. It operates on conduit and server types to facilitate establishing TCP, TLS, or VCHAN connections within MirageOS network stacks, supporting both client and server implementations. Key use cases include configuring Mirage-based applications to handle secure or virtualized network communication with protocol-specific settings.",
+      "description_length": 490,
+      "index": 10,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 17,
-    "meaningful_modules": 17,
+    "total_modules_in_package": 11,
+    "meaningful_modules": 11,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 811,
-    "min_description_length": 336,
-    "avg_description_length": 496.70588235294116,
-    "embedding_file_size_mb": 0.062209129333496094
+    "max_description_length": 490,
+    "min_description_length": 342,
+    "avg_description_length": 406.72727272727275,
+    "embedding_file_size_mb": 0.1599140167236328
   }
 }

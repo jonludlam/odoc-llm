@@ -1,285 +1,253 @@
 {
   "package": "mirage-block-combinators",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 33,
-  "creation_timestamp": "2025-07-15T23:12:24.791678",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 29,
+  "creation_timestamp": "2025-08-15T12:26:05.280720",
   "modules": [
     {
-      "module_path": "Mirage_block_copy.Copy.Sparse_copy",
+      "module_path": "Mirage_block_copy.Copy.From_seekable",
       "library": "mirage-block-combinators",
-      "description": "This module implements efficient sparse file copying between seekable sources and writeable destinations, preserving sparsity by detecting and skipping zero-filled regions. It handles errors from both source and destination operations, including size mismatches and read-only destinations. Concrete use cases include disk image cloning, virtual machine snapshot transfers, and backup systems where sparse files must be copied without allocating unnecessary space.",
-      "description_length": 463,
+      "description": "This module implements block device copy operations for seekable sources, supporting reading from and writing to specific offsets. It works with `Cstruct.t` buffers and 64-bit integer offsets, providing functions to disconnect, retrieve device info, and perform seek-aware transfers. Concrete use cases include copying disk images or replicating storage volumes between seekable block devices.",
+      "description_length": 393,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mirage_block_copy.Copy.From_seekable",
+      "module_path": "Mirage_block_copy.Copy.Sparse_copy",
       "library": "mirage-block-combinators",
-      "description": "This module implements block device copy operations for seekable sources, supporting reading from and writing to specific offsets. It works with `Cstruct.t` buffers and 64-bit integer offsets, providing functions to disconnect, retrieve device info, and perform seek-aware data transfers. It is used to copy data between block devices where random access is required, such as replicating disk images or synchronizing storage backends.",
-      "description_length": 434,
+      "description": "This module implements sparse copying between seekable sources and writeable destinations, preserving sparsity by skipping zero-filled blocks. It handles errors from both source and destination operations, ensuring correct size matching and write permissions. Useful for efficiently copying large files or disk images where sparse regions should remain unallocated.",
+      "description_length": 365,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_block_combinators.SEEKABLE",
-      "library": "mirage-block-combinators",
-      "description": "This module provides operations to read from and write to specific sectors of a block device, supporting both mapped and unmapped region detection. It works with `Cstruct.t` buffers for data transfer and uses `int64` for sector addressing. Concrete use cases include direct sector manipulation for virtual disk images and efficient data copying between block devices.",
-      "description_length": 367,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_block_log.Log",
-      "library": "mirage-block-combinators",
-      "description": "This module provides functions for logging messages at various severity levels, including debug, info, warning, error, and application-specific logs. It supports structured logging with custom formatters, tags, and result-handling utilities to propagate errors while logging them. Concrete use cases include tracking disk I/O operations, diagnosing failures in block device access, and auditing system events with contextual metadata.",
-      "description_length": 434,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_block_combinators.Compare",
-      "library": "mirage-block-combinators",
-      "description": "Compares the contents of two block devices, returning the result of the comparison as an integer indicating equality or ordering. It handles errors from either of the two block device implementations and provides a pretty-printer for these errors. This module is useful for verifying data consistency between block devices or implementing synchronization tools.",
-      "description_length": 361,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_block_combinators.Copy",
       "library": "mirage-block-combinators",
-      "description": "Implements byte-level copying between two block devices, ensuring data from a source device is replicated to a destination device. Works with block device implementations that support reading and writing operations. Useful for disk imaging or mirroring data between storage backends.",
-      "description_length": 283,
-      "index": 5,
+      "description": "Implements byte-level copying between two block devices, ensuring data from a source device is replicated to a destination device. Works with block devices defined by modules A and B, handling errors like read-only destinations or mismatched sizes. Useful for disk imaging or data migration tasks where exact replication is required.",
+      "description_length": 333,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mirage_block_compare.Compare",
+      "module_path": "Mirage_block_copy.Make_seekable",
       "library": "mirage-block-combinators",
-      "description": "Compares the contents of two block devices, `From.t` and `Dest.t`, returning the result of the comparison as an integer indicating match or mismatch. It handles errors from either source or destination block device operations, providing detailed error information through its `error` type and pretty-printing function `pp_error`. A concrete use case is verifying data integrity after copying or migrating virtual disk images between storage backends.",
-      "description_length": 450,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_block_iter.Fold",
-      "library": "mirage-block-combinators",
-      "description": "Iterates over the contents of a block device, applying a function to each sector. Works with `Cstruct.t` buffers and `int64` offsets. Useful for checksumming or analyzing raw disk contents.",
-      "description_length": 189,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_block_mem.Int64Map",
-      "library": "mirage-block-combinators",
-      "description": "This module provides ordered dictionary operations for maps with `int64` keys and polymorphic values, supporting insertion, deletion, lookup, iteration, folding, filtering, and merging. It facilitates conversion between maps and sequences of key-value pairs, enabling efficient transformations and bulk operations. It is particularly useful for managing large integer-keyed datasets, such as memory block allocations or range-based resource tracking, where precise key ordering and arbitrary value types are critical.",
-      "description_length": 517,
-      "index": 8,
+      "description": "This module implements seekable block device operations with support for reading from and writing to specific sectors using lists of buffers. It works with block devices represented by the `B.t` type and handles errors related to I/O and writes through dedicated result types. Concrete use cases include direct device access for virtual disk management and implementing custom block-level data transfer logic.",
+      "description_length": 409,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_block_combinators.Fast_fold",
       "library": "mirage-block-combinators",
-      "description": "This module performs efficient folds over block devices using seek operations to skip zero-filled regions. It provides two main functions: `mapped_s` folds over all data blocks, skipping known-zero blocks, while `unmapped_s` folds only over regions guaranteed to be zero. These operations are useful for tasks like disk image analysis, sparse file handling, or checksum computation where skipping zeros improves performance.",
-      "description_length": 424,
-      "index": 9,
+      "description": "This module performs efficient folds over block devices using seek operations to skip zero-filled regions. It provides two main functions: `mapped_s` folds over all data blocks, skipping known-zero blocks, while `unmapped_s` folds only over regions guaranteed to be zero. These functions are useful for analyzing or processing disk images efficiently, such as calculating checksums or detecting sparse regions.",
+      "description_length": 410,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mirage_block_patterns.Fill",
+      "module_path": "Mirage_block_mem.Int64Map",
       "library": "mirage-block-combinators",
-      "description": "Randomly fills a block device with data. Works with `Block.t` devices. Useful for testing storage initialization or generating sample data.",
-      "description_length": 139,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_block_combinators_s.RESIZABLE",
-      "library": "mirage-block-combinators",
-      "description": "This module defines operations for interacting with block devices, including reading from and writing to sectors, disconnecting from the device, retrieving device information, and resizing the device. It works with types such as `t` for representing the block device, `Cstruct.t list` for buffer management, and custom error types for handling I/O and write failures. Concrete use cases include managing disk images, implementing virtual block devices, and handling dynamic storage resizing in virtualized environments.",
-      "description_length": 519,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_block_copy.Sparse_copy",
-      "library": "mirage-block-combinators",
-      "description": "Performs efficient block-level copying between two storage devices, preserving sparsity by skipping unallocated regions. Works with block device implementations that support sparse tracking and read/write operations. Useful for virtual disk image cloning or backup tasks where only allocated data needs transfer.",
-      "description_length": 312,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_block_combinators.Fold",
-      "library": "mirage-block-combinators",
-      "description": "Implements a fold operation over sequentially read blocks of a block device, accumulating results using a provided function. Works with `Cstruct.t` buffers and `int64` offsets, returning a result in the context of the `Lwt` monad. Useful for checksumming, data aggregation, or analysis across entire block devices.",
-      "description_length": 314,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_block_combinators_s.SEEKABLE",
-      "library": "mirage-block-combinators",
-      "description": "This module handles I/O operations for seekable block devices, supporting reads, writes, and position queries on devices with fixed-size sectors. It works with `Cstruct.t` buffers and 64-bit integer offsets to manage data transfer and positioning. Concrete use cases include virtual disk access, disk image manipulation, and low-level storage device interaction in unikernels.",
-      "description_length": 376,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_block_copy.Make_seekable",
-      "library": "mirage-block-combinators",
-      "description": "This module implements seekable block device operations by extending an underlying block device module with functions to read, write, and disconnect. It supports `Cstruct.t` buffer lists for I/O operations and provides `int64`-based sector addressing for precise data positioning. Use it to implement disk image manipulation, virtual block devices, or custom storage backends requiring random access.",
-      "description_length": 400,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_block_safe.Make",
-      "library": "mirage-block-combinators",
-      "description": "This module implements safe read and write operations for block devices, enforcing bounds checks and validating buffer sizes and ranges before performing I/O. It wraps an underlying block device module `B`, extending its error types with safety-related failures such as out-of-range accesses and invalid buffers. Concrete use cases include secure disk image access, virtual block device management, and controlled I/O in unikernel environments where safety and isolation are critical.",
-      "description_length": 484,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_block_iter.Fast_fold",
-      "library": "mirage-block-combinators",
-      "description": "Iterates over data in a seekable device using a stateful function applied to each chunk. Works with `Cstruct.t` buffers and 64-bit offsets, handling both mapped and unmapped regions. Useful for efficiently processing disk images or large binary files where direct memory access is available.",
-      "description_length": 291,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_block_combinators.Mem",
-      "library": "mirage-block-combinators",
-      "description": "Implements an in-memory block device with fixed 16MB sectors, supporting read, write, and disconnect operations. Uses `Cstruct.t` buffers for data transfer and returns result values with error types for I/O operations. Suitable for lightweight testing or prototyping block device behavior without persistent storage.",
-      "description_length": 316,
-      "index": 18,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_block_combinators.RESIZABLE",
-      "library": "mirage-block-combinators",
-      "description": "This module supports resizing block devices by adjusting their capacity in sectors. It works with block device handles (`t`) and interacts with Cstruct buffers for data transfer. Use it to dynamically change storage volume sizes in virtualized environments or disk images.",
-      "description_length": 272,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_block_copy.Copy",
-      "library": "mirage-block-combinators",
-      "description": "This module efficiently copies data between block devices, particularly optimizing for sparse files by detecting and preserving zero-filled regions during transfer. It supports seekable sources and writeable destinations, using `Cstruct.t` buffers and 64-bit offsets to manage precise data movement and avoid unnecessary space allocation. Operations include cloning virtual disks, transferring snapshots, and backing up sparse files across storage backends. Key functions allow error handling, size validation, and direct offset-based reads and writes to ensure accurate replication.",
-      "description_length": 583,
-      "index": 20,
+      "description": "This module provides key-based insertion, deletion, and lookup operations for a map structure with `int64` keys and arbitrary value types, supporting transformations and bulk updates through functions like `fold`, `filter_map`, and sequence conversion. It works with persistent maps optimized for 64-bit integer keys, enabling efficient traversal, comparison, and partitioning of data. Typical use cases include managing resource allocations, indexing large numeric identifiers, or processing batched key-value sequences where performance-critical lookups and updates are required.",
+      "description_length": 581,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_block_combinators.Sparse_copy",
       "library": "mirage-block-combinators",
-      "description": "This module efficiently copies data between two block devices by using seek operations to skip unmapped or sparse regions, minimizing unnecessary writes. It works with seekable source devices and block destination devices, ensuring data is only copied where present. A typical use case involves replicating sparse disk images or migrating virtual machine storage while preserving sparsity.",
-      "description_length": 389,
-      "index": 21,
+      "description": "Implements efficient sparse byte copying between two block devices by leveraging seek operations to skip unmapped regions. Operates on source and destination block devices with compatible but distinct types, ensuring data is only copied where present. Useful for replicating sparse disk images or migrating virtual machine storage efficiently.",
+      "description_length": 343,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_block_combinators.Fill",
+      "library": "mirage-block-combinators",
+      "description": "This module fills a block device with pseudorandom data using the `random` function. It operates on block devices represented by the `A.t` type and returns an Lwt promise with a result indicating success or failure. A concrete use case is securely erasing storage by overwriting it with random values.",
+      "description_length": 301,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_block_patterns.Fill",
+      "library": "mirage-block-combinators",
+      "description": "Fills a block device with random data using a provided block module. It operates directly on block devices, leveraging the Block module's interface for writing data. This is useful for securely erasing storage or generating test data on virtual block devices.",
+      "description_length": 259,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_block_log.Log",
+      "library": "mirage-block-combinators",
+      "description": "This module provides functions for logging messages at various severity levels, including `app`, `err`, `warn`, `info`, and `debug`, all following the logging interface from `Logs`. It includes specialized functions like `on_error` and `on_error_msg` to handle and log `result` values that return `Error`. These logging utilities are used to record events and errors in MirageOS block device implementations, particularly for debugging and monitoring virtualized storage operations.",
+      "description_length": 482,
+      "index": 9,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Mirage_block_combinators.Make_safe",
       "library": "mirage-block-combinators",
-      "description": "This module wraps a block device implementation with safety checks for read and write operations, ensuring buffer preconditions are met and producing descriptive errors. It works directly with `Cstruct.t` buffers, `int64` sector offsets, and Lwt-based asynchronous I/O. Concrete use cases include safely reading from and writing to virtual or physical block devices while avoiding cryptic system-level errors like EINVAL during invalid buffer access.",
-      "description_length": 450,
-      "index": 22,
+      "description": "This module wraps a block device to enforce buffer preconditions during read and write operations, providing clearer error messages when those preconditions fail. It works directly with `Cstruct.t` buffers and `int64` sector offsets, ensuring each buffer in a list is a valid size for block device access. Use this when debugging or handling low-level storage operations where precise error diagnostics are critical, such as in virtualization or disk image management.",
+      "description_length": 468,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_block_safe.Make",
+      "library": "mirage-block-combinators",
+      "description": "This module implements safe block device operations with runtime checks and error handling for buffer safety, range validation, and controlled access. It works with block devices through the `B` module, using `Cstruct.t` buffers and producing typed errors that include safety violations and device-specific failures. Concrete use cases include validating read/write operations against device boundaries, enforcing safe buffer sizes, and wrapping unsafe device operations with safety checks before execution.",
+      "description_length": 507,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_block_combinators.Compare",
+      "library": "mirage-block-combinators",
+      "description": "Compares the contents of two block devices by reading and checking their data sequentially. Works with block device implementations that support Lwt-based reading operations. Useful for verifying data consistency between mirrored or replicated block storage devices.",
+      "description_length": 266,
+      "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Mirage_block_combinators.Fill",
+      "module_path": "Mirage_block_copy.Sparse_copy",
       "library": "mirage-block-combinators",
-      "description": "This module fills a block device with pseudorandom data using the `random` function. It operates on the block device type defined in the parameter module A. A concrete use case is initializing storage devices with random content for testing or security purposes.",
-      "description_length": 262,
-      "index": 23,
+      "description": "This module copies data between two block devices when the source may have sparse regions, ensuring only allocated blocks are transferred. It handles errors related to size mismatches, read-only destinations, and I/O operations from both source and destination devices. It is used to efficiently replicate virtual disk images where sparse files are common, such as in cloud infrastructure or virtual machine management.",
+      "description_length": 419,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mirage_block_copy",
+      "module_path": "Mirage_block_combinators.Fold",
       "library": "mirage-block-combinators",
-      "description": "This module enables efficient block-level data transfer between storage devices by leveraging sparse region detection and 64-bit addressing for precise data positioning. It provides operations to read, write, and copy data using `Cstruct.t` buffers, while preserving sparsity to avoid unnecessary allocation. Key use cases include cloning virtual disks, transferring snapshots, and backing up sparse files across different storage backends. The module supports error handling, size validation, and direct offset-based I/O for reliable and accurate replication.",
-      "description_length": 560,
-      "index": 24,
+      "description": "Implements a fold operation over sequentially read blocks of a block device, accumulating results using a provided function. Works with block device representations and Cstruct.t for data handling. Useful for processing disk images or log files block by block.",
+      "description_length": 260,
+      "index": 14,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Mirage_block_combinators_s",
+      "module_path": "Mirage_block_iter.Fold",
       "library": "mirage-block-combinators",
-      "description": "This module provides abstractions for seekable and resizable block devices, defining core operations to control read/write positions and adjust storage capacity dynamically. It centers around types like `t`, `Cstruct.t`, and 64-bit offsets, enabling precise interaction with low-level storage such as disk images or network-backed devices. Operations include reading and writing sectors, resizing, disconnecting, and querying device properties, supporting use cases like virtual block devices and dynamic storage management. Submodules refine these capabilities with specialized I/O handling for fixed-size sectors and structured error management.",
-      "description_length": 647,
-      "index": 25,
+      "description": "Iterates over the contents of a block device, applying a function to each sector. Works with `Cstruct.t` buffers and `int64` offsets. Useful for checksumming, copying, or transforming raw block device data sequentially.",
+      "description_length": 219,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mirage_block_combinators.Mem",
+      "library": "mirage-block-combinators",
+      "description": "This module implements an in-memory block device with fixed-size sectors, supporting read and write operations via `read` and `write` functions that interact with `Cstruct.t` buffers. It provides connection management through `connect` and `disconnect`, along with device metadata retrieval via `get_info`. It is suitable for lightweight testing or prototyping where persistent storage is not required and performance or capacity are not critical.",
+      "description_length": 447,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mirage_block_mem",
+      "module_path": "Mirage_block_copy.Copy",
       "library": "mirage-block-combinators",
-      "description": "This module implements an in-memory block device using a mutable mapping of 64-bit keys to Cstruct buffers, supporting read and write operations through a MirageOS-compatible interface. It integrates an ordered dictionary submodule for managing key-value pairs with operations like insertion, iteration, and merging, enabling efficient handling of memory block allocations or resource tracking. Main data types include `Cstruct.t` for buffers, `Int64Map` for storage, and Mirage_block types for device metadata and errors. Example uses include simulating virtual block storage, testing backends without physical I/O, and managing temporary storage in unikernels with precise key ordering and bulk transformations.",
-      "description_length": 713,
-      "index": 26,
+      "description": "This module implements block-level data transfer between seekable source and writable destination devices, using `Cstruct.t` buffers and 64-bit offsets. It provides functions to copy raw data with precise offset control, handle device disconnection, and format error messages for failed operations. It is used for tasks like disk image migration or storage volume replication where exact data transfer at the block level is required.",
+      "description_length": 433,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mirage_block_safe",
+      "module_path": "Mirage_block_iter.Fast_fold",
       "library": "mirage-block-combinators",
-      "description": "This module provides safe access to block devices by validating buffer sizes and enforcing bounds checks on read and write operations, preventing out-of-range accesses and invalid I/O. It wraps an underlying block device implementation, extending its error handling to include safety-specific failures such as misaligned or oversized buffers. It enables secure disk image manipulation, virtual block device control, and robust I/O management in isolated environments like unikernels. Example usage includes reading from or writing to specific sectors of a disk image only when the requested ranges are valid and properly aligned.",
-      "description_length": 629,
-      "index": 27,
-      "embedding_norm": 1.0000001192092896
+      "description": "Iterates over data in a seekable device using a mapped or unmapped strategy. It operates on `Cstruct.t` buffers and 64-bit offsets, applying a function to each segment of data. This is useful for checksumming or analyzing disk image contents in a memory-efficient way.",
+      "description_length": 268,
+      "index": 18,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Mirage_block_log",
+      "module_path": "Mirage_block_compare.Compare",
       "library": "mirage-block-combinators",
-      "description": "This module enables structured logging of block device events with severity levels like debug, info, and error, using the `Logs` library. It includes utilities to handle and format `result` values, logging errors with contextual metadata and custom severity. Submodules extend logging capabilities with formatters, tags, and result-handling functions. Examples include tracing disk I/O, diagnosing device failures, and auditing state changes with rich diagnostic output.",
-      "description_length": 470,
-      "index": 28,
+      "description": "Compares the contents of two block devices, `From.t` and `Dest.t`, returning the result of the comparison as an integer or an error. It provides `v` to perform the comparison asynchronously and `pp_error` to format comparison errors. Useful for verifying data integrity between storage devices or disk images.",
+      "description_length": 309,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_block_iter",
       "library": "mirage-block-combinators",
-      "description": "This module provides a monadic bind operator for Lwt result values, enabling chaining of effectful, fallible computations, while its submodules offer efficient iteration over block devices. The main operations support applying functions to sectors or chunks of data, working with `Cstruct.t` buffers and `int64` offsets, suitable for tasks like checksumming or storage transformations. One submodule handles basic sector-by-sector iteration, while the other processes seekable devices with stateful chunk-based operations, accommodating both mapped and unmapped regions. Example uses include analyzing raw disk images and implementing custom storage filters with efficient memory access.",
-      "description_length": 687,
-      "index": 29,
+      "description": "Implements monadic result sequencing and two strategies for iterating over block device data. Works with `Cstruct.t` buffers and `int64` offsets to process raw disk contents sequentially. Useful for tasks like checksumming, copying, or analyzing virtual disk images without loading the entire device into memory.",
+      "description_length": 312,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mirage_block_patterns",
+      "module_path": "Mirage_block_safe",
       "library": "mirage-block-combinators",
-      "description": "This module provides utilities for filling block devices with randomly generated data, operating directly on `Block.t` devices. It enables testing storage initialization and creating sample datasets. For example, it can populate a block device with random bytes to simulate real-world usage or stress-test storage systems. Key operations include generating and writing randomized content to specified block ranges.",
-      "description_length": 414,
-      "index": 30,
+      "description": "This module implements safe block device operations with runtime checks and error handling for buffer safety, range validation, and controlled access. It works with block devices via the `B` module, using `Cstruct.t` buffers and producing typed errors that include safety violations and device-specific failures. Use cases include validating read/write operations against device boundaries, enforcing safe buffer sizes, and wrapping unsafe device operations with safety checks before execution.",
+      "description_length": 494,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_block_combinators_s",
+      "library": "mirage-block-combinators",
+      "description": "This module defines two key interfaces: `SEEKABLE` for devices supporting random access via position-based reads and writes, and `RESIZABLE` for those allowing dynamic size changes. It works with block device abstractions that expose position and size operations. Concrete use cases include implementing disk images or virtual block devices where precise control over storage layout and capacity is required.",
+      "description_length": 408,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mirage_block_mem",
+      "library": "mirage-block-combinators",
+      "description": "This module implements an in-memory block device with 64-bit integer addressing, supporting read and write operations on regions of a virtual disk represented as a persistent map of `int64` keys to `Cstruct.t` values. It provides direct access to block storage with functions to connect, disconnect, and manage devices using string identifiers, while handling I/O operations with result-based error propagation. Concrete use cases include simulating disk storage for unikernels, testing block device drivers, and managing memory-backed storage with precise offset and length constraints.",
+      "description_length": 587,
+      "index": 23,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Mirage_block_combinators",
       "library": "mirage-block-combinators",
-      "description": "This module provides combinators for working with seekable and resizable block devices using Lwt for asynchronous I/O. It includes operations for folding over block ranges, filling blocks with data, and creating safe or in-memory block device implementations. Main data types include `Cstruct.t` for data buffers and `int64` for sector addressing, with core operations like reading, writing, resizing, and comparing block devices. You can copy data between devices while skipping sparse regions, compute checksums over block contents, verify data consistency between two devices, or create in-memory block devices for testing and prototyping.",
-      "description_length": 642,
-      "index": 31,
+      "description": "This module implements block device operations using Lwt for asynchronous I/O, providing fold-based processing, efficient traversal of sparse regions, and secure data filling. It works with `Cstruct.t` buffers and `int64` sector offsets, supporting seekable and resizable block device semantics. Concrete use cases include disk image analysis, secure erasure, in-memory block device testing, and low-level storage debugging with precise error handling.",
+      "description_length": 452,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mirage_block_copy",
+      "library": "mirage-block-combinators",
+      "description": "This module implements seekable block device operations, supporting reads and writes to specific sectors using buffer lists. It works with block devices of type `B.t` and uses result types to handle I/O and write errors. It is used for virtual disk management and custom block-level data transfers.",
+      "description_length": 298,
+      "index": 25,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mirage_block_patterns",
+      "library": "mirage-block-combinators",
+      "description": "This module fills block devices with random data using the `Block` module's interface, specifically targeting secure erasure or test data generation on virtual block devices. It provides the `Fill` submodule which handles writing operations directly to block devices. Use cases include preparing storage for reuse by overwriting existing data or simulating storage behavior in testing environments.",
+      "description_length": 398,
+      "index": 26,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_block_compare",
       "library": "mirage-block-combinators",
-      "description": "This module compares the contents of two block devices, `From.t` and `Dest.t`, returning an integer result indicating whether the data matches. It provides detailed error handling through an `error` type and a `pp_error` function for reporting issues during comparison. Operations include reading and comparing blocks from both devices, supporting use cases like verifying data integrity after disk image migrations or backups. Example usage includes checking consistency between a source and destination virtual disk after a copy operation.",
-      "description_length": 541,
-      "index": 32,
+      "description": "This module implements block-level comparison operations for disk images, providing functions to compare contents of two block devices or files sector by sector. It works with raw data buffers and block device handles, returning detailed mismatch information including offset and differing byte values. It is used in virtualization and disk imaging workflows to verify data integrity and detect changes between disk snapshots or copies.",
+      "description_length": 436,
+      "index": 27,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mirage_block_log",
+      "library": "mirage-block-combinators",
+      "description": "This module provides logging operations for recording events and errors at specific severity levels, including `app`, `err`, `warn`, `info`, and `debug`. It works directly with `Logs`-compatible message formatting and handles `result` types, particularly for logging and handling `Error` cases with custom messages and tags. It is used in MirageOS block device implementations to trace and debug storage operations such as device access, read/write errors, and virtual disk management.",
+      "description_length": 485,
+      "index": 28,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 33,
-    "meaningful_modules": 33,
+    "total_modules_in_package": 29,
+    "meaningful_modules": 29,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 713,
-    "min_description_length": 139,
-    "avg_description_length": 434.3030303030303,
-    "embedding_file_size_mb": 0.12034416198730469
+    "max_description_length": 587,
+    "min_description_length": 219,
+    "avg_description_length": 391.1034482758621,
+    "embedding_file_size_mb": 0.4206361770629883
   }
 }

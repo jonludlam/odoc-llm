@@ -1,133 +1,93 @@
 {
   "package": "pgx",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 14,
-  "creation_timestamp": "2025-07-15T23:08:02.840515",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:17:06.631222",
   "modules": [
-    {
-      "module_path": "Pgx.Make.Io",
-      "library": "pgx",
-      "description": "This module provides monadic composition and error handling for I/O operations with SSL support. It works with the `ssl_config` type and the `Io.t` monad, enabling sequential execution of asynchronous or effectful actions. Concrete use cases include safely managing network connections with SSL, handling exceptions during I/O, and ensuring cleanup actions run after operations complete.",
-      "description_length": 387,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Pgx.Make.Prepared",
       "library": "pgx",
-      "description": "This module manages prepared SQL statements, allowing them to be created, executed, and cleaned up efficiently. It supports operations like parameterized query execution, result processing via mapping or folding, and portal management for incremental result retrieval. Concrete use cases include safely executing user-provided queries with typed parameters, batching database operations, and handling large result sets without loading all data into memory at once.",
-      "description_length": 464,
+      "description": "This module manages prepared SQL statements, allowing queries to be compiled once and executed multiple times with different parameters. It supports operations like preparation, execution with parameter binding, result folding, mapping, and iteration, as well as portal and statement cleanup. Use cases include efficiently running parameterized queries, batch operations, and handling result sets with strongly typed rows.",
+      "description_length": 422,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Pgx.Make.Io",
+      "library": "pgx",
+      "description": "This module provides monadic composition and error handling for I/O operations with SSL support. It works with the `ssl_config` type and the `Io.t` monad, enabling sequential execution of asynchronous or effectful actions. Concrete use cases include building network clients with SSL, handling exceptions in I/O chains, and ensuring cleanup actions run after operations complete.",
+      "description_length": 379,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Pgx.S-Prepared",
+      "module_path": "Pgx.Make",
       "library": "pgx",
-      "description": "This module handles preparing and executing SQL statements with explicit parameter and result type handling. It supports operations like preparing a statement with optional name and types, executing queries with parameter binding, and managing portals for result streaming. Concrete use cases include safely running parameterized queries, iterating over large result sets, and inspecting statement metadata such as parameter and result types.",
-      "description_length": 442,
+      "description": "This module implements a PostgreSQL client with support for SSL, transactions, and prepared statements. It provides functions to connect to a database, execute queries with parameter binding, manage transactions, and handle I/O operations through a monadic interface. Concrete use cases include building secure database clients, executing batch SQL operations efficiently, and managing transactional logic with automatic commit or rollback.",
+      "description_length": 440,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Pgx.Result_desc",
       "library": "pgx",
-      "description": "This module defines a record type representing metadata about a result field, including its name, type, and associated table and column information. It provides functions to convert between S-expressions and the record type, and to construct a result description from a row description. It is used to inspect or serialize the structure of query results, particularly when working with PostgreSQL result sets.",
-      "description_length": 408,
+      "description": "This module defines a record type describing the structure of a result field, including metadata like name, table OID, column number, type, and modifiers. It provides functions to convert these records to and from S-expressions and to construct them from row descriptions. It is used to inspect and serialize the schema of query results in PostgreSQL interactions.",
+      "description_length": 364,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pgx.Access",
       "library": "pgx",
-      "description": "This module defines an enumeration type with two values, `Read_write` and `Read_only`, representing access modes. It includes functions to convert these values to and from S-expressions and to convert them to strings. This module is useful for managing database connection access modes, particularly when serializing or deserializing configuration data.",
-      "description_length": 353,
+      "description": "This module defines an enumeration for access modes, supporting conversion to and from S-expressions and string representations. It works with the variant type `t` consisting of `Read_write` and `Read_only`. Concrete use cases include serializing access mode values during configuration parsing or logging.",
+      "description_length": 306,
       "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pgx.Value",
+      "library": "pgx",
+      "description": "This module facilitates conversion between PostgreSQL values and OCaml types, offering safe (`option`) and unsafe (`exn`) coercion for primitives (integers, floats, booleans), composite types (lists, `hstore`, `inet`), and specialized data like UUIDs, geometric points, and S-expressions. It handles nulls, optional values, and type comparison, while raising descriptive `Convert_failure` exceptions for invalid operations. Use cases include ORM layers, database query result processing, and type-safe serialization of complex data structures to/from PostgreSQL.",
+      "description_length": 562,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pgx.Isolation",
       "library": "pgx",
-      "description": "This module defines an enumeration of transaction isolation levels used in database connections, including Serializable, Repeatable_read, Read_committed, and Read_uncommitted. It provides functions to convert these levels to and from S-expressions and to obtain their string representation. This is useful when configuring transaction behavior in PostgreSQL interactions, such as setting the isolation level for a database session or serializing transaction settings for logging or configuration files.",
-      "description_length": 502,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pgx.S",
-      "library": "pgx",
-      "description": "This module implements PostgreSQL client operations for connecting, querying, and transaction management. It supports typed query execution with functions like `execute`, `execute_map`, and `execute_fold`, and works with parameterized SQL statements using `Pgx_value.v` types. Concrete use cases include running parameterized queries, batching operations with `execute_many`, and managing transactions safely via `with_transaction`.",
-      "description_length": 432,
+      "description": "This module defines an enumeration of transaction isolation levels, including Serializable, Repeatable Read, Read Committed, and Read Uncommitted. It provides functions to convert these levels to and from S-expressions and to obtain their string representation. This is used to specify and serialize transaction isolation settings when interacting with PostgreSQL databases.",
+      "description_length": 374,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pgx.Make",
-      "library": "pgx",
-      "description": "This module provides a PostgreSQL client interface with robust support for connections, queries, transactions, and prepared statements. It centers around key types like connection handles (`t`), SSL configurations, and query results as lists of value options, with core operations including `execute`, `execute_many`, and `with_transaction`. The integrated I/O module enables monadic composition of effectful actions with SSL safety and resource cleanup, while the prepared statement module allows efficient execution of parameterized queries, batching, and streaming of large result sets. Examples include atomic transaction blocks, bulk inserts with typed parameters, and incremental retrieval of query results using portals.",
-      "description_length": 727,
-      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pgx.Error_response",
       "library": "pgx",
-      "description": "This module defines a structured representation of PostgreSQL error responses, including fields for error code, severity, message, and custom key-value pairs. It provides functions to convert error responses to and from S-expressions, determine if an error should be printed based on verbosity, and format errors as strings. This module is used to handle and display detailed PostgreSQL error information in a structured and customizable way.",
-      "description_length": 442,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pgx.Value",
-      "library": "pgx",
-      "description": "This component provides bidirectional conversion utilities between PostgreSQL values and OCaml types like integers, strings, UUIDs, and composite structures (e.g., `hstore`, `inet`, and float pairs). It supports safe (`option`-based) and unsafe (exception-raising) type coercion, along with serialization to S-expressions and structured comparison operations. These capabilities enable robust data marshaling for database interactions, such as parsing query results or binding parameters, while handling type mismatches through detailed error reporting.",
-      "description_length": 553,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pgx.Io",
-      "library": "pgx",
-      "description": "This module offers asynchronous I/O operations for network communication, supporting both plaintext and SSL-secured channels with capabilities for reading/writing character and binary data, connection lifecycle management, and secure credential handling. It operates on low-level file descriptor streams and sequencers to coordinate non-blocking I/O events, ensuring atomicity and ordering in concurrent environments. Typical applications include building high-performance network servers requiring secure communication, debugging tools for connection state analysis, or systems needing precise control over asynchronous I/O scheduling.",
-      "description_length": 636,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pgx.S-Io",
-      "library": "pgx",
-      "description": "This module handles asynchronous I/O operations with support for error handling and resource management. It works with the `Io.t` monad and exceptions, enabling sequential composition of effectful computations. Concrete use cases include safely executing database queries with rollback on failure and managing network connections with guaranteed cleanup.",
-      "description_length": 354,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pgx.Io-Sequencer",
-      "library": "pgx",
-      "description": "This module provides functions to create and manage sequencers for ordering operations on a generic type `'a`. It supports enqueuing operations that transform values into monadic results, ensuring sequential execution. Use it to coordinate ordered processing of asynchronous or effectful computations, such as handling database queries or event streams in a controlled sequence.",
-      "description_length": 378,
-      "index": 12,
+      "description": "This module defines a structured representation of PostgreSQL error responses, including fields for error code, severity, message, and custom key-value pairs. It provides functions to convert error responses to and from S-expressions, determine if an error should be printed based on verbosity, and format errors as strings. Concrete use cases include logging detailed PostgreSQL errors and handling database exceptions with structured data.",
+      "description_length": 441,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pgx",
       "library": "pgx",
-      "description": "This module facilitates PostgreSQL interaction by enabling type-safe query execution, structured error handling, and metadata management. It supports operations like parameterized queries, result streaming, and transaction control, with core data types including typed values, result descriptions, and isolation levels. Users can execute queries with precise parameter binding, inspect result structure, manage transaction settings, and handle errors with detailed diagnostics. Submodules enhance functionality with prepared statements, connection management, asynchronous I/O, and data serialization, enabling use cases such as bulk inserts, atomic transactions, and secure client communication.",
-      "description_length": 696,
-      "index": 13,
+      "description": "This module provides client-side PostgreSQL interaction capabilities, including structured error handling, transaction management, and schema inspection. It operates on database results, rows, parameters, and connection configurations, with support for SSL encryption and prepared statements. Key use cases involve safely converting between OCaml and PostgreSQL data types, managing transaction isolation levels, and inspecting query result metadata during database client development.",
+      "description_length": 485,
+      "index": 8,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 14,
-    "meaningful_modules": 14,
+    "total_modules_in_package": 9,
+    "meaningful_modules": 9,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 727,
-    "min_description_length": 353,
-    "avg_description_length": 483.85714285714283,
-    "embedding_file_size_mb": 0.05129432678222656
+    "max_description_length": 562,
+    "min_description_length": 306,
+    "avg_description_length": 419.22222222222223,
+    "embedding_file_size_mb": 0.13079166412353516
   }
 }

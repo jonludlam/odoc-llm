@@ -1,133 +1,125 @@
 {
   "package": "asak",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 14,
-  "creation_timestamp": "2025-07-15T23:07:42.598566",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 13,
+  "creation_timestamp": "2025-08-14T23:14:52.770146",
   "modules": [
-    {
-      "module_path": "Asak.Monad_error.Make",
-      "library": "asak",
-      "description": "This module implements a monadic structure for error handling, providing operations to chain computations that may fail with errors of type `T.e`. It works with values wrapped in a monadic type `'a t`, representing either a successful result or an error. Use it to compose error-prone operations like parsing, file reading, or validation, where early failure propagation is needed.",
-      "description_length": 381,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Asak.Monad_error.ErrS",
       "library": "asak",
-      "description": "This module implements a monadic structure for handling computations that may fail with string-based errors, providing operations to chain and transform results. It works with values wrapped in a result type that represents either success or failure with a string message. Concrete use cases include parsing input, validating data, or handling IO operations where errors need to be propagated and composed in a type-safe manner.",
+      "description": "This module implements a monadic structure for handling computations that may fail with string-based errors. It provides core operations like `fail` for raising errors, `ret` for successful returns, `map` for transforming results, and `>>=` for chaining error-propagating computations. It works directly with result values through `run` and `to_err`, and converts optional values into error-aware contexts using `err_of_option`.",
       "description_length": 428,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Asak.Clustering.Hash",
-      "library": "asak",
-      "description": "This module works with fingerprint values representing hashed data signatures. It provides a `compare` function to establish a total ordering between two fingerprints, enabling their use in ordered data structures like sets and maps. This is useful for clustering or deduplication tasks where hash-based comparisons are required.",
-      "description_length": 329,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Asak.Clustering.HMap",
-      "library": "asak",
-      "description": "This module implements a polymorphic hash map with operations for key-based insertion, deletion, merging, and ordered traversal of key-value pairs. It operates on maps parameterized by a hashable key type (`Asak.Clustering.Hash.t`) and arbitrary data values, leveraging physical equality for efficient updates and comparator-driven ordering to support min/max extraction, key-range splitting, and sequence-based transformations. It is suited for managing associative collections with strict ordering requirements, bulk construction from sequential data, or performance-sensitive merging and filtering workflows.",
-      "description_length": 611,
-      "index": 3,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Asak.Clustering.Distance",
       "library": "asak",
-      "description": "This module defines a custom distance type that supports both finite integer values and infinity, enabling comparisons and ordering operations. It provides functions to compare distances, check ordering, and compute maximum or minimum values between two distances. This is useful in clustering algorithms where distances between points need to represent unbounded values, such as when initializing or comparing cluster centroids.",
-      "description_length": 429,
+      "description": "This module defines a custom distance type that supports both finite integer values and infinity, enabling comparisons and ordering operations. It provides functions to compare distances, check ordering, and compute maximum or minimum values between two distances. This is useful in clustering algorithms where handling infinite distances is necessary to represent unreachable or undefined connections.",
+      "description_length": 402,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Asak.Monad_error.Make",
+      "library": "asak",
+      "description": "This module implements a monadic structure for error handling, providing operations like `ret` for wrapping values, `fail` for error propagation, and `>>=` for chaining computations. It works with a custom error type `T.e` and a result type `('a, T.e) Stdlib.result`. Concrete use cases include composing functions that may fail with typed errors, such as validating input or handling exceptional states in a pipeline.",
+      "description_length": 418,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Asak.Clustering.HMap",
+      "library": "asak",
+      "description": "This module implements a polymorphic hash map with ordered keys, supporting key-value storage, transformation through folds and filters, and ordered traversal. It offers operations for constructing maps from sequences, splitting maps based on key ranges, and performing comparisons or aggregations using custom combinators. Typical applications include managing sorted associative data, incremental map construction from streaming sources, and algorithms requiring key order guarantees like range queries or priority-based updates.",
+      "description_length": 531,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Asak.Clustering.Hash",
+      "library": "asak",
+      "description": "This module works with hash fingerprints to enable clustering operations based on similarity. It provides a comparison function to order or group fingerprints, facilitating tasks like near-duplicate detection or content-based clustering. Use this module when organizing or analyzing large sets of hashed data items efficiently.",
+      "description_length": 327,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Asak.Monad_error.T",
+      "module_path": "Asak.Monad_error",
       "library": "asak",
-      "description": "This module implements a monadic interface for handling computations that may fail, providing operations like `bind`, `return`, and `catch` to sequence error-prone actions and handle failures explicitly. It works with a polymorphic error type `e` and a wrapped result type that represents either a successful value or an error. Concrete use cases include parsing, input validation, and system operations where errors need to be propagated and handled in a structured way.",
-      "description_length": 471,
+      "description": "This module provides monadic error handling operations for composing computations that may fail with typed errors. It includes functions like `ret` for wrapping successful values, `fail` for error propagation, and `>>=` for chaining operations, working with result types of the form `('a, 'e) Stdlib.result`. It is used for tasks like validating input or handling exceptional states in data pipelines.",
+      "description_length": 401,
       "index": 5,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Asak.Lambda_normalization",
+      "module_path": "Asak.Lambda_hash",
       "library": "asak",
-      "description": "Performs inlining of side-effect-free expressions and renames local variables to unique identifiers based on their position in the AST. Works directly with lambda expressions represented by the `Lambda.lambda` type. Useful for simplifying lambda terms and ensuring consistent variable naming during compilation or analysis.",
-      "description_length": 323,
+      "description": "This module computes structural hashes of lambda expressions, ignoring constants, to identify similar code shapes. It supports configurable hashing with options to sort lists and hash variable names, using either hard or percentage-based thresholds. Functions include hashing individual expressions, batch processing ASTs from parsed structures, and escaping hashes for output.",
+      "description_length": 377,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Asak.Parse_structure",
       "library": "asak",
-      "description": "This module parses OCaml source strings into parsetrees, typechecks them, and extracts lambda representations of specific let bindings. It works with OCaml parsetrees, typedtrees, and lambda expressions, along with custom error monads and environments. Concrete use cases include analyzing and transforming OCaml code fragments into executable lambda forms, filtering by variable names, and retrieving bindings with their source locations.",
-      "description_length": 439,
+      "description": "This module processes OCaml source code into internal representations, supporting operations like parsing strings into parsetrees, typechecking structures, and extracting lambda expressions from value bindings. It works with OCaml AST types such as `Parsetree.structure`, `Typedtree.structure`, and `Lambda.lambda`, along with environments and locations. Concrete use cases include analyzing or transforming specific let bindings, reading top-level definitions into lambdas, and checking if a binding matches a given name.",
+      "description_length": 522,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Asak.Clustering",
       "library": "asak",
-      "description": "This module organizes labeled data into hierarchical clusters using hash fingerprints or customizable similarity metrics, supporting tasks like code clone detection or structuring similar abstract syntax trees. It leverages a fingerprint module for hash-based comparisons, a polymorphic hash map for efficient key-value management with ordered operations, and a distance type that handles finite and infinite values for algorithmic flexibility. Operations include clustering based on complete-linkage, deduplication using hash fingerprints, and managing large associative collections with ordered traversal and merging. Example uses include grouping similar code structures, detecting duplicates in datasets, and building hierarchical cluster trees with customizable distance thresholds.",
-      "description_length": 787,
+      "description": "This module performs clustering operations on labeled data with hash fingerprints, using a semimetric to group similar items. It supports initial cluster formation, complete-linkage clustering with optional filtering, and recursive cluster output. Use it to organize abstract syntax trees or similar structured data into meaningful, hierarchical groups based on hash similarity.",
+      "description_length": 378,
       "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Asak.Monad_error",
-      "library": "asak",
-      "description": "This module provides tools for error handling and monadic composition with `result` values, enabling branching on success or error cases and transforming lists while propagating errors. It supports operations like `either` for decision-making based on `Ok` or `Error`, and `filter_rev_map` for safe list processing in validation pipelines or sequential computations. The module works with `result` types and polymorphic error handling, allowing chaining of operations like parsing, validation, or IO with explicit error propagation. Submodules extend this functionality with monadic interfaces for string-based errors, polymorphic error types, and structured failure handling through `bind`, `return`, and `catch`.",
-      "description_length": 714,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Asak.Lambda_hash",
-      "library": "asak",
-      "description": "This module hashes lambda expressions into comparable fingerprints based on structural similarity, ignoring constants. It supports configurable hashing via sorting and variable name handling, with functions to batch process lambda expressions and escape resulting hashes for output. Use cases include detecting duplicate or similar code structures across different expressions or files.",
-      "description_length": 386,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Asak.Wtree",
-      "library": "asak",
-      "description": "This module implements operations for processing weighted trees. It provides `fold_tree`, which recursively combines node values with their children's results using a given function, and `size_of_tree`, which calculates the total weight of all nodes in the tree. These functions operate on trees where each node has an associated weight and a value of arbitrary type.",
-      "description_length": 367,
-      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Asak.Partition",
       "library": "asak",
-      "description": "This module partitions OCaml code based on a threshold and maps values to their types by analyzing source files or signature items. It constructs a partition from a list of named elements and extracts type expressions for specific values. It is used to analyze and organize OCaml code by value types, enabling structured processing of code elements based on their inferred types.",
-      "description_length": 379,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module partitions OCaml code based on a threshold and a list of named elements, producing structured groupings. It works with OCaml type expressions and signature items to analyze and extract value types from source files or compiled interfaces. Concrete use cases include organizing code into sections for analysis, refactoring, or generating documentation based on type information extracted from ML files or signatures.",
+      "description_length": 427,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Asak.Wtree",
+      "library": "asak",
+      "description": "This module implements a weighted tree structure with two core operations: `fold_tree`, which recursively combines node values and subtrees using a given function, and `size_of_tree`, which calculates the total weight of the tree based on node-specific weight functions. It works with trees where each node contains a value of arbitrary type `'a` and a weight. Concrete use cases include efficiently aggregating hierarchical data with weighted nodes, such as calculating total resource usage in a nested directory structure or combining weighted scores in a decision tree.",
+      "description_length": 572,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Asak.Lambda_normalization",
+      "library": "asak",
+      "description": "Performs lambda expression transformations by inlining side-effect-free expressions and renaming local variables to unique identifiers based on their AST position. Works directly with `Lambda.lambda` structures, which represent lambda calculus terms. Useful for simplifying lambda expressions and ensuring consistent variable naming in compiler intermediate representations.",
+      "description_length": 374,
+      "index": 11,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Asak",
       "library": "asak",
-      "description": "This module processes and transforms lambda expressions and OCaml source code through inlining, renaming, parsing, and type analysis, enabling simplification and structured manipulation of functional code. It supports clustering and hashing of expressions for detecting similarity, along with error handling and monadic composition for robust validation pipelines. Key data types include lambda expressions, parsetrees, typedtrees, result monads, weighted trees, and hash-based fingerprints. Examples include extracting and analyzing lambda forms from OCaml code, clustering similar ASTs for clone detection, and validating code transformations with error propagation.",
-      "description_length": 668,
-      "index": 13,
+      "description": "This module organizes labeled data with hash fingerprints into hierarchical clusters using a semimetric, supporting initial cluster formation and complete-linkage clustering. It works with abstract syntax trees and similar structured data, enabling concrete use cases such as grouping similar code structures for analysis or refactoring.",
+      "description_length": 337,
+      "index": 12,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 14,
-    "meaningful_modules": 14,
+    "total_modules_in_package": 13,
+    "meaningful_modules": 13,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 787,
-    "min_description_length": 323,
-    "avg_description_length": 479.42857142857144,
-    "embedding_file_size_mb": 0.05128669738769531
+    "max_description_length": 572,
+    "min_description_length": 327,
+    "avg_description_length": 422.61538461538464,
+    "embedding_file_size_mb": 0.18880462646484375
   }
 }

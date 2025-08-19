@@ -1,55 +1,55 @@
 {
   "package": "dns-resolver",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:05:20.598958",
+  "creation_timestamp": "2025-08-14T23:02:21.685481",
   "modules": [
     {
       "module_path": "Dns_resolver",
       "library": "dns-resolver",
-      "description": "This module implements a DNS resolver capable of handling DNS queries, managing resolution state, and performing DNSSEC validation. It processes DNS messages using functions like `handle_buf` to parse incoming responses and generate outgoing queries or answers, and uses `query_root` to initiate root zone updates. The resolver maintains internal state (`t`) that tracks pending queries, cached responses, and configuration parameters such as IP protocol version and cache size.",
-      "description_length": 478,
+      "description": "This module implements a DNS resolver that processes DNS queries, handles responses, and manages DNSSEC validation. It works with DNS packets, IP addresses, and protocol types, maintaining internal state for ongoing resolutions and caching. It is used to perform iterative DNS resolution, handle buffer input from network sources, and manage root zone queries and timeouts.",
+      "description_length": 373,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dns_resolver_root",
+      "module_path": "Dns_resolver_cache",
       "library": "dns-resolver",
-      "description": "This module provides access to DNS root server information, including IP addresses, NS, A, AAAA records, and reserved zones. It works with domain names, IP addresses, and DNS resource record sets. Concrete use cases include bootstrapping DNS resolution, validating queries against reserved ranges, and retrieving root server addresses based on IP protocol version.",
-      "description_length": 364,
+      "description": "This module implements DNS resolution with caching, handling queries, responses, and CNAME following. It processes DNS questions and replies, manages cache state, and supports DNSSEC validation. It is used to perform iterative DNS lookups, cache results, and synthesize responses from cached data.",
+      "description_length": 297,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Dns_resolver_cache",
+      "module_path": "Dns_resolver_root",
       "library": "dns-resolver",
-      "description": "This module implements DNS resolution with caching, handling queries, responses, and CNAME following. It processes DNS questions and resource records, managing cache state and time-to-live (TTL) for domain names and record types. It is used to perform DNS lookups with support for DNSSEC, IPv4/IPv6 selection, and query response synthesis from cached data.",
-      "description_length": 356,
+      "description": "This module defines root DNS server information and related records. It provides access to root server IP addresses, NS, A, AAAA records, and reserved DNS zones. The data structures include lists of domain names paired with IPv4/IPv6 addresses, IP sets, and a trie of reserved zones. Concrete use cases include bootstrapping DNS resolution and validating domain names against reserved ranges.",
+      "description_length": 392,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_resolver_utils",
       "library": "dns-resolver",
-      "description": "This module processes DNS response packets to extract and validate resource records for caching, filtering out-of-bailiwick entries to prevent cache poisoning. It works with DNS packet structures, domain names, and cache entries, using key types from the DNS library. Concrete use cases include sanitizing DNS responses before cache insertion and generating placeholder SOA records for invalid zones.",
-      "description_length": 400,
+      "description": "This module processes DNS packets to extract and validate resource records for caching, ensuring they fall within the specified bailiwick to prevent cache poisoning. It works with domain names, DNS packets, and resource record maps, returning filtered entries along with their cache rank or an error code. A concrete use case is validating and qualifying DNS responses before updating a resolver's cache with only legitimate records.",
+      "description_length": 433,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_resolver_mirage.Make",
       "library": "dns-resolver.mirage",
-      "description": "This module implements a DNS resolver stack that registers caching DNS resolution over UDP, TCP, or TLS protocols with configurable ports and timeouts. It works with IP addresses, DNS queries, and TLS configurations to perform external DNS resolution. Concrete use cases include handling DNS requests in MirageOS-based unikernels with support for secure DNS over TLS on custom ports.",
-      "description_length": 383,
+      "description": "This module creates a caching DNS resolver that operates over UDP, TCP, or TLS, supporting both standard and encrypted DNS queries on configurable ports. It works with network stacks and DNS configurations to handle query resolution, using TTL values to manage caching behavior. It is used to implement DNS resolution services in MirageOS-based unikernels, where it processes incoming queries and returns resolved records with associated time-to-live values.",
+      "description_length": 458,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dns_resolver_mirage",
       "library": "dns-resolver.mirage",
-      "description": "The module implements a DNS resolver stack supporting caching and secure resolution over UDP, TCP, or TLS with configurable ports and timeouts. It handles DNS queries, IP addresses, and TLS settings to enable external DNS resolution in MirageOS unikernels. Users can perform DNS lookups with custom transport protocols, specify TLS parameters for secure resolution, and adjust timeouts and ports dynamically. Example use cases include resolving domain names over DNS over TLS on a non-standard port or caching DNS responses to improve performance in networked unikernels.",
-      "description_length": 571,
+      "description": "This module creates a caching DNS resolver that performs queries over UDP, TCP, or TLS, supporting standard and encrypted DNS with configurable ports. It processes incoming DNS requests and returns resolved records with TTL values, managing cache behavior based on those values. It is used to implement DNS resolution services in MirageOS unikernels, integrating with network stacks to handle query resolution efficiently.",
+      "description_length": 422,
       "index": 5,
       "embedding_norm": 1.0
     }
@@ -61,9 +61,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 571,
-    "min_description_length": 356,
-    "avg_description_length": 425.3333333333333,
-    "embedding_file_size_mb": 0.02222919464111328
+    "max_description_length": 458,
+    "min_description_length": 297,
+    "avg_description_length": 395.8333333333333,
+    "embedding_file_size_mb": 0.08736896514892578
   }
 }

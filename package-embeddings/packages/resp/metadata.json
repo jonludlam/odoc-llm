@@ -1,133 +1,77 @@
 {
   "package": "resp",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 14,
-  "creation_timestamp": "2025-07-15T23:06:54.064602",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 7,
+  "creation_timestamp": "2025-08-14T23:13:37.524121",
   "modules": [
     {
-      "module_path": "Resp.INPUT",
+      "module_path": "Resp.Reader",
       "library": "resp",
-      "description": "Handles input operations for Redis protocol parsing, including reading raw strings, lines, and individual characters from a connection. Works with the `ic` type, representing input channels. Used to implement low-level Redis client or server communication over network streams.",
-      "description_length": 277,
+      "description": "This module implements Redis serialization protocol parsing by reading from input channels. It provides functions to read raw bytes, lines, characters, and lexemes, and to decode lexemes into Redis protocol values. It works with input channels and handles Redis-specific data formats like bulk strings, integers, and arrays. Use it to implement Redis clients or protocol-aware network services.",
+      "description_length": 394,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Resp.String_reader",
-      "library": "resp",
-      "description": "This module implements Redis protocol parsing from a string-based input channel. It provides functions to read raw strings, lines, characters, and lexemes, and to decode lexemes into Redis protocol values. It operates on a string reference as the input source, handling incremental parsing and buffer management internally. Use this module to parse Redis commands or responses from a string buffer, such as when implementing a Redis client or server over a custom transport.",
-      "description_length": 474,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Resp.S-Reader",
-      "library": "resp",
-      "description": "This module implements Redis protocol parsing for input channels, supporting asynchronous reading of Redis commands and responses. It handles low-level data types like bulk strings, integers, and arrays by decoding raw bytes into structured values. Use it to build Redis clients or proxies that process serialized Redis data streams.",
-      "description_length": 333,
-      "index": 2,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resp.S",
-      "library": "resp",
-      "description": "Implements Redis serialization and deserialization for asynchronous I/O. Handles conversion between Redis protocol values and OCaml types, supporting bulk strings, integers, arrays, and error messages. Used to encode commands for Redis clients and decode responses from Redis servers over Lwt-based connections.",
-      "description_length": 311,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resp.S-Writer",
-      "library": "resp",
-      "description": "This module handles the serialization of Redis protocol data into a string output channel. It provides functions to write raw strings, separators, individual lexemes, and fully encoded Redis values to a writer. Concrete use cases include sending Redis commands or responses over a network connection using the Redis serialization format.",
-      "description_length": 337,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Resp.Writer",
       "library": "resp",
-      "description": "This module handles writing Redis protocol data to an output channel. It provides functions to write raw strings, separators, individual protocol lexemes, and fully encoded Redis values. Use it to serialize Redis commands or responses for transmission over a network connection.",
-      "description_length": 278,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resp.WRITER",
-      "library": "resp",
-      "description": "This module handles writing Redis protocol data to an output channel. It provides functions to write raw strings, separators, lexemes, and fully encoded Redis values. It operates directly on `Resp.lexeme` and `Resp.t` types, making it suitable for serializing Redis commands and responses to be sent over a network connection.",
-      "description_length": 326,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Resp.Make",
-      "library": "resp",
-      "description": "Implements Redis serialization and deserialization for communication over network streams. Uses `Reader` and `Writer` to handle input and output operations, parsing and constructing Redis protocol messages. Useful for building Redis clients or proxies that require low-level protocol control.",
-      "description_length": 292,
-      "index": 7,
+      "description": "This module handles writing Redis protocol data to an output channel. It provides functions to write raw strings, separators, individual protocol lexemes, and fully encoded Redis values. It works directly with Redis serialization types like `Resp.t` and `Resp.lexeme`, making it suitable for implementing Redis clients or servers that need to serialize commands and responses.",
+      "description_length": 376,
+      "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Resp.String",
       "library": "resp",
-      "description": "Handles Redis string values in the REdis Serialization Protocol. Parses and serializes string data during Redis client-server communication. Used for reading and writing string responses like bulk strings or simple strings.",
-      "description_length": 223,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Resp.Reader",
-      "library": "resp",
-      "description": "This module implements the deserialization logic for Redis protocol messages by reading from an input channel. It provides functions to parse low-level Redis protocol elements like lines, characters, and length-prefixed strings, and to decode them into lexemes and structured Redis values. Use it to process Redis commands or responses from a network stream.",
-      "description_length": 358,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Resp.OUTPUT",
-      "library": "resp",
-      "description": "Handles writing Redis protocol-formatted data to output channels. Works with Redis request and response structures, serializing them into strings for transmission. Used to send commands and data to Redis servers over network connections.",
-      "description_length": 237,
-      "index": 10,
+      "description": "Handles Redis string responses by encoding and decoding bulk string values according to the Redis serialization protocol. Works directly with `Resp.t` values, specifically for string-based Redis commands and replies. Useful for implementing Redis clients or parsing raw Redis string responses from network streams.",
+      "description_length": 314,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Resp.READER",
+      "module_path": "Resp.Make",
       "library": "resp",
-      "description": "Reads and parses Redis protocol data from an input channel. It provides functions to read raw strings, lines, characters, and lexemes, as well as decode them into Redis protocol values. Useful for implementing Redis clients or servers that need to process incoming Redis commands or responses.",
-      "description_length": 293,
-      "index": 11,
+      "description": "Implements Redis serialization and deserialization for communication over network streams. Uses `Reader` and `Writer` to handle input and output operations, encoding and decoding `Resp.t` values. Enables building Redis clients or servers by managing protocol-level data exchange.",
+      "description_length": 279,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Resp.String_reader",
+      "library": "resp",
+      "description": "This module implements low-level input operations for parsing Redis protocol messages from a string-based input channel. It provides functions to read raw strings, lines, characters, and lexemes, and to decode lexemes into Redis protocol values. Typical use cases include implementing Redis client-server communication and parsing Redis bulk data formats.",
+      "description_length": 355,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resp.String_writer",
       "library": "resp",
-      "description": "This module handles incremental construction of Redis protocol messages by writing strings, separators, and lexemes into a mutable string reference. It processes `Resp.lexeme` values and serializes them into the correct Redis wire format. Useful for building networked Redis clients or proxies that require efficient, buffer-based message assembly.",
-      "description_length": 348,
-      "index": 12,
+      "description": "This module implements Redis serialization for string-based output channels. It provides functions to write raw strings, separators, lexemes, and fully-encoded Redis values to a string reference. Use it to serialize Redis commands or responses into a buffer for network transmission.",
+      "description_length": 283,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Resp",
       "library": "resp",
-      "description": "This module implements the REdis Serialization Protocol for OCaml, enabling both parsing and serialization of Redis commands and responses. It operates on input and output channels with support for asynchronous I/O, handling low-level data types like bulk strings, integers, arrays, and errors through structured values and lexemes. You can read from or write to network streams incrementally, parse Redis protocol messages from string buffers, or serialize commands for transmission. Specific operations include decoding length-prefixed strings, reading lines from a connection, and assembling Redis wire format messages in memory.",
-      "description_length": 632,
-      "index": 13,
+      "description": "This module provides encoding and decoding of Redis protocol values (`Resp.t`) to and from strings, bytes, and I/O channels, supporting operations like parsing lexemes, reading full values, and writing raw data or structured Redis types. It bridges Redis values with OCaml primitives (e.g., `int64`, `float`) and collections (e.g., lists, hashtables) through conversion functions, offering both safe (`result`) and unsafe (`exn`) variants. It is used for implementing Redis clients or servers in OCaml, handling Redis command parsing, and serializing application data for storage or retrieval via Redis.",
+      "description_length": 603,
+      "index": 6,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 14,
-    "meaningful_modules": 14,
+    "total_modules_in_package": 7,
+    "meaningful_modules": 7,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 632,
-    "min_description_length": 223,
-    "avg_description_length": 337.07142857142856,
-    "embedding_file_size_mb": 0.05130958557128906
+    "max_description_length": 603,
+    "min_description_length": 279,
+    "avg_description_length": 372.0,
+    "embedding_file_size_mb": 0.1018209457397461
   }
 }

@@ -1,133 +1,109 @@
 {
   "package": "spectrum",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 14,
-  "creation_timestamp": "2025-07-15T23:07:36.015567",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 11,
+  "creation_timestamp": "2025-08-14T23:23:19.939880",
   "modules": [
-    {
-      "module_path": "Spectrum.Capabilities.OsInfoProvider",
-      "library": "spectrum",
-      "description": "This module determines the current operating system and provides access to its version information. It includes functions to check if the system is Windows and to retrieve the OS version as an optional string. It is used in cross-platform applications to adapt behavior based on the OS, such as selecting appropriate file paths or system calls.",
-      "description_length": 344,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Spectrum.Capabilities.Make",
       "library": "spectrum",
-      "description": "This module determines the supported color level for terminal output based on environment and operating system information. It uses data from the `Env` and `OsInfo` submodules to detect conditions such as whether the output is a terminal and the OS's color support. A concrete use case is configuring logging or CLI output to use ANSI colors appropriately when running in different environments like Windows, Unix, or CI systems.",
-      "description_length": 429,
+      "description": "This module determines the supported color level based on environment and operating system information. It uses data from the `Env` and `OsInfo` submodules to detect capabilities such as ANSI color support. A concrete use case is configuring terminal output to match the display capabilities of the host system.",
+      "description_length": 311,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Spectrum.Capabilities.StrMap",
+      "library": "spectrum",
+      "description": "This module supports manipulation of string-keyed associative maps through operations like insertion, deletion, lookup, and bulk transformations (e.g., `merge`, `filter_map`), alongside ordered element extraction (`min_binding`, `max_binding`) and structural queries (`split`, `partition`). It operates on `StrMap.t` (maps from strings to arbitrary values) and sequences of key-value pairs, enabling use cases such as bidirectional conversion between maps and sequences, bulk updates from iterable collections, and ordered traversal of bindings. Applications include managing hierarchical data configurations, processing environment variables, or aggregating key-value streams with dynamic schema.",
+      "description_length": 697,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Spectrum.Capabilities.EnvProvider",
+      "module_path": "Spectrum.Noexn.Simple",
       "library": "spectrum",
-      "description": "Retrieves environment variables by name, with one function returning an optional value and the other raising an error if the variable is missing. Works with string keys and string values from the process environment. Useful for configuration lookup where missing variables are either acceptable or considered fatal errors.",
-      "description_length": 322,
+      "description": "This module provides formatted output operations for printing to standard output, standard error, and generating strings. It works with format strings and values of arbitrary types, following the same semantics as the `Format` module. Concrete use cases include logging messages, error reporting, and string construction with type-safe formatting.",
+      "description_length": 347,
       "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Spectrum.Capabilities.Sys_Capabilities",
+      "library": "spectrum",
+      "description": "Returns the highest color level supported by the terminal, based on whether the output is a terminal (`true`) or not (`false`). Works with the `color_level` type, which represents different levels of color support (e.g., ANSI, truecolor). Useful for determining appropriate color output in terminal applications.",
+      "description_length": 312,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Spectrum.Capabilities.SysOsInfo",
       "library": "spectrum",
-      "description": "This module provides operations to determine the operating system type and version. It works with basic system information through lightweight OS detection functions. Concrete use cases include conditional logic based on OS type, such as configuring platform-specific settings or adjusting behavior for Windows systems.",
-      "description_length": 319,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Spectrum.Capabilities.CapabilitiesProvider",
-      "library": "spectrum",
-      "description": "Determines the maximum color level supported by the terminal based on whether color output is enabled. Works with boolean flags and `color_level` enumerations. Useful for configuring terminal output dynamically in CLI applications.",
-      "description_length": 231,
+      "description": "This module provides operations to determine the operating system type and version. It works with basic system information data types, returning boolean and string values. Concrete use cases include checking if the runtime environment is Windows or retrieving the OS version string for diagnostics.",
+      "description_length": 298,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Spectrum.Exn.Simple",
       "library": "spectrum",
-      "description": "This module provides functions for formatted output to standard output, standard error, and string buffers. It works with format strings and values of polymorphic type, producing output or strings. Concrete use cases include logging messages, error reporting, and generating formatted string data.",
-      "description_length": 297,
+      "description": "This module provides formatted output operations for printing to standard output, standard error, and generating strings. It works with format strings and values of polymorphic type `'a`, leveraging OCaml's format type system. Concrete use cases include logging messages, error reporting, and string construction with type-safe formatting.",
+      "description_length": 339,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Spectrum.Noexn.Simple",
+      "module_path": "Spectrum.Exn",
       "library": "spectrum",
-      "description": "This module provides formatted output operations for printing to standard output, standard error, and generating strings. It works with format strings and values of polymorphic type `'a`, following the same interface as the standard `Format` module. Concrete use cases include logging messages, error reporting, and string formatting without raising exceptions.",
-      "description_length": 361,
+      "description": "This module configures a formatter for pretty-printing operations, ensuring proper formatting behavior when generating output. It works directly with OCaml's `Format.formatter` type and supports functions that produce side effects during formatting. A concrete use case is customizing output formatting for error messages or structured logging in applications.",
+      "description_length": 360,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Spectrum.Capabilities.Sys_Capabilities",
+      "module_path": "Spectrum.Lexer",
       "library": "spectrum",
-      "description": "Returns the highest color level supported by the terminal, based on whether the output is a terminal (`true` if it is, `false` otherwise). Works with boolean values and the `color_level` type from the `Spectrum.Capabilities` module. Useful for determining color output capabilities in terminal-based applications.",
-      "description_length": 313,
+      "description": "This module combines color conversion utilities and lexical analysis tools, offering operations to transform color specifications (names, hex, RGB, HSL) into ANSI terminal codes and process lexbuf input streams. It works with `Lexing.lexbuf`, strings, and numeric types to support tasks like syntax highlighting, config file parsing, or dynamic theme generation in terminal applications. Core functionalities include token parsing, context-aware color formatting, and bidirectional conversion between human-readable color representations and low-level escape sequences.",
+      "description_length": 569,
       "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Spectrum.Exn",
-      "library": "spectrum",
-      "description": "This module enhances exception handling by integrating formatting and pretty-printing capabilities for errors, allowing customization of output through hooks that attach to standard exception printers. It supports operations on format strings and polymorphic values, enabling precise control over error messages in command-line tools or logs. Submodule functionality extends to formatted output generation for standard streams and string buffers, covering use cases like logging, error reporting, and string data construction. Together, the combined interface facilitates rich, structured error handling and output formatting across applications.",
-      "description_length": 646,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Spectrum.Capabilities",
-      "library": "spectrum",
-      "description": "This module organizes functionality for detecting and managing terminal color support and system-specific capabilities. It defines core types like `color_level` and version information, and provides utilities to parse, compare, and determine supported color levels based on environment and OS data. Submodules retrieve environment variables, detect OS type and version, and determine whether output is a terminal to influence color support decisions. For example, applications can use `supported_color_level` with environment and OS info to dynamically enable ANSI colors in logs or CLI output on Unix, Windows, or CI systems.",
-      "description_length": 626,
-      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Spectrum.Noexn",
       "library": "spectrum",
-      "description": "This module enhances formatted output handling by configuring and managing `Stdlib.Format.formatter` instances, ensuring precise control over output destinations and formatting behavior. It includes `prepare_ppf` for setting up formatters before printing, enabling consistent output across different streams. Submodule extends this by offering direct printing to standard output, standard error, or string generation, using familiar format specifiers and polymorphic values. Example uses include structured logging, error display, and safe, exception-free formatted string construction.",
-      "description_length": 586,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Spectrum.Printer",
-      "library": "spectrum",
-      "description": "Handles formatted output for spectrum data using standard format printers. Provides a `prepare_ppf` function to configure output formatting and a `Simple` submodule for basic printing operations. Useful for generating human-readable spectral analysis results or logging formatted numerical data.",
-      "description_length": 295,
-      "index": 11,
+      "description": "This module provides functions for type-safe formatted output, including printing to standard output and error streams, as well as string generation. It operates on format strings and values of any type, using the same formatting semantics as the standard `Format` module. Use it for logging, error reporting, and constructing strings with embedded values.",
+      "description_length": 356,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Spectrum.Printer-Simple",
+      "module_path": "Spectrum.Capabilities",
       "library": "spectrum",
-      "description": "This module provides formatted printing operations for standard output, error output, and string generation. It works with format strings and values of arbitrary types, following the same interface as the standard Format module. Concrete use cases include logging messages to the console, generating error output, and constructing strings with formatted content.",
-      "description_length": 362,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines color support levels and version data structures, offering functions to parse semantic versions, compare color levels, and format or display their values. It includes interfaces to query operating system information and terminal color capabilities, returning specific color level values based on whether output streams are connected to a terminal. Use cases include adapting terminal output based on color support, parsing and comparing application versions, and abstracting environment or OS-specific data for cross-platform tools.",
+      "description_length": 552,
+      "index": 9,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Spectrum",
       "library": "spectrum",
-      "description": "This module processes and formats structured text output with functions for string escaping, lexical analysis, and formatter configuration. It supports operations on stacks, format strings, and polymorphic values, enabling tasks like preparing output for spectral data or setting up custom printers based on runtime flags. Submodules enhance error reporting with customizable hooks for formatted exceptions, manage terminal color support using environment and OS detection, and provide utilities for directing output to standard streams or buffers. Applications include compiler output generation, structured logging with ANSI colors, and safe formatted string construction across platforms.",
-      "description_length": 691,
-      "index": 13,
+      "description": "This module provides operations for parsing and comparing semantic versions, converting color specifications into ANSI codes, and formatting output with type-safe formatting. It works with semantic version strings, color representations (names, hex, RGB, HSL), and format strings with associated values. Concrete uses include adapting terminal output based on detected color support, implementing syntax highlighting or theme systems, and generating structured logs or error messages with custom formatting.",
+      "description_length": 507,
+      "index": 10,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 16,
-    "meaningful_modules": 14,
-    "filtered_empty_modules": 2,
-    "retention_rate": 0.875
+    "total_modules_in_package": 11,
+    "meaningful_modules": 11,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 691,
-    "min_description_length": 231,
-    "avg_description_length": 415.85714285714283,
-    "embedding_file_size_mb": 0.05127429962158203
+    "max_description_length": 697,
+    "min_description_length": 298,
+    "avg_description_length": 422.54545454545456,
+    "embedding_file_size_mb": 0.1598072052001953
   }
 }

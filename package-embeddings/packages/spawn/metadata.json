@@ -1,49 +1,49 @@
 {
   "package": "spawn",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:06.687374",
+  "creation_timestamp": "2025-08-14T22:54:41.872073",
   "modules": [
     {
-      "module_path": "Spawn.Unix_backend",
+      "module_path": "Spawn.Working_dir",
       "library": "spawn",
-      "description": "Implements spawning processes on Unix systems using either `vfork` or `fork`, depending on environment configuration. It directly handles process creation and execution of external commands. This module is used when launching subprocesses where precise control over forking behavior is required, such as in performance-sensitive or resource-constrained environments.",
-      "description_length": 366,
+      "description": "Handles working directory specification for process spawning operations. It accepts paths, file descriptors pointing to directories (Unix-only), or the `Inherit` directive to propagate the parent's working directory. This module is used to configure the execution context of child processes created through the spawn library.",
+      "description_length": 325,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Spawn.Working_dir",
+      "module_path": "Spawn.Env",
       "library": "spawn",
-      "description": "Handles working directory specification for process spawning operations. It provides functions to set and retrieve directory paths, file descriptors, or inherit the current process's working directory. Used when configuring subprocess execution contexts where directory state must be explicitly controlled or preserved.",
-      "description_length": 319,
+      "description": "Handles environment variable manipulation for process spawning. It provides a function to construct an environment from a list of key-value strings. This is used to configure the environment of a new process when spawning.",
+      "description_length": 222,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Spawn.Env",
+      "module_path": "Spawn.Unix_backend",
       "library": "spawn",
-      "description": "Handles environment variable manipulation for process spawning. It creates and manages environment blocks from key-value string lists. Used to configure environment variables when launching subprocesses with custom settings.",
-      "description_length": 224,
+      "description": "This module defines the backend strategy for process spawning on Unix systems, specifically using either `fork` or `vfork`. It provides a `default` value that selects the appropriate strategy based on the `SPAWN_USE_FORK` environment variable. Use this module to control process creation behavior in low-level system tooling or when fine-grained control over forking is required.",
+      "description_length": 379,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Spawn.Pgid",
       "library": "spawn",
-      "description": "This module manages process group IDs for controlling process groups in Unix-like systems. It provides two values: `new_process_group`, which sets a child process's group ID to match its process ID, and `of_pid`, which converts a valid process ID into a process group ID. Use this module when creating or managing process groups for job control or signal handling.",
-      "description_length": 364,
+      "description": "Handles process group ID manipulation for process management. Provides values representing process group IDs and operations to create a new process group or convert a process ID into a group ID. Useful when spawning child processes that need to be grouped under a specific ID, such as managing job control or signal handling in Unix environments.",
+      "description_length": 346,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Spawn",
       "library": "spawn",
-      "description": "This module orchestrates process spawning with precise control over execution context, including environment variables, working directory, and process group settings. It supports Unix-specific forking strategies like `vfork` or `fork`, redirection of I/O, and signal handling, enabling efficient subprocess management in resource-sensitive scenarios. You can launch commands with custom environments, set working directories explicitly, and assign processes to specific groups for coordinated signal handling or job control. The module integrates these capabilities to streamline complex system-level workflows involving subprocess execution and isolation.",
-      "description_length": 656,
+      "description": "This module spawns child processes with configurable environment, working directory, and process group settings. It provides direct control over process creation parameters like signal masks, file descriptors, and forking strategy via `vfork` or `fork`. Concrete use cases include building custom process supervisors, managing job control in Unix shells, and fine-grained orchestration of external commands with specific execution contexts.",
+      "description_length": 440,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -53,9 +53,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 656,
-    "min_description_length": 224,
-    "avg_description_length": 385.8,
-    "embedding_file_size_mb": 0.01862812042236328
+    "max_description_length": 440,
+    "min_description_length": 222,
+    "avg_description_length": 342.4,
+    "embedding_file_size_mb": 0.07282733917236328
   }
 }

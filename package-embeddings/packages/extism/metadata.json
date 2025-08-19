@@ -1,229 +1,213 @@
 {
   "package": "extism",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 26,
-  "creation_timestamp": "2025-07-15T23:11:07.881741",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 24,
+  "creation_timestamp": "2025-08-15T12:15:08.287182",
   "modules": [
     {
-      "module_path": "Extism.Plugin.Typed.S",
+      "module_path": "Extism.Plugin.Typed.Init",
       "library": "extism",
-      "description": "This module defines an interface for working with typed plugins, allowing functions to be pre-declared with input and output type specifications. It supports loading a typed plugin instance from a base plugin and provides operations to safely invoke plugin functions with typed arguments and return values. Concrete use cases include calling WebAssembly functions exported by plugins with static type checking, such as transforming input data or executing domain-specific logic within a sandboxed environment.",
-      "description_length": 509,
+      "description": "This module initializes typed plugins with statically checked functions, providing `of_plugin` and `of_plugin_exn` to load plugin instances. It supports declaring and calling typed functions using `fn` and `exn`, which map input and output types using modules conforming to `Extism.Type.S`. Concrete use cases include safely invoking WebAssembly plugin functions with predefined argument and return types, such as calling a plugin function that takes a string and returns an integer or handles binary data.",
+      "description_length": 506,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Extism.Plugin.Typed.Init",
+      "module_path": "Extism.Type.Bigstring",
       "library": "extism",
-      "description": "This module loads and manages typed plugin instances, providing `of_plugin` and `of_plugin_exn` to create them from raw plugins. It supports declaring and invoking typed functions with `fn` and `exn`, ensuring type-safe calls to plugin-exported functions. Concrete use cases include loading a WebAssembly module with defined input/output types and calling its functions safely from OCaml.",
-      "description_length": 388,
+      "description": "This module provides `encode` and `decode` functions for converting between `Bigstringaf.t` values and strings. It handles data directly from Extism memory, ensuring safe access without copying unless necessary. Use it when passing binary data to or from Extism plugins, such as processing raw network packets or file contents.",
+      "description_length": 327,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Extism.Type.Json",
       "library": "extism",
-      "description": "This module provides `encode` and `decode` functions for converting between JSON values and strings or bigstrings. It operates on `Yojson.Safe.t` values, enabling efficient serialization and deserialization of structured data. Use it to pass JSON data to or from Extism plugins using direct memory pointers without intermediate copies.",
-      "description_length": 335,
+      "description": "This module provides `encode` and `decode` functions for converting between `Yojson.Safe.t` values and string or bigstring representations. It supports efficient serialization and deserialization of JSON data directly to and from Extism memory, ensuring safe handling of in-memory data without unnecessary copies. Use this module when passing JSON data to or from Extism plugins, particularly when working with raw memory buffers provided by the host or plugin.",
+      "description_length": 461,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Extism.Type.Float64",
-      "library": "extism",
-      "description": "Handles 64-bit floating-point values for interaction with Extism memory. Provides `encode` to convert a float to a string and `decode` to parse a float from a bigstring representing raw memory. Used when passing float values between OCaml and Extism plugins, ensuring correct memory representation.",
-      "description_length": 298,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Extism.Type.Bigstring",
-      "library": "extism",
-      "description": "This module defines a `Bigstring` type and provides `encode` and `decode` functions for converting between `Bigstringaf.t` values and strings. It handles data that resides in Extism plugin memory, ensuring safe access and conversion without direct external storage of memory pointers. Use this when passing large binary data to and from Extism plugins, such as processing raw network data or binary file contents.",
-      "description_length": 413,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Extism.Type.Int",
-      "library": "extism",
-      "description": "Handles conversion of OCaml integers to and from Extism memory using int64 encoding. Works directly with `int` values, decoding from a `Bigstringaf.t` memory buffer. Used when passing integer values between OCaml and Extism plugins, ensuring correct memory representation.",
-      "description_length": 272,
-      "index": 5,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Extism.Plugin.Cancel_handle",
-      "library": "extism",
-      "description": "This module manages cancellation of running plugins through a handle type. It provides a `cancel` function that takes a handle and returns a boolean indicating success. The handle references an ongoing plugin execution, allowing targeted termination. Use this module to stop plugins mid-execution from another thread or in response to external signals.",
-      "description_length": 352,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Extism.Type.Unit",
-      "library": "extism",
-      "description": "This module defines the unit type for conversions between OCaml and Extism memory. It includes `encode` to convert a unit value to a string and `decode` to parse a unit value from a bigstring buffer. These operations are used when passing unit values to or from Extism plugins.",
-      "description_length": 277,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Extism.Val.Array",
-      "library": "extism",
-      "description": "This module provides direct access to WebAssembly value arrays through indexing operations, allowing retrieval and modification of individual elements. It works with arrays of `Extism.Val.t` values, which represent low-level WebAssembly types. Concrete use cases include passing and manipulating function parameters and return values between OCaml and WebAssembly.",
-      "description_length": 364,
-      "index": 8,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Extism.Type.Int64",
       "library": "extism",
-      "description": "This module defines the Int64 type used for converting 64-bit integers between OCaml and Extism memory. It provides `encode` to convert an int64 to a string and `decode` to parse an int64 from a bigstring buffer referencing raw plugin memory. These operations support direct data exchange with Extism plugins without requiring intermediate copies.",
-      "description_length": 347,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Extism.Type.S",
-      "library": "extism",
-      "description": "This module defines the interface for types that can be encoded to and decoded from Extism host memory. It provides `encode` to convert values to strings and `decode` to parse values from bigstrings, ensuring safe access to plugin memory. It is used to handle data exchange between OCaml and Extism plugins, such as passing arguments or retrieving results from WebAssembly functions.",
-      "description_length": 383,
-      "index": 10,
+      "description": "This module handles encoding and decoding of 64-bit integers to and from memory representations used by Extism plugins. It provides `encode` to convert an `int64` into a string and `decode` to extract an `int64` from a bigstring pointing to raw plugin memory. These operations are used when passing 64-bit integer values between OCaml and Extism WebAssembly functions.",
+      "description_length": 368,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Extism.Plugin.Typed",
       "library": "extism",
-      "description": "This module enables the definition and use of typed plugin interfaces with statically checked function signatures, ensuring type safety during plugin initialization and invocation. It provides core operations to declare functions with explicit input and output types, and to load and invoke these functions safely from plugin modules. For example, it can load a WebAssembly module, declare its exported functions with OCaml types, and call them with type-checked arguments. Submodules handle function declaration, instance management, and safe execution, supporting use cases like embedding domain-specific logic or sandboxed computations with strong type guarantees.",
-      "description_length": 667,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Extism.Type.Bytes",
-      "library": "extism",
-      "description": "This module provides `encode` and `decode` functions for converting `bytes` values to and from strings and bigstrings. It handles data directly from Extism memory using `Bigstringaf.t`, ensuring safe and efficient transfers without unnecessary copies. Use this module when passing binary data between OCaml and Extism plugins, such as serializing buffers or reading raw memory from a plugin.",
-      "description_length": 391,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Extism.Plugin.Compiled",
-      "library": "extism",
-      "description": "This module compiles plugins from WebAssembly bytecode or a JSON manifest, supporting WASI configuration and custom function imports. It manages the lifecycle of compiled plugins with explicit freeing and provides creation interfaces that return either a result or raise exceptions on failure. Concrete use cases include loading and instantiating WebAssembly modules for execution within the Extism runtime.",
-      "description_length": 407,
-      "index": 13,
+      "description": "This module defines typed plugins with statically checked function signatures, ensuring type safety when calling plugin functions. It works with plugin instances and typed function descriptors, enabling developers to specify input and output types at definition time. Concrete use cases include building safe, versioned plugin interfaces where function arity and types are validated upon plugin instantiation.",
+      "description_length": 409,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Extism.Type.Float32",
       "library": "extism",
-      "description": "This module defines a 32-bit float type and provides `encode` to convert a float to a string representation and `decode` to parse a float from a bigstring. It works directly with `float` values and `Bigstringaf.t` memory buffers, handling safe conversion between them. It is used when passing 32-bit floating-point data to or from Extism plugins that expect memory-backed float values.",
-      "description_length": 385,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Extism.Type.Int32",
-      "library": "extism",
-      "description": "This module defines the Int32 type used for converting 32-bit integers between OCaml and Extism memory. It provides `encode` to convert an Int32 value to a string and `decode` to parse an Int32 from a bigstring pointing to Extism memory. These operations are used when passing 32-bit integers to or from WebAssembly plugins.",
-      "description_length": 324,
-      "index": 15,
+      "description": "Handles encoding and decoding of 32-bit floating-point numbers between OCaml and Extism memory. Works directly with `float` values and `Bigstringaf.t` buffers for memory-efficient conversions. Used when passing float data to or from WebAssembly plugins via Extism's host function interface.",
+      "description_length": 290,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Extism.Type.String",
+      "module_path": "Extism.Type.Unit",
       "library": "extism",
-      "description": "This module defines the `t` type as an alias for `string` and provides `encode` and `decode` functions for converting between OCaml strings and Extism memory representations. It operates directly on `string` and `Bigstringaf.t` data types, enabling efficient string handling when interacting with Extism plugins. Use this module to pass string values between OCaml code and Extism WebAssembly plugins without intermediate conversions.",
-      "description_length": 434,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module handles the unit type in the context of Extism memory, providing `encode` to convert a unit value to a string and `decode` to parse a unit value from a bigstring. It works directly with `unit` values and uses `Bigstringaf.t` for memory-efficient decoding. Concrete use cases include marshaling unit values when interacting with Extism plugins, ensuring correct data representation across OCaml and Extism memory boundaries.",
+      "description_length": 435,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Plugin.Compiled",
+      "library": "extism",
+      "description": "This module compiles plugins from WebAssembly bytecode or a JSON manifest, supporting WASI configuration and host function imports. It operates on raw string inputs or `Manifest.t` values, producing compiled plugin instances that can be instantiated and called. Use it to load and prepare plugins for execution, such as running WebAssembly modules with custom host functions or embedding WASI support.",
+      "description_length": 401,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Plugin.Cancel_handle",
+      "library": "extism",
+      "description": "This module manages cancellation of running plugins through a handle type `t`. It provides the `cancel` function, which attempts to cancel a plugin's execution and returns a boolean indicating success. The handle is used to track and control cancellation state for individual plugin instances.",
+      "description_length": 293,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Type.Bytes",
+      "library": "extism",
+      "description": "This module provides `encode` to convert a bytes value into a string and `decode` to safely construct a bytes value from a bigstring, handling memory constraints. It directly works with `bytes` and `Bigstringaf.t` types, ensuring safe interaction with Extism memory. Use it when passing binary data between OCaml and Extism plugins, such as reading file contents or handling network payloads.",
+      "description_length": 392,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Val.Array",
+      "library": "extism",
+      "description": "This module provides direct access to WebAssembly value arrays for host function parameters, allowing indexed retrieval and assignment of `Val.t` elements. It supports operations like getting, setting, and determining the length of value arrays. Concrete use cases include handling input and output parameters passed between WebAssembly modules and host functions.",
+      "description_length": 364,
+      "index": 10,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Extism.Host_function.Memory_handle",
       "library": "extism",
-      "description": "This module provides direct memory manipulation capabilities for plugins, allowing allocation, deallocation, and conversion of memory blocks to and from values. It supports operations on memory handles, strings, and bigstrings, enabling efficient data transfer between the host and plugin environments. Concrete use cases include passing string data to and from WebAssembly plugins, managing dynamic memory within host functions, and interfacing with plugin-allocated data structures.",
-      "description_length": 484,
-      "index": 17,
+      "description": "This module provides direct memory manipulation capabilities for plugins, including allocation, deallocation, reading, and writing operations. It works with memory handles, strings, bigstrings, and Extism values (`Val.t`), enabling conversion between these types. Concrete use cases include passing string data to and from WebAssembly plugins, managing dynamic memory within host functions, and interfacing with raw memory buffers for high-performance data processing.",
+      "description_length": 468,
+      "index": 11,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Extism.Function",
+      "module_path": "Extism.Type.Float64",
       "library": "extism",
-      "description": "This module creates and configures functions that can be called from WebAssembly plugins. It works with function types that specify parameter and result value types, along with arbitrary OCaml user data. Concrete use cases include defining host functions that plugins can invoke, such as logging, data processing, or external system interactions, by associating OCaml implementations with Wasm-visible function signatures.",
-      "description_length": 422,
-      "index": 18,
+      "description": "Handles encoding and decoding of 64-bit floating-point numbers between OCaml and Extism memory. Works directly with `float` and `Bigstringaf.t` for efficient data transfer. Used when passing float values to or from WebAssembly plugins via Extism's host function interface.",
+      "description_length": 272,
+      "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Extism.Host_function",
+      "module_path": "Extism.Type.String",
       "library": "extism",
-      "description": "This module provides direct access to function parameters and results during plugin execution, enabling manipulation of values by index and supporting data types like strings, bigstrings, and generic values through conversion modules. It allows setting outputs and retrieving inputs, particularly for interfacing with WebAssembly plugins. The child module extends this functionality with memory management operations, supporting allocation, deallocation, and conversion of memory blocks to facilitate efficient data transfer between host and plugin. Together, they enable tasks such as handling function arguments, returning computed results, and managing dynamic memory or plugin-allocated structures.",
-      "description_length": 702,
-      "index": 19,
+      "description": "This module provides `encode` and `decode` functions for converting between OCaml strings and Extism memory representations. It operates directly on `string` and `Bigstringaf.t` data types, enabling efficient string data transfer between OCaml and Extism plugins. Use this module when passing string values to or from WebAssembly plugins using Extism's host function interface.",
+      "description_length": 377,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Extism.Val_type",
+      "module_path": "Extism.Type.Int32",
       "library": "extism",
-      "description": "This module defines Wasm value types like integers, floats, and references, along with conversions to and from integers. It includes operations to map types such as I32, I64, F32, and ExternRef to their corresponding integer representations. Use this when implementing host functions that interface with Wasm modules, particularly for handling type signatures and pointer values.",
-      "description_length": 379,
-      "index": 20,
+      "description": "This module handles encoding and decoding of 32-bit integers to and from memory formats used by Extism plugins. It provides `encode` to convert an `int32` to a string and `decode` to parse an `int32` from a bigstring pointing to raw plugin memory. These operations are used when passing 32-bit integer values between OCaml and Extism WebAssembly modules.",
+      "description_length": 354,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Extism.Plugin",
+      "module_path": "Extism.Type.Int",
       "library": "extism",
-      "description": "This module enables the instantiation and execution management of plugins from WebAssembly modules, manifests, or precompiled code, integrating binary data handling, structured configuration, and typed interfaces for safe host-guest interactions. It supports operations such as function invocation, cancellation via dedicated handles, and type-safe loading and calling of exported functions, facilitating use cases like embedding extensions or sandboxed computations. The module compiles plugins with support for WASI and custom imports, and ensures resource safety through explicit lifecycle management and error handling. Together with cancellation handles, typed interface declarations, and compilation utilities, it provides a comprehensive system for embedding and controlling WebAssembly-based logic within OCaml applications.",
-      "description_length": 832,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Extism.Val",
-      "library": "extism",
-      "description": "This module handles conversion and type inspection of low-level WebAssembly values, supporting creation and extraction of 32-bit and 64-bit integers and floats. It provides safe and unsafe type conversion functions, enabling precise interaction with WebAssembly values when passing primitives to or from functions and validating types during host calls. The child module offers direct access to WebAssembly value arrays, allowing indexed retrieval and modification of `Extism.Val.t` elements. This facilitates manipulation of function parameters and return values between OCaml and WebAssembly, such as reading or updating individual values in a parameter list.",
-      "description_length": 661,
-      "index": 22,
+      "description": "This module encodes and decodes OCaml integers to and from Extism memory using 64-bit representation. It operates on `int` values and interacts directly with `Bigstringaf.t` memory buffers for efficient data transfer. Use this module when passing integer values between OCaml and Extism plugins, especially when working with raw memory pointers.",
+      "description_length": 345,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Extism.Type",
       "library": "extism",
-      "description": "This module enables bidirectional marshaling of OCaml values to and from Extism memory using type-specific conversion functions, supporting primitives like integers, floats, and strings, as well as structured data like JSON and byte sequences. It provides `encode` and `decode` operations that work directly with memory buffers such as `Bigstringaf.t`, ensuring compatibility with WebAssembly memory models and enabling efficient data exchange without intermediate copies. Child modules extend this functionality to specific types\u2014such as JSON for structured data, Int64 for 64-bit integers, and Bigstring for binary payloads\u2014allowing tasks like passing configuration data as JSON, exchanging numeric values, or processing raw network packets with minimal overhead.",
-      "description_length": 765,
-      "index": 23,
+      "description": "This module provides bidirectional conversions between OCaml values and memory-efficient representations used for interoperability with WebAssembly plugins, focusing on zero-copy data exchange. It handles primitive types like integers, floats, and unit, as well as structured data such as strings, bigstrings, and JSON, ensuring correct memory layout during transfers. These utilities are optimized for scenarios requiring direct, high-performance communication between OCaml code and sandboxed WebAssembly modules.",
+      "description_length": 515,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Val",
+      "library": "extism",
+      "description": "This module handles low-level WebAssembly values with functions to create and convert values of specific types like i32, i64, f32, and f64. It supports direct type inspection and safe or unsafe extraction of numeric values. Concrete use cases include passing parameters to and from WebAssembly functions and validating value types during host function calls.",
+      "description_length": 358,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Plugin",
+      "library": "extism",
+      "description": "This module supports instantiating, invoking, and managing WebAssembly plugins through operations like loading raw WASM modules or manifests, calling functions with strings, bigstrings, or typed values, and handling cancellable executions. It works with WebAssembly modules, manifests, and precompiled `Compiled` module values, enabling use cases such as embedding sandboxed plugins in applications, inspecting exported functions or UUIDs, and integrating with host contexts via WASI imports for secure, isolated computations.",
+      "description_length": 526,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Function",
+      "library": "extism",
+      "description": "This module creates functions callable from WebAssembly plugins, allowing OCaml functions to be exposed with specified parameter and return types. It works with `Extism.Val_type.t` lists for parameter and result types, and arbitrary OCaml values as user data. Concrete use cases include defining host functions that plugins can invoke, such as logging, data processing, or external system interactions.",
+      "description_length": 402,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Host_function",
+      "library": "extism",
+      "description": "This module provides direct access to parameters and results within host functions, allowing precise manipulation of input and output values via indexed access. It works with `Val.t` values, strings, bigstrings, and memory handles, enabling data exchange between host functions and WebAssembly plugins. Concrete use cases include extracting typed arguments from linear memory, returning strings or binary data from host functions, and directly modifying result values in the plugin's context.",
+      "description_length": 492,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Extism.Val_type",
+      "library": "extism",
+      "description": "This module defines Wasm value types like integers, floats, and references, and provides conversions between these types and integers. It includes operations to convert to and from `int` values, and a `ptr` value representing a pointer in Extism. Concrete use cases include specifying parameter and return types when implementing host functions for Wasm modules.",
+      "description_length": 362,
+      "index": 21,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Extism.Error",
       "library": "extism",
-      "description": "This module defines an error type for handling failures in the Extism bindings, representing errors as a message string. It provides functions to extract a successful value from a result or raise an error as an exception. Concrete use cases include propagating plugin loading or execution failures in host applications.",
-      "description_length": 319,
-      "index": 24,
-      "embedding_norm": 1.0
+      "description": "This module defines an error type for handling failures in the Extism bindings, with operations to unwrap result values and throw errors as exceptions. It works with the `result` type from `Stdlib` and the custom error variant `t`. Concrete use cases include propagating plugin execution errors and handling invalid input during function calls.",
+      "description_length": 344,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Extism",
       "library": "extism",
-      "description": "This module enables loading and interacting with WebAssembly plugins through typed function calls, host function definitions, and memory management. It centers around plugins, values, and value types, allowing operations like invoking exported functions with typed arguments, defining host functions with custom OCaml logic, and managing memory for data exchange. For example, you can load a plugin from a manifest, call a function that accepts a string input and returns a JSON result, or define a host function that logs messages from the plugin. Submodules handle low-level value manipulation, type conversions, structured data marshaling, and error handling, making it possible to work with integers, floats, strings, and binary data safely and efficiently.",
-      "description_length": 761,
-      "index": 25,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module enables direct interaction with WebAssembly plugins via the Extism framework, offering precise control over plugin instantiation, function invocation, and memory management. It operates on WebAssembly modules, manifests, and typed values, supporting concrete use cases like embedding sandboxed plugins in applications, exchanging structured data with plugins, and exposing OCaml functions to WebAssembly. Specific operations include loading plugins from WASM binaries, calling exported functions with typed arguments, and handling logging and error propagation.",
+      "description_length": 573,
+      "index": 23,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 26,
-    "meaningful_modules": 26,
+    "total_modules_in_package": 24,
+    "meaningful_modules": 24,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 832,
+    "max_description_length": 573,
     "min_description_length": 272,
-    "avg_description_length": 456.5769230769231,
-    "embedding_file_size_mb": 0.0949106216430664
+    "avg_description_length": 401.4166666666667,
+    "embedding_file_size_mb": 0.34809398651123047
   }
 }

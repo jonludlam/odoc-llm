@@ -1,117 +1,101 @@
 {
   "package": "bap-byteweight",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:07:04.570188",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 10,
+  "creation_timestamp": "2025-08-14T23:10:25.958767",
   "modules": [
     {
       "module_path": "Bap_byteweight.V2.Make",
       "library": "bap-byteweight",
-      "description": "The module provides operations for constructing and training a byteweight decider to identify function starts in binary data, along with serialization capabilities for persisting decider state. It operates on trie-structured corpora of byte chunks, enabling statistical analysis of token sequences through folding and conditional traversal. Key use cases include binary reverse engineering, signature generation for unknown binaries, and incremental training of byte-weight models using annotated datasets.",
-      "description_length": 506,
+      "description": "This module provides operations for constructing and querying probabilistic models to identify function starts in binary code, leveraging trie structures to represent and analyze byte sequence statistics. It supports training on corpus data, serializing models, and folding over trie-based byte chunks to compute aggregate metrics or locate sequences matching specific conditions. The trie-based approach enables efficient exploration of byte n-gram distributions, making it suitable for reverse engineering tasks where distinguishing code from data in stripped binaries is critical.",
+      "description_length": 583,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_byteweight.V1.Make",
       "library": "bap-byteweight",
-      "description": "Implements a byteweight decider that trains on a corpus to identify function starts in binary data. It extracts substrings up to a specified maximum length, using a classification function to guide training, and uses a trie-like structure for efficient substring storage and lookup. The module supports serialization, pretty-printing, and querying for likely function starts based on a threshold.",
-      "description_length": 396,
+      "description": "This module implements a byteweight decider for identifying function starts in binary code. It provides operations to train the decider on a corpus of binary data, classify substrings using a user-defined test function, and predict potential function starts using weighted statistics. The decider works with binary corpora and trie-based storage of substrings, supporting serialization via Bin_prot and Sexp.",
+      "description_length": 408,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_byteweight.V2.S",
-      "library": "bap-byteweight",
-      "description": "This module implements a trainable decider for identifying function starts in binary code by analyzing weighted byte patterns. It operates on tokenized binary data and associated statistical records, supporting training on labeled corpora, querying substring frequencies, and persistent storage via serialization formats like bin_prot. Key use cases include reverse engineering, binary analysis toolchains, and building predictive models for disassembly optimization. The folding operation enables cross-chunk analysis to aggregate metrics or detect patterns across large binary datasets.",
-      "description_length": 588,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_byteweight.V2",
-      "library": "bap-byteweight",
-      "description": "This module implements version 2 of the byteweight algorithm for detecting function starts in binary code, using statistical analysis over byte sequences and a trained model to predict control flow boundaries. It provides core operations for building, training, and serializing deciders, while its child modules support trie-based corpus traversal, substring frequency analysis, and cross-chunk metric aggregation. Users can train models incrementally on annotated datasets, query byte pattern statistics, and persist decider state for use in reverse engineering or disassembly optimization pipelines. Example workflows include signature generation for unknown binaries and integrating predictive models into binary analysis toolchains for improved control flow recovery.",
-      "description_length": 771,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_byteweight_signatures.Data",
       "library": "bap-byteweight",
-      "description": "This module declares data types for signature databases using `declare`, which specifies how to load from and save to bytes. It works with abstract data types that are serialized to and deserialized from byte sequences. Concrete use cases include defining custom signature formats like Bap_byteweight.Bytes for storage or transmission.",
-      "description_length": 335,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_byteweight.Stats",
-      "library": "bap-byteweight",
-      "description": "Tracks statistical outcomes of hypothesis testing in the byteweight algorithm, specifically counting total trials, acceptances of the null hypothesis (h0), and rejections (h1). It works with the `t` type representing aggregated test statistics. Used to evaluate the performance and accuracy of function start identification in binary analysis.",
-      "description_length": 343,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_byteweight.V1",
-      "library": "bap-byteweight",
-      "description": "This module trains a byteweight model on binary data to detect function starts by extracting and classifying substrings up to a maximum length. It uses a trie-like structure for efficient storage and lookup of substrings, supporting operations like serialization, pretty-printing, and threshold-based querying. Examples include identifying function boundaries in machine code or analyzing binary formats where function metadata is not explicitly marked.",
-      "description_length": 453,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_byteweight.Corpus",
-      "library": "bap-byteweight",
-      "description": "This module defines a data interface for extracting fixed-length chunks from binary data. It provides a `look` function that retrieves a key representing a chunk of specified length at a given offset. It works with binary data structures, using keys to identify and compare segments for pattern recognition in executable code analysis.",
-      "description_length": 335,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_byteweight.S",
-      "library": "bap-byteweight",
-      "description": "Implements the Byteweight algorithm for function start identification in binary data. It trains on a corpus of substrings labeled by a user-provided predicate, learning to predict whether a substring corresponds to a function start. Exposes operations to create, train, query, and print deciders, with support for serialization via Bin_prot and Sexp.",
-      "description_length": 350,
-      "index": 8,
+      "description": "This module declares data type handlers for signature databases using `declare`, which specifies how to load and save values as bytes. It works with arbitrary data types by defining serialization and deserialization functions for them. Concrete use cases include registering custom types like `Bap_byteweight.Bytes` for storage in signature databases.",
+      "description_length": 351,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_byteweight.Make",
       "library": "bap-byteweight",
-      "description": "This module implements a byteweight decider using a trie-based representation for efficient substring analysis. It supports training on a corpus to identify function starts in binaries, with operations to create, query, and print substring data. Concrete use cases include binary analysis tasks like disassembly and reverse engineering, where precise function boundary detection is critical.",
-      "description_length": 391,
-      "index": 9,
+      "description": "Implements a byteweight decider that identifies function starts in binary code using a trained model. It operates on substrings of a given maximum length, classifying them with a user-provided test function and storing weighted patterns in a trie-based structure. The module supports training from a corpus, querying for likely function starts based on weights, and serializing the model for storage or transfer.",
+      "description_length": 412,
+      "index": 3,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_byteweight.Stats",
+      "library": "bap-byteweight",
+      "description": "Tracks statistical outcomes of hypothesis testing in the byteweight algorithm, providing counts for total trials, accepted null hypotheses, and rejected null hypotheses. Uses a dedicated stats type to represent these metrics. Useful for evaluating the accuracy and behavior of function start identification in binary analysis.",
+      "description_length": 326,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_byteweight.V1",
+      "library": "bap-byteweight",
+      "description": "This module implements the Byteweight algorithm for identifying function starts in binary code. It processes sequences of bytes and uses precomputed signature data to calculate probabilities of function entry points. Concrete use cases include binary analysis tasks such as reverse engineering and vulnerability detection in compiled programs.",
+      "description_length": 343,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_byteweight.Bytes",
+      "library": "bap-byteweight",
+      "description": "This module provides serialization, deserialization, and statistical classification tools for analyzing memory chunks. It handles training of byteweight deciders on binary corpora and identifies regions in memory that match specific statistical properties, such as those indicating function starts, using thresholding or Bayesian approaches.",
+      "description_length": 341,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_byteweight.V2",
+      "library": "bap-byteweight",
+      "description": "Implements version 2 of the byteweight algorithm for identifying function starts in binary code. It operates on byte sequences and uses a weighted scoring system to detect likely function entry points. This module is useful for binary analysis tasks such as disassembly and control flow recovery.",
+      "description_length": 296,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bap_byteweight",
       "library": "bap-byteweight",
-      "description": "The library implements the Byteweight algorithm for identifying function starts in binary code through statistical analysis of byte sequences. It provides core operations to train deciders on annotated binary data, using substring frequency models and hypothesis testing metrics to predict control flow boundaries, with support for serialization and incremental model building. Child modules enhance this functionality by offering trie-based substring storage, chunk-based analysis, and performance evaluation through statistical counters. Users can generate predictive models from binary corpora, analyze function boundaries in machine code, or integrate the deciders into disassembly pipelines for improved reverse engineering accuracy.",
-      "description_length": 738,
-      "index": 10,
+      "description": "This module implements the Byteweight algorithm for identifying function starts in binary code. It processes byte sequences using precomputed signatures and statistical models to calculate probabilities of function entry points. Concrete use cases include reverse engineering, disassembly, and control flow recovery in binary analysis tasks.",
+      "description_length": 341,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_byteweight_signatures",
       "library": "bap-byteweight",
-      "description": "This module provides a key-value storage system for signatures used in binary analysis, where keys combine target and compiler descriptions and values are arbitrary, structured data. It supports operations to load, save, update, and query signature entries across multiple archives, enabling efficient retrieval of compiler-specific code patterns. The Data module allows defining custom signature formats through serialization to bytes, as seen in implementations like Bap_byteweight.Bytes for concrete storage and parsing. Together, these components facilitate managing and analyzing compiled binary signatures across different architectures and compilers.",
-      "description_length": 657,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides functions to store, retrieve, and manage signature data associated with target architectures and compilers. It operates on key-value entries where keys combine target and compiler descriptions, and values are arbitrary data types handled through serialization. Concrete use cases include saving and loading byteweight signatures for binary analysis, such as storing hash data for malware detection or binary diffing.",
+      "description_length": 437,
+      "index": 9,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 13,
-    "meaningful_modules": 12,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9230769230769231
+    "total_modules_in_package": 10,
+    "meaningful_modules": 10,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 771,
-    "min_description_length": 335,
-    "avg_description_length": 488.5833333333333,
-    "embedding_file_size_mb": 0.044013023376464844
+    "max_description_length": 583,
+    "min_description_length": 296,
+    "avg_description_length": 383.8,
+    "embedding_file_size_mb": 0.145294189453125
   }
 }

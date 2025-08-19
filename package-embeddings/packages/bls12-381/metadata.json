@@ -1,125 +1,93 @@
 {
   "package": "bls12-381",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 13,
-  "creation_timestamp": "2025-07-15T23:08:58.023785",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:24:05.484815",
   "modules": [
-    {
-      "module_path": "Bls12_381.Ff_sig.PRIME_WITH_ROOT_OF_UNITY",
-      "library": "bls12-381",
-      "description": "This module implements arithmetic operations in a prime field, including addition, multiplication, inversion, and exponentiation, alongside specialized functionality for computing and validating roots of unity. It operates on a field element type `t` and leverages arbitrary-precision integers (`Z.t`) for exponents and modulus parameters, supporting conversions from integers and byte-level encodings. These capabilities are critical for cryptographic protocols like pairing-based signatures, zero-knowledge proofs, and verifiable computation, where structured algebraic properties and efficient modular arithmetic are foundational.",
-      "description_length": 633,
-      "index": 0,
-      "embedding_norm": 0.9999998807907104
-    },
     {
       "module_path": "Bls12_381.G1.Scalar",
       "library": "bls12-381",
-      "description": "This module supports scalar arithmetic and field operations for cryptographic computations, including modular inversion, exponentiation, and quadratic residue checks, while providing safe conversions between scalar values and byte sequences, strings, or integers. It operates on scalar values derived from the finite field Fr, leveraging low-level representations like `Bls12_381.Fr.t` to ensure correctness under the field's order. These capabilities are critical for protocols requiring elliptic curve operations, such as digital signatures or zero-knowledge proofs, where scalar manipulation and serialization are foundational.",
-      "description_length": 630,
+      "description": "This module implements modular arithmetic and cryptographic primitives for scalar values in a prime-order field, focusing on operations like inversion, exponentiation, and byte-integer conversions. It manipulates scalars modulo the BLS12-381 subgroup order, handling data types such as OCaml integers (`int`), arbitrary-precision integers (`Z.t`), and byte sequences. These capabilities enable secure key generation, signature schemes, and zero-knowledge proof systems requiring precise scalar manipulations in pairing-based cryptography.",
+      "description_length": 538,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bls12_381.G2.Scalar",
+      "library": "bls12-381",
+      "description": "This module provides finite field scalar operations essential for elliptic curve cryptography, including arithmetic (addition, multiplication, negation), modular inversion, exponentiation, and square root computation. It handles scalars modulo the BLS12-381 field order, working with little-endian byte encodings, Zarith integers, and native integers for conversions and validation. These operations are critical for cryptographic protocols like BLS signatures and zero-knowledge proofs, where secure scalar manipulation and serialization are required.",
+      "description_length": 552,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bls12_381.Ff_sig.PRIME",
-      "library": "bls12-381",
-      "description": "This module implements arithmetic and cryptographic operations over a prime finite field GF(p), including addition, multiplication, inversion, exponentiation, and square root computation. It represents field elements as type `t` and supports conversions from integers and bytes, along with validation for safe encoding. These operations are essential for cryptographic protocols requiring prime field arithmetic, such as digital signatures and zero-knowledge proofs.",
-      "description_length": 466,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bls12_381.CURVE",
-      "library": "bls12-381",
-      "description": "This module provides low-level operations for elliptic curve point manipulation on BLS12-381, including coordinate conversions between Jacobian and affine representations, serialization to compressed/uncompressed byte arrays, validity checks, and arithmetic operations like addition, doubling, scalar multiplication, and multi-scalar exponentiation via Pippenger\u2019s algorithm. It operates on Jacobian coordinates (`t`), affine points, and scalar values (`Scalar.t`), with optimizations for performance and memory efficiency such as in-place updates and bulk processing. These capabilities are critical for cryptographic protocols requiring efficient threshold signatures, zero-knowledge proofs, or secure key aggregation.",
-      "description_length": 720,
-      "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bls12_381.G1",
       "library": "bls12-381",
-      "description": "This module implements elliptic curve operations over the field Fq for the BLS12-381 curve defined by y\u00b2 = x\u00b3 + 4, offering point arithmetic including addition, scalar multiplication, and batch multi-exponentiation via Pippenger\u2019s algorithm. It supports coordinate conversions between affine and Jacobian representations, point validity checks, and serialization in compressed and uncompressed formats, enabling efficient batch verification and hashing to the curve. The scalar submodule provides field operations over Fr, including modular inversion, exponentiation, and safe byte conversion, working with low-level scalar values used in cryptographic protocols. Together, these components facilitate high-throughput applications like BLS signatures and zero-knowledge proofs with optimized, interoperable data layouts.",
-      "description_length": 820,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements elliptic curve group operations for the BLS12-381 G1 curve, supporting efficient arithmetic with points represented in both Jacobian and affine coordinates. It provides core functionalities like point creation (hashing, random generation), scalar multiplication, batch addition, and equality checks, alongside optimized memory management through in-place operations and serialization. Designed for cryptographic protocols requiring high performance, it enables secure pairing-based applications such as digital signatures and zero-knowledge proofs by integrating scalar operations and compressed point representations.",
+      "description_length": 641,
+      "index": 2,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Bls12_381.Pairing",
       "library": "bls12-381",
-      "description": "This module implements pairing operations between points in groups G1 and G2, producing results in the target group GT. It includes functions for computing the Miller loop, final exponentiation, and pairing checks, supporting cryptographic protocols like zero-knowledge proofs. Specific use cases include verifying BLS signatures and performing identity-based encryption operations.",
-      "description_length": 382,
+      "description": "Computes bilinear pairings over elliptic curve groups G1 and G2, mapping to the target group GT. It supports operations like Miller loop computation, final exponentiation, and pairing equality checks. Used in cryptographic protocols such as zero-knowledge proofs and BLS signatures for verifying aggregated signatures.",
+      "description_length": 318,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bls12_381.GT",
+      "library": "bls12-381",
+      "description": "This module implements a prime-order subgroup of the extension field `Fq12`, represented additively, with operations including element encoding/decoding, equality checks, group addition, scalar multiplication, and random element generation. It works with byte sequences and the `t` type representing group elements, ensuring all operations stay within the subgroup. Concrete use cases include cryptographic protocols requiring a cyclic group with efficient pairing-based operations, such as BLS signatures and zero-knowledge proofs.",
+      "description_length": 532,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bls12_381.Fr",
+      "library": "bls12-381",
+      "description": "This module implements finite field arithmetic over a prime-order field tailored for cryptographic protocols, supporting operations like modular addition, multiplication, exponentiation, and inversion, as well as efficient byte and string serialization. It works with field elements represented as opaque values (`t`) and provides optimized in-place arithmetic, bulk operations, and number-theoretic utilities such as quadratic residue checks and square roots. These capabilities are critical for applications like zero-knowledge proofs, digital signatures, and pairing-based cryptography where high-performance field computations are required.",
+      "description_length": 644,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bls12_381.Fq12",
       "library": "bls12-381",
-      "description": "This module implements a field extension over Fq12 with operations including multiplication, inversion, equality checks, random element generation, and byte-level encoding/decoding. It works with 12-dimensional vectors of field elements, encoded as bytes or constructed directly from strings or Zarith integers. It is used to manipulate intermediate results of cryptographic pairings, particularly to delay final exponentiation after Miller loops in BLS signature schemes.",
-      "description_length": 472,
+      "description": "This module implements a field extension used in pairing-based cryptography, specifically designed for operations like Miller loops and final exponentiations. It provides arithmetic operations such as multiplication, inversion, exponentiation, and equality checks on elements of the field, along with encoding/decoding functions for serialization. Concrete use cases include constructing and manipulating elements during bilinear pairing computations, particularly when delaying final exponentiation.",
+      "description_length": 500,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bls12_381.Fr",
-      "library": "bls12-381",
-      "description": "This module implements arithmetic and memory-efficient operations for a prime-order finite field used in pairing-based cryptography, operating on modular integers reduced by the BLS12-381 curve's scalar field. It supports in-place arithmetic (addition, multiplication, inversion), batch computations (sums, products), and constant-time checks (quadratic residues, Legendre symbol) while enabling low-level memory control through buffer reuse and byte-level comparisons. These capabilities are critical for high-performance cryptographic protocols like zero-knowledge proofs and threshold signatures, where efficient modular operations and strict memory safety are required.",
-      "description_length": 673,
-      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bls12_381.Ff_sig",
       "library": "bls12-381",
-      "description": "This module defines interfaces for finite field operations used in pairing-based cryptography, structuring base fields, prime fields, and prime fields with roots of unity. It supports core operations like addition, multiplication, inversion, exponentiation, and root validation, with field elements represented as type `t` and exponents as arbitrary-precision integers. Submodules implement concrete arithmetic over GF(p), including square roots and byte-level encoding, enabling cryptographic schemes such as BLS signatures and zk-SNARKs. Together, they provide the algebraic foundation for secure, efficient modular computations and protocol implementations.",
-      "description_length": 660,
-      "index": 8,
+      "description": "This module defines interfaces for finite field operations used in pairing-based cryptography. It specifies structures for base fields, prime fields, and prime fields with a root of unity, supporting operations like addition, multiplication, inversion, and exponentiation. These abstractions are essential for implementing cryptographic protocols such as BLS signatures and zk-SNARKs.",
+      "description_length": 384,
+      "index": 7,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bls12_381.G2",
-      "library": "bls12-381",
-      "description": "This module implements elliptic curve group operations on a G2 curve defined over Fq\u00b2 with the equation y\u00b2 = x\u00b3 + 4(u + 1), supporting addition, scalar multiplication, batch multi-scalar multiplication via Pippenger's algorithm, coordinate conversions, and serialization. It uses structured point representations in arrays for efficient in-place computations, includes subgroup validation, and provides cryptographic primitives like hashing to the curve. The module enables high-performance pairing-based cryptographic protocols such as zero-knowledge proofs and blockchain signature aggregation. Submodules handle low-level field arithmetic, point encoding, and optimized multi-exponentiation routines critical for protocol implementation.",
-      "description_length": 740,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bls12_381.CURVE-Scalar",
-      "library": "bls12-381",
-      "description": "This module provides arithmetic and cryptographic operations for finite field scalars modulo a fixed prime order, including modular addition, multiplication, inversion, exponentiation, and square root computation. It works with scalar values represented as `Scalar.t`, supporting conversions to/from integers, byte sequences, and strings, while ensuring valid field membership through encoding checks. These operations are essential for cryptographic protocols like BLS signatures or zero-knowledge proofs, where precise control over scalar field arithmetic and secure serialization are critical.",
-      "description_length": 596,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bls12_381.GT",
-      "library": "bls12-381",
-      "description": "This module implements the prime-order subgroup of Fq12, represented additively, with operations including addition, scalar multiplication, and group checks. It works with elements of type `t`, byte sequences for encoding/decoding, and scalars from the Fr module. Concrete use cases include cryptographic operations such as BLS signature verification and pairing-based protocols, where secure and efficient group arithmetic is required.",
-      "description_length": 436,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bls12_381",
       "library": "bls12-381",
-      "description": "This module implements the BLS12-381 elliptic curve cryptographic operations, supporting scalar multiplication, pairing computation, and group operations across G1, G2, and GT. It includes finite field arithmetic over Fr, Fq, and Fq12, enabling protocols like BLS signatures and zk-SNARKs through structured point representations, efficient multi-scalar exponentiation, and pairing checks. Submodules handle low-level point manipulations, coordinate conversions, serialization, and optimized field operations, with support for in-place updates, batch processing, and memory-safe arithmetic. Specific capabilities include hashing to the curve, threshold signature schemes, and delayed final exponentiation for performance-critical cryptographic applications.",
-      "description_length": 757,
-      "index": 12,
-      "embedding_norm": 1.0
+      "description": "This module implements core cryptographic primitives for the BLS12-381 elliptic curve, including finite field arithmetic, group operations, and bilinear pairings. It provides concrete functionality for scalar multiplication on G1 and G2 curves, Miller loop computation, final exponentiation, and operations in the target group GT, supporting advanced protocols like BLS signatures and zero-knowledge proofs. The module works with field elements, curve points, and group elements represented as opaque types, offering serialization, in-place arithmetic, and number-theoretic utilities.",
+      "description_length": 584,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 15,
-    "meaningful_modules": 13,
-    "filtered_empty_modules": 2,
-    "retention_rate": 0.8666666666666667
+    "total_modules_in_package": 10,
+    "meaningful_modules": 9,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9
   },
   "statistics": {
-    "max_description_length": 820,
-    "min_description_length": 382,
-    "avg_description_length": 614.2307692307693,
-    "embedding_file_size_mb": 0.047677040100097656
+    "max_description_length": 644,
+    "min_description_length": 318,
+    "avg_description_length": 521.4444444444445,
+    "embedding_file_size_mb": 0.130889892578125
   }
 }

@@ -1,41 +1,41 @@
 {
   "package": "logs-syslog",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:05:57.509767",
+  "creation_timestamp": "2025-08-14T23:02:59.523313",
   "modules": [
-    {
-      "module_path": "Logs_syslog_lwt_tls",
-      "library": "logs_syslog_lwt_tls",
-      "description": "This module provides a function `tcp_tls_reporter` to create a secure syslog reporter over TLS using Lwt. It establishes a TLS connection to a remote syslog server, authenticates the server using a CA certificate, and sends log messages with optional truncation and framing. The function requires client credentials (certificate and private key) and handles automatic reconnection, making it suitable for reliable, encrypted logging in asynchronous applications.",
-      "description_length": 462,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Logs_syslog_lwt",
-      "library": "logs-syslog.lwt",
-      "description": "This module creates syslog reporters over Lwt for sending log messages via UDP, TCP, or Unix domain sockets. It handles connection setup, message truncation, and framing for reliable transmission to syslog servers. Use it to forward application logs to a remote syslog server over UDP, a secure TLS-enabled syslog endpoint over TCP, or a local Unix socket like `/dev/log`.",
-      "description_length": 372,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Logs_syslog",
       "library": "logs-syslog",
-      "description": "This module provides functions to format and send log messages via the syslog protocol using various transport mechanisms like UDP, TCP, and TLS. It works with log messages as strings, timestamps using `Ptime.t`, and structured syslog message types, supporting message framing for stream transports using line feed, null bytes, octet counting, or custom delimiters. Concrete use cases include sending structured logs to remote syslog servers over TCP with null-byte framing or via TLS with octet-counted message framing.",
-      "description_length": 520,
-      "index": 2,
+      "description": "This module provides functions to format and frame syslog messages with support for various transport framing methods like line feed, null byte, custom delimiters, and octet counting. It maps log levels to syslog levels, injects timestamps and hostnames, and allows overriding syslog facilities using tags. Concrete use cases include sending structured logs over TCP or TLS to a syslog server, with proper message framing and error handling during connection failures.",
+      "description_length": 468,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Logs_syslog_unix",
       "library": "logs-syslog.unix",
-      "description": "This module provides functions to create syslog reporters over UDP, TCP, or Unix domain sockets. It works with IP addresses, Unix sockets, and syslog message structures, allowing logs to be sent to remote or local syslog servers. Concrete use cases include sending structured log messages to a centralized logging server via UDP or TCP, or logging locally through a Unix socket like `/dev/log`, with options to control message truncation, framing, and syslog facility.",
-      "description_length": 468,
+      "description": "This module provides functions to create syslog reporters over UDP, TCP, or Unix domain sockets for sending structured log messages. It works with IPv4 addresses, Unix sockets, and syslog-specific types like facilities and framing modes. Concrete use cases include forwarding logs to a remote syslog server via UDP, reliably sending logs over TCP with reconnection handling, or logging locally through a Unix socket like `/dev/log`.",
+      "description_length": 432,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Logs_syslog_lwt",
+      "library": "logs-syslog.lwt",
+      "description": "This module provides functions to create syslog reporters over UDP, TCP, or Unix domain sockets for asynchronous logging in Lwt-based applications. It works with IP addresses, string hostnames, and socket paths, supporting message truncation, framing, and facility configuration. Concrete use cases include sending structured logs to remote syslog servers, handling connection failures gracefully, and integrating with local syslog daemons via Unix sockets.",
+      "description_length": 457,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Logs_syslog_lwt_tls",
+      "library": "logs_syslog_lwt_tls",
+      "description": "This module creates a TLS-secured syslog reporter that sends log messages over TCP to a remote server using Lwt for asynchronous I/O. It requires cryptographic credentials (CA certificate, client certificate, and private key) and allows optional message truncation and framing configuration. A concrete use case is sending authenticated, encrypted logs to a centralized syslog server over a secure TLS connection.",
+      "description_length": 413,
       "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 520,
-    "min_description_length": 372,
-    "avg_description_length": 455.5,
-    "embedding_file_size_mb": 0.014929771423339844
+    "max_description_length": 468,
+    "min_description_length": 413,
+    "avg_description_length": 442.5,
+    "embedding_file_size_mb": 0.058349609375
   }
 }

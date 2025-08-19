@@ -1,119 +1,119 @@
 {
   "package": "ocp-indent",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 14,
-  "creation_timestamp": "2025-07-15T23:09:15.785604",
+  "creation_timestamp": "2025-08-14T23:22:20.087704",
   "modules": [
     {
-      "module_path": "IndentBlock",
-      "library": "ocp-indent.lib",
-      "description": "This module manages indentation blocks for tracking and modifying code indentation levels during parsing. It provides operations to shift, set, and reverse indentation, as well as query current indentation, padding, and original column positions. Use cases include updating indentation state when processing tokens, guessing indentation for empty lines, and determining block context such as whether inside a comment or at a top-level declaration.",
-      "description_length": 447,
+      "module_path": "IndentExtend",
+      "library": "ocp-indent.lexer",
+      "description": "This module manages lexer extensions for indentation-sensitive parsing, allowing registration of keyword-token pairs and custom lexers. It works with lexbuf streams and token definitions to support context-specific indentation rules. Use it to implement language extensions that require custom indentation handling, such as domain-specific languages or enhanced syntax blocks.",
+      "description_length": 376,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "IndentPrinter",
-      "library": "ocp-indent.lib",
-      "description": "This module manages formatted text output with indentation, handling elements like newlines, whitespace, and text blocks. It processes streams of output elements and applies indentation logic to structure blocks of text. Useful for generating code or pretty-printing nested data with consistent formatting.",
-      "description_length": 306,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "IndentConfig",
-      "library": "ocp-indent.lib",
-      "description": "This module manages indentation configurations for source code formatting, providing operations to load, save, and update indentation settings from files or strings. It works with a structured type `t` storing integer-based indentation levels and toggle options, along with a recursive block type for manual formatting instructions. Concrete use cases include reading `.ocp-indent` files to control OCaml code indentation, handling syntax extensions, and exporting configurations to disk.",
-      "description_length": 488,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Approx_tokens",
       "library": "ocp-indent.lexer",
-      "description": "This module defines a comprehensive set of lexical token types representing OCaml source code elements, including keywords, operators, literals, and punctuation. It provides a `to_string` function to convert each token variant to its corresponding string representation. Concrete use cases include lexing OCaml code, parsing, and tooling that requires precise token-level manipulation, such as syntax highlighters or linters.",
-      "description_length": 425,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "IndentExtend",
-      "library": "ocp-indent.lexer",
-      "description": "This module manages lexer extensions for indentation-sensitive parsing, allowing registration of custom keyword-token pairs and lexers. It provides operations to register, retrieve, and list named extensions, each consisting of keywords and an optional lexer function. Use it to dynamically extend indentation-based syntax parsing with language-specific rules.",
-      "description_length": 360,
-      "index": 4,
+      "description": "This module defines a comprehensive set of lexical token types representing OCaml source code elements, including keywords, operators, literals, and punctuation. It provides a `to_string` function to convert each token variant to its corresponding string representation. Concrete use cases include lexing OCaml code, generating readable token output for debugging, and supporting parser development by identifying and handling specific syntactic constructs.",
+      "description_length": 457,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Approx_lexer",
       "library": "ocp-indent.lexer",
-      "description": "This module tokenizes character sequences into structured lexical elements, managing state transitions for nested or multi-line constructs like comments and string literals. It operates on buffered input streams and string data, producing tokens paired with positional metadata for precise error reporting or source mapping. Typical applications include implementing language parsers, syntax highlighters, or preprocessing tools requiring accurate lexical analysis with context-sensitive handling of delimiters and embedded content.",
-      "description_length": 532,
+      "description": "This module supports tokenization, comment handling, and recursive lexing of complex constructs like quotations and verbatim sections, operating on `Lexing.lexbuf` and character streams. It processes lexical tokens (e.g., identifiers, integers, operators) while managing states for nested comments, string buffering, and positional metadata. Key use cases include parsing OCaml source code with precise location tracking for error reporting or AST generation, and handling embedded syntax extensions through customizable lexing rules.",
+      "description_length": 534,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "IndentConfig",
+      "library": "ocp-indent.lib",
+      "description": "This module manages indentation settings for code formatting, providing operations to load, save, and update configurations from files or strings. It works with a record type `t` storing integer and boolean options for indentation levels and styles, along with a custom `man_block` type for documentation formatting. Concrete use cases include reading `.ocp-indent` files to apply project-specific indentation rules, modifying settings via environment variables, and exporting current configurations to disk.",
+      "description_length": 508,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "IndentBlock",
+      "library": "ocp-indent.lib",
+      "description": "This module manages indentation blocks for tracking and adjusting code indentation levels during parsing. It provides operations to shift, set, and reverse indentation, as well as query current indentation, padding, and original column positions. Use cases include handling nested code structures, aligning sub-blocks, and determining correct indentation for empty lines or during partial parsing.",
+      "description_length": 397,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "IndentPrinter",
+      "library": "ocp-indent.lib",
+      "description": "This module manages formatted output generation with indentation control, using a custom type `output_elt` to represent newline, indentation, whitespace, and text elements. It processes streams of tokens (`Nstream.t`) within an indentation context (`IndentBlock.t`) to produce properly indented output. Concrete use cases include generating source code, pretty-printing structured data, and formatting configuration files.",
+      "description_length": 422,
       "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pos.Region",
-      "library": "ocp-indent.utils",
-      "description": "This module represents and manipulates text regions defined by start and end positions, providing operations to create regions, extract positional data like line and column numbers, and transform regions through shifting or calculating length. It works with `Pos.Position.t` to define region boundaries and exposes integer-based metadata such as character offset, line numbers, and column positions. Concrete use cases include tracking source code spans during lexing, reporting error locations, and aligning text transformations with original source structure.",
-      "description_length": 561,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pos.Position",
-      "library": "ocp-indent.utils",
-      "description": "This module represents and manipulates lexer positions, tracking location information during parsing. It provides operations to retrieve the column offset of a position, convert a position to a string, and obtain the initial (zero) position. Useful for reporting precise source code locations in error messages or syntax analysis tools.",
-      "description_length": 336,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Compat.String",
-      "library": "ocp-indent.utils",
-      "description": "This module provides comprehensive string manipulation capabilities spanning text processing, binary data handling, and encoding operations. It works with `string` and `bytes` types to enable tasks like case conversion, substring extraction, UTF-8/UTF-16 validation, and integer parsing from byte buffers, while supporting advanced use cases such as hash generation for hashtables, whitespace trimming, and bidirectional conversions between text and binary representations. Key applications include parsing binary file formats, normalizing textual data, and implementing low-level network protocols requiring precise byte-level control.",
-      "description_length": 636,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Compat",
-      "library": "ocp-indent.utils",
-      "description": "This module simplifies function chaining and value passing through polymorphic composition and application operators, making data pipelines more readable. It includes a String submodule that manipulates `string` and `bytes` values for tasks like encoding, parsing, and binary conversion. You can compose functions like `f >> g` to transform data sequentially or use `|>` to inject values into processing chains, while the String module handles operations such as trimming whitespace or validating UTF-8. Together, they streamline workflows that mix high-level transformations with low-level text and byte manipulation.",
-      "description_length": 618,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nstream",
-      "library": "ocp-indent.utils",
-      "description": "This module implements a stream with efficient n-lookup, primarily handling tokenized input from strings or channels. It provides operations to create streams (`of_string`, `of_channel`) and retrieve the next token (`next`) along with its metadata like position, offset, and surrounding text. Concrete use cases include parsing source code with precise error locations or processing structured text where token context and layout matter.",
-      "description_length": 437,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pos",
-      "library": "ocp-indent.utils",
-      "description": "This module tracks and manipulates source code positions and regions during lexing, providing precise location data for error reporting and text analysis. It defines `Pos.Position.t` to represent lexer positions with line and column offsets, and `Pos.Region.t` to describe spans between positions, supporting operations like shifting, length calculation, and string conversion. You can use it to map syntax errors to specific source locations, align transformations with original text structure, or generate human-readable position reports. For example, it can convert a position to a string like `\"line 3, column 5\"` or compute the length of a region in characters.",
-      "description_length": 666,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Util",
-      "library": "ocp-indent.utils",
-      "description": "This module combines functions for string manipulation and function composition. It provides operations like splitting strings on characters, checking prefixes, counting indentation, and safely handling optional values with defaults. Use cases include parsing text, formatting output, and composing transformations in data processing pipelines.",
-      "description_length": 344,
-      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "IndentLoader",
       "library": "ocp-indent.dynlink",
-      "description": "Loads dynamically linked modules and Finlib packages, resolving dependencies and initializing components. It processes a list of module or package specifications, handling symbol resolution and execution context setup. Useful for plugin systems or modular applications requiring runtime extension.",
-      "description_length": 297,
+      "description": "Loads modules or packages dynamically using Dynlink, enabling runtime extension of the program. Accepts a list of module or package references to link, with an optional debug flag to trace the loading process. Useful for plugin systems or modular applications that need to load components on demand.",
+      "description_length": 299,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Compat.String",
+      "library": "ocp-indent.utils",
+      "description": "This module offers string creation, character-level manipulation (including mapping, trimming, and escaping), and low-level binary parsing via integer extraction and hashing. It works with strings and bytes, supports ASCII, UTF-8, and UTF-16 encodings, and is used for text processing, binary data decoding, and string validation tasks.",
+      "description_length": 336,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pos.Position",
+      "library": "ocp-indent.utils",
+      "description": "This module represents and manipulates lexer positions, tracking location information during lexical analysis. It provides operations to retrieve the column offset of a position, convert a position to a string, and obtain an initial zero position. Concrete use cases include error reporting with precise source location and tracking input progress in custom lexers.",
+      "description_length": 365,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pos.Region",
+      "library": "ocp-indent.utils",
+      "description": "This module represents and manipulates text regions defined by start and end positions, typically used during lexing to track source code spans. It supports operations to create regions, query their boundaries (lines, columns, character offsets), compute lengths, shift regions, and access predefined empty regions. Concrete use cases include error reporting with precise source locations and tracking token spans in a lexer.",
+      "description_length": 425,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Compat",
+      "library": "ocp-indent.utils",
+      "description": "This module defines function composition and application operators for pipeline-style programming. It works directly with functions and values of arbitrary types. Use it to streamline control flow in data transformation chains or callback-heavy code.",
+      "description_length": 250,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nstream",
+      "library": "ocp-indent.utils",
+      "description": "This module implements a stream with efficient n-lookup, providing operations to create streams from strings or input channels and retrieve tokens incrementally. It works with a custom token type that includes positional information, a lexer token, newline count, and string fragments. Concrete use cases include parsing source code with precise error locations and incremental token processing in lexers or parsers.",
+      "description_length": 416,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pos",
+      "library": "ocp-indent.utils",
+      "description": "This module handles lexer positions and text regions for tracking source code locations during lexical analysis. It provides functions to manipulate positions (e.g., retrieve column offsets, create initial positions) and regions (e.g., define spans, compute lengths, shift boundaries). Use cases include precise error reporting and token span tracking in custom lexers.",
+      "description_length": 369,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Util",
+      "library": "ocp-indent.utils",
+      "description": "This module combines functions for string manipulation and function composition. It provides tools to split strings by characters or sets of characters, check string prefixes and escape endings, count leading spaces, and shorten strings to a given length. Additionally, it supports composing functions using `compose` and the `@*` operator, along with retrieving default values for optional inputs.",
+      "description_length": 398,
       "index": 13,
       "embedding_norm": 1.0
     }
@@ -125,9 +125,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 666,
-    "min_description_length": 297,
-    "avg_description_length": 460.92857142857144,
-    "embedding_file_size_mb": 0.051278114318847656
+    "max_description_length": 534,
+    "min_description_length": 250,
+    "avg_description_length": 396.57142857142856,
+    "embedding_file_size_mb": 0.20331668853759766
   }
 }

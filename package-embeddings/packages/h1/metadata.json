@@ -1,80 +1,72 @@
 {
   "package": "h1",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 17,
-  "creation_timestamp": "2025-07-15T23:09:06.533158",
+  "creation_timestamp": "2025-08-14T23:26:01.557573",
   "modules": [
-    {
-      "module_path": "H1.Body.Writer",
-      "library": "h1",
-      "description": "This module provides functions to efficiently write HTTP message bodies using buffered and zero-copy techniques. It supports writing characters, strings, and bigstrings, with operations that either copy data into internal buffers or schedule data for transmission without copying. Typical use cases include streaming large payloads, sending binary data over HTTP connections, and ensuring timely transmission of response bodies in a web server.",
-      "description_length": 444,
-      "index": 0,
-      "embedding_norm": 1.0000001192092896
-    },
     {
       "module_path": "H1.Request.Body_length",
       "library": "h1",
-      "description": "This module represents the length of a request body in an HTTP 1.1 message, with support for fixed-length, chunked encoding, and error states. It provides a single type `t` that encodes these possible body length states and a function `pp_hum` to format and print these values for logging or debugging. Use this module when handling HTTP request parsing or generation where body length determination affects message processing or resource allocation.",
-      "description_length": 450,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "H1.Body.Reader",
-      "library": "h1",
-      "description": "This module manages the reading of HTTP message bodies by providing callbacks for consuming incoming bytes and handling end-of-file conditions. It operates on a `t` type representing a body reader, supporting asynchronous consumption of data through vectorized IO. Concrete use cases include processing chunked or content-length delimited HTTP payloads in a streaming fashion, such as parsing JSON or form data incrementally.",
-      "description_length": 425,
-      "index": 2,
+      "description": "This module represents the length of a request body in an HTTP 1.1 message, with support for fixed-length, chunked encoding, and error states. It provides a single type `t` that encodes these possible body length states and a function `pp_hum` to format and print these values for logging or debugging. Use this module when handling HTTP request parsing and validation, particularly when determining how to process the body based on the `Content-Length` or `Transfer-Encoding` headers.",
+      "description_length": 485,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "H1.Response.Body_length",
       "library": "h1",
-      "description": "This module determines the length of a response body based on HTTP 1.1 message framing rules. It works with the `t` type, which represents body length as fixed size, chunked encoding, close-delimited, or error conditions. It is used to correctly frame HTTP responses by indicating how the body should be transmitted, such as determining when to apply chunked transfer encoding or when the response ends.",
-      "description_length": 403,
+      "description": "This module defines the length semantics of a server-generated HTTP response body, including fixed-length, chunked encoding, close-delimited, and error states. It works with the `t` variant type to represent body length strategies and provides `pp_hum` for human-readable formatting. It is used to determine how response body transmission should be terminated, directly influencing connection handling and framing behavior in HTTP 1.1 and 1.0 servers.",
+      "description_length": 451,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "H1.Body.Reader",
+      "library": "h1",
+      "description": "This module manages the reading of HTTP message bodies by providing callbacks for consuming incoming data and handling end-of-file conditions. It operates on a `t` type representing a reader state, using `Bigstringaf.t` for efficient byte buffer handling during reads. Use this module to process streamed HTTP body content incrementally, such as for parsing chunked transfers or handling large payloads without full buffering.",
+      "description_length": 426,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "H1.Body.Writer",
+      "library": "h1",
+      "description": "This module provides functions to efficiently write HTTP message bodies using internal buffering and zero-copy techniques. It supports writing characters, strings, and bigstrings, with operations that either copy data into internal buffers or schedule bigstrings for transmission without copying. Typical use cases include streaming large data payloads, handling HTTP chunked encoding, and ensuring efficient network transmission in high-performance web servers.",
+      "description_length": 462,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "H1.Method",
+      "module_path": "H1.Request",
       "library": "h1",
-      "description": "This module defines the set of standard HTTP request methods and categorizes them by their safety, cacheability, and idempotence properties. It provides functions to check these properties for standard methods and to convert between string representations and typed values, including handling custom methods. It is used to validate and process HTTP requests according to the semantics defined in RFC7231.",
-      "description_length": 404,
+      "description": "This module represents and manipulates client-initiated HTTP messages, providing operations to construct and inspect requests. It works with HTTP methods, request targets, versions, and headers, and includes functionality to determine body length, check for persistent connections, and detect upgrade requests. Concrete use cases include parsing incoming HTTP requests, validating message structure, and managing connection behavior in a web server.",
+      "description_length": 449,
       "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "H1.Headers",
-      "library": "h1",
-      "description": "This module manages HTTP/1 header fields through operations that maintain field order and enforce case-insensitive name handling, using an ordered list of (name, value) pairs. It supports adding, removing, and querying headers with special logic for multi-valued fields (e.g., comma-joining allowed duplicates), while providing serialization and folding utilities for tasks like request/response processing or logging. Key use cases include parsing client requests, constructing server responses, and ensuring RFC-compliant header manipulation where field order and case normalization are critical.",
-      "description_length": 598,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "H1.Status",
-      "library": "h1",
-      "description": "This module defines types and functions for working with HTTP response status codes, including standard classifications like informational, successful, redirection, client error, and server error. It provides operations to convert status codes to and from integers, strings, and reason phrases, as well as predicates to check the class of a status code. Concrete use cases include constructing HTTP responses with appropriate status codes, validating incoming status codes, and logging or debugging HTTP transactions using human-readable reason phrases.",
-      "description_length": 553,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "H1.Body",
-      "library": "h1",
-      "description": "This module handles HTTP message bodies for both sending and receiving data efficiently. It provides types like `t` for body readers and supports operations to write strings, bigstrings, or characters with optional zero-copy semantics. You can stream large payloads, send binary data without extra copies, or process incoming HTTP payloads asynchronously, such as parsing JSON incrementally or handling form data.",
-      "description_length": 413,
-      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "H1.Config",
       "library": "h1",
-      "description": "This module defines configuration parameters for buffer sizes used in HTTP connection handling. It provides a record type `t` with fields for read, request body, response, and response body buffer sizes, along with a `default` value that sets all buffers to their predefined defaults. It is used to tune memory usage and I/O efficiency when processing HTTP requests and responses.",
-      "description_length": 380,
-      "index": 8,
+      "description": "This module defines configuration parameters for buffer sizes used in HTTP connection handling. It provides a record type `t` with fields for read, request body, response, and response body buffer sizes, along with a `default` value that sets these fields to standard initial values. It is used to tune memory usage and performance when processing HTTP requests and responses.",
+      "description_length": 376,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "H1.Client_connection",
+      "library": "h1",
+      "description": "This module manages HTTP 1.1 client connections by handling request submission, response parsing, and bidirectional byte stream processing. It works with HTTP requests and responses, using vectorized IO for efficient data transmission and supporting pipelined operations. Concrete use cases include sending HTTP requests over a network socket, processing server responses incrementally, and managing connection state transitions during read and write operations.",
+      "description_length": 462,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "H1.Reqd",
+      "library": "h1",
+      "description": "This module handles HTTP request processing and response generation for a high-performance web server. It provides access to request metadata, response initialization, and streaming capabilities, working with HTTP request and response types along with body readers and writers. Concrete use cases include sending string or streaming responses, handling upgrades, and managing exceptions during request handling.",
+      "description_length": 411,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
@@ -82,62 +74,70 @@
       "library": "h1",
       "description": "This module represents and manipulates HTTP protocol versions using a record type with major and minor fields. It provides constants for HTTP 1.0 and 1.1, functions for parsing and formatting versions, and comparison operations. Use this module to handle version negotiation, protocol conformance checks, and string representation in HTTP server logic.",
       "description_length": 352,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "H1.Client_connection",
-      "library": "h1",
-      "description": "This module manages HTTP 1.1 client connections, handling request submission, response parsing, and bidirectional byte stream processing. It works with HTTP requests and responses, using efficient vectorized IO through `Bigstringaf` and `IOVec` for high-performance data transfer. Concrete use cases include sending HTTP requests over a network socket, processing pipelined responses, and managing connection state transitions during read and write operations.",
-      "description_length": 460,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "H1.Response",
-      "library": "h1",
-      "description": "This module manages HTTP server responses, handling status codes, headers, and protocol versions while determining body length and connection behavior based on the request and proxy context. It directly supports assembling responses for transmission and inspecting metadata for connection management, working with response body framing through its child module that calculates body length as fixed, chunked, close-delimited, or error states. You can use it to construct valid HTTP responses, decide when to use chunked encoding, and determine if a connection should stay open or close after transmission.",
-      "description_length": 604,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "H1.Reqd",
-      "library": "h1",
-      "description": "This module handles HTTP request processing and response generation for a high-performance web server. It provides access to request metadata, response initialization, and streaming capabilities for large payloads, working with HTTP 1.1 requests and responses, including support for connection upgrades. Concrete use cases include serving static content, handling dynamic requests with streaming responses, and managing protocol upgrades like WebSockets.",
-      "description_length": 454,
-      "index": 12,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "H1.IOVec",
+      "module_path": "H1.Method",
       "library": "h1",
-      "description": "This module manages vectorized IO operations for handling HTTP message bodies efficiently. It provides functions to calculate the total length of data buffers, shift offsets within buffers, and pretty-print buffer contents. These operations are critical for processing pipelined HTTP requests and responses without unnecessary memory copies.",
-      "description_length": 341,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "H1.Request",
-      "library": "h1",
-      "description": "This module handles client HTTP requests, allowing creation and inspection of messages with their method, target, version, and headers. It supports operations to construct valid HTTP 1.1 requests and determine properties like body length and connection persistence for network communication. The body length functionality is provided by a dedicated submodule that represents possible length states\u2014fixed, chunked, or error\u2014and includes utilities for formatting these values. Use this module to build, inspect, and process HTTP requests, particularly when handling message framing, parsing, or resource allocation based on body length.",
-      "description_length": 634,
-      "index": 14,
+      "description": "This module defines the set of standard HTTP request methods and categorizes them by properties such as safety, cacheability, and idempotence. It provides functions to convert between string representations and typed values, along with predicates to check method characteristics. Use this module when handling HTTP requests to validate, classify, or respond based on the method used, such as distinguishing between `GET` and `POST` for routing or caching logic.",
+      "description_length": 461,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "H1.Server_connection",
       "library": "h1",
-      "description": "This module manages HTTP 1.1 server connections by handling request parsing, response writing, and connection state transitions. It works with low-level IO operations using `Bigstringaf` and `IOVec`, and integrates with request handlers to process incoming HTTP requests. Concrete use cases include reading request bodies, writing response headers and content, handling connection closure, and managing backpressure through yield and resume operations during IO.",
-      "description_length": 462,
-      "index": 15,
+      "description": "This module processes HTTP 1.1 server connections by managing request parsing, response writing, and connection lifecycle events. It works with low-level byte buffers, vectorized IO, and HTTP-specific types like requests, responses, and headers. Concrete use cases include handling pipelined HTTP requests, managing partial reads and writes, and signaling errors or protocol violations during connection processing.",
+      "description_length": 415,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "H1.IOVec",
+      "library": "h1",
+      "description": "This module manages vectorized IO operations for handling HTTP message bodies efficiently. It provides functions to calculate the total length of data buffers, shift offsets within buffers, and pretty-print buffer contents. These operations are essential for parsing and serializing HTTP messages with minimal memory copying.",
+      "description_length": 325,
+      "index": 11,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "H1.Headers",
+      "library": "h1",
+      "description": "The module offers operations to construct, modify, and query HTTP header fields while maintaining their order and case-insensitive names. It works with ordered collections of `(name, value)` pairs, supporting single and multi-value semantics, and provides functions to fold over headers, convert them to strings, or format them for readability. These capabilities are essential for handling HTTP/1.1 messages in high-performance web servers, ensuring compliance with standards when adding, removing, or combining headers like `Set-Cookie` or `Content-Length`.",
+      "description_length": 559,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "H1.Response",
+      "library": "h1",
+      "description": "This module constructs and analyzes HTTP server responses, handling status codes, headers, and versioning. It works with structured types for HTTP versions, statuses, and headers, along with body length determination and connection persistence logic. Concrete use cases include building valid HTTP 1.1 responses for server connections, determining when to apply chunked encoding, and deciding whether to keep a connection open after a response.",
+      "description_length": 444,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "H1.Body",
+      "library": "h1",
+      "description": "This module handles the reading and writing of HTTP message bodies with precise control over data flow and memory usage. It works with `Bigstringaf.t` buffers for efficient byte-level operations, supporting both incremental consumption of incoming data and buffered or zero-copy emission of outgoing content. Concrete applications include streaming large file uploads, processing chunked HTTP transfers, and managing pipelined HTTP requests and responses in high-performance web servers.",
+      "description_length": 487,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "H1.Status",
+      "library": "h1",
+      "description": "This module defines types and functions for working with HTTP response status codes, including standard classifications like informational, successful, redirection, client error, and server error. It provides operations to convert status codes to and from integers, strings, and formatted output, along with predicates to check the class of a status code. Concrete use cases include validating HTTP response codes, generating appropriate status messages, and handling different categories of HTTP responses in a type-safe manner.",
+      "description_length": 529,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "H1",
       "library": "h1",
-      "description": "This module implements a high-performance HTTP 1.1 web server with full support for parsing, serialization, and connection pipelining. It provides core data types for HTTP methods, headers, status codes, protocol versions, and message bodies, along with operations to construct, inspect, and process HTTP requests and responses efficiently. You can handle streaming payloads, manage connection state, tune buffer sizes, and work with vectorized IO for minimal memory overhead. Specific use cases include serving dynamic content, handling protocol upgrades, and building scalable network services with precise control over HTTP semantics.",
-      "description_length": 637,
+      "description": "This module implements HTTP 1.1 parsing, serialization, and connection management for high-performance web servers. It works with structured types for HTTP methods, versions, status codes, headers, and message bodies, using efficient buffer handling and vectorized IO for minimal memory overhead. Concrete use cases include processing pipelined HTTP requests, streaming large payloads with zero-copy semantics, and enforcing protocol compliance for server connections.",
+      "description_length": 468,
       "index": 16,
       "embedding_norm": 1.0
     }
@@ -149,9 +149,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 637,
-    "min_description_length": 341,
-    "avg_description_length": 471.4117647058824,
-    "embedding_file_size_mb": 0.06217765808105469
+    "max_description_length": 559,
+    "min_description_length": 325,
+    "avg_description_length": 444.8235294117647,
+    "embedding_file_size_mb": 0.24681949615478516
   }
 }

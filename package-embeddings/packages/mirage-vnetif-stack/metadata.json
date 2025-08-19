@@ -1,117 +1,37 @@
 {
   "package": "mirage-vnetif-stack",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:08:37.888318",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 2,
+  "creation_timestamp": "2025-08-14T23:03:07.496966",
   "modules": [
     {
       "module_path": "Vnetif_stack.Vnetif_stack.V4V6.IP",
       "library": "mirage-vnetif-stack",
-      "description": "This module handles IP layer operations for both IPv4 and IPv6, including packet input demultiplexing, IP frame writing with fragmentation control, source address selection, and MTU management. It works with IP addresses, prefixes, and Cstruct buffers, providing functions to send and process IP packets with protocol-specific callbacks. Concrete use cases include handling incoming IP traffic by protocol, sending UDP or TCP packets with proper IP headers, and configuring or querying IP addresses and network prefixes on an interface.",
-      "description_length": 536,
+      "description": "This module handles IP layer operations for both IPv4 and IPv6, including packet input demultiplexing, IP frame writing with fragmentation control, source address selection, and pseudoheader generation for checksums. It works with IP addresses, prefixes, and network buffers, providing direct access to interface configuration such as MTU and assigned IP prefixes. Concrete use cases include processing incoming IP packets, sending UDP or TCP packets with specified options, and determining source addresses for outgoing connections.",
+      "description_length": 533,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack.V4V6.UDP",
-      "library": "mirage-vnetif-stack",
-      "description": "This module handles UDP communication by providing functions to send and receive datagrams with explicit source and destination addressing. It supports operations like `write` for transmitting data to a specified destination, `listen` to register callbacks for incoming packets on a port, and `input` to route received datagrams to the appropriate listener. The module works with IP addresses represented as `Ipaddr.t`, uses `Cstruct.t` for packet data, and manages asynchronous I/O via `Lwt.t`.",
-      "description_length": 495,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack.V4V6.TCP",
-      "library": "mirage-vnetif-stack",
-      "description": "This module manages TCP connection lifecycles, enabling operations like establishing connections, transmitting data streams, and terminating sessions, while also processing incoming packets through stateful handling of IPv4/IPv6 traffic. It operates on `flow` types representing individual TCP connections and `t` values encapsulating the TCP/IP stack instance, working with network packet buffers and IP address types. These capabilities support use cases such as building TCP servers, implementing reliable communication channels, and integrating packet processing pipelines in MirageOS network stacks.",
-      "description_length": 604,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack.Backend",
-      "library": "mirage-vnetif-stack",
-      "description": "This module manages virtual network interface backends, handling registration, packet transmission, and event callbacks. It works with virtual network devices identified by integer handles, supporting operations like writing packets, setting receive handlers, and managing MAC addresses. Concrete use cases include implementing custom network backends for MirageOS unikernels, directing traffic between virtual interfaces and external networks, and handling per-device packet processing logic.",
-      "description_length": 493,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack.V4V6",
-      "library": "mirage-vnetif-stack",
-      "description": "This module coordinates a dual IPv4/IPv6 networking stack, enabling the creation of network services that handle UDP, TCP, and raw IP traffic across both protocols. It provides descriptors for transport-layer communication, supports connection teardown, packet demultiplexing, and asynchronous I/O handling through Lwt, while integrating IP layer management for addressing, fragmentation, and MTU control. The IP submodule routes incoming packets by protocol, sends IP frames with proper headers, and manages address configuration, while the UDP and TCP submodules offer datagram transmission, port-based listeners, connection establishment, and stream-based data transfer. Example uses include setting up a TCP server that accepts IPv4 and IPv6 connections, sending UDP datagrams with explicit addressing, or processing raw IP packets with custom protocol handlers.",
-      "description_length": 866,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack-V4V6-UDP",
-      "library": "mirage-vnetif-stack",
-      "description": "This module handles UDP communication over IPv4 and IPv6, providing functions to send and receive datagrams with explicit source and destination addressing. It supports binding listeners to specific ports, processing incoming packets via callbacks, and writing packets with optional TTL control. Use cases include implementing custom UDP-based protocols, handling multicast or unicast UDP traffic, and integrating with network stacks that require fine-grained control over UDP endpoints.",
-      "description_length": 487,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack",
-      "library": "mirage-vnetif-stack",
-      "description": "This module creates and manages virtualized IPv4 network stacks connected to backends, supporting configuration of CIDR ranges, gateways, and MTUs, while coordinating packet transmission and concurrency control. It works with data types like `backend`, `Ipaddr.V4.Prefix.t`, and `Cstruct.t`, enabling setup of virtual network interfaces with monitoring and custom packet handling. The backend module manages virtual devices by handle, allowing packet writes, receive handlers, and MAC address control, useful for implementing MirageOS network backends or directing traffic between interfaces. The networking stack module extends this with dual IPv4/IPv6 support, handling UDP, TCP, and raw IP traffic through Lwt-based I/O, with concrete uses including TCP servers accepting both IP versions and custom protocol handlers for raw packets.",
-      "description_length": 837,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack-V4V6-TCP",
-      "library": "mirage-vnetif-stack",
-      "description": "This module provides a TCP networking interface for managing IPv4/IPv6 connections, offering operations to establish and terminate connections, transmit data with configurable buffering, control flow states, and handle errors. It operates on TCP connection objects and stack instances, leveraging IP addresses for endpoint identification and continuations to process incoming packets within a Vnetif-based network stack. Suitable for implementing dual-stack network services, virtualized networking layers, or applications requiring precise TCP state management and packet handling.",
-      "description_length": 582,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack-V4V6-IP",
-      "library": "mirage-vnetif-stack",
-      "description": "This module handles IP layer operations for both IPv4 and IPv6, including packet input demultiplexing, IP frame writing with fragmentation control, source address selection, and checksum pseudoheader generation. It works with IP addresses, prefixes, and network buffers, providing direct access to the interface's configured IP addresses and MTU values. Concrete use cases include sending and receiving IP packets, handling protocol-specific callbacks, and managing IP-level transmission parameters like TTL and fragmentation.",
-      "description_length": 526,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack-V4V6",
-      "library": "mirage-vnetif-stack",
-      "description": "This module manages a dual IPv4 and IPv6 networking stack, providing operations to obtain descriptors for UDP, TCP, and raw IP handling. It supports disconnecting from the network, listening for incoming traffic, and demultiplexing packets to registered callbacks. Concrete use cases include implementing network services that require both IPv4 and IPv6 connectivity, such as dual-stack web servers or custom network protocols.",
-      "description_length": 427,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vnetif_stack.Vnetif_stack-Backend",
-      "library": "mirage-vnetif-stack",
-      "description": "This module manages virtual network interface devices, handling registration, packet transmission, and reception callbacks. It works with backend implementations of network interfaces, using MAC addresses and buffer structures for data transfer. Concrete use cases include attaching virtual network devices to a backend, sending Ethernet frames with specified sizes, and setting up asynchronous packet listeners.",
-      "description_length": 412,
-      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vnetif_stack",
       "library": "mirage-vnetif-stack",
-      "description": "This module implements a network interface stack for virtual networks, coordinating packet transmission and reception across Ethernet, IP, UDP, and TCP layers. It manages virtual network devices through backend interfaces, enabling frame transmission, MAC address control, and asynchronous packet handling, while supporting IPv4 and IPv6 with CIDR configuration, MTU control, and protocol demultiplexing. The UDP layer sends and receives datagrams with TTL and port binding, the TCP layer manages connections with flow control and buffering, and the IP layer handles fragmentation, checksums, and address selection. Use cases include dual-stack network services, virtualized network backends, custom protocol implementations, and packet filtering or simulation layers.",
-      "description_length": 768,
-      "index": 11,
+      "description": "This module defines a network interface stack for virtualized networking, focusing on packet transmission and reception. It works with network device interfaces and packet buffers to manage communication in virtualized environments. Concrete use cases include implementing virtual network backends for hypervisors and handling network I/O in unikernels.",
+      "description_length": 353,
+      "index": 1,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 12,
-    "meaningful_modules": 12,
+    "total_modules_in_package": 2,
+    "meaningful_modules": 2,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 866,
-    "min_description_length": 412,
-    "avg_description_length": 586.0833333333334,
-    "embedding_file_size_mb": 0.044025421142578125
+    "max_description_length": 533,
+    "min_description_length": 353,
+    "avg_description_length": 443.0,
+    "embedding_file_size_mb": 0.0294036865234375
   }
 }

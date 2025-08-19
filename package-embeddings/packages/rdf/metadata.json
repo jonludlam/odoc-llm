@@ -1,560 +1,528 @@
 {
   "package": "rdf",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 115,
-  "creation_timestamp": "2025-07-15T23:25:12.290249",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 108,
+  "creation_timestamp": "2025-08-15T16:46:59.263579",
   "modules": [
-    {
-      "module_path": "Rdf.Mem.Mem.BGP",
-      "library": "rdf",
-      "description": "This module implements in-memory storage for RDF graphs using tree-based sets, supporting operations to add, query, and compare RDF terms. It works with terms representing subjects, predicates, and objects in an RDF graph, and provides direct access to lists of subjects and objects present in the graph. Concrete use cases include building and querying RDF datasets in memory, such as for semantic web applications or data integration tools.",
-      "description_length": 442,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Rdf.Graph.Make.BGP",
       "library": "rdf",
-      "description": "Implements a basic graph pattern (BGP) engine for RDF graphs, supporting term comparison, subject-object enumeration, and triple pattern matching. Operates on graph (`g`) and term types, enabling efficient in-place queries and term conversions. Used to execute SPARQL-like pattern searches within an RDF graph instance.",
-      "description_length": 319,
+      "description": "Implements a basic graph pattern (BGP) interface for querying and manipulating RDF graphs in memory. It supports operations like finding triples matching subject-predicate-object patterns, listing all subjects or objects, and comparing and converting between internal and external term representations. This module is used when evaluating SPARQL queries or performing pattern matching over RDF data stored in memory.",
+      "description_length": 416,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Mem.Mem.BGP",
+      "library": "rdf",
+      "description": "This module implements in-memory storage for RDF graphs using tree-based sets, supporting efficient term comparison and retrieval. It works with terms representing RDF nodes and provides operations to query triples by subject, predicate, or object. Concrete use cases include storing and querying RDF datasets in memory, such as loading and searching small ontologies or SPARQL query execution.",
+      "description_length": 394,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Foaf.Open",
-      "library": "rdf",
-      "description": "This module provides constants and functions for working with FOAF vocabulary terms as IRI identifiers, enabling the representation of agents, their attributes, and relationships in RDF data models. It defines properties like `foaf_knows`, `foaf_email`, and `foaf_openid` (alongside classes such as `foaf_c_Person`) to describe personal details, social connections, professional activities, and online presence. These tools are particularly useful for modeling social network data, linking individuals to resources like weblogs or chat identifiers, and structuring metadata about agents in semantic web applications.",
-      "description_length": 616,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Test_manifest.Open",
-      "library": "rdf",
-      "description": "This module defines IRIs for categorizing RDF test types (e.g., syntax validation, query evaluation), specifying test actions, and encoding metadata like expected outcomes and status. It operates on RDF terms and manifest entries to enforce constraints such as cardinality requirements or test status validation. These constructs are used to structure and validate test suites for SPARQL and RDF processing systems, ensuring conformance with W3C specifications.",
-      "description_length": 461,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Graph.Graph",
-      "library": "rdf",
-      "description": "This module provides in-place manipulation of RDF graphs through triple addition/removal, SPARQL-like query execution, and transaction control. It operates on RDF terms, IRIs, and triples while managing namespace mappings and blank node generation. Designed for use cases like persistent RDF storage, atomic graph updates, and SPARQL query processing with customizable prefix handling.",
-      "description_length": 385,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Vcard.Open",
-      "library": "rdf",
-      "description": "This module exposes a comprehensive set of `Iri.t` constants representing vCard ontology elements for contact data modeling, including categories (e.g., relationship types, communication methods), properties (e.g., name components, addresses, dates), and entity classifications (individuals, organizations). These IRIs directly map to RDF/OWL representations of vCard fields like email, phone, gender, and organizational roles, enabling structured annotation of contact information in RDF graphs. It supports use cases such as integrating vCard-based contact data into semantic web applications, categorizing relationships (colleague, friend), and handling property parameters (e.g., work/home labels) while aligning with RFC6350 and W3C vCard NS standards.",
-      "description_length": 757,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Bgp.P",
-      "library": "rdf",
-      "description": "Implements operations for querying and manipulating RDF terms within a basic graph pattern context. It provides functions to retrieve subjects and objects, compare terms, and perform pattern-based lookups using optional subject, predicate, or object filters. This module is used to evaluate SPARQL-like queries over RDF data by matching triples against specified constraints.",
-      "description_length": 375,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sparql_http.S",
-      "library": "rdf",
-      "description": "This module defines the interface for sending SPARQL queries over HTTP using GET and POST methods. It handles encoding SPARQL messages into HTTP requests and decoding responses, working with IRIs, graphs, and SPARQL protocol messages. It is used to implement SPARQL query execution against remote endpoints, particularly for querying RDF datasets like DBPedia.",
-      "description_length": 360,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Types.Ordered_char",
-      "library": "rdf",
-      "description": "This module defines a character type with a total ordering, enabling comparison operations between characters. It supports data structures that require ordered elements, such as sets and maps. Concrete use cases include building ordered collections of ASCII characters and efficiently comparing character-based identifiers.",
-      "description_length": 323,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sparql_ms.MuNOrdered",
-      "library": "rdf",
-      "description": "This module defines a type `t` as a pair of an integer and a value of type `Rdf.Sparql_ms.mu`, and provides a `compare` function that orders such pairs based on their integer component. It is used to manage and compare ranked or indexed values in SPARQL query processing. A concrete use case is sorting or merging results based on their position in a query execution plan.",
-      "description_length": 372,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Acl.Open",
-      "library": "rdf",
-      "description": "This module defines constants and access modes for representing and working with access control policies in RDF, particularly aligned with the W3C's ACL vocabulary. It includes specific access types like Read, Write, Append, and Control, along with entities such as Agent, Authorization, and AccessTo to model permissions. It is used to construct and interpret access control rules for resources in semantic web applications, especially when managing fine-grained permissions for RDF graphs or linked data.",
-      "description_length": 506,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Types.SSet",
-      "library": "rdf",
-      "description": "This module implements immutable sets of strings with efficient pure functional operations including union, intersection, difference, and ordered traversal via iteration, mapping, and filtering. It supports conversions to and from lists and sequences, along with safe element access through both exception-raising and option-returning variants, making it suitable for tasks like data transformation pipelines, ordered set analysis, and scenarios requiring robust handling of optional values.",
-      "description_length": 491,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Types.Ordered_string",
-      "library": "rdf",
-      "description": "Implements a named string type with a total ordering for use in RDF term comparisons. Provides a `compare` function to determine the order of two strings based on their lexicographical values. Useful for maintaining consistent sorting and equality checks in RDF datasets.",
-      "description_length": 271,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Owl.Open",
-      "library": "rdf",
-      "description": "This module exposes constants and utility functions for defining and manipulating semantic relationships in OWL 2 ontologies, focusing on class hierarchies, property constraints, and logical axioms. It operates primarily on `Iri.t` values to represent ontology elements like classes, properties, and annotations, enabling precise modeling of semantic web constructs. Typical applications include constructing knowledge graphs with formal semantics, enforcing domain constraints (e.g., cardinality, disjointness), and expressing metadata for RDF-based data integration or reasoning systems.",
-      "description_length": 589,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Doap.Open",
-      "library": "rdf",
-      "description": "This module provides a collection of predefined IRIs for DOAP vocabulary terms that describe software project metadata, repositories, and relationships. It operates on RDF triples using `Iri.t` values to represent entities like projects, developers, licenses, and version control systems. These IRIs are used to build or query RDF graphs that model software project information, such as linking a project to its Git repository, contributors, or distribution endpoints.",
-      "description_length": 468,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Dc.Open",
-      "library": "rdf",
-      "description": "This module provides standardized Dublin Core metadata terms as `Iri.t` values, enabling the description of resource properties like creators, dates, formats, and relationships in RDF triples. It operates on RDF data structures to support semantic web applications requiring interoperable metadata, such as cataloging digital resources, encoding provenance, or expressing licensing terms using DCMI vocabularies. Specific use cases include annotating datasets with temporal/spatial coverage or linking resources via hierarchical relationships like `dc_isPartOf`.",
-      "description_length": 562,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Dt.ValueOrdered",
-      "library": "rdf",
-      "description": "Implements comparison logic for RDF term values in SPARQL computations, handling ordered value types like numbers, dates, and strings. Uses the `compare` function to determine ordering, which is essential for operations like sorting or grouping query results. Useful when evaluating SPARQL expressions that require value comparisons, such as `ORDER BY` or `GROUP BY`.",
-      "description_length": 367,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Bgp.S",
-      "library": "rdf",
-      "description": "Implements operations for evaluating basic graph patterns against RDF datasets, producing multiset results. It processes SPARQL algebra triples and returns structured query results. Useful for executing SPARQL queries over RDF data models.",
-      "description_length": 239,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Solid.Open",
-      "library": "rdf",
-      "description": "This module defines RDF classes and properties for Solid protocol resources, including accounts, inboxes, notifications, timelines, and type indexes. It provides IRIs for working with notification state, timeline containers, and type registries in Solid-compliant storage systems. Concrete use cases include modeling user inboxes with read/unread status, organizing time-ordered data in file-based systems, and registering RDF types for application-specific resources.",
-      "description_length": 468,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Term.TSet",
-      "library": "rdf",
-      "description": "This module implements ordered collections of RDF terms with efficient membership checks, set algebra operations, and ordered traversal capabilities. It works with sets of `Rdf.Term.term` values maintained in sorted order using a custom comparator, supporting transformations like mapping, filtering, and partitioning while preserving element uniqueness and order. Typical applications include managing RDF term vocabularies with deterministic ordering, performing set-based reasoning over RDF graphs, and generating ordered sequences for serialization formats like RDF/XML or Turtle.",
-      "description_length": 584,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Sparql_http.Make",
-      "library": "rdf",
-      "description": "This module implements a functor for creating HTTP bindings to send SPARQL queries via GET or POST requests, handling protocol encoding and decoding. It works with SPARQL input and output messages, IRIs, and HTTP response types from the provided parameter module. Concrete use cases include querying SPARQL endpoints like DBpedia or Wikidata by constructing and sending properly formatted HTTP requests with optional graph context and content negotiation.",
-      "description_length": 455,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Sparql_types.OrderedString",
-      "library": "rdf",
-      "description": "This module defines a string type with a comparison function for maintaining ordered collections. It supports operations requiring lexicographical ordering of strings, such as sorting or use in ordered data structures. It is useful in scenarios like query result sorting or managing ordered sets of identifiers.",
-      "description_length": 311,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Types.CMap",
-      "library": "rdf",
-      "description": "This module implements a char-keyed ordered map with efficient physical equality checks, supporting insertion, deletion, merging, and ordered key queries like min/max bindings. It operates on sorted key-value structures, enabling ordered traversal, transformation via mapping and filtering, and conversion to/from sequences of bindings. Designed for scenarios requiring consistent key ordering and optimized updates, it's suited for RDF data modeling where character-indexed maps must maintain sorted structure and enable operations like incremental construction from key-value streams.",
-      "description_length": 586,
-      "index": 22,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Security.Open",
-      "library": "rdf",
-      "description": "This module provides cryptographic signature schemes (e.g., BBS-BLS, Ed25519, ECDSA), canonicalization algorithms, and key management operations for securing RDF data. It works with RDF graphs, cryptographic primitives (keys, digests, nonces), and IRIs representing security constructs like verification methods or proof metadata. These capabilities enable decentralized identity systems, verifiable credentials, and selective disclosure workflows requiring data integrity, authentication, and capability delegation.",
-      "description_length": 516,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Dt.VMap",
-      "library": "rdf",
-      "description": "This module implements ordered maps with `Rdf.Dt.value` keys, supporting precise manipulation of RDF term bindings through operations like merging, filtering, and ordered traversal. It provides transformations over key-value pairs (e.g., `map`, `filter_map`), structural queries (`union`, `split`), and sequence-based construction (`of_list`, `to_seq`), while ensuring safe error handling via optional return types. Designed for SPARQL query evaluation and RDF data processing, it enables efficient aggregation, comparison, and ordered enumeration of RDF term mappings.",
-      "description_length": 569,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Types.SMap",
-      "library": "rdf",
-      "description": "This module handles ordered maps with string keys, providing operations for insertion, deletion, ordered traversal, and bulk transformations like mapping, filtering, and merging. It supports conversions to and from lists and sequences, enabling efficient iteration in",
-      "description_length": 267,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Pim.Open",
-      "library": "rdf",
-      "description": "This module provides functions to manage access control and storage configurations for workspaces, including operations to retrieve and set storage types such as public, private, and shared. It works with IRI-based identifiers to define policies and relationships between workspaces, storages, and user preferences. Concrete use cases include configuring user-specific data isolation, defining access permissions for shared resources, and managing URI prefixes for resource addressing.",
-      "description_length": 485,
-      "index": 26,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Bgp.Make",
-      "library": "rdf",
-      "description": "Implements evaluation of Basic Graph Patterns (BGP) by processing SPARQL algebra triples into multiset results. Works directly with SPARQL algebra representations and multiset data structures. Used to execute SPARQL queries over RDF datasets by matching triple patterns against stored data.",
-      "description_length": 290,
-      "index": 27,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Rdf_.Open",
       "library": "rdf",
-      "description": "This module provides standardized IRI constants for core RDF vocabulary and XSD datatypes, enabling precise representation of semantic web constructs. It operates on and returns IRI values to identify RDF classes (e.g., `rdf_c_Property`), statement components (e.g., `rdf_predicate`), literal types (e.g., `rdf_dt_JSON`, `xsd_integer`), and container structures (e.g., `rdf_c_Bag`). These IRIs are essential for building and interpreting RDF graphs in applications like JSON-LD serialization, linked data frameworks, and semantic data validation.",
-      "description_length": 546,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Activitystreams.Open",
-      "library": "rdf",
-      "description": "This module provides a collection of standardized IRI constants for ActivityStreams 2.0 vocabulary terms, enabling precise modeling of social interactions, content types, and metadata in RDF-based systems. It defines identifiers for activities (e.g., `Like`, `Announce`), object types (e.g., `Note`, `Person`), and properties (e.g., `actor`, `accuracy`) to facilitate consistent construction and interpretation of semantic data. These IRIs directly support applications like ActivityPub implementations, social data aggregation, and linked data workflows requiring structured representation of digital interactions.",
-      "description_length": 615,
-      "index": 29,
+      "description": "This module provides constants for working with RDF vocabulary terms, including container classes (e.g., Bag, Alt), literal datatypes (e.g., JSON, langString), and structural properties (e.g., first, object), all represented as IRI values. It supports operations for constructing and interpreting RDF statements, literals, and container structures, particularly in contexts involving XML serialization, typed literals, or JSON-encoded data. Specific use cases include parsing RDF/XML documents, serializing RDF triples with language-tagged strings, and handling JSON literals via the xsd_JSON IRI.",
+      "description_length": 597,
+      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Rdf.Ds.NameSet",
+      "module_path": "Rdf.Sparql_ms.MuSet",
       "library": "rdf",
-      "description": "This module offers functional set operations for managing ordered collections of dataset names, including union, intersection, difference, element insertion/removal, and transformations like mapping and filtering. It works with immutable sets of `Rdf.Ds.name` values, leveraging their total ordering for efficient queries (e.g., membership checks, min/max) and ordered iteration. Use cases include tracking named graphs in datasets, comparing graph identifier sets, and converting between sets and ordered lists for deterministic processing.",
-      "description_length": 541,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Ldp.Open",
-      "library": "rdf",
-      "description": "This module defines RDF terms and relations for modeling container hierarchies, membership constraints, and pagination mechanics in Linked Data Platform systems. It operates on RDF graphs and resources to manage containment relationships (e.g., basic/direct/indirect containers), member indexing, and paged sequence sorting. Specific applications include structuring hierarchical data stores, enforcing membership rules in RDF datasets, and efficiently navigating large collections through sorted, paginated views using customizable sort criteria and directional ordering.",
-      "description_length": 572,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Types.CSet",
-      "library": "rdf",
-      "description": "This module supports operations like union, intersection, and element-wise transformations on **immutable, ordered sets of characters**, leveraging total ordering for predictable behavior. It provides conversions between sets and sequences, along with iterative processing and structural manipulation, while preserving physical equality for efficient reuse. Such functionality is useful in text analysis, lexing, or data processing tasks where ordered character sets require efficient membership checks, ordered traversal, or aggregation into lists and sequences.",
-      "description_length": 563,
-      "index": 32,
+      "description": "This module supports mutable set operations for elements ordered via `Rdf.Sparql_ms.MuOrdered`, offering standard set algebra (union, intersection, difference), membership checks, and transformations (iteration, folding, filtering) alongside specialized queries for cardinality, extremal values, and element selection. It works with sets of `Rdf.Sparql_ms.MuOrdered.t` values, enabling efficient manipulation of RDF terms in SPARQL query processing, such as filtering result bindings, combining graph patterns, or managing temporary node sets during query execution.",
+      "description_length": 566,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Rdfs.Open",
       "library": "rdf",
-      "description": "This module provides direct access to RDFS vocabulary terms as Iri.t values, enabling precise semantic annotations and metadata description in RDF data models. It includes core elements like class hierarchies, property domains and ranges, human-readable labels, and container membership. Concrete use cases include building and interpreting RDF schemas, enriching RDF triples with descriptive metadata, and validating semantic relationships between resources.",
-      "description_length": 459,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Sparql_types.VarSet",
-      "library": "rdf",
-      "description": "This module offers operations for managing ordered collections of SPARQL variables, including union, intersection, difference, membership checks, and conversions from lists, alongside utilities to query size, retrieve elements, and identify extremum values. It operates on an abstract type representing variable sets, which encapsulates ordered structures for efficient comparison and iteration. These capabilities support use cases like analyzing variable scoping in queries, optimizing join conditions through overlap detection, and enforcing constraints during SPARQL algebra transformations.",
-      "description_length": 595,
-      "index": 34,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sparql_ms.Multimu",
-      "library": "rdf",
-      "description": "This module provides two core data structures for handling SPARQL mappings: an unordered multiset type supporting set-theoretic operations (union, intersection, filtering) and an ordered multiset-like structure for cardinality tracking, element retrieval, and ordered transformations. Both are designed to model SPARQL's multiset semantics, enabling use cases like merging query results, eliminating duplicates with custom equality, or processing ranked solutions. The unordered variant emphasizes efficient membership checks and bulk operations, while the ordered variant supports priority-based element access and sequence-aware manipulations.",
-      "description_length": 645,
-      "index": 35,
+      "description": "This module provides functions to work with RDFS schema elements such as classes, properties, and literals using IRI values. It includes operations for managing class hierarchies via `subClassOf`, property relationships via `subPropertyOf`, and metadata retrieval via `label`, `comment`, and `seeAlso`. Concrete use cases include building and querying semantic web data models, validating RDF graphs against RDFS schemas, and extracting human-readable annotations from RDF resources.",
+      "description_length": 483,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Earl.Open",
       "library": "rdf",
-      "description": "This module provides identifiers and structured relationships for expressing test assertions and evaluation results in RDF graphs. It defines IRIs to represent test metadata, outcomes, and contextual links between test subjects, criteria, and locations, enabling machine-readable conformance reports. These components are specifically used to model W3C-style test suite results and semantic web protocol validations using RDF triples.",
-      "description_length": 434,
-      "index": 36,
+      "description": "This module defines RDF constants and IRIs for EARL (Evaluation and Report Language) ontology elements, including test outcomes (`Pass`, `Fail`, `CannotTell`), test components (`Assertion`, `TestSubject`, `Assertor`), and metadata properties (`mode`, `outcome`, `info`). It operates on RDF triples and IRIs to structure and interpret accessibility evaluation reports, enabling precise representation of test results, their relationships to test criteria, and contextual metadata in web accessibility assessments.",
+      "description_length": 512,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Activitystreams.Open",
+      "library": "rdf",
+      "description": "This module provides a comprehensive set of IRI constants for ActivityStreams 2.0 and ActivityPub vocabulary terms, enabling semantic modeling of social interactions and content-centric data. It defines identifiers for activity types (e.g., `Like`, `Announce`), object kinds (e.g., `Note`, `Profile`), metadata properties (e.g., `attributedTo`, `published`), and relationship descriptors (e.g., `actor`, `inReplyTo`), all expressed as `Iri.t` values. These constants facilitate RDF-based data processing in ActivityPub-compliant systems, such as federated social networks, where they are used to structure, annotate, and query social activity streams, user-generated content, and dynamic relationships between entities.",
+      "description_length": 719,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Ds.NameMap",
+      "library": "rdf",
+      "description": "This module implements a finite map with ordered keys, supporting efficient insertion, deletion, lookup, and ordered traversal over `Rdf.Ds.name` keys paired with arbitrary values. It enables list-accumulating updates, customizable merging of maps, and transformations like filtering, mapping, and partitioning, while allowing both ascending and descending iteration. Typical applications include managing RDF datasets with ordered name-based associations, aggregating values into lists, and merging heterogeneous data with conflict resolution strategies.",
+      "description_length": 555,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_eval.GExprOrdered",
+      "library": "rdf",
+      "description": "This module implements comparison logic for ordered SPARQL graph expressions, specifically handling lists of optional RDF terms. It provides a `compare` function to determine ordering between two such lists, which is essential for sorting and grouping in SPARQL query evaluation. Concrete use cases include result ordering in SPARQL SELECT queries and handling of ordered aggregates.",
+      "description_length": 383,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Pim.Open",
+      "library": "rdf",
+      "description": "This module defines constants and functions for working with access control and storage configurations in a semantic web context. It provides IRIs and operations to manage workspaces with varying access levels, including public, private, and shared storages. Concrete use cases include setting up user-specific data isolation, defining access policies for collaborative resources, and organizing data into controlled or unrestricted spaces.",
+      "description_length": 440,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Foaf.Open",
+      "library": "rdf",
+      "description": "This module provides IRI values for FOAF classes and properties, including agent types (e.g., people, groups, online accounts), personal attributes (names, contact details), and social relationships (connections, affiliations). These terms, represented as `Iri.t` values, enable the creation and manipulation of RDF data structures to model entities, their digital identities, and semantic relationships. It is commonly applied in linked data projects for representing personal metadata, social networks, and online presence in semantic web applications.",
+      "description_length": 554,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Vcard.Open",
+      "library": "rdf",
+      "description": "This module provides constants and IRIs for working with vCard vocabulary in RDF, focusing on contact categorization (e.g., individuals, groups, organizations), communication methods (email, phone), and personal/organizational metadata (names, addresses, dates). It operates on `Iri.t` values to model semantic relationships and property types, supporting both active and deprecated terms. Use cases include semantic contact data modeling, integration with RDF-based systems, and mapping legacy vCard data to modern ontologies.",
+      "description_length": 527,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Doap.Open",
+      "library": "rdf",
+      "description": "This module provides a collection of predefined RDF constants and predicate IRIs for the DOAP ontology, enabling the representation of software project metadata and relationships. It works with `Iri.t` values that map to specific DOAP vocabulary terms, covering project types (e.g., Git/SVN repositories), contributor roles (developer, maintainer), and distribution details (license, download page). These definitions are used to model project attributes, version control information, and resource links in RDF-based software descriptions.",
+      "description_length": 539,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Xml.SMap",
+      "library": "rdf",
+      "description": "This module implements a string-keyed map with ordered key handling, offering associative operations like insertion, deletion, and lookup, alongside specialized functions for appending values to list-valued entries and ordered traversal. It supports transformations, filtering, and bulk conversions between maps, sequences, and lists, ensuring consistent processing in key order. This structure is particularly useful for managing RDF/XML data with ordered properties, enabling efficient aggregation of values during parsing and ordered serialization for predictable output.",
+      "description_length": 574,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Sparql_ms.MuNOrdered",
+      "library": "rdf",
+      "description": "This module defines a type `t` as a pair of an integer and a value of type `Rdf.Sparql_ms.mu`, and provides a `compare` function that orders such pairs based on their integer component. It is used to manage and compare ranked or indexed values in SPARQL query processing. A concrete use case is sorting or merging intermediate results in SPARQL query execution where both the rank and the result data matter.",
+      "description_length": 408,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Types.SMap",
+      "library": "rdf",
+      "description": "This module provides ordered string-keyed map operations for manipulating key-value associations with efficient insertion, deletion, and lookup, along with ordered traversal and transformation via functions like `fold`, `map`, and `filter`. It works with maps containing values of arbitrary type `'a`, supports conversion to and from lists and sequences of bindings, and maintains key ordering for operations like `min_binding`, `split`, and `find_last`. Specific use cases include RDF data aggregation, merging hierarchical datasets with string keys, and ordered key-based processing in lexically sorted contexts.",
+      "description_length": 614,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Sparql_ms.Multimu",
+      "library": "rdf",
+      "description": "This module supports set-like operations such as union, intersection, and difference alongside multiset-specific queries for cardinality, element retrieval, and aggregation, all tailored for unordered collections of `MuNOrdered.t` elements. It works with a specialized multiset type to handle SPARQL query processing tasks like managing variable bindings or intermediate result sets, where precise control over element multiplicity and unordered storage is required. Key use cases include transforming collections via higher-order functions, comparing multisets for equivalence, and extracting min/max elements during query evaluation.",
+      "description_length": 635,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Solid.Open",
+      "library": "rdf",
+      "description": "This module provides operations to manage Solid account resources, including creating and accessing inbox, timeline, and type index containers. It works with IRIs and RDF terms to represent notifications, timelines, and type registries as defined in the Solid ontology. Concrete use cases include setting up user notification systems, organizing time-ordered data in file-like structures, and maintaining application-specific type registries for resources.",
+      "description_length": 456,
+      "index": 17,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Owl.Open",
+      "library": "rdf",
+      "description": "This module provides constants for OWL ontology constructs, including class IRIs, restriction types, and annotation properties that operate on `Iri.t` values. It enables modeling semantic relationships (e.g., disjointness, cardinality, equivalence) and structural constraints in RDF data. These constructs are used for defining ontologies, classifying entities, and expressing axioms in semantic web applications.",
+      "description_length": 413,
+      "index": 18,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Types.SSet",
+      "library": "rdf",
+      "description": "This module implements immutable ordered sets of strings, supporting operations like creation, modification through set algebra (union, intersection, difference), querying membership and cardinality, ordered element retrieval (min/max), and transformation via mapping and filtering. It also provides conversions between sets, lists, and sequences, with ordering enforced by `Ord.compare`. Designed for applications requiring ordered string collections with efficient set operations, such as managing RDF terms, processing sequences of unique elements, or implementing algorithms that rely on ordered set intersections and unions.",
+      "description_length": 629,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Types.Ordered_string",
+      "library": "rdf",
+      "description": "This module defines a string type with a total ordering, ensuring consistent comparison operations. It supports efficient sorting and comparison of string values using the `compare` function. Concrete use cases include managing ordered collections of strings, such as sorted lists or sets, where stable lexicographical ordering is required.",
+      "description_length": 340,
+      "index": 20,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Ds.NameSet",
+      "library": "rdf",
+      "description": "This module implements an immutable set structure for managing collections of names within RDF datasets, supporting efficient insertion, deletion, union, intersection, and difference operations. It relies on ordered elements to enable optimized membership checks, subset comparisons, and transformations like mapping or filtering with monotonic predicates, while providing bidirectional conversion to ordered sequences. Typical use cases include tracking unique identifiers in RDF graphs, performing set-based analysis of dataset components, and constructing hierarchical views through ordered iteration.",
+      "description_length": 604,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Test_manifest.Open",
+      "library": "rdf",
+      "description": "This module provides operations for defining and organizing RDF test manifests using IRI-based vocabularies to categorize test types (e.g., syntax validation, query evaluation), specify metadata (names, dependencies, actions), and structure test suites. It works with `Iri.t` values to represent formal concepts like test outcomes, cardinality constraints, and status flags within RDF datasets. These tools are specifically used to formalize test expectations and results in SPARQL query/update test suites, enabling machine-readable test descriptions and execution frameworks.",
+      "description_length": 577,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_http.Make",
+      "library": "rdf",
+      "description": "This module implements a functor for creating HTTP bindings to send SPARQL queries via GET or POST requests, handling protocol encoding and response decoding. It works with SPARQL input and output messages, IRIs, and HTTP URIs, supporting operations like query submission and result parsing. Concrete use cases include querying remote RDF datasets using the SPARQL protocol over HTTP, with support for content negotiation and error handling.",
+      "description_length": 441,
+      "index": 23,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Term.Ordered_term",
       "library": "rdf",
-      "description": "Implements comparison operations for RDF terms, enabling ordering of resources, literals, and blank nodes. Works directly with the `t` type representing RDF terms. Useful for sorting collections of RDF terms or building ordered data structures like sets and maps.",
-      "description_length": 263,
-      "index": 37,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sparql_eval.GExprOrdered",
-      "library": "rdf",
-      "description": "This module defines a type `t` as a list of optional RDF terms and provides a `compare` function to order such lists. It is used to evaluate and compare sequences of SPARQL graph expressions where variables may be unbound. The module supports operations requiring ordered matching of query results against RDF graph patterns.",
-      "description_length": 325,
-      "index": 38,
+      "description": "Implements a total ordering for RDF terms, providing comparison operations that establish a consistent sort order across terms. Works directly with `Rdf.Term.t` values, using the `compare` function to determine relative positioning. Useful for organizing terms in sorted collections like sets or maps, or for deterministic ordering in query results and graph serialization.",
+      "description_length": 373,
+      "index": 24,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Time.Open",
-      "library": "rdf",
-      "description": "This module provides operations for modeling temporal entities, intervals, durations, and ordering relations (e.g., *before*, *after*) using structured calendar-clock semantics. It works with `Iri.t` values to represent temporal positions, units (like minutes, months), and interval relationships (e.g., *contains*, *overlaps*) in RDF data. Specific use cases include semantic web applications requiring precise temporal reasoning, time-based metadata modeling, and calendar/ordinal system integrations.",
-      "description_length": 503,
-      "index": 39,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Graph.Make",
-      "library": "rdf",
-      "description": "This implementation provides an in-memory RDF graph with transactional control, allowing triples to be added, removed, or queried while supporting metadata management like namespace mappings and blank node generation. It features a built-in BGP engine for executing SPARQL-like pattern queries, enabling term comparison, triple pattern matching, and subject-object enumeration directly over the graph. Operations such as `commit` and `rollback` facilitate transactional data processing, while namespace handling and blank node management support dynamic, real-time linked data applications. Example uses include semantic web data manipulation, transaction-safe RDF updates, and efficient in-memory SPARQL query execution.",
-      "description_length": 721,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Graph.Bid_map",
-      "library": "rdf",
-      "description": "This module implements bidirectional maps with ordered keys for managing bidirectional relationships in graph data, supporting operations like key-based lookups, value transformations, and ordered traversal. It works with maps binding `Rdf.Term.blank_id` keys to arbitrary values, enabling efficient filtering, partitioning, and sequence-based construction while maintaining key order. Typical use cases include representing RDF graph structures with reversible associations, such as tracking blank node mappings or maintaining ordered indexes for query optimization.",
-      "description_length": 567,
-      "index": 41,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sioc.Open",
-      "library": "rdf",
-      "description": "This module provides operations for modeling semantic relationships and metadata in social web data using RDF IRIs. It works with SIOC ontology entities like forums, posts, user accounts, and groups to represent hierarchical connections (e.g., replies, parent-child scopes), user roles (moderator, owner), content properties (timestamps, descriptions), and social interactions (membership, subscriptions). These tools enable semantic linking and categorization of online community resources for applications like social network analysis or content moderation systems.",
-      "description_length": 567,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Graph.Storage_BGP",
-      "library": "rdf",
-      "description": "This module evaluates Basic Graph Patterns (BGP) by efficiently matching and joining triples within a graph. It works directly with abstract term representations and provides operations to retrieve subjects, objects, and matched triples based on optional subject, predicate, or object constraints. Concrete use cases include SPARQL query processing and optimizing triple pattern joins in RDF datasets.",
-      "description_length": 401,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Oa.Open",
-      "library": "rdf",
-      "description": "This module provides operations for constructing and managing annotations, including text/image selection mechanisms, metadata attachment, and resource state tracking. It works with RDF classes and predicates to model annotations as structured entities linked to targets, bodies, and selectors via IRIs, incorporating temporal, stylistic, and provenance metadata. Specific applications include defining precise content ranges (e.g., text positions, CSS/SVG selections), associating annotations with contextual motivations, and capturing resource derivation or rendering details.",
-      "description_length": 578,
-      "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Graph.Storage",
-      "library": "rdf",
-      "description": "This module provides operations for managing RDF triples through insertion, removal, and pattern-based querying using subject-predicate-object templates, alongside advanced features like graph traversal, transaction control, and namespace management. It operates on a polymorphic graph type `g` containing RDF terms (IRIs, literals, blank nodes) and supports use cases such as SPARQL query execution, transactional updates in persistent RDF stores, and manipulation of blank node identifiers during graph copying or merging. Key applications include semantic web data integration, versioned RDF graph management, and BGP (Basic Graph Pattern) evaluation for query planning.",
-      "description_length": 673,
-      "index": 45,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Rdf.Prov.Open",
-      "library": "rdf",
-      "description": "This module provides operations for defining and manipulating IRI constants and qualified relations from the PROV-O ontology, enabling structured representation of provenance metadata. It works with RDF triples, directed acyclic graphs, and semantic web data models to express relationships between entities, activities, and agents. Specific use cases include tracking entity derivation, activity influence, delegation, and temporal provenance constraints in semantic web applications aligned with PROV-DM standards.",
-      "description_length": 516,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Sparql_eval.GExprMap",
-      "library": "rdf",
-      "description": "This module manages associative collections with ordered keys derived from SPARQL expressions, supporting polymorphic values. It provides ordered traversal, key-based splitting, and transformations with functions that manipulate both values and key-value pairs, enabling efficient filtering and aggregation over structured RDF data. Typical use cases include query result processing, where ordered expression keys represent variable bindings or intermediate evaluation steps in SPARQL queries.",
-      "description_length": 493,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Dt.VSet",
-      "library": "rdf",
-      "description": "This module implements set-theoretic operations and ordered collection transformations for elements of type `Rdf.Dt.VSet.elt`, which represent SPARQL value computations that may carry errors. It supports functional manipulation of immutable sets through union, intersection, difference, and filtered transformations, while leveraging a total ordering to enable efficient membership checks, ordered iteration, and sequence conversions. Typical applications include aggregating and querying RDF term values with error propagation, optimizing SPARQL expression evaluation through ordered set operations, and converting between sets and sequences for pipeline processing.",
-      "description_length": 667,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Graph.Storage-BGP",
-      "library": "rdf",
-      "description": "Implements in-place graph storage for RDF terms with support for term comparison, subject/object enumeration, and pattern-based triple lookups. Works directly with graph (`g`) and term types, enabling efficient traversal and querying of RDF datasets. Useful for applications requiring direct manipulation of RDF triples in memory or persistent storage backends.",
-      "description_length": 361,
-      "index": 49,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Rdf.Sparql_ms.MuOrdered",
       "library": "rdf",
-      "description": "This module defines a type `t` as an alias for `Rdf.Sparql_ms.mu` and provides a `compare` function to establish a total ordering between values of this type. It is used to manage and compare SPARQL query solution mappings in a way that supports ordered collections or sorting. A concrete use case is enabling efficient storage and retrieval of SPARQL query results in ordered data structures like sets or maps.",
-      "description_length": 411,
-      "index": 50,
+      "description": "This module defines a type `t` as an alias for `Rdf.Sparql_ms.mu` and provides a `compare` function to establish a total ordering between values of this type. It is used to compare solutions or variable bindings in SPARQL query processing. The comparison supports operations like sorting and deduplication of query results based on variable mappings.",
+      "description_length": 350,
+      "index": 25,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Graph.Graph-BGP",
+      "module_path": "Rdf.Dt.VMap",
       "library": "rdf",
-      "description": "Implements a graph-based Basic Graph Pattern (BGP) engine for RDF data. It supports operations to bind and compare terms, retrieve subjects and objects, and query triples using partial patterns. Designed for in-memory traversal and manipulation of RDF graphs based on SPARQL semantics.",
-      "description_length": 285,
-      "index": 51,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Activitypub.Open",
-      "library": "rdf",
-      "description": "This module provides standardized Internationalized Resource Identifiers (IRIs) for ActivityPub and ActivityStreams vocabulary terms, encompassing actions (e.g., Follow, Block), object types (e.g., Article, Video), properties (e.g., attributedTo, url), and collection types (e.g., Collection, OrderedCollection). These IRIs, represented as `Iri.t` values, enable precise RDF-based data modeling, JSON-LD serialization, and semantic annotation of social interactions and metadata. They are critical for interoperability in federated social networks, supporting use cases like media uploads, relationship management (e.g., followers, likes), and endpoint routing (e.g., inbox, OAuth tokens).",
-      "description_length": 689,
-      "index": 52,
+      "description": "Implements ordered key-value maps with `Rdf.Dt.value` keys and polymorphic values, supporting operations like merge, union, and ordered traversal via predicates. Handles error propagation through optional semantics and enables bulk updates from sequences. Useful for SPARQL value computations involving RDF terms, ordered binding transformations, and error-aware map manipulations.",
+      "description_length": 381,
+      "index": 26,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Mem.Mem",
       "library": "rdf",
-      "description": "This module provides in-memory RDF graph management with transactional support, combining tree-based triple indexing and list-based namespace mappings to enable efficient storage, querying, and state manipulation. It allows adding, removing, and querying triples by subject-predicate-object patterns, managing blank nodes, and resolving namespaces dynamically during processing. Operations include transactional updates, graph comparison, and enumeration of subjects and objects within the dataset. Use cases range from semantic web data integration to transaction-safe RDF processing workflows.",
-      "description_length": 595,
-      "index": 53,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides in-memory RDF graph management through operations for triple manipulation (insertion, removal, pattern-based queries), transaction control (commit, rollback), and metadata handling (namespace management, blank node generation). It operates on a tree-structured graph representation (`g`) optimized for efficient triple storage and traversal, supporting use cases like RDF dataset prototyping, transactional SPARQL query processing, and blank node lifecycle management in semantic web applications.",
+      "description_length": 518,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Dc.Open",
+      "library": "rdf",
+      "description": "This module provides semantic identifiers and metadata properties for describing resources in RDF graphs, using standardized Dublin Core (DCMI) terms encoded as `Iri.t` values. It supports structured metadata modeling with ontological categories like resource types, temporal/spatial attributes, and access rights, alongside properties for provenance, licensing, and inter-resource relationships. Specific use cases include semantic web applications requiring formal metadata encoding, resource description frameworks, and standardized data interoperability scenarios involving cultural heritage or scholarly communication contexts.",
+      "description_length": 632,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Graph.Bid_map",
+      "library": "rdf",
+      "description": "This module implements a bidirectional map with ordered keys, supporting operations for associative updates, ordered traversal, and sequence-based transformations. It works with key-value pairs where keys follow a total order, enabling range queries, filtered iterations, and bulk conversions to and from lists or sequences. It is particularly useful for managing bidirectional relationships in RDF graph data, such as efficiently mapping blank node identifiers to terms while maintaining ordered access for query or serialization tasks.",
+      "description_length": 537,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Time.Open",
+      "library": "rdf",
+      "description": "This module provides temporal modeling capabilities for calendar-clock systems, structured date-time descriptions, and interval relationships using RDF ontologies. It operates on `Iri.t` values to represent temporal entities, durations, units (seconds, months), and relations (before, contains, overlaps), while supporting time zones, calendar intervals, and precision markers. These components enable semantic web applications requiring formal temporal reasoning, such as scheduling systems, historical event analysis, or OWL2-based temporal knowledge graphs.",
+      "description_length": 560,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_types.VarSet",
+      "library": "rdf",
+      "description": "The module implements functional set abstractions for managing collections of SPARQL variables, supporting transformations like union, intersection, and difference alongside predicate-based filtering and iteration. It operates on ordered sets represented as immutable structures, enabling operations such as element comparison, ordered traversal, and list conversion. These capabilities are particularly useful for SPARQL query analysis tasks requiring variable set manipulation, such as determining variable scope dependencies or optimizing query execution plans through set-based reasoning.",
+      "description_length": 592,
+      "index": 31,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Term.TMap",
       "library": "rdf",
-      "description": "This module supports ordered map operations over key-value pairs where keys are RDF terms, enabling efficient traversal, filtering, and transformation based on key order. It provides functions like `fold`, `filter_map`, and `split`, along with conversions to and from sequences and lists, ensuring compatibility with ordered RDF term keys. Typical applications include managing RDF datasets with sorted term mappings, merging graphs with conflict resolution, or extracting subsets of data via key predicates.",
-      "description_length": 508,
+      "description": "This module implements ordered key-value maps using RDF terms as keys, supporting operations like insertion, deletion, ordered traversal, and bulk updates from sequences. It provides functions for querying, transforming, and converting maps while preserving key order, with values of arbitrary types. Typical use cases include managing RDF-based data structures requiring ordered term keys, efficient lookups, and batch operations for dataset manipulation.",
+      "description_length": 456,
+      "index": 32,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Acl.Open",
+      "library": "rdf",
+      "description": "This module defines constants and utilities for working with access control policies in RDF datasets, specifically aligned with the W3C's Access Control List (ACL) vocabulary. It provides direct bindings for common ACL concepts such as access modes (`Read`, `Write`, `Append`, `Control`), authorization targets (`accessTo`, `accessToClass`), and agent roles (`agent`, `agentClass`, `agentGroup`). These are used to construct, query, and enforce fine-grained access rules on RDF resources, particularly in linked data platforms and semantic web services requiring secure resource sharing.",
+      "description_length": 587,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Bgp.Make",
+      "library": "rdf",
+      "description": "Implements evaluation of Basic Graph Patterns (BGP) by matching triple patterns against RDF datasets. Works with SPARQL algebra triples and multiset mappings to produce query results. Used for executing SPARQL BGP queries over RDF data.",
+      "description_length": 236,
+      "index": 34,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Types.CMap",
+      "library": "rdf",
+      "description": "This module implements a persistent map structure with character keys, supporting efficient functional operations for key-value manipulation, ordered traversal, and structural transformations. It provides ordered iteration, range queries, and sequence interconversion while maintaining immutability through physical equality optimizations. Designed for applications requiring ordered key-value associations, such as RDF graph component indexing or lexically ordered data processing pipelines.",
+      "description_length": 492,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Dt.ValueOrdered",
+      "library": "rdf",
+      "description": "Implements comparison logic for RDF term values in SPARQL computations, handling ordered value types like numbers, dates, and strings. Works directly with `Rdf.Dt.value` types, including error values that propagate through comparisons. Used to determine ordering in SPARQL `ORDER BY` clauses and filter expressions involving inequalities.",
+      "description_length": 338,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Activitypub.Open",
+      "library": "rdf",
+      "description": "This component provides a collection of IRI constants that define vocabulary terms for ActivityPub and ActivityStreams, including activity types (e.g., `Accept`, `Create`), object classifications (e.g., `Article`, `Event`), and relationship actions (e.g., `Follow`, `Block`). These constants operate on `Iri.t` values to enable semantic categorization and structured data interchange in social networking protocols, particularly for modeling activities, metadata (e.g., `published`, `summary`), and cryptographic endpoints. They are used to serialize and interpret RDF-based ActivityPub messages, manage distributed social interactions, and specify protocol features like media upload endpoints or secure key exchanges.",
+      "description_length": 719,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Types.Ordered_char",
+      "library": "rdf",
+      "description": "This module defines a character type with a total ordering, enabling comparison operations like `compare` for sorting and equality checks. It works directly with the built-in `char` type, ensuring consistent ordering across character values. Concrete use cases include sorting character-based enumerations and implementing ordered collections of characters.",
+      "description_length": 357,
+      "index": 38,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Prov.Open",
+      "library": "rdf",
+      "description": "This component provides a set of IRI constants and properties aligned with the PROV-O ontology to model provenance relationships in RDF. It operates on `Iri.t` values to define classes (e.g., activity events, agent roles) and properties (e.g., derivation, attribution, temporal boundaries) that structure semantic metadata for tracking data lineage, entity relationships, and agent interactions. These terms enable expressing qualified provenance statements, such as revision history, resource derivation, and activity timelines, within RDF triples or OWL ontologies.",
+      "description_length": 567,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Graph.Make",
+      "library": "rdf",
+      "description": "This module implements in-memory RDF graph management with operations to add, remove, and query triples individually or in bulk, supporting atomic updates through transaction control. It works with a graph type backed by a storage module `S`, enabling efficient traversal and manipulation of subject-predicate-object relationships, while the `BGP` submodule enables SPARQL-like pattern matching for semantic data processing. Additional features include blank node identifier generation, namespace mapping management, and graph copying, catering to use cases like RDF dataset manipulation and temporary identifier assignment in semantic web applications.",
+      "description_length": 653,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Ldp.Open",
+      "library": "rdf",
+      "description": "This module defines RDF terms and IRIs for modeling Linked Data Platform (LDP) containers, membership relations, and pagination mechanics. It provides primitives to express containment hierarchies (e.g., BasicContainer, DirectContainer), bidirectional membership links (hasMemberRelation/isMemberOfRelation), and page sequences with sorting criteria (pageSortPredicate, pageSortOrder) to manage large collections. These constructs enable implementing LDP-compliant servers that support resource containment, dynamic membership semantics, and paginated traversal of ordered datasets.",
+      "description_length": 582,
+      "index": 41,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Dt.VSet",
+      "library": "rdf",
+      "description": "This module implements ordered collections of semantic web values with error handling for SPARQL computations, supporting set algebra operations like union and difference alongside transformations through filtering, mapping, and partitioning. It works with immutable sets of `Rdf.Dt.value` elements ordered via comparator-based logic, enabling precise manipulation of heterogeneous RDF terms including error states. Use cases include semantic query result aggregation, ordered term sequence conversions for iterative processing, and error-aware set operations during SPARQL expression evaluation.",
+      "description_length": 596,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Security.Open",
+      "library": "rdf",
+      "description": "This module provides cryptographic operations for digital signatures, proofs, and key management using algorithms like BBS-BLS, ECDSA, and Ed25519, alongside canonicalization and digest methods such as SHA-256 and Blake2B. It operates on RDF datasets, IRIs, cryptographic keys, and X.509 certificates to enable secure data verification, decentralized identity controls, and interoperable authentication aligned with Linked Data and Verifiable Credentials standards. Key features include support for selective disclosure, capability chains, and cryptographic metadata encoding in semantic web contexts.",
+      "description_length": 601,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_types.OrderedString",
+      "library": "rdf",
+      "description": "This module defines a string type with a comparison function for maintaining ordered collections. It supports operations requiring lexicographical ordering of strings, such as sorting or use in ordered data structures. It is useful in scenarios like query result sorting or managing ordered RDF terms.",
+      "description_length": 301,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Oa.Open",
+      "library": "rdf",
+      "description": "This module provides operations to model annotations using RDF classes and predicates for the Web Annotation Ontology, focusing on components like selectors, states, and motivations. It works with RDF resources and IRI values to represent annotation targets, selection ranges, styling directives, and temporal metadata. These tools enable applications like document markup systems, provenance-aware data platforms, and semantic annotation frameworks to express structured annotations with precise targeting and contextual metadata.",
+      "description_length": 531,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_eval.GExprMap",
+      "library": "rdf",
+      "description": "This module supports associative map operations for key-value pairs where keys are ordered SPARQL expressions (`GExprOrdered.t`) and values are polymorphic, enabling efficient insertion, deletion, ordered traversal, merging, and key-based filtering. It facilitates SPARQL query execution by handling structured data transformations, such as grouping or filtering RDF graph elements based on evaluated expressions, while maintaining ordered key relationships for deterministic processing. Use cases include aggregating query results, pruning intermediate evaluation states, and managing expression-indexed metadata during RDF graph traversal.",
+      "description_length": 641,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Term.TSet",
+      "library": "rdf",
+      "description": "This module offers ordered set operations for managing collections of RDF terms, supporting element insertion, deletion, and algebraic operations like union and intersection, alongside ordered queries for min/max elements. It works with sets of `Rdf.Term.TSet.elt` values, maintaining strict ordering via a comparator module, and enables transformations through mapping, filtering, and folding over ordered elements. Use cases include RDF data deduplication, ordered traversal for serialization, and set-theoretic comparisons in semantic graph processing.",
+      "description_length": 555,
+      "index": 47,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Sioc.Open",
+      "library": "rdf",
+      "description": "This module provides operations to define and manipulate RDF predicates and classes for modeling online community data, focusing on social relationships, content metadata, and resource interconnections. It works with semantic web identifiers (`Iri.t`) to represent entities like users, forums, posts, and their associations, including roles (moderator, owner), interactions (replies, subscriptions), and metadata (timestamps, versions). These tools are used to structure social media data, track user-generated content, and semantically link resources in community platforms and collaborative systems.",
+      "description_length": 601,
+      "index": 48,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_parser",
+      "library": "rdf",
+      "description": "This module defines a lexer and parser for SPARQL queries, transforming input text into an abstract syntax tree representing SPARQL operations such as SELECT, INSERT, DELETE, and CONSTRUCT. It processes tokens for URIs, literals, variables, and SPARQL keywords, supporting operations like filtering, grouping, and aggregation. It is used to parse SPARQL query strings into executable query structures for processing RDF data.",
+      "description_length": 425,
+      "index": 49,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_eval",
+      "library": "rdf",
+      "description": "This module evaluates SPARQL expressions and built-in functions over RDF data, handling tasks like term comparison, string manipulation, numeric operations, and logical constraints. It operates on RDF terms, SPARQL expressions, variable mappings, and solution sequences, using structures like ordered expressions and maps to manage sorting, grouping, and aggregation. Key use cases include executing SPARQL queries with filtering, joining, deduplicating, and computing aggregates like sums or averages over structured RDF datasets.",
+      "description_length": 531,
+      "index": 50,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Oa",
+      "library": "rdf",
+      "description": "This module provides constants and RDF properties for the W3C Web Annotation ontology, enabling the creation and interpretation of annotations with precise targeting, selection, and contextual metadata. It operates on IRIs and RDF resources to model components like textual bodies, XPath selectors, time-based states, and motivations, while supporting relationships between annotations, targets, and styling or provenance information. These tools are used for document markup, semantic annotation systems, and applications requiring structured metadata to represent selections, refinements, or temporal applicability within digital resources.",
+      "description_length": 642,
+      "index": 51,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Foaf",
+      "library": "rdf",
+      "description": "This module provides operations to define and manipulate FOAF ontology terms as RDF properties and classes, working primarily with `Iri.t` values to represent entities like people, groups, and accounts. It supports constructing and interpreting RDF graphs with social data, including personal attributes (names, age), relationships (friends, group memberships), and contact information (email, phone). Use cases include semantic web applications, linked data systems, and social network analysis tools that require structured descriptions of agents and their interactions.",
+      "description_length": 572,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Activitypub",
+      "library": "rdf",
+      "description": "This component provides a set of constants for ActivityPub vocabulary terms, including activities (e.g., `Follow`, `Like`), object types (e.g., `Person`, `Note`), and relationship properties (e.g., `actor`, `attributedTo`), all represented as `Iri.t` values. It operates on Internationalized Resource Identifiers to model social interactions, metadata, and decentralized network structures, with specific applications in annotating content, managing social graph relations (e.g., `followers`, `inbox`), and serializing ActivityPub-compliant data for protocols like Mastodon or PeerTube. The constants directly extend the W3C ActivityStreams namespace to enable structured data interchange and cryptographic endpoint specification in decentralized systems.",
+      "description_length": 755,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Security",
+      "library": "rdf",
+      "description": "This module provides cryptographic operations for digital signatures, proof generation, and key management using algorithms like BBS-BLS, ECDSA, and Ed25519, alongside canonicalization and hashing with SHA-256 or Blake2B. It works with RDF datasets, cryptographic keys (PEM, JWK, Base58 formats), X.509 certificates, and blockchain identifiers to enable secure verification, selective disclosure, and decentralized identity workflows. Specific use cases include data integrity validation, verifiable credentials, and blockchain-integrated authentication in semantic web applications.",
+      "description_length": 583,
       "index": 54,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Rdf.Sparql_http.P",
+      "module_path": "Rdf.Sparql_ms",
       "library": "rdf",
-      "description": "This module defines the interface for sending SPARQL queries over HTTP using GET and POST methods, handling content negotiation and response parsing. It works with URIs, HTTP headers, and SPARQL result formats like XML or JSON. Concrete use cases include querying remote RDF datasets via HTTP endpoints and integrating SPARQL result parsing into client applications.",
-      "description_length": 366,
+      "description": "This module supports operations for managing variable bindings and multi-mappings in SPARQL query execution, including merging, projecting, and set-theoretic operations like union, difference, and join. It works with `Multimu.t` structures\u2014multi-mappings from variables to RDF terms\u2014to handle tasks like filtering by predicates, extending bindings, and managing blank node cardinality. These tools are optimized for scenarios requiring precise control over variable scoping, duplicate elimination, and nested joins in RDF data processing.",
+      "description_length": 538,
       "index": 55,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Term",
+      "module_path": "Rdf.Test_manifest",
       "library": "rdf",
-      "description": "This module handles RDF terms including IRIs, literals, and blank nodes, offering construction, comparison, conversion, and serialization to Turtle syntax. It provides core operations for managing term identity with hashing, datetime handling, and string-based identifier conversion, enabling precise term manipulation and RDF data processing. The set submodule supports ordered collections with efficient set algebra and ordered traversal, ideal for managing vocabularies and performing set-based RDF reasoning. The map submodule enables ordered key-value mappings using RDF terms as keys, supporting transformations and traversals useful for dataset management and graph merging.",
-      "description_length": 681,
+      "description": "This module provides operations to define and manipulate IRIs representing vocabulary elements for RDF test manifests, such as test types, statuses, requirements, and metadata. It primarily works with `Iri.t` values to formalize structured test descriptions in SPARQL query/update conformance testing. These operations support use cases like organizing test suites, specifying expected results, and enabling machine-readable test execution frameworks through standardized RDF ontologies.",
+      "description_length": 487,
       "index": 56,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Owl",
-      "library": "rdf",
-      "description": "This module provides core OWL vocabulary elements and utilities for working with RDF triples and OWL ontologies, focusing on classes, properties, and logical axioms. It includes operations for building and manipulating class expressions, property restrictions, and ontology metadata, using `Iri.t` to represent semantic constructs. Submodules extend this functionality with constants and utilities for defining class hierarchies, enforcing constraints like cardinality and disjointness, and expressing logical relationships. Together, they enable modeling domain knowledge, constructing semantic web ontologies, and supporting reasoning over linked data.",
-      "description_length": 654,
-      "index": 57,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Sparql_map",
       "library": "rdf",
-      "description": "This module transforms SPARQL query components through recursive traversal of abstract syntax trees, applying user-defined mappers to elements like variables, IRIs, literals, graph patterns, and solution modifiers. It operates on structured representations of SPARQL constructs including expressions, constraints, triples, and sub-selects, enabling systematic rewriting or analysis of query logic. Typical applications include query optimization, schema-aware rewriting, and semantic transformations of SPARQL queries during processing or compilation.",
-      "description_length": 551,
+      "description": "The module provides functions for recursively transforming SPARQL abstract syntax tree (AST) elements, such as expressions, graph patterns, paths, and query clauses, using a mapper that applies modifications while preserving structural integrity. It operates on specific SPARQL AST node types like `path_elt`, `verb`, `triples_node`, and `group_graph_pattern`, as well as container types such as `option`, `var`, and `literal`. These transformations enable use cases like query rewriting, optimization, and semantic analysis by systematically traversing and altering SPARQL syntax trees.",
+      "description_length": 587,
+      "index": 57,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Loc",
+      "library": "rdf",
+      "description": "This module represents and manipulates source code locations using character positions within files or strings. It provides functions to create locations from file contents or strings, along with pretty-printing and string conversion utilities. Concrete use cases include tracking the origin of parsed RDF data elements for error reporting or source mapping.",
+      "description_length": 358,
       "index": 58,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Webacl",
+      "module_path": "Rdf.Sparql_algebra",
       "library": "rdf",
-      "description": "This module provides operations to manipulate access rights by adding, removing, and checking read, write, append, and control permissions. It works with a custom `rights` type representing sets of permissions, along with IRI lists to map rights to standardized identifiers. Concrete use cases include enforcing access control policies in RDF-based web applications and converting between human-readable rights and their serialized representations.",
-      "description_length": 448,
+      "description": "This module provides operations for translating SPARQL queries into algebraic representations, manipulating graph patterns and property paths, and serializing algebraic structures into human-readable strings. It works with RDF data models including IRIs, variables, triples, paths, and SPARQL algebra constructs, while handling error cases in variable scoping and prefix resolution. Typical use cases include query processing pipelines, SPARQL query optimization, and generating string representations for debugging or interchange formats.",
+      "description_length": 539,
       "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Stubs",
-      "library": "rdf",
-      "description": "This module defines placeholder implementations and references to external functions for string manipulation and hashing. It includes stubs for SHA-1 and SHA-256 hashing, PCRE-based string replacement, and pattern matching. These are used when full implementations are unavailable or during early development stages.",
-      "description_length": 316,
-      "index": 60,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Ds",
-      "library": "rdf",
-      "description": "This module manages RDF datasets composed of a default graph and named graphs, supporting retrieval, addition, iteration, merging, and isomorphism checks. It provides core operations like `add_graph`, `get_graph`, and `merge_named_graphs`, while its child module handles ordered sets of graph names with functional transformations and efficient membership queries. Use cases include SPARQL dataset manipulation, RDF quad management with distinct contexts, and deterministic processing through ordered graph identifier sets. The API combines direct dataset mutation with immutable set logic for flexible data handling.",
-      "description_length": 617,
-      "index": 61,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Utf8",
-      "library": "rdf",
-      "description": "This module handles UTF-8 encoded strings with functions for indexing, substring extraction, character counting, and encoding conversion. It supports operations like finding character positions, slicing by UTF-8 index, checking prefixes/suffixes, escaping and unescaping sequences, and case transformations. Use cases include parsing and manipulating UTF-8 text in formats like JSON, XML, or RDF where precise character handling and string transformations are required.",
-      "description_length": 469,
-      "index": 62,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Mem",
-      "library": "rdf",
-      "description": "This module implements an in-memory RDF graph system with transactional capabilities, using tree-based indexing for efficient triple storage and retrieval. It supports operations such as adding, removing, and querying triples by subject-predicate-object patterns, dynamic namespace resolution, and graph comparison. Blank nodes are managed internally, and the system allows enumeration of subjects and objects for analysis or export. Example uses include semantic data integration, versioned RDF processing, and transaction-safe data manipulation workflows.",
-      "description_length": 557,
-      "index": 63,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Sparql_http",
-      "library": "rdf",
-      "description": "This module implements HTTP bindings for the SPARQL query protocol, encoding queries into GET and POST requests and decoding structured responses in formats like XML or JSON. It provides a functor that integrates with HTTP clients to send SPARQL queries\u2014such as SELECT, ASK, and CONSTRUCT\u2014to remote endpoints like DBpedia or Wikidata, handling content negotiation and result parsing. The core types include SPARQL messages, IRIs, and HTTP response handlers, with operations for query execution and result decoding. Submodules define interfaces for request/response handling, content negotiation, and result format parsing, enabling applications to query RDF datasets and process structured results directly.",
-      "description_length": 707,
-      "index": 64,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Json",
       "library": "rdf",
-      "description": "Converts JSON data into RDF terms and SPARQL query results. Processes `Yojson.Basic.t` structures to construct RDF model elements and parse SPARQL responses. Useful for integrating JSON-based APIs or storage with RDF data processing workflows.",
-      "description_length": 243,
-      "index": 65,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Rdf_",
-      "library": "rdf",
-      "description": "This module enables the construction and manipulation of RDF statements, literals, and containers using standardized IRIs and XML Schema datatypes. It supports RDF triples, typed literals with language tags or XML content, and semantic structures like lists and bags, with direct operations for creating and inspecting RDF graphs. The child module supplies essential IRI constants for RDF vocabulary and XSD types, such as `rdf_predicate`, `xsd_integer`, and `rdf_c_Bag`, which are used to accurately represent and process semantic web data. Together, they facilitate tasks like modeling metadata, serializing JSON-LD, and validating linked data structures.",
-      "description_length": 657,
-      "index": 66,
+      "description": "Converts JSON data to RDF terms and SPARQL query results. Processes `Yojson.Basic.t` structures to produce typed RDF terms or parse SPARQL responses. Useful for integrating JSON-based APIs with RDF data models or querying remote SPARQL endpoints.",
+      "description_length": 246,
+      "index": 60,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Doap",
+      "module_path": "Rdf.Log",
       "library": "rdf",
-      "description": "This module defines the DOAP RDF vocabulary using `Iri.t` values to represent structured metadata for software projects, including repositories, contributors, licenses, and release data. It enables the construction and querying of RDF graphs that link projects to source code, developers, and external resources like bug trackers. The child module supplies standard IRIs for common DOAP terms, simplifying the creation of triples that describe project relationships and attributes. Together, they support modeling and navigating software ecosystems through precise RDF-based metadata representations.",
-      "description_length": 600,
-      "index": 67,
+      "description": "This module provides logging functions at different severity levels\u2014error, warning, info, and debug\u2014using the `Logs` library. It works with formatted message producers of type `('a, unit) Logs.msgf`. Use this module to emit structured log messages from within RDF processing components, such as tracking parsing issues, reporting load progress, or debugging query execution.",
+      "description_length": 374,
+      "index": 61,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Sioc",
+      "module_path": "Rdf.Vcard",
       "library": "rdf",
-      "description": "This module enables the construction of namespaced IRIs and defines semantic relationships between entities in online communities, such as forums, posts, and users, using RDF resources. It supports modeling hierarchical connections, user roles, content metadata, and social interactions, with operations to represent forum structures, track replies, associate content with topics, and manage user memberships or ownership. The child module extends this functionality by providing specific tools for semantic linking, categorization, and metadata handling within the SIOC ontology. Together, they facilitate applications like social network analysis, content moderation, and semantic web integration through structured relationships and typed RDF-based data modeling.",
-      "description_length": 766,
-      "index": 68,
+      "description": "This module provides operations to define and manipulate IRIs for vCard ontology elements, enabling structured representation of contact data in RDF. It works with `Iri.t` values to model properties (e.g., email, phone, address), classes (e.g., individual, organization), and relationship types (e.g., spouse, colleague), aligning with W3C vCard standards. Use cases include semantic web applications requiring interoperable contact metadata, such as integrating legacy vCard data into RDF-based systems or enriching contact graphs with typed relationships and annotations.",
+      "description_length": 573,
+      "index": 62,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Stubs",
+      "library": "rdf",
+      "description": "This module provides placeholder implementations for cryptographic hashing (SHA-1, SHA-256) and PCRE-based string replacement and pattern matching. It works with strings and PCRE-compatible regular expressions, enabling text transformation and validation workflows. Concrete use cases include stubbing cryptographic functions during testing and implementing flexible string manipulation logic using regex patterns.",
+      "description_length": 414,
+      "index": 63,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Bgp",
+      "library": "rdf",
+      "description": "Implements evaluation of Basic Graph Patterns by matching triple patterns against RDF datasets. Uses SPARQL algebra triples and multiset mappings to produce query results. Enables execution of SPARQL BGP queries over RDF data.",
+      "description_length": 226,
+      "index": 64,
       "embedding_norm": 1.0
     },
     {
@@ -562,380 +530,356 @@
       "library": "rdf",
       "description": "Extracts the title of a resource from a graph by looking up the `dc:title` or `rdfs:label` properties. Works with RDF graphs and IRI identifiers. Useful for retrieving human-readable names of resources in semantic web applications.",
       "description_length": 231,
+      "index": 65,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Doap",
+      "library": "rdf",
+      "description": "This module provides operations to define and manipulate IRIs for the DOAP vocabulary, focusing on software project metadata such as repositories, contributors, and release details. It works with RDF triples and typed `Iri.t` values to represent relationships between projects and attributes like licenses, programming languages, or version control endpoints. Specific use cases include semantic web applications for project discovery, dependency management systems, and tools integrating with version control platforms (e.g., Git, SVN) via standardized metadata descriptions.",
+      "description_length": 576,
+      "index": 66,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_print",
+      "library": "rdf",
+      "description": "This module converts SPARQL AST elements into formatted string representations using buffer-based generation, handling components like queries, graph patterns, expressions, and solution modifiers. It operates on structured types such as `select_clause`, `group_graph_pattern`, `expr`, and `triples_same_subject` to produce valid SPARQL syntax. Typical use cases include query serialization for execution, debugging, or dynamic query construction with properly escaped IRIs, literals, and variables.",
+      "description_length": 498,
+      "index": 67,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Prov",
+      "library": "rdf",
+      "description": "This module provides functions to model provenance relationships using RDF triples, focusing on constructing and manipulating IRIs for PROV-O ontology terms. It operates on `Iri.t` values to represent entities, activities, agents, and their interactions through relations like derivation, attribution, usage, and temporal constraints. Use cases include tracking data lineage, capturing process accountability, and annotating resource provenance in semantic web applications with support for both unqualified assertions and qualified influence contexts.",
+      "description_length": 552,
+      "index": 68,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Rdfs",
+      "library": "rdf",
+      "description": "This module provides operations for managing RDF Schema semantics, including class and property hierarchy relationships, metadata annotations, and schema construction. It works with IRIs and RDF graphs to enable tasks like defining classes with labels and comments, establishing subclass links, and organizing vocabularies with namespaces. Typical use cases involve building or querying semantic web ontologies, enriching data models with descriptive metadata, and maintaining hierarchical relationships in RDF-based knowledge graphs.",
+      "description_length": 534,
       "index": 69,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Sparql_eval",
+      "module_path": "Rdf.Owl",
       "library": "rdf",
-      "description": "This module evaluates SPARQL expressions and executes query algebra operations over RDF datasets, handling built-in functions, value comparisons, and constraint filtering. It processes data using variable mappings and solution sequences, supporting joins, unions, sorting, and aggregations like `COUNT` and `GROUP_CONCAT`. One submodule defines ordered sequences of optional RDF terms for comparing SPARQL graph expression results, while another manages ordered associative collections for efficient filtering and aggregation based on SPARQL expression keys. Together, they enable structured manipulation of RDF data through operations such as type conversion, language-tagged string matching, and ordered traversal of query solutions.",
-      "description_length": 735,
+      "description": "This module provides a collection of IRI constants for OWL ontology elements, enabling the representation of classes, properties, and axioms within RDF data. It operates on `Iri.t` values to model semantic constructs like class hierarchies, property restrictions (e.g., functional, symmetric), and metadata annotations (e.g., deprecation, versioning), supporting tasks such as defining logical constraints (equivalence, disjointness) and expressing complex relationships via property chains or cardinality rules. These IRIs directly facilitate ontology engineering, semantic web modeling, and formal reasoning over RDF-based knowledge graphs.",
+      "description_length": 642,
       "index": 70,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Rdf.Sparql_ms",
+      "module_path": "Rdf.Xml",
       "library": "rdf",
-      "description": "This module manages variable bindings and multiset structures essential for SPARQL query evaluation, offering operations for union, join, filtering, and transformation with immutable data semantics. It includes submodules that define ordered and unordered multiset types for handling SPARQL mappings with set-theoretic and sequence-aware operations, a ranked pair structure for indexed result merging, and comparison utilities for mapping ordering. The unordered multiset supports efficient membership and bulk operations, while the ordered variant enables priority-based access and cardinality tracking, useful for query result merging and duplicate elimination. Concrete uses include sorting solutions by rank, enforcing SPARQL filter constraints, and combining partial query results with union or join operations.",
-      "description_length": 816,
+      "description": "This module parses and serializes RDF/XML data using a custom XML tree structure, handling namespaces, blank nodes, and base IRIs. It provides functions to convert XML trees or files into RDF graphs and vice versa, supporting ordered traversal and maintaining consistent serialization. Concrete use cases include reading RDF data from XML sources, constructing RDF graphs with proper context handling, and exporting RDF graphs to RDF/XML format with customizable namespace declarations.",
+      "description_length": 486,
       "index": 71,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Sparql_expand",
+      "module_path": "Rdf.Dt",
       "library": "rdf",
-      "description": "This module facilitates SPARQL query normalization and transformation by resolving prefixed names, normalizing IRIs, and rewriting query components like variables, paths, and graph patterns using a shared environment that tracks base IRIs and namespace prefixes. It operates on SPARQL abstract syntax trees, recursively processing elements such as constraints, solution modifiers, and dataset declarations while maintaining contextual consistency. Typical applications include query preprocessing for execution, dataset construction with environment-aware substitutions, and semantic rewriting of RDF graph patterns in SPARQL engines.",
-      "description_length": 634,
+      "description": "This module handles SPARQL value computations with strict type conversion, error propagation, and RDF term mapping. It provides functions for converting, comparing, and manipulating RDF terms as typed values\u2014supporting operations like integer and boolean coercion, IRI resolution, and literal parsing\u2014while managing errors such as type mismatches and invalid literals. Key use cases include SPARQL expression evaluation, semantic query result processing, and error-resilient RDF term transformations.",
+      "description_length": 500,
       "index": 72,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Sparql_lex",
+      "module_path": "Rdf.Sparql_http",
       "library": "rdf",
-      "description": "Performs Unicode-aware lexing for SPARQL queries, handling input streams and position tracking. It converts escaped Unicode sequences into actual characters and produces tokens for the SPARQL parser. Useful for processing SPARQL query strings with internationalized identifiers and literals.",
-      "description_length": 291,
+      "description": "This module implements a functor for creating HTTP bindings to send SPARQL queries via GET or POST requests, handling protocol encoding and response decoding. It works with SPARQL input and output messages, IRIs, and HTTP URIs, supporting operations like query submission and result parsing. Concrete use cases include querying remote RDF datasets using the SPARQL protocol over HTTP, with support for content negotiation and error handling.",
+      "description_length": 441,
       "index": 73,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Vcard",
+      "module_path": "Rdf.Sparql_expand",
       "library": "rdf",
-      "description": "This module provides a set of IRI constants for modeling contact information in RDF, based on the W3C vCard ontology. It includes classes and properties for personal data such as names, addresses, dates, and communication methods, along with relationship types and metadata like organizations and revisions. The module enables structured annotation of contact details in semantic web applications, supporting both standard vCard fields and legacy property mappings. Specific IRIs allow categorizing contacts by relationship (e.g., colleague, friend) and labeling communication methods (e.g., work, home).",
-      "description_length": 604,
+      "description": "This module handles IRI resolution, prefix expansion, and transformation of SPARQL query components\u2014including literals, variables, clauses, and graph patterns\u2014using a shared environment to track base IRIs and prefix mappings. It operates on SPARQL AST types to perform recursive variable substitution, term resolution, and dataset construction, primarily supporting query rewriting and execution in SPARQL update and query contexts.",
+      "description_length": 432,
       "index": 74,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Activitypub",
+      "module_path": "Rdf.Sioc",
       "library": "rdf",
-      "description": "This module enables the construction and interpretation of ActivityPub data models using semantic identifiers and RDF principles, centered around `Iri.t` values that represent activities, object types, and metadata properties. It provides core operations for working with social actions like `Follow` and `Create`, content types such as `Article` and `Video`, and relationships including `attributedTo` and `inReplyTo`, supporting JSON-LD serialization and federated protocol implementation. The child module supplies standardized IRIs for key vocabulary terms, ensuring interoperability across decentralized systems by precisely identifying entities and endpoints required for social interactions, media handling, and user relationships. Together, they facilitate the modeling, exchange, and semantic annotation of user activities and content in federated networks.",
-      "description_length": 866,
+      "description": "This module models online communities, user roles, and content relationships through semantic web standards, providing IRIs and predicates to represent entities like forums, posts, and user accounts. It operates on `Iri.t` values and strings to define structured connections (e.g., containment, authorship, membership) and metadata (e.g., timestamps, interaction counts) for social platforms. Specific use cases include semantic data integration for community forums, modeling user-generated content networks, and tracking collaborative interactions in social web applications.",
+      "description_length": 577,
       "index": 75,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Ttl_types",
+      "library": "rdf",
+      "description": "This module defines core data structures for representing Turtle (TTL) syntax in RDF, including IRIs, literals, subjects, objects, and statements. It supports parsing and constructing Turtle documents with types like `qname`, `iri`, and `directive` to handle namespaces and base IRIs. Concrete use cases include building or processing RDF triples with precise syntactic elements like prefixed names, language-tagged strings, and blank nodes.",
+      "description_length": 441,
+      "index": 76,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Graph",
+      "library": "rdf",
+      "description": "This module provides operations for manipulating RDF triples through addition, removal, and pattern-based queries, alongside advanced features like subgraph extraction, namespace management, and transactional updates. It operates on graph structures composed of terms and triples, enabling analysis tasks such as isomorphism detection, difference generation, and value replacement within interconnected node hierarchies. Designed for semantic web applications, it supports merging distributed data sources, synchronizing graph states, and executing SPARQL-like queries against in-memory or pluggable storage backends.",
+      "description_length": 617,
+      "index": 77,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Sparql_types",
       "library": "rdf",
-      "description": "This module provides core types and structures for representing and manipulating SPARQL queries, including variables, literals, graph patterns, and update operations, with support for precise source location tracking. It enables the construction and analysis of SPARQL syntax trees for applications such as query optimization, RDF data transformation, and semantic web tooling. A submodule handles ordered string collections with lexicographical comparison, facilitating sorted result handling and identifier management, while another manages ordered sets of SPARQL variables with set operations and extremum queries, aiding in scoping analysis and constraint enforcement during query rewriting. Together, these components support precise, efficient manipulation of SPARQL syntax and semantics across diverse processing pipelines.",
-      "description_length": 830,
-      "index": 76,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sparql_vis",
-      "library": "rdf",
-      "description": "This module provides visitor functions for traversing and transforming SPARQL abstract syntax trees, handling constructs like IRIs, literals, variables, triple patterns, graph patterns, and solution modifiers. Built on data structures from `Rdf.Sparql_types`, it enables tasks such as query analysis, optimization, or conversion into alternative representations by systematically processing expressions, aggregates, and path components through dedicated visitor methods.",
-      "description_length": 470,
-      "index": 77,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Time",
-      "library": "rdf",
-      "description": "This module models temporal entities, intervals, and durations using the W3C Time Ontology, supporting calendar-clock semantics through `Iri.t` values to represent time positions, units, and relations. It enables operations such as comparing intervals (*before*, *overlaps*), expressing durations (minutes, years), and annotating RDF data with temporal constraints. Child modules extend this functionality with structured operations for temporal reasoning, including interval containment, ordering, and integration with semantic web standards like OWL. Examples include modeling event timelines, enforcing time-based metadata, and expressing temporal constraints in linked data applications.",
-      "description_length": 691,
+      "description": "This module defines the core syntax types and data structures for SPARQL queries and updates, encompassing IRIs, literals, variables, blank nodes, and clauses like SELECT, CONSTRUCT, and ASK. It supports operations such as parsing, query construction, and transformation, along with structured manipulation of datasets, graph patterns, and update actions, enabling tasks like SPARQL expression analysis and RDF data processing. Key abstractions include typed locations, solution modifiers, and variable sets to facilitate query optimization and semantic analysis.",
+      "description_length": 563,
       "index": 78,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Ttl_parser",
-      "library": "rdf",
-      "description": "Parses Turtle and N-Triples syntax into RDF terms and triples. It processes lexbuf input using a tokenizer, converting sequences of tokens into structured data like IRIs, literals, and blank nodes. Useful for reading RDF data from strings or files into a graph representation.",
-      "description_length": 276,
-      "index": 79,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sparql",
-      "library": "rdf",
-      "description": "This module supports parsing and executing SPARQL queries over RDF data, handling operations like SELECT, CONSTRUCT, ASK, DESCRIBE, and UPDATE to retrieve or manipulate graph structures. It works with RDF graphs and datasets, producing typed query results such as solutions, boolean responses, or transformed RDF terms, while allowing customization through user-defined IRI resolution logic. Typical applications include semantic web querying, data integration pipelines, and dynamic graph validation workflows.",
-      "description_length": 511,
-      "index": 80,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Graph",
-      "library": "rdf",
-      "description": "This module provides in-place manipulation of RDF graphs through triple addition, removal, and querying, alongside structural operations like isomorphism checks and subgraph copying. It supports RDF terms (IRIs, literals, blank nodes) and advanced features such as transaction control, namespace management, and BGP evaluation for SPARQL-like queries. Submodules offer specialized functionality: in-memory graph storage with transactional updates, bidirectional mapping for blank node tracking, and optimized BGP engines for efficient triple pattern matching. Example workflows include semantic data synchronization, transaction-safe RDF updates, and cross-storage graph persistence with customizable query execution.",
-      "description_length": 717,
-      "index": 81,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Activitystreams",
-      "library": "rdf",
-      "description": "This module provides a set of IRI constants for the ActivityStreams 2.0 vocabulary, enabling precise modeling of social activities, objects, and metadata in RDF graphs. It defines core types such as activity kinds (`c_Create`, `c_Like`), object classes (`c_Event`, `c_Person`), and properties like `published` and `totalItems`, all operating on `Iri.t` values. These constants support semantic web applications by encoding structured relationships and actions for systems like ActivityPub. Submodules extend this vocabulary with additional standardized IRIs for activities, object types, and properties, enhancing interoperability in social data aggregation and linked data workflows.",
-      "description_length": 684,
-      "index": 82,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sparql_protocol",
-      "library": "rdf",
-      "description": "This module handles the SPARQL protocol for querying and updating RDF datasets. It defines data structures for input messages, including queries and datasets with default and named graphs, and supports parsing, validation, and error handling for SPARQL requests. Concrete use cases include constructing SPARQL query requests with specific datasets and processing protocol-level errors during SPARQL execution.",
-      "description_length": 409,
-      "index": 83,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Sedlex",
-      "library": "rdf",
-      "description": "This module provides functions to integrate Ulex lexical analysis with Menhir parsers, specifically handling position tracking during lexing. It works with `Sedlexing.lexbuf` and `Stdlib.Lexing.position` to maintain accurate source locations. A key use case is enabling Menhir-based parsers to consume input from Ulex-generated lexers while correctly reporting positions in error messages or AST nodes.",
-      "description_length": 402,
-      "index": 84,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Pim",
-      "library": "rdf",
-      "description": "This module defines RDF classes and properties for modeling storage and workspace configurations, such as public and private workspaces and storage types, using IRIs to represent resources like preferences files and master workspaces. It includes operations to construct and identify URIs within workspaces, supporting use cases like access control policy modeling, data organization in semantic web applications, and managing shared or user-specific workspaces. The child module extends this functionality with functions to manage access control policies, set storage types, and define relationships between workspaces and storages using IRI-based identifiers. Together, they enable configuring data isolation, defining permissions on shared resources, and handling URI prefixes for resource addressing.",
-      "description_length": 804,
-      "index": 85,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Loc",
-      "library": "rdf",
-      "description": "This module represents and manipulates source code locations using character positions. It defines a `loc` type that captures start and end positions in a source file or string, and provides functions to construct locations from file content or strings, as well as convert locations to human-readable strings or formatted output. It is used to track and report precise source positions during parsing or error reporting.",
-      "description_length": 420,
-      "index": 86,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Log",
-      "library": "rdf",
-      "description": "This module provides logging functionality using the `Logs` library, exposing standard severity-level log functions (`err`, `warn`, `info`, `debug`) to emit formatted messages. It works with string-based log messages and supports structured logging through `Logs.msgf` formatting. Concrete use cases include tracking parsing errors, reporting load progress, and debugging triple generation in RDF processing pipelines.",
-      "description_length": 418,
-      "index": 87,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Ldp",
       "library": "rdf",
-      "description": "This module provides tools for managing Linked Data Platform resources by organizing them into hierarchical containers, enforcing membership constraints, and enabling efficient traversal of large datasets through sorted, paginated sequences. It uses `Iri.t` to represent RDF constructs like containers and members, and supports operations for defining containment relations, indexing members, and applying predicate-based sorting with directional ordering. Child modules extend this functionality by defining RDF terms and relations that model container hierarchies, manage member inclusion rules, and implement pagination mechanics over RDF graphs. Examples include structuring data stores with nested containers, enforcing membership conditions, and retrieving large collections in ordered, paged segments based on custom criteria.",
-      "description_length": 833,
+      "description": "This library supports modeling container hierarchies and membership relationships in Linked Data Platform systems, using IRIs and strings to represent RDF terms for resources like containers, members, and source types. It enables management of sorted, paginated sequences through collation and ordering predicates, specifically addressing use cases for hierarchical resource navigation and ordered member traversal across distributed datasets. The operations align with LDP specifications for containment semantics and scalable handling of large RDF graphs.",
+      "description_length": 557,
+      "index": 79,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Nq",
+      "library": "rdf",
+      "description": "This module parses and serializes N-quads data, handling input and output operations for datasets and individual graphs. It works with `Rdf.Ds.dataset` and `Rdf.Graph.graph` types, providing direct conversion to and from strings and files. Use it to load N-quads data into a dataset from a string or file, or to export datasets and graphs to string or file formats.",
+      "description_length": 365,
+      "index": 80,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Term",
+      "library": "rdf",
+      "description": "This module provides operations for constructing and manipulating RDF terms, including IRIs, typed literals, language-tagged strings, and blank nodes, with support for comparisons, hashing, and structured data operations through ordered sets and maps. It handles conversions between primitive values (booleans, numbers, datetimes) and RDF literals, while enabling Turtle syntax serialization and string parsing for RDF terms. Key use cases include semantic web data processing, RDF graph manipulation, and interoperability with systems requiring standardized term representations.",
+      "description_length": 580,
+      "index": 81,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Ds",
+      "library": "rdf",
+      "description": "This module manages RDF datasets composed of a default graph and a collection of named graphs, supporting operations to add, retrieve, and iterate over graphs with optional names. It provides functions to merge named graphs into the default graph, compare datasets for isomorphism, and report structural differences including missing graphs or mismatched triples. Key data types include `dataset`, `name` (IRIs or blank node identifiers), and `diff` for representing dataset discrepancies.",
+      "description_length": 489,
+      "index": 82,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Acl",
+      "library": "rdf",
+      "description": "This module implements the W3C ACL vocabulary for expressing access control policies in RDF datasets. It includes constants for access modes like read, write, append, and control, along with properties to specify target resources and agent roles such as agent, agent class, and agent group. It is used to define and enforce access rules in semantic web applications and linked data platforms.",
+      "description_length": 392,
+      "index": 83,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Mem",
+      "library": "rdf",
+      "description": "This module implements an in-memory RDF graph using tree-based sets for efficient triple storage and querying. It supports operations to add, remove, and query triples, manage transactions with commit and rollback, and handle namespaces and blank nodes. Use cases include building and manipulating RDF datasets in memory, executing transactional SPARQL queries, and managing blank node identifiers in semantic web applications.",
+      "description_length": 427,
+      "index": 84,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Utf8",
+      "library": "rdf",
+      "description": "This module handles UTF-8 encoded strings with precise operations for indexing, substring extraction, character counting, and encoding conversion. It supports string manipulation based on UTF-8 character positions, including prefix/suffix checks, substring search, and line position tracking. Specific use cases include parsing UTF-8 text with accurate character indexing, escaping and unescaping strings for IRI encoding, and performing case transformations on UTF-8 content.",
+      "description_length": 476,
+      "index": 85,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Ttl",
+      "library": "rdf",
+      "description": "This module parses and serializes RDF data in Turtle format. It supports reading from strings or files into a graph, writing graphs to strings or files, and converting individual terms and triples to their string representations. Use it to load RDF datasets from Turtle-encoded sources or export them in a compact or namespace-aware format.",
+      "description_length": 340,
+      "index": 86,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Ttl_lex",
+      "library": "rdf",
+      "description": "This module implements a Unicode-aware lexer for parsing RDF Turtle syntax. It provides a `main` function that processes input from a `Sedlexing.lexbuf`, tracking positions and emitting tokens for the Turtle parser. The lexer handles reserved characters defined in `reserved_chars`, which represents Unicode code points significant to Turtle syntax. It is used during the lexical analysis phase of Turtle document parsing to split input into meaningful tokens like IRIs, literals, and keywords.",
+      "description_length": 494,
+      "index": 87,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Webacl",
+      "library": "rdf",
+      "description": "This module manages access control rights for RDF resources, providing operations to add, remove, and check read, write, append, and control permissions. It works with a custom `rights` type and IRI lists to represent access modes and their associated rights. Concrete use cases include enforcing fine-grained access policies in RDF-based web applications and converting between structured rights and string representations for storage or transmission.",
+      "description_length": 452,
       "index": 88,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Rdf.Types",
       "library": "rdf",
-      "description": "This module provides a suite of ordered data structures built around characters and strings, enabling efficient comparison, traversal, and transformation. It includes character and string types with total ordering, immutable ordered sets and maps with operations like union, intersection, and ordered iteration, as well as named string types for RDF-compatible comparisons. You can build and manipulate ordered collections of characters and strings, perform set and map operations with predictable ordering, and model RDF data using ordered maps and comparable string types. Examples include constructing character sets for lexing, transforming string sets in data pipelines, and maintaining sorted maps for RDF term indexing.",
-      "description_length": 726,
+      "description": "This module defines fundamental data structures and orderings for string and character-based collections. It includes ordered string and character types, along with maps and sets that support efficient, ordered manipulation of key-value pairs and unique elements. These structures are used for managing RDF terms, merging lexically sorted datasets, and implementing algorithms requiring ordered set operations or precise key-based lookups.",
+      "description_length": 439,
       "index": 89,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Rdf.Config",
+      "module_path": "Rdf.Activitystreams",
       "library": "rdf",
-      "description": "Retrieves the library's version as a string. Works with no data structures, returning a simple string value. Useful for checking the current version of the library at runtime.",
-      "description_length": 175,
+      "description": "This module provides a structured vocabulary for modeling social activities and interactions through a collection of IRI constants representing Activity Streams 2.0 classes (e.g., `Activity`, `Person`, `Like`), properties (e.g., `actor`, `content`, `attributedTo`), and metadata (e.g., `published`, `totalItems`, `url`). These identifiers operate within RDF triples to express semantic relationships, activity contexts, and object metadata, primarily supporting ActivityPub-based systems for social graph modeling, content annotation, and distributed interaction protocols. The constants enable precise semantic tagging and linking of resources in federated social networks and linked data applications.",
+      "description_length": 703,
       "index": 90,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Rdf.Ttl",
+      "module_path": "Rdf.Sparql_lex",
       "library": "rdf",
-      "description": "This module parses and serializes RDF data in Turtle format. It provides functions to read from strings or files into an RDF graph, write a graph to a Turtle string or file with optional namespace declarations and compact formatting, and convert individual RDF terms and triples to their Turtle string representations. It directly handles RDF graphs, terms, IRIs, and namespaces.",
-      "description_length": 379,
+      "description": "Performs Unicode-aware lexing for SPARQL queries, handling input streams and position tracking. It translates raw input into tokenized output suitable for SPARQL parsing, including proper handling of escaped characters. Useful for building SPARQL query parsers that require accurate source position reporting and Unicode support.",
+      "description_length": 329,
       "index": 91,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Rdf.Oa",
+      "module_path": "Rdf.Misc",
       "library": "rdf",
-      "description": "This module enables the creation and manipulation of semantic annotations using RDF triples, with core operations for defining targets, bodies, selectors, and metadata through standardized relationships. It centers on `Iri.t`-based modeling of annotation components like textual or temporal ranges, styling, and provenance, supporting precise resource targeting and contextual metadata attachment. Child modules extend this by providing structured mechanisms for annotation management, including selection techniques (XPath, CSS, text ranges), motivation tagging, and state tracking. Examples include building annotations with CSS selectors and styling hints, or capturing temporal states and derivation chains for versioned resources.",
-      "description_length": 735,
+      "description": "This module includes functions for handling optional values, such as converting between strings and options, mapping over options, and comparing optional values. It provides utilities for reading file contents into a string and splitting strings based on character delimiters. These operations are useful when parsing input, processing text files, or handling optional configuration values.",
+      "description_length": 390,
       "index": 92,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Foaf",
+      "module_path": "Rdf.Sedlex",
       "library": "rdf",
-      "description": "This module provides direct access to FOAF vocabulary terms as IRI values, enabling the representation of individuals, their attributes, and relationships within RDF graphs. It includes core classes like `foaf_c_Person` and properties such as `foaf_knows`, `foaf_email`, and `foaf_openid`, supporting the modeling of social connections, digital identities, and personal metadata. Submodules extend this functionality with additional constants and utilities for structured data interchange in semantic web and linked data applications. Example uses include integrating social network data, linking agents to online resources, and standardizing descriptions of people and groups in RDF-based systems.",
-      "description_length": 698,
+      "description": "This module provides functions for integrating Ulex lexical analysis with Menhir parsers, specifically handling position tracking during lexing. It works with `Sedlexing.lexbuf` and `Stdlib.Lexing.position` to maintain accurate source locations. A concrete use case is implementing custom lexers that update position information correctly when parsing RDF files using Menhir-based parsers.",
+      "description_length": 389,
       "index": 93,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Dt",
-      "library": "rdf",
-      "description": "This module provides a comprehensive framework for working with RDF terms as typed values in SPARQL computations, handling literals, integers, booleans, and datetimes with error-aware operations. It supports parsing, conversion, and coercion of RDF terms while propagating type errors, enabling robust expression evaluation. Submodules extend this with comparison logic for ordered values, ordered maps for term bindings, and set operations for error-aware collections. These tools facilitate tasks like sorting query results, aggregating term mappings, and performing set-theoretic transformations in SPARQL processing pipelines.",
-      "description_length": 630,
-      "index": 94,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Nq",
-      "library": "rdf",
-      "description": "This module parses and serializes N-quads data, handling input and output operations for datasets and graphs. It provides functions to convert N-quads strings and files to and from dataset and graph structures, supporting direct data persistence and interchange. Concrete use cases include loading RDF data from N-quads files into a dataset or exporting a graph to an N-quads string for transmission.",
-      "description_length": 400,
-      "index": 95,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Bgp",
-      "library": "rdf",
-      "description": "This module evaluates Basic Graph Patterns over RDF datasets using pattern matching and variable substitution, enabling SPARQL-like query execution. It provides core operations for matching triple patterns, resolving variables, and joining results, working with RDF terms, triples, and graph structures. The module processes SPARQL algebra triples into multiset results, supporting structured query evaluation and pattern-based lookups with subject, predicate, or object filters. It combines direct APIs for triple matching with submodules that handle result merging, term comparison, and algebraic evaluation.",
-      "description_length": 610,
-      "index": 96,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Acl",
-      "library": "rdf",
-      "description": "This module provides RDF terms and classes for modeling access control policies, including permissions like read, write, append, and control over resources. It defines core entities such as Agent, Authorization, and AccessTo, enabling the construction and interpretation of fine-grained access rules in semantic web applications. The module supports operations for specifying ownership, agent groups, and delegation, aligning with W3C's ACL vocabulary. Use cases include defining ACL rules for linked data, managing permissions on RDF graphs, and implementing authorization policies in web-based systems.",
-      "description_length": 604,
-      "index": 97,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Ttl_lex",
-      "library": "rdf",
-      "description": "This module implements a Unicode-aware lexer for parsing Turtle (TTL) files. It defines a set of reserved characters used in TTL syntax and provides the `main` function to tokenize input from a `Sedlexing.lexbuf`, producing positions and tokens for the parser. It is used directly during the lexical analysis phase of RDF data ingestion in Turtle format.",
-      "description_length": 354,
-      "index": 98,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Dc",
-      "library": "rdf",
-      "description": "This module provides semantic identifiers for Dublin Core metadata terms, enabling structured annotations of resources using standardized vocabularies. It defines Iri.t values for properties such as title, rights, and date, along with data types like time intervals and geographic points, to model metadata in RDF graphs. The child module exposes specific Dublin Core terms as Iri.t values, supporting the description of creators, formats, and relationships in RDF triples. Use cases include annotating datasets with spatial coverage, encoding provenance information, and expressing licensing terms using DCMI vocabularies.",
-      "description_length": 623,
-      "index": 99,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Rdf.Dot",
       "library": "rdf",
-      "description": "This module converts RDF graphs into Graphviz format for visualization. It provides functions to generate namespace mappings, apply prefixes to IRIs, and output DOT representations of entire graphs or specific IRI-related triples. It works directly with RDF graphs and IRI values, enabling visual inspection of RDF data through directed graphs.",
-      "description_length": 344,
-      "index": 100,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Prov",
-      "library": "rdf",
-      "description": "This module enables the construction and interpretation of RDF triples that model provenance information using the PROV-O vocabulary, representing entities, activities, and agents through typed IRIs and constants. It supports relationships such as generation, usage, and influence, facilitating the description of data lineage, temporal interactions, and contextual roles in semantic web applications. The child module extends this by defining IRI constants and qualified relations, allowing structured metadata representation through directed acyclic graphs and semantic web data models. Together, they enable precise tracking of derivation, delegation, and provenance constraints, suitable for scientific workflow tracking and digital artifact auditing.",
-      "description_length": 755,
-      "index": 101,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Sparql_print",
-      "library": "rdf",
-      "description": "This module serializes SPARQL abstract syntax tree (AST) elements\u2014such as queries, graph patterns, triples, and expressions\u2014into string buffers, handling components like `SELECT` clauses, `VALUES` blocks, path modifiers, and solution modifiers. It operates on SPARQL AST types, formatting structured data into human-readable SPARQL syntax for query generation or debugging purposes. The resulting output can be used to construct executable SPARQL queries or inspect internal representations during development.",
-      "description_length": 510,
-      "index": 102,
+      "description": "This module converts RDF graphs into Graphviz format for visualization, handling IRI namespace abbreviations and optional hyperlinks. It provides functions to generate DOT representations of RDF graphs or specific IRI-related triples, using customizable namespaces and term linking. Use cases include generating visual diagrams of RDF data and focusing on specific IRI nodes within a graph.",
+      "description_length": 390,
+      "index": 94,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Rdf.Earl",
+      "module_path": "Rdf.Sparql_protocol",
       "library": "rdf",
-      "description": "This module provides RDF IRI constants for modeling test outcomes and metadata in semantic web validation, including classes like `c_Pass` and `c_TestCase`, and properties such as `assertedBy` and `info`. It operates on `Iri.t` values to represent test subjects, assertors, and evaluation results, enabling structured reporting through EARL-compliant RDF graphs. Submodules define identifiers and relationships for expressing test assertions, outcomes, and contextual links, supporting machine-readable conformance reports. Specific uses include encoding W3C test suite results and semantic protocol validations using RDF triples.",
-      "description_length": 630,
-      "index": 103,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Ttl_types",
-      "library": "rdf",
-      "description": "This module defines core data structures and types for parsing and representing Turtle (TTL) syntax in RDF, including IRIs, literals, subjects, objects, and statements. It handles namespaces through prefix and base directives, maintaining context with IRI resolution and prefix mappings. It is used for processing Turtle documents into structured statements that can be further interpreted into RDF graphs.",
-      "description_length": 406,
-      "index": 104,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Security",
-      "library": "rdf",
-      "description": "This module enables cryptographic operations for RDF datasets, combining signature schemes like ECDSA, Ed25519, and BBS-BLS with key management and proof metadata handling. It supports cryptographic primitives such as keys, digests, and nonces, and works with RDF graphs and IRIs to secure data integrity, authentication, and decentralized identity workflows. Child modules extend these capabilities with canonicalization algorithms and selective disclosure mechanisms, enabling use cases like blockchain identifier integration and processing JSON-LD/RDFa-encoded security metadata. Together, they provide a comprehensive toolkit for creating and verifying linked data proofs in semantic web applications.",
-      "description_length": 705,
-      "index": 105,
-      "embedding_norm": 1.0
+      "description": "This module implements the SPARQL protocol for querying and updating RDF datasets over HTTP. It defines data structures for handling SPARQL query requests, including input datasets with default and named graphs, and represents responses such as query results, update acknowledgments, or error conditions. It is used to interact with SPARQL endpoints, enabling operations like querying remote RDF datastores or sending update requests to triplestores like 4store.",
+      "description_length": 462,
+      "index": 95,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Rdf.Update",
       "library": "rdf",
-      "description": "This module handles RDF graph updates by applying SPARQL solutions to triples, managing blank node mappings, and performing insertions, deletions, and modifications on RDF graphs. It operates on RDF graphs, SPARQL algebra triples, solution mappings, and blank node identifiers. Concrete use cases include updating RDF datasets based on SPARQL `INSERT`, `DELETE`, and `MODIFY` operations, and applying query solutions to graph mutations while handling blank node scoping.",
-      "description_length": 470,
-      "index": 106,
+      "description": "This module handles RDF graph updates using SPARQL update operations, providing functions to insert, delete, and modify triples with support for blank node mapping and solution application. It works with RDF graphs, SPARQL algebra triples, and update templates, enabling concrete operations like applying variable bindings to triples, adding or removing data based on query solutions, and executing DELETE/INSERT/WHERE clauses. Use cases include implementing SPARQL update operations, managing RDF dataset mutations, and handling blank node substitutions during graph updates.",
+      "description_length": 576,
+      "index": 96,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql_vis",
+      "library": "rdf",
+      "description": "This module provides traversal and transformation capabilities for SPARQL queries using a visitor pattern, targeting RDF terms like variables, IRIs, and literals alongside query constructs such as `SELECT`, `VALUES`, and dataset clauses. It operates on SPARQL AST structures\u2014including expressions, aggregates, graph patterns, and solution modifiers\u2014enabling recursive processing of components like paths, triples, and sub-selects. The framework supports tasks like query analysis, optimization, or rewriting by systematically manipulating abstract syntax tree nodes.",
+      "description_length": 566,
+      "index": 97,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Rdf.Time",
+      "library": "rdf",
+      "description": "This module constructs and references temporal entities using IRIs to model instants, intervals, durations, and calendar components (days, months, years) with directional relations like before and after. It operates on temporal positions, Allen's interval relations, and units (seconds, weeks) aligned with W3C Time Ontology and XML Schema standards. Applications include semantic modeling of scheduling systems, knowledge graphs, and temporal reasoning in RDF data.",
+      "description_length": 466,
+      "index": 98,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Rdf.Lang",
       "library": "rdf",
-      "description": "This module validates language tags according to RFC5646. It provides a function `is_valid_language_tag` that checks if a given string conforms to the language tag format specified in section 2.1 of RFC5646. It operates on string inputs and is used to ensure correct formatting of language identifiers in applications handling multilingual data.",
-      "description_length": 345,
-      "index": 107,
+      "description": "This module validates language tags according to RFC5646. It provides the function `is_valid_language_tag` that checks if a given string conforms to the specified language tag format. Useful for ensuring correct language identifiers in internationalized applications or RDF data processing.",
+      "description_length": 290,
+      "index": 99,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Sparql",
+      "library": "rdf",
+      "description": "The module supports parsing SPARQL queries, executing them against RDF datasets and graphs, and extracting typed values (e.g., terms, integers, strings) from solutions. It handles operations like SELECT, CONSTRUCT, ASK, DESCRIBE, and UPDATE, returning structured results such as solution sequences, RDF graphs, or booleans, with applications in semantic web data querying and custom IRI function management.",
+      "description_length": 407,
+      "index": 100,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Rdf_",
+      "library": "rdf",
+      "description": "This module provides operations for constructing and manipulating IRIs using predefined RDF and XSD namespaces, with utilities to append suffixes and generate numbered IRIs. It defines standard vocabulary terms for RDF containers (e.g., `Alt`, `Seq`), properties (e.g., `subject`, `predicate`), and datatypes (e.g., `xsd_integer`, `dt_JSON`) to support parsing, serializing, and manipulating RDF data with XML, JSON, or language-tagged literals. Specific use cases include building RDF graphs with typed literals, handling RDF lists using `nil` terminators, and working with RDF statements and metadata properties like `type_` or `language`.",
+      "description_length": 641,
+      "index": 101,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Pim",
+      "library": "rdf",
+      "description": "This module defines IRIs and operations for managing workspaces and storage configurations with specific access controls in a semantic web context. It supports data types like `Iri.t` to represent storage types (public, private, shared) and workspace policies. Concrete use cases include enforcing user-specific data isolation, configuring access levels for collaborative resources, and organizing URI spaces with defined privacy settings.",
+      "description_length": 439,
+      "index": 102,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Rdf.Xml",
+      "module_path": "Rdf.Ttl_parser",
       "library": "rdf",
-      "description": "This module parses and serializes RDF/XML documents into a tree structure, handling XML namespaces, blank nodes, and base IRIs. It processes XML trees to populate RDF graphs using subject-predicate-object triples, supporting node and property input with language and datatype tracking. You can read RDF data from XML strings, files, or input handles, and convert RDF graphs back to RDF/XML with optional namespace declarations and compact serialization. Submodules extend this functionality with specialized parsing, formatting, and namespace management tools for more precise control over RDF/XML processing.",
-      "description_length": 609,
-      "index": 108,
+      "description": "Parses Turtle and N-Triples syntax into RDF terms and triples. It processes lexed tokens to construct in-memory representations of Turtle documents or N-Triples lists, handling IRIs, literals, blank nodes, and prefixes. Used for reading RDF data from Turtle (.ttl) or N-Triples (.nq) files into structured term formats for further processing or storage.",
+      "description_length": 353,
+      "index": 103,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Rdf.Earl",
+      "library": "rdf",
+      "description": "This module provides constants for constructing and interpreting EARL vocabulary terms, including classes like test outcomes (pass/fail) and entities (test cases), along with properties linking assertions to metadata. It operates on RDF triples and IRIs to encode structured accessibility evaluation data, such as test results, execution modes, and subject references. These tools are specifically used to generate and process semantic web reports for accessibility compliance testing.",
+      "description_length": 485,
+      "index": 104,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Rdf.Solid",
       "library": "rdf",
-      "description": "This module provides RDF terms and classes from the Solid vocabulary, enabling precise modeling of core concepts like accounts, inboxes, notifications, and timelines through direct IRI access and constructors. It supports operations for tracking notification states, organizing data in timeline containers, and registering RDF types within Solid-compliant storage. Submodules extend this functionality with specialized IRIs and structures for managing notification status, time-ordered resources, and type registries. Example uses include building unread tracking systems, structuring data in file-based timelines, and registering application-specific types for discovery.",
-      "description_length": 672,
-      "index": 109,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Rdf.Rdfs",
-      "library": "rdf",
-      "description": "This module enables the construction and manipulation of RDF Schema elements using `Iri.t` identifiers and `Rdf.Graph.graph` structures, supporting the definition of classes with inheritance, properties with domain and range constraints, and metadata annotations. It provides direct access to core RDFS vocabulary terms for precise semantic modeling, allowing operations like declaring subclass relationships, specifying property characteristics, and attaching human-readable labels. Concrete applications include building ontology hierarchies, validating RDF data against schema definitions, and enriching semantic graphs with structured metadata. The combination of programmatic schema assembly and vocabulary-based annotations supports robust semantic web data modeling and vocabulary creation workflows.",
-      "description_length": 807,
-      "index": 110,
+      "description": "This module defines IRIs and classes from the Solid ontology for managing accounts, notifications, timelines, and type indexes. It provides direct access to key resources like inbox, notification, timeline, and typeIndex, along with boolean flags such as read. Use cases include modeling user notification systems, structuring time-based data in file-like hierarchies, and registering RDF types for application-specific resources.",
+      "description_length": 430,
+      "index": 105,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Rdf.Misc",
+      "module_path": "Rdf.Config",
       "library": "rdf",
-      "description": "This module includes functions for handling optional values, such as converting between strings and string options, mapping over optional values, and comparing optional and list values. It operates on data types like `string option`, `'a list`, and `char list`. Specific use cases include reading file contents into a string, splitting strings based on delimiter characters, and performing comparisons on lists and optional values.",
-      "description_length": 431,
-      "index": 111,
+      "description": "Retrieves the library's version number as a string. Works with string and unit types. Useful for checking the installed version of the library at runtime.",
+      "description_length": 154,
+      "index": 106,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Sparql_parser",
-      "library": "rdf",
-      "description": "This module defines a lexer and parser for SPARQL queries, converting input text into an abstract syntax tree representing SPARQL operations. It recognizes SPARQL keywords, variables, literals, and operators as distinct token types and processes them into structured query representations. It is used to parse SPARQL SELECT, INSERT, DELETE, and other query forms into executable structures for RDF data manipulation.",
-      "description_length": 416,
-      "index": 112,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Rdf.Test_manifest",
-      "library": "rdf",
-      "description": "This module provides constants and IRIs for structuring RDF test manifests, enabling the classification of test types, specification of actions, and encoding of metadata such as expected outcomes and status indicators. It supports operations on RDF vocabularies to define test cases, validate constraints like cardinality and status, and organize test suites for RDF and SPARQL processing systems. Specific uses include identifying syntax validation tests, associating test entries with datasets, and annotating test cases with conformance requirements. Submodules extend these capabilities by providing specific IRIs for test categorization and metadata handling.",
-      "description_length": 664,
-      "index": 113,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Rdf",
       "library": "rdf",
-      "description": "This module provides a comprehensive toolkit for working with RDF data, including terms, triples, graphs, and datasets, alongside support for SPARQL query processing, OWL ontologies, and semantic vocabularies. Core data types include IRIs, literals, blank nodes, RDF graphs, datasets, and SPARQL expressions, with operations for construction, transformation, querying, and serialization. It enables tasks such as semantic reasoning with OWL, access control modeling, temporal data representation, and cryptographic signing of RDF datasets. Specific applications include parsing and executing SPARQL queries, building linked data applications with FOAF and DOAP vocabularies, and visualizing RDF graphs using Graphviz.",
-      "description_length": 717,
-      "index": 114,
+      "description": "This module provides operations for parsing, serializing, and transforming RDF data across formats like Turtle, N-Triples, and SPARQL, alongside tools for constructing and evaluating semantic queries. It works with RDF graphs, datasets, IRIs, and literals to support ontology modeling, access control policies, and provenance tracking in semantic web applications. Specific capabilities include cryptographic security for data verification, interoperability with social networking standards like ActivityPub, and integration with vCard/time ontologies for structured metadata handling.",
+      "description_length": 585,
+      "index": 107,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 138,
-    "meaningful_modules": 115,
-    "filtered_empty_modules": 23,
-    "retention_rate": 0.8333333333333334
+    "total_modules_in_package": 129,
+    "meaningful_modules": 108,
+    "filtered_empty_modules": 21,
+    "retention_rate": 0.8372093023255814
   },
   "statistics": {
-    "max_description_length": 866,
-    "min_description_length": 175,
-    "avg_description_length": 523.6173913043478,
-    "embedding_file_size_mb": 0.4182004928588867
+    "max_description_length": 755,
+    "min_description_length": 154,
+    "avg_description_length": 492.01851851851853,
+    "embedding_file_size_mb": 1.565389633178711
   }
 }

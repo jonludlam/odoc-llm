@@ -1,9 +1,9 @@
 {
   "package": "slack",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 17,
-  "creation_timestamp": "2025-07-15T23:09:31.398251",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 15,
+  "creation_timestamp": "2025-08-14T23:27:51.678944",
   "modules": [
     {
       "module_path": "Slack_lib.Mrkdwn.Cmarkit_slack",
@@ -16,142 +16,126 @@
     {
       "module_path": "Slack_lib.Atd_adapters.Unfurl_adapter",
       "library": "slack.lib",
-      "description": "This module provides `normalize` and `restore` functions that convert between real and ATD-compliant JSON trees. It operates on `Yojson.Safe.t` data structures, transforming nested or irregular JSON into a standardized format and vice versa. Concrete use cases include preparing JSON data for ATD-based serialization and converting ATD-serialized data back into standard JSON for external consumption.",
-      "description_length": 401,
+      "description": "This module provides `normalize` and `restore` functions that convert between real and ATD-compliant JSON trees. It operates on `Yojson.Safe.t` data structures, ensuring compatibility between raw JSON and ATD-generated types. Use this when interfacing with Slack's API to handle unfurl responses that require strict ATD formatting.",
+      "description_length": 331,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Slack_lib.Utils.ApiHelpers",
       "library": "slack.lib",
-      "description": "This module provides functions to send and update text messages in Slack channels, including options to customize the sender's username and icon. It works with Slack contexts, channel identifiers, and message timestamps to interact with Slack's API. Concrete use cases include sending notifications, updating existing messages, and posting messages as a specific user in a channel.",
-      "description_length": 381,
+      "description": "This module provides functions to send and update text messages in Slack channels, including options to customize the sender's username and icon. It works with Slack contexts, channel identifiers, and message timestamps to interact with Slack's API endpoints for posting and updating messages. Concrete use cases include sending notifications to a channel, updating a bot's previous message, or posting messages as a specific user identity.",
+      "description_length": 440,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Slack_lib.Api.S",
-      "library": "slack.lib",
-      "description": "This module defines the interface for interacting with Slack's API, including functions to send and update messages, upload files, manage conversations, and handle usergroups. It operates on data types representing Slack API requests and responses, such as `post_message_req`, `update_message_req`, and their corresponding result types. Concrete use cases include posting messages to channels, updating existing messages, uploading files, retrieving conversation history, and managing usergroup memberships.",
-      "description_length": 507,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Slack_lib.Atd_adapters.Slack_response_adapter",
-      "library": "slack.lib",
-      "description": "This module provides functions to normalize and restore JSON structures for handling Slack API responses, specifically addressing error detection. It works with `Yojson.Safe.t` data types to ensure compatibility with ATD-generated types. Use cases include transforming Slack API JSON responses into a predictable format for error checking and converting them back to standard JSON when needed.",
-      "description_length": 393,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Slack_lib.Slack_j",
-      "library": "slack.lib",
-      "description": "This module provides JSON serialization and deserialization utilities for Slack API data types, including users, usergroups, message blocks, attachments, and API requests/responses. It supports operations for constructing and parsing Slack API interactions such as message updates, usergroup management, file uploads, and event handling. Key use cases include integrating with Slack's messaging system, processing real-time events, and managing workspace usergroups through type-safe data modeling.",
-      "description_length": 498,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Slack_lib.Api_local",
-      "library": "slack.lib",
-      "description": "This module simulates Slack API operations for testing environments, offering predefined responses for actions like message sending, file uploads, usergroup management, and event handling. It operates on contextual configurations and cached data structures, enabling developers to validate logic without external network dependencies. Key use cases include unit testing chatbot interactions, verifying webhook payloads, and mocking user/conversation state flows in isolated scenarios.",
-      "description_length": 484,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Slack_lib.Atd_adapters",
-      "library": "slack.lib",
-      "description": "This module handles bidirectional transformations between real-world JSON and ATD-compliant JSON structures, ensuring compatibility with ATD-generated types. It operates on `Yojson.Safe.t` values, offering `normalize` to standardize JSON for ATD serialization and `restore` to revert it back. These transformations are useful for processing irregular JSON, such as Slack API responses, by normalizing nested or inconsistent structures into predictable formats suitable for type-safe handling and error detection. Example use cases include sanitizing JSON before deserialization and converting ATD-validated data back into standard JSON for external interfaces.",
-      "description_length": 660,
-      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Slack_lib.Api_remote",
       "library": "slack.lib",
-      "description": "This module enables authenticated interactions with Slack's API, supporting operations like message creation and updates, file uploads, usergroup administration, and retrieval of conversation details, user information, and workspace member lists. It processes Slack-specific request types (`post_message_req`, `files_upload_req`) and authentication contexts (`Context.t`), leveraging HTTP requests with form-encoded parameters and JSON payloads. These capabilities are used for workflows such as automating channel notifications, managing team directory data, and validating API authentication tokens.",
-      "description_length": 601,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Slack_lib.Colors",
-      "library": "slack.lib",
-      "description": "Defines string constants for common color codes used in Slack messages. Provides direct access to colors like gray, blue, yellow, red, green, and purple. Useful for formatting Slack notifications with specific visual emphasis.",
-      "description_length": 226,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module handles authenticated HTTP interactions with Slack's API, supporting operations like message posting, file uploads, usergroup management, and conversation state manipulation. It processes Slack-specific request structures (`post_message_req`, `files_upload_req`, `usergroup`) by serializing them into form data for transmission and parses JSON responses, while leveraging `Context.t` for authentication. Typical use cases include integrating real-time messaging workflows, automating file sharing, and synchronizing usergroup configurations with Slack's remote services.",
+      "description_length": 582,
+      "index": 3,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Slack_lib.Mrkdwn",
       "library": "slack.lib",
-      "description": "This module formats and manipulates Slack mrkdwn strings, offering direct transformations for bold, italic, links, lists, code blocks, and mentions using regex-based parsing and rendering. It includes utilities to escape and unescape special characters, construct message elements, and process user/group references. The child module extends this functionality by converting CommonMark documents into Slack-compatible mrkdwn, enabling structured document rendering via `Cmarkit_renderer.t`. Use cases include building richly formatted Slack messages, modals, and blocks from raw text or structured input.",
-      "description_length": 604,
-      "index": 10,
+      "description": "This module handles Slack mrkdwn formatting by providing functions to escape and unescape special characters, create formatted elements like bold, italic, code blocks, and lists, and generate user or usergroup mentions. It includes utilities for rendering CommonMark documents into Slack-compatible mrkdwn through the `Cmarkit_slack` submodule. Use it to construct richly formatted Slack messages programmatically or convert structured markdown content for Slack surfaces.",
+      "description_length": 472,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Slack_lib.Slack_j",
+      "library": "slack.lib",
+      "description": "This module provides JSON serialization and deserialization utilities for Slack API interactions, focusing on message composition, user/usergroup management, and event handling. It operates on types like `user`, `profile`, `message_block`, `attachment`, `event_callback_notification`, and API request/response structures (e.g., `update_usergroups_users_req`, `conversations_replies_res`). Specific use cases include constructing API requests for messaging operations, parsing Slack event payloads (e.g., link sharing, usergroup updates), and managing user authentication/data exchange in integrations.",
+      "description_length": 601,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Slack_lib.Common",
+      "library": "slack.lib",
+      "description": "This module includes functions for making HTTP requests with customizable methods, headers, and body content, as well as utilities for file access and string signing. It works with strings, file paths, key-value form data, and result types for handling success or error states. Concrete use cases include sending signed API requests, reading local configuration files, and retrieving sorted file listings from a directory.",
+      "description_length": 422,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Slack_lib.Colors",
+      "library": "slack.lib",
+      "description": "Defines string constants for common color codes used in Slack messages. Provides direct access to colors like gray, blue, yellow, red, green, and purple. Useful for formatting Slack notifications with specific color indicators.",
+      "description_length": 227,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Slack_lib.Utils",
       "library": "slack.lib",
-      "description": "This module validates Slack API request signatures and processes incoming events, including URL verification challenges, using functions like `validate_signature` and `process_slack_notification`. It routes events to user-defined handlers and provides typed representations for conversation channels, with helpers like `conversation_type_of_conversation` to classify channel types. Its child module sends and updates messages in Slack channels, supporting custom usernames and icons, and allows interaction with messages via timestamps and channel IDs. Examples include verifying webhook requests, handling event payloads, and posting or updating messages as a specific user.",
-      "description_length": 675,
-      "index": 11,
+      "description": "This module validates Slack event signatures, processes incoming notifications and events with custom handlers, and categorizes conversation types. It operates on HTTP headers, Slack events, and conversation data structures, returning appropriate responses. Concrete use cases include securing Slack webhooks, handling real-time messaging events, and determining conversation scope for routing logic.",
+      "description_length": 400,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Slack_lib.Api_local",
+      "library": "slack.lib",
+      "description": "This module simulates Slack API interactions for testing by providing predefined responses for operations like message manipulation, file uploads, conversation management, and usergroup/channel queries. It processes Slack-specific request/response types and context values, enabling developers to validate workflows without external network activity. A dedicated authentication test function asynchronously returns cached success/failure results, supporting reliable mock scenarios for integration logic.",
+      "description_length": 504,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Slack_lib.Atd_adapters",
+      "library": "slack.lib",
+      "description": "This module contains two submodules for adapting JSON data to and from ATD-compliant formats. `Slack_response_adapter` normalizes and restores `Yojson.Safe.t` trees to handle Slack API responses, particularly for error detection using the `error` field. `Unfurl_adapter` provides similar conversions for working with Slack's unfurl responses that require strict ATD formatting.",
+      "description_length": 377,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Slack_lib.Context",
       "library": "slack.lib",
-      "description": "Handles creation and management of Slack API contexts, including authentication secrets and user agent strings. Provides functions to construct contexts from in-memory values or configuration files, retrieve secrets, and access tokens. Useful for initializing Slack API clients with proper authentication and metadata.",
-      "description_length": 318,
+      "description": "This module manages context configuration for interacting with Slack APIs, providing functions to create and retrieve secrets, user agents, and access tokens. It works with records containing user agent strings and Slack secrets, and handles secret loading from files. Concrete use cases include setting up authenticated Slack API requests using tokens and secrets from environment variables or files.",
+      "description_length": 401,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Slack_lib.Api",
+      "library": "slack.lib",
+      "description": "This module defines a first-class module type for interacting with Slack's API, including functions to send messages, manage channels, and handle webhooks. It works with data types representing API responses, authentication tokens, and Slack events. Concrete use cases include building bots that respond to user input, automating team workflows, and integrating external services with Slack.",
+      "description_length": 391,
       "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Slack_lib.Slack_t",
       "library": "slack.lib",
-      "description": "This module supports operations for managing Slack users and usergroups, formatting and updating messages with structured blocks and attachments, handling file uploads and link-sharing events, and orchestrating conversation workflows like joining channels or responding to replies. It works with data structures representing user profiles, message components (blocks, attachments), API request/response",
-      "description_length": 402,
+      "description": "This module centers on API request/response modeling, data serialization, and optional parameter handling for Slack integrations. It operates on user profiles, message blocks, attachments, usergroups, timestamps, and channels, enabling use cases like message handling, event processing, file uploads, and usergroup management.",
+      "description_length": 326,
       "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Slack_lib.Api",
-      "library": "slack.lib",
-      "description": "This module provides a first-class interface for interacting with Slack's API, enabling operations like sending and updating messages, uploading files, managing conversations, and handling usergroups. It defines core data types such as `post_message_req`, `update_message_req`, and related result types, along with tokens, channel IDs, and message payloads. Use it to build bots that post notifications, automate file sharing, or manage workspace entities like channels and usergroups. Submodules expand on these capabilities with specialized functions for rich interactions and structured API requests.",
-      "description_length": 603,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Slack_lib.Common",
-      "library": "slack.lib",
-      "description": "This module handles HTTP requests with customizable methods, headers, and body formats, supporting operations like GET, POST, and custom verbs. It provides functions for file access, including reading, transforming, and listing files in a directory with optional sorting. Additionally, it includes utilities for generating SHA-256 signatures and handling errors with formatted messages.",
-      "description_length": 386,
-      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Slack_lib",
       "library": "slack.lib",
-      "description": "This module suite provides comprehensive tooling for building and testing Slack integrations, centered around type-safe handling of API data, message formatting, and authenticated interactions. Core data types include Slack API requests and responses, message blocks, user and usergroup representations, and context configurations, with operations for message construction and updates, file uploads, usergroup management, and event routing. Developers can simulate API behavior for testing, transform and validate JSON structures, generate richly formatted messages with mrkdwn, and securely authenticate and dispatch HTTP requests to Slack endpoints. Example workflows include automating notifications, validating incoming webhooks, mocking chatbot interactions, and synchronizing workspace data through type-safe interfaces.",
-      "description_length": 826,
-      "index": 16,
+      "description": "This module provides Slack integration capabilities through a set of focused submodules. It supports API interactions\u2014both real and simulated\u2014message formatting with mrkdwn, JSON serialization, color constants, and request/response modeling. Concrete use cases include building and testing Slack bots, automating messaging and file workflows, and handling real-time events with structured data parsing and validation.",
+      "description_length": 417,
+      "index": 14,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 17,
-    "meaningful_modules": 17,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 16,
+    "meaningful_modules": 15,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9375
   },
   "statistics": {
-    "max_description_length": 826,
-    "min_description_length": 226,
-    "avg_description_length": 483.11764705882354,
-    "embedding_file_size_mb": 0.06224346160888672
+    "max_description_length": 601,
+    "min_description_length": 227,
+    "avg_description_length": 409.26666666666665,
+    "embedding_file_size_mb": 0.21778106689453125
   }
 }

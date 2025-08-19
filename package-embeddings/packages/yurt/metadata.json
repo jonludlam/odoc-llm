@@ -1,112 +1,104 @@
 {
   "package": "yurt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 20,
-  "creation_timestamp": "2025-07-15T23:10:00.428118",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 21,
+  "creation_timestamp": "2025-08-15T12:10:47.051417",
   "modules": [
     {
       "module_path": "Yurt.Server.IO",
       "library": "yurt",
-      "description": "This module implements asynchronous I/O operations for handling network connections, including reading from input channels, writing to output channels, and managing connection flows. It provides functions for line-based and fixed-length data reading, output flushing, and error handling with result types. Concrete use cases include processing client requests over TCP connections and managing bidirectional communication streams in a server.",
-      "description_length": 442,
+      "description": "This module implements asynchronous I/O operations for handling network connections using Lwt, including reading from and writing to input/output channels. It provides functions like `read_line`, `read`, `write`, and `flush`, which interact with types such as `ic`, `oc`, and `conn` for network communication. It is used to manage low-level data transfer in a server, such as receiving client input or sending responses over TCP connections.",
+      "description_length": 441,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Yurt.Util",
+      "module_path": "Yurt.Body",
       "library": "yurt",
-      "description": "This module provides functions for handling optional values, generating UUIDs, and validating file paths. It includes operations to extract values from options, generate version 4 UUIDs, and check if a path is safe relative to an optional prefix. These functions are useful for configuration loading, path sanitization, and unique identifier generation.",
-      "description_length": 353,
+      "description": "This module provides functions to convert request bodies to and from strings, JSON, and streams, allowing modification, length inspection, and content draining. It works with body types from Cohttp_lwt, string streams, and JSON values via Ezjsonm. Concrete use cases include parsing incoming request data into JSON for processing, streaming large payloads, and modifying or measuring body content before sending a response.",
+      "description_length": 423,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
+      "module_path": "Yurt.Util",
+      "library": "yurt",
+      "description": "This module provides functions for handling optional values, generating UUIDs, and validating file paths. It includes utilities to safely extract values from options, generate version 4 UUIDs, and check if a path is safe relative to an optional prefix. These operations are useful when processing user input, managing file systems, or handling configuration data.",
+      "description_length": 363,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
       "module_path": "Yurt_html.Tag",
       "library": "yurt",
-      "description": "This module defines a polymorphic variant type representing HTML tag names and provides a function to convert them to strings. It includes a list of self-closing tags used for rendering HTML without closing tags. Directly used in generating and manipulating HTML structures programmatically.",
-      "description_length": 291,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Yurt.Server",
-      "library": "yurt",
-      "description": "This module configures and runs HTTP servers with TLS support, declarative routing, and response generation from JSON, HTML, files, or redirects. It handles server lifecycle management, process daemonization, and composable transformations, enabling secure endpoint setup and streaming responses. The child module provides low-level asynchronous I/O for network connections, supporting line-based and fixed-length data transfer, output flushing, and TCP request processing. Together, they allow building robust, secure web services that handle complex communication patterns while abstracting server setup and connection management.",
-      "description_length": 632,
+      "description": "This module defines a polymorphic variant type representing HTML tag names and provides a function to convert them to strings. It includes a list of self-closing tags used for rendering HTML without closing tags. The module is used to model and manipulate HTML structure in a type-safe way, ensuring valid tag handling during document generation.",
+      "description_length": 346,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Yurt.Query",
-      "library": "yurt",
-      "description": "This module parses query string parameters from HTTP requests and provides typed access to individual parameters. It works with `Request.t` to extract values as strings, integers, floats, or JSON values. Use it to retrieve and convert query parameters directly from a request in a type-safe manner.",
-      "description_length": 298,
-      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Yurt_request_ctx.Query",
       "library": "yurt",
-      "description": "This module handles query string parameters from HTTP requests, providing direct access to values by key and supporting conversion to common data types like strings, integers, floats, and JSON. It works with query strings that may have multiple values per key, storing them internally as a hash table mapping strings to lists of strings. Concrete use cases include extracting filter criteria from API requests, parsing pagination parameters, and retrieving user input from web forms.",
-      "description_length": 483,
-      "index": 5,
+      "description": "This module handles query string parameters from HTTP requests, providing direct access to values by key and supporting conversion to common data types like strings, integers, floats, and JSON. It works with query data structured as a hash table mapping string keys to lists of string values, enabling precise extraction and type-safe decoding. Concrete use cases include parsing filter criteria, pagination parameters, and configuration flags from URLs.",
+      "description_length": 454,
+      "index": 4,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Yurt.Route",
-      "library": "yurt",
-      "description": "This module provides functions to construct and manipulate routes with typed parameters, converting them to strings or regular expressions for URL matching. It supports data types like strings, integers, floats, and nested routes, along with extracting typed values from matched routes. Concrete use cases include building type-safe URL routers and extracting structured data from HTTP request paths.",
-      "description_length": 400,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Yurt_request_ctx.Body",
-      "library": "yurt",
-      "description": "This module offers operations to manage HTTP message bodies through a polymorphic type with variants for empty, streamed, and string-based content, supporting transformations between these forms, streaming-aware manipulations, and format conversions. It integrates with `Cohttp_lwt` for transfer encoding detection and body draining, while enabling serialization to S-expressions, JSON via `Ezjsonm`, and form data parsing. Key applications include efficient processing of large payloads through streaming, bidirectional conversion between textual and structured formats, and handling HTTP message bodies in web frameworks or clients without full in-memory buffering.",
-      "description_length": 667,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Yurt.Form",
       "library": "yurt",
       "description": "This module handles parsing HTTP form data from request bodies, supporting both URL-encoded and multipart formats. It provides functions to extract form fields as hashtables, lists, or JSON, and processes multipart streams with attributes. Use it to retrieve user input from HTML forms or file uploads in web applications.",
       "description_length": 322,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
+      "index": 5,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Yurt_header.Cookie",
       "library": "yurt",
-      "description": "This module defines a type `t` representing HTTP cookie headers with fields for cookie value, expiration, domain, path, and flags like secure and HTTP-only. It provides functions to construct, serialize, and extract cookies from HTTP headers, along with accessors for each field. Concrete use cases include managing session cookies, parsing incoming cookie headers from clients, and generating `Set-Cookie` headers for responses.",
-      "description_length": 429,
-      "index": 9,
+      "description": "This module defines a structured representation of HTTP cookies, including fields for name, value, expiration, domain, path, and security flags. It provides functions to construct, serialize, and extract cookies from HTTP headers, as well as access individual components like the cookie value or expiration time. Concrete use cases include managing session cookies with specific domains and paths, enforcing secure transmission, and parsing cookies from incoming HTTP requests.",
+      "description_length": 477,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Yurt.Body",
+      "module_path": "Yurt.Server",
       "library": "yurt",
-      "description": "This module handles request body manipulation, providing direct conversions between bodies and strings, streams, or JSON values. It supports operations like mapping over content, checking length or emptiness, and extracting transfer encoding. Use it to process or transform HTTP request payloads efficiently, such as parsing incoming JSON data or streaming large body content.",
-      "description_length": 376,
-      "index": 10,
+      "description": "The module facilitates building HTTP servers using Lwt for asynchronous I/O and Cohttp for request handling, offering operations to define route handlers, generate responses (JSON, HTML, files, redirects), and configure TLS, logging, and static file endpoints. It manages server lifecycle tasks like asynchronous startup and daemonization, working with server instances and route definitions to support dynamic content delivery, API hosting, and file-serving workflows. Pipeline operators enable fluent configuration through chained transformations and side-effect application during server setup.",
+      "description_length": 597,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Yurt.Query",
+      "library": "yurt",
+      "description": "This module parses HTTP request query strings into structured data, supporting extraction of values as strings, integers, floats, or JSON. It works with query strings by converting them into a hash table mapping keys to lists of values, and provides direct access to individual parameters in a type-safe manner. Use it to handle query parameters in web handlers, such as filtering or sorting data based on user input.",
+      "description_length": 417,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Yurt.Route",
+      "library": "yurt",
+      "description": "This module provides functions to construct and manipulate routes with typed parameters, converting them to strings or regular expressions for URL matching. It works with route values that can represent strings, integers, floats, paths, or nested routes, and handles parameter extraction from matched routes. Concrete use cases include building dynamic URL patterns for web applications, extracting typed parameters from HTTP requests, and generating URLs from structured data.",
+      "description_length": 477,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Yurt.Client",
       "library": "yurt",
-      "description": "This module sends HTTP requests and handles responses with JSON or raw string data. It supports GET, POST, and custom HTTP methods, including form-encoded and JSON payloads. Use it to interact with REST APIs, submit forms, or fetch remote resources with optional custom headers and network contexts.",
-      "description_length": 299,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module sends HTTP requests and handles responses, supporting GET, POST, and custom methods with optional headers, bodies, and JSON or form-encoded data. It works with strings for URLs, headers, and raw responses, and with JSON values for structured data input and output. Use it to interact with web APIs, submit forms, or retrieve and parse JSON resources from remote services.",
+      "description_length": 383,
+      "index": 10,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Yurt_client",
+      "module_path": "Yurt_request_ctx.Body",
       "library": "yurt",
-      "description": "This module implements HTTP client operations for sending GET, POST, and form-based requests, returning responses paired with body content. It handles raw string bodies and JSON-encoded data using `Cohttp` and `Ezjsonm` types, with optional custom headers and contexts. Concrete use cases include querying APIs, submitting forms, and interacting with JSON-based web services.",
-      "description_length": 375,
-      "index": 12,
+      "description": "The module provides operations to convert between various body representations (like JSON, form data, and raw strings), manipulate content through streaming or serialization, and interface with HTTP body handling. It works with a polymorphic type encapsulating empty, streamed, or buffered content forms, alongside JSON and form data structures. These capabilities support use cases such as parsing HTTP request/response bodies, handling multipart form submissions, and efficiently streaming large payloads.",
+      "description_length": 507,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
@@ -114,68 +106,84 @@
       "library": "yurt",
       "description": "This module includes functions for safely unwrapping optional values, generating UUIDs, and validating file paths. It works with option types, strings, and regular expressions. Use cases include handling optional configuration values, generating unique identifiers, and preventing path traversal vulnerabilities in file operations.",
       "description_length": 331,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Yurt_html",
+      "library": "yurt",
+      "description": "The module enables constructing and manipulating HTML elements through a type `t` representing nodes with tags, attributes, content, and children, ensuring type-safe structure via the `Tag` module. It supports building semantic tags, forms, lists, and media elements with functions that handle attributes as string pairs, manage templates using hashtables, and convert HTML components to strings or load them from files. Use cases include dynamic HTML generation for web interfaces, template-driven content assembly, and static site generation where structured, valid HTML trees are required.",
+      "description_length": 592,
       "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Yurt_request_ctx",
+      "library": "yurt",
+      "description": "This module handles HTTP request context operations, including parsing and manipulating request bodies and query parameters. It supports converting between JSON, form data, and raw string body representations, and provides typed access to URL query values. Use it for processing HTTP payloads, handling form submissions, and extracting structured parameters from URLs.",
+      "description_length": 368,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Yurt_route",
+      "library": "yurt",
+      "description": "This module provides functions to parse, match, and extract parameters from URL-like routes using a custom algebraic data type. It supports operations to convert routes to regular expressions, check string matches, and retrieve typed parameters like integers, floats, or strings from matched routes. Concrete use cases include routing in web applications, extracting dynamic segments from URLs, and serializing routes to JSON for API definitions.",
+      "description_length": 446,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Yurt_header",
       "library": "yurt",
-      "description": "This module manages cookie handling for HTTP requests, providing functions to set cookies in headers, extract all cookies, or find a specific cookie by name. It works with request and header types from Yurt_request_ctx and uses the Cookie submodule's `t` type to represent individual cookies with fields like value, expiration, domain, path, and security flags. The Cookie submodule includes utilities to construct, serialize, and parse cookies, enabling tasks like session management and state tracking across requests. Together, the module and its submodule support both reading cookies from incoming requests and generating `Set-Cookie` headers for responses.",
-      "description_length": 662,
-      "index": 14,
+      "description": "This module handles HTTP cookie management through structured types and operations. It provides functions to create, serialize, and extract cookies, with direct access to fields like name, value, domain, and security flags. Use cases include setting session cookies with specific attributes, parsing incoming cookies from HTTP requests, and retrieving cookies by name for validation or processing.",
+      "description_length": 397,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Yurt_server",
+      "library": "yurt",
+      "description": "This module provides HTTP server functionality with operations for routing requests based on HTTP methods, generating responses in formats like JSON, HTML, and binary files, and managing server lifecycle tasks like startup and daemonization. It works with types such as `Cohttp.Request.t`, `Cohttp.Response.t`, `Uri.t`, and `Ezjsonm.value`, supporting use cases like RESTful API endpoints, static file hosting, and TLS-secured server configurations. Key patterns include declarative route registration, response composition via chaining, and middleware-style request handling with logging or streaming capabilities.",
+      "description_length": 615,
+      "index": 17,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Yurt",
       "library": "yurt",
-      "description": "This module coordinates HTTP routing, request parsing, and client-server communication, enabling the creation of type-safe web servers with custom endpoints. It supports defining routes with typed parameters, extracting query and form data, and processing request bodies in formats like JSON or multipart, while submodules handle low-level I/O, TLS configuration, and response generation. You can build secure services that parse URL parameters as integers, handle file uploads, stream responses, or make outgoing HTTP requests with custom headers. Additional utilities for UUID generation, path validation, and option handling complement server logic for configuration and data processing.",
-      "description_length": 690,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Yurt_html",
-      "library": "yurt",
-      "description": "This module represents HTML structures as typed nodes, enabling creation of elements like headings, forms, and semantic tags through attribute lists and nested content. It supports dynamic content with placeholders, fragment imports, and template serialization, using hashtables for template management and utilities for rendering trees to strings. The polymorphic variant type for tag names allows safe, programmatic generation and manipulation of HTML, including handling self-closing tags. Examples include building type-safe documents, implementing templating systems, and modifying DOM-like structures with precise attribute and content control.",
-      "description_length": 650,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Yurt_request_ctx",
-      "library": "yurt",
-      "description": "Manages HTTP request contexts with typed status codes, enabling precise handling of web requests through structured access to query parameters and message bodies. The query module extracts and converts query string values to typed data, supporting multi-value keys for tasks like filtering and pagination, while the body module provides polymorphic representations for empty, streamed, or string-based content, allowing format conversions and streaming-aware processing. This structure supports efficient handling of large payloads, parsing form data, and transforming request content between structured and textual formats like JSON or S-expressions. Combined, they streamline request processing in Cohttp-based servers by unifying typed context management with flexible data extraction and transformation capabilities.",
-      "description_length": 820,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Yurt_form",
-      "library": "yurt",
-      "description": "This module parses HTTP form data from request bodies, supporting both URL-encoded and multipart formats. It provides functions to extract form fields as hashtables, lists, or JSON, and handles file uploads by detecting filename attributes in multipart data. Use cases include processing user input from HTML forms, handling file uploads in web applications, and converting form data into structured formats for further processing.",
-      "description_length": 431,
+      "description": "This module provides structured handling of HTTP routes, request bodies, query parameters, and forms, along with utilities for server configuration, client requests, and data validation. It supports typed route parameters, JSON and stream-based body processing, query parsing, and form data extraction, working with Cohttp_lwt and Ezjsonm types. Concrete use cases include building type-safe web APIs, handling file uploads, parsing user input, and constructing dynamic URL routes for server endpoints.",
+      "description_length": 502,
       "index": 18,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Yurt_route",
+      "module_path": "Yurt_form",
       "library": "yurt",
-      "description": "This module processes and matches URL routes with typed parameters using a custom algebraic data type. It converts route definitions to regular expressions, extracts variables, and parses parameters from URLs into typed values like strings, integers, or floats. Concrete use cases include routing HTTP requests in a web application based on path components and capturing dynamic segments with specific type constraints.",
-      "description_length": 419,
+      "description": "This module parses HTTP form data from request bodies, supporting both URL-encoded and multipart formats. It extracts form fields into structured representations like hashtables, JSON, or custom multipart records, with utilities to inspect attributes and detect file uploads. Concrete use cases include handling user input from HTML forms, processing file uploads, and converting form data into JSON for API responses.",
+      "description_length": 418,
       "index": 19,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Yurt_client",
+      "library": "yurt",
+      "description": "This module implements HTTP client operations for sending GET, POST, and form-based requests, returning responses paired with body content. It handles raw string bodies and JSON payloads using `Cohttp` and `Ezjsonm` types, with support for custom headers and contexts. Concrete use cases include querying APIs, submitting forms, and interacting with web services using standard HTTP methods.",
+      "description_length": 391,
+      "index": 20,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 21,
-    "meaningful_modules": 20,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9523809523809523
+    "meaningful_modules": 21,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 820,
-    "min_description_length": 291,
-    "avg_description_length": 468.5,
-    "embedding_file_size_mb": 0.07307243347167969
+    "max_description_length": 615,
+    "min_description_length": 322,
+    "avg_description_length": 441.2857142857143,
+    "embedding_file_size_mb": 0.30469608306884766
   }
 }

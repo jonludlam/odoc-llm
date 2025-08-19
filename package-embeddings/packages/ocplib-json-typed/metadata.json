@@ -1,101 +1,93 @@
 {
   "package": "ocplib-json-typed",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 10,
-  "creation_timestamp": "2025-07-15T23:07:24.660854",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:12:51.667086",
   "modules": [
     {
-      "module_path": "Json_repr.Yojson",
+      "module_path": "Json_repr.Ezjsonm",
       "library": "ocplib-json-typed",
-      "description": "This module provides functions to convert between a Yojson representation and a standardized JSON view, enabling seamless manipulation of JSON data using Yojson's concrete types. It works directly with Yojson values and the `Json_repr.view` type to ensure compatibility with common JSON structures. Concrete use cases include parsing JSON data into Yojson for efficient processing and serializing processed data back to a standard JSON format.",
-      "description_length": 443,
+      "description": "This module provides functions to convert between a simplified view of JSON values and the `ezjsonm` representation, enabling direct manipulation of JSON data structures. It works with the `value` type representing JSON elements like objects, arrays, strings, and numbers. Use this module to build or deconstruct JSON values in a structured way, such as parsing JSON input into a view for easy modification or serializing modified data back into a `value`.",
+      "description_length": 456,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Json_query.Make",
-      "library": "ocplib-json-typed",
-      "description": "This module implements operations to query, insert, replace, and merge values within a custom JSON representation. It works with a user-defined `Repr.value` type that represents JSON data structures such as objects, arrays, and primitives. Concrete use cases include manipulating JSON data with domain-specific representations, such as custom ASTs or encoded formats, without converting to a standard JSON type first.",
-      "description_length": 417,
-      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Json_encoding.Make",
       "library": "ocplib-json-typed",
-      "description": "This module provides functions to construct and deconstruct JSON values using a custom representation, enabling serialization and deserialization of OCaml values to JSON. It works with arbitrary OCaml types `'t` and a custom JSON representation defined by the `Repr` module. Concrete use cases include encoding domain-specific data structures into JSON formats suitable for storage or transmission, and decoding such structures back from JSON values.",
+      "description": "This module provides functions to construct and deconstruct JSON values using a custom representation, enabling serialization and deserialization of OCaml values to JSON. It works with the `Repr.value` type and `Json_encoding.encoding` to define bidirectional transformations. Concrete use cases include encoding domain-specific data structures into JSON for storage or transmission, and decoding JSON payloads into typed OCaml values for processing.",
       "description_length": 450,
-      "index": 2,
+      "index": 1,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Json_repr.Repr",
-      "library": "ocplib-json-typed",
-      "description": "This module provides functions to convert between a custom JSON representation and a standardized view, enabling interoperability between different JSON implementations. It works with a `value` type representing JSON data and a `view` type that defines a common structure for JSON values. Use this module when translating JSON data between various libraries or formats while maintaining a consistent interface.",
-      "description_length": 410,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Json_repr.Ezjsonm",
-      "library": "ocplib-json-typed",
-      "description": "This module provides functions to convert between a simplified view of JSON values and the standard `ezjsonm` representation. It works with the `value` type from `ezjsonm`, which represents JSON documents as OCaml values. Use this module to decode or encode JSON data in a format compatible with `ezjsonm` while working with a more convenient intermediate representation.",
-      "description_length": 371,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Json_schema.Make",
       "library": "ocplib-json-typed",
-      "description": "Converts between JSON schemas and a custom JSON representation using provided functions. It operates on `Json_schema.schema` and `Repr.value` types. This module is useful for serializing and deserializing JSON schemas when working with different JSON backends or custom data formats.",
-      "description_length": 283,
-      "index": 5,
+      "description": "Converts between JSON schemas and a custom JSON representation using `to_json` and `of_json`. Works directly with `Json_schema.schema` and `Repr.value` types. Enables serialization and deserialization of schema definitions for storage or transmission using a user-defined JSON format.",
+      "description_length": 284,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Json_query",
+      "module_path": "Json_query.Make",
       "library": "ocplib-json-typed",
-      "description": "This module provides path-based querying, insertion, and merging operations over JSON documents, supporting both JSON pointers and JSON paths for navigating nested structures. It operates on a custom `Repr.value` type, allowing manipulation of domain-specific JSON representations such as ASTs or encoded formats without intermediate conversions. You can extract fields from configuration files, update deeply nested values, or merge partial JSON payloads directly into existing structures. Submodules extend these capabilities with specialized operations for querying, insertion, and structural merging on the custom JSON representation.",
-      "description_length": 638,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements operations to query, insert, replace, and merge values within a custom JSON representation. It works with a user-defined `Repr` module that provides the underlying JSON data structure. Use this to manipulate JSON documents using path-based queries while abstracting the concrete JSON representation.",
+      "description_length": 322,
+      "index": 3,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Json_encoding",
+      "module_path": "Json_repr.Yojson",
       "library": "ocplib-json-typed",
-      "description": "This module enables bidirectional JSON serialization of OCaml values using dependently typed combinators, supporting structured data modeling with objects, arrays, tuples, optional fields, sum types, and recursion. It provides core operations for mapping OCaml data like options, lists, and associative structures to JSON through an intermediate representation, allowing schema-driven validation and precise error handling. The child module extends this by offering direct construction and deconstruction of JSON values over arbitrary OCaml types, using a custom representation for flexibility in encoding and decoding domain-specific structures. Together, they support tasks like API data interchange, configuration parsing, and persistent storage serialization with type-safe, composable tooling.",
-      "description_length": 798,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Json_repr",
-      "library": "ocplib-json-typed",
-      "description": "This module enables conversion between multiple in-memory JSON representations, including `ezjsonm` and `yojson`, and provides utilities for pretty-printing and transforming structured JSON data such as objects, arrays, and primitives. It supports direct manipulation of JSON values through types like `view`, `value`, and library-specific types like Yojson's, allowing seamless translation between different JSON implementations. Specific use cases include converting JSON data between libraries for processing, serializing structured data into readable or compact formats, and decoding or encoding JSON using intermediate representations that simplify manipulation. Submodules focus on specific translation layers, handling Yojson, custom JSON types, and `ezjsonm`, ensuring consistent interoperability across different JSON representations.",
-      "description_length": 843,
-      "index": 8,
+      "description": "This module provides functions to convert between a Yojson representation and a standardized JSON view, enabling consistent manipulation of JSON data. It works directly with Yojson values and their corresponding view and UID representations. Use this module to build or inspect JSON documents using Yojson while ensuring compatibility with the broader JSON representation system.",
+      "description_length": 379,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Json_schema",
       "library": "ocplib-json-typed",
-      "description": "This module provides an abstract representation of JSON schemas compliant with draft-04, enabling the construction, manipulation, and validation of schema definitions. It includes core operations on the `schema` type, such as composing constraints and extracting schema properties, while the `Repr.value` type facilitates conversion between schemas and custom JSON representations. The child module supports serialization and deserialization workflows, allowing schemas to be encoded to or decoded from external JSON formats using specific conversion functions. For example, users can programmatically build a schema, convert it to a JSON-like structure for storage, and later reconstruct the schema from that representation.",
-      "description_length": 725,
-      "index": 9,
+      "description": "This module enables constructing and transforming JSON schema definitions using a structured representation of elements like objects, arrays, and primitives. It supports bidirectional conversion between schemas and JSON, with utilities for validation workflows, error diagnostics, and custom serialization formats. Key operations include schema composition, definition resolution via path traversal, and manipulating constraints for data validation scenarios.",
+      "description_length": 459,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Json_encoding",
+      "library": "ocplib-json-typed",
+      "description": "This module defines bidirectional mappings between OCaml data and JSON representations, supporting structured transformations for tuples, records, variants, lists, and recursive types. It enables schema-driven encoding with features like optional fields, default values, numeric constraints, and nullable value detection, while handling complex compositions through object merging, tuple encodings, and fixpoint combinators. Typical applications include API request/response handling, configuration parsing, and persistent storage serialization where precise JSON schema alignment with OCaml types is required.",
+      "description_length": 610,
+      "index": 6,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Json_query",
+      "library": "ocplib-json-typed",
+      "description": "This module implements path-based querying, insertion, replacement, and merging operations on JSON documents represented with `Json_repr.ezjsonm`. It supports parsing and formatting paths in JSON Pointer and JSON Path formats, handling wildcards, and performing operations like extracting values, inserting or replacing fields, and merging JSON structures. Concrete use cases include navigating nested JSON configurations, modifying specific fields in JSON payloads, and extracting subsets of JSON data based on dynamic paths.",
+      "description_length": 526,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Json_repr",
+      "library": "ocplib-json-typed",
+      "description": "This module provides functions to convert between different in-memory JSON representations, such as `ezjsonm` and `yojson`, and supports generic operations like pretty-printing and type-safe value conversion. It works with algebraic data types that represent JSON structures, including objects, arrays, strings, and primitives. Concrete use cases include transforming JSON data between libraries, serializing and inspecting JSON values, and handling structured JSON input/output in a representation-agnostic way.",
+      "description_length": 512,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 10,
-    "meaningful_modules": 10,
+    "total_modules_in_package": 9,
+    "meaningful_modules": 9,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 843,
-    "min_description_length": 283,
-    "avg_description_length": 537.8,
-    "embedding_file_size_mb": 0.03673744201660156
+    "max_description_length": 610,
+    "min_description_length": 284,
+    "avg_description_length": 444.22222222222223,
+    "embedding_file_size_mb": 0.1308126449584961
   }
 }

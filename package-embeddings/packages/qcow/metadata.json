@@ -1,127 +1,127 @@
 {
   "package": "qcow",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 15,
-  "creation_timestamp": "2025-07-15T23:08:47.441559",
+  "creation_timestamp": "2025-08-14T23:23:35.255877",
   "modules": [
     {
       "module_path": "Qcow.Make.Debug.Setting",
       "library": "qcow",
-      "description": "Controls compaction behavior during disk image writes by enabling mid-write compaction checks. It uses a mutable boolean reference to determine if a compact operation should occur partway through a write. This ensures write operations correctly handle interruptions and resume properly after compaction.",
-      "description_length": 303,
+      "description": "This module defines a mutable setting that controls whether a compaction step is triggered mid-write during disk image operations. It works with boolean values wrapped in a `ref` to enable dynamic configuration. This is specifically used in testing scenarios to verify the correctness of write operations following a compaction event.",
+      "description_length": 334,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Qcow.Make.Debug",
       "library": "qcow",
-      "description": "This module ensures disk image integrity by validating block overlaps, metadata consistency, and cluster map synchronization, using interval sets to track physical offsets and metadata blocks. It supports direct checks for corruption during image manipulation and verifies structural integrity before and after modifications. The controls submodule enables mid-write compaction checks via a mutable flag, ensuring proper handling of interrupted writes and resuming after compaction. Example uses include validating image state after partial writes and testing recovery behavior under simulated interruptions.",
-      "description_length": 608,
+      "description": "This module provides runtime verification and debugging tools for disk image operations. It includes functions to check for block overlaps, ensure metadata consistency, and validate cluster mappings, working directly with disk state and interval sets. It is used in testing to catch leaks, enforce correctness after compactions, and inspect metadata layout.",
+      "description_length": 357,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Qcow.Make.Config",
-      "library": "qcow",
-      "description": "This module defines a configuration structure for managing disk image behavior, including options like enabling discard, setting erased space retention, and controlling runtime checks. It provides functions to create, serialize, and parse configuration values, allowing runtime customization of disk image handling. Use cases include configuring virtual disk images with specific performance and safety settings, and passing these configurations between processes via command-line arguments.",
-      "description_length": 491,
-      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Qcow.Make.Stats",
       "library": "qcow",
-      "description": "Tracks statistics related to disk image operations, specifically counting sectors erased and unmapped during discard actions. Works with `int64` values stored in a mutable record structure. Useful for monitoring and analyzing the efficiency of storage management tasks in virtualized environments.",
-      "description_length": 297,
-      "index": 3,
+      "description": "Tracks statistics related to disk image operations, specifically counting sectors erased and unmapped during discard processes. Uses a mutable record type `t` with two `int64` fields. Useful for monitoring and optimizing storage management in virtualization environments.",
+      "description_length": 271,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Qcow_recycler.Make",
+      "module_path": "Qcow.Make.Config",
       "library": "qcow",
-      "description": "Implements cluster allocation, erasure, and copying for a qcow image, operating on block devices and cluster maps. It manages background recycling and reference updates for efficient storage reuse. Use to handle dynamic cluster management in virtual disk images with caching and locking.",
-      "description_length": 287,
-      "index": 4,
+      "description": "This module defines a configuration structure for managing disk image behavior, with fields to control features like discarding unused blocks, erasure retention, and runtime checks. It provides functions to create, serialize, and parse configuration values, enabling customization of disk image handling in virtualization contexts. Use cases include setting up virtual disk images with specific performance and safety characteristics for cloud or container environments.",
+      "description_length": 470,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Qcow_cstructs.BE",
       "library": "qcow",
-      "description": "This module provides functions to read unsigned 16-bit and 32-bit integers in big-endian format from a list of Cstruct.t values. It operates directly on the `t` type, which is an alias for `Cstruct.t list`, allowing efficient parsing of binary data structured in memory. Concrete use cases include decoding network protocols or binary file formats that require big-endian interpretation of byte sequences.",
-      "description_length": 405,
-      "index": 5,
+      "description": "This module provides functions to read unsigned 16-bit and 32-bit integers in big-endian format from a list of Cstruct.t values. It operates directly on the `Qcow_cstructs.t` type, which represents structured binary data. These functions are used for parsing binary file formats or network protocols that encode integers in big-endian byte order.",
+      "description_length": 346,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Qcow_padded.Make",
       "library": "qcow",
-      "description": "This module implements a block device that extends reads beyond the device's end with virtual zeroes, ensuring non-failing reads past the current boundary. It operates on `Cstruct.t` buffers and `int64` sector offsets, supporting standard block operations like `read`, `write`, `flush`, and `resize`. Concrete use cases include safely handling sparse disk images or virtual machine snapshots where reads past allocated sectors must return zeroes instead of errors.",
-      "description_length": 464,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements a block device that extends reads beyond the end of the device with virtual zero sectors, allowing safe access to unallocated regions. It wraps an underlying block device implementation and modifies its behavior during read operations to pad results with zeroes when necessary. It is useful for handling disk images that may be sparse or dynamically sized, where reads past the end of the stored data should not fail but return zeros instead.",
+      "description_length": 465,
+      "index": 5,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Qcow.Make",
       "library": "qcow",
-      "description": "This module manages qcow block devices with operations for connection, sector I/O, image creation, resizing, compaction, and mapping navigation. It works with block device handles, memory buffers, and metadata, offering precise error handling for I/O and corruption scenarios. The validation submodule ensures image integrity through metadata and cluster map checks, supporting corruption detection and recovery testing. A configuration submodule enables customizable image behavior, including discard settings and runtime checks, while a statistics module tracks sector erasure and unmapping for storage efficiency analysis. Example uses include validating images after partial writes, configuring virtual disks with safety options, and monitoring discard operation impact.",
-      "description_length": 774,
-      "index": 7,
-      "embedding_norm": 1.0
+      "description": "This module supports low-level disk image management operations such as sector I/O, resizing, compaction, and refcount table maintenance, alongside consistency verification and metadata manipulation. It works with disk image handles (`t`), block devices (`B`), and memory buffers (`Cstruct.t list`), while exposing error types for precise failure handling. Typical use cases include virtualization storage management, filesystem integrity checks after crashes, and optimizing disk space utilization through trimming or compaction.",
+      "description_length": 530,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Qcow_block_cache.Make",
       "library": "qcow",
-      "description": "Implements a caching layer for block devices with read and write buffering, supporting operations like reading into and writing from memory buffers, resizing, and flushing. Works with block devices parameterized by module B and uses `Cstruct.t` for memory buffers. Useful for optimizing disk I/O in virtualization scenarios where frequent access to specific sectors occurs, such as in qcow2 image handling.",
-      "description_length": 406,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements a block device cache with asynchronous I/O operations, providing buffered reads and writes backed by a configurable memory limit. It works with sector-aligned data through `Cstruct.t` buffers and Mirage's block device interface, tracking device info, sector positions, and flush behavior. Concrete use cases include optimizing disk access patterns for virtual disk images and reducing I/O contention in storage-intensive applications.",
+      "description_length": 457,
+      "index": 7,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Qcow",
+      "module_path": "Qcow_recycler.Make",
       "library": "qcow",
-      "description": "This module provides tools for managing qcow block devices, supporting operations like connection, I/O, image creation, resizing, compaction, and mapping navigation. Key data types include block device handles, memory buffers, and metadata structures, with error handling tailored for I/O and corruption scenarios. Users can validate image integrity, configure virtual disk behavior, and track storage efficiency metrics such as sector erasure and unmapping. Example workflows include validating images after partial writes, adjusting discard settings for performance, and analyzing the impact of runtime configuration changes.",
-      "description_length": 627,
-      "index": 9,
+      "description": "Implements cluster allocation, erasure, copying, and reference updating for a qcow image, operating on clusters and interval sets. It manages background recycling and metadata updates using a block device, cache, locks, and cluster map. Used to handle dynamic cluster management during image operations like compaction or snapshot merges.",
+      "description_length": 338,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Qcow_cstructs",
       "library": "qcow",
-      "description": "This module operates on a list of Cstruct.t values, providing direct manipulation through functions like `shift`, `sub`, and `to_cstruct`, while supporting concrete operations such as reading unsigned 8-bit integers, setting memory in place, and converting to a contiguous Cstruct or string. Its child module extends this functionality by adding support for reading unsigned 16-bit and 32-bit integers in big-endian format, enabling efficient parsing of structured binary data split across multiple memory regions. Together, they facilitate low-level data manipulation useful for decoding network protocols or binary file formats that require precise control over byte-level representations. Specific operations include extracting subregions, advancing offsets, and interpreting byte sequences in big-endian format.",
-      "description_length": 815,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module operates on a list of Cstruct.t values, providing direct access and manipulation of structured binary data. It includes functions for reading and writing bytes, extracting subregions, and converting data to contiguous buffers, with a focus on handling big-endian encoded integers. It is used for parsing and constructing binary formats such as disk images or network packets where data is split across multiple memory buffers.",
+      "description_length": 438,
+      "index": 9,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Qcow_debug",
       "library": "qcow",
-      "description": "This module performs low-level consistency checks on qcow image cluster references. It verifies back-references from a given physical offset, ensuring cluster metadata matches expected reference counts and locations. It works directly with qcow metadata, cluster maps, and raw cluster offsets to detect and handle reference inconsistencies during image inspection or repair.",
-      "description_length": 374,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides functions to verify and handle cluster references in a qcow image. It checks for duplicate references and ensures the integrity of back-references from a given physical offset. The operations work with qcow metadata, cluster maps, and cluster types, interacting directly with disk structures to validate reference consistency during image inspection or repair.",
+      "description_length": 381,
+      "index": 10,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Qcow_padded",
       "library": "qcow",
-      "description": "This module provides a block device layer that extends reads beyond the end of the underlying storage by returning virtual zeroes, ensuring safe access to unallocated regions. It works with `Cstruct.t` buffers and `int64` sector offsets, supporting core operations such as `read`, `write`, `flush`, and `resize`. It is particularly useful for managing sparse disk images or virtual machine snapshots, where reading past the current allocation should return zeroes instead of failing. For example, a virtual disk that grows dynamically can use this to expose a larger logical size while only allocating space for written sectors.",
-      "description_length": 628,
-      "index": 12,
+      "description": "This module implements a block device that extends read operations beyond the end of the underlying storage by returning virtual zero sectors. It wraps another block device and modifies its read behavior to pad output with zeroes when accessing unallocated regions. Useful for safely reading sparse or dynamically sized disk images where out-of-bounds reads should return zeros instead of failing.",
+      "description_length": 397,
+      "index": 11,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Qcow_recycler",
       "library": "qcow",
-      "description": "This module manages dynamic cluster allocation, erasure, and copying for qcow images, handling background recycling and reference updates to optimize storage reuse. It operates on block devices and cluster maps, providing locking and caching mechanisms to ensure consistency and performance. Key operations include allocating new clusters, copying data between clusters, and safely erasing unused clusters. For example, it can reallocate clusters during image resizing or compact sparse disk images by reclaiming unused space.",
-      "description_length": 526,
-      "index": 13,
+      "description": "Implements cluster allocation, erasure, copying, and reference updating for qcow images by managing clusters and interval sets. Uses a block device, cache, locks, and cluster map to handle background recycling and metadata updates. Designed for dynamic cluster management during compaction and snapshot merges.",
+      "description_length": 310,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Qcow_block_cache",
       "library": "qcow",
-      "description": "This module provides a caching layer for block devices that optimizes disk I/O through read and write buffering, supporting efficient operations on memory buffers with resizing and flushing. It works with block devices parameterized by module B and uses `Cstruct.t` for buffer management, enabling fast access to frequently used sectors. It is ideal for virtualization contexts like qcow2 image handling, where frequent sector access benefits from reduced disk reads and writes. Example uses include buffering disk sector reads during VM boot and batching writes to minimize I/O overhead.",
-      "description_length": 588,
+      "description": "This module implements a block device cache with asynchronous I/O operations, providing buffered reads and writes backed by a configurable memory limit. It works with sector-aligned data through `Cstruct.t` buffers and Mirage's block device interface, tracking device info, sector positions, and flush behavior. Concrete use cases include optimizing disk access patterns for virtual disk images and reducing I/O contention in storage-intensive applications.",
+      "description_length": 457,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Qcow",
+      "library": "qcow",
+      "description": "This module implements low-level disk image management, including sector read/write operations, image resizing, refcount table updates, and consistency checks. It operates on disk image handles, block devices, and memory buffers, with explicit error handling for storage operations. It is used for virtual disk maintenance, crash recovery verification, and optimizing storage efficiency via compaction and trimming.",
+      "description_length": 415,
       "index": 14,
       "embedding_norm": 1.0
     }
@@ -133,9 +133,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 815,
-    "min_description_length": 287,
-    "avg_description_length": 506.2,
-    "embedding_file_size_mb": 0.054924964904785156
+    "max_description_length": 530,
+    "min_description_length": 271,
+    "avg_description_length": 397.73333333333335,
+    "embedding_file_size_mb": 0.2178211212158203
   }
 }

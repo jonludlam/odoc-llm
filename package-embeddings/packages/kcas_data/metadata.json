@@ -1,141 +1,133 @@
 {
   "package": "kcas_data",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 15,
-  "creation_timestamp": "2025-07-15T23:09:48.681109",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 14,
+  "creation_timestamp": "2025-08-14T23:21:46.188916",
   "modules": [
     {
-      "module_path": "Kcas_data.Mvar.Xt",
+      "module_path": "Kcas_data.Stack.Xt",
       "library": "kcas_data",
-      "description": "This module provides transactional operations for managing synchronizing variables, including checking emptiness, putting and taking values with blocking or non-blocking semantics, and peeking at values. It works with `'a Kcas_data.Mvar.t`, a type representing a synchronizing variable that holds an optional value and supports concurrent access. Concrete use cases include coordinating producer-consumer workflows, implementing bounded buffers, and synchronizing state transitions in concurrent algorithms.",
-      "description_length": 507,
+      "description": "This module implements a lock-free, thread-safe LIFO stack with transactional operations using explicit transaction logs. It supports standard stack operations such as `push`, `pop_opt`, `top_opt`, and `is_empty`, along with utilities like `clear`, `swap`, and `to_seq` for batch manipulation and iteration. Use cases include concurrent task scheduling, shared resource management, and parallel processing pipelines where compositional memory transactions are required.",
+      "description_length": 469,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Kcas_data.Queue.Xt",
+      "module_path": "Kcas_data.Promise.Xt",
       "library": "kcas_data",
-      "description": "This module provides operations for managing a lock-free, concurrent FIFO queue with explicit transaction log passing. It supports adding and removing elements, checking the queue's state, and converting or transferring its contents, with blocking and non-blocking variants for element access. Concrete use cases include coordinating task scheduling between threads, implementing concurrent buffers, and building higher-level synchronization primitives.",
-      "description_length": 453,
+      "description": "This module provides operations to explicitly manage transactional promises, allowing promises to be resolved, awaited, or inspected within a transaction. It works with transactional promise types, including standard result-wrapped promises, to support synchronized value resolution. Concrete use cases include coordinating asynchronous computations that must be resolved within a transaction, such as ensuring a value is available before proceeding in a concurrent data structure update.",
+      "description_length": 488,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kcas_data.Accumulator.Xt",
       "library": "kcas_data",
-      "description": "This module provides operations to manipulate a shared integer value in a thread-safe, lock-free manner, supporting concurrent increments, decrements, additions, and value reads and updates. It works with the `Kcas_data.Accumulator.t` type, which represents a single integer accumulator, and uses `Kcas.Xt.t` transaction contexts to compose operations with others in a transactional memory system. Concrete use cases include tracking shared counters in high-contention environments, such as monitoring resource usage or managing statistics in concurrent applications.",
-      "description_length": 567,
+      "description": "This module provides operations to manipulate integer accumulators within transactions, including incrementing, decrementing, reading, and setting values. It works with the `Kcas_data.Accumulator.t` type and requires an explicit transaction log passed as a parameter. It is suitable for scenarios like tracking shared counters in parallel computations where updates are frequent but reads are rare.",
+      "description_length": 398,
       "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Kcas_data.Dllist.Xt",
+      "library": "kcas_data",
+      "description": "This module implements transactional operations on doubly-linked lists using explicit transaction logs, enabling fine-grained manipulation of individual nodes and efficient bulk transfers between lists. It supports concurrent access patterns where nodes can be removed, moved, or swapped without traversing the list, and allows lists to act as deques with blocking or non-blocking removal operations. Concrete use cases include building compositional concurrent data structures like LRU caches, where maintaining element ordering and efficient removal is critical.",
+      "description_length": 564,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Kcas_data.Stack.Xt",
+      "module_path": "Kcas_data.Queue.Xt",
       "library": "kcas_data",
-      "description": "This module implements a lock-free, concurrent LIFO stack with transactional semantics. It supports atomic operations such as `push`, `pop_opt`, `top_opt`, and `clear`, along with blocking variants for synchronization. Designed for parallel environments, it ensures strict serializability and composability, making it suitable for fine-grained concurrent algorithms where coordination across multiple data structures is required.",
-      "description_length": 429,
-      "index": 3,
+      "description": "This module implements a lock-free FIFO queue with explicit transaction log passing, supporting concurrent and parallel operations without starvation or contention between producers and consumers. It provides operations for adding elements, inspecting or removing elements with blocking and non-blocking variants, and converting the queue to safe iteration sequences. Concrete use cases include coordinating task scheduling between threads, implementing bounded buffers, and managing asynchronous event queues in high-performance servers.",
+      "description_length": 538,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kcas_data.Mvar.Xt",
+      "library": "kcas_data",
+      "description": "This module implements synchronizing variables with explicit transaction passing, supporting blocking and non-blocking put and take operations. It works with values of type `'a Kcas_data.Mvar.t`, which represent optional values with synchronization semantics. Use this module to coordinate producer-consumer patterns, implement channels, or manage shared state with atomic transactions in concurrent programs.",
+      "description_length": 409,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kcas_data.Hashtbl.Xt",
       "library": "kcas_data",
-      "description": "This module provides transactional operations for manipulating lock-free hash tables with explicit transaction log passing. It supports adding, removing, and querying key-value bindings, as well as swapping and resetting table contents, all within a compositional context. Use cases include building concurrent associative data structures like LRU caches where multiple operations must be composed atomically.",
-      "description_length": 409,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kcas_data.Dllist.Xt",
-      "library": "kcas_data",
-      "description": "This module implements transactional operations for manipulating doubly-linked lists in a lock-free, compositional manner. It supports adding, removing, and moving nodes within or between lists, as well as blocking and non-blocking value extraction from list ends. Use cases include building efficient, thread-safe LRU caches or managing dynamic collections where elements need to be inserted, removed, or reordered without traversal overhead.",
-      "description_length": 443,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Kcas_data.Promise.Xt",
-      "library": "kcas_data",
-      "description": "This module provides operations to explicitly pass transaction logs when resolving and awaiting promises. It supports promise values of any type, including regular values and exceptions. These functions are useful for coordinating asynchronous computations within transactional contexts, such as implementing concurrent workflows where operations must block until dependencies are resolved.",
-      "description_length": 390,
+      "description": "This module provides transactional operations for manipulating lock-free hash tables, including adding, removing, replacing, and querying key-value pairs within a transaction log. It works with typed hash tables that support concurrent access and modification, allowing for precise control over transactional consistency. These operations are ideal for implementing thread-safe caches and associative maps where atomic updates and lookups are critical, such as in concurrent LRU cache designs or distributed state management systems.",
+      "description_length": 533,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kcas_data.Dllist",
-      "library": "kcas_data",
-      "description": "This structure provides lock-free concurrent doubly-linked lists with operations for constant-time node insertion, removal, and reordering (e.g., `add_l`, `remove`, `swap`), along with bulk privatization (`take_all`) and bidirectional traversal (`to_list_l`, `to_nodes_r`). It works with heap-allocated nodes and lists, enabling efficient node manipulation without full-list traversal, strictly serializable composition with other data structures. The transactional submodule extends this with compositional manipulation of nodes within or across lists, supporting blocking and non-blocking value extraction, ideal for thread-safe LRU caches or dynamic collections requiring atomic reordering. Specific use cases include LRU caches, bounded associative maps, and work-stealing queues where atomic node management and privatization are critical.",
-      "description_length": 844,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kcas_data.Promise",
-      "library": "kcas_data",
-      "description": "This module enables asynchronous communication through promises that can be resolved with values or exceptions, supporting operations like creation, resolution, and status checking. It includes submodules for handling transactional contexts, allowing explicit passing of transaction logs when resolving or awaiting promises. Main data types include the promise itself, along with resolver functions and transaction logs. You can use it to coordinate concurrent tasks, implement async workflows, or build synchronization primitives that block until dependencies resolve, all while maintaining transactional consistency where needed.",
-      "description_length": 631,
-      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kcas_data.Accumulator",
       "library": "kcas_data",
-      "description": "This module provides a scalable, thread-safe counter for high-concurrency environments, supporting atomic increment, decrement, and read operations on an integer value. It uses the `Kcas_data.Accumulator.t` type and integrates with `Kcas.Xt.t` transaction contexts to enable lock-free accumulation and composition with other operations in transactional memory systems. You can use it to track shared metrics, manage resource counts, or aggregate statistics in parallel applications where reads are rare but updates are frequent. The child module extends these capabilities with fine-grained manipulation functions, enabling precise control over the accumulator's value in concurrent contexts.",
-      "description_length": 692,
-      "index": 9,
+      "description": "This module implements a scalable integer accumulator optimized for parallel increment and decrement operations with infrequent reads. It provides atomic operations for updating values in high-concurrency environments, such as tracking shared counters in distributed computations or monitoring resource usage across threads. The non-compositional interface supports direct manipulation of counters, while the compositional interface enables transactional updates within explicit transaction logs.",
+      "description_length": 496,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kcas_data.Hashtbl",
       "library": "kcas_data",
-      "description": "This module implements a concurrent, lock-free hash table that supports scalable parallelism by allowing non-resizing writes and concurrent reads to proceed without interference. It provides thread-safe operations for inserting, removing, and querying key-value bindings, along with in-place transformations such as filtering and folding, making it suitable for applications like bounded associative maps and LRU caches that require compositional updates and linearizable semantics. The child module extends this functionality with transactional operations that enable atomic composition of multiple hash table manipulations, supporting use cases where consistency across several operations is essential. Key data types include the hash table (`t`) and transaction log, with operations like `create`, `find`, `add`, `remove`, `fold`, and `iter`, alongside transactional variants for compositional updates.",
-      "description_length": 905,
+      "description": "This module implements a lock-free hash table with standard operations like `add`, `replace`, and `find`, alongside transactional composition via the `Xt` module, enabling atomic updates across multiple structures. It supports concurrent key-value storage with scalable resizing, in-place transformations, and parallel traversal, optimized for high-concurrency scenarios. Use cases include building LRU caches or associative maps where composability and starvation-free parallelism are critical, such as coordinating atomic updates across shared data structures in distributed systems.",
+      "description_length": 585,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kcas_data.Queue",
+      "library": "kcas_data",
+      "description": "This module implements a lock-free FIFO queue with operations for adding elements, inspecting or removing elements with blocking and non-blocking variants, and converting the queue to safe iteration sequences. It works with generic OCaml values and provides concrete functionality for coordinating task scheduling between threads, implementing bounded buffers, and managing asynchronous event queues in high-performance servers. The queue avoids contention and starvation, offering efficient concurrent access without relying on locks.",
+      "description_length": 535,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kcas_data.Mvar",
+      "library": "kcas_data",
+      "description": "This module implements synchronizing variables with blocking semantics for `put` and `take` operations, working with values of type `'a Kcas_data.Mvar.t` that represent optional values with concurrency-safe access. It supports producer-consumer coordination, channel-like communication, and atomic shared-state management in concurrent programs. Key operations include `put`, `take`, `try_put`, and `peek`, with optional timeouts for blocking calls.",
+      "description_length": 449,
       "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kcas_data.Stack",
       "library": "kcas_data",
-      "description": "This module provides a lock-free, concurrent LIFO stack with transactional semantics, supporting atomic push, pop, top, and clear operations along with blocking variants for synchronization. It offers constant-time length tracking, safe iteration via sequences, and composability for use in fine-grained concurrent algorithms and parallel task coordination. Concrete applications include concurrent task scheduling, resource pooling, and coordination across interdependent data structures. The interface aligns with a subset of Stdlib.Stack but enhances it with transactional guarantees and safe traversal under concurrency.",
-      "description_length": 624,
+      "description": "This module implements a lock-free, thread-safe LIFO stack with transactional operations using explicit transaction logs. It supports standard stack operations such as `push`, `pop_opt`, `top_opt`, and `is_empty`, along with utilities like `clear`, `swap`, and `to_seq` for batch manipulation and iteration. Use cases include concurrent task scheduling, shared resource management, and parallel processing pipelines where compositional memory transactions are required.",
+      "description_length": 469,
       "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Kcas_data.Queue",
+      "module_path": "Kcas_data.Promise",
       "library": "kcas_data",
-      "description": "This module implements a lock-free, thread-safe FIFO queue optimized for concurrent producer-consumer scenarios, offering both blocking and non-blocking operations like `add`, `take`, `peek`, and `take_all`, along with utilities such as `is_empty`, `length`, and `clear`. Its design minimizes contention and avoids starvation, making it suitable for high-throughput applications like task scheduling and inter-thread communication. The child module extends this functionality by introducing explicit transaction log passing, enabling coordinated access and modification of the queue across threads. Together, they support building concurrent buffers, synchronization primitives, and pipeline-based systems with strict serialization guarantees.",
-      "description_length": 743,
+      "description": "This module implements transactional promises for synchronizing asynchronous computations in concurrent environments. It provides operations to create, resolve, and await promises, supporting both standard and result-wrapped value resolution. Concrete use cases include coordinating data structure updates that depend on asynchronous results, such as ensuring a value is available before inserting it into a shared map.",
+      "description_length": 419,
       "index": 12,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Kcas_data.Mvar",
-      "library": "kcas_data",
-      "description": "This module implements a synchronizing variable that supports blocking put and take operations, working with optional values of any type to coordinate threads based on data availability. It provides direct access to operations that allow threads to wait for the variable to become full or empty, enabling use cases such as producer-consumer workflows and bounded buffers. The child module extends this functionality with transactional operations, supporting non-blocking and blocking variants for checking emptiness, putting, taking, and peeking values on `'a Kcas_data.Mvar.t`. Together, they offer a flexible interface for synchronizing state transitions and managing concurrent access in scenarios like channel implementations and coordinated resource sharing.",
-      "description_length": 763,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Kcas_data",
       "library": "kcas_data",
-      "description": "This library provides lock-free, concurrent data structures designed for compositional use in parallel programs. It offers structures such as doubly-linked lists, hash tables, stacks, queues, accumulators, mvars, and promises, each supporting atomic operations with strict serializability and efficient time complexity. These structures enable building complex concurrent abstractions\u2014like LRU caches, bounded maps, async workflows, and task schedulers\u2014with precise control over memory and synchronization. Each module integrates with transactional memory contexts to allow safe, atomic cross-structure operations while maintaining scalability and avoiding contention under load.",
-      "description_length": 679,
-      "index": 14,
-      "embedding_norm": 0.9999998807907104
+      "description": "This module implements compositional, lock-free data structures and synchronization primitives for concurrent and parallel programming. It provides hash tables, queues, stacks, synchronizing variables, promises, and accumulators that support atomic transactions, scalable concurrency, and efficient coordination between threads. Concrete use cases include building composable LRU caches, coordinating asynchronous I/O operations, and managing shared counters in distributed computations.",
+      "description_length": 487,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
     "total_modules_in_package": 15,
-    "meaningful_modules": 15,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "meaningful_modules": 14,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9333333333333333
   },
   "statistics": {
-    "max_description_length": 905,
-    "min_description_length": 390,
-    "avg_description_length": 605.2666666666667,
-    "embedding_file_size_mb": 0.054901123046875
+    "max_description_length": 585,
+    "min_description_length": 398,
+    "avg_description_length": 488.5,
+    "embedding_file_size_mb": 0.20329570770263672
   }
 }

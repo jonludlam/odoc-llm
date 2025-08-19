@@ -1,125 +1,101 @@
 {
   "package": "ppx_protocol_conv",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 13,
-  "creation_timestamp": "2025-07-15T23:09:26.288256",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 10,
+  "creation_timestamp": "2025-08-14T23:22:51.298429",
   "modules": [
-    {
-      "module_path": "Protocol_conv.Runtime.Driver",
-      "library": "ppx_protocol_conv.runtime",
-      "description": "This module provides bidirectional conversion operations between an abstract type `t` and a wide range of OCaml data forms, including structured types (variants, records, tuples, lists, arrays, options, refs) and primitives (integers, floats, booleans, characters, strings, lazy values, results). It supports serialization to and from `bytes` and `unit`, enabling scenarios like persisting typed data to binary formats, transmitting OCaml values over networks, or parsing external data streams into typed representations while ensuring deserialization errors are explicitly handled via `Protocol_error` exceptions.",
-      "description_length": 614,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Protocol_conv.Runtime.Helper",
-      "library": "ppx_protocol_conv.runtime",
-      "description": "This module provides functions for mapping, serializing, and deserializing tuples, records, and variants, including transformations on field and constructor names. It supports operations like converting associative lists to records, mapping over tuple fields, and handling variant constructors with name transformations. Concrete use cases include implementing custom serialization formats for structured data types and adapting data representations during encoding and decoding.",
-      "description_length": 479,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Protocol_conv.Runtime.Tuple_in",
       "library": "ppx_protocol_conv.runtime",
-      "description": "This module defines a right-associative operator `(^::)` that extends a tuple decoder by applying a function to the next decoded value. It works with tuple decoder types that track remaining fields and decoding context. Use this to build decoders for fixed-size tuples from a sequence of decoding functions.",
-      "description_length": 307,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Protocol_conv.Runtime.Tuple_out",
-      "library": "ppx_protocol_conv.runtime",
-      "description": "This module provides a right-associative operator `(^::)` for building tuple-like structures from functions, enabling the composition of functions that produce tuple values in a right-to-left order. It works with function types and tuple representations in the form of the `Tuple_out.t` type, which captures the intermediate state of constructing a tuple. A concrete use case is incrementally building a function that returns a tuple by combining individual functions that produce each element of the tuple.",
-      "description_length": 507,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Protocol_conv.Runtime.Record_in",
-      "library": "ppx_protocol_conv.runtime",
-      "description": "This module provides a combinator for building record decoding functions incrementally, where each field is described by a name, a projection function, and an optional default value. It works with tuples representing partially applied record constructors and supports deserialization from formats like JSON or binary. A concrete use case is parsing structured data formats into OCaml records with customizable field extraction and error handling.",
-      "description_length": 446,
-      "index": 4,
+      "description": "This module provides a single operator `(^::)` that extends a tuple decoder by applying a function to one of its elements. It works with tuple-like structures in the context of decoding, allowing the transformation of a component within a larger tuple. Use this to build complex decoders by composing functions that extract and modify individual fields from a tuple.",
+      "description_length": 366,
+      "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Protocol_conv.Runtime.Record_out",
       "library": "ppx_protocol_conv.runtime",
-      "description": "This module provides a single operator `(^::)` for building protocol buffer serialization functions. It works with optional record fields, combining field names, serialization functions, and optional values into a chainable structure. Use it to construct efficient, type-safe serialization logic for records in protocol buffer encoders.",
-      "description_length": 336,
-      "index": 5,
+      "description": "This module builds serializable record outputs by extending fields with optional values and transformation functions. It works with record output structures that track field encodings, pending functions, and finalization logic. Use it to construct custom binary or JSON encoders for records incrementally, attaching fields with optional values and transformations as needed.",
+      "description_length": 374,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Protocol_conv.Runtime.Record_in",
+      "library": "ppx_protocol_conv.runtime",
+      "description": "This module provides a combinator for building record decoding functions in a declarative way. It works with tuples representing field names, projection functions, and optional default values, combined into record parsing specifications. A concrete use case is decoding JSON or binary data into OCaml records by defining field-by-field mappings.",
+      "description_length": 345,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Protocol_conv.Runtime.Helper",
+      "library": "ppx_protocol_conv.runtime",
+      "description": "This module provides operations for mapping, serializing, and deserializing tuples, records, and variants during protocol conversion. It includes functions for transforming field names, constructing values from associative lists, and handling strict or lenient deserialization. Concrete use cases include converting between structured data formats and OCaml values, such as parsing JSON objects into records or serializing variant types to tagged lists.",
+      "description_length": 453,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Protocol_conv.Runtime.Tuple_out",
+      "library": "ppx_protocol_conv.runtime",
+      "description": "This module provides a single operator `(^::)` that extends a tuple-building function by adding a new field to the front. It works with tuple-like structures represented as functions that accumulate values step by step. A concrete use case is constructing fixed-size tuples incrementally when parsing or decoding data, where each field is processed in sequence.",
+      "description_length": 361,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Protocol_conv.Runtime",
       "library": "ppx_protocol_conv.runtime",
-      "description": "This module handles serialization and deserialization of OCaml values to and from external data formats, with strict error handling via result types. It supports structured types like records, tuples, and variants, enabling tasks like parsing configuration files, marshaling data for network transmission, and validating structured input. Submodules provide utilities for bidirectional type conversions, tuple and record manipulation, and protocol buffer serialization, with operators for incrementally building decoders and encoders. Specific examples include converting associative lists to records, composing tuple decoders using `^::`, and constructing type-safe protocol buffer serializers for records with optional fields.",
-      "description_length": 728,
-      "index": 6,
+      "description": "This module implements protocol conversion for structured data using combinators and incremental builders. It provides precise tools for decoding and encoding records, tuples, and variants through declarative specifications and transformation pipelines. Concrete applications include mapping JSON or binary data to OCaml records, constructing tuples from sequential decoders, and serializing variants with custom tagging schemes.",
+      "description_length": 429,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Protocol_conv",
       "library": "ppx_protocol_conv.runtime",
-      "description": "This module enables type-safe conversion between OCaml values and external data formats, using result-typed functions to handle errors during parsing and serialization. It supports structured data like records, tuples, and variants, with utilities for composing decoders and encoders incrementally, such as using `^::` to build tuple parsers or mapping association lists to records. Specific use cases include deserializing configuration files, validating input data, and generating protocol buffer encoders for records with optional fields.",
-      "description_length": 541,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ppx_protocol_driver.Driver",
-      "library": "ppx_protocol_conv.driver",
-      "description": "This module enables bidirectional conversion of OCaml primitive values (integers, floats, strings, booleans, lists, and association lists) to an abstract structured type, supporting nullable representations and type-safe transformations. It provides operations for serializing data into this intermediate format and reconstructing values, with utilities for validating type consistency and handling optional fields. These capabilities are particularly useful for data serialization, cross-format data processing, and enforcing schema constraints during value transformations.",
-      "description_length": 575,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ppx_protocol_driver.Parameters",
-      "library": "ppx_protocol_conv.driver",
-      "description": "This module defines parameters for customizing the behavior of code generation related to record fields, variants, and constructor mappings. It provides functions to transform field and variant names, and configurable flags to control serialization and deserialization behaviors such as omitting default values, handling lazy fields, and strictness on unknown fields. It is used to adjust how data structures are represented during parsing and serialization, particularly in conjunction with attributes like [@key] and [@name].",
-      "description_length": 527,
-      "index": 9,
+      "description": "This module implements protocol conversion for structured data using combinators and incremental builders. It provides precise tools for decoding and encoding records, tuples, and variants through declarative specifications and transformation pipelines. Concrete applications include mapping JSON or binary data to OCaml records, constructing tuples from sequential decoders, and serializing variants with custom tagging schemes.",
+      "description_length": 429,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ppx_protocol_driver.Make",
       "library": "ppx_protocol_conv.driver",
-      "description": "This module provides bidirectional conversion functions for serializing and deserializing values between a structured type `t` and a wide range of OCaml representations, including basic types (`int`, `string`, `bool`, `bytes`), composite types (records, variants, tuples, arrays), and standard library types (`option`, `list`, `result`, `ref`). It supports workflows like data encoding/decoding (e.g., JSON, binary formats) by enabling precise transformations while handling errors through dedicated utilities. The operations are designed for scenarios requiring robust round-trip conversions between domain models and external data formats.",
-      "description_length": 641,
-      "index": 10,
+      "description": "This module provides bidirectional conversion operations for transforming a generic type `t` into various OCaml constructs, including structured types like variants, records, and tuples, as well as primitive types such as integers, strings, and booleans. It supports serialization and deserialization workflows with robust error handling, enabling type-safe marshaling of data to and from standardized representations. These capabilities are particularly useful for tasks like persistent storage, cross-platform data exchange, or interfacing with external systems requiring strict format guarantees.",
+      "description_length": 599,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ppx_protocol_driver.Default_parameters",
       "library": "ppx_protocol_conv.driver",
-      "description": "This module defines default parameters for mapping OCaml types during serialization and deserialization. It includes functions to transform field and variant names, and boolean flags to control the handling of constructors, default values, lazy fields, and unknown fields. These parameters are used to customize the behavior of code generated by the ppx_protocol_driver extension points.",
-      "description_length": 387,
-      "index": 11,
+      "description": "This module defines default parameters for mapping OCaml types during serialization and deserialization. It includes functions to transform field and variant names, and boolean flags to control constructor representation, default value handling, lazy field evaluation, and strictness on unknown fields. It is used to configure how data structures like records and variants are encoded or decoded in protocols such as JSON or binary formats.",
+      "description_length": 440,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ppx_protocol_driver",
       "library": "ppx_protocol_conv.driver",
-      "description": "This module converts snake case to camel case via the `mangle` function and provides drivers and configurations for protocol-related operations during compilation. It works with submodules that handle data serialization, name transformations, and type-safe conversions between OCaml values and structured types. The core functionality supports bidirectional data transformations, customizable record and variant handling, and round-trip conversions for formats like JSON or binary. Examples include mapping a record field with a renamed key, serializing a list of values into an intermediate format, or validating type consistency during deserialization.",
-      "description_length": 654,
-      "index": 12,
+      "description": "This module provides functions and configuration parameters for customizing the serialization and deserialization of OCaml data types, particularly records and variants, into formats like JSON or binary. It includes name transformation utilities, such as converting snake_case to camelCase, and configurable options for handling constructors, defaults, and strictness. Concrete use cases include adapting OCaml type definitions to external data protocols with specific naming or encoding requirements.",
+      "description_length": 501,
+      "index": 9,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 15,
-    "meaningful_modules": 13,
+    "total_modules_in_package": 12,
+    "meaningful_modules": 10,
     "filtered_empty_modules": 2,
-    "retention_rate": 0.8666666666666667
+    "retention_rate": 0.8333333333333334
   },
   "statistics": {
-    "max_description_length": 728,
-    "min_description_length": 307,
-    "avg_description_length": 518.6153846153846,
-    "embedding_file_size_mb": 0.047657012939453125
+    "max_description_length": 599,
+    "min_description_length": 345,
+    "avg_description_length": 429.7,
+    "embedding_file_size_mb": 0.13099193572998047
   }
 }

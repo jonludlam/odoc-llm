@@ -1,63 +1,63 @@
 {
   "package": "bitgenerators",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:05:45.920150",
+  "creation_timestamp": "2025-08-14T23:01:20.883346",
   "modules": [
     {
-      "module_path": "Bitgen.SeedSequence",
+      "module_path": "Bitgen.SFC64",
       "library": "bitgenerators",
-      "description": "This module creates and manages seed sequences for initializing pseudo-random number generators with high-quality entropy. It supports generating 32-bit and 64-bit seed states, and spawning independent seed sequences for parallel or distributed use. Concrete use cases include initializing multiple non-overlapping PRNGs for simulations or generating reproducible random streams by logging and reusing entropy values.",
-      "description_length": 417,
+      "description": "This module implements the SFC64 pseudo-random number generator, providing functions to generate random 64-bit and 32-bit unsigned integers, bounded 64-bit integers, and 64-bit floating-point values. It operates on a state type `t` consisting of four 64-bit unsigned integers, including a counter that ensures a minimum cycle length of 2^64. Concrete use cases include generating random numbers for simulations, cryptographic nonces, and randomized algorithms requiring a large period and high-quality randomness.",
+      "description_length": 513,
       "index": 0,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999998807907104
     },
     {
-      "module_path": "Bitgen.Xoshiro256",
+      "module_path": "Bitgen.ChaCha",
       "library": "bitgenerators",
-      "description": "This module implements the Xoshiro256** algorithm, a 64-bit pseudo-random number generator (PRNG) with a period of 2^256 - 1. It provides functions to generate 32-bit and 64-bit unsigned integers, bounded 64-bit integers, and 64-bit floating-point numbers, all returning an updated generator state. The module supports parallel applications through a jump function that advances the sequence by 2^128 steps, enabling generation of non-overlapping sub-sequences.",
-      "description_length": 461,
+      "description": "This module implements a counter-based pseudorandom number generator derived from the ChaCha cipher, offering precise control over sequence generation and advancement. It operates on a state type `t` that encapsulates the cipher's key, counter, and buffered outputs, allowing generation of 32-bit and 64-bit unsigned integers, bounded 64-bit integers, and 64-bit floating-point values. Concrete use cases include cryptographic applications requiring non-overlapping random sequences, Monte Carlo simulations needing deterministic reproducibility, and parallel computations where independent substreams are essential.",
+      "description_length": 616,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bitgen.PCG64",
       "library": "bitgenerators",
-      "description": "This module implements the PCG XSL RR 128/64 pseudo-random number generator, providing functions to generate 64-bit and 32-bit unsigned integers, 64-bit floats, and bounded 64-bit integers, all while returning the updated generator state. It works with the `SeedSequence` type to initialize and manage the internal 128-bit state, which consists of a 128-bit LCG state and a fixed odd increment. Concrete use cases include cryptographic sampling, simulation, and randomized algorithms requiring high-quality, reproducible random streams with support for arbitrary state advancement and multiple independent streams.",
-      "description_length": 614,
+      "description": "This module implements the PCG-64 pseudo-random number generator, providing operations to generate unsigned 64-bit, 32-bit, and 64-bit floating-point values, as well as bounded 64-bit integers. It works with a state type `t` that encapsulates the internal 128-bit state and increment values of the generator. Use this module to produce high-quality random numbers with support for arbitrary state advancement and multiple independent streams.",
+      "description_length": 442,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bitgen.ChaCha",
+      "module_path": "Bitgen.Xoshiro256",
       "library": "bitgenerators",
-      "description": "This module implements the ChaCha cipher-based pseudo-random number generator with explicit state management. It provides functions to generate 32-bit and 64-bit unsigned integers, bounded integers, and 64-bit floating-point values, along with precise control over the generator's state through initialization, advancement, and counter manipulation. It is suitable for applications requiring reproducible, high-quality random number generation with support for large non-overlapping sequence jumps.",
-      "description_length": 498,
+      "description": "This module implements the Xoshiro256** algorithm, a fast 64-bit pseudo-random number generator with a period of 2^256 - 1. It provides functions to generate 32-bit and 64-bit unsigned integers, bounded integers, and 64-bit floating-point values, all while returning an updated generator state. The module supports deterministic sequence jumping via the `jump` function, enabling parallel computations using non-overlapping subsequences.",
+      "description_length": 437,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bitgen.SFC64",
+      "module_path": "Bitgen.SeedSequence",
       "library": "bitgenerators",
-      "description": "This module implements the SFC64 pseudorandom number generator algorithm, producing 64-bit unsigned integers, 32-bit unsigned integers, bounded 64-bit integers, and 64-bit floating-point values. It operates on a state type `t` composed of four 64-bit unsigned integers, including a counter that increments with each step. Use this module to generate high-quality pseudorandom numbers with a large period, suitable for simulations, randomized algorithms, and cryptographic applications requiring strong randomness properties.",
-      "description_length": 524,
+      "description": "This module manages the creation and branching of high-quality seed states for pseudo-random number generators. It takes a list of 128-bit integers as input entropy and provides functions to generate 32-bit or 64-bit seed arrays for initializing PRNGs. It supports spawning independent seed sequences for parallel or distributed generation, ensuring non-overlapping and reproducible random streams.",
+      "description_length": 398,
       "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bitgen.Philox4x64",
       "library": "bitgenerators",
-      "description": "This module implements the Philox4x64 counter-based pseudorandom number generator, producing 64-bit and 32-bit unsigned integers, bounded integers, and 64-bit floating-point values. It operates on a state represented as a 256-bit counter and a 128-bit key, both stored as tuples of 64-bit unsigned integers. It supports fast forward and jump operations to generate non-overlapping sequences, making it suitable for parallel applications where independent streams are required.",
-      "description_length": 476,
+      "description": "This module implements the Philox4x64 counter-based pseudo-random number generator, producing 64-bit and 32-bit unsigned integers, 64-bit floating-point values, and bounded 64-bit integers. It operates on a state represented as a 256-bit counter and a 128-bit key, enabling independent random sequences through different keys and large jumps in the sequence via `jump` and `advance`. It is used to generate independent parallel random number streams by initializing with a `SeedSequence` and spawning new generators with unique keys.",
+      "description_length": 533,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bitgen",
       "library": "bitgenerators",
-      "description": "This library implements a suite of high-quality pseudo-random number generators (PRNGs) with explicit state management, designed for reproducibility, parallelism, and cryptographic-grade randomness. Each generator\u2014such as Xoshiro256**, PCG XSL RR 128/64, ChaCha, SFC64, and Philox4x64\u2014produces 32-bit or 64-bit integers, bounded integers, and floating-point values, while returning an updated state for functional use. Seed sequences provide high-quality initialization and support spawning independent streams, enabling use cases like parallel simulations, randomized algorithms, and cryptographic sampling. For example, you can initialize a Xoshiro256** generator from a seed sequence, generate a float between 0 and 1, then jump its state to produce a non-overlapping sub-sequence for parallel tasks.",
-      "description_length": 803,
+      "description": "This module implements high-quality pseudo-random number generators with explicit state management, supporting operations to generate unsigned integers, bounded integers, and floating-point values. It works with state types specific to each algorithm, such as four 64-bit integers for SFC64 or a combination of key and counter for Philox4x64, ensuring long periods and reproducibility. Use cases include cryptographic nonces, Monte Carlo simulations, and parallel randomized algorithms requiring independent, non-overlapping random streams.",
+      "description_length": 540,
       "index": 6,
       "embedding_norm": 1.0
     }
@@ -69,9 +69,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 803,
-    "min_description_length": 417,
-    "avg_description_length": 541.8571428571429,
-    "embedding_file_size_mb": 0.025826454162597656
+    "max_description_length": 616,
+    "min_description_length": 398,
+    "avg_description_length": 497.0,
+    "embedding_file_size_mb": 0.10195636749267578
   }
 }

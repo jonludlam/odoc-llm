@@ -1,97 +1,97 @@
 {
   "package": "ceph",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 11,
-  "creation_timestamp": "2025-07-15T23:08:27.899489",
+  "creation_timestamp": "2025-08-14T23:20:13.094968",
   "modules": [
     {
-      "module_path": "Bindings.S",
-      "library": "ceph.stubs",
-      "description": "This module provides low-level constants and data structures for interacting with file system APIs, focusing on system-level operations and metadata inspection. It defines integer and character constants for error codes, file types, and open flags (e.g., `enoent`, `dt_DIR`, `o_CREAT`), alongside C-compatible structures for Unix directory entries (`dirent`) and extended file statistics (`statx`), including fields for inode numbers, timestamps, and file modes. These bindings enable use cases like error handling in CephFS operations, type-safe file attribute checks (e.g., distinguishing directories from regular files via `s_IFDIR`), and retrieving metadata such as file sizes or modification times.",
-      "description_length": 703,
+      "module_path": "Structs.C",
+      "library": "ceph.structs",
+      "description": "This module provides constants for CephFS library versioning, file type identification, and open flags, alongside C-compatible data structures for Unix directory entries (`dirent`) and extended file statistics (`statx`). It includes field accessors for metadata like inode numbers, timestamps, and file sizes, as well as type masks (e.g., `s_IFREG`, `s_IFDIR`) to distinguish file categories such as regular files, directories, and symlinks. These features enable low-level filesystem operations, metadata inspection, and type-specific handling in OCaml applications interfacing with CephFS or Unix-based systems.",
+      "description_length": 613,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
+      "module_path": "Structs",
+      "library": "ceph.structs",
+      "description": "This module defines C-compatible data structures and constants for low-level filesystem operations, including `dirent` for directory entries and `statx` for extended file metadata. It provides field accessors for attributes like inode numbers, timestamps, and file sizes, along with type masks to identify file categories such as regular files and directories. Use this module when working directly with filesystem metadata in CephFS or Unix system calls from OCaml.",
+      "description_length": 466,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ceph.C",
+      "library": "ceph",
+      "description": "The module provides filesystem operations for managing Ceph-mounted storage, including mount configuration, directory traversal, file creation/removal, symbolic link handling, and metadata retrieval via statx. It operates on Ceph-specific structures like `mount_info` for connection state and `dir_result` for directory listings, leveraging Ctypes for low-level C interoperability. This enables use cases such as distributed storage management, permission updates, and file metadata inspection in clustered environments.",
+      "description_length": 520,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ceph.Statx",
+      "library": "ceph",
+      "description": "This module provides direct access to file metadata fields such as mode, size, modification time, and birth time from a `statx` structure. It includes functions to extract specific attributes, determine file types, and construct a `statx` value from a pointer. Concrete use cases include inspecting file properties in low-level system programming tasks, such as checking file sizes or timestamps without relying on higher-level abstractions.",
+      "description_length": 441,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ceph.S",
+      "library": "ceph",
+      "description": "This module exposes constants and accessors for low-level CephFS operations, focusing on system call interfaces and metadata inspection. It works with C-style structures like `dirent` and `statx` to extract file metadata (inode numbers, timestamps, modes) and provides error codes and flags for file operations. It is used in scenarios requiring direct interaction with CephFS semantics, such as implementing custom file system tools or handling extended attributes in distributed storage systems.",
+      "description_length": 497,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ceph.Dirent",
+      "library": "ceph",
+      "description": "This module provides functions to access the type, inode number, and name fields of a Ceph directory entry structure. It supports extracting structured data from Ctypes pointers to Ceph directory entries. Concrete use cases include parsing directory listings and retrieving metadata for files and directories in a Ceph file system.",
+      "description_length": 331,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ceph",
+      "library": "ceph",
+      "description": "The module provides filesystem operations for managing distributed storage systems, including mount configuration, directory navigation, file manipulation, and metadata retrieval. It operates on data structures such as mount information records, directory entries, and extended metadata (statx), facilitating tasks like storage configuration, symbolic link management, and data synchronization in clustered environments. These capabilities are particularly used for low-level control of distributed file systems, directory traversal, and metadata inspection.",
+      "description_length": 558,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bindings.S",
+      "library": "ceph.stubs",
+      "description": "This module supports low-level file system operations through integer constants and C-compatible data structures for metadata inspection. It works with `dirent` and `statx` structures to expose directory entry information and file statistics, including field accessors for timestamps, size, and mode. The constants for file types and open flags enable precise control over system calls, particularly for CephFS integration and Linux kernel interfaces requiring metadata retrieval or file type checks.",
+      "description_length": 500,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
       "module_path": "Bindings.C",
       "library": "ceph.stubs",
-      "description": "This module provides C bindings for a custom filesystem interface, supporting operations like mounting, directory management, file manipulation, and metadata handling. It works with structured types such as `mount_info` and uses a result type to encapsulate success or error states, interacting with file paths, descriptors, and directory handles. It is suited for implementing virtual filesystems, storage backends, or tools requiring fine-grained control over file operations and extended attributes.",
-      "description_length": 502,
-      "index": 1,
+      "description": "This interface enables low-level filesystem implementation through operations like mounting, directory management, file manipulation, and metadata handling. It works with structured data such as `mount_info` records, paths, and file descriptors, exposing system-call-like primitives for tasks like creating virtual filesystems or integrating user-space FUSE-based storage solutions. Key use cases include building custom mountable filesystems, managing hierarchical data via directory operations, and implementing POSIX-compliant file abstractions.",
+      "description_length": 548,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bindings",
+      "library": "ceph.stubs",
+      "description": "This module provides low-level filesystem operations through two submodules. Submodule S exposes integer constants and C-compatible data structures like `dirent` and `statx` for inspecting directory entries and file metadata, including direct access to timestamps, size, and file modes, primarily supporting CephFS and Linux kernel interfaces. Submodule C implements filesystem primitives for mounting, directory and file management, and metadata handling using structured data like `mount_info`, paths, and file descriptors, enabling creation of custom filesystems and FUSE-based storage.",
+      "description_length": 589,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Structs_generated",
       "library": "ceph.stubs",
-      "description": "This module provides low-level operations for constructing and manipulating C-compatible data structures, including primitives like integers and floating-point values, as well as complex types such as arrays, bigarrays, structs, unions, and pointers. It enables precise memory layout control, type introspection, and pointer arithmetic, supporting use cases like interfacing with C libraries, system programming, and zero-copy data sharing between OCaml and external systems. Key features include type coercion, memory allocation with finalizers, and direct field access for structured data, mirroring C-style memory management and type representations.",
-      "description_length": 653,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bindings",
-      "library": "ceph.stubs",
-      "description": "This module offers system-level filesystem interaction through low-level constants and structures for error codes, file types, and metadata, along with C bindings for custom filesystem operations including mount management and directory traversal. Key data types include `dirent` and `statx` for directory entries and file statistics, while operations support metadata retrieval, type checking, and structured filesystem control via types like `mount_info`. It enables tasks like inspecting file attributes to distinguish directories, handling extended attributes, and implementing virtual filesystems with precise error handling and system call integration. Example uses include building storage backends, analyzing file metadata, and managing mount points programmatically.",
-      "description_length": 775,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ceph.C",
-      "library": "ceph",
-      "description": "This module enables mounting/unmounting Ceph filesystems, directory management (create/remove/traverse), file manipulation (link/unlink/rename), permission/ownership control, and extended attribute handling. It operates on Ceph-specific structures like `mount_info` for connection state, `dir_result`/`dirent` for directory traversal, and `statx` for file metadata, supporting distributed storage systems and low-level filesystem tooling. Use cases include building custom Ceph mount utilities, implementing storage orchestration layers, or auditing filesystem state with extended attributes.",
-      "description_length": 592,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ceph.Dirent",
-      "library": "ceph",
-      "description": "This module provides functions to access the type, inode number, and name fields of a directory entry structure. It works with Ceph's internal dirent type, which represents entries in a directory. Use this module to extract file metadata when iterating through directory contents or processing file system operations.",
-      "description_length": 317,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ceph.S",
-      "library": "ceph",
-      "description": "The module provides low-level constants and data structures for interacting with CephFS metadata and system calls, including error codes (e.g., `enoent`), file type identifiers (e.g., `dt_DIR`), and open flags (e.g., `o_RDONLY`). It defines C-like structs such as `dirent` for directory entries and `statx` for extended file statistics, with accessors to retrieve inode information, timestamps, and file modes. These components are used for tasks like directory traversal, file metadata inspection, and precise control over file operations in distributed storage systems.",
-      "description_length": 571,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ceph.Statx",
-      "library": "ceph",
-      "description": "This module provides direct access to file metadata fields such as mode, size, modification time, and creation time from a `statx` structure. It includes functions to extract specific attributes like file type from raw system call results. Concrete use cases include inspecting file properties in low-level filesystem operations and converting raw stat data into usable types.",
-      "description_length": 376,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ceph",
-      "library": "ceph",
-      "description": "This module provides tools for interacting with CephFS at a low level, combining filesystem operations with metadata handling and directory traversal. It supports key data types like `mount_info`, `dirent`, and `statx`, enabling operations such as mounting filesystems, iterating directories, inspecting file metadata, and managing permissions. Functions allow extracting file modes, inode numbers, timestamps, and extended attributes, useful for building custom storage utilities or auditing distributed filesystems. Submodules refine access to directory entry fields, system call constants, and metadata conversion, supporting precise control over file and directory operations.",
-      "description_length": 680,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Structs.C",
-      "library": "ceph.structs",
-      "description": "This module exposes constants and C-compatible data structures for low-level filesystem interactions, including error codes (e.g., `enoent`), file type identifiers (e.g., `dt_DIR`), and open flags (e.g., `o_RDONLY`). It defines bindings for Unix directory entries (`dirent`) and extended attribute structures like `statx`, enabling precise metadata access (inode numbers, timestamps) via system calls such as `readdir` and `statx`. These facilities are primarily used for implementing CephFS client operations, file type checks, and robust error handling in filesystem-related code.",
-      "description_length": 582,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Structs",
-      "library": "ceph.structs",
-      "description": "This module provides low-level filesystem abstractions with C-compatible data structures and constants for interacting with Unix APIs. It includes error codes like `enoent`, file type identifiers like `dt_DIR`, and open flags like `o_RDONLY`, along with structures such as `dirent` and `statx` for directory traversal and metadata retrieval. Operations like `readdir` and `statx` enable precise access to filesystem metadata, including inode numbers and timestamps. These tools support tasks like implementing CephFS client logic, handling file type checks, and managing filesystem errors in system-level code.",
-      "description_length": 610,
+      "description": "This module provides operations for constructing and manipulating C-compatible data types, memory layouts, and pointer arithmetic, enabling precise control over low-level representations. It works with structured types like structs, unions, and arrays, alongside primitive C types, Bigarrays, and typed pointers, supporting type-safe conversions and zero-copy data sharing. Specific use cases include interfacing with foreign libraries, implementing performance-critical numerical computations, and managing direct memory access for system-level programming.",
+      "description_length": 558,
       "index": 10,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -101,9 +101,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 775,
-    "min_description_length": 317,
-    "avg_description_length": 578.2727272727273,
-    "embedding_file_size_mb": 0.04043769836425781
+    "max_description_length": 613,
+    "min_description_length": 331,
+    "avg_description_length": 511.0,
+    "embedding_file_size_mb": 0.15983200073242188
   }
 }

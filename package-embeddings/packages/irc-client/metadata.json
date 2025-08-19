@@ -1,9 +1,9 @@
 {
   "package": "irc-client",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 10,
-  "creation_timestamp": "2025-07-15T23:06:35.231163",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 7,
+  "creation_timestamp": "2025-08-14T23:07:40.611784",
   "modules": [
     {
       "module_path": "Irc_client.Make.Io",
@@ -14,88 +14,64 @@
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Irc_helpers.Log",
-      "library": "irc-client",
-      "description": "This module provides direct logging functions for emitting messages at various severity levels, including debug, info, error, and warning. It supports logging formatted messages and handling result values, particularly for error cases. Concrete use cases include logging incoming IRC messages, connection errors, and parsing failures with structured context.",
-      "description_length": 358,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Irc_client.CLIENT-Io",
-      "library": "irc-client",
-      "description": "Handles network communication for an IRC client, including connecting to servers, sending and receiving messages, and managing socket I/O. Works with `inet_addr` for addressing and `config` for client configuration. Used to establish and maintain IRC connections, send commands like JOIN and PRIVMSG, and process incoming server events.",
-      "description_length": 336,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irc_transport.IO",
-      "library": "irc-client",
-      "description": "This module implements asynchronous I/O operations for network communication, including socket management, DNS resolution, and time-based controls. It works with low-level data types like `file_descr`, `inet_addr`, and `Bytes`, supporting concrete tasks such as connecting to IRC servers, reading and writing raw socket data, and handling timeouts. Specific use cases include establishing TCP connections, performing non-blocking reads with timeouts, and resolving hostnames to IP addresses for client networking.",
-      "description_length": 513,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
       "module_path": "Irc_client.Make",
       "library": "irc-client",
-      "description": "This module implements an IRC client that connects to servers, sends commands like JOIN and PRIVMSG, and handles incoming messages with customizable callbacks. It manages network communication, supporting TLS and asynchronous I/O, and works with connection and message types to maintain client state. Use it to build bots that respond to channel events, automate messaging, or manage multiple IRC connections securely. Submodules handle low-level socket I/O and client configuration, enabling fine-grained control over network behavior and message processing.",
+      "description": "This module implements a functional IRC client interface with operations to connect to servers, send IRC commands like JOIN, PRIVMSG, and QUIT, and handle message reception with keepalive and reconnection logic. It works with connection state, IRC messages, and network addresses to support building persistent, event-driven IRC clients. Concrete use cases include automated chat bots, real-time messaging integrations, and network monitoring tools that require reliable IRC communication.",
+      "description_length": 489,
+      "index": 1,
+      "embedding_norm": 1.0000001192092896
+    },
+    {
+      "module_path": "Irc_helpers.Log",
+      "library": "irc-client",
+      "description": "This module provides direct logging functions for emitting messages at various severity levels, including `app`, `err`, `warn`, `info`, and `debug`, all of which wrap formatted log output using the `Logs` module's infrastructure. It supports logging operations that integrate with `Logs.Tag.set` and custom formatters, enabling structured and contextual logging. The module includes utilities for handling and logging `result`-valued computations, specifically for surfacing and formatting `Error` cases with customizable severity levels and message handlers.",
       "description_length": 559,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irc_client.CLIENT",
-      "library": "irc-client",
-      "description": "This module implements an IRC client with functions to connect to servers, send commands like JOIN, PRIVMSG, and QUIT, and handle message reception. It works with connection_t for stateful interactions and Irc_message.t for message parsing. Concrete use cases include building bots that join channels, respond to messages, or maintain persistent connections with automatic reconnection.",
-      "description_length": 386,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irc_message",
-      "library": "irc-client",
-      "description": "This module handles the construction, parsing, and serialization of structured IRC protocol messages. It defines a polymorphic `command` type representing IRC operations (e.g., authentication, channel management, messaging) with associated data, paired with an optional prefix in the `t` type. Designed for tasks like protocol implementation, message validation, and network communication, it operates on raw strings, channels, and buffers to convert between wire format and typed representations.",
-      "description_length": 497,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irc_helpers",
-      "library": "irc-client",
-      "description": "This module combines line-based parsing and incremental input handling with logging capabilities to process IRC messages from a network stream. It offers functions for splitting strings and managing buffered socket data, alongside structured logging for errors, warnings, and debug information. You can use it to break down raw IRC input into lines, accumulate partial messages, and log connection events or parsing issues with context. Together, these features support robust, traceable handling of IRC communication.",
-      "description_length": 518,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Irc_client",
-      "library": "irc-client",
-      "description": "This module provides a complete IRC client implementation that manages connections, sends and receives messages, and processes server events with support for custom transports and protocol data structures. It centers around the `connection_t` type for stateful interactions and `Irc_message.t` for parsing and constructing IRC commands like JOIN, PRIVMSG, and QUIT. Child modules handle low-level network communication, including TLS and asynchronous I/O, while supporting customizable callbacks for responding to messages, managing client state, and handling reconnection. Use it to build IRC bots or clients that automate messaging, join channels, or maintain secure, persistent connections.",
-      "description_length": 693,
-      "index": 8,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Irc_transport",
       "library": "irc-client",
-      "description": "This module defines the transport-layer interface for IRC clients, handling low-level IO operations like socket management, DNS resolution, and timeouts. It provides types such as `file_descr`, `inet_addr`, and `Bytes` to support concrete tasks including TCP connections, non-blocking reads, and hostname resolution. Direct operations allow sending and receiving raw IRC messages, while submodules extend functionality for asynchronous networking and time-based controls. Example uses include connecting to an IRC server, reading lines with timeouts, and writing IRC commands over a socket.",
-      "description_length": 590,
-      "index": 9,
+      "description": "Defines the IO module type for implementing input/output operations required to build an IRC client. It specifies functions for connecting to a server, sending and receiving messages, and handling low-level socket interactions. Concrete use cases include TCP-based network communication and mock IO for testing IRC client behavior.",
+      "description_length": 331,
+      "index": 3,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irc_helpers",
+      "library": "irc-client",
+      "description": "This module provides functions for splitting strings on specific characters and handling line-based input buffering. It works with strings and buffers, processing text data incrementally as it arrives from a socket. Concrete use cases include parsing IRC messages by splitting command components and buffering partial lines until complete messages are available for processing.",
+      "description_length": 377,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Irc_client",
+      "library": "irc-client",
+      "description": "This module implements a functional IRC client interface with operations to connect to servers, send IRC commands like JOIN, PRIVMSG, and QUIT, and handle message reception with keepalive and reconnection logic. It works with connection state, IRC messages, and network addresses to support building persistent, event-driven IRC clients. Concrete use cases include automated chat bots, real-time messaging integrations, and network monitoring tools that require reliable IRC communication.",
+      "description_length": 489,
+      "index": 5,
+      "embedding_norm": 1.0000001192092896
+    },
+    {
+      "module_path": "Irc_message",
+      "library": "irc-client",
+      "description": "This module enables constructing, parsing, and serializing IRC protocol messages by converting raw strings into structured representations with a `command` type and associated record. It operates on strings and message structures to handle common IRC commands like authentication, channel joining, and private messaging, supporting use cases such as client-server communication or message routing. Helper functions simplify creating commands with variable arguments, optional values, or list-based parameters while providing robust parsing and wire-format serialization.",
+      "description_length": 570,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 10,
-    "meaningful_modules": 10,
+    "total_modules_in_package": 7,
+    "meaningful_modules": 7,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 693,
+    "max_description_length": 570,
     "min_description_length": 328,
-    "avg_description_length": 477.8,
-    "embedding_file_size_mb": 0.036726951599121094
+    "avg_description_length": 449.0,
+    "embedding_file_size_mb": 0.10184764862060547
   }
 }

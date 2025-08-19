@@ -1,53 +1,61 @@
 {
   "package": "pbrt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:59.162110",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 5,
+  "creation_timestamp": "2025-08-14T22:59:08.777740",
   "modules": [
     {
       "module_path": "Pbrt.Decoder",
       "library": "pbrt",
-      "description": "This module provides operations for decoding Protocol Buffers from byte or string inputs, including reading fields, parsing nested messages, and decoding integers using varint or zigzag encodings. It works with `bytes` and `string` inputs through a stateful decoder type, handling malformed or incomplete data with error reporting. Specific use cases include deserializing scalar wrapper fields, extracting optional primitive values, and processing fixed-size or variable-length encoded data streams.",
-      "description_length": 500,
+      "description": "This module provides low-level decoding operations for parsing Protocol Buffers binary formats, handling varint/zigzag integers, 32/64-bit floats, strings, bytes, and nested messages. It operates on a decoder state (`t`) that tracks input buffers and position, supporting memory-efficient substring/subbyte extraction and structured error propagation for malformed data. Key use cases include deserializing protobuf-encoded data streams with strict validation and handling optional/wrapper types like `int32` or `string` that may be absent or invalid.",
+      "description_length": 551,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pbrt.List_util",
       "library": "pbrt",
-      "description": "Implements `rev_iter_with`, which iterates over a list in reverse, applying a function to each element and a shared state. Operates on standard OCaml lists and arbitrary state types. Useful for efficiently processing protobuf message fields in reverse without modifying the original list structure.",
-      "description_length": 298,
+      "description": "Implements `rev_iter_with`, which iterates over a list in reverse, applying a function to each element and a shared state. Operates on standard OCaml lists and arbitrary state values. Useful for processing protobuf message fields in reverse order during serialization or traversal.",
+      "description_length": 281,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Pbrt.Repeated_field",
+      "module_path": "Pbrt.Encoder",
       "library": "pbrt",
-      "description": "This module implements an optimized container for storing and manipulating repeated values in a protobuf field. It supports operations like adding elements, converting to arrays or lists, and applying functions over stored values, with efficient iteration and folding. It is used to handle repeated scalar or message fields in protobuf messages, enabling efficient serialization and in-memory manipulation.",
-      "description_length": 406,
+      "description": "This module encodes structured data into Protocol Buffers binary format through operations that serialize keys, nested messages, and map entries, while supporting numeric encodings like Varint, ZigZag, and Bits32/Bits64. It operates on an internal buffer (`t`) to process primitive types (integers, floats, booleans, strings, bytes) and their optional wrappers, including transformations for efficient serialization. Specific use cases include handling optional byte sequences with Protobuf's wrapping logic and encoding numeric fields with variable-length or signed representations for compact wire formats.",
+      "description_length": 608,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
+      "module_path": "Pbrt.Repeated_field",
+      "library": "pbrt",
+      "description": "This module implements an optimized container for storing and manipulating repeated values in a protobuf context. It supports operations like adding elements, converting to arrays or lists, and applying functions across elements, all while maintaining efficient memory usage. It is particularly useful for handling repeated fields in protobuf messages where performance and compact storage are critical.",
+      "description_length": 403,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
       "module_path": "Pbrt",
       "library": "pbrt",
-      "description": "This module handles the core serialization and deserialization of Protocol Buffers messages, offering low-level encoding and decoding of varint, 32-bit, 64-bit, and byte payloads. It provides utilities for working with repeated fields and byte lists, enabling direct manipulation of protobuf binary data in network or file I/O scenarios. Submodules enhance this functionality with buffer-based encoding, stateful decoding from bytes or strings, and optimized list processing for repeated values. Specific capabilities include parsing nested messages, decoding integers with zigzag encoding, and efficiently iterating over protobuf fields in reverse using shared state.",
-      "description_length": 668,
-      "index": 3,
+      "description": "This module implements a runtime library for encoding and decoding Protocol Buffers binary data. It provides low-level operations for reading and writing protobuf fields, including varint, zigzag, and fixed-size numeric encodings, as well as handling strings, bytes, nested messages, and repeated fields. Use cases include parsing and generating protobuf payloads with precise control over wire-efficient representations and structured error handling during data deserialization.",
+      "description_length": 479,
+      "index": 4,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 6,
-    "meaningful_modules": 4,
-    "filtered_empty_modules": 2,
-    "retention_rate": 0.6666666666666666
+    "meaningful_modules": 5,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.8333333333333334
   },
   "statistics": {
-    "max_description_length": 668,
-    "min_description_length": 298,
-    "avg_description_length": 468.0,
-    "embedding_file_size_mb": 0.014954566955566406
+    "max_description_length": 608,
+    "min_description_length": 281,
+    "avg_description_length": 464.4,
+    "embedding_file_size_mb": 0.07283496856689453
   }
 }

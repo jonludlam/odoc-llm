@@ -1,125 +1,93 @@
 {
   "package": "revops",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 13,
-  "creation_timestamp": "2025-07-15T23:08:11.193453",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 9,
+  "creation_timestamp": "2025-08-14T23:17:34.917251",
   "modules": [
     {
       "module_path": "Revops_fn.Make.Oprev",
       "library": "revops",
-      "description": "Implements a module for managing a value that can be created and destroyed, using two functions: one to produce a value and another to consume it. Works with any type `'a` wrapped in a monadic effect `M.t`, and encapsulates the lifecycle in an `Oprev.t` structure. Useful for handling resources like file handles or network connections where initialization and cleanup are required.",
-      "description_length": 382,
+      "description": "This module implements a bidirectional interface for initializing and disposing of resources, using two functions: one to create a value within a monadic context and another to finalize it. It operates on monadic types `'a M.t` and pairs them with an `'a -> unit M.t` disposal function, encapsulating both in an `'a Oprev.t` structure. It is useful for managing resources like file handles or network connections where setup and teardown actions must be explicitly paired.",
+      "description_length": 472,
       "index": 0,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Revops_fn.Make.M",
       "library": "revops",
-      "description": "This module provides monadic composition through bind (`>>=`) and value injection via `return`, enabling sequential chaining of effectful computations. It also includes `protect`, which ensures a finalization action runs after a computation, regardless of success or failure. These operations work with values wrapped in the monadic type `M.t`, supporting structured error handling and resource management.",
-      "description_length": 406,
+      "description": "This module implements monadic operations for a custom effect system, supporting bind (`>>=`) for chaining effectful computations, `return` for pure values, and `protect` for ensuring cleanup code runs after execution. It works with a polymorphic monadic type `'a M.t` representing suspended computations with effects. Concrete use cases include managing resource-safe I/O operations and sequencing asynchronous or error-prone processes with guaranteed finalization.",
+      "description_length": 466,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Revops_fn.Make",
-      "library": "revops",
-      "description": "This module enables reversible computation with context-aware execution, combining state transitions and undo capabilities through `'a Oprev.t` and `'a Revop.t`. It supports resource management via a sub-module that encapsulates value creation and destruction in a monadic effect `M.t`, ideal for handling file or network resources. Another sub-module enhances operation composition using monadic bind and guaranteed finalization with `protect`, enabling robust error handling and sequential workflows. Together, these components allow building transactional systems where operations can be chained, reversed, or safely finalized.",
-      "description_length": 630,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Revops_intf.MONAD",
-      "library": "revops",
-      "description": "This module defines core monadic operations including bind (`>>=`), return, and protected computation execution with cleanup. It works with monadic types `'a t`, supporting chaining asynchronous or effectful computations. Concrete use cases include managing resource-safe I/O operations and composing deferred computations with guaranteed finalization.",
-      "description_length": 352,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Revops_intf.S-M",
-      "library": "revops",
-      "description": "This module defines monadic operations for composing computations that produce values within a monadic context. It includes bind (`>>=`) for chaining functions, `return` for wrapping values, and `protect` for ensuring cleanup actions run after computation. These functions work with values of type `'a M.t`, supporting use cases like asynchronous I/O, error handling, or stateful computations where sequencing and resource management are critical.",
-      "description_length": 447,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Revops_intf.S-Oprev",
-      "library": "revops",
-      "description": "This module defines a type `'a Oprev.t` representing a resource with setup and teardown operations. It provides the `make` function to create a value from initialization and cleanup functions, where initialization returns a value and cleanup consumes it. Useful for managing resources like file handles or network connections that require explicit release.",
-      "description_length": 356,
-      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Revops.M",
       "library": "revops",
-      "description": "This module implements a monadic structure for composing sequential computations that handle side effects, with support for binding (`>>=`) and value injection (`return`). It works with the abstract type `'a t`, representing effectful computations that produce values of type `'a`. Use this module to structure error handling, resource management, or asynchronous workflows where operations depend on prior results.",
-      "description_length": 415,
-      "index": 6,
+      "description": "This module implements a monadic structure for composing sequential computations that handle side effects, with support for binding (`>>=`) and wrapping values (`return`). It works with a generic type `'a t` representing effectful computations that may depend on state or I/O. A concrete use case is managing database transactions where `protect` ensures cleanup actions run after operations, regardless of success or failure.",
+      "description_length": 426,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Revops.Oprev",
       "library": "revops",
-      "description": "This module creates a reversible operation pair from a producer and consumer, where the producer generates a value and the consumer applies it, both returning unit-wrapped monadic results. It works with monadic types following the `Revops.M` signature and values of any type `'a`. Use this to model reversible actions like state transitions or undoable commands where setup and teardown are inverses.",
-      "description_length": 400,
-      "index": 7,
+      "description": "This module creates reversible operations for managing state transitions, where `make` constructs a reversible action from an undo function and a redo function. It works with monadic actions in the `Revops.M.t` monad, handling values of any type `'a` during state changes. Concrete use cases include implementing undo-redo functionality in interactive applications like text editors or GUI tools.",
+      "description_length": 396,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Revops_intf.S",
+      "module_path": "Revops_fn.Make",
       "library": "revops",
-      "description": "This module defines operations for composing and executing reversible operations with context-aware transformations. It supports data types `Oprev.t` for representing prior states, `Revop.t` for reversible actions, and computations within the `M.t` monadic context. Concrete use cases include managing state transitions in transactional systems, implementing undoable actions, and composing complex reversible processes from simpler ones.",
-      "description_length": 438,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Revops_intf",
-      "library": "revops",
-      "description": "This module defines a monadic interface for building and composing asynchronous or effectful computations in a type-safe way. It provides core operations like bind (`>>=`), return, and resource-safe computation execution with cleanup, working with abstract monadic types `'a t` and `'a M.t`. It also includes support for managing resources with setup and teardown semantics through the `'a Oprev.t type, and enables reversible operations with context-aware transformations using `Revop.t`. Together, these components allow for structured handling of effects, resource management, and reversible logic in a unified monadic framework.",
-      "description_length": 632,
-      "index": 9,
+      "description": "This module implements monadic operations for effectful computations with resource management guarantees, providing `bind`, `return`, and `protect` for sequencing and finalizing actions. It works with polymorphic monadic types `'a M.t` and resource-handling structures `'a Oprev.t`, which pair initialization with disposal. Concrete use cases include safely managing file handles, network connections, and transactional operations where setup and teardown must be explicitly paired and composed.",
+      "description_length": 495,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Revops_fn",
       "library": "revops",
-      "description": "This module enables reversible computation with context-aware execution, combining state transitions and undo capabilities through `'a Oprev.t` and `'a Revop.t`. It supports resource management via a monadic effect `M.t` for handling file or network resources, and enhances operation composition using monadic bind and guaranteed finalization with `protect`. These components allow building transactional systems where operations can be chained, reversed, or safely finalized. For example, you can open a file, write to it, and ensure it closes properly even on failure, while retaining the ability to roll back changes.",
-      "description_length": 620,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "Implements monadic operations for effectful computations with guaranteed resource management, including `bind`, `return`, and `protect` to sequence actions and handle finalization. Works with polymorphic monadic types `'a M.t` and resource-handling structures `'a Oprev.t` that pair initialization with disposal. Used for safely managing resources like file handles, network connections, and transactions where setup and teardown must be explicitly paired and composed.",
+      "description_length": 469,
+      "index": 5,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Revops_sys",
       "library": "revops",
-      "description": "Creates temporary files with optional prefix and suffix, returning the file path in an `Oprev.t` result. Works with string options and unit input. Useful for safely generating unique temporary file names in system operations.",
-      "description_length": 225,
-      "index": 11,
+      "description": "Creates a temporary file with an optional prefix and suffix, returning its path in an optional value. Works with strings and optional values. Useful for generating unique temporary file names in system operations.",
+      "description_length": 213,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Revops",
       "library": "revops",
-      "description": "This module enables reversible operations with precise control over forward and backward execution, using `Oprev.t` and `Revop.t` to model transactional logic, undoable actions, and stateful computations. Its monadic submodule structures sequential, effectful computations with `>>=` and `return`, supporting error handling and resource management. Another submodule pairs producers and consumers into reversible units, modeling setup/teardown inverses like state transitions. Together, these components allow composing and running context-aware, reversible workflows with rich control over execution flow and intermediate state.",
-      "description_length": 629,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines operations for composing and executing reversible actions within a monadic context. It provides functions to perform reversible operations (`doop`), undo them (`undo`), inspect current values (`peek`), and combine multiple reversible actions using custom logic or tuples (`compose`, `compose_tuple`, `+*`). These operations are used to manage complex, nested state transitions with guaranteed rollback capabilities, such as in collaborative document editing or multi-step form processing with undo support.",
+      "description_length": 526,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Revops_intf",
+      "library": "revops",
+      "description": "Defines monadic operations and a core interface for working with sequences. Supports transformations, folds, and effectful iterations over list-like structures. Useful for composing data-processing pipelines with strict left-to-right evaluation.",
+      "description_length": 245,
+      "index": 8,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 16,
-    "meaningful_modules": 13,
-    "filtered_empty_modules": 3,
-    "retention_rate": 0.8125
+    "total_modules_in_package": 11,
+    "meaningful_modules": 9,
+    "filtered_empty_modules": 2,
+    "retention_rate": 0.8181818181818182
   },
   "statistics": {
-    "max_description_length": 632,
-    "min_description_length": 225,
-    "avg_description_length": 456.3076923076923,
-    "embedding_file_size_mb": 0.04766273498535156
+    "max_description_length": 526,
+    "min_description_length": 213,
+    "avg_description_length": 412.0,
+    "embedding_file_size_mb": 0.130828857421875
   }
 }

@@ -1,357 +1,205 @@
 {
   "package": "pomap",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 42,
-  "creation_timestamp": "2025-07-15T23:14:56.122870",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 23,
+  "creation_timestamp": "2025-08-15T12:35:57.275232",
   "modules": [
-    {
-      "module_path": "Pomap.Pomap_impl.Make.Store.Ix.Set",
-      "library": "pomap",
-      "description": "This component provides efficient set-theoretic operations\u2014including membership testing, union, intersection, and difference\u2014alongside functional transformations like mapping, folding, and filtering over sets of integers. It operates on an abstract type `t` representing ordered index elements, designed for managing key subsets and positional data in a partially ordered map's storage infrastructure. These capabilities enable tasks such as tracking active indices, optimizing subset queries, and performing iterative computations required by the map's structural operations.",
-      "description_length": 576,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
     {
       "module_path": "Pomap.Pomap_impl.Make.Store.Ix.Map",
       "library": "pomap",
-      "description": "This module implements ordered associative maps for key-value pairs where keys are indices from a storage structure, enabling efficient insertion, deletion, and ordered traversal via operations like `fold`, `iter`, and `to_seq`. It supports bulk updates through sequence conversions and provides ordered query capabilities for min/max bindings, filtered subsets, and structural comparisons. Designed for scenarios requiring strict key ordering and indexed element management, it underpins storage layer operations in partially ordered map implementations.",
-      "description_length": 555,
+      "description": "This module provides associative map operations for key-value pairs where keys are indices from a partially ordered store, supporting insertion, deletion, ordered traversal, and transformations with total ordering guarantees. It works with maps that bind `Store.Ix.t` keys to arbitrary values, offering utilities for ordered queries (min/max, range selection), structural manipulation (filtering, merging, splitting), and sequence-based construction. Specific use cases include managing ordered collections with efficient key-based lookups, merging or partitioning maps by ordered key ranges, and processing values through order-preserving transformations.",
+      "description_length": 656,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pomap.Pomap_impl.Make.Store.Ix.Set",
+      "library": "pomap",
+      "description": "This module provides operations for managing sets of integer indices, including creation, membership checks, union, intersection, and difference, along with iteration and comparison functions. It works with sets (type `t`) and integer elements (`elt`), supporting transformations and queries through mapping, folding, filtering, and element extraction (e.g., min/max). Designed for scenarios requiring efficient index management in partially ordered maps, such as handling sparse data or dynamic index collections.",
+      "description_length": 514,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_impl.Make.Ix.Map",
-      "library": "pomap",
-      "description": "This module implements ordered associative maps with keys of type `Ix.t`, supporting insertion, deletion, ordered traversal, and value transformation. It provides set-like merging, key-range queries, and conversions to lazy sequences for efficient data manipulation. Typical applications include managing indexed collections where key ordering is essential, such as time-series data or sorted dictionaries.",
-      "description_length": 406,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_impl.Make.Ix.Set",
-      "library": "pomap",
-      "description": "This module provides operations for managing integer sets with efficient set algebra (union, intersection, difference) and functional transformations (mapping, folding, filtering) over the `Ix.Set.t` type, which represents collections of unique integers. It supports use cases requiring dynamic index tracking, such as maintaining element subsets in a data store, performing membership queries, or orchestrating complex set-based computations for indexing and retrieval tasks.",
-      "description_length": 476,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pomap.Store_impl.IntStore.Ix.Set",
       "library": "pomap",
-      "description": "This module implements efficient operations for managing sets of integer indices, supporting creation, modification, querying, and iteration. It provides standard set functions like union, intersection, difference, membership testing, mapping, folding, and filtering\u2014with safe and unsafe variants\u2014to enable precise control over index set transformations and traversals. These capabilities are optimized for scenarios requiring high-performance manipulation of index sets within a store implementation, such as tracking element positions or managing ordered collections.",
-      "description_length": 569,
+      "description": "This module offers operations for creating, modifying, and querying sets of integers (indices) with standard set operations like union, intersection, and difference, as well as transformations (`map`), aggregations (`fold`), and element-wise queries (`find`, `min_elt`, `max_elt`). It works with the set structure `Pomap.Store_impl.IntStore.Ix.Set.t`, which stores integer indices used to reference elements in a store. Specific use cases include managing subsets of indexed elements, filtering or partitioning indices based on dynamic criteria, and efficiently computing aggregate properties of index sets during store manipulations.",
+      "description_length": 634,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pomap.Store_impl.IntStore.Ix.Map",
+      "library": "pomap",
+      "description": "This module provides associative map operations for integer keys, supporting ordered traversal, bulk transformations, and sequence conversions. It works with maps binding these keys to arbitrary values, enabling efficient lookups, conditional searches, and structural manipulations like merging or partitioning. Use cases include managing indexed collections where ordered access, incremental updates, or predicate-based filtering are required.",
+      "description_length": 444,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pomap.Store_impl.Make.Ix.Map",
+      "library": "pomap",
+      "description": "This module provides ordered map operations for managing key-value associations with efficient insertion, merging, and range-based queries over a persistent data structure. It works with maps keyed by ordered `Ix.Map.key` values and arbitrary `'a` payloads, supporting transformations like filtering, sequence-driven updates, and ordered traversal while preserving immutability. Specific use cases include indexed data processing pipelines and applications requiring ordered key-value storage with bulk operations and monotonic predicate enforcement.",
+      "description_length": 550,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pomap.Pomap_impl.Make.Store.Ix",
       "library": "pomap",
-      "description": "This module manages unique integer indices for elements in a partially ordered map, providing operations to generate, track, and remove indices while integrating with the `Store` module. It supports core tasks like retrieving the next available index, converting indices to integers, and handling index lifetimes during dynamic updates. The first child module extends this functionality by offering set-theoretic operations over index sets, enabling efficient membership checks, unions, and transformations useful for tracking active indices and optimizing queries. The second child module builds on these indices by implementing ordered associative maps, allowing efficient key-value storage, ordered traversal, and bulk updates based on indexed keys.",
-      "description_length": 752,
+      "description": "This module manages index generation and manipulation for a partially ordered map store, providing operations to create, advance, and remove index values. It works with integer indices (`t`) and a generator type (`gen`) to track index state, supporting efficient allocation and deallocation of unique indices. Concrete use cases include maintaining dynamic index sets during map updates, handling sparse data structures, and ensuring ordered traversal by managing index ranges.",
+      "description_length": 477,
       "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_impl.IntStore.Ix.Map",
-      "library": "pomap",
-      "description": "This module implements a persistent map structure for integer keys with efficient associative operations like insertion, deletion, and lookup, alongside ordered traversal, merging, and transformations via functions such as `map` and `fold`. It supports sequence-based conversions, reverse iteration, and specialized filtering or partitioning, enabling use cases like managing indexed elements in store implementations where ordered key-value processing and structural manipulation are critical. The module leverages inherent key ordering to optimize operations such as `find_first` and range-based traversal for applications requiring precise element management.",
-      "description_length": 662,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_impl.IntStore.Ix",
-      "library": "pomap",
-      "description": "This module manages a sequence of integer indices for a store, generating and tracking unique identifiers while supporting efficient index management through its core operations and submodules. The `Set` submodule provides optimized set operations for index manipulation, including union, intersection, and filtering, while the `Map` submodule offers a persistent map structure for integer keys with ordered traversal and associative operations. It enables concrete use cases such as tracking active sessions, managing ordered collections, or handling database records with precise key control. Direct operations allow index creation, removal, and tracking, complemented by the submodules' capabilities for complex data transformations and queries.",
-      "description_length": 748,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_impl.IntIx.Map",
-      "library": "pomap",
-      "description": "This module implements integer-indexed maps with ordered traversal capabilities, supporting functional updates, aggregation, and sequence conversions. It provides operations for key-based manipulation (insertion, deletion, lookup), ordered iteration (ascending/descending traversal), and structural transformations (filtering, partitioning, merging) while preserving immutability. These maps are particularly useful for scenarios requiring efficient ordered key-value storage with integer indices, such as configuration management, state tracking with ordinal keys, or data processing pipelines needing deterministic iteration order.",
-      "description_length": 633,
-      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pomap.Pomap_impl.Make.Store",
       "library": "pomap",
-      "description": "This module manages a collection of indexed elements from a partially ordered map, supporting creation, insertion, lookup, and traversal, along with filtering, folding, and transformation operations. It uses indices (`Store.Ix.t`) to track elements and provides structural analysis through equivalence class partitioning and index mapping retrieval. The module is extended by submodules that handle set-theoretic operations over index sets and implement ordered associative maps for key-value storage and ordered traversal. Examples include retrieving the next available index, performing bulk updates on indexed keys, and categorizing nodes based on equivalence classes.",
-      "description_length": 671,
-      "index": 9,
-      "embedding_norm": 1.0
+      "description": "This module provides core operations for managing a store of indexed elements, including index generation, insertion, lookup, update, and removal, along with traversal, filtering, and folding over elements and indices. It operates on a store structure that associates elements of arbitrary type with unique integer indices, supporting efficient index management and ordered processing of sparse data. Specific functions like grouping elements into equivalence classes or retrieving index maps for storage positions enable structural analysis and precise control in applications requiring complex data organization.",
+      "description_length": 614,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Pomap.Store_impl.IntIx.Set",
       "library": "pomap",
-      "description": "This module implements efficient operations for integer-indexed sets, including creation, membership queries, union, intersection, difference, and iterative transformations. It works with an abstract type `t` representing finite sets of integers, optimized for functional manipulation through mapping, folding, and filtering. Typical use cases involve managing sparse data structures, tracking active indices, or handling integer key sets in store implementations where performance-critical set operations are required.",
-      "description_length": 519,
-      "index": 10,
+      "description": "This module offers functional operations for managing immutable sets of integers, supporting efficient creation, membership checks, union, intersection, difference, and transformation via mapping or folding. It works with persistent set structures (`t`) that preserve previous versions when modified, enabling safe use in algorithms requiring non-destructive updates. Typical applications include graph traversal tracking, permission bitmask management, or incremental data processing workflows where immutable state snapshots are valuable.",
+      "description_length": 540,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pomap.Store_impl.IntStore.Ix",
+      "library": "pomap",
+      "description": "This module represents indices for elements in a store, providing a type `t` for integer indices and a generator type `gen` to produce and manage them. It includes functions to generate the next index, remove an index from a generator, and convert an index to an integer. Use cases include tracking and manipulating element positions in a store, such as allocating new indices, releasing used indices, and converting indices for external use.",
+      "description_length": 442,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Pomap.Store_impl.Make.Ix",
       "library": "pomap",
-      "description": "This module manages the generation and tracking of unique integer indices for elements in a store, ensuring consistent identifier assignment and lifecycle management during insertions and deletions. It provides core operations to generate, remove, and maintain indices, while its child modules extend this functionality with ordered associative maps and efficient integer set operations. With these tools, users can implement indexed collections with ordered keys, perform key-range queries, and execute set algebra on index sets for tasks like dynamic tracking and membership testing. Example use cases include managing time-series data with ordered identifiers and orchestrating complex index-based retrieval operations in a data store.",
-      "description_length": 738,
-      "index": 11,
+      "description": "This module manages index generation and manipulation for store elements, providing operations to create, advance, and remove indices. It works with integer-based indices and a generator type to produce unique, ordered identifiers. Concrete use cases include maintaining insertion order in persistent maps and generating stable keys for efficient range queries and ordered traversal in data processing pipelines.",
+      "description_length": 412,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Pomap.Display_hasse_intf.DISPLAY_HASSE",
+      "module_path": "Pomap.Store_impl.IntIx.Map",
       "library": "pomap",
-      "description": "This module provides functions to visualize partially ordered maps as Hasse diagrams. It defines the `pomap` type and includes `fprintf` and `printf` for rendering these structures to a formatter or standard output. It is used to debug or display the hierarchical relationships within a partially ordered map.",
-      "description_length": 309,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_intf.INDEX-Map",
-      "library": "pomap",
-      "description": "This module provides ordered key-based map operations for polymorphic value types, supporting efficient insertion, deletion, and lookup alongside ordered traversal and transformation. It works with a map structure parameterized over a fixed ordered key type, enabling set-like merges, filtered iterations, and sequence conversions. Specific use cases include maintaining sorted key-value collections, processing range-bound queries, and bulk data synchronization between maps and ordered sequences.",
-      "description_length": 498,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Pomap_intf.POMAP-Store-Ix-Map",
-      "library": "pomap",
-      "description": "This module provides associative map operations for keys of type `Store.Ix.t`, supporting functional updates, ordered key manipulation, and bulk sequence-based transformations. It works with maps that maintain key ordering, enabling efficient querying (e.g., bounded searches, min/max bindings), structural operations (e.g., merging, splitting, filtering), and traversal in ascending or descending order. Specific use cases include managing indexed data collections where key order is semantically significant, performing optimized bulk updates from sequences, and implementing algorithms requiring ordered key range operations like range queries or ordered folds.",
-      "description_length": 664,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_impl.Make",
-      "library": "pomap",
-      "description": "This module organizes polymorphic collections around unique indices, enabling structural transformations such as partitioning, grouping, and mapping indexed elements. It directly supports operations that track, generate, and manage indices through a core set of functions, while its child modules extend this foundation with ordered key handling and efficient set operations. Users can, for example, group elements into equivalence classes, maintain ordered maps for time-series data, or perform set algebra on index sets for dynamic membership queries. Together, the module and its submodules form a cohesive system for managing and manipulating indexed data with precision and flexibility.",
-      "description_length": 691,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pomap.Pomap_impl.Make",
-      "library": "pomap",
-      "description": "This module provides core operations for managing partially ordered maps with index tracking, enabling creation, modification, and querying through topological traversals, set-like operations, and equivalence class computations. It supports direct manipulation of keys under a partial order and low-level updates to node structures, while its child modules handle indexed element collections, set-theoretic operations, and ordered associative maps. Main data types include keys with partial ordering, values with index associations, and stores for tracking indices. Examples include bulk updates on indexed keys, categorizing nodes into equivalence classes, and performing topological traversals consistent with Hasse diagrams.",
-      "description_length": 727,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_intf.STORE-Ix-Map",
-      "library": "pomap",
-      "description": "This module provides a comprehensive set of operations for polymorphic maps (`'a Ix.Map.t`) with keys of type `Ix.t`, including creation, insertion, modification, and combination, alongside ordered traversal and selection (e.g., `min_binding`, `max_binding`). It supports transformation, filtering, and sequence-based construction/iteration (`to_seq_from`, `of_seq`), leveraging the map's inherent key ordering. Designed for efficient index-based data management, it is suited for applications requiring sorted data structures, functional updates, and ordered processing of key-value pairs.",
-      "description_length": 590,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_intf.STORE-Ix",
-      "library": "pomap",
-      "description": "This module manages index generation and manipulation for elements in a store, providing operations to create, retrieve, and remove indices. It works with integer-based index types and includes set and map submodules for managing collections of indices. Concrete use cases include tracking unique identifiers for stored elements and efficiently managing sparse index spaces during dynamic data insertion and removal.",
-      "description_length": 416,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Pomap_intf.POMAP-Store",
-      "library": "pomap",
-      "description": "This module provides operations for managing collections of indexed elements within a partially ordered structure, supporting creation, transformation, and traversal with explicit index tracking. It works with stores containing nodes that maintain equivalence relationships and positional mappings, enabling advanced structural analysis. Specific capabilities include partitioning elements into equivalence classes and retrieving index-to-element mappings, which are essential for maintaining and inspecting hierarchical or partially ordered data relationships.",
-      "description_length": 561,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Display_hasse_impl.DefaultSpec",
-      "library": "pomap",
-      "description": "This module defines display parameters and node formatting for Hasse diagrams, including visual properties like size, rotation, and node/edge attributes. It works with graph data structures representing partial orders, particularly for lattice visualization. Concrete use cases include customizing diagram layout and styling nodes based on their position (top, bottom, or both).",
-      "description_length": 378,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_intf.STORE-Ix-Set",
-      "library": "pomap",
-      "description": "This module supports efficient integer set operations like union, intersection, difference, and membership testing, alongside functional transformations such as mapping, filtering, and folding over indexed sets. It works with `Ix.Set.t` structures, which represent ordered collections of integers, enabling precise manipulation of element ranges and subsets. These capabilities are suited for tasks requiring sparse index management, range-based data aggregation, or combinatorial set logic in performance-sensitive contexts.",
-      "description_length": 525,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pomap.Store_impl.IntStore",
-      "library": "pomap",
-      "description": "This implementation provides a structured way to manage collections of elements indexed by unique, incrementally assigned integer keys, supporting operations such as insertion, modification, traversal, and transformation. It maintains a strict mapping between indices and values, enabling ordered element handling and structural analysis through equivalence class partitioning and direct index-value associations. The core functionality is complemented by submodules: `Set` for efficient index set manipulation with operations like union and intersection, and `Map` for persistent integer-keyed maps with ordered traversal and associative queries. Examples include managing active sessions, handling ordered collections, or processing database records with precise key control through both direct index operations and higher-level transformations.",
-      "description_length": 847,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Display_hasse_intf.DEFAULT_SPEC",
-      "library": "pomap",
-      "description": "Defines default configuration parameters for rendering Hasse diagrams using the DOT utility. It specifies visual properties such as graph name, label, dimensions, orientation, and node/edge attributes. Used to customize the appearance of top, bottom, and regular nodes in generated DOT output.",
-      "description_length": 293,
-      "index": 23,
+      "description": "This module implements ordered maps with integer keys (`IntIx.t`) and arbitrary value types, offering operations for insertion, deletion, merging, and ordered traversal while preserving key order. It supports efficient transformations, filtering, and conversions to/from sequences and lists, enabling use cases like indexed data management, ordered collections, and persistent storage systems where key ordering and performance are critical.",
+      "description_length": 441,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pomap.Display_hasse_impl.Make",
       "library": "pomap",
-      "description": "Generates a pretty-printer for visualizing Hasse diagrams of partially ordered maps using a provided specification. It works with partially ordered map structures and formatting specifications to produce textual representations. Useful for debugging or displaying hierarchical relationships in data like dependency graphs or class hierarchies.",
-      "description_length": 343,
-      "index": 24,
+      "description": "Generates a pretty-printer for visualizing Hasse diagrams of partially ordered maps using a specified formatting style. It works with `pomap` structures from the `POMap` module and a printer specification to render diagrams to standard output or custom formatters. Useful for debugging or displaying hierarchical relationships in data like dependency graphs or class hierarchies.",
+      "description_length": 379,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pomap.Store_impl.Make",
+      "library": "pomap",
+      "description": "This module implements indexed collections with integer-based keys, supporting creation, modification, and traversal operations like `add`, `fold`, and `map`, alongside advanced transformations such as partitioning, equivalence class grouping, and index-stable conversions to maps. It works with structures `'a t` indexed by ordered integer identifiers (`Ix.t`), ensuring efficient updates and ordered iteration. These capabilities are suited for scenarios requiring hierarchical data management, categorized aggregation, or persistent state transformations where index stability is critical.",
+      "description_length": 592,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pomap.Display_hasse_impl.DefaultSpec",
+      "library": "pomap",
+      "description": "This module defines display parameters and node formatting for Hasse diagrams, including visual properties like size, rotation, and node/edge attributes. It works with graph data structures representing partial orders, particularly for visualization. Concrete use cases include customizing the layout and appearance of nodes and edges when generating diagram output.",
+      "description_length": 366,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pomap.Store_impl.IntIx",
       "library": "pomap",
-      "description": "This module manages a stateful generator for unique integer indices, using the `gen` type to track generator state and `t` to represent individual indices. It supports operations to generate the next index, remove an index, and convert an index to an integer, enabling efficient allocation and tracking of unique identifiers. The module integrates with its submodules to provide ordered integer-indexed maps and efficient integer-indexed sets, allowing for functional updates, ordered traversal, and set algebra. For example, it can generate unique IDs for elements in a map, manage active indices in a set, or traverse keys in a specific order while maintaining immutability.",
-      "description_length": 676,
-      "index": 25,
+      "description": "This module manages a sequence of unique integer indices with operations to generate, remove, and convert indices. It works with integer-based identifiers (`t`) and a generator state (`gen`) to track available indices. Concrete use cases include allocating unique identifiers in persistent data structures, managing sparse indices in maps or sets, and ensuring efficient index reuse without collisions.",
+      "description_length": 402,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Pomap.Pomap_intf.POMAP-Store-Ix",
+      "module_path": "Pomap.Store_impl.IntStore",
       "library": "pomap",
-      "description": "This module manages index generation and manipulation for elements in a store, providing operations to generate, remove, and convert indices. It works with integer-based index types (`t`) and a generator type (`gen`), along with associated set and map modules. Concrete use cases include tracking unique identifiers for stored elements, efficiently generating new indices, and removing or converting existing indices to integers.",
-      "description_length": 429,
-      "index": 26,
+      "description": "This module implements index-based storage management for collections of values associated with integer keys, supporting efficient element insertion, lookup, modification, and traversal via imperative operations. It provides specialized functionality for grouping elements into equivalence classes based on custom equality predicates and extracting the internal index-to-value mapping as an explicit map structure. Such capabilities are useful for maintaining dynamic datasets requiring integer-keyed access, analyzing data partitions, or transforming indexed collections through bulk operations.",
+      "description_length": 596,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Pomap.Store_intf.INDEX",
+      "module_path": "Pomap.Display_hasse_intf",
       "library": "pomap",
-      "description": "This module defines an index generation system for uniquely identifying elements in a store. It provides operations to generate and manage integer-based indices, including creating a new index, advancing the generator, removing an index, and converting indices to integers. The module works with a generator type `gen` and an index type `t` that is an alias for `int`, supporting use cases such as tracking unique identifiers in a persistent store or managing element positions in a dynamic collection.",
-      "description_length": 502,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_intf.STORE",
-      "library": "pomap",
-      "description": "This module provides operations for managing indexed collections where elements of type `'a` are associated with unique indices of type `Ix.t`. It supports transformations like mapping, filtering, and folding over indexed elements, along with advanced grouping via equivalence classes determined by user-defined equality. Use cases include efficient data retrieval by identifier, partitioning datasets into related subsets, and maintaining structured collections with precise index-level control.",
-      "description_length": 496,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Pomap_intf.PARTIAL_ORDER",
-      "library": "pomap",
-      "description": "Implements a partial order relation with elements of type `el`, using the `ord` type to represent comparison outcomes. Provides the `compare` function to determine the relative ordering between pairs of elements. Useful for scenarios like dependency resolution or topological sorting where elements may not be fully ordered.",
-      "description_length": 324,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Store_intf.INDEX-Set",
-      "library": "pomap",
-      "description": "This module specializes in efficient integer set operations, offering creation, membership checks, and set-theoretic manipulations (union, intersection, difference) alongside functional utilities like mapping, filtering, and folding. It operates on a dedicated integer set type `t`, optimized for performance in scenarios requiring frequent index set transformations, such as data structure traversal or batch index processing. Use cases include managing sparse index collections, implementing graph algorithms, or handling dynamic sets of identifiers with low-overhead immutability.",
-      "description_length": 583,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pomap.Display_hasse_intf.SPEC",
-      "library": "pomap",
-      "description": "This module defines configuration parameters and node attribute formatting for rendering Hasse diagrams. It includes values for diagram layout (size, ratio, rotation, centering) and styling (node and edge attributes). The `pp_node_attr` function customizes how node attributes are printed, using a provided formatter and node data.",
-      "description_length": 331,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Pomap_intf.POMAP",
-      "library": "pomap",
-      "description": "The module provides operations to manage key-value associations within a partially ordered structure, where nodes (identified by `Store.Ix.t` indices) maintain relationships through predecessor and successor links. It supports creation, modification, and traversal of these maps with customizable ordering strategies (e.g., topological, reverse), alongside advanced transformations like differencing, equivalence class computation, and unsafe direct updates to node relationships or extremal indices. This structure is particularly suited for applications requiring dependency tracking, hierarchical data manipulation, or graph-based algorithms where partial order constraints are inherent.",
-      "description_length": 690,
-      "index": 32,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pomap.Pomap_intf.POMAP-Store-Ix-Set",
-      "library": "pomap",
-      "description": "This module offers a suite of efficient operations for manipulating finite sets of integers (indices), including union, intersection, difference, membership testing, element insertion/removal, and transformations like mapping, filtering, and folding. It works with the `Store.Ix.Set.t` type, a purely functional set structure optimized for performance, and supports conversions from lists and safe access via `option`-returning variants. Typical use cases involve managing sparse index collections, tracking active elements in arrays or maps, and enabling algebraic set operations in data processing pipelines.",
-      "description_length": 610,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Display_hasse_impl",
-      "library": "pomap",
-      "description": "This module visualizes Hasse diagrams of partially ordered structures by defining display parameters and generating formatted output. It supports customization of node appearance and layout based on positional roles like top or bottom elements, and it produces textual representations of diagrams for maps with partial orders. Key operations include styling nodes, specifying graph attributes, and generating readable output for debugging or display of hierarchical relationships such as dependencies or class hierarchies.",
-      "description_length": 522,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pomap.Ptset",
-      "library": "pomap",
-      "description": "This module implements an immutable ordered set structure for integers with operations like union, intersection, difference, and ordered element traversal. It supports functional transformations such as mapping, folding, filtering, and partitioning, along with efficient membership checks and min/max element extraction. Designed for scenarios requiring persistent ordered collections, it enables tasks like integer range management, priority-based data aggregation, and ordered query processing.",
-      "description_length": 496,
-      "index": 35,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pomap.Pomap_impl",
-      "library": "pomap",
-      "description": "This module implements partially ordered maps with index tracking, supporting creation, modification, and querying through topological traversals, set-like operations, and equivalence class computations. It provides key data types such as partially ordered keys, indexed values, and index-tracking stores, along with operations for bulk updates, node classification into equivalence classes, and traversals that respect partial order constraints. Examples include updating multiple keys under a partial order, grouping nodes by equivalence, and navigating the structure using Hasse diagram semantics.",
-      "description_length": 600,
-      "index": 36,
+      "description": "This module defines interfaces for displaying Hasse diagrams of partially ordered sets. It includes specifications for ordering relations, display formatting, and diagram generation. Concrete use cases include visualizing lattice structures and partial order relationships in formal verification and abstract interpretation contexts.",
+      "description_length": 333,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pomap.Store_impl",
       "library": "pomap",
-      "description": "This module manages collections of values indexed by unique integer keys, providing operations for index generation, value association, and structural transformations. It centers around the `t` type for indices and `gen` for index state, supporting insertion, mapping, grouping, and ordered traversal, with submodules for set operations and persistent maps. Users can group elements into equivalence classes, maintain ordered maps for time-series data, or perform set algebra on index sets. Example uses include managing active sessions, processing database records with precise key control, and traversing keys in a specific order while preserving immutability.",
-      "description_length": 662,
-      "index": 37,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pomap.Store_intf",
-      "library": "pomap",
-      "description": "This module defines interfaces for structured data storage with typed keys and ordered comparison, enabling efficient key-based access and index management. It provides core abstractions for building custom storage layers, with support for typed indices, ordered maps, and sets to facilitate operations like insertion, deletion, lookup, and ordered traversal. Child modules extend this foundation with concrete implementations for index generation, map and set manipulations, and indexed collections, enabling tasks such as managing sparse identifier spaces, performing range queries, and transforming indexed data. Examples include maintaining sorted key-value stores, synchronizing data between maps and sequences, and implementing index-based grouping and filtering logic.",
-      "description_length": 775,
-      "index": 38,
+      "description": "This module implements index-based storage systems with support for unique integer identifier generation, indexed collection management, and imperative-style value storage. It provides operations for creating, modifying, and traversing collections indexed by integers, including functions for partitioning, mapping, and converting to standard map structures. Concrete use cases include managing persistent data structures with stable indices, implementing sparse maps or sets, and performing bulk data transformations on integer-keyed collections.",
+      "description_length": 547,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pomap.Pomap_intf",
       "library": "pomap",
-      "description": "This module defines interfaces for ordered maps based on partial order relations, enabling operations like insertion, lookup, and traversal that respect precedence constraints. It includes signatures for defining ordering logic and map behavior, supporting use cases such as dependency management and hierarchical data representation. Child modules provide concrete implementations for indexed maps with ordered keys, index manipulation, set operations, and structures for tracking and transforming partially ordered data relationships. Specific capabilities include efficient range queries, index generation, equivalence class computation, and topological traversal strategies over structured key-value stores.",
-      "description_length": 711,
-      "index": 39,
+      "description": "This module defines interfaces for working with partially ordered maps, where keys adhere to a partial order relation. It includes operations to create, query, and manipulate maps based on partial ordering constraints. Concrete use cases include managing dependency graphs and scheduling tasks with precedence constraints.",
+      "description_length": 322,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pomap.Display_hasse_impl",
+      "library": "pomap",
+      "description": "This module implements functions to customize and render Hasse diagrams, focusing on visual parameters such as node size, rotation, and edge styling. It operates on graph structures representing partial orders, enabling precise control over diagram layout and appearance. Use cases include defining display specifications for nodes and edges and generating visually structured outputs for specific partial order visualizations.",
+      "description_length": 427,
+      "index": 19,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Pomap.Display_hasse_intf",
+      "module_path": "Pomap.Pomap_impl",
       "library": "pomap",
-      "description": "This module defines interfaces for rendering Hasse diagrams, supporting customization of node and edge appearance in graph-like structures with labeled elements. It includes functionality for generating textual or graphical output, particularly through DOT configurations, and works with partially ordered maps via the `pomap` type. Operations like `fprintf` and `printf` display hierarchical relationships, while configuration modules control layout, styling, and node attribute formatting. Example uses include debugging data structures and generating visualizations with custom orientations, labels, and visual attributes.",
-      "description_length": 625,
-      "index": 40,
+      "description": "Implements maps indexed by partially ordered keys, supporting efficient insertion, lookup, and traversal operations. Works with key-value pairs where keys adhere to a partial order relation. Useful for managing dependencies or scheduling tasks with precedence constraints.",
+      "description_length": 272,
+      "index": 20,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Pomap.Store_intf",
+      "library": "pomap",
+      "description": "Defines interfaces for index and storage abstractions with typed keys and ordered keys. Supports operations to manipulate and query indexed data structures with strong type guarantees. Useful for implementing custom data stores with ordered and typed key-value mappings.",
+      "description_length": 270,
+      "index": 21,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pomap",
       "library": "pomap",
-      "description": "This module provides a comprehensive framework for managing and visualizing partially ordered data structures with rich indexing and ordering semantics. It supports key data types such as partially ordered maps, indexed sets, and equivalence-classed collections, enabling operations like topological traversal, set algebra, and index-based transformations. Users can render Hasse diagrams with custom styling, perform efficient membership and range queries, and maintain ordered or partially ordered key-value associations. Example tasks include visualizing class hierarchies, managing dependency graphs, and processing ordered or partially ordered datasets with precise control over structure and display.",
-      "description_length": 706,
-      "index": 41,
+      "description": "This module implements maps over partially ordered keys with efficient operations for insertion, lookup, and traversal, while also providing storage mechanisms based on integer indices for managing structured collections. It works with key-value pairs under partial orders and indexed data structures for typed keys. Concrete use cases include managing dependency graphs, scheduling tasks with precedence constraints, and handling sparse or indexed collections with stable identifiers.",
+      "description_length": 485,
+      "index": 22,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 42,
-    "meaningful_modules": 42,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 26,
+    "meaningful_modules": 23,
+    "filtered_empty_modules": 3,
+    "retention_rate": 0.8846153846153846
   },
   "statistics": {
-    "max_description_length": 847,
-    "min_description_length": 293,
-    "avg_description_length": 568.6904761904761,
-    "embedding_file_size_mb": 0.1529712677001953
+    "max_description_length": 656,
+    "min_description_length": 270,
+    "avg_description_length": 465.8695652173913,
+    "embedding_file_size_mb": 0.33376026153564453
   }
 }

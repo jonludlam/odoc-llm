@@ -1,33 +1,33 @@
 {
   "package": "nbd-unix",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 3,
-  "creation_timestamp": "2025-07-15T23:04:54.743625",
+  "creation_timestamp": "2025-08-14T22:52:27.937771",
   "modules": [
     {
       "module_path": "Nbd_unix.Server",
       "library": "nbd-unix",
-      "description": "This module handles the initial handshake and options negotiation for exposing block devices over NBD, allowing a server to offer a list of available disk names and establish a connection with a client. It works with cleartext channels and abstract server instances, managing the lifecycle of a connection from setup to termination. Concrete use cases include starting a server to export a specific block device, restricting access to read-only operations, and ensuring proper cleanup after client disconnection.",
-      "description_length": 512,
+      "description": "This module handles the initial handshake and export negotiation for a Network Block Device server, allowing remote clients to connect and access block devices. It works with cleartext channels and provides functions to serve block devices in read-only or read-write mode once a valid export name is selected. Concrete use cases include exposing disk images or physical devices to remote NBD clients for virtualization or distributed storage systems.",
+      "description_length": 450,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd_unix.Client",
       "library": "nbd-unix",
-      "description": "This module implements client-side operations for interacting with remote block devices over a network. It supports connecting to a specific disk, reading and writing data to it using buffer lists, and querying device properties such as size and capabilities. It works with `Cstruct.t` buffers, `int64` sector offsets, and standard Lwt-based asynchronous channels, returning results in a typed error format that includes protocol-level failures. Use cases include virtual machine disk access over a network, remote storage management, and distributed system coordination where block-level access is required.",
-      "description_length": 608,
+      "description": "This module implements client-side operations for accessing remote block devices over the Network Block Device (NBD) protocol. It supports connecting to a remote disk, reading and writing data in sector-aligned buffers, querying device metadata, and listing available exports on a server. The module works with `Cstruct.t` buffers for data transfer, `int64` for sector offsets and sizes, and `Nbd.Channel.channel` for communication, returning structured errors for failed operations.",
+      "description_length": 483,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd_unix",
       "library": "nbd-unix",
-      "description": "This module enables secure and cleartext NBD communication over Unix sockets, supporting both client and server roles with TLS integration, file descriptor management, and asynchronous I/O. It provides core functions to establish and manage connections, configure TLS contexts, and expose or access block devices remotely. The server-side submodule handles handshake negotiation, disk export, and connection lifecycle, allowing clients to securely access specific block devices with read-only or read-write permissions. The client-side submodule supports asynchronous read/write operations, device property queries, and structured error handling, enabling use cases like remote virtual machine storage and distributed block device coordination using `Cstruct.t` buffers and `Lwt` channels.",
-      "description_length": 789,
+      "description": "This module implements the Network Block Device protocol for Unix, providing functions to establish cleartext and TLS-secured connections, manage file descriptor-based channels, and handle block device operations. It works with `Lwt_unix.file_descr`, `Nbd.Channel.cleartext_channel`, `Ssl.context`, and `Cstruct.t` for asynchronous, sector-aligned data transfers. Concrete use cases include remotely mounting disk images, securely exposing physical storage devices over TLS, and implementing virtualization infrastructure with client-server block device access.",
+      "description_length": 561,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -37,9 +37,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 789,
-    "min_description_length": 512,
-    "avg_description_length": 636.3333333333334,
-    "embedding_file_size_mb": 0.011324882507324219
+    "max_description_length": 561,
+    "min_description_length": 450,
+    "avg_description_length": 498.0,
+    "embedding_file_size_mb": 0.043892860412597656
   }
 }

@@ -1,224 +1,192 @@
 {
   "package": "binaryen",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 59,
-  "creation_timestamp": "2025-07-15T23:14:50.003409",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 60,
+  "creation_timestamp": "2025-08-15T14:33:19.612486",
   "modules": [
     {
-      "module_path": "Binaryen.Expression.Table",
+      "module_path": "Binaryen.Expression.Drop",
       "library": "binaryen",
-      "description": "This module provides functions to manipulate WebAssembly table expressions, including getting and setting elements by index, checking the size, and growing the table. It works with tables in a WebAssembly module, using expressions to represent indices, values, and deltas. Concrete use cases include dynamically managing function tables or external data references during WebAssembly code generation or transformation.",
-      "description_length": 418,
+      "description": "Handles expressions that discard a value, typically used to remove results from the stack in WebAssembly code generation. Works with `Binaryen.Expression.t` values, allowing creation, retrieval, and modification of drop expressions. Useful when compiling or transforming code where intermediate values need to be explicitly discarded.",
+      "description_length": 334,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Binaryen.Expression.Tuple_extract",
+      "module_path": "Binaryen.Expression.Unreachable",
       "library": "binaryen",
-      "description": "Extracts values from tuples within WebAssembly expressions. It operates on `Binaryen.Expression.t` values, specifically handling tuple access by index. This module is used to manipulate structured data in WebAssembly code generation, such as accessing individual fields of a tuple returned from a function.",
-      "description_length": 306,
+      "description": "Creates an unreachable expression node in a WebAssembly module, which represents a point in the code that should never be reached during execution. Works with the `Binaryen.Module.t` and `Binaryen.Expression.t` types. Used when generating or manipulating WebAssembly control flow to indicate undefined or fatal execution paths.",
+      "description_length": 327,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Binaryen.Expression.Table_size",
+      "module_path": "Binaryen.Expression.If",
       "library": "binaryen",
-      "description": "This module provides direct access to the table name associated with a `Table.size` expression. It allows retrieving and modifying the table identifier referenced by such expressions. Useful when inspecting or transforming WebAssembly code that involves table size operations.",
-      "description_length": 276,
+      "description": "This module implements conditional expression handling in WebAssembly code generation. It allows creating if-expressions with condition, then, and optional else branches, and provides accessors and mutators for each component. The module works directly with WebAssembly expressions, enabling precise control over branching logic in generated code, such as implementing high-level language conditionals or optimizing control flow during compilation.",
+      "description_length": 448,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Binaryen.Expression.Data_drop",
+      "module_path": "Binaryen.Expression.Call",
       "library": "binaryen",
-      "description": "Creates and manipulates data drop expressions in WebAssembly modules. Works with `Binaryen.Expression.t` and `Binaryen.Module.t` types. Used to specify memory segments to be dropped during execution, typically after copying initialized data into linear memory.",
-      "description_length": 260,
+      "description": "This module creates and manipulates call expressions in a WebAssembly module, allowing functions to be invoked with a list of arguments. It supports setting and retrieving the target function name, modifying individual arguments, and controlling whether the call should return a value. Use cases include generating function calls during code compilation or transformation, and dynamically adjusting call parameters in an expression tree.",
+      "description_length": 437,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Binaryen.Expression.Memory_fill",
+      "module_path": "Binaryen.Expression.Pop",
       "library": "binaryen",
-      "description": "This module creates and manipulates memory fill expressions in WebAssembly. It allows setting and retrieving the destination address, value, and size expressions for a memory fill operation. Use it when generating or modifying WebAssembly code that initializes memory regions with a specific value.",
-      "description_length": 298,
+      "description": "Creates a pop expression that removes a value of the specified type from the stack, returning the popped value. Works with WebAssembly stack-based expressions and types. Useful for implementing control flow or stack manipulation in low-level code generation.",
+      "description_length": 258,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Binaryen.Expression.Table_get",
+      "module_path": "Binaryen.Expression.Load",
       "library": "binaryen",
-      "description": "This module provides direct access and modification of `Table.get` expression components in WebAssembly. It allows retrieving and setting the table name and index expression of a `Table.get` node. Use this module to inspect or manipulate table access expressions in WebAssembly AST nodes.",
-      "description_length": 288,
+      "description": "This module creates and manipulates load expressions for WebAssembly memory access. It supports setting and retrieving memory addresses with specified alignment, offset, and type. Use it to generate expressions that read values from linear memory in a WebAssembly module.",
+      "description_length": 271,
       "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Memory_copy",
-      "library": "binaryen",
-      "description": "This module creates and manipulates memory copy expressions in WebAssembly, specifically handling operations that copy data between memory regions. It works with WebAssembly expressions representing memory addresses and sizes, allowing construction and modification of copy operations with specified source, destination, and size. Concrete use cases include implementing efficient memory operations in WebAssembly code generation, such as copying buffers or relocating data within linear memory.",
-      "description_length": 495,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Local_get",
-      "library": "binaryen",
-      "description": "Creates a WebAssembly expression that retrieves the value of a local variable at the specified index, with the given type. Works with WebAssembly modules and expression structures to generate local variable access instructions. Useful for building function bodies that read from local variables in low-level WebAssembly code generation.",
-      "description_length": 336,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Memory_size",
-      "library": "binaryen",
-      "description": "Creates an expression that retrieves the current size of linear memory in units of pages. Accepts a module handle, an optional offset string, and a boolean indicating whether to use 64-bit memory. Useful for implementing WebAssembly instructions that query memory size dynamically during execution.",
-      "description_length": 298,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Expression.Memory_grow",
-      "library": "binaryen",
-      "description": "This module creates and manipulates memory grow expressions in WebAssembly. It allows setting and retrieving the delta value that specifies how much memory to grow, using expressions like constants or variables. Use it when dynamically adjusting memory size within a WebAssembly function body.",
-      "description_length": 293,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Null",
-      "library": "binaryen",
-      "description": "Creates a null expression in the Binaryen intermediate representation, used for WebAssembly compilation. This function generates a null pointer value of the appropriate type for use in expressions. It is useful when initializing variables or passing null arguments in WebAssembly code generation.",
-      "description_length": 296,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Switch",
-      "library": "binaryen",
-      "description": "This module creates and manipulates switch expressions in WebAssembly using Binaryen. It allows setting and modifying case labels, default targets, conditions, and associated values. Use it to build control flow structures that branch based on a value, such as implementing `switch` statements in a compiler targeting WebAssembly.",
-      "description_length": 330,
-      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Expression.Local_tee",
       "library": "binaryen",
-      "description": "Creates a local variable assignment expression that also returns the assigned value. It takes a module, local index, value expression, and type, producing an expression that sets the local and yields the value. Useful for inserting side effects into expression chains while preserving the value.",
-      "description_length": 295,
-      "index": 12,
+      "description": "Creates a local variable assignment expression that also returns the assigned value. It takes a module, local index, value expression, and type, then generates a WebAssembly expression that stores the value in the specified local and yields it as the result. This is useful for inserting side-effecting computations into expression chains without altering their final output.",
+      "description_length": 375,
+      "index": 6,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Call_indirect",
-      "library": "binaryen",
-      "description": "This module handles indirect function calls in WebAssembly by creating and manipulating call expressions that target functions through a table. It allows setting and retrieving the target expression, table name, and operands for a call, as well as controlling whether the call should return. Use cases include implementing dynamic dispatch, function pointers, and indirect calls in WebAssembly modules.",
-      "description_length": 402,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Binaryen.Module.Feature",
       "library": "binaryen",
-      "description": "This module defines a set of WebAssembly features as distinct values of type `t`, each representing a specific language or runtime capability such as SIMD operations, garbage collection, or exception handling. It allows precise control over feature enablement in WebAssembly modules by combining or checking individual flags like `simd128`, `gc`, and `memory64`. Use cases include configuring module compilation targets and validating feature support in execution environments.",
-      "description_length": 477,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Loop",
-      "library": "binaryen",
-      "description": "This module creates and manipulates loop expressions in a WebAssembly module. It allows setting and retrieving the name and body of a loop, where the body is another expression. Use this to build or modify loop structures in WebAssembly code, such as implementing custom control flow or optimizing existing loops.",
-      "description_length": 313,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Expression.Break",
-      "library": "binaryen",
-      "description": "This module creates and manipulates break expressions in WebAssembly code, allowing specification of a target label, an optional condition, and an optional value. It works with expression nodes in a WebAssembly module's control flow structure. Use this module to generate conditional breaks or breaks with return values in WebAssembly functions.",
-      "description_length": 345,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Drop",
-      "library": "binaryen",
-      "description": "Handles expressions that discard a value, typically used to remove results from the stack in WebAssembly code generation. Works with `Binaryen.Expression.t` values, allowing creation, retrieval, and modification of drop expressions. Useful when compiling languages with statements that ignore return values, such as void expressions in C or JavaScript.",
-      "description_length": 352,
-      "index": 17,
+      "description": "This module defines a set of constants representing WebAssembly features, each as a distinct value of type `t`. It allows precise specification and combination of WebAssembly feature sets for module validation and compilation. Use cases include enabling SIMD instructions, atomics, garbage collection, or multi-memory support in WebAssembly modules.",
+      "description_length": 349,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Expression.Global_set",
       "library": "binaryen",
-      "description": "This module creates and manipulates global set expressions in a WebAssembly module. It allows setting and retrieving the name and value of global variables within an expression context. Use it when constructing or modifying WebAssembly functions that assign values to global variables.",
-      "description_length": 285,
+      "description": "This module creates and manipulates global set expressions in a WebAssembly module. It allows setting and retrieving the name and value of global variables within expression nodes. Use it when constructing or modifying WebAssembly functions that assign values to global variables.",
+      "description_length": 280,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Loop",
+      "library": "binaryen",
+      "description": "This module creates and manipulates loop expressions in a WebAssembly module. It allows setting and retrieving the name and body of a loop, where the body is another expression. Use this to build or modify loop structures within function definitions.",
+      "description_length": 250,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Expression.Break",
+      "library": "binaryen",
+      "description": "This module creates and manipulates break expressions in WebAssembly code, allowing specification of a target label, an optional condition, and an optional value. It works with expression nodes in a WebAssembly module's control flow structure. Use it to generate conditional breaks or breaks with return values in loops and blocks within WebAssembly functions.",
+      "description_length": 360,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Expression.Select",
+      "library": "binaryen",
+      "description": "This module creates and manipulates select expressions in a WebAssembly module, allowing the construction of conditional logic that chooses between two expressions based on a condition. It operates on expression nodes, specifically handling the condition, true branch, and false branch within a select statement. Use cases include implementing branching logic in low-level code generation or optimizing control flow in WebAssembly AST transformations.",
+      "description_length": 451,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Nop",
+      "library": "binaryen",
+      "description": "Creates a no-operation expression in a WebAssembly module. This function takes a module context and returns an expression that performs no action, typically used as a placeholder or to align code structure. Useful for scenarios like padding or representing empty statements in generated WebAssembly code.",
+      "description_length": 304,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Const",
+      "library": "binaryen",
+      "description": "Creates an expression representing a constant value in WebAssembly, using a literal such as an integer or float. It operates on WebAssembly modules and literals to generate constant expressions. Useful for embedding fixed values directly into WebAssembly code during compilation or transformation tasks.",
+      "description_length": 303,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Expression.Block",
+      "library": "binaryen",
+      "description": "This module creates and manipulates block expressions in a WebAssembly module, allowing blocks to be named, modified, and traversed. It supports operations to add, remove, and access child expressions within a block, as well as setting and retrieving block names. Concrete use cases include structuring control flow with labeled blocks and dynamically modifying sequences of expressions during code generation or optimization.",
+      "description_length": 426,
+      "index": 14,
+      "embedding_norm": 1.0000001192092896
+    },
+    {
+      "module_path": "Binaryen.Expression.Ref",
+      "library": "binaryen",
+      "description": "This module creates and manipulates WebAssembly expressions representing null checks, type assertions, function references, and equality comparisons. It operates on expressions within a WebAssembly module, using types, operations, and functions defined in the same context. Concrete use cases include building expressions for null safety, dynamic typing, and function identity checks in WebAssembly code generation.",
+      "description_length": 415,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Unary",
+      "library": "binaryen",
+      "description": "This module creates and manipulates unary expressions in a WebAssembly module. It supports constructing unary operations with a specified operand, retrieving the operand from an existing unary expression, and updating the operand in place. Use cases include building and modifying arithmetic or logical operations like negation, absolute value, or type conversion in WebAssembly code generation.",
+      "description_length": 395,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Table",
+      "library": "binaryen",
+      "description": "This module provides functions to manipulate WebAssembly table expressions, including getting and setting elements, and adjusting table size. It works with tables identified by name and index, using expressions for dynamic access and modification. Concrete use cases include dynamically updating function tables or managing indirect call targets in WebAssembly modules.",
+      "description_length": 369,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Global_get",
+      "library": "binaryen",
+      "description": "This module creates and manipulates global variable get expressions in WebAssembly. It provides functions to construct a global get expression with a specified name and type, retrieve or update the referenced global variable name. These operations directly handle `Binaryen.Expression.t` values representing global accesses, used when generating or modifying WebAssembly functions that read global variables.",
+      "description_length": 408,
       "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Expression.Tuple_make",
       "library": "binaryen",
-      "description": "This module handles the creation and manipulation of tuple expressions in a WebAssembly module. It provides functions to construct a tuple from a list of expressions, access or modify individual elements by index, and dynamically add or remove elements. Use cases include building composite values for Wasm function returns or structured data passing.",
-      "description_length": 351,
+      "description": "This module handles the creation and manipulation of tuple expressions in a WebAssembly module. It provides functions to construct a tuple from a list of expressions, access or modify individual elements by index, and dynamically add or remove elements. Use cases include building composite values for WebAssembly instructions or managing structured data in expression trees.",
+      "description_length": 375,
       "index": 19,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Binaryen.Expression.Const",
+      "module_path": "Binaryen.Expression.Memory_init",
       "library": "binaryen",
-      "description": "Creates an expression representing a constant value in WebAssembly, using a literal such as integers or floats. It operates on WebAssembly modules and literals to generate constant expressions. Useful for embedding fixed values directly into WebAssembly code during compilation or transformation tasks.",
-      "description_length": 302,
+      "description": "This module creates and manipulates memory initialization expressions in WebAssembly. It allows setting and retrieving the destination, offset, size, and segment index of a memory initialization operation. Use it when defining how data segments are copied into linear memory during module instantiation.",
+      "description_length": 303,
       "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Expression.If",
-      "library": "binaryen",
-      "description": "This module implements conditional expressions in WebAssembly by creating and manipulating `if` statements with condition, true, and optional false branches. It operates on `Binaryen.Expression.t` values, allowing inspection and modification of the condition, true case, and optional false case expressions. Concrete use cases include building control flow logic such as ternary operations or branching based on runtime values.",
-      "description_length": 427,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Table_set",
-      "library": "binaryen",
-      "description": "This module provides direct access and modification of the components of a `Table.set` expression, including the table name, index, and value expressions. It operates specifically on `Binaryen.Expression.t` values that represent table set operations. Use cases include inspecting or rewriting table mutation instructions during WebAssembly code transformation or analysis.",
-      "description_length": 372,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Ref",
-      "library": "binaryen",
-      "description": "This module creates and manipulates WebAssembly expressions representing null checks, function references, equality comparisons, and type coercions. It operates on expressions within a WebAssembly module, using types and operations defined in the broader WebAssembly context. Concrete use cases include building expressions for null validation, function identity checks, and type-safe value comparisons in WebAssembly code generation.",
-      "description_length": 434,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Pop",
-      "library": "binaryen",
-      "description": "Creates a pop expression that removes a value of the specified type from the stack, returning the popped value. Works with WebAssembly module and type structures to generate stack manipulation instructions. Useful for implementing control flow or stack-based operations in WebAssembly code generation.",
-      "description_length": 301,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Expression.I31",
-      "library": "binaryen",
-      "description": "This module provides functions to create and extract i31 expressions in a WebAssembly module. It supports making an i31 from a value and extracting the underlying value with sign control. These operations are used when working with 31-bit integer values in WebAssembly intermediate representation.",
-      "description_length": 297,
-      "index": 25,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Expression.Return",
       "library": "binaryen",
-      "description": "This module handles the creation and manipulation of return expressions in WebAssembly code. It provides functions to create a return statement with a given value, retrieve the current return value expression, and update the return value. These operations are used when generating or modifying WebAssembly functions that need to return results to their callers.",
-      "description_length": 361,
-      "index": 26,
+      "description": "This module handles the creation and manipulation of return expressions in WebAssembly code. It provides functions to construct a return statement with a given value, retrieve the current return value expression, and update the return value. These operations are used when generating or modifying WebAssembly functions that need to return results to their callers.",
+      "description_length": 364,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Binary",
+      "library": "binaryen",
+      "description": "This module creates and manipulates binary expressions in a WebAssembly module. It supports setting and retrieving left and right operands of a binary operation, such as addition or multiplication. Use it when building or modifying arithmetic or logical expressions in WebAssembly code generation or transformation tasks.",
+      "description_length": 321,
+      "index": 22,
       "embedding_norm": 1.0
     },
     {
@@ -226,268 +194,308 @@
       "library": "binaryen",
       "description": "This module manipulates `Table.grow` expressions in Binaryen IR. It provides accessors and setters for the table name, value expression, and delta expression of a `Table.grow` operation. It is used when modifying or analyzing WebAssembly table growth instructions directly within a Binaryen pass or transformation.",
       "description_length": 314,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Call",
-      "library": "binaryen",
-      "description": "This module creates and manipulates function call expressions, allowing the specification of targets, operands, and return behavior. It works with expression trees and types, enabling direct construction of calls and control over operand lists. Concrete use cases include building direct function invocations, modifying call arguments dynamically, and marking calls for return propagation in WebAssembly code generation.",
-      "description_length": 420,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Global_get",
-      "library": "binaryen",
-      "description": "Creates and manipulates global variable get expressions in WebAssembly. Works with global variables by name and type, allowing retrieval and updating of the referenced global name. Used when generating or modifying WebAssembly code to access global state directly.",
-      "description_length": 264,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Local_set",
-      "library": "binaryen",
-      "description": "This module creates and manipulates local variable assignment expressions in WebAssembly. It provides functions to construct a local set operation, retrieve the assigned value, and update the value within an existing local set expression. These operations directly work with WebAssembly expressions, enabling precise control over local variable mutation in function bodies.",
-      "description_length": 373,
-      "index": 30,
+      "index": 23,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Binaryen.Expression.Unary",
+      "module_path": "Binaryen.Expression.Tuple_extract",
       "library": "binaryen",
-      "description": "This module creates and manipulates unary expressions in WebAssembly, such as negation or type conversion, using a specified operation and operand. It operates on WebAssembly expressions and modules, allowing the construction and modification of unary operations within function bodies. Concrete use cases include generating arithmetic negations, bit shifts, or type coercions directly in WebAssembly AST nodes.",
-      "description_length": 411,
-      "index": 31,
+      "description": "This module handles the creation and manipulation of tuple extraction expressions in WebAssembly. It allows extracting a specific element from a tuple by index, retrieving the tuple operand, and updating the tuple operand. Direct use cases include accessing return values from functions that return multiple results or decomposing structured data in WebAssembly code generation.",
+      "description_length": 378,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Binaryen.Expression.Load",
+      "module_path": "Binaryen.Expression.Memory_fill",
       "library": "binaryen",
-      "description": "This module creates and manipulates load expressions for WebAssembly memory access. It supports setting and retrieving memory addresses with specified byte sizes, signedness, and alignment. Use it to generate expressions that read data from linear memory in a WebAssembly module.",
-      "description_length": 279,
-      "index": 32,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Expression.Memory_init",
-      "library": "binaryen",
-      "description": "This module creates and manipulates memory initialization expressions in WebAssembly. It supports setting and getting the destination, offset, size, and segment index for memory initialization operations. Use it when directly constructing or modifying WebAssembly module memory operations, such as copying data from a segment into linear memory at a specific location and size.",
-      "description_length": 377,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Block",
-      "library": "binaryen",
-      "description": "This module creates and manipulates block expressions in a WebAssembly module, allowing for structured control flow. It supports operations to build blocks with optional names and return types, and to dynamically modify block contents through indexed access, insertion, and removal. Concrete use cases include constructing loops, conditional branches, and scoped sequences of instructions within WebAssembly functions.",
-      "description_length": 418,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Unreachable",
-      "library": "binaryen",
-      "description": "Creates an unreachable expression in a WebAssembly module, which represents a point in the code that should never be reached during execution. This function is used to insert trap instructions or mark invalid code paths in generated or transformed WebAssembly code. It operates directly on the module structure to produce an expression that, when executed, causes a runtime error.",
-      "description_length": 380,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Select",
-      "library": "binaryen",
-      "description": "This module creates and manipulates select expressions in a WebAssembly module. It allows constructing a select expression with a condition and two branches, and accessing or modifying each component individually. Use this to implement conditional logic in WebAssembly code generation or transformation.",
-      "description_length": 303,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression.Nop",
-      "library": "binaryen",
-      "description": "Creates a no-operation expression in a WebAssembly module. Accepts a module context and returns an expression representing an empty instruction. Used to insert placeholder or empty statements in code generation or transformation passes.",
-      "description_length": 236,
-      "index": 37,
+      "description": "This module creates and manipulates memory fill expressions in WebAssembly. It allows setting and retrieving the destination address, value, and size expressions for a memory fill operation. Use it when generating or modifying WebAssembly code that initializes memory regions with specific values.",
+      "description_length": 297,
+      "index": 25,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Expression.Store",
       "library": "binaryen",
-      "description": "This module constructs and manipulates store expressions in WebAssembly, specifically handling memory writes. It works with `Binaryen.Expression.t` values representing pointers, values, and memory operations. Concrete use cases include setting up direct memory stores and modifying existing store expressions in a module's code.",
-      "description_length": 328,
+      "description": "This module constructs and manipulates store expressions for memory operations in WebAssembly. It supports setting and retrieving pointers and values within expressions, specifically working with `Binaryen.Expression.t` and `Binaryen.Module.t` types. Use cases include building direct memory write operations and modifying expression components in code generation or transformation tasks.",
+      "description_length": 388,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Call_indirect",
+      "library": "binaryen",
+      "description": "This module handles indirect function calls in WebAssembly by creating and manipulating call expressions that target functions through a table. It allows setting and retrieving the target expression, table name, and operands for a call, as well as controlling whether the call should return. Use cases include implementing dynamic dispatch, function pointers, and callback mechanisms in WebAssembly modules.",
+      "description_length": 407,
+      "index": 27,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Expression.I31",
+      "library": "binaryen",
+      "description": "This module provides functions to create and extract i31 expressions in a WebAssembly module. It supports making an i31 from a value and extracting the underlying value with sign handling. These operations are used when working with 31-bit integer values in WebAssembly intermediate representation.",
+      "description_length": 298,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Table_size",
+      "library": "binaryen",
+      "description": "This module provides direct access to the table name associated with a `Table.size` expression. It allows retrieving and modifying the specific table identifier referenced in the expression. Use this module when inspecting or transforming WebAssembly table size operations that target named tables.",
+      "description_length": 298,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Null",
+      "library": "binaryen",
+      "description": "Creates a null expression in the Binaryen intermediate representation, used for WebAssembly compilation. Returns an expression handle that represents a null reference. Useful when initializing or resetting reference-type variables in WebAssembly code generation.",
+      "description_length": 262,
+      "index": 30,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Expression.Memory_copy",
+      "library": "binaryen",
+      "description": "This module provides operations to create and manipulate memory copy expressions in WebAssembly. It allows setting and retrieving the destination, source, and size expressions for a memory copy, which are used to define how data is transferred between memory regions. These functions are used when generating or modifying WebAssembly code that involves direct memory operations, such as copying buffers or initializing memory segments.",
+      "description_length": 435,
+      "index": 31,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Expression.Table_set",
+      "library": "binaryen",
+      "description": "This module provides direct access and modification of the components of a `Table.set` expression in WebAssembly. It allows retrieving and setting the table name, index expression, and value expression associated with a `Table.set` node. It operates specifically on `Binaryen.Expression.t` values that represent `Table.set` operations, enabling precise manipulation of WebAssembly table update instructions.",
+      "description_length": 407,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Memory_size",
+      "library": "binaryen",
+      "description": "Creates an expression that retrieves the current size of linear memory in a WebAssembly module. It takes a module handle, an offset as a string, and a flag indicating whether to use 64-bit memory. This function is used when generating or modifying WebAssembly code to query memory size dynamically during execution.",
+      "description_length": 315,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Data_drop",
+      "library": "binaryen",
+      "description": "Creates and manipulates data drop expressions in WebAssembly modules. Works with `Binaryen.Expression.t` values representing data segments. Use to generate code that drops data segments from memory at runtime.",
+      "description_length": 209,
+      "index": 34,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Expression.Local_get",
+      "library": "binaryen",
+      "description": "Creates a WebAssembly expression that retrieves the value of a local variable at the specified index. It takes a module context, a local index, and a type, producing an expression suitable for use in function bodies. This is used when generating or manipulating WebAssembly code that needs to access local variables directly.",
+      "description_length": 325,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Switch",
+      "library": "binaryen",
+      "description": "This module creates and manipulates switch expressions in WebAssembly using Binaryen. It allows setting and modifying case names, default cases, conditions, and associated values. Use it to build or modify control flow constructs that branch based on discrete values in WebAssembly modules.",
+      "description_length": 290,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Memory_grow",
+      "library": "binaryen",
+      "description": "This module creates and manipulates memory grow expressions in WebAssembly. It allows setting and retrieving the delta value that specifies how much memory to grow, using expressions like integers or variables. Use it when dynamically adjusting memory size at runtime within a WebAssembly function.",
+      "description_length": 298,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression.Local_set",
+      "library": "binaryen",
+      "description": "This module creates and manipulates local variable assignment expressions in WebAssembly. It provides functions to construct a local set operation, retrieve the assigned value, and update the value within an existing local set expression. These operations directly work with WebAssembly expressions and modules, specifically handling local variable indices and their associated values. Use this module when building or modifying WebAssembly functions that require storing intermediate results in local variables.",
+      "description_length": 512,
       "index": 38,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Binaryen.Expression.Binary",
+      "module_path": "Binaryen.Expression.Table_get",
       "library": "binaryen",
-      "description": "This module creates and manipulates binary expressions in a WebAssembly module. It supports setting and retrieving the left and right operands of a binary operation, such as addition or multiplication, using expressions like constants or local variables. Use cases include building arithmetic operations and bitwise computations in WebAssembly code generation.",
-      "description_length": 360,
+      "description": "This module provides direct access and modification of `Table.get` expressions in WebAssembly, allowing retrieval and setting of the table name and index expression. It operates on `Binaryen.Expression.t` values, specifically those representing table access operations. Use cases include analyzing or transforming table access patterns in WebAssembly modules, such as optimizing indirect function calls or inspecting dynamic dispatch behavior.",
+      "description_length": 443,
       "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Heap_type",
-      "library": "binaryen",
-      "description": "This component provides operations for constructing and analyzing WebAssembly heap type hierarchies, including creating specific type representations like function, struct, array, and primitive types, along with checking subtype relationships and type classifications. It works directly with heap type values to support queries about type properties (e.g., whether a type is a struct or array) and hierarchical relationships (e.g., determining the bottom type or validating subtyping constraints). These capabilities are essential for implementing WebAssembly validation, optimization, and type inference workflows.",
-      "description_length": 615,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Table",
-      "library": "binaryen",
-      "description": "This module manages tables and element segments in a WebAssembly module. It provides operations to add tables with specified properties, create active element segments that link tables to functions, and manipulate existing element segments by removal or lookup. These features support dynamic dispatch and table initialization in WebAssembly code generation.",
-      "description_length": 358,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Struct_type",
-      "library": "binaryen",
-      "description": "This module provides operations to inspect struct types, including retrieving the number of fields, the type of a specific field, its packed type, and whether the field is mutable. It works with `Heap_type.t` to represent struct types and interacts with `Type.t` and `Packed_type.t` for field details. Use cases include analyzing or constructing WebAssembly struct types with precise field properties.",
-      "description_length": 401,
-      "index": 42,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Function",
-      "library": "binaryen",
-      "description": "This module manages function definitions within a WebAssembly module, supporting operations to create, retrieve, modify, and remove functions. It works with function values represented by the `t` type, along with types, expressions, and module-level constructs. Concrete use cases include defining entry points, setting function bodies with control flow or arithmetic operations, and assigning debug metadata for source mapping.",
-      "description_length": 428,
-      "index": 43,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Signature_type",
-      "library": "binaryen",
-      "description": "This module defines operations to retrieve the parameter and result types of a function signature. It works with `Heap_type.t` values representing function signatures and returns `Type.t` values indicating the respective parameter and result types. These functions are used when inspecting or constructing WebAssembly functions to ensure correct type handling for function calls and definitions.",
-      "description_length": 395,
-      "index": 44,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Import",
-      "library": "binaryen",
-      "description": "This module defines functions to add and access imported functions, tables, memory, and global variables in a WebAssembly module. It operates on module, function, and global value types, enabling precise control over import declarations. Use cases include linking external APIs, defining callback interfaces, and integrating host-provided resources like memory or global constants into a WebAssembly module.",
-      "description_length": 407,
-      "index": 45,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Op",
-      "library": "binaryen",
-      "description": "This module provides low-level numeric operations for WebAssembly, encompassing integer and floating-point arithmetic, comparisons, type conversions, and SIMD vector manipulations for 32/64-bit scalars and 128-bit vectors (e.g., `i8x16`, `f64x2`). It supports data transformations like saturating truncation, sign extension, lane-wise vector operations, and string encoding conversions (UTF-8, WTF-16) alongside reference type checks. These capabilities enable compiler optimizations, high-performance numerical computations, and direct WebAssembly code generation for tasks requiring fine-grained control over arithmetic, memory, and SIMD parallelism.",
-      "description_length": 652,
-      "index": 46,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Binaryen.Array_type",
-      "library": "binaryen",
-      "description": "This module provides functions to inspect array type properties in WebAssembly. It retrieves the element type, packed type, and mutability flag of a given heap type. These operations are essential when working with array definitions in WebAssembly modules, such as validating array access or generating correct type signatures.",
-      "description_length": 327,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Global",
-      "library": "binaryen",
-      "description": "This module manages global variables in a WebAssembly module, providing functions to add, retrieve, and remove globals by name or index. It works with global variables represented by the `t` type, along with associated types for expressions and modules. Use this module to define mutable or immutable global variables, set their initial values, and inspect or modify their properties during WebAssembly module construction or transformation.",
-      "description_length": 441,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Packed_type",
-      "library": "binaryen",
-      "description": "This module defines packed type representations for low-level memory operations. It includes values for 8-bit and 16-bit integer types, along with a marker for non-packed types. These types are used to specify memory layout in WebAssembly operations, particularly when working with vector or struct data in a size-constrained context.",
-      "description_length": 334,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Expression",
-      "library": "binaryen",
-      "description": "This module constructs and transforms WebAssembly expressions for control flow, memory, and variable access, enabling low-level code generation and analysis. It supports operations like blocks, loops, branches, memory loads/stores, and local/global access, while submodules handle structured data (tuples, tables), memory manipulation (copy, fill, init), and dynamic control flow (switches, breaks). You can generate function calls, manipulate table elements, extract tuple fields, manage memory size, and build conditional logic or arithmetic expressions. Specific examples include dynamically resizing a function table, copying memory buffers, initializing linear memory from a segment, and constructing complex control flow with named loops and break conditions.",
-      "description_length": 765,
-      "index": 50,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Literal",
-      "library": "binaryen",
-      "description": "This module creates and manipulates literal values for WebAssembly constants, supporting 32-bit and 64-bit integers and floats. It provides functions to construct literals from raw bits or numeric values, enabling precise control over binary representation. Use cases include generating immediate values in WebAssembly code generation and handling low-level numeric constants.",
-      "description_length": 376,
-      "index": 51,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Type",
       "library": "binaryen",
-      "description": "This module provides operations for creating, inspecting, and manipulating WebAssembly function types, heap types, and primitive value types (e.g., integers, floats, references like `funcref` or `anyref`). It supports constructing compound types, expanding them into arrays, checking nullability, and converting between heap types and general types. These capabilities are used to define variable and expression types in Binaryen IR, manage type hierarchies during Wasm compilation, and handle low-level type transformations for optimization or analysis.",
-      "description_length": 554,
-      "index": 52,
+      "description": "This module supports constructing and analyzing WebAssembly value types, including primitive numeric types (e.g., 32-bit integers, 64-bit floats), reference types (e.g., function references, any references), and specialized types like string views and array references. It provides operations to create compound types from arrays, expand types into component arrays, check nullability, and convert between heap types and general types, working directly with `Type.t` and `Heap_type.t` structures. These capabilities are used for compiling, optimizing, and validating WebAssembly code, ensuring correct type representations and safe memory operations.",
+      "description_length": 650,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Signature_type",
+      "library": "binaryen",
+      "description": "This module provides functions to retrieve the parameter and result types from a heap type. It operates on `Binaryen.Heap_type.t` values, extracting their associated function signature components. Use it to inspect or validate the structure of function types in WebAssembly modules.",
+      "description_length": 282,
+      "index": 41,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Heap_type",
+      "library": "binaryen",
+      "description": "This module provides operations to construct and analyze WebAssembly heap types, including basic types like functions, structs, arrays, and string representations (WTF-8/16), alongside subtyping checks and hierarchy queries. It works directly with heap type instances to validate structural relationships (e.g., `is_sub_type`) and retrieve hierarchical properties (e.g., `get_bottom`), ensuring compatibility in scenarios like module compilation or type-safe optimizations. Use cases include enforcing type correctness during WebAssembly code generation and analyzing type hierarchies for runtime safety guarantees.",
+      "description_length": 615,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Passes",
+      "library": "binaryen",
+      "description": "The module provides optimization and transformation operations for WebAssembly modules, focusing on low-level code restructuring, control flow manipulation, and type/memory optimizations. It operates on WebAssembly structures like functions, locals, memory accesses, and Binaryen's intermediate representation to achieve size reduction, performance improvements, and JavaScript integration compatibility. Specific applications include dead code elimination, function inlining, debug info handling, and Emscripten ABI-specific transformations like dynCall support.",
+      "description_length": 563,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Op",
+      "library": "binaryen",
+      "description": "This module provides low-level numeric transformations, conversions, and vector operations aligned with WebAssembly instruction semantics, including arithmetic, bitwise manipulations, rounding, and saturating truncations. It operates on scalar types like 32/64-bit integers and floats, as well as SIMD vectors (e.g., i8x16, f32x4, i64x2) and reference types for memory-safe conversions. These operations enable numerical computation, SIMD acceleration, and string encoding handling in WebAssembly code generation and optimization workflows.",
+      "description_length": 540,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Array_type",
+      "library": "binaryen",
+      "description": "This module provides functions to inspect the element type, packed type, and mutability of array types. It operates on `Binaryen.Heap_type.t` values representing array structures. Use it to analyze or validate array type properties in WebAssembly modules.",
+      "description_length": 255,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Module",
+      "library": "binaryen",
+      "description": "The module provides functions to create, parse, optimize, and validate WebAssembly modules, supporting additions of custom sections, enabling features like SIMD, and serializing or interpreting modules. It operates on `Binaryen.Module.t` instances, maintaining mappings between source filenames and debug info indices, which is essential for compiler toolchains, runtime environments, and debugging utilities.",
+      "description_length": 409,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Expression",
+      "library": "binaryen",
+      "description": "This module provides operations for constructing and manipulating WebAssembly expressions, including control flow constructs, function calls, memory accesses, and table operations. It works with expression trees, WebAssembly modules, and data structures like tuples, i31 values, and tables, enabling use cases such as low-level code generation, memory optimization, and dynamic table management in WebAssembly compilation or transformation pipelines.",
+      "description_length": 450,
+      "index": 47,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Struct_type",
+      "library": "binaryen",
+      "description": "This module provides operations to inspect struct types, including retrieving the number of fields, the type of a specific field, its packed type, and whether it is mutable. It works with `Heap_type.t` to represent struct definitions and interacts with `Type.t` and `Packed_type.t` for field characteristics. Concrete use cases include analyzing or constructing WebAssembly struct types with precise field properties.",
+      "description_length": 417,
+      "index": 48,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Table",
+      "library": "binaryen",
+      "description": "This module manages tables and element segments in a WebAssembly module. It provides operations to add tables with specified properties, create and remove active element segments, and access existing segments by name or index. It works directly with tables, element segments, and expressions to support dynamic function table manipulation and initialization.",
+      "description_length": 358,
+      "index": 49,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Memory",
       "library": "binaryen",
-      "description": "This module manages memory definitions and operations in a WebAssembly module, including setting memory parameters, querying memory limits, and handling memory segments. It works with memory segments containing raw byte data, segment kinds, and sizes, along with module and memory identifiers. Concrete use cases include initializing linear memory, checking if memory is shared or 64-bit, retrieving memory segments, and configuring memory with specific offsets and data.",
-      "description_length": 471,
+      "description": "This module manages memory definitions and operations in a WebAssembly module, including setting memory parameters, querying memory properties like initial and maximum sizes, and inspecting memory segments. It works with memory segments containing raw byte data, segment kinds, and metadata, and supports features like shared memory and 64-bit addressing. Concrete use cases include configuring linear memory at module creation, inspecting memory layout for optimization, and handling passive segments for WebAssembly features like bulk memory operations.",
+      "description_length": 555,
+      "index": 50,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Global",
+      "library": "binaryen",
+      "description": "This module manages global variables in a WebAssembly module, providing functions to add, retrieve, and remove globals by name or index. It works with global variables that have a type, mutability flag, and optional initializer expression. Use it to define module-level variables, access their properties, or modify their initial values.",
+      "description_length": 337,
+      "index": 51,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Literal",
+      "library": "binaryen",
+      "description": "This module creates and manipulates literal values for WebAssembly constants, supporting 32-bit and 64-bit integers and floats. It provides functions to construct literals from raw bits or numeric values, enabling precise control over binary representation. Use this when defining immediate values in WebAssembly code generation or when inspecting constant expressions.",
+      "description_length": 369,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Import",
+      "library": "binaryen",
+      "description": "This module defines functions to add and retrieve imported functions, tables, memories, and globals in a WebAssembly module. It operates on module, function, and global types, enabling precise control over import declarations. Use cases include integrating external APIs, linking runtime libraries, or configuring module dependencies with specific module and base names.",
+      "description_length": 370,
       "index": 53,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Binaryen.Settings",
       "library": "binaryen",
-      "description": "This module manages compiler settings for optimization, inlining, and code generation. It provides accessors and mutators for integer and boolean configuration options, as well as string-based pass arguments. Concrete use cases include adjusting optimization levels, controlling debug information, and tuning inlining thresholds for WebAssembly compilation.",
-      "description_length": 357,
+      "description": "This module manages compiler settings for optimization, inlining, and output behavior through mutable global state. It provides direct access to tweak parameters like optimization levels, inlining size limits, and debug information generation. Use cases include configuring compilation pipelines for performance or size, enabling/disabling features like color output, and tuning low-level code generation options.",
+      "description_length": 413,
       "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Binaryen.Module",
-      "library": "binaryen",
-      "description": "This module manages WebAssembly feature sets through a type `t` that encodes capabilities like SIMD, garbage collection, and memory extensions as distinct flags. It provides operations to combine, check, and filter features, enabling precise configuration of module compilation and validation. Submodules group related features and offer utilities for feature composition and compatibility checks. For example, you can use `Feature.(simd128 && gc)` to specify a target with SIMD and garbage collection support or test an environment's ability to handle `memory64`.",
-      "description_length": 564,
-      "index": 55,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Element_segment",
       "library": "binaryen",
-      "description": "This module provides access to element segment properties in WebAssembly modules. It allows retrieving metadata such as the segment's name, associated table, offset expression, length, and raw data at specific indices. Use this module when inspecting or manipulating element segments during WebAssembly code generation or transformation.",
-      "description_length": 337,
+      "description": "This module provides access to element segment properties in WebAssembly modules. It allows retrieving the name, associated table, offset expression, length, and specific data entries of an element segment. Use cases include inspecting or modifying element segments during WebAssembly code generation or analysis.",
+      "description_length": 313,
+      "index": 55,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Binaryen.Packed_type",
+      "library": "binaryen",
+      "description": "This module defines packed type representations for WebAssembly memory operations. It includes values for 8-bit and 16-bit integer types, along with a marker for non-packed types. These types are used to specify element sizes when working with memory loads and stores in WebAssembly code generation.",
+      "description_length": 299,
       "index": 56,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen.Export",
       "library": "binaryen",
-      "description": "This module manages the creation, retrieval, and removal of exports in a WebAssembly module, allowing specific functions, tables, memories, and globals to be exposed by name. It provides direct access to export entries by name or index, and supports inspecting export kinds and associated values. Concrete use cases include linking module internals to external environments, exposing entry points for host integration, and configuring exported symbols for tooling or runtime access.",
-      "description_length": 482,
+      "description": "This module manages exports in a WebAssembly module, allowing functions, tables, memories, and globals to be associated with external names. It provides direct access and manipulation of export entries, including adding, removing, and querying exports by name or index. Use cases include linking internal module elements to external identifiers for interoperability with host environments or other WebAssembly modules.",
+      "description_length": 418,
       "index": 57,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Binaryen.Function",
+      "library": "binaryen",
+      "description": "This module manages function definitions within a WebAssembly module, supporting operations to create, retrieve, modify, and remove functions. It works with function values represented by the `t` type, along with types, expressions, and module-level constructs. Concrete use cases include defining entry points, setting function bodies with control flow or arithmetic expressions, and inspecting or updating function parameters and local variables.",
+      "description_length": 448,
+      "index": 58,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Binaryen",
       "library": "binaryen",
-      "description": "This module provides comprehensive tools for constructing, analyzing, and optimizing WebAssembly modules. It supports defining and inspecting types (function, struct, array, primitive), managing code (functions, expressions, control flow), and handling module components (tables, memory, globals, imports, exports). You can build and validate type hierarchies, generate low-level expressions with arithmetic and control flow, configure memory and table layouts, and control compilation settings. Examples include defining a function with a custom body, inspecting struct field types, adding a memory segment with initialization data, or enabling SIMD features for optimized code generation.",
-      "description_length": 690,
-      "index": 58,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides precise tools for analyzing and manipulating WebAssembly type hierarchies, array structures, and element segments. It includes functions for inspecting array element types, validating heap type relationships, and accessing element segment data such as table associations and offset expressions. These capabilities support tasks like type checking during compilation, structural validation of WebAssembly modules, and direct modification of element segments during code generation or analysis.",
+      "description_length": 513,
+      "index": 59,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 60,
-    "meaningful_modules": 59,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9833333333333333
+    "meaningful_modules": 60,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 765,
-    "min_description_length": 236,
-    "avg_description_length": 383.47457627118644,
-    "embedding_file_size_mb": 0.21460342407226562
+    "max_description_length": 650,
+    "min_description_length": 209,
+    "avg_description_length": 376.21666666666664,
+    "embedding_file_size_mb": 0.8697671890258789
   }
 }

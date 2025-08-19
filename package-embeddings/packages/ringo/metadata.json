@@ -1,117 +1,85 @@
 {
   "package": "ringo",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:08:12.410967",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 8,
+  "creation_timestamp": "2025-08-14T23:17:38.144939",
   "modules": [
     {
-      "module_path": "Ringo.Weighted_Dll",
+      "module_path": "Ringo.Ring",
       "library": "ringo",
-      "description": "This module implements a doubly-linked list with weighted capacity management, where each element has an associated weight that determines its space allocation. It supports operations to add elements with their weights, automatically evicting older elements to make space, and returning the evicted values. Use cases include implementing bounded caches where items have variable memory footprints or managing resource pools with weighted limits.",
-      "description_length": 445,
+      "description": "This module implements a bounded FIFO buffer using an array-based ring structure. It supports adding elements with optional return of overwritten values, removing elements from either end, clearing, and folding over elements in oldest or newest order. Concrete use cases include managing fixed-size logs, caches with eviction, or sliding windows of recent data.",
+      "description_length": 361,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ringo.Weighted_LRU_Collection",
-      "library": "ringo",
-      "description": "This module organizes data into a weighted LRU structure that tracks each element's weight and access order, enforcing a maximum total capacity to manage memory-bound scenarios. It supports insertion, removal, and promotion operations that dynamically evict the least recently used elements when adding new entries would exceed the capacity. This design is particularly useful for caching systems handling variable-sized data, such as image thumbnails or serialized payloads, where memory usage must be strictly controlled.",
-      "description_length": 523,
-      "index": 1,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ringo.UNBOXED_WEIGHTED_COLLECTION",
-      "library": "ringo",
-      "description": "This module implements a ring buffer that tracks elements along with their weights, supporting operations to add weighted elements, automatically evict older entries when capacity is exceeded, and retrieve or remove elements in order. It provides functions to fold over the elements in either direction, inspect the oldest and newest elements, and manage buffer contents with precise control over capacity and weight limits. Concrete use cases include managing a capped history of weighted events, such as tracking recent user actions with varying importance or maintaining a fixed-size cache of prioritized data.",
-      "description_length": 613,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ringo.UNBOXED_COLLECTION",
-      "library": "ringo",
-      "description": "This module implements a ring buffer with fixed capacity, supporting operations to add and remove elements with optional return of displaced values. It provides bidirectional folds and access to elements in oldest-to-newest or newest-to-oldest order. Useful for maintaining a sliding window of recent values, such as logging the last N events or computing moving averages over a stream of data.",
-      "description_length": 394,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ringo.Dll",
-      "library": "ringo",
-      "description": "This module manages bounded, least-recently-used (LRU) collections using a doubly-linked list abstraction. It supports operations to add elements with automatic eviction of the oldest item when capacity is exceeded, remove elements from either end, and fold over elements in either newest-to-oldest or oldest-to-newest order. It is suitable for caching scenarios where memory efficiency and fine-grained allocation are important, such as tracking recent events or maintaining a fixed-size history buffer.",
-      "description_length": 504,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ringo.COLLECTION",
-      "library": "ringo",
-      "description": "This module implements a fixed-capacity buffer that stores elements in a linked structure, supporting efficient addition, removal, and traversal. It provides operations to add elements with optional return of dropped values, inspect and manipulate elements by age, and fold over the buffer in either insertion order. Use cases include implementing caches with eviction policies, maintaining recent history buffers, or managing fixed-size queues with controlled element promotion.",
-      "description_length": 479,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ringo.WEIGHTED_COLLECTION",
-      "library": "ringo",
-      "description": "This module manages a weighted circular buffer of generic elements stored in nodes, each with an associated weight, supporting insertion, removal, promotion, and bidirectional traversal while maintaining capacity and total weight constraints. It dynamically adjusts size by evicting older elements during over-capacity insertion and is optimized for scenarios like caching, frequency-based prioritization, or resource allocation where weighted elements require dynamic reordering based on access patterns.",
-      "description_length": 505,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Ringo.FIFO_Precise_Collection",
       "library": "ringo",
-      "description": "This module implements a first-in-first-out (FIFO) collection with precise accounting for cache replacement policies. It supports operations to add, remove, and promote elements, ensuring the oldest elements are discarded when capacity is exceeded, with exact tracking of active elements. Use cases include building size-constrained caches where element eviction follows insertion order, and tracking or displacing the least recently used items with precise control over memory limits.",
-      "description_length": 485,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ringo.LRU_Collection",
-      "library": "ringo",
-      "description": "This module implements a fixed-capacity buffer that automatically evicts the least-recently used elements when full. It tracks elements using nodes, supporting operations to add, remove, and promote elements to update their usage status. Use this to build caches where access patterns determine retention, such as in memory-constrained environments or performance-critical lookups.",
-      "description_length": 381,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ringo.Ring",
-      "library": "ringo",
-      "description": "This module implements a bounded FIFO collection using an array-based ring buffer, supporting operations to add elements with overflow handling, remove elements from either end, and traverse elements in oldest-to-newest or newest-to-oldest order. It works with arbitrary typed elements in a mutable buffer with fixed capacity, tracking current length and insertion order. Concrete use cases include managing recent event logs, maintaining sliding windows of data samples, and implementing caches with automatic eviction of stale entries.",
-      "description_length": 537,
-      "index": 9,
+      "description": "This module implements a fixed-capacity FIFO buffer with precise accounting, where elements are automatically evicted when the capacity is exceeded. It supports operations to add elements, remove specific or oldest/newest elements, promote elements to adjust their position, and fold over elements in either order. The buffer is designed for building caches with FIFO replacement policies, where promotions reflect access patterns to influence eviction.",
+      "description_length": 453,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ringo.FIFO_Sloppy_Collection",
       "library": "ringo",
-      "description": "This module implements a FIFO cache with approximate size tracking, where inserting elements beyond capacity evicts the oldest. It provides operations to add, remove, and promote elements, with direct access to nodes containing stored values. Useful for building caches that require first-in-first-out eviction and manual control over element promotion on read or write.",
-      "description_length": 370,
-      "index": 10,
+      "description": "This module implements a size-bounded FIFO buffer with sloppy accounting, where inserting elements beyond capacity evicts the oldest. It supports precise control over element promotion for cache-like access patterns, with operations to add, remove, and reorder elements, and provides direct access to the oldest and newest elements. Concrete use cases include building caches with FIFO-based eviction policies and managing streaming data with bounded memory usage.",
+      "description_length": 464,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ringo.Weighted_LRU_Collection",
+      "library": "ringo",
+      "description": "This module manages a cache where entries are evicted based on cumulative weight rather than element count, supporting dynamic capacity adjustments through operations like insertion, removal, and access-based promotion. It works with entries that associate keys to values and explicit weight values, organizing them to prioritize recently accessed items while enforcing weight limits. Ideal for scenarios like memory-constrained caches storing variable-sized resources (e.g., images, serialized objects) where eviction must account for heterogeneous storage costs.",
+      "description_length": 564,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ringo.Dll",
+      "library": "ringo",
+      "description": "This module manages bounded, least-recently-used (LRU) collections using a doubly-linked list abstraction. It supports operations to add elements with automatic eviction of the oldest when capacity is exceeded, remove elements from either end, and fold over elements in either newest-first or oldest-first order. Concrete use cases include caching recent values with limited memory, tracking recent events or logs, and implementing sliding windows over data streams.",
+      "description_length": 466,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ringo.Weighted_Dll",
+      "library": "ringo",
+      "description": "This module implements a doubly-linked list with weighted capacity, where each element has an associated weight that contributes to the buffer's total capacity. It supports operations to add elements with their weight, automatically evicting older elements if necessary to make space, and returning the evicted values. Use cases include managing memory-limited caches where items have variable sizes, such as caching network responses with byte sizes or storing variable-length buffers.",
+      "description_length": 486,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ringo.LRU_Collection",
+      "library": "ringo",
+      "description": "This module implements a fixed-capacity buffer that enforces an LRU (Least Recently Used) eviction policy. It tracks elements using nodes, where each node holds a value and maintains insertion order. Operations include adding elements (with optional return of evicted values), removing specific or oldest/newest elements, promoting nodes to update their position, and folding over elements in age order. It is suitable for building caches where access patterns determine which items stay in memory, such as HTTP response caching or database query result buffering.",
+      "description_length": 564,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ringo",
       "library": "ringo",
-      "description": "This module provides fixed-capacity data structures optimized for efficient element eviction based on size, usage patterns, and weighted allocation. It supports arbitrary data types through functors and implements strict and approximate FIFO, LRU, and weighted LRU policies, enabling caches with bounded memory, session pools, and sliding window algorithms. Submodules offer specialized structures: weighted doubly linked lists manage variable-sized items, ring buffers handle ordered history with capacity limits, and LRU buffers track access patterns for memory-bound caching. Examples include tracking recent user actions with weighted importance, maintaining fixed-size caches with eviction on insert, and computing moving averages over bounded data streams.",
-      "description_length": 762,
-      "index": 11,
-      "embedding_norm": 1.0
+      "description": "This module provides bounded-length collection implementations optimized for specific access and eviction patterns. It includes ring buffers, LRU and FIFO caches, and weighted variants that manage capacity based on element size. These structures are used for fixed-size logging, sliding window analysis, and memory-constrained caching of variable-sized data.",
+      "description_length": 358,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 12,
-    "meaningful_modules": 12,
+    "total_modules_in_package": 8,
+    "meaningful_modules": 8,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 762,
-    "min_description_length": 370,
-    "avg_description_length": 499.8333333333333,
-    "embedding_file_size_mb": 0.04402446746826172
+    "max_description_length": 564,
+    "min_description_length": 358,
+    "avg_description_length": 464.5,
+    "embedding_file_size_mb": 0.11625957489013672
   }
 }

@@ -1,533 +1,293 @@
 {
   "package": "gitlab",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 64,
-  "creation_timestamp": "2025-07-15T23:16:05.228337",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 34,
+  "creation_timestamp": "2025-08-15T14:55:51.850643",
   "modules": [
     {
       "module_path": "Gitlab_core.Make.Project.Notes.Merge_request",
       "library": "gitlab",
-      "description": "This module provides functions to list, retrieve, create, update, and delete notes on merge requests for a project. It operates on merge request identifiers (IID) and note identifiers, returning note data structures or response monads. Use this module to interact with GitLab's merge request comment system, such as fetching all notes for a specific merge request or modifying an existing comment.",
-      "description_length": 397,
+      "description": "This module provides functions to list, retrieve, create, update, and delete notes on merge requests for a specific project in GitLab. It operates on project identifiers, merge request internal IDs, and note IDs, returning note streams or individual note responses. Use this module to interact with merge request comments programmatically, such as fetching all notes for a merge request or modifying an existing comment.",
+      "description_length": 420,
       "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Endpoint.Version",
+      "library": "gitlab",
+      "description": "This module defines version metadata types used for conditional HTTP requests, specifically `Etag` and `Last_modified`. It provides functions to parse and compare these version identifiers for cache validation and resource change detection. Concrete use cases include optimizing API calls by avoiding redundant data retrieval when the resource state hasn't changed.",
+      "description_length": 365,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Project.Commit",
+      "library": "gitlab",
+      "description": "This module provides operations to retrieve and manipulate commit data, including listing commits, fetching individual commits by SHA, adding and retrieving comments, and managing commit statuses. It works with commit hashes, project identifiers, and associated metadata like timestamps and file paths. Concrete use cases include auditing commit histories, integrating CI/CD pipelines via commit statuses, and enabling code review workflows through commit comments.",
+      "description_length": 465,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Project.Milestone",
+      "library": "gitlab",
+      "description": "This module manages project milestones in GitLab, offering operations to list, retrieve, create, update, and delete milestones for a specific project. It works with milestone data structures defined in `Gitlab_t`, including milestone states and new milestone parameters. Concrete use cases include tracking project progress by managing milestone deadlines, descriptions, and statuses within a GitLab project.",
+      "description_length": 408,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_core.Make.Project.Branch",
       "library": "gitlab",
-      "description": "This module provides functions to manage repository branches within a GitLab project, including listing all branches, retrieving a specific branch, creating a new branch from a reference, and deleting branches. It operates on branch names and project identifiers, returning streams or responses with branch details. Use cases include automating branch creation for feature development, cleaning up merged branches, or retrieving branch information for deployment workflows.",
-      "description_length": 473,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Group.Project",
-      "library": "gitlab",
-      "description": "This module provides the `by_name` function to retrieve projects owned by a specific group that match a given name, optionally using an authentication token to access private projects. It works with group names, project names, and token-based authentication. A concrete use case is querying all projects under a group with a particular naming pattern, such as finding projects related to a specific feature or team.",
-      "description_length": 415,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Group.Issue",
-      "library": "gitlab",
-      "description": "This module retrieves issues associated with a specific group in GitLab, supporting filters such as state, assignee, milestone, labels, and author. It works with group identifiers and authentication tokens, producing a stream of issue data. Concrete use cases include listing open issues for a group, finding issues assigned to a specific user, or filtering by label or milestone within a group context.",
-      "description_length": 403,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Group.Milestone",
-      "library": "gitlab",
-      "description": "This module manages group milestones in GitLab, offering operations to list, retrieve, create, update, and delete milestones by ID. It works with milestone data structures, including fields like title, description, due date, and state. Use it to automate milestone management within a group, such as creating scheduled milestones or updating milestone statuses.",
-      "description_length": 361,
+      "description": "This module provides functions to manage repository branches within a project, including listing, retrieving, creating, and deleting branches, as well as removing merged branches. It operates on project identifiers and branch names, returning streams or responses of detailed branch information. Use cases include automating branch cleanup, creating feature branches from specific refs, and retrieving branch details for continuous integration workflows.",
+      "description_length": 454,
       "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Project.Issue",
-      "library": "gitlab",
-      "description": "This module handles operations for managing project issues in GitLab, including listing all issues for a project, retrieving a specific issue by ID, and creating new issues. It works with `Gitlab_t.issue` and `Gitlab_t.create_issue` data structures, along with authentication tokens and project identifiers. Concrete use cases include fetching a stream of project issues, accessing detailed information about a single issue, and submitting new issue data to a project.",
-      "description_length": 468,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Project.ExternalStatusCheck",
-      "library": "gitlab",
-      "description": "This module manages external status checks for GitLab projects, offering operations to list, create, update, and delete checks, as well as set their status for specific merge requests. It works with project IDs, merge request IIDs, and external status check identifiers, interacting with GitLab's API to enforce status check policies. Concrete use cases include integrating CI/CD pipelines to validate merge requests before merging and automating status updates from external verification services.",
-      "description_length": 498,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.User.PersonalAccessToken",
-      "library": "gitlab",
-      "description": "This module manages personal access tokens for GitLab users, providing functions to list, create, and revoke tokens. It works with user identifiers and token data structures to handle authentication and authorization operations. Concrete use cases include automating token management for API access, setting up tokens for CI/CD pipelines, and revoking compromised tokens.",
-      "description_length": 371,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Project.ProjectAccessToken",
-      "library": "gitlab",
-      "description": "This module manages project access tokens for authentication with the GitLab API and Git over HTTP. It provides operations to list, create, and revoke tokens for a specific project. These tokens are used to authenticate API requests and Git operations tied to a particular project.",
-      "description_length": 281,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_core.Make.Project.Commit",
-      "library": "gitlab",
-      "description": "This module provides functions to retrieve, comment on, and update the status of commits in a GitLab project. It works with commit hashes, project IDs, and time-based filters to fetch specific commit data, including individual commits, lists of commits, comments, and build statuses. Concrete use cases include fetching a project's commit history, adding review comments to specific commits, and reporting continuous integration build statuses.",
-      "description_length": 444,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_core.Make.Endpoint.Version",
-      "library": "gitlab",
-      "description": "This module handles version metadata for API endpoints, providing `Etag` and `Last_modified` types to support conditional HTTP requests. It allows clients to validate cached responses and manage resource versions efficiently. Use cases include implementing cache control and minimizing data transfer by checking resource freshness.",
-      "description_length": 331,
-      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_core.Make.Project.Notes",
       "library": "gitlab",
-      "description": "This module enables interaction with GitLab's merge request comment system, supporting operations like listing, retrieving, creating, updating, and deleting notes using merge request IIDs and note IDs. It works with note data structures and response monads to handle success or error states. For example, you can fetch all notes for a specific merge request or modify an existing comment.",
-      "description_length": 388,
-      "index": 11,
-      "embedding_norm": 1.0
+      "description": "This module provides functions to list, create, update, and delete notes on merge requests for a GitLab project. It works with project identifiers, merge request internal IDs, and note IDs, returning note streams or individual note responses. Use it to programmatically manage merge request comments, such as retrieving all notes for a specific merge request or editing an existing note.",
+      "description_length": 387,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Gitlab_core.Make.Project.Hook",
       "library": "gitlab",
       "description": "This module manages webhooks for GitLab projects, providing operations to list all hooks, retrieve a specific hook by ID, and create new hooks. It works with project identifiers and hook data structures, enabling integration with external services via HTTP callbacks. Concrete use cases include automating CI/CD pipelines, triggering notifications, or synchronizing project events with third-party systems.",
       "description_length": 406,
-      "index": 12,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Gitlab_core.Make.Project.Milestone",
+      "module_path": "Gitlab_core.Make.Group.Milestone",
       "library": "gitlab",
-      "description": "This module manages project milestones in GitLab, providing functions to list, retrieve, create, update, and delete milestones for a specific project. It works with milestone data structures defined in `Gitlab_t`, including milestone state, title, description, and dates. Concrete use cases include tracking project progress by creating milestones, updating their status or deadlines, and fetching milestone details for reporting or automation workflows.",
-      "description_length": 454,
+      "description": "This module manages group milestones in GitLab, providing functions to list, retrieve, create, update, and delete milestones for a specific group. It operates on milestone data structures defined in `Gitlab_t`, including milestone state, title, description, and dates. Concrete use cases include tracking project progress by creating and updating milestones, filtering milestones by state or title, and removing obsolete milestones from a group.",
+      "description_length": 445,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Gitlab_core.Make.Group.Issue",
+      "library": "gitlab",
+      "description": "This module retrieves issues associated with a specific group in GitLab, supporting filters such as state, assignee, milestone, labels, and author. It operates on group identifiers and authentication tokens, returning a stream of issue data. Concrete use cases include listing open issues assigned to a specific user within a group or fetching issues tagged with certain labels for reporting purposes.",
+      "description_length": 401,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Project.ProjectAccessToken",
+      "library": "gitlab",
+      "description": "This module manages project access tokens for authentication, providing functions to list, revoke, and create tokens for specific projects. It operates on project identifiers and token data structures, interacting directly with the GitLab API to handle token lifecycle operations. Concrete use cases include automating token management for CI/CD pipelines and restricting project access for external services.",
+      "description_length": 409,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Group.Project",
+      "library": "gitlab",
+      "description": "This module provides the `by_name` function to retrieve projects owned by a specific group that match a given name. It works with GitLab project data, returning a response containing short project details. Use it to find one or more projects within a group by their name, optionally using an authentication token to include private projects.",
+      "description_length": 341,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.User.PersonalAccessToken",
+      "library": "gitlab",
+      "description": "This module manages personal access tokens for user authentication, providing operations to list, revoke, and create tokens. It works with user identifiers and token data structures, specifically interacting with GitLab's API to handle token lifecycle and permissions. Concrete use cases include administrative management of user tokens and programmatic token revocation or generation for API access.",
+      "description_length": 400,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Project.Issue",
+      "library": "gitlab",
+      "description": "This module provides functions to interact with GitLab project issues, including listing all issues for a project, retrieving a specific issue by ID, and creating new issues. It operates on `Gitlab_t.issue` data structures, handling API requests and responses. Concrete use cases include fetching issue streams for tracking, querying specific issue details, and submitting new issues with custom attributes.",
+      "description_length": 407,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Gitlab_core.Make.Project.ExternalStatusCheck",
+      "library": "gitlab",
+      "description": "This module manages external status checks for GitLab projects, offering operations to list, create, update, and delete checks, as well as set their status for specific merge requests. It works with project IDs, merge request IIDs, and external status check identifiers, interacting with GitLab's API to enforce status policies. Concrete use cases include integrating CI/CD pipelines to validate merge requests against external services and managing approval workflows tied to specific branches.",
+      "description_length": 495,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_core.Make.API",
       "library": "gitlab",
-      "description": "This module performs HTTP requests to the GitLab API, supporting GET, POST, DELETE, PATCH, and PUT operations with customizable headers, tokens, and query parameters. It handles responses through parsing functions, allowing for expected status codes and fallback handlers, and provides streaming for large responses. It works with URIs, tokens, and GitLab API response structures, enabling concrete use cases like querying project data, managing issues, and handling rate-limited API access.",
-      "description_length": 491,
+      "description": "This module implements HTTP interactions with the GitLab API, supporting GET, POST, DELETE, PATCH, and PUT requests with customizable headers, authentication tokens, and query parameters. It handles responses through status code validation, parsing, and error recovery mechanisms, and provides streaming variants for large data sets. Use it to query GitLab projects, manage issues, or automate repository operations with precise control over HTTP behavior and rate limiting.",
+      "description_length": 474,
       "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Runners",
-      "library": "gitlab",
-      "description": "This module provides a function to retrieve a list of GitLab runners accessible to a user, using an authentication token. It operates on token and response data types defined in the broader GitLab API context. A concrete use case is querying available CI/CD runners for job execution management.",
-      "description_length": 295,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Monad",
-      "library": "gitlab",
-      "description": "This module implements a monadic structure for sequencing GitLab API operations, handling state and concurrency through Lwt threads. It provides core monadic combinators like `bind`, `map`, and applicative operators for composing asynchronous API requests, along with exception handling and embedding of raw Lwt threads. Concrete use cases include chaining API calls that share context, such as authenticated requests or operations dependent on prior results.",
-      "description_length": 459,
-      "index": 16,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Gitlab_core.Make.Scope",
       "library": "gitlab",
-      "description": "This module provides functions to convert between GitLab API scope constructors and their string representations, both individually and in lists. It works with the `Gitlab_t.scope` type and string values for serialization and parsing. Concrete use cases include preparing scope parameters for API requests and interpreting scope responses from GitLab.",
-      "description_length": 351,
-      "index": 17,
+      "description": "This module provides functions to convert between GitLab scope constructors and their string representations, both individually and as lists. It works with the `Gitlab_t.scope` type and lists of that type. Useful for serializing scopes for API requests and parsing scope responses from GitLab.",
+      "description_length": 293,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Gitlab_core.Make.Stream",
+      "module_path": "Gitlab_core.Make.Runners",
       "library": "gitlab",
-      "description": "This module implements lazy, paginated traversal of GitLab API endpoints, supporting operations like `next`, `map`, `take`, and `fold` over streamed data. It works with GitLab's API responses that return ordered, versioned collections, such as issue lists or commit histories. Use it to efficiently process large datasets from GitLab without loading everything into memory at once, or to poll for updates from a known state.",
-      "description_length": 424,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Project",
-      "library": "gitlab",
-      "description": "This module automates GitLab project management through operations for creating and retrieving projects, interacting with pipelines and merge requests, and handling events via authenticated tokens. It supports sub-resources like access tokens, issues, and webhooks, enabling CI/CD automation, issue tracking, and notification systems. For example, you can create a project, trigger pipeline runs, or list recent merge request events filtered by status. Submodules extend this functionality with tools to manage branches, issues, status checks, and milestones, supporting workflows like automated branch cleanup, issue submission, and milestone tracking.",
-      "description_length": 653,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Event",
-      "library": "gitlab",
-      "description": "This module retrieves user contribution events from GitLab, supporting filtering by time range, scope, sort order, target type, and action type. It operates on authentication tokens and returns event lists in a structured response format. Use it to audit user activity or track contributions like push events, issue interactions, and merge requests.",
-      "description_length": 349,
-      "index": 20,
+      "description": "This module provides operations to interact with GitLab runners, specifically listing available runners for a user. It works with authentication tokens and structured API responses representing runners. A concrete use case is retrieving runner details for monitoring or managing CI/CD execution resources.",
+      "description_length": 305,
+      "index": 16,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_core.Make.Token",
-      "library": "gitlab",
-      "description": "This module handles authentication token creation and management for interacting with GitLab APIs. It supports personal access tokens, project access tokens, and OAuth 2.0 flows using authorization codes or refresh tokens. Concrete operations include generating authorization URLs, exchanging authorization codes for tokens, and serializing or deserializing tokens for storage or transmission.",
-      "description_length": 393,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_core.Make.Response",
-      "library": "gitlab",
-      "description": "This module handles responses from direct API requests to GitLab, providing access to the payload value, redirection chains, and final redirect resolution. It works with response objects that carry values of arbitrary types and lists of redirect values, each indicating temporary or permanent redirection with a URI. Concrete use cases include extracting the result of an API call, tracking redirect history, and determining the final resource location after a series of redirects.",
-      "description_length": 481,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make.Endpoint",
-      "library": "gitlab",
-      "description": "This module manages version metadata for API endpoints, offering `Etag` and `Last_modified` types to support conditional HTTP requests. It enables clients to validate cached responses and efficiently manage resource versions. Specific use cases include implementing cache control mechanisms and minimizing data transfer by checking resource freshness. Operations allow attaching and comparing version identifiers to API responses.",
-      "description_length": 430,
-      "index": 23,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_core.Make.Group",
       "library": "gitlab",
-      "description": "This module enables interaction with GitLab groups by retrieving and filtering merge requests, issues, and milestones across projects within a group. It supports key operations such as listing merge requests by state, author, or labels, querying issues with filters like assignee or milestone, and managing milestones through create, update, and delete actions. The module also includes submodules for retrieving group projects by name and handling authenticated requests. Specific use cases include automating milestone scheduling, aggregating open issues for a team, and tracking merge requests across multiple projects within a group.",
-      "description_length": 637,
-      "index": 24,
+      "description": "This module provides functions to interact with GitLab group-level resources, including listing merge requests for a group, managing milestones, and querying issues with filters like state, labels, or assignee. It operates on group identifiers and authentication tokens, returning structured streams of merge requests, milestones, and issues. Concrete use cases include retrieving a group's active merge requests, tracking progress via milestone management, and generating reports based on filtered group issues.",
+      "description_length": 512,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_core.Make.User",
       "library": "gitlab",
-      "description": "This module retrieves user information by ID or name, lists projects and contribution events, and provides access to merge requests and issues for the authenticated user. It supports operations like searching users, fetching project lists, and retrieving GitLab activity events using IDs, authentication tokens, and filters like state and scope. The child module manages personal access tokens, enabling listing, creating, and revoking tokens for authentication, authorization, and CI/CD integration. Together, they support workflows like fetching a user's recent activity, automating token setup for pipelines, and securing API access by revoking compromised credentials.",
-      "description_length": 672,
-      "index": 25,
+      "description": "This module provides functions to retrieve user details by ID or name, fetch the current authenticated user, list user projects, merge requests, issues, and events. It operates on user identifiers, tokens, and various GitLab API response types like projects, merge requests, and issues. Concrete use cases include user identity verification, project access management, and tracking user activity through events and merge request participation.",
+      "description_length": 443,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Gitlab_s.Env",
+      "module_path": "Gitlab_core.Make.Response",
       "library": "gitlab",
-      "description": "This module defines the environment configuration for connecting to a Gitlab instance, including the base URI and a debug flag. It provides the necessary setup for interacting with Gitlab's API, such as specifying the target instance and enabling debug logging. Concrete use cases include initializing a Gitlab client with a custom endpoint or enabling verbose output during development.",
-      "description_length": 387,
-      "index": 26,
+      "description": "This module handles responses from direct API requests, providing access to payloads and redirect chains. It works with `Response.t` values that carry a payload of any type and a list of redirects. Use it to extract the final value after a request, inspect redirect history, or determine the final resource location after a series of permanent or temporary redirects.",
+      "description_length": 367,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Monad",
+      "library": "gitlab",
+      "description": "This module defines a monadic structure for composing asynchronous GitLab API requests using Lwt threads, with built-in handling of state such as authentication and request context. It provides standard monadic operations like `bind`, `map`, and their infix operators, along with utilities for error handling (`catch`, `fail`), embedding raw Lwt threads, and extracting final results. Concrete use cases include chaining API calls in sequence, transforming response values, and safely handling exceptions within monadic pipelines.",
+      "description_length": 530,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Endpoint",
+      "library": "gitlab",
+      "description": "This module defines the structure and operations for interacting with GitLab's API endpoints, including constructing URLs, setting HTTP methods, and handling request parameters. It works with version metadata from the `Version` submodule to support conditional requests using `If-None-Match` and `If-Modified-Since` headers. Concrete use cases include efficiently querying GitLab resources while minimizing unnecessary data transfer by leveraging version-based caching mechanisms.",
+      "description_length": 480,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Token",
+      "library": "gitlab",
+      "description": "This module handles authentication tokens for accessing GitLab APIs, supporting OAuth 2.0 flows including authorization code and refresh token grants. It provides functions to create authorization URLs, exchange authorization codes for tokens, refresh expired tokens, and serialize/deserialize tokens. Concrete use cases include authenticating API requests, managing user sessions, and handling token persistence across client restarts.",
+      "description_length": 436,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Stream",
+      "library": "gitlab",
+      "description": "This module implements lazy, paginated traversal of GitLab API endpoints, supporting operations like `next`, `map`, `take`, and `fold` over streamed data. It works with GitLab's versioned endpoints, handling internal buffering and continuation without mutable state. Concrete use cases include incremental retrieval of large datasets, polling for updates with throttling compliance, and filtering or transforming elements on demand.",
+      "description_length": 432,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Gitlab_core.Make.Event",
+      "library": "gitlab",
+      "description": "Handles retrieval of user contribution events from GitLab with filters like time range, scope, sort order, target type, and action type. Accepts a GitLab API token and optional query parameters to refine results. Useful for tracking user activity such as merge requests, issue interactions, or repository contributions within a specific period or context.",
+      "description_length": 355,
+      "index": 24,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Endpoint",
-      "library": "gitlab",
-      "description": "This module defines the endpoints available in GitLab's API, specifying the exact paths and methods used to interact with GitLab resources. It works with HTTP request types and URL structures to target specific API routes. Concrete use cases include constructing URLs for project creation, user authentication, and retrieving repository data.",
-      "description_length": 342,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Group-Project",
-      "library": "gitlab",
-      "description": "Retrieves GitLab projects under a specified group by name, supporting both public and private project access with an optional token. Works with GitLab project and response data structures, allowing filtering by group and project name. Useful for querying specific projects within a group, such as finding all projects named \"backend\" under the \"engineering\" group.",
-      "description_length": 364,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Time",
-      "library": "gitlab",
-      "description": "This module provides two core time-related operations: retrieving the current Unix epoch time in seconds and sleeping for a specified duration. It works with floating-point values to represent time intervals. These functions are essential for tracking timestamps and implementing delays in asynchronous GitLab API interactions.",
-      "description_length": 327,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-Notes",
-      "library": "gitlab",
-      "description": "This module handles creation and retrieval of notes on GitLab projects and merge requests. It supports operations to list all notes for a project or merge request, and to create new notes with specified content. The module works with project and merge request identifiers, using GitLab's API to manage note data.",
-      "description_length": 312,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-ExternalStatusCheck",
-      "library": "gitlab",
-      "description": "This module provides functions to manage external status checks for GitLab projects, including listing checks for merge requests, setting check statuses, and creating, updating, or deleting project-level checks. It works with project IDs, merge request IIDs, and external status check identifiers, along with associated metadata like names, URLs, and protected branch IDs. Concrete use cases include integrating CI/CD pipelines with GitLab to enforce external approval workflows or validation steps before merge requests can proceed.",
-      "description_length": 533,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Response",
-      "library": "gitlab",
-      "description": "This module handles GitLab API response values, providing access to the payload and redirect history from HTTP requests. It works with response objects containing values of arbitrary type and lists of redirects, which include URIs and their persistence status. Use this module to extract the final result of a request, track redirect chains, or determine whether a redirect is temporary or permanent.",
-      "description_length": 400,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Stream",
-      "library": "gitlab",
-      "description": "This module implements lazy, paginated streams for consuming GitLab API endpoints that return ordered, versioned data. It supports operations like `next`, `map`, `take`, and `fold` to process elements incrementally, and provides `poll` and `since` for efficient synchronization with remote state. Concrete use cases include iterating over GitLab projects, issues, or merge requests without loading all results upfront, and polling for updates while respecting API rate limits.",
-      "description_length": 476,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-Milestone",
-      "library": "gitlab",
-      "description": "This module provides functions to manage project milestones in GitLab, including listing, retrieving, creating, updating, and deleting milestones. It works with milestone data structures, supporting operations like filtering by state or title, and modifying attributes such as description, due date, and state. Concrete use cases include automating milestone creation for project tracking, synchronizing milestone dates, and removing obsolete milestones.",
-      "description_length": 454,
-      "index": 34,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Event",
-      "library": "gitlab",
-      "description": "This module retrieves user contribution events from GitLab, supporting filtering by time range, scope, sort order, target type, and action type. It operates on GitLab event data structures and authentication tokens. Concrete use cases include auditing user activity, tracking merge request interactions, and monitoring repository contributions.",
-      "description_length": 344,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Group-Issue",
-      "library": "gitlab",
-      "description": "This module retrieves issues associated with a specific group in GitLab, supporting filtering by state, assignee, milestone, labels, and author. It works with GitLab group issue data structures, using tokens for authentication and group identifiers. Concrete use cases include listing open issues for a group, filtering issues by label or assignee username, and streaming all issues for a group.",
-      "description_length": 395,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Group",
-      "library": "gitlab",
-      "description": "This module provides operations to retrieve merge requests for a GitLab group, supporting filters like state, milestone, labels, author, and scope. It works with GitLab group identifiers and streams merge request data. A concrete use case is listing all open merge requests in a specific group filtered by a milestone or author.",
-      "description_length": 328,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Endpoint-Version",
-      "library": "gitlab",
-      "description": "This module defines a version identifier for HTTP resources, supporting conditional requests through entity tags (ETag) or last-modified timestamps. It works with string-based identifiers and timestamps conforming to HTTP-date format. Concrete use cases include caching validation and efficient resource synchronization by comparing version metadata from server responses.",
-      "description_length": 372,
-      "index": 38,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-User-PersonalAccessToken",
-      "library": "gitlab",
-      "description": "This module manages personal access tokens for GitLab user authentication, providing functions to list, revoke, and create tokens. It works with `Token.t` for authentication, `Gitlab_t.personal_access_tokens` for token lists, and `Gitlab_t.new_token` for token creation. Concrete use cases include retrieving a user's tokens, revoking an expired token by ID, and creating a new token for a specific user.",
-      "description_length": 404,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-API",
-      "library": "gitlab",
-      "description": "This module implements HTTP interactions with the GitLab API, supporting GET, POST, DELETE, PATCH, and PUT requests with customizable headers, authentication tokens, and query parameters. It works with URIs, HTTP status codes, and GitLab-specific response formats, including rate limit metadata and error messages. Concrete use cases include fetching paginated project data, creating merge requests, deleting branches, and managing rate-limited API access.",
-      "description_length": 456,
-      "index": 40,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_json.Date",
       "library": "gitlab",
-      "description": "This module handles date conversions between string and float representations. It provides `wrap` to parse date strings into Unix timestamps and `unwrap` to format timestamps back into ISO 8601 strings. Useful for serializing and deserializing dates in JSON payloads when interacting with GitLab's API.",
-      "description_length": 302,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-Notes-Merge_request",
-      "library": "gitlab",
-      "description": "This module provides functions to interact with GitLab merge request notes, supporting operations to list all notes, retrieve a specific note by ID, create new notes, update existing notes, and delete notes. It works with data types such as `Token.t`, `Gitlab_t.note`, and `Gitlab_t.create_note`, along with project identifiers and merge request IIDs. Concrete use cases include automating comment management on merge requests, integrating external tools with GitLab discussions, and scripting note updates or deletions for moderation.",
-      "description_length": 535,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-Issue",
-      "library": "gitlab",
-      "description": "This module handles operations for listing, retrieving, and creating project issues using GitLab's API. It works with `Gitlab_t.issue` and `Gitlab_t.create_issue` data structures, representing existing and new issues respectively. Concrete use cases include fetching a stream of issues for a project, getting details of a specific issue by ID, and creating a new issue with provided attributes.",
-      "description_length": 394,
-      "index": 43,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-Hook",
-      "library": "gitlab",
-      "description": "This module handles operations for managing project webhooks, including listing all hooks for a project, retrieving a specific hook by ID, and creating new hooks. It works with project identifiers, hook identifiers, and webhook configuration data. Concrete use cases include setting up notification endpoints for CI/CD events and retrieving configured webhooks for monitoring or debugging.",
-      "description_length": 389,
-      "index": 44,
+      "description": "This module handles date-time values in a float format, converting them to and from ISO 8601 string representations. It provides `wrap` to parse date strings into Unix timestamps and `unwrap` to format timestamps back into human-readable strings. Useful for serializing and deserializing date-time fields in JSON data, particularly when working with GitLab's API responses.",
+      "description_length": 373,
+      "index": 25,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_json.DateTime",
       "library": "gitlab",
-      "description": "This module handles conversion between ISO 8601 datetime strings and float timestamps. It provides `wrap` to parse datetime strings into Unix timestamps and `unwrap` to format timestamps back into human-readable strings. Useful for interfacing with GitLab's JSON API, where datetimes are often exchanged in both string and numeric formats.",
-      "description_length": 339,
-      "index": 45,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Token",
-      "library": "gitlab",
-      "description": "This module handles authentication tokens for GitLab APIs, supporting personal access tokens, project access tokens, and OAuth tokens. It provides functions to create authorization URLs, exchange authorization codes for tokens, refresh expired tokens, and serialize tokens to and from strings. Concrete use cases include authenticating API requests, managing OAuth2 flows, and handling token persistence.",
-      "description_length": 404,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_core.Make",
-      "library": "gitlab",
-      "description": "This module orchestrates GitLab API interactions with robust support for authentication, rate limiting, and asynchronous composition. It centralizes token management, scope handling, and HTTP communication, enabling operations like querying user data, managing runners, and streaming paginated results. The API client performs authenticated requests with customizable headers and response parsing, while the pagination module allows lazy traversal of large datasets like commit histories. Monad combinators sequence and parallelize Lwt-backed API calls, and versioning tools track resource changes using Etags, all supporting workflows from CI/CD automation to user activity auditing.",
-      "description_length": 684,
-      "index": 47,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Scope",
-      "library": "gitlab",
-      "description": "This module provides functions to convert between GitLab scope constructors and their string representations, both individually and as lists. It works with the `Gitlab_t.scope` type and lists of that type. Concrete use cases include serializing scopes for API requests and parsing scope responses from GitLab.",
-      "description_length": 309,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Group-Milestone",
-      "library": "gitlab",
-      "description": "This module provides functions to manage group milestones in GitLab, including listing, retrieving, creating, updating, and deleting milestones. It works with milestone data structures, supporting operations like filtering by state or title, and modifying attributes such as description, due date, and state. Concrete use cases include automating milestone creation for project planning, synchronizing milestone states across groups, and querying active milestones for reporting.",
-      "description_length": 479,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-Branch",
-      "library": "gitlab",
-      "description": "This module manages GitLab project branches, providing functions to list all branches, retrieve a specific branch, create a new branch from a reference, and delete branches, including merged ones. It works with project identifiers and branch names, requiring authentication tokens for private projects. Use it to automate branch management tasks such as cleaning up merged branches or creating feature branches in a CI/CD pipeline.",
-      "description_length": 431,
-      "index": 50,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab",
-      "library": "gitlab",
-      "description": "This module handles GitLab API interactions, including rate limiting, authentication, and request/response processing. It works with HTTP responses, API endpoints, and GitLab resources like users, projects, and events. Concrete use cases include querying project details, managing user access, and streaming event data from GitLab instances.",
-      "description_length": 341,
-      "index": 51,
+      "description": "This module handles ISO 8601 datetime strings by converting them to and from floating-point timestamps. It provides `wrap` to parse a datetime string into a float and `unwrap` to format a float back into a datetime string. Useful for working with GitLab API timestamps in JSON data.",
+      "description_length": 282,
+      "index": 26,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_json.Adapter",
       "library": "gitlab",
-      "description": "Handles parsing and validation of GitLab webhook payloads into typed OCaml values. It operates on JSON data received from GitLab webhooks, converting raw JSON objects into structured event types such as push, merge request, or pipeline events. This module is used to process incoming GitLab webhook notifications in an OCaml backend service, enabling direct mapping of JSON payloads to domain-specific event types for further handling.",
-      "description_length": 435,
-      "index": 52,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-User",
-      "library": "gitlab",
-      "description": "This module provides functions to retrieve user information by ID or name, list user projects, and access authenticated user data. It supports querying merge requests, issues, and events with filters like state, labels, and scope. Use cases include user management, activity tracking, and integration with GitLab's contribution history.",
-      "description_length": 336,
-      "index": 53,
+      "description": "Handles parsing and validation of GitLab webhook payloads into typed OCaml values. It operates on JSON data received from GitLab webhooks, converting raw JSON strings into structured event types such as push, merge request, or pipeline events. This module is used to process incoming GitLab webhook notifications for event-driven systems like CI/CD monitors or automated issue trackers.",
+      "description_length": 386,
+      "index": 27,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Gitlab_s.Gitlab-Project",
+      "module_path": "Gitlab_core.Make",
       "library": "gitlab",
-      "description": "This module enables managing project resources in a GitLab instance, supporting creation, querying by identifiers (IDs, names, short references), and retrieving associated data like pipelines, jobs, merge requests, and events. It operates on project entities alongside submodules for branches, commits, milestones, issues, access tokens, and webhooks to facilitate workflows such as CI/CD automation, access control, issue tracking, and integration with external tools via status checks and event-driven hooks.",
-      "description_length": 510,
-      "index": 54,
+      "description": "This module provides core functionality for interacting with GitLab's API, including handling authentication tokens, rate limiting, and structured API requests. It supports operations like querying user and group resources, managing events, and streaming paginated data, working with types such as `rate_limit`, `Response.t`, and `Gitlab_t.scope`. Concrete use cases include automating repository management, tracking user contributions, and efficiently retrieving large datasets with streaming and filtering.",
+      "description_length": 509,
+      "index": 28,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-Commit",
-      "library": "gitlab",
-      "description": "This module provides functions to retrieve and manipulate commit data in a GitLab project. It supports listing commits with optional filters, fetching individual commits, managing comments, and handling commit statuses. Operations work with commit hashes, project IDs, and associated metadata, enabling use cases like tracking changes, auditing commit history, or integrating CI/CD status updates.",
-      "description_length": 397,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Runners",
-      "library": "gitlab",
-      "description": "This module provides a function to retrieve a list of GitLab runners accessible to a user, using an authentication token. It works with the `Token.t` type for authentication and returns a response containing runner data in a monadic context. A concrete use case is fetching available CI/CD runners for monitoring or management purposes.",
-      "description_length": 336,
-      "index": 56,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Project-ProjectAccessToken",
-      "library": "gitlab",
-      "description": "This module manages project access tokens for GitLab projects, providing functions to list, create, and revoke tokens. It works with GitLab project identifiers and token data structures to handle authentication and permission management. Concrete use cases include automating token creation for CI/CD pipelines, revoking compromised tokens, and listing existing tokens for auditing purposes.",
-      "description_length": 391,
-      "index": 57,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Gitlab_s.Gitlab-Monad",
-      "library": "gitlab",
-      "description": "This module defines a monadic structure for composing GitLab API requests, handling state and concurrency through Lwt threads. It provides monadic combinators like `bind`, `map`, and operators such as `>>=`, `>|=`, and `>>~` to chain and transform API calls, with support for error handling via `catch` and exception propagation with `fail`. Concrete use cases include sequencing authenticated API requests, transforming response values, and managing stateful interactions with the GitLab server.",
-      "description_length": 496,
-      "index": 58,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Gitlab_s",
       "library": "gitlab",
-      "description": "This module provides a comprehensive interface for interacting with GitLab's API, enabling operations such as project management, issue tracking, merge request handling, and CI/CD pipeline integration. It centers around algebraic data types representing GitLab entities like projects, issues, users, and merge requests, with core operations for creating, querying, and modifying these resources. Submodules handle essential tasks including authentication via personal and project access tokens, HTTP communication with customizable headers and methods, and efficient data retrieval through paginated streams and conditional requests. Specific capabilities include automating issue and note creation, managing project milestones and branches, synchronizing user contributions, and integrating external status checks with merge requests, all while supporting rate limiting, concurrency, and stateful API interactions through a monadic interface.",
-      "description_length": 943,
-      "index": 59,
+      "description": "This module defines core abstractions for interacting with GitLab, including operations for managing projects, users, and pipelines. It works with custom algebraic data types representing GitLab entities like `project_id`, `user`, and `pipeline_status`. Concrete use cases include querying project details, triggering CI pipelines, and retrieving user permissions within a GitLab instance.",
+      "description_length": 389,
+      "index": 29,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Gitlab_json",
+      "module_path": "Gitlab_core",
       "library": "gitlab",
-      "description": "This module provides utilities for converting and validating date representations and GitLab webhook payloads. It includes functions to parse and format ISO 8601 datetime strings to and from Unix timestamps, and to transform raw JSON webhook data into structured event types like push or merge request events. These tools facilitate seamless interaction with GitLab's JSON API by enabling precise date handling and event parsing. For example, it can convert a GitLab webhook JSON into a typed event structure for processing pipeline updates or user activity notifications.",
-      "description_length": 572,
-      "index": 60,
+      "description": "This module implements core interactions with the GitLab API, including operations for querying projects, users, and merge requests. It works with HTTP clients and JSON data to handle authentication, requests, and response parsing. Concrete use cases include fetching project details, listing user activity, and retrieving merge request pipelines.",
+      "description_length": 347,
+      "index": 30,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Gitlab_j",
       "library": "gitlab",
-      "description": "This module handles JSON serialization and deserialization for GitLab API and webhook data, converting between OCaml values and JSON representations using Yojson. It models GitLab entities like projects, commits, pipelines, merge requests, and user data, with types structured to mirror API responses and event payloads. This enables use cases such as processing webhook events (CI/CD status updates, issue tracking) and parsing API responses into typed OCaml structures for application logic.",
-      "description_length": 493,
-      "index": 61,
-      "embedding_norm": 1.0
+      "description": "This module primarily provides JSON serialization and deserialization operations for GitLab webhook events and API interactions, focusing on converting between OCaml types and structured JSON payloads. It models a wide range of data structures including projects, users, commits, merge requests, issues, pipelines, and CI/CD metadata, closely mirroring GitLab's API responses and event hooks. These capabilities enable OCaml applications to process GitLab webhooks, automate project management tasks, and integrate with GitLab's CI/CD and issue tracking systems by handling events like push notifications, pipeline status updates, and merge request workflows.",
+      "description_length": 659,
+      "index": 31,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Gitlab_t",
       "library": "gitlab",
-      "description": "This module provides operations for processing GitLab webhook events and API interactions, focusing on structured modeling of CI/CD workflows, user activity, and project metadata. It works with rich data structures representing entities like commits, merge requests, pipelines, jobs, issues, feature flags, deployments, users, projects, and SCIM identities, capturing event payloads and API response details. Specific use cases include integrating with GitLab's CI/CD pipelines to track job statuses, handling push/merge request events for automation, and managing project/user data through API operations like token authentication or branch management.",
-      "description_length": 653,
-      "index": 62,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides structured data representations for GitLab webhook events and API interactions, focusing on version control and CI/CD workflows. It includes rich data structures for modeling push events, merge requests, pipelines, issues, and project/user metadata, along with detailed records for commits, job statuses, and deployment entities. These types enable precise handling of webhook notifications, pipeline status tracking, issue management, and GitLab API integrations for project configuration and activity monitoring.",
+      "description_length": 535,
+      "index": 32,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Gitlab_core",
+      "module_path": "Gitlab_json",
       "library": "gitlab",
-      "description": "This module provides a comprehensive interface to interact with the GitLab API, handling authentication, rate limiting, and asynchronous operations. It supports key data types like API clients, paginated streams, and versioned resources, with operations for querying user data, managing CI/CD runners, and traversing commit histories. Using Lwt-based monads, it enables composing complex workflows such as parallel API calls for CI pipeline monitoring or sequential requests for user activity audits. Example uses include automating runner provisioning, streaming large commit logs, and tracking resource changes via Etags.",
-      "description_length": 623,
-      "index": 63,
-      "embedding_norm": 0.9999999403953552
+      "description": "Parses GitLab webhook JSON payloads into typed events like push, merge request, and pipeline updates, using structured data conversion. Works directly with JSON strings and converts date-time fields to and from Unix timestamps via `Date` and `DateTime` modules. Used to build event-driven systems that react to GitLab actions, such as CI/CD status trackers or automated notification services.",
+      "description_length": 392,
+      "index": 33,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 64,
-    "meaningful_modules": 64,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 35,
+    "meaningful_modules": 34,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9714285714285714
   },
   "statistics": {
-    "max_description_length": 943,
-    "min_description_length": 281,
-    "avg_description_length": 437.671875,
-    "embedding_file_size_mb": 0.23293209075927734
+    "max_description_length": 659,
+    "min_description_length": 282,
+    "avg_description_length": 420.6470588235294,
+    "embedding_file_size_mb": 0.4930734634399414
   }
 }

@@ -1,31 +1,31 @@
 {
   "package": "tar-mirage",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 3,
-  "creation_timestamp": "2025-07-15T23:05:07.876983",
+  "creation_timestamp": "2025-08-14T22:54:46.349647",
   "modules": [
     {
       "module_path": "Tar_mirage.Make_KV_RW",
       "library": "tar-mirage",
-      "description": "This module supports read-write key-value operations including retrieval, partial reads, allocation, directory listing, and metadata queries (like last modified time or size) on a tar-formatted block device. It works with keys (`Mirage_kv.Key.t`) and string values, enforcing append-only semantics that disallow file removal or renaming, and integrates with MirageOS block storage for use cases requiring immutable tar-based filesystems with incremental writes. Error handling is explicitly structured for storage constraints and unsupported operations, making it suitable for Mirage unikernels needing append-only data persistence.",
-      "description_length": 632,
+      "description": "This module implements a read-write key-value interface for managing data stored in tar-formatted block devices, supporting operations like key-based reads, writes, partial updates, and allocation while enforcing append-only semantics. It works with string values and keys represented as `Mirage_kv.Key.t`, tracking metadata such as modification timestamps and content digests, and interacts directly with block devices via the `connect` and `free` functions. It is designed for MirageOS applications requiring lightweight storage management over immutable tar archives, such as unikernels needing to append or modify files in a constrained environment where deletions or renames are disallowed.",
+      "description_length": 695,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Tar_mirage.Make_KV_RO",
       "library": "tar-mirage",
-      "description": "This module constructs a read-only key-value store from a block device containing tar-formatted data. It supports operations such as checking key existence, retrieving full or partial values, listing directory entries, and querying metadata like modification time, digest, and size. The store works directly with tar archives mapped onto block devices, enabling efficient access to individual files or directories within the archive as if they were entries in a key-value store.",
-      "description_length": 478,
+      "description": "This module constructs a read-only key-value store from a block device containing tar-formatted data. It supports operations such as checking key existence, retrieving full or partial values, listing directory entries, and querying metadata like size, last modified time, and digest. It works with block devices and uses standard Mirage key-value types, making it suitable for embedding static file hierarchies in unikernels.",
+      "description_length": 425,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Tar_mirage",
       "library": "tar-mirage",
-      "description": "This module provides key-value access to tar-formatted data on block devices, supporting both read-only and append-only use cases. It exposes operations like key existence checks, value retrieval, partial reads, directory listing, and metadata queries (e.g., size, modification time), working with `Mirage_kv.Key.t` and string values. The read-write variant enforces append-only semantics, allowing allocation and incremental writes but disallowing removal or renaming, while the read-only variant enables efficient access to pre-existing tar archives. Example uses include embedding immutable file hierarchies in unikernels or building append-only logging systems over tar-backed storage.",
-      "description_length": 689,
+      "description": "This module provides read-only and read-write key-value interfaces for interacting with tar-formatted block devices. It supports operations like key existence checks, value retrieval and updates, directory listing, and metadata queries, working with `Mirage_kv.Key.t` keys and string values. It is used to embed and manipulate static file hierarchies in MirageOS unikernels, enabling lightweight storage management over tar archives in environments with strict immutability constraints.",
+      "description_length": 486,
       "index": 2,
       "embedding_norm": 1.0
     }
@@ -37,9 +37,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 689,
-    "min_description_length": 478,
-    "avg_description_length": 599.6666666666666,
-    "embedding_file_size_mb": 0.011303901672363281
+    "max_description_length": 695,
+    "min_description_length": 425,
+    "avg_description_length": 535.3333333333334,
+    "embedding_file_size_mb": 0.043914794921875
   }
 }

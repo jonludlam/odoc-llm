@@ -1,183 +1,183 @@
 {
   "package": "topkg",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 22,
-  "creation_timestamp": "2025-07-15T23:10:55.863300",
+  "creation_timestamp": "2025-08-15T12:14:10.700900",
   "modules": [
     {
       "module_path": "Topkg.Private.Opam.File",
       "library": "topkg",
-      "description": "This module provides direct access to opam file metadata through a list-based structure, where each entry is a field name paired with its string list value. It includes a codec for serializing and deserializing these fields, and a function to extract fields from a given opam file path by invoking the topkg executable. It is specifically used during pin builds to retrieve opam metadata for watermarking when the opam-format library is unavailable.",
-      "description_length": 449,
+      "description": "This module parses and encodes opam file fields, represented as a list of key-value pairs. It provides direct access to specific metadata from an opam file by invoking the `topkg` executable, primarily used during pin builds for watermarking. The `fields` function retrieves the parsed contents of an opam file, while `codec` handles the serialization and deserialization of field data.",
+      "description_length": 386,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Topkg.OS.Env",
+      "module_path": "Topkg.Conf.OCaml",
       "library": "topkg",
-      "description": "This module reads environment variables, providing `var` to retrieve an optional value and `opt_var` to get a default if undefined. It operates on strings for variable names and values. Use it to access configuration from the environment, such as feature flags or runtime settings.",
-      "description_length": 281,
+      "description": "This module parses and queries OCaml compiler configuration data obtained via `ocamlc -config`, providing access to compiler version, file extensions for object files and libraries, native compilation support, and platform-specific details like word size and shared library capabilities. It works with a concrete configuration type `t` built from the output of the OCaml compiler's configuration and the target OS. Use cases include determining the correct file extensions for compiled artifacts, checking if native or dynamic linking is supported, and detecting compiler features based on version and configuration keys.",
+      "description_length": 621,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Topkg.Private.Pkg",
-      "library": "topkg",
-      "description": "This module defines and manipulates package descriptions, providing accessors for metadata such as name, delegate command, build directory, and file lists for readmes, change logs, and licenses. It supports operations to configure distribution URIs, specify publish artifacts, and define linting rules including custom lint functions and checks for file existence and META/opam file correctness. Concrete use cases include constructing and validating package metadata for building, distributing, and publishing OCaml packages via OPAM and other systems.",
-      "description_length": 553,
-      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Topkg.Private.Ipc",
       "library": "topkg",
-      "description": "This module implements interprocess communication for transferring structured data between processes. It provides functions to access command-line arguments, serialization codecs, and answer file paths used in IPC exchanges. It supports concrete operations like retrieving package descriptions, running custom linting, and preparing distribution archives with specific parameters like build directories, package names, and version strings.",
-      "description_length": 439,
+      "description": "This module handles interprocess communication for package description retrieval, custom linting, and distribution preparation. It works with command-line arguments, codecs, and file paths to transfer data between processes. Concrete use cases include requesting package metadata, running lint checks, and preparing distribution archives with watermarked files.",
+      "description_length": 361,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Topkg.OS.Cmd",
+      "library": "topkg",
+      "description": "This module runs system commands and captures or redirects their output. It works with command values and file paths, supporting operations like checking executable availability, running commands, and handling output as strings, lines, or files. Concrete use cases include executing build tools, capturing compiler output, and redirecting command results to disk or standard output.",
+      "description_length": 382,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Topkg.Private.Opam",
       "library": "topkg",
-      "description": "This module provides low-level access to opam file metadata using a list-based structure, where each entry consists of a field name and its corresponding string list value. It includes a codec for parsing and printing these fields, along with functionality to extract metadata directly from an opam file path by invoking the topkg executable. This is used during pin builds to retrieve opam metadata for watermarking when opam-format is not available. Example usage includes reading fields like \"name\" or \"version\" from an opam file or generating a watermarked opam file during package builds.",
-      "description_length": 593,
+      "description": "This module provides functions to parse, encode, and manipulate opam file metadata through direct interaction with the `topkg` executable. It works with key-value pair representations of opam fields, supporting concrete use cases like extracting version information or package dependencies during pin builds. The `fields` function retrieves parsed opam data, while `codec` enables serialization and deserialization of field values for build automation tasks.",
+      "description_length": 458,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Topkg.OS.Dir",
+      "module_path": "Topkg.OS.Env",
       "library": "topkg",
-      "description": "Handles directory operations including existence checks, listing contents, and managing the current working directory. Works with file paths represented as `Topkg.fpath` values. Use cases include verifying directory presence, enumerating directory contents with control over dotfiles and relative paths, and temporarily changing the working directory for scoped operations.",
-      "description_length": 373,
+      "description": "This module handles environment variable queries with precise control over default values and presence checks. It operates on strings for variable names and values, offering direct access to the process environment. Concrete use cases include reading configuration from environment variables, with fallback to default values when variables are unset.",
+      "description_length": 350,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Topkg.Conf.OCaml",
+      "module_path": "Topkg.OS.Dir",
       "library": "topkg",
-      "description": "This module reads and queries OCaml compiler configuration by parsing the output of `ocamlc -config`. It provides access to compiler version, file extensions for object files and libraries, native compilation support, and system-specific properties like word size. Use it to determine build-time characteristics of the OCaml environment, such as whether shared libraries are supported or to detect the native compiler's availability.",
-      "description_length": 433,
+      "description": "This module handles directory operations such as checking existence, listing contents, and managing the current working directory. It works with file paths (`Topkg.fpath`) and provides precise control over directory traversal, including handling symbolic links and filtering dotfiles. Concrete use cases include verifying directory structure before package operations, listing files for inclusion in a distribution, and temporarily changing the working directory during build steps.",
+      "description_length": 482,
       "index": 6,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Topkg.Private.Codec",
       "library": "topkg",
-      "description": "This module enables structured data serialization and deserialization for interprocess communication, focusing on types like strings, file paths (`Fpath.t`), command fragments (`Cmd.t`), and versioned tuples. It supports encoding values into strings and decoding them back, with specialized handling for error messages, tagged unions, and versioned data formats. Typical use cases include exchanging package metadata between `topkg` and description files or safely persisting and retrieving complex configurations with schema evolution.",
-      "description_length": 536,
+      "description": "Encodes and decodes primitives (bool, int, string), collections (option, list, result), and composite types (tuples up to five elements) using combinators for versioned codecs, alternatives, and bidirectional data transformations. Handles specialized data structures like file paths, shell commands, and error messages, with support for serializing to strings and files. Enables robust interprocess communication between the package builder and description files, ensuring version compatibility and structured error handling during package management workflows.",
+      "description_length": 561,
       "index": 7,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Topkg.OS.Cmd",
+      "module_path": "Topkg.Private.Pkg",
       "library": "topkg",
-      "description": "This module runs system commands and captures or redirects their output. It works with command values, file paths, and process exit statuses. Use it to execute shell tools, check executable availability, collect command output into strings or files, or stream output directly to stdout.",
-      "description_length": 286,
+      "description": "This module defines operations to access and manipulate package metadata, including name, build directory, readmes, change logs, licenses, and associated opam files. It provides functions to retrieve package-specific configurations like delegate commands, distribution URIs, and linting settings for files, META files, and opam files. Concrete use cases include extracting package documentation paths, determining custom linting rules, and generating opam file locations during package building and publishing workflows.",
+      "description_length": 520,
       "index": 8,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Topkg.OS.File",
       "library": "topkg",
-      "description": "This module handles file operations including reading, writing, and managing temporary files. It works with file paths and strings, providing functions for existence checks, content substitution, and traversing directory hierarchies. Concrete use cases include reading from or writing to specific files, substituting variables in configuration files, and deleting or checking the existence of files during package building tasks.",
-      "description_length": 429,
+      "description": "This module handles file operations including existence checks, reading, writing, and managing temporary files. It works with file paths (`Topkg.fpath`) and supports special paths like `null` and `dash` for input/output redirection. Use cases include reading from or writing to files, filtering content during writes, and traversing directory structures while skipping specific files.",
+      "description_length": 384,
       "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Topkg.Log",
+      "library": "topkg",
+      "description": "This module manages logging levels and message reporting for error tracking and diagnostics during package building. It supports operations to set and retrieve logging levels, count errors and warnings, and emit formatted log messages at specific severity levels. Concrete use cases include logging build progress, handling errors during package configuration, and tracking warning counts for diagnostic reporting.",
+      "description_length": 414,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Topkg.Private",
       "library": "topkg",
-      "description": "This module contains internal utilities for managing package descriptions and build processes, including disabling the default main function and handling inter-process communication. It works with package definitions, command-line interfaces, and serialization formats to customize builds and integrate with external tools. Main data types include package metadata, opam file entries, command fragments, and versioned tuples, with operations for configuration, linting, serialization, and metadata extraction. Examples include constructing package descriptions, running custom lint checks, exchanging structured data between processes, and reading or watermarking opam files during builds.",
-      "description_length": 689,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Topkg.Pkg",
-      "library": "topkg",
-      "description": "This module provides operations for defining package installation, build workflows, and distribution management in OCaml projects. It works with file paths, build configurations, and metadata to handle tasks like structured installation into standard directories (e.g., `bin`, `lib`), conditional file moves, OCaml library/C stub installation, ocamlbuild tag application, and distribution file manipulation (e.g., watermarking, exclusion). Specific use cases include building and publishing OCaml packages, generating `META`/`opam` metadata, and automating installation logic with customizable paths and executable handling.",
-      "description_length": 624,
+      "description": "This module includes internal utilities for encoding and decoding structured data, managing package metadata, handling interprocess communication, and manipulating opam files. It works with primitive and composite data types, file paths, command-line arguments, and opam metadata. Use cases include serializing package configurations, transferring data between processes during builds, and extracting version and dependency information from opam files.",
+      "description_length": 452,
       "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Topkg.Exts",
-      "library": "topkg",
-      "description": "This module defines standard file extensions for OCaml packages, including interfaces, compiled modules, libraries, and executables. It provides predefined extension sets like `api`, `library`, and `exe`, and allows creating custom extension lists via `exts` and `ext`. These are used to specify package contents, such as C libraries in `Topkg.Pkg.clib` or executable targets in package configurations.",
-      "description_length": 402,
-      "index": 12,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Topkg.String",
-      "library": "topkg",
-      "description": "This module offers string manipulation, binary data parsing, and text validation operations, focusing on character-level transformations, substring analysis, and encoding-aware processing. It works with standard OCaml strings treated as byte arrays or structured text, supporting indexed access, UTF validation, and integer/byte conversions. Specific applications include parsing version strings, trimming/escaping text, hashing, and handling binary data formats like endianness-sensitive integer representations.",
-      "description_length": 513,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Topkg.Fpath",
-      "library": "topkg",
-      "description": "This module manipulates file system paths using a consistent type `t` that represents paths with only `/` as the directory separator, even on Windows. It provides operations to append paths, check if a path is a directory or file, extract base names and directory names, and handle file extensions with functions like `get_ext`, `has_ext`, and `rem_ext`. Concrete use cases include constructing and analyzing file paths during package building and ensuring cross-platform path consistency.",
-      "description_length": 489,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Topkg.Log",
-      "library": "topkg",
-      "description": "This module defines logging levels (App, Error, Warning, Info, Debug) and provides functions to control logging behavior, including setting the current level, counting errors or warnings, and parsing level representations. It supports formatted message logging at specific levels through `msg` and level-specific helpers like `err` or `info`, with integration for handling error results via `on_error_msg`. Concrete use cases include reporting build process diagnostics, filtering log output based on severity, and tracking error occurrences during package building.",
-      "description_length": 566,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Topkg.OS",
-      "library": "topkg",
-      "description": "This module provides comprehensive OS interaction capabilities through four child modules. It supports environment variable access with string-based keys and values, directory manipulation with path existence checks and scoped working directory changes, execution of system commands with output handling, and file operations including reading, writing, and temporary file management. You can retrieve environment settings with fallbacks, list directory contents selectively, run shell commands and capture their output, and perform file substitutions or deletions during build processes. Specific examples include checking for a configured feature flag, executing a compiler toolchain command, reading a template file and writing a modified version, or safely managing temporary build artifacts.",
-      "description_length": 795,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Topkg.R",
-      "library": "topkg",
-      "description": "This module provides functions to manipulate and combine result values, focusing on error handling and message formatting. It works with result types that carry error messages, specifically using the `msg` type to represent structured error information. Concrete use cases include transforming error values, appending or replacing error messages, and creating formatted error results directly.",
-      "description_length": 393,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Topkg.Vcs",
-      "library": "topkg",
-      "description": "This module provides operations for interacting with version control systems (Git and Mercurial), including repository detection, state querying (e.g., dirty status, HEAD commit), metadata retrieval (tags, commit timestamps), and change tracking. It works with version control repository data structures and file paths to perform actions like cloning, branch checkouts, committing files, and managing signed or forced tags. These capabilities are used in package building workflows to automate versioning from repository metadata, ensure clean working directories, and handle dependency cloning or release tagging.",
-      "description_length": 614,
-      "index": 18,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Topkg.Cmd",
       "library": "topkg",
-      "description": "This module represents and manipulates command lines and fragments, using a single type to model both. It supports operations to build command lines incrementally, including adding arguments, appending fragments, and conditional inclusion. Use cases include constructing shell commands for package building, where precise control over command-line arguments is required.",
-      "description_length": 370,
-      "index": 19,
+      "description": "This module constructs and manipulates command lines and fragments using a list-like structure of strings. It supports operations to build command sequences incrementally, conditionally include fragments, and compare or convert command representations. Concrete use cases include assembling system command invocations for package building tasks, such as invoking compilers or packaging tools with precise argument lists.",
+      "description_length": 420,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Topkg.Conf",
       "library": "topkg",
-      "description": "This module manages build configurations by parsing and resolving values from command-line arguments and environment variables, supporting data types like `bool`, `int`, and `fpath`. It provides operations to access build flags, package metadata, and OCaml-specific settings, enabling use cases like selecting toolchains or controlling debug output. A child module extracts OCaml compiler details such as version and file extensions by parsing `ocamlc -config`, while another constructs OS-aware commands and resolves configuration values with environment fallbacks. Together, they support flexible, context-aware build workflows across different platforms.",
-      "description_length": 657,
+      "description": "This module provides configuration value converters and predefined keys for parsing build-time settings from command-line arguments and environment variables, supporting types like strings, integers, booleans, file paths, and optional values. It enables context-aware package building by defining configuration keys for package metadata, build directories, version control status, and test flags, while also offering introspection tools for OCaml compiler capabilities and platform-specific features. Use cases include managing debug/test modes, selecting toolchains, and adapting builds to runtime environments via dynamic configuration resolution.",
+      "description_length": 649,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Topkg.OS",
+      "library": "topkg",
+      "description": "This module handles operating system interactions for environment variables, files, directories, and command execution. It provides precise operations for reading and setting environment variables, managing file and directory contents with path handling, and running system commands with output control. Concrete use cases include configuring builds based on environment settings, manipulating package files and directories, and invoking external tools during build processes.",
+      "description_length": 476,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Topkg.Pkg",
+      "library": "topkg",
+      "description": "This module orchestrates installation specifications, build configurations, and distribution workflows for OCaml packages. It manipulates file paths and metadata through combinators like `flatten`, field constructors (e.g., `lib`, `doc`), and configuration-driven operations to manage installation destinations, executable permissions, and conditional logic. Key applications include defining OCaml library (`mllib`) and C stub (`clib`) installations, generating `META` and `.opam` metadata files, and customizing distribution creation with watermarks or exclusion rules.",
+      "description_length": 571,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Topkg.Vcs",
+      "library": "topkg",
+      "description": "This module offers operations to interact with version control systems like Git and Mercurial, enabling tasks such as repository detection, commit state inspection, metadata retrieval (e.g., HEAD, tags, timestamps), and tracking file changes. It works with version control repositories (`Topkg.Vcs.t`) and file paths (`Topkg.fpath`), emphasizing Git for advanced features like signed tags and branch management. It is particularly useful in OCaml package workflows for automating source control tasks, ensuring consistent versioning, and validating repository states during builds.",
+      "description_length": 581,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Topkg.Fpath",
+      "library": "topkg",
+      "description": "This module manipulates file system paths using a consistent interface that ensures the use of `/` as the directory separator across all platforms. It provides operations to append paths, determine if a path represents a directory or file, extract base names and directory names, and handle file extensions. Concrete use cases include constructing and normalizing paths during package building, checking path types, and modifying file extensions when processing source or output files.",
+      "description_length": 485,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Topkg.R",
+      "library": "topkg",
+      "description": "This module provides functions to manipulate and combine result values, focusing on error handling and message formatting. It works with the result type `('a, 'b) Topkg.r`, allowing transformation of error values, creation of error messages, and formatted error generation. Concrete use cases include rewording errors, appending or replacing error messages, and constructing errors with formatted strings.",
+      "description_length": 405,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Topkg.Exts",
+      "library": "topkg",
+      "description": "This module defines standard file extensions for OCaml build artifacts such as interfaces, libraries, executables, and C-related archives. It provides predefined extension sets like `interface`, `library`, and `exe`, and allows constructing custom extension lists via `ext` and `exts`. These are used directly in package definitions to specify file types for inclusion, installation, or distribution.",
+      "description_length": 400,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Topkg.String",
+      "library": "topkg",
+      "description": "This module offers string manipulation, binary parsing, and Unicode handling capabilities through character-level transformations, substring operations, and encoding validation. It operates on `string` and character sequence types, enabling tasks like UTF-8 inspection, version prefix parsing, and endianness-aware integer extraction from binary string data. Specific applications include processing versioned identifiers, decoding encoded byte sequences, and implementing custom string traversal logic with positional predicates.",
+      "description_length": 530,
       "index": 20,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Topkg",
       "library": "topkg",
-      "description": "This module orchestrates OCaml package building by integrating distribution management, build configuration, and file system operations. It centers around data types like package metadata, paths, and command fragments, enabling tasks such as conditional installation, opam file generation, and version-controlled releases. Submodules handle string and path manipulation, OS interactions, result error handling, and command-line construction, supporting concrete actions like linting packages, building OCaml libraries with custom extensions, and logging build diagnostics. It streamlines workflows such as automated documentation generation, binary installation, and cross-platform path handling, all while interfacing with version control and external tools.",
-      "description_length": 759,
+      "description": "This module provides operations for OCaml package building, including path manipulation, command construction, logging, and version control integration. It works with strings, file paths, result types, and configuration values to support tasks like assembling build commands, handling errors with formatted messages, and interacting with Git repositories. Concrete use cases include constructing platform-agnostic file paths, logging build diagnostics with severity levels, and retrieving version control metadata for package builds.",
+      "description_length": 533,
       "index": 21,
       "embedding_norm": 1.0
     }
@@ -189,9 +189,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 795,
-    "min_description_length": 281,
-    "avg_description_length": 511.04545454545456,
-    "embedding_file_size_mb": 0.0803842544555664
+    "max_description_length": 649,
+    "min_description_length": 350,
+    "avg_description_length": 473.6818181818182,
+    "embedding_file_size_mb": 0.3192481994628906
   }
 }

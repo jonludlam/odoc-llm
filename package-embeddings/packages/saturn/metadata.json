@@ -1,135 +1,135 @@
 {
   "package": "saturn",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 16,
-  "creation_timestamp": "2025-07-15T23:09:29.469928",
+  "creation_timestamp": "2025-08-14T23:27:44.852089",
   "modules": [
     {
-      "module_path": "Saturn.Single_prod_single_cons_queue",
+      "module_path": "Saturn.Size",
       "library": "saturn",
-      "description": "This module implements a lock-free queue optimized for single-producer, single-consumer scenarios, supporting constant-time enqueue and dequeue operations. It works with arbitrary OCaml values and provides unsafe but fast access, mutation, and inspection operations when used within the correct domain constraints. Concrete use cases include high-performance pipelines where one domain produces data and another consumes it without contention, such as streaming data processing or task scheduling between two domains.",
-      "description_length": 517,
+      "description": "This module implements a wait-free size counter designed for use with lock-free data structures, supporting atomic increment and decrement operations that can be applied at most once per update. It works with a custom counter type `t` and associated `once` and `update` types to track and apply size changes in a parallelism-safe manner. It is particularly useful in concurrent environments where multiple threads interact with shared data structures and need to maintain an accurate size without blocking or risking data corruption.",
+      "description_length": 533,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Saturn.Stack",
+      "module_path": "Saturn.Htbl_unsafe",
       "library": "saturn",
-      "description": "This module implements a lock-free Treiber stack for concurrent access in multicore environments. It supports standard LIFO operations such as push, pop, peek, and batch manipulation via push_all and pop_all, all operating on a thread-safe stack type. It is suitable for task scheduling, shared work queues, and parallel algorithms requiring efficient last-in-first-out access.",
-      "description_length": 377,
+      "description": "This module implements a lock-free, resizable hash table with wait-free single-key reads, supporting concurrent access and modification across multiple threads. It provides atomic operations for adding, updating, and removing key-value bindings, along with comparison-based conditional modifications for building non-blocking algorithms. Concrete use cases include implementing distributed consensus protocols, concurrent caches, and shared state management in parallel applications.",
+      "description_length": 483,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Saturn.Bag",
       "library": "saturn",
-      "description": "This module implements a concurrent, lock-free bag that supports adding elements and removing random elements. It works with a generic value type `'v` and provides operations for pushing values into the bag and popping values either with `pop_exn` or `pop_opt`. Concrete use cases include load balancing across threads, randomized task scheduling, and concurrent sampling from a dynamic collection.",
-      "description_length": 398,
+      "description": "This module implements a concurrent, lock-free bag with randomized element removal. It supports creation, adding elements, and popping elements either with an exception on empty or returning an option type. It is useful for work-stealing schedulers or parallel task queues where unordered processing is acceptable.",
+      "description_length": 314,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Saturn.Single_prod_single_cons_queue_unsafe",
       "library": "saturn",
-      "description": "This module implements a lock-free queue optimized for single-producer, single-consumer use cases, offering unchecked push and pop operations with bounded capacity. It directly manipulates a circular buffer structure, exposing unsafe low-level access through functions like `push_exn`, `try_push`, `pop_opt`, and `peek_exn`, all requiring strict domain affinity. Concrete use cases include high-throughput pipeline stages in parallel programs where one domain produces data and another consumes it without synchronization overhead.",
-      "description_length": 531,
+      "description": "This module implements a lock-free queue optimized for single-producer, single-consumer scenarios, supporting constant-time enqueue and dequeue operations. It works with arbitrary OCaml values and uses an underlying circular buffer with a fixed maximum size determined at creation. Concrete use cases include high-performance pipelines where one domain produces data and another consumes it without contention, such as streaming processing or task scheduling between two domains.",
+      "description_length": 479,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Saturn.Htbl_unsafe",
-      "library": "saturn",
-      "description": "This module implements a lock-free, resizable hash table with wait-free single-key reads, supporting concurrent access and mutation across multiple threads. It provides atomic operations like `try_add`, `try_set`, `try_compare_and_set`, and `try_remove` for fine-grained control over key-value bindings, along with snapshotting via `to_seq` and bulk removal via `remove_all`. Concrete use cases include building scalable in-memory key-value stores, coordinating distributed consensus protocols, and managing shared state in high-throughput concurrent applications.",
-      "description_length": 564,
-      "index": 4,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Saturn.Bounded_queue",
-      "library": "saturn",
-      "description": "This module implements a lock-free bounded queue with operations for creating, inspecting, and modifying queues in a thread-safe manner. It supports fixed-capacity queues with functions to add elements (push_exn, try_push), remove elements (pop_exn, pop_opt, drop_exn), and check state (length, capacity_of, is_empty, is_full). Concrete use cases include coordinating workloads across threads where capacity limits are necessary to control resource usage, such as task scheduling with backpressure or managing fixed-size buffers in concurrent pipelines.",
-      "description_length": 553,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Saturn.Queue_unsafe",
-      "library": "saturn",
-      "description": "This module implements a lock-free, multi-producer multi-consumer queue based on the Michael-Scott algorithm, providing FIFO semantics for concurrent access in multicore environments. It supports operations for creating, inspecting, adding, and removing elements, working directly with generic queue structures built from lists or initialized empty. Use this queue when high-throughput, thread-safe message passing or task scheduling is needed, especially in scenarios where length tracking is not required.",
-      "description_length": 507,
-      "index": 6,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Saturn.Skiplist",
       "library": "saturn",
-      "description": "This module implements a lock-free skiplist data structure with ordered key-value pairs, supporting concurrent insertions, deletions, and lookups with average logarithmic time complexity. It works with any key type equipped with a comparison function and supports operations like `try_add`, `try_remove`, and `find_opt` for safe, non-blocking access in parallel contexts. Concrete use cases include concurrent caches, priority queues, and indexed data stores where fast access and updates are required across multiple domains.",
-      "description_length": 526,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Saturn.Work_stealing_deque",
-      "library": "saturn",
-      "description": "This module implements a lock-free work-stealing deque optimized for parallel task scheduling in multicore environments. It supports efficient push and pop operations from one end by a designated owner domain, and steal operations from the opposite end by multiple consumer domains. The deque is particularly suited for task scheduling systems where throughput and data locality are prioritized over fairness, such as parallel recursive algorithms or divide-and-conquer workloads.",
-      "description_length": 480,
-      "index": 8,
+      "description": "This module implements a lock-free skiplist data structure with ordered key-value bindings, supporting efficient concurrent insertions, lookups, and deletions. It works with arbitrary key and value types, requiring a user-provided comparison function for keys. Concrete use cases include concurrent caching systems, parallel dictionary implementations, and thread-safe symbol tables where ordered traversal and logarithmic-time operations are needed.",
+      "description_length": 450,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Saturn.Size",
+      "module_path": "Saturn.Bounded_stack",
       "library": "saturn",
-      "description": "This module implements a wait-free size counter for lock-free data structures, using a transactional approach to ensure correct updates without requiring thread indices. It provides operations to create a counter, apply increment or decrement updates at most once, and retrieve the current value, all while handling potential counter overflow. It is suitable for tracking the size of concurrent collections like linked lists where updates must be applied safely across threads.",
-      "description_length": 477,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements a lock-free bounded stack with fixed capacity, supporting atomic push, pop, and peek operations. It works with any OCaml value type and provides explicit functions for handling sequences and lists, including bulk operations with failure handling. Concrete use cases include concurrent task scheduling with bounded memory usage and parallel data processing pipelines where capacity limits are critical.",
+      "description_length": 424,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Saturn.Single_prod_single_cons_queue",
+      "library": "saturn",
+      "description": "This module implements a lock-free queue optimized for single-producer, single-consumer scenarios, supporting constant-time enqueue and dequeue operations. It works with arbitrary OCaml values and provides unsafe unchecked variants for performance-critical code. Concrete use cases include high-throughput pipelines where one domain produces data and another consumes it without contention.",
+      "description_length": 390,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Saturn.Queue",
       "library": "saturn",
-      "description": "This module implements a lock-free concurrent queue with Michael-Scott semantics, supporting multi-producer and multi-consumer operations in parallel contexts. It provides creation, insertion, and removal operations such as `push`, `pop_opt`, and `peek_exn`, working directly with queue instances built from elements of any type. It is suitable for high-throughput FIFO scenarios where parallel access is required, such as task scheduling or inter-domain communication.",
-      "description_length": 469,
+      "description": "This module implements a lock-free concurrent queue with multi-producer multi-consumer support, based on the Michael-Scott algorithm. It provides operations for creating queues, adding elements with `push`, inspecting and removing elements with `peek_exn`, `pop_exn`, and their `option` variants, and checking emptiness. Designed for high-concurrency FIFO scenarios where performance and parallelism safety are critical.",
+      "description_length": 420,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Saturn.Bounded_queue_unsafe",
+      "library": "saturn",
+      "description": "Implements a lock-free bounded queue with operations for creating, inspecting, and modifying queues with fixed capacity. It supports atomic push and pop operations, with functions to check queue status such as full, empty, length, and capacity. Designed for high-performance concurrent scenarios where strict capacity limits are required, such as resource-constrained producer-consumer systems.",
+      "description_length": 394,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Saturn.Single_consumer_queue",
+      "library": "saturn",
+      "description": "This module implements a lock-free queue optimized for single-consumer, multi-producer scenarios in a multicore OCaml environment. It supports atomic push operations from multiple domains and exclusive consumer operations like pop, peek, and close on one domain. Suitable for task scheduling where one domain manages a queue and multiple domains submit tasks.",
+      "description_length": 359,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Saturn.Work_stealing_deque",
+      "library": "saturn",
+      "description": "This module implements a lock-free work-stealing deque optimized for parallel task scheduling where one domain manages its own task queue and other domains steal tasks from the opposite end. It supports efficient push and pop operations for the owner domain, and steal operations for other domains, working with dynamically sized FIFO/LIFO task sequences. Concrete use cases include parallel task schedulers for divide-and-conquer algorithms or load-balanced pipeline stages where throughput and cache locality outweigh fairness concerns.",
+      "description_length": 538,
       "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Saturn.Htbl",
       "library": "saturn",
-      "description": "This module implements a lock-free, resizable hash table optimized for parallelism in multicore environments. It supports atomic operations such as wait-free single-key reads, conditional inserts, updates, and removals, and provides snapshotting of contents for iteration or bulk extraction. It is suitable for building concurrent data caches, distributed coordination protocols, and scalable state tracking systems where high throughput and low contention are critical.",
-      "description_length": 470,
+      "description": "This module implements a lock-free, resizable hash table optimized for parallelism in Multicore OCaml. It supports atomic operations such as `try_add`, `try_set`, `try_compare_and_set`, and `try_remove`, which return success/failure status instead of raising exceptions, making them suitable for non-blocking algorithms. The hash table is designed for concurrent environments where multiple threads interact with shared state, such as implementing distributed coordination protocols or shared caches with high write throughput.",
+      "description_length": 527,
       "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Saturn.Bounded_stack",
+      "module_path": "Saturn.Queue_unsafe",
       "library": "saturn",
-      "description": "This module implements a lock-free bounded stack based on Treiber's algorithm, supporting operations like push, pop, peek, and batch manipulation with optional capacity constraints. It works with generic OCaml values and provides concrete functionality for managing a thread-safe LIFO structure where capacity limits and length tracking are required. Use cases include concurrent task scheduling, resource pooling, and bounded buffer management in multicore environments.",
-      "description_length": 471,
+      "description": "This module implements a lock-free, multi-producer multi-consumer FIFO queue based on the Michael-Scott algorithm. It supports creation from a list, peeking, popping, and pushing operations, with unsafe variants that raise exceptions on empty queue access. Designed for high-performance concurrent scenarios in multicore OCaml, it is ideal for task scheduling or inter-domain communication where lightweight, non-blocking synchronization is critical.",
+      "description_length": 450,
       "index": 12,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Saturn.Single_consumer_queue",
+      "module_path": "Saturn.Bounded_queue",
       "library": "saturn",
-      "description": "This module implements a lock-free queue optimized for single-consumer, multi-producer scenarios in a multicore OCaml environment. It supports atomic push operations from multiple domains and exclusive consumer operations like pop, peek, and close on one domain. Designed for high-performance task scheduling, it enables efficient work distribution in parallel applications such as job schedulers or event loops where one domain manages task retrieval and execution.",
-      "description_length": 466,
+      "description": "This module implements a lock-free bounded queue with operations for creating, inspecting, and modifying queues in a thread-safe manner. It supports fixed-capacity queues with functions to add elements (blocking or non-blocking), retrieve or remove the front element, and check the queue's state (empty, full, length, capacity). Concrete use cases include coordinating work-stealing schedulers or managing fixed-size buffers in concurrent applications.",
+      "description_length": 452,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Saturn.Bounded_queue_unsafe",
+      "module_path": "Saturn.Stack",
       "library": "saturn",
-      "description": "This module implements a lock-free bounded queue optimized for parallelism, supporting operations like `push_exn`, `try_push`, `pop_exn`, `peek_opt`, and `is_full`. It works with a thread-safe, fixed-capacity FIFO structure, where capacity is set at creation and cannot be changed. Concrete use cases include coordinating producer-consumer workflows under memory constraints and managing parallel tasks with backpressure in multicore environments.",
-      "description_length": 447,
+      "description": "This module implements a lock-free Treiber stack optimized for concurrent access in multicore environments. It supports atomic push, pop, and peek operations, along with batch operations like push_all and pop_all, working directly with lists and sequences. Concrete use cases include task scheduling in parallel algorithms and shared work queues in domain-local and global contexts.",
+      "description_length": 382,
       "index": 14,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Saturn",
       "library": "saturn",
-      "description": "This collection provides a range of lock-free data structures designed for efficient, thread-safe operations in multicore OCaml programs. It includes queues, stacks, bags, deques, hash tables, and skiplists, each optimized for specific concurrency patterns such as single-producer single-consumer pipelines, multi-domain task scheduling, or scalable key-value storage. These structures support operations like atomic push/pop, batch manipulation, bounded capacity enforcement, and wait-free reads, enabling concrete applications such as parallel algorithms, concurrent caches, and high-throughput work distribution without traditional locking mechanisms.",
-      "description_length": 654,
+      "description": "This module provides parallelism-safe data structures optimized for concurrent programming in Multicore OCaml. It includes hash tables, skiplists, queues, stacks, and deques that support atomic operations such as `push`, `pop`, `try_add`, and `try_remove`, designed for non-blocking algorithms and high-concurrency scenarios. Concrete use cases include task scheduling in parallel applications, shared caches with high write throughput, and inter-domain communication in distributed coordination protocols.",
+      "description_length": 506,
       "index": 15,
       "embedding_norm": 1.0
     }
@@ -141,9 +141,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 654,
-    "min_description_length": 377,
-    "avg_description_length": 494.1875,
-    "embedding_file_size_mb": 0.05855274200439453
+    "max_description_length": 538,
+    "min_description_length": 314,
+    "avg_description_length": 443.8125,
+    "embedding_file_size_mb": 0.23228168487548828
   }
 }

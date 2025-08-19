@@ -1,48 +1,56 @@
 {
   "package": "jsonrpc",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:07:19.020614",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 11,
+  "creation_timestamp": "2025-08-14T23:12:13.771005",
   "modules": [
     {
       "module_path": "Jsonrpc.Response.Error.Code",
       "library": "jsonrpc",
-      "description": "This module defines a polymorphic variant type representing standardized error codes for JSON-RPC responses, including both protocol-defined codes like `ParseError` and `InvalidRequest`, and application-specific codes like `ServerNotInitialized` and `ContentModified`. It supports operations to match, compare, and convert error codes to integers or strings. Use cases include handling and categorizing errors in JSON-RPC servers and clients, such as distinguishing between client errors and server errors or checking for specific failure conditions like cancellation or modification of content.",
-      "description_length": 595,
+      "description": "This module defines a polymorphic variant type `t` representing standardized JSON-RPC error codes. It includes specific constructors for common JSON-RPC errors such as `ParseError`, `InvalidRequest`, and `MethodNotFound`, along with server-specific and custom error codes via `Other`. It is used to classify and handle error conditions in JSON-RPC communication, enabling precise error responses and client-side error handling.",
+      "description_length": 427,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Jsonrpc.Json.Jsonable.S",
+      "module_path": "Jsonrpc.Response.Error",
       "library": "jsonrpc",
-      "description": "This module defines conversion functions between a custom type `t` and JSON values using the `Jsonrpc.Json.t` representation. It includes `yojson_of_t` for serializing values of type `t` into JSON and `t_of_yojson` for deserializing JSON back into `t`. It is used to integrate custom data types with JSON-RPC communication, enabling precise data exchange with JSON-based services.",
-      "description_length": 380,
+      "description": "This module defines a structured representation of JSON-RPC error responses, including standardized error codes, descriptive messages, and optional additional data. It provides functions to construct and raise errors, convert exceptions to errors, and serialize errors to JSON. It is used to generate precise error outputs in JSON-RPC servers and to handle client-side error parsing and recovery.",
+      "description_length": 396,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Jsonrpc.Json.Jsonable",
       "library": "jsonrpc",
-      "description": "This module enables type-safe conversion between OCaml values and JSON representations, primarily through `yojson_of_t` and `t_of_yojson` functions. It supports structured data serialization for JSON-RPC payloads, allowing precise transmission of custom types over communication channels. Child modules extend this capability by implementing the `S` module type, providing type-specific serialization for user-defined data. For example, a module implementing `S` can define how a custom type `t` is converted to and from `Yojson.Safe.t` for use in JSON-based APIs.",
-      "description_length": 564,
+      "description": "This module defines type-specific serialization and deserialization functions for converting OCaml values to and from JSON representations. It works with abstract types that implement the `S` module type, enabling conversion to and from `Yojson.Safe.t`. It is used to build JSON-RPC request and response handlers that automatically marshal OCaml values into JSON payloads.",
+      "description_length": 372,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Jsonrpc.Response.Error",
+      "module_path": "Jsonrpc.Structured",
       "library": "jsonrpc",
-      "description": "This module defines error responses for a JSON-RPC implementation, including error codes, messages, and optional structured data. It provides functions to construct errors, convert them to JSON, and raise them as exceptions, supporting use cases such as signaling invalid requests, internal server errors, or application-specific failures. The child module defines a polymorphic variant type for standardized error codes, including both protocol-defined and application-specific codes, with operations to match, compare, and convert them. Together, they enable precise error handling and categorization in JSON-RPC services, such as distinguishing client from server errors or detecting content modifications.",
-      "description_length": 709,
+      "description": "Handles structured JSON-RPC data with conversion functions between its internal representation and Yojson. Works with associative lists and lists of JSON values. Used to serialize and deserialize JSON-RPC payloads while preserving structural integrity.",
+      "description_length": 252,
       "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Jsonrpc.Json",
+      "library": "jsonrpc",
+      "description": "This module provides functions for constructing, manipulating, and querying JSON values using the `t` type, which includes primitives like strings, numbers, booleans, and structured types like lists and associations. It supports concrete operations such as field extraction from associative lists, list traversal, and type-safe value retrieval. Use cases include parsing JSON payloads from network requests, building JSON responses in RPC handlers, and extracting specific fields from JSON objects for further processing.",
+      "description_length": 521,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Jsonrpc.Response",
       "library": "jsonrpc",
-      "description": "This module handles JSON-RPC response construction and serialization, offering functions to create successful or error responses and convert them to Yojson-compatible structures. It supports operations on response values, errors, and identifiers, enabling precise error handling through a polymorphic variant type for standardized error codes and structured error data. The module allows constructing responses with values or errors, serializing them to JSON, and raising errors as exceptions, such as signaling invalid requests or internal server failures. It also supports matching, comparing, and converting error codes, distinguishing client from server errors, and handling application-specific failure cases.",
-      "description_length": 714,
-      "index": 4,
+      "description": "This module represents JSON-RPC responses, encapsulating either a successful result or an error, along with the corresponding request ID. It provides functions to construct valid responses from results or errors and supports serialization and deserialization to and from JSON using the Yojson-compatible format. It is used to format output for JSON-RPC servers and to parse incoming responses on the client side.",
+      "description_length": 412,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
@@ -50,68 +58,52 @@
       "library": "jsonrpc",
       "description": "Handles JSON-RPC notification messages by constructing and serializing them. Works with JSON-RPC method names and structured data parameters. Used to create and convert notification payloads for transmission over JSON-compatible interfaces.",
       "description_length": 240,
-      "index": 5,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Jsonrpc.Id",
+      "library": "jsonrpc",
+      "description": "Handles JSON-RPC request identifiers, supporting string and integer types. Exposes serialization to and from JSON, hashing, and equality checks. Useful for managing unique request IDs in JSON-RPC communication.",
+      "description_length": 210,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Jsonrpc.Packet",
+      "library": "jsonrpc",
+      "description": "This module serializes and deserializes JSON-RPC packets to and from JSON values. It supports converting individual requests, notifications, responses, and batches of mixed requests or notifications to JSON and vice versa. Use this module when handling raw JSON input/output for JSON-RPC communication, such as parsing incoming JSON into structured packets or encoding packets for transmission.",
+      "description_length": 394,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Jsonrpc.Request",
       "library": "jsonrpc",
-      "description": "Handles the construction and serialization of JSON-RPC request objects. Works with JSON-RPC request structures, including method names, optional parameters, and request IDs. Used to create properly formatted JSON-RPC requests and convert them to JSON for transmission over a network or inter-process communication.",
-      "description_length": 314,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Jsonrpc.Id",
-      "library": "jsonrpc",
-      "description": "Handles JSON-RPC request identifiers, supporting string and integer types. Provides serialization to and from JSON, hashing, and equality checks. Useful for managing unique request IDs in JSON-RPC communication.",
-      "description_length": 211,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Jsonrpc.Json",
-      "library": "jsonrpc",
-      "description": "This module provides a comprehensive interface for working with JSON data, combining core JSON manipulation capabilities with type-safe serialization through its child modules. It defines the primary JSON data type and supports parsing, constructing, and serializing JSON values, enabling tasks like transforming JSON between formats, validating payloads, and handling input/output in RPC calls. The main operations include converting between OCaml values and JSON representations using functions like `yojson_of_t` and `t_of_yojson`, which are extended by child modules implementing the `S` module type. For example, a user-defined type `t` can be seamlessly encoded to and decoded from `Yojson.Safe.t` for use in structured JSON-RPC communications.",
-      "description_length": 750,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Jsonrpc.Packet",
-      "library": "jsonrpc",
-      "description": "This module serializes and deserializes JSON-RPC packets to and from JSON values. It handles individual requests, notifications, responses, and batches of mixed requests and notifications. Use this module when parsing incoming JSON into structured packets or converting packets back to JSON for transmission.",
-      "description_length": 308,
+      "description": "Handles the construction and serialization of JSON-RPC request objects. Works with JSON-RPC request structures, including method names, optional parameters, and request IDs. Used to create properly formatted JSON-RPC requests and convert them to JSON for transmission over a communication channel.",
+      "description_length": 297,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Jsonrpc.Structured",
-      "library": "jsonrpc",
-      "description": "Handles conversion between structured data types and JSON representations in a JSON-RPC context. It provides functions to transform values of a structured type `t` (comprising associative lists and lists of JSON values) into JSON and vice versa. This module is used to serialize and deserialize JSON-RPC messages for transmission or storage.",
-      "description_length": 341,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Jsonrpc",
       "library": "jsonrpc",
-      "description": "This module implements a complete JSON-RPC protocol handler, enabling construction, serialization, and parsing of requests, responses, and notifications. It defines core data types for JSON values, request IDs, method names, and structured payloads, with operations to convert between OCaml values and JSON using `yojson_of_t` and `t_of_yojson`. You can build valid JSON-RPC messages with optional parameters and IDs, handle errors with structured data and standardized codes, and serialize or parse entire packets for network transmission or inter-process communication. Examples include encoding a method call with parameters and an ID, decoding a batch of mixed requests and notifications, or raising and catching RPC-specific errors during processing.",
-      "description_length": 755,
-      "index": 11,
-      "embedding_norm": 1.0
+      "description": "This module implements JSON-RPC 2.0 functionality, providing structured handling of RPC requests, responses, notifications, and batches. It works with JSON values represented using the `t` type, request identifiers, and associative structures for method parameters and payloads. Concrete use cases include building JSON-RPC clients and servers, handling remote procedure calls over HTTP or WebSocket, and serializing/deserializing RPC messages for network transmission.",
+      "description_length": 469,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 12,
-    "meaningful_modules": 12,
+    "total_modules_in_package": 11,
+    "meaningful_modules": 11,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 755,
-    "min_description_length": 211,
-    "avg_description_length": 490.0833333333333,
-    "embedding_file_size_mb": 0.04398822784423828
+    "max_description_length": 521,
+    "min_description_length": 210,
+    "avg_description_length": 362.72727272727275,
+    "embedding_file_size_mb": 0.15976524353027344
   }
 }

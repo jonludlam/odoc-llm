@@ -1,293 +1,293 @@
 {
   "package": "shexp",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 34,
-  "creation_timestamp": "2025-07-15T23:13:41.861724",
+  "creation_timestamp": "2025-08-15T12:32:50.009028",
   "modules": [
-    {
-      "module_path": "Shexp_sexp.Sexp",
-      "library": "shexp.sexp",
-      "description": "This module defines a type for s-expressions with combinators to construct values from basic types like integers, strings, and booleans, and recursively from pairs, lists, and records. It supports conversion of OCaml values into s-expression representations, enabling structured data serialization. Use cases include configuration parsing, data interchange formats, and representing structured values in a uniform tree format.",
-      "description_length": 426,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Shexp_sexp.Std",
-      "library": "shexp.sexp",
-      "description": "This module defines functions for converting values of various primitive and container types into S-expressions. It supports types like lists, options, integers, floats, strings, characters, booleans, and exceptions. These functions are used to serialize data structures for logging, configuration, or inter-process communication.",
-      "description_length": 330,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Shexp_sexp",
-      "library": "shexp.sexp",
-      "description": "This module provides a unified system for constructing and serializing OCaml values into s-expressions, supporting primitive types like integers, strings, and booleans, as well as structured types such as lists, pairs, records, and options. It enables conversion of complex data structures into a uniform tree format, suitable for configuration parsing, logging, and inter-process communication. For example, you can serialize a list of integers into an s-expression or convert a record into a nested s-expression structure for configuration files.",
-      "description_length": 548,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Shexp_bigstring.Bigstring",
       "library": "shexp.bigstring",
-      "description": "This module provides operations for creating, slicing, and manipulating bigstrings, including functions for copying data between bigstrings and strings or bytes, searching for characters, and safely handling temporary bigstring allocations. It works directly with bigstrings, strings, and bytes, offering efficient range checks and in-place modifications. Concrete use cases include handling large binary data buffers, implementing I/O operations, and parsing binary formats where direct memory manipulation is required.",
-      "description_length": 520,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides operations for creating, manipulating, and inspecting bigstrings, including functions for allocation, slicing, searching, and efficient memory transfers between bigstrings, strings, and bytes. It works directly with the `Bigarray.Array1.t` type specialized to `char` elements in C layout, ensuring compatibility with low-level I/O and binary data processing. Concrete use cases include handling large binary buffers for file operations, network communication, and in-place string manipulation where performance and memory control are critical.",
+      "description_length": 564,
+      "index": 0,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_bigstring",
       "library": "shexp.bigstring",
-      "description": "This module provides core functionality for working with bigstrings, enabling efficient creation, slicing, and manipulation of large binary data buffers. It supports operations such as copying data between bigstrings, strings, and bytes, searching for characters, and performing in-place modifications, with built-in range checks for safety. Temporary bigstring allocations can be handled safely, making it suitable for I/O operations, binary parsing, and direct memory manipulation tasks. For example, it can be used to read and process binary file contents directly into a bigstring or to parse structured binary formats like network packets.",
-      "description_length": 644,
-      "index": 4,
+      "description": "This module handles bigstring creation, slicing, and in-place modification with direct support for efficient binary data processing. It operates on `Bigarray.Array1.t` values specialized to `char` elements, enabling low-level memory manipulation and interoperability with I/O operations. Use it for high-performance tasks like parsing binary protocols, transforming large text buffers, or interfacing with system calls that require raw memory access.",
+      "description_length": 450,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shexp_process.Std.Process.Let_syntax.Let_syntax",
+      "library": "shexp.process",
+      "description": "This module provides monadic operations for composing shell command processes, including `return`, `bind`, `map`, and `both` (alias `fork`) to sequence and combine process values. It works with the `Shexp_process.Std.Process.t` type representing shell commands and their execution context. Concrete use cases include building complex shell pipelines by chaining commands, running multiple processes in parallel, and transforming process outputs within a typed functional interface.",
+      "description_length": 481,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Std.Process.Context.Working_dir",
       "library": "shexp.process",
-      "description": "This module defines the working directory context for executing processes, supporting operations to specify whether to inherit the current directory, use a symbolic path, or reference a physical directory with an open file descriptor. It works with string paths and Unix file descriptors, enabling precise control over process execution environments. Concrete use cases include setting up isolated or chrooted process executions where directory access must be restricted or explicitly controlled.",
-      "description_length": 496,
-      "index": 5,
+      "description": "Manages working directory contexts for process execution, supporting directory inheritance, path-based directory changes, and physical directory references with file descriptor tracking. Provides operations to construct, inspect, and apply directory contexts when launching processes. Useful for ensuring processes run in the correct filesystem location, such as switching to a temporary directory or preserving the current working directory across process spawns.",
+      "description_length": 464,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Shexp_process.Std.Process.Let_syntax",
+      "module_path": "Shexp_process.Std.Process.With_debug",
       "library": "shexp.process",
-      "description": "This module enables writing process pipelines using monadic composition, allowing values in the process monad to be sequenced with `>>=`, transformed with `>>|`, and combined in sequence or parallel. It supports operations over `'a Process.t`, such as chaining shell commands, running processes concurrently with `both`, and handling their results in a functional style. Concrete use cases include scripting workflows that run multiple external commands in parallel or sequence, and composing their outputs into structured values. The module focuses on direct monadic manipulation, with submodules providing specific process execution combinators.",
-      "description_length": 647,
-      "index": 6,
+      "description": "This module provides the `eval` function for running a process computation with optional context, output capture, and a debugger instance. It works with process values defined by the `Shexp_process.Std.Process` type, along with context and debugger types. A concrete use case is evaluating shell command pipelines with custom debugging logic while optionally capturing their output.",
+      "description_length": 382,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shexp_process.Std.Process.Background_command",
+      "library": "shexp.process",
+      "description": "Handles execution of background shell commands with process IDs. Works with shell expressions and process types to manage asynchronous command execution. Used to spawn and track background processes, retrieve their process IDs, and integrate with system-level task management.",
+      "description_length": 276,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Std.Process.Prim",
       "library": "shexp.process",
-      "description": "This module converts primitive process calls and their results into s-expressions, enabling serialization of execution details and outcomes for logging or external processing. It operates on types like `('a, 'b) t` and `'b`, providing direct functions to encode process structures and values. The empty child module has no impact on functionality. Example uses include transforming process call inputs and outputs into a structured, serializable format for analysis or storage.",
-      "description_length": 477,
-      "index": 7,
+      "description": "Handles low-level process execution and result conversion in the s-expression-based process monad. It works with process definitions and their arguments, converting calls and results to s-expressions for serialization or logging. Used internally to implement process invocation and result inspection in a format compatible with s-expression-based systems.",
+      "description_length": 355,
+      "index": 6,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Shexp_process.Std.Process.List",
-      "library": "shexp.process",
-      "description": "Executes a list of values sequentially, applying a function that returns a process to each element, and combines the results into a single process. Works with lists of any type and functions that produce unit processes. Useful for running a series of shell-like commands in sequence where each command depends on the previous one.",
-      "description_length": 330,
-      "index": 8,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Std.Process.Traced",
       "library": "shexp.process",
-      "description": "This module evaluates process expressions with tracing, returning both the result and a S-expression trace. It works with process monads and execution contexts to capture detailed runtime information. Use it to inspect or log the execution steps of shell command pipelines.",
-      "description_length": 273,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Shexp_process.Std.Process.With_debug",
-      "library": "shexp.process",
-      "description": "This module provides the `eval` function for running a process within a process monad, allowing optional context and output capture settings. It works with process monad values parameterized over a debugger type `Dbg.t`. Use this module to execute and debug shell-like processes with custom debugging behavior, such as logging or tracing intermediate steps during evaluation.",
-      "description_length": 375,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Shexp_process.Std.Process.Debugger",
-      "library": "shexp.process",
-      "description": "This module defines a debugger interface for tracing and logging operations within the `Shexp_process` monad. It provides callbacks for monitoring primitive execution, handling exceptions, capturing output, and managing forked and sub contexts during evaluation. Concrete use cases include debugging shell command execution pipelines and inspecting the evaluation of nested or threaded process expressions.",
-      "description_length": 406,
-      "index": 11,
+      "description": "This module evaluates process expressions with tracing, returning both the result and a full execution trace in S-expressions. It works with process monads and execution contexts to capture detailed runtime information. Use it for debugging or auditing process executions by inspecting the generated trace.",
+      "description_length": 306,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Std.Process.Context",
       "library": "shexp.process",
-      "description": "This module manages execution contexts for external processes, combining control over input/output redirection, environment variables, and working directories into a unified interface. It provides core operations like `create` to set up contexts with custom file descriptors and environment settings, and `dispose` to release resources, while its child module adds precise control over working directories using paths or file descriptors. You can use it to run commands with redirected I/O, custom environments, or restricted directory access, such as executing a process in an isolated chroot environment or capturing output to a file. The interface works with both string paths and Unix file descriptors, supporting low-level process management tasks directly and through its submodules.",
-      "description_length": 789,
-      "index": 12,
+      "description": "Manages execution contexts for processes, including working directory state, file descriptors, and environment variables. It supports creating contexts with custom settings and ensures proper resource cleanup through disposal. This is useful for running processes in controlled environments, such as isolated directories or with redirected I/O streams.",
+      "description_length": 352,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shexp_process.Std.Process.List",
+      "library": "shexp.process",
+      "description": "This module provides an `iter` function that runs a process-producing function over each element of a list, sequentially. It works with lists of values and process monads that return unit. A concrete use case is executing a series of shell commands in sequence, where each command is derived from an element of the list.",
+      "description_length": 320,
+      "index": 9,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Shexp_process.Std.Process.Background_command",
+      "module_path": "Shexp_process.Std.Process.Let_syntax",
       "library": "shexp.process",
-      "description": "Handles execution of background shell commands with process IDs. Works with shell expressions and process types to manage asynchronous command execution. Used for running and tracking background tasks like long-lived services or batch jobs.",
-      "description_length": 240,
-      "index": 13,
+      "description": "This module provides monadic combinators like `return`, `bind`, `map`, and `both` to compose and sequence shell command processes. It operates on the `Shexp_process.Std.Process.t` type, which represents executable shell commands with their context. Use it to build structured command pipelines, run parallel processes, and chain transformations on command outputs in a type-safe manner.",
+      "description_length": 386,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Std.Process.Infix",
       "library": "shexp.process",
-      "description": "This module provides infix operators for composing and sequencing process actions in a monadic style. It works with the `Shexp_process.Std.Process.t` type, enabling chaining of processes using bind, map, sequence, pipe, and parallel execution. Concrete use cases include building complex command pipelines, combining multiple process executions, and structuring asynchronous process workflows.",
-      "description_length": 393,
-      "index": 14,
+      "description": "This module defines infix operators for composing and chaining process computations in a monadic style. It works with values of type `'a Shexp_process.Std.Process.t`, representing shell command executions that can be sequenced or transformed. Concrete use cases include combining multiple shell commands with dependencies, transforming command outputs, or chaining processes where the output of one feeds into another.",
+      "description_length": 418,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Std.Process.Logged",
       "library": "shexp.process",
-      "description": "Works with the Shexp process monad to provide logging functionality for process execution. It allows capturing and logging events during process evaluation using a custom log function, which defaults to printing to stderr. Concrete use cases include debugging process execution by logging intermediate steps or integrating with external logging systems.",
-      "description_length": 353,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Shexp_process.Std.Process",
-      "library": "shexp.process",
-      "description": "This module orchestrates concurrent system processes through a monadic framework, enabling execution of external commands, I/O redirection, and lifecycle management. It centers on `'a Process.t`, a type for asynchronous computations, and supports environment manipulation, file descriptor handling, and custom debugging via submodules. You can compose pipelines with monadic operators, run commands in sequence or parallel, capture and log execution traces, and manage processes with custom contexts for I/O and environment. Specific tasks include scripting shell-like automation, isolating processes in custom directories, and debugging workflows with structured logging or s-expression traces.",
-      "description_length": 695,
-      "index": 16,
+      "description": "This module provides a function `eval` that runs a process, allowing optional logging of events via a provided function. It works with process values and context types, capturing their execution state. A concrete use case is executing shell commands while logging intermediate steps for debugging or auditing purposes.",
+      "description_length": 318,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Context.Working_dir",
       "library": "shexp.process",
-      "description": "Manages working directory configurations for process execution. Provides functions to set, retrieve, and manipulate directory paths and file descriptors. Used to control the current working directory when launching external processes.",
-      "description_length": 234,
-      "index": 17,
+      "description": "Manages working directory configurations for process execution. Provides functions to set, retrieve, and manipulate directory paths and file descriptors. Used to control the current working directory when spawning processes, ensuring correct file access and execution context.",
+      "description_length": 276,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shexp_process.Std.Process",
+      "library": "shexp.process",
+      "description": "This module provides a process monad for composing and executing shell commands with fine-grained control over I/O, concurrency, and system resources. It works with process values representing shell operations, contexts for environment and working directory management, and system primitives like file descriptors and process IDs. It is used to build complex command pipelines, manage background processes, handle temporary file creation/deletion, and implement robust error handling around external process execution.",
+      "description_length": 518,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Let_syntax.Let_syntax",
       "library": "shexp.process",
-      "description": "This module enables monadic composition of shell command processes using `ppx_let` syntax, supporting operations like `bind`, `map`, and `both` over `Process.t` values. It allows chaining and combining shell commands in a readable, sequential style, such as passing the output of one command as input to another or running multiple commands in parallel. The `Process.t` type represents executable shell commands, and operations transform or combine these processes into complex workflows. While it includes a placeholder child module, the core functionality resides in its direct API for structuring process pipelines.",
-      "description_length": 618,
-      "index": 18,
+      "description": "This module provides monadic operations for composing process values using `ppx_let` syntax. It supports binding, mapping, and combining processes that produce values of arbitrary types. Use it to sequence shell command executions and handle their outputs in a structured, composable way.",
+      "description_length": 288,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Shexp_process.Traced",
+      "module_path": "Shexp_process.Prim",
       "library": "shexp.process",
-      "description": "This module evaluates process expressions and returns both the result and a detailed execution trace in S-expression format. It works with process values and context configurations, capturing execution steps when enabled. Use it to inspect or log the full evaluation steps of a process, especially for debugging or auditing command execution flows.",
-      "description_length": 348,
-      "index": 19,
-      "embedding_norm": 1.0
+      "description": "This module provides functions to convert primitive process calls and their results into s-expressions. It operates on process primitives and their argument and result types, specifically handling serialization for structured logging or debugging. Use cases include inspecting process execution steps or generating readable representations of process pipelines.",
+      "description_length": 361,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Shexp_process.Std",
       "library": "shexp.process",
-      "description": "This module enables concurrent execution of system processes through a monadic interface, centered on the `'a Process.t` type for representing asynchronous computations. It supports command execution, I/O redirection, environment manipulation, and process lifecycle management, allowing tasks like running commands in parallel, capturing output, and applying custom logging or debugging traces. You can compose complex pipelines using monadic operators, run external tools with custom contexts, and isolate processes in specific directories or environments. Examples include automating shell-like workflows, debugging process chains with structured logs, and managing subprocesses with redirected file descriptors.",
-      "description_length": 714,
-      "index": 20,
+      "description": "This module provides a process monad for composing and executing shell commands with fine-grained control over I/O, concurrency, and system resources. It works with process values representing shell operations, contexts for environment and working directory management, and system primitives like file descriptors and process IDs. It is used to build complex command pipelines, manage background processes, handle temporary file creation and deletion, and implement robust error handling around external process execution.",
+      "description_length": 522,
+      "index": 17,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Shexp_process.Traced",
+      "library": "shexp.process",
+      "description": "This module evaluates process expressions and returns both the result and a detailed execution trace in S-expression format. It works with process values defined in the Process module, handling their evaluation in a given context with optional output capture. Use it to inspect step-by-step execution of shell-like processes for debugging or logging purposes.",
+      "description_length": 359,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shexp_process.Infix",
+      "library": "shexp.process",
+      "description": "This module defines infix operators for composing and chaining process computations. It provides monadic bind (`>>=`), map (`>>|`), sequential execution (`>>`), piped execution (`|-`), and parallel execution with result pairing (`|+`). These operators simplify building complex process workflows by enabling concise, linear syntax for combining process values.",
+      "description_length": 360,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Std_io",
       "library": "shexp.process",
-      "description": "Handles standard input, output, and error streams for process execution. It provides a type `t` with constructors `Stdin`, `Stdout`, and `Stderr`, and a function `sexp_of_t` to convert these stream identifiers to S-expressions. Useful when configuring process redirections in build systems or scripting tools that require precise control over I/O handling.",
-      "description_length": 356,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
+      "description": "Handles standard input/output/error channels as symbolic values. Provides a way to convert these channel identifiers to S-expressions for serialization or logging. Useful when representing IO redirections in command execution contexts.",
+      "description_length": 235,
+      "index": 20,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Shexp_process.With_debug",
+      "module_path": "Shexp_process.Let_syntax",
       "library": "shexp.process",
-      "description": "Implements process evaluation with integrated debugging support, allowing inspection of process execution steps. Works with process types defined in `Shexp_process__` and requires a debugger instance to log or handle events. Useful for tracing command execution flows and diagnosing failures in process pipelines.",
-      "description_length": 313,
+      "description": "This module enables monadic composition of process values using `ppx_let` syntax, supporting bind (`>>=`), map (`>>|`), and combine (`|+`) operations. It works with `Shexp_process__.Process.t` values, which represent processes producing typed outputs. Use it to sequence and transform shell command executions, handling intermediate results and combining multiple processes in a structured way.",
+      "description_length": 394,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shexp_process.List",
+      "library": "shexp.process",
+      "description": "Applies a function to each element of a list in sequence, where the function returns a process type. Binds the list elements to the function and sequences the resulting processes. Useful for executing a series of process-based actions over list elements in order.",
+      "description_length": 263,
       "index": 22,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Shexp_process.Debugger",
+      "module_path": "Shexp_process.Background_command",
       "library": "shexp.process",
-      "description": "This module defines a debugger interface for tracing and logging operations during the evaluation of s-expression-based processes. It provides callbacks for tracking primitive execution, handling exceptions, managing forks and sub-contexts, and capturing output. Concrete use cases include debugging process execution flows, inspecting primitive calls and results, and tracing user exceptions with backtraces.",
-      "description_length": 409,
+      "description": "Represents a command running in the background, tracking its process ID. Provides access to the command's PID for monitoring or control. Useful for managing long-running subprocesses like servers or batch jobs.",
+      "description_length": 210,
       "index": 23,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Shexp_process.Logged",
       "library": "shexp.process",
-      "description": "Handles evaluation of process expressions with detailed event logging. Accepts a process, optional context, capture flag, and a log function that records each event, defaulting to stderr output. Useful for debugging process execution by tracing intermediate steps and results.",
-      "description_length": 276,
+      "description": "This module evaluates a process and logs each event using a provided logging function, which defaults to printing to stderr if none is given. It allows capturing the process output and provides contextual configuration through an optional context parameter. A typical use case is debugging process execution by inspecting intermediate events in the log.",
+      "description_length": 353,
       "index": 24,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_process.Exit_status",
       "library": "shexp.process",
-      "description": "Represents the exit status of external processes with constructors for normal termination and signal-based termination. Converts exit status values to S-expressions for serialization or logging purposes. Useful when handling process results in scripts or system tools that need to inspect how child processes terminated.",
-      "description_length": 320,
+      "description": "Represents the exit status of external processes with constructors `Exited` and `Signaled`, both carrying integer values. Converts exit status values to S-expressions for serialization or logging purposes. Useful when handling process termination results in system scripting or command execution workflows.",
+      "description_length": 306,
       "index": 25,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Shexp_process.Context",
+      "module_path": "Shexp_process.With_debug",
       "library": "shexp.process",
-      "description": "This module orchestrates execution contexts for process spawning, integrating working directory management, file descriptor handling, and environment configuration. It centers around the `context` type, with operations like `create` to define custom execution environments and `dispose` to clean up resources. You can, for example, launch a subprocess with redirected I/O, a temporary working directory, and a modified environment. Submodule functionality seamlessly extends context setup by enabling precise control over directory paths and file descriptors during process execution.",
-      "description_length": 584,
+      "description": "This module evaluates process expressions with debugging capabilities, allowing inspection of intermediate states during execution. It works with process types defined in `Shexp_process` and integrates a debugger module to log or analyze steps. Use it to trace failures in process pipelines or understand execution flow in complex process compositions.",
+      "description_length": 352,
       "index": 26,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Shexp_process.List",
+      "module_path": "Shexp_process.Context",
       "library": "shexp.process",
-      "description": "Applies a function to each element of a list in sequence, where the function returns a process type. Binds the list elements to the function and sequences the resulting processes. Useful for executing a series of process-dependent actions over list elements.",
-      "description_length": 258,
+      "description": "Manages execution contexts for processes with configurable standard I/O file descriptors, working directories, and Unix environment variables. It works with Unix file descriptors, environment tuples, and working directory configurations. Used to set up and tear down isolated process environments for running external commands with specific resource handles and directory states.",
+      "description_length": 379,
       "index": 27,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Shexp_process.Let_syntax",
+      "module_path": "Shexp_process",
       "library": "shexp.process",
-      "description": "This module enables monadic composition of shell command pipelines using `Process.t`, offering bind (`>>=`), map (`>>|`), sequence (`>>`), and parallel execution (`|+`) operators. It supports chaining commands declaratively, such as passing output from one process as input to another or running multiple commands concurrently. The `Process.t` type represents executable shell commands, and combinators transform or combine these into structured workflows. Submodules extend this capability with additional operators for more expressive process orchestration.",
-      "description_length": 559,
+      "description": "This module enables composing and executing shell commands with fine-grained control over I/O redirection, concurrency, and system resources. It operates on process descriptions (`t`), command arguments, environment variables, and file paths, supporting tasks like scripting, system automation, and workflow orchestration with capabilities for logging, tracing, and error handling. Key use cases include building complex pipeline workflows, managing temporary files and permissions, and synchronizing asynchronous or concurrent process execution.",
+      "description_length": 546,
       "index": 28,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Shexp_sexp.Std",
+      "library": "shexp.sexp",
+      "description": "This module defines functions for converting various primitive and container types into S-expressions. It supports direct conversion of integers, floats, strings, characters, booleans, exceptions, lists, and options to `Sexp.t` values. These functions are used when serializing OCaml values into a structured format for configuration files, data interchange, or logging.",
+      "description_length": 370,
+      "index": 29,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Shexp_process.Infix",
-      "library": "shexp.process",
-      "description": "This module provides infix operators for composing and sequencing process values. It supports binding, mapping, sequencing, and combining processes that produce values of arbitrary types. These operations are used to build complex shell command pipelines and handle their outputs in a structured way.",
-      "description_length": 300,
-      "index": 29,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Shexp_process.Background_command",
-      "library": "shexp.process",
-      "description": "Represents a background process spawned by the shell expansion library. Provides access to the process ID (PID) of the running command. Useful for tracking or managing long-running subprocesses initiated through shell expressions.",
-      "description_length": 230,
+      "module_path": "Shexp_sexp.Sexp",
+      "library": "shexp.sexp",
+      "description": "This module represents and manipulates S-expressions, supporting construction from primitive values like integers, strings, and booleans, as well as structured data such as pairs, lists, records, and custom constructor forms. It provides functions to serialize these structures into string form and register custom exception converters for precise error representation. Use cases include configuration parsing, data serialization, and structured logging where S-expressions serve as a lightweight, readable format.",
+      "description_length": 514,
       "index": 30,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Shexp_process",
-      "library": "shexp.process",
-      "description": "This module orchestrates process execution with rich support for logging, debugging, and concurrency. It centers on the `'a Process.t` type, representing asynchronous computations, and provides monadic combinators for composing pipelines, handling I/O redirection, and managing execution contexts. You can run commands in parallel, capture output, inspect execution traces, and serialize process results as S-expressions. Submodules extend this with stream handling, exit status modeling, background process tracking, and fine-grained control over environment and directory settings during execution.",
-      "description_length": 600,
+      "module_path": "Shexp_sexp",
+      "library": "shexp.sexp",
+      "description": "This module provides operations to construct, manipulate, and serialize S-expressions, supporting primitive values and structured data like lists, pairs, and records. It includes functions to convert common OCaml types to S-expressions and register custom exception serializers. It is used for configuration parsing, structured logging, and data serialization where S-expressions are the preferred format.",
+      "description_length": 405,
       "index": 31,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Shexp_bigstring_io.Bigstring",
       "library": "shexp.bigstring-io",
-      "description": "This module offers low-level I/O and memory manipulation for bigstrings, including slicing, copying, and safe bounds-checked access, alongside reading from and writing to file descriptors with support for temporary allocation and interruptible reads. It enables line-oriented or delimiter-based incremental",
-      "description_length": 306,
+      "description": "This module enables low-level I/O operations and memory manipulation on mutable byte buffers, supporting slicing, copying, and bounds-checked data access while interfacing with file descriptors for reading and writing. It facilitates line-by-line or delimiter-separated data processing through iterative accumulation, ideal for handling large binary files, implementing network protocols, or performing memory-efficient system-level data transformations. Key use cases include parsing streamed input, manual memory management for performance-critical tasks, and robust handling of interrupted I/O operations.",
+      "description_length": 608,
       "index": 32,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Shexp_bigstring_io",
       "library": "shexp.bigstring-io",
-      "description": "This module provides low-level I/O operations and memory manipulation for bigstrings, supporting slicing, copying, and bounds-checked access. It includes functionality for reading from and writing to file descriptors, handling temporary allocations and interruptible reads, enabling line-oriented or delimiter-based incremental processing. Specific operations allow efficient streaming input parsing and direct memory-to-file data transfer. Example uses include reading lines from a socket incrementally or writing a bigstring slice to a file descriptor with automatic buffer management.",
-      "description_length": 587,
+      "description": "This module performs low-level I/O operations on mutable byte buffers, supporting slicing, copying, and bounds-checked access. It works directly with bigstrings for efficient memory manipulation and file descriptor interfacing. Concrete use cases include parsing streamed binary data, implementing custom network protocols, and handling large files with minimal memory overhead.",
+      "description_length": 378,
       "index": 33,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 42,
+    "total_modules_in_package": 40,
     "meaningful_modules": 34,
-    "filtered_empty_modules": 8,
-    "retention_rate": 0.8095238095238095
+    "filtered_empty_modules": 6,
+    "retention_rate": 0.85
   },
   "statistics": {
-    "max_description_length": 789,
-    "min_description_length": 230,
-    "avg_description_length": 439.8235294117647,
-    "embedding_file_size_mb": 0.1239166259765625
+    "max_description_length": 608,
+    "min_description_length": 210,
+    "avg_description_length": 384.38235294117646,
+    "embedding_file_size_mb": 0.4930839538574219
   }
 }

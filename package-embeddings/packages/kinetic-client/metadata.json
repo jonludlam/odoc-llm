@@ -1,9 +1,9 @@
 {
   "package": "kinetic-client",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 22,
-  "creation_timestamp": "2025-07-15T23:10:17.717409",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 20,
+  "creation_timestamp": "2025-08-15T12:12:09.898159",
   "modules": [
     {
       "module_path": "Kinetic.Make.Entry",
@@ -14,184 +14,168 @@
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Kinetic.BytesIntegration",
+      "module_path": "Kinetic.Config",
       "library": "kinetic-client",
-      "description": "This module implements low-level byte manipulation and network I/O operations for secure sockets. It provides functions to read from and write to SSL sockets using byte buffers, along with checksum generation using SHA1 and CRC32 algorithms. Typical use cases include handling binary network protocols, data integrity verification, and direct memory manipulation for communication with devices or services requiring precise byte-level control.",
-      "description_length": 443,
+      "description": "This module defines a configuration structure for a storage device, including fields for hardware identifiers, network settings, and operational limits. It provides a `show` function to convert the configuration to a human-readable string. Use this module to manage device-specific settings and constraints in a kinetic storage system.",
+      "description_length": 335,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Kinetic_config.Config",
+      "module_path": "Kinetic_session.Session",
       "library": "kinetic-client",
-      "description": "This module defines a configuration record for a storage device with fields for vendor, model, serial number, network addresses, and operational limits. It provides functions to construct the record with named parameters and format or display its contents. Use this module to initialize and manage device-specific settings for communication and resource constraints in a storage system.",
-      "description_length": 386,
+      "description": "This module manages session state for a kinetic client, providing operations to increment and set sequence numbers, control batch mode, and maintain session metadata like identity, connection ID, and configuration. It works with a session record containing mutable fields for sequence, batch state, and trace flags, along with immutable configuration and version data. Concrete use cases include tracking request sequences, managing batched operations, and maintaining client-specific settings during communication with a kinetic server.",
+      "description_length": 537,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Kinetic.INTEGRATION",
+      "module_path": "Kinetic.Make",
       "library": "kinetic-client",
-      "description": "This module handles low-level data transmission and integrity verification for binary values over sockets. It supports operations to read and write both raw memory buffers and byte arrays, with functions to compute SHA1 and CRC32 tags over specified memory regions. Concrete use cases include network communication with precise memory control and checksum generation for data validation.",
-      "description_length": 387,
+      "description": "This module provides networked storage operations for versioned key-value management, including session handling, batched modifications, and device-level control (e.g., firmware updates, secure erasure). It works with versioned entries tagged with SHA1/CRC32 hashes, batch operations, and socket-wrapped clients to enable distributed storage synchronization and consistent data replication across devices. Specific use cases include distributed systems requiring strong consistency guarantees, networked storage devices with capacity reporting, and applications needing atomic batch updates with version conflict detection.",
+      "description_length": 623,
       "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kinetic_tag.Tag",
+      "library": "kinetic-client",
+      "description": "This module defines a tagged union type for representing different kinds of binary identifiers, including invalid, SHA-1, and CRC32 values. It provides a `show` function to convert these tags into human-readable strings. Use this module when handling network or storage identifiers that need distinct type tagging and string representation.",
+      "description_length": 340,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Kinetic_integration.BytesIntegration",
       "library": "kinetic-client",
-      "description": "This module handles low-level byte manipulation and socket communication for binary data transmission. It provides functions to read from and write to SSL sockets, compute checksums using SHA1 and CRC32, and convert socket states to string representations. Concrete use cases include network protocol implementation, data integrity verification, and direct binary I/O operations.",
-      "description_length": 379,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kinetic.Tag",
-      "library": "kinetic-client",
-      "description": "Handles parsing and validation of binary tags used in a distributed storage system. Provides functions to serialize, deserialize, and compute hash values for tags like SHA-1 and CRC32. Used to ensure data integrity and support efficient lookups in storage nodes.",
-      "description_length": 262,
+      "description": "This module handles low-level byte manipulation and I/O operations for SSL sockets. It provides functions to read from and write to secure sockets, create and display byte buffers, and compute checksums using SHA1 and CRC32 algorithms. Concrete use cases include network communication over TLS/SSL, binary data transmission, and integrity verification in distributed systems.",
+      "description_length": 375,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kinetic_error.Error",
       "library": "kinetic-client",
-      "description": "This module defines error types and formatting functions for handling specific error conditions in kinetic operations. It supports error categorization through variants like `KineticError`, `Generic`, `Timeout`, and `Assert`, each carrying contextual data such as error codes, messages, and timestamps. It is used to report and format detailed error information during kinetic system interactions, such as network timeouts or assertion failures.",
-      "description_length": 445,
+      "description": "This module defines error types and formatting functions for handling specific error conditions in a kinetic system. It supports operations to create and display errors such as `KineticError`, `Generic`, `Timeout`, and `Assert`, each carrying contextual messages and numeric codes. Use this module to report and format runtime failures, assertion violations, or timeout events with structured data.",
+      "description_length": 398,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kinetic_session.Session",
-      "library": "kinetic-client",
-      "description": "This module manages session state for a kinetic client, providing operations to increment and set sequence numbers, toggle batch mode, and maintain configuration and trace settings. It works with a session record containing mutable fields like sequence, batch ID, and connection state. Concrete use cases include tracking message sequences during network communication and managing batched operations in a distributed system.",
-      "description_length": 425,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kinetic.Config",
-      "library": "kinetic-client",
-      "description": "This module defines a configuration structure for a storage device, including fields for hardware identifiers, network settings, and operational limits. It provides a `show` function to convert the configuration to a human-readable string. Use this module to manage device-specific settings and constraints in a networked storage system.",
-      "description_length": 337,
-      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kinetic.Error",
       "library": "kinetic-client",
-      "description": "This module defines a set of error types used to represent different kinds of failures in kinetic operations, including specific errors with codes, generic errors with context, timeout errors with duration, and assertion errors. It provides the `show` function to convert these error values into human-readable strings. These error types are used to handle and report failures in network communication, timeouts, and internal assertions during kinetic operations.",
-      "description_length": 463,
+      "description": "This module defines a set of error types used to represent different failure conditions in kinetic operations, including specific errors with integer codes, generic errors with context, timeout errors with duration, and assertion errors. It provides a `show` function to convert these error values into human-readable strings. These error types are used to handle and propagate failures in network communication, timeouts, and internal assertions within kinetic systems.",
+      "description_length": 470,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kinetic.BytesIntegration",
+      "library": "kinetic-client",
+      "description": "This module provides functions for reading from and writing to SSL sockets using byte buffers, including operations to compute SHA1 and CRC32 hashes over specified byte ranges. It works directly with `Bytes.t` and `Lwt_ssl.socket` types, enabling efficient binary data handling and network communication. Concrete use cases include implementing custom binary protocols over SSL, verifying data integrity with checksums, and managing buffer-based I/O operations.",
+      "description_length": 461,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kinetic_config.Config",
+      "library": "kinetic-client",
+      "description": "This module defines a configuration record for a storage device with fields for vendor, model, serial number, network addresses, and operational limits. It provides functions to construct the record with named parameters and to format or display its contents. Use this module to create and manage device configuration instances in applications that interact with storage hardware.",
+      "description_length": 380,
       "index": 9,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Kinetic_tag.Tag",
+      "module_path": "Kinetic.Tag",
       "library": "kinetic-client",
-      "description": "Handles parsing and displaying binary tags used in data integrity checks. Works with binary data represented as `Bytes.t` and 32-bit integers. Used to identify and validate checksum formats like SHA-1 and CRC32 in network or storage protocols.",
-      "description_length": 243,
+      "description": "Handles binary tag identifiers with validation, parsing, and checksum operations. Works with `Bytes.t` and `int32` to represent and verify tags like SHA-1 hashes and CRC32 checksums. Used for decoding and validating binary protocol messages with specific tag formats.",
+      "description_length": 267,
       "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Kinetic.Make",
-      "library": "kinetic-client",
-      "description": "This module orchestrates session management, batched key-value operations, and device lifecycle control in networked storage systems, coordinating clients, sessions, and cryptographic tags for synchronized integrity checks, secure erasure, and firmware updates. It integrates a sub-module that models versioned database entries with optional value tagging, enabling precise handling of evolving data states with rich metadata. Operations include constructing tagged entries, applying batched modifications, and managing device sessions with versioned protocol interactions. Example use cases include executing bulk data updates with integrity verification and provisioning storage capacity while tracking firmware versions across devices.",
-      "description_length": 738,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Kinetic_integration.INTEGRATION",
-      "library": "kinetic-client",
-      "description": "This module implements low-level I/O operations for a kinetic integration system, handling data transfer and integrity checks. It works with `value` and `socket` types, providing functions to read from and write to sockets, compute SHA-1 and CRC32 hashes over data ranges. Concrete use cases include transmitting binary data over network sockets and verifying data integrity during transfers.",
-      "description_length": 392,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Kinetic_tag",
-      "library": "kinetic-client",
-      "description": "This module processes binary tags for data integrity verification, supporting operations on `Bytes.t` and 32-bit integers. It identifies and validates checksum formats such as SHA-1 and CRC32 in network or storage protocols. You can parse binary data to extract tags, compute checksums, and verify data consistency. For example, it can validate a CRC32 checksum embedded in a network packet or verify a SHA-1 hash in a file header.",
-      "description_length": 431,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Kinetic_config",
-      "library": "kinetic-client",
-      "description": "The module organizes device configuration management by encapsulating key properties such as vendor, model, serial number, network addresses, and operational limits into a single record. It supports creating configurations using named parameters and provides operations to format or display the stored settings. This enables tasks like initializing storage devices with precise identifiers and constraints, and adapting communication parameters based on device capabilities. Example usage includes constructing a device configuration with specific limits and serializing it for logging or transmission.",
-      "description_length": 602,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kinetic_pb",
-      "library": "kinetic-client",
-      "description": "This module provides binary encoding and decoding operations for structured protocol messages defined in the Kinetic specification, focusing on command types like device logs, security ACLs, batch operations, and power management. It works with `Kinetic_types` structures such as command headers, bodies, status codes, and nested subcommands, using `Pbrt.Encoder.t` and `Pbrt.Decoder.t` for efficient serialization. These functions are used to prepare commands for network transmission or storage and to parse incoming binary streams into actionable structured data.",
-      "description_length": 566,
-      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kinetic_error",
       "library": "kinetic-client",
-      "description": "This module handles error categorization and reporting for kinetic operations, providing structured error types like `KineticError`, `Generic`, `Timeout`, and `Assert` with contextual data such as error codes, messages, and timestamps. It supports formatting and propagation of detailed error information during system interactions, such as network timeouts or assertion failures. For example, a `Timeout` error can carry a timestamp indicating when the failure occurred, while an `Assert` error can include a message describing the failed condition.",
-      "description_length": 550,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Kinetic_network",
-      "library": "kinetic-client",
-      "description": "This module implements low-level network communication primitives for handling binary data over Lwt-based asynchronous I/O. It provides functions for precise reading and writing of byte sequences, including fixed-size 32-bit integers, with support for timeouts, partial reads, and message framing. These operations are used for implementing protocols that require strict control over binary message layout and transmission, such as the Kinetic protocol for storage devices.",
-      "description_length": 473,
-      "index": 17,
+      "description": "This module defines error types like `KineticError`, `Timeout`, and `Assert` with associated messages and codes. It provides functions to create and format these errors for reporting runtime failures and violations in a kinetic system. Use it to handle and display structured error data during system execution.",
+      "description_length": 311,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Kinetic",
+      "module_path": "Kinetic_tag",
       "library": "kinetic-client",
-      "description": "This module provides a key-value store with typed keys, versioning, and timeout controls, enabling caching, prioritized access, and versioned storage in distributed systems. It coordinates low-level network I/O, binary tag handling, and memory operations through submodules that manage secure socket communication, checksums, and direct memory manipulation. Additional components handle configuration, error reporting with context, and session orchestration for batched operations and device lifecycle management. Example uses include secure bulk data updates with integrity checks, version-controlled storage with expiration, and firmware-aware device provisioning.",
-      "description_length": 666,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kinetic_session",
-      "library": "kinetic-client",
-      "description": "The module manages session state for a kinetic client, offering operations to manipulate sequence numbers, control batch mode, and maintain configuration and trace settings. It centers around a session record with mutable fields such as sequence, batch ID, and connection state. This enables tracking message sequences during network communication and managing batched operations in distributed systems. Example uses include incrementing sequence numbers per message and toggling batch mode during bulk data transfers.",
-      "description_length": 518,
-      "index": 19,
+      "description": "This module implements a tagged union type for binary identifiers, supporting distinct representations for invalid, SHA-1, and CRC32 values. It includes a `show` function to convert these identifiers into human-readable strings. Use it when managing network or storage identifiers that require explicit type tagging and clear string formatting.",
+      "description_length": 344,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kinetic_integration",
       "library": "kinetic-client",
-      "description": "This module manages time-based data expiration and retrieval using byte arrays as keys and values, enabling precise timeout control in milliseconds for caching and time-sensitive storage. It integrates low-level byte manipulation and socket communication capabilities from its submodules, supporting operations like SSL socket I/O, checksum computation with SHA1 and CRC32, and binary data transfer with integrity verification. You can insert entries that expire automatically, query active data, and ensure transmission reliability over networks using direct binary I/O and hash validation. The combination of timed expiration with secure, verified data transfer makes it suitable for distributed systems requiring both performance and data integrity.",
-      "description_length": 752,
-      "index": 20,
+      "description": "This module implements cryptographic hashing and secure socket I/O operations for binary data. It provides functions to compute SHA1 and CRC32 checksums, read from and write to SSL sockets, and manipulate byte buffers. Use this module for network communication over TLS/SSL, binary data transmission, and integrity verification in distributed systems.",
+      "description_length": 351,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kinetic_config",
+      "library": "kinetic-client",
+      "description": "This module provides functions to create and manage configuration records for storage devices, including fields like vendor, model, serial number, network addresses, and operational limits. It supports constructing instances with named parameters and formatting their contents for display. Use it to represent and manipulate device configurations in applications interfacing with storage hardware.",
+      "description_length": 397,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kinetic",
+      "library": "kinetic-client",
+      "description": "This module implements networked storage operations for versioned key-value management with session handling, batched modifications, and device control. It works with versioned entries tagged using SHA1 and CRC32 hashes, and uses SSL sockets for secure communication. Concrete use cases include distributed systems requiring strong consistency, networked storage devices needing capacity reporting, and applications performing atomic batch updates with version conflict detection.",
+      "description_length": 480,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kinetic_session",
+      "library": "kinetic-client",
+      "description": "This module manages session state for a kinetic client, offering functions to increment and set sequence numbers, enable or disable batch mode, and update trace flags. It operates on a session record that holds mutable state such as sequence count and batch status, along with immutable data like client identity and connection ID. It is used to track request sequences, manage batched operations, and retain client-specific configuration during interaction with a kinetic server.",
+      "description_length": 480,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Kinetic_pb",
+      "library": "kinetic-client",
+      "description": "This module provides binary serialization and deserialization routines for protocol-defined structures such as command headers, authentication tokens, device logs, power management operations, and security ACLs using Protocol Buffers encoding. It operates on types from the `Kinetic_types` module, converting them to and from wire format via `Pbrt.Encoder` and `Pbrt.Decoder` for network transmission. Specific applications include encoding setup commands, decoding batched operations, and handling status metadata in storage device communication protocols.",
+      "description_length": 557,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kinetic_network",
+      "library": "kinetic-client",
+      "description": "This module implements low-level network communication primitives for handling binary data over Lwt-based asynchronous I/O. It provides functions for precise reading and writing of byte sequences, including fixed-size 32-bit integers, with support for timeouts, partial reads, and message framing. Concrete use cases include implementing custom network protocols that require strict control over binary message layout and transmission, such as wire-level serialization for distributed systems or storage engines.",
+      "description_length": 512,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Kinetic_util",
       "library": "kinetic-client",
-      "description": "This module includes functions for converting and formatting data types such as bytes, options, and tuples into strings, with specific utilities like `to_hex` for hexadecimal encoding and `show_pair` for structured output. It provides safe option handling through operations like `unwrap_option`, `map_option`, and `get_option`, enabling concise error handling and value extraction. Use cases include logging, data serialization, and error propagation in asynchronous workflows using Lwt_result.",
-      "description_length": 495,
-      "index": 21,
+      "description": "This module includes functions for converting and formatting data types such as bytes, options, and tuples into strings, with specific utilities like `to_hex`, `show_option`, and `show_pair`. It provides operations for flattening optional values, chaining Lwt_result computations, and handling logging sections for tracing. Use cases include debugging output, data serialization, and managing optional or result-typed values in asynchronous workflows.",
+      "description_length": 451,
+      "index": 19,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 23,
-    "meaningful_modules": 22,
+    "total_modules_in_package": 21,
+    "meaningful_modules": 20,
     "filtered_empty_modules": 1,
-    "retention_rate": 0.9565217391304348
+    "retention_rate": 0.9523809523809523
   },
   "statistics": {
-    "max_description_length": 752,
-    "min_description_length": 243,
-    "avg_description_length": 467.95454545454544,
-    "embedding_file_size_mb": 0.08037376403808594
+    "max_description_length": 623,
+    "min_description_length": 267,
+    "avg_description_length": 420.55,
+    "embedding_file_size_mb": 0.29026222229003906
   }
 }

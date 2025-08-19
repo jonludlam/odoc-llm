@@ -1,39 +1,39 @@
 {
   "package": "ocluster-worker",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:56.334596",
+  "creation_timestamp": "2025-08-14T22:53:01.881685",
   "modules": [
+    {
+      "module_path": "Cluster_worker.Obuilder_config",
+      "library": "ocluster-worker",
+      "description": "This module constructs and manages configuration values for sandboxed builds, supporting both native and Docker execution environments. It defines a type `t` that encapsulates sandbox configuration and a function `v` to create instances from either native or Docker sandbox configurations along with a store specification. Concrete use cases include setting up isolated build environments for continuous integration tasks with specific sandboxing requirements.",
+      "description_length": 460,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "Cluster_worker.Log_data",
       "library": "ocluster-worker",
-      "description": "This module manages log data buffering and streaming with concurrency support. It provides functions to write log entries, stream log chunks starting at a specified offset, and close log resources. The module works with buffered log data and Lwt-based asynchronous conditions for coordination. Use cases include handling log output from cluster workers, streaming logs to clients, and merging asynchronous log input into a unified buffer.",
-      "description_length": 438,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cluster_worker.Process",
-      "library": "ocluster-worker",
-      "description": "This module executes and manages external processes with support for logging, environment configuration, and custom success checks. It handles process execution via `exec` and `check_call`, returning typed results that include cancellation, exit codes, or error messages. Concrete use cases include running shell commands with controlled input/output handling and verifying their success based on custom criteria.",
-      "description_length": 413,
+      "description": "This module manages log data buffering and streaming with concurrency support. It provides operations to write log entries, stream log chunks from a given position, and close log resources. The module works with a custom type `t` that holds a buffer, a condition variable for synchronization, and a mutable state indicating whether the log is running or finished. Use cases include handling log output from cluster workers, supporting asynchronous log retrieval via HTTP, and managing log rotation with size-limited chunks.",
+      "description_length": 523,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cluster_worker.Obuilder_config",
+      "module_path": "Cluster_worker.Process",
       "library": "ocluster-worker",
-      "description": "This module constructs and manages configuration values for sandboxed builds, supporting both native and Docker execution environments. It defines a type `t` that encapsulates sandbox configuration along with a store initialization function. The `v` function creates a configuration instance from a sandbox specification and a store setup function, enabling concrete build workflows with specific sandbox and storage backends.",
-      "description_length": 426,
+      "description": "This module executes and manages external processes with support for logging, environment configuration, and custom success checks. It handles process execution via `exec` and `check_call`, returning results as Lwt promises with typed errors for cancellation, exit codes, and messages. It is used to run shell commands asynchronously while capturing output and handling failures in distributed task workers.",
+      "description_length": 407,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cluster_worker",
       "library": "ocluster-worker",
-      "description": "This module orchestrates distributed build execution using Docker, Obuilder, or custom sandboxed environments, managing job lifecycles with cancellation, logging, and resource constraints. It processes build configurations, enforces concurrency and disk usage limits, and integrates with submodules for log streaming, process execution, and sandbox configuration. The log submodule buffers and streams log data with Lwt-based concurrency, enabling real-time log aggregation and client streaming. The process submodule runs external commands with typed results, supporting controlled execution and custom success validation for build steps.",
-      "description_length": 639,
+      "description": "This module executes distributed build jobs using Docker, Obuilder, or custom specifications, providing a `run` function to start a worker that connects to a registry and processes jobs concurrently. It supports sandboxed build configurations through the `Obuilder_config` module, and manages external process execution, logging, and cancellation via the `Process` and `Log_data` modules. Concrete use cases include running CI builds in isolated environments, streaming build logs to clients, and managing worker capacity and state in a cluster.",
+      "description_length": 545,
       "index": 3,
       "embedding_norm": 1.0
     }
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 639,
-    "min_description_length": 413,
-    "avg_description_length": 479.0,
-    "embedding_file_size_mb": 0.014955520629882812
+    "max_description_length": 545,
+    "min_description_length": 407,
+    "avg_description_length": 483.75,
+    "embedding_file_size_mb": 0.05836009979248047
   }
 }

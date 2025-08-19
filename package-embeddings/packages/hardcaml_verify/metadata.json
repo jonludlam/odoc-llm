@@ -1,333 +1,309 @@
 {
   "package": "hardcaml_verify",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 39,
-  "creation_timestamp": "2025-07-15T23:13:35.285140",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 36,
+  "creation_timestamp": "2025-08-15T12:34:37.694042",
   "modules": [
     {
       "module_path": "Hardcaml_verify.Nusmv.Counter_example_trace",
       "library": "hardcaml_verify",
-      "description": "Converts counterexample traces from NuSMV into structured waveforms or lists of signal values for debugging. Works with lists of signal-value pairs and NuSMV trace data. Useful for visualizing simulation results in waveform viewers or analyzing signal behavior over time.",
-      "description_length": 271,
+      "description": "Converts counterexample traces from NuSMV into structured waveforms or value traces. It processes traces containing signal-value pairs at each time step, extracting them into lists or visual waveforms. Useful for debugging hardware designs by inspecting signal behavior over time in a formal verification context.",
+      "description_length": 313,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hardcaml_verify.Nusmv",
       "library": "hardcaml_verify",
-      "description": "This module translates hardware designs into NuSMV models for formal verification, supporting circuit-to-model conversion and property checking using LTL or CTL. It enables creating, writing, and verifying models that capture safety and liveness properties of digital circuits. Its child module processes counterexample traces, converting them into structured waveforms or signal lists for debugging and visualization. Together, they allow translating designs, verifying properties, and analyzing simulation traces in a workflow that bridges model creation and result interpretation.",
-      "description_length": 583,
+      "description": "This module translates hardware designs into NuSMV models for formal verification, supporting temporal logic properties like LTL and CTL. It generates circuits from specifications, writes models to files, and runs verification checks, producing proof results or counterexamples. The `Counter_example_trace` submodule converts NuSMV counterexamples into structured signal traces for debugging design flaws step-by-step.",
+      "description_length": 418,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Hardcaml_verify",
       "library": "hardcaml_verify",
-      "description": "This module translates hardware designs into NuSMV models for formal verification, supporting circuit-to-model conversion and property checking using LTL or CTL. It provides data types for representing circuits, temporal properties, and counterexample traces, along with operations to generate models, verify properties, and extract simulation traces. Users can convert a digital circuit into a formal model, specify safety and liveness properties, and analyze counterexamples as structured waveforms or signal lists. Example workflows include verifying correctness properties of a register transfer level design and debugging failed properties using generated signal traces.",
-      "description_length": 675,
+      "description": "Translates hardware designs into NuSMV models for formal verification, supporting LTL and CTL properties. Generates circuits from specifications, writes models to files, and runs verification checks, producing proof results or counterexamples. Converts NuSMV counterexamples into structured signal traces for step-by-step debugging of design flaws.",
+      "description_length": 348,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Cnf.Model_with_bits",
+      "module_path": "Hardcaml_verify_kernel.Comb_gates.Uop",
       "library": "hardcaml_verify.kernel",
-      "description": "This module constructs and manipulates models for CNF formulae using bit-level inputs, mapping literals to integer indexes for DIMACS compatibility. It provides functions to retrieve and print input values associated with a CNF model, supporting direct interaction with SAT solver outputs. Concrete use cases include extracting and displaying signal values from a hardware verification context.",
-      "description_length": 394,
+      "description": "This module implements arithmetic and comparison operations for unsigned bit vectors, working directly with `Bits.t` or `Signal.t` types. It provides functions for addition, subtraction, multiplication, and comparisons like less than or equal, supporting variable-width operands with automatic sign extension. Use cases include building and verifying combinational logic circuits that perform numeric computations or comparisons on binary data.",
+      "description_length": 444,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Is_one_hot.Make",
+      "module_path": "Hardcaml_verify_kernel.Cnf.Model_with_bits",
       "library": "hardcaml_verify.kernel",
-      "description": "This module creates a one-hot checker for a given vector, computing signals indicating whether no bits, exactly one bit, or multiple bits are set. It operates on `Comb.t` values, which represent combinational logic signals. Use this to efficiently verify one-hot conditions in hardware designs during SAT proofs.",
-      "description_length": 312,
+      "description": "This module constructs and manipulates models for CNF formulae using bit-level inputs, mapping literals to integer indices for DIMACS compatibility. It provides functions to retrieve and print input values derived from SAT solver outputs. Use it to interpret SAT solver results as concrete bit assignments for circuit verification tasks.",
+      "description_length": 337,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Sec.Equivalence_result",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module represents the result of a propositional SAT check during sequential equivalence verification. It contains a SAT result paired with input vectors that demonstrate a counterexample when equivalence does not hold. It is used to determine whether two circuits are equivalent after stateful elements are fixed, returning `Unsat` for equivalent circuits and `Sat` with counterexample vectors otherwise.",
-      "description_length": 409,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Cnf.Literal",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module represents individual literals within a CNF formula, mapping them to integer indexes for efficient conversion to DIMACS format. It provides operations to construct literals from labels, create named literal arrays, and manage literal negation. These literals are used to build disjunctions that form clauses in a CNF formula, enabling direct interaction with SAT solvers.",
-      "description_length": 383,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Tseitin.S",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module implements a Tseitin transformation for converting logical expressions into conjunctive normal form (CNF). It operates on a custom type `t` representing Boolean expressions, supporting negation via the `(~:)` function. This is particularly useful in formal verification tasks such as SAT solving and circuit equivalence checking.",
-      "description_length": 341,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Comb_gates.Sop",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module implements arithmetic and comparison operations for fixed-width bit vectors using combinational logic gates. It supports addition, subtraction, multiplication, and comparisons like less than or equal, directly on `Comb_gates.t` values. These operations are used to build digital circuits that perform signed integer arithmetic and decision-making based on numeric values.",
-      "description_length": 383,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Comb_gates.Typed_math",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module provides arithmetic and comparison operations for bitvectors represented as type `v`, including addition, subtraction, multiplication, and comparisons like less than or equal, equality, and inequality. It supports operations on bitvectors of varying widths, automatically handling sign or zero extension as needed, and includes a resize function to adjust bitvector widths. Concrete use cases include building and verifying combinational logic circuits that require precise bitvector arithmetic and comparisons, such as ALUs or digital signal processing components.",
-      "description_length": 577,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Cnf.Disjunction",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module represents a disjunction of literals, supporting operations to create, add, and iterate over literals. It works with CNF literals mapped to integer indexes for efficient DIMACS conversion and SAT solving. Concrete use cases include constructing clauses for SAT solvers and extracting models from solver outputs.",
-      "description_length": 323,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Cnf.Conjunction",
-      "library": "hardcaml_verify.kernel",
-      "description": "Represents a logical conjunction of disjunctions, where each disjunction is a collection of literals mapped to integer indexes. It supports creating, combining, and serializing CNF expressions for input to SAT solvers. Useful for constructing complex logical constraints incrementally and converting them to DIMACS format.",
-      "description_length": 322,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Tseitin.Make",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module converts boolean gate expressions into Tseitin-form CNF by introducing new SAT literals for each gate output. It operates on boolean terms represented by the `B.t` type, supporting operations like AND, OR, XOR, NAND, NOR, and their compositions. Use it to encode hardware circuits into CNF for SAT-based verification tasks such as equivalence checking or bug finding.",
-      "description_length": 379,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Sec.Proposition",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module represents a logical proposition derived from comparing two circuits, capturing the differences in their combinational logic. It works with circuit descriptions to generate a SAT problem, where the proposition's satisfiability indicates logical inequivalence. Use this to verify that two circuit implementations, such as an optimized version and its original, behave identically under all input conditions.",
-      "description_length": 418,
-      "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hardcaml_verify_kernel.Sec.Instantiation_ports_match",
       "library": "hardcaml_verify.kernel",
-      "description": "This module defines how instantiation port connections between two circuits are compared during sequential equivalence checking. It supports two modes: exact matching or allowing the left circuit's ports to be a subset of the right's, accommodating Verilog designs where optional ports may be omitted. This is used when verifying circuits where some input/output ports may be undriven but must not affect the design's behavior.",
-      "description_length": 427,
-      "index": 14,
+      "description": "This module defines how instantiation port connections are compared during sequential equivalence checking. It supports two modes: exact matching or allowing the left side to be a subset of the right side, which accommodates Verilog designs where ports may be declared but not driven. This is used when verifying circuits where combinational logic may differ but state elements must match exactly.",
+      "description_length": 397,
+      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Basic_gates.Uid",
+      "module_path": "Hardcaml_verify_kernel.Sec.Proposition",
       "library": "hardcaml_verify.kernel",
-      "description": "This module provides comparison and ordering operations for unique identifiers (`Uid.t`), supporting standard relational checks (`compare`, `<`, `>`, etc.), range validation, and clamping. It also enables serialization of identifiers to strings and integers, as well as generating identifiers from integer values. The functionality is used to manage and manipulate unique identifiers for basic gates in hardware verification workflows.",
-      "description_length": 435,
-      "index": 15,
+      "description": "Represents a logical proposition used in sequential equivalence checking to compare two circuits. It captures the differences in their combinational logic as a SAT problem. Used to determine if two circuits are functionally equivalent under all possible input conditions.",
+      "description_length": 271,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Nusmv.Output_parser",
+      "module_path": "Hardcaml_verify_kernel.Nusmv.With_interface",
       "library": "hardcaml_verify.kernel",
-      "description": "Parses word constants and proof results from strings, converting them into Bits and Proof_result types. It processes output from NuSMV model checking runs into structured data for analysis. Useful for interpreting formal verification results directly from NuSMV's textual output.",
-      "description_length": 279,
-      "index": 16,
+      "description": "This module constructs and verifies formal specifications for hardware circuits using temporal logic. It maps input and output interfaces to LTL and CTL properties, enabling precise assertions about signal sequences and state transitions. Use it to generate model-checking specifications for synchronous circuit verification.",
+      "description_length": 325,
+      "index": 7,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Cnf.Model",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module evaluates and manipulates models derived from CNF formulae, mapping DIMACS-style integer literals back to their original input representation. It supports extracting and printing solutions from SAT solver outputs in a structured, human-readable format. Concrete use cases include post-processing SAT solver results to verify logical constraints and debugging circuit models in formal verification workflows.",
-      "description_length": 419,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Hardcaml_verify_kernel.Nusmv.Counter_example_trace",
       "library": "hardcaml_verify.kernel",
-      "description": "This module represents counterexample traces generated by NuSMV during formal verification. It provides a way to convert counterexample data into a structured trace format, mapping signal names to bit values across simulation steps. Use this module to analyze or visualize the sequence of signal changes that lead to a failed assertion in hardware designs.",
-      "description_length": 356,
-      "index": 18,
-      "embedding_norm": 1.0
+      "description": "This module represents counterexample traces generated by NuSMV during formal verification. It provides a way to convert counterexample data into a structured trace format, mapping signal names to bit values across simulation steps. Use this module to analyze or visualize the sequence of signal changes that lead to a failed assertion in a hardware design.",
+      "description_length": 357,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Nusmv.Circuit_properties",
+      "module_path": "Hardcaml_verify_kernel.Cnf.Literal",
       "library": "hardcaml_verify.kernel",
-      "description": "This module provides access to input and output signal definitions of a circuit representation used for formal verification. It works with parametric data structures representing circuit interfaces. Concrete use cases include extracting signal names and types for generating or analyzing circuit models in NuSMV.",
-      "description_length": 312,
-      "index": 19,
+      "description": "This module represents individual literals within a CNF formula, mapping them to integer indexes for DIMACS format compatibility. It provides operations to create single literals or vectors of literals, assign labels, and convert literals to strings or S-expressions. These literals are used when constructing disjunctions for SAT solving, enabling direct correspondence with solver inputs and output models.",
+      "description_length": 408,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hardcaml_verify_kernel.Comb_gates.Signed",
       "library": "hardcaml_verify.kernel",
-      "description": "This module implements arithmetic and comparison operations for signed binary vectors represented as lists of combinational gates. It supports addition, subtraction, multiplication, and comparisons like less than or equal, operating on values of type `v` which encapsulate signed signals. These operations are used to construct digital circuits for signed integer arithmetic and decision logic directly in a gate-level representation.",
-      "description_length": 434,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Comb_gates.Uop",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module implements arithmetic and comparison operations for unsigned bit vectors, working directly with `Comb_gates.t` values representing hardware signals. It provides addition, subtraction, multiplication, and comparisons like less than or equal, supporting variable-width operands with automatic sign extension. These operations are used to build combinational logic circuits for hardware verification tasks involving fixed-width binary computations.",
-      "description_length": 457,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Nusmv.With_interface",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module creates and verifies formal specifications for hardware circuits using NuSMV. It supports linear temporal logic (LTL) and computational tree logic (CTL) properties on input and output interfaces. Use it to generate model-checking specifications directly from OCaml circuit descriptions.",
-      "description_length": 298,
-      "index": 22,
+      "description": "This module implements arithmetic and comparison operations for signed binary vectors represented as lists of basic gates. It supports addition, subtraction, multiplication, and comparisons like less than or equal, operating on signed values with automatic sign extension and width management. These operations are used to build combinational circuits for arithmetic logic units or digital signal processing where signed number handling is required.",
+      "description_length": 449,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Label.Uid",
+      "module_path": "Hardcaml_verify_kernel.Comb_gates.Sop",
       "library": "hardcaml_verify.kernel",
-      "description": "This module supports comparison, ordering, and serialization of unique identifiers paired with bit positions to distinguish variables in hardware descriptions. It operates on a composite type combining identifiers and integer bit indices, offering utilities like `min`, `max`, `clamp`, and deterministic UID generation via integer-seeded functions, alongside string encoding/decoding for persistence or debugging. These capabilities are critical for managing vector signals and ensuring unambiguous variable identity in synthesis, simulation, and formal verification workflows.",
-      "description_length": 577,
-      "index": 23,
+      "description": "This module implements arithmetic and comparison operations for combinational logic signals, working directly with `Bits.t` or `Signal.t` types. It provides addition, subtraction, multiplication, and comparisons (less than, greater than, equal, etc.), with automatic bit-width extension to prevent truncation. These operations are used to build and verify digital circuits that perform numerical computations or conditional logic in hardware designs.",
+      "description_length": 450,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Cnf.Model_with_vectors",
+      "module_path": "Hardcaml_verify_kernel.Sec.Equivalence_result",
       "library": "hardcaml_verify.kernel",
-      "description": "This module constructs and manipulates models of CNF formulae using input vectors, mapping literals to integer indexes for DIMACS compatibility. It provides functions to retrieve and print input values from a SAT solver's output model. Use it to extract concrete variable assignments after solving and to format those results for output or further processing.",
-      "description_length": 359,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Comb_gates.Unsigned",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module implements arithmetic and comparison operations for unsigned bit vectors using combinational logic gates. It supports addition, subtraction, multiplication, and comparisons like less than or equal, greater than, and equality, with automatic bit-width extension to prevent truncation. These operations are used to model and verify digital circuits that process unsigned binary numbers, such as counters, arithmetic units, or control logic in hardware designs.",
-      "description_length": 470,
-      "index": 25,
+      "description": "This module represents the result of a SAT check performed during sequential equivalence checking. It returns `Unsat` if the combinational logic of two circuits is equivalent, or `Sat` with a counterexample input if not. The result includes input vectors that demonstrate the inequivalence, aiding in debugging mismatches during circuit optimization or translation from Verilog.",
+      "description_length": 378,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hardcaml_verify_kernel.Nusmv.Proof_result",
       "library": "hardcaml_verify.kernel",
-      "description": "This module represents the result of a formal verification proof, indicating whether a property is a tautology or has a counterexample. It works with the `t` variant type that distinguishes between tautologies and counterexamples backed by a trace. It is used to interpret and report outcomes of model checking runs in formal verification workflows.",
-      "description_length": 349,
-      "index": 26,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Dimacs",
-      "library": "hardcaml_verify.kernel",
-      "description": "Handles reading and writing files in DIMACS format for SAT solving. It provides functions to write a CNF formula to a DIMACS file and to parse or read SAT solver output into a structured result. This module is used when interfacing with external SAT solvers like minisat, picosat, or z3 to verify logical formulas.",
-      "description_length": 314,
-      "index": 27,
+      "description": "This module represents the result of a proof attempt, either confirming a tautology or providing a counterexample trace. It works with the `t` variant type that distinguishes between a proven tautology and a counterexample. Concrete use cases include reporting the outcome of model checking a hardware design property.",
+      "description_length": 318,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Comb_gates",
+      "module_path": "Hardcaml_verify_kernel.Cnf.Disjunction",
       "library": "hardcaml_verify.kernel",
-      "description": "This module provides combinational logic operations for bitvectors, supporting both signed and unsigned arithmetic and comparisons. It includes functions for addition, subtraction, multiplication, and comparisons such as less than or equal, equality, and inequality, operating on bitvectors of varying widths. Submodules handle automatic sign or zero extension, and provide resizing capabilities to adjust bitvector widths as needed. Examples of use include building ALUs, counters, and control logic circuits where precise bit-level operations are required.",
-      "description_length": 558,
-      "index": 28,
+      "description": "This module represents a disjunction of literals, supporting operations to create, add to, and fold over a collection of literals. It works with CNF literals mapped to integer indexes for efficient conversion to DIMACS format. Use this to build individual clauses for CNF formulas that can be processed by SAT solvers.",
+      "description_length": 318,
+      "index": 14,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Solver",
+      "module_path": "Hardcaml_verify_kernel.Label.Uid",
       "library": "hardcaml_verify.kernel",
-      "description": "This module provides functions to run SAT solvers like Minisat, Picosat, and Z3 on DIMACS input files, producing results in a structured format. It supports solving CNF formulas and extracting models, with options to control solver behavior such as parallel execution and model printing. Concrete use cases include verifying digital circuits by checking satisfiability of generated CNF constraints and debugging logic designs using model outputs.",
-      "description_length": 446,
-      "index": 29,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Basic_gates",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module combines boolean logic, comparison operations, and circuit traversal capabilities for an abstract gate type `t`, enabling symbolic manipulation of boolean expressions and constraint application through clamping and CNF generation. It includes support for analyzing gate dependencies and verifying circuit properties, while its child module handles unique identifier management with comparison, serialization, and integer conversion operations. Specific uses include formal verification, circuit optimization, and hardware validation tasks where both gates and their identifiers require precise manipulation and analysis.",
-      "description_length": 632,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Tseitin",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module transforms Boolean logic expressions into equisatisfiable CNF formulas using the Tseitin method, introducing new variables to flatten complex subexpressions. It supports operations on two main types\u2014`t` for general Boolean expressions with negation via `(~:)`, and `B.t` for gate-level circuit modeling with AND, OR, XOR, and their variants. The transformation generates CNF clauses suitable for SAT solvers, enabling tasks like circuit equivalence checking and formal verification. Submodules handle both term-level and gate-level encodings, allowing users to translate nested logical expressions or digital circuits into solver-friendly constraints.",
-      "description_length": 663,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Is_one_hot",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module synthesizes combinational logic to check one-hot conditions on a vector, producing signals that indicate whether no bits, exactly one bit, or multiple bits are set. It operates on `Comb.t` values, representing logic signals in hardware designs. You can use it to verify one-hot encodings during SAT proofs, ensuring efficient validation of design properties. For example, given a 4-bit vector, it can confirm if exactly one bit is high, or detect invalid states like all bits being low or multiple bits being high.",
-      "description_length": 526,
-      "index": 32,
+      "description": "This module manages unique identifiers for hardware verification labels, focusing on deterministic creation, string conversion, and precise comparison of `(uid, bit_pos)` pairs to distinguish single-bit variables within vector representations. It operates on a custom `Uid.t` type alongside integer bit positions, enabling use cases like formal verification where reproducible identifier generation and exact label differentiation are critical. Key operations include seed-based UID creation, bidirectional string encoding, and ordering primitives that ensure stable comparisons for verification workflows.",
+      "description_length": 606,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hardcaml_verify_kernel.Cnf",
+      "module_path": "Hardcaml_verify_kernel.Is_one_hot.Make",
       "library": "hardcaml_verify.kernel",
-      "description": "This module represents CNF formulae using literals mapped to integer indexes, enabling efficient conversion to DIMACS format for SAT solvers. It supports constructing formulae from conjunctions and disjunctions, folding over clauses, and extracting model data from solver outputs. The module works with submodules that handle literals, disjunctions, models, and evaluators to build, solve, and interpret logical constraints. Examples include constructing clauses from named literals, serializing CNF expressions for SAT input, and extracting signal values from solver-generated models.",
-      "description_length": 585,
-      "index": 33,
+      "description": "This module creates a one-hot checker for a given bit vector, returning a record with signals indicating whether no bits, exactly one bit, or multiple bits are set. It operates on `Comb.t` values, which represent combinational logic signals. Use this to efficiently verify one-hot conditions in hardware descriptions, particularly for proving SAT properties where compact and predictable logic depth is preferred over optimized `popcount` implementations.",
+      "description_length": 455,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Basic_gates.Uid",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module provides functions for comparing, ordering, and constraining unique identifiers with precise bounds, along with serialization and deserialization capabilities. It operates on a unique identifier type (`Uid.t`), strings, and integers, enabling use cases like hardware signal identification, circuit component tagging, and safe range-based validation in verification workflows. Key utilities include clamping values to intervals, generating identifiers from integers, and maintaining ordered collections through comparator witnesses.",
+      "description_length": 543,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Nusmv.Output_parser",
+      "library": "hardcaml_verify.kernel",
+      "description": "Parses word constants and proof results from strings, converting them into hardware description types. Works with string lists and bits to extract formal verification outcomes. Used to interpret NuSMV model checker outputs in hardware verification workflows.",
+      "description_length": 258,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Tseitin.Make",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module converts boolean gate expressions into Tseitin-form CNF by introducing new SAT literals for each gate output. It operates on boolean terms represented by the `B.t` type, supporting operations like logical connectives (AND, OR, XOR, NAND, NOR) and constants. Use it to encode digital circuit logic into CNF for SAT solving, such as verifying circuit equivalence or solving constraint satisfaction problems.",
+      "description_length": 417,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Cnf.Conjunction",
+      "library": "hardcaml_verify.kernel",
+      "description": "Represents a conjunction of disjunctions in a CNF formula, where each disjunction is a collection of literals. It provides operations to create, combine, and manipulate CNF expressions, specifically supporting the addition of disjunctions, conversion from and to lists, and concatenation of multiple conjunctions. This structure is used to build complex logical constraints for SAT solving, such as encoding circuit behavior or verification conditions in DIMACS format.",
+      "description_length": 469,
+      "index": 20,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Comb_gates.Unsigned",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module implements arithmetic and comparison operations for unsigned bit vectors using combinational logic gates. It supports addition, subtraction, multiplication, and comparisons like less than or equal, directly on vector values. These operations are used to build digital circuits for tasks like arithmetic computation or control logic in hardware designs.",
+      "description_length": 364,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Cnf.Model_with_vectors",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module evaluates and extracts input values from CNF models generated by SAT solvers, mapping literal results to named input variables. It works with CNF structures and SAT solver outputs to produce lists of input records containing names and boolean values. It is used to interpret SAT solver results in terms of original circuit inputs, particularly for verification tasks like checking signal assignments in digital designs.",
+      "description_length": 431,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Nusmv.Circuit_properties",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module provides access to input and output signals of a circuit representation used in formal verification. It works with a polymorphic circuit type that captures signal relationships. Concrete use cases include extracting signal lists for model checking or analysis tasks.",
+      "description_length": 278,
+      "index": 23,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hardcaml_verify_kernel.Label",
       "library": "hardcaml_verify.kernel",
-      "description": "This module manages labeled variables using unique identifiers and bit positions, enabling precise representation of single-bit and multi-bit signals in digital design. It provides operations for creating, comparing, and ordering labels based on the composite `(uid, bit_pos)` key, supporting functions like `min`, `max`, and `clamp` for signal range manipulation. Submodules extend this with deterministic UID generation, serialization, and bit-level indexing, allowing robust handling of vector signals across simulation, synthesis, and verification tasks. Example uses include modeling hardware registers, tracking signal dependencies, and encoding multi-bit values for formal analysis.",
-      "description_length": 689,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Sat",
-      "library": "hardcaml_verify.kernel",
-      "description": "Converts a model and its associated SAT solver state into an S-expression representation. Works with `'model` types paired with a SAT solver instance. Useful for serializing verification results and solver states for debugging or external analysis.",
-      "description_length": 248,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hardcaml_verify_kernel.Sec",
-      "library": "hardcaml_verify.kernel",
-      "description": "This module performs sequential equivalence checking by comparing the combinational logic of two circuits while ensuring their stateful elements match. It constructs logical propositions from circuit outputs, register inputs, and instantiation ports, using SAT solving to determine equivalence\u2014returning `Unsat` if equivalent or `Sat` with counterexample vectors when not. The result module captures SAT outcomes along with input vectors that expose mismatches, enabling debugging of logical differences. Port comparison modes allow exact matching or subset-based checks, supporting Verilog designs with optional undriven ports.",
-      "description_length": 628,
-      "index": 36,
+      "description": "This module manages labeled single-bit variables for hardware verification, using unique `(uid, bit_pos)` pairs to distinguish bits within vectors. It provides comparison operations, ordering utilities, and S-expression serialization for deterministic workflows, alongside functions to construct and inspect labeled bits with visibility flags. The design supports scenarios requiring precise identification and manipulation of individual bits in vector signals during formal verification.",
+      "description_length": 488,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hardcaml_verify_kernel.Nusmv",
       "library": "hardcaml_verify.kernel",
-      "description": "This module translates hardware circuits into NuSMV models for formal verification, supporting model generation from circuits and temporal logic properties in LTL or CTL, writing models to files, and invoking NuSMV to verify properties. It provides core data types such as circuits, temporal logic formulas, and signals, while child modules handle parsing of proof results, counterexample traces, signal definitions, formal specifications, and proof outcomes. With it, you can generate NuSMV models from circuit descriptions, specify temporal properties over input and output signals, run model checking automatically, and analyze results through structured proof and counterexample data. Examples include converting a circuit and LTL formula into a model file, extracting signal names and types for interface analysis, and interpreting NuSMV output into typed counterexample traces for debugging failed assertions.",
-      "description_length": 915,
-      "index": 37,
+      "description": "This module generates and manipulates NuSMV models for formal verification of hardware circuits. It supports creating models from signal lists and properties expressed in LTL or CTL, writing models to files, and running model checking to obtain proof results. The module includes submodules for handling counterexample traces, parsing outputs, and accessing circuit properties, enabling concrete use cases such as verifying correctness of digital designs and debugging failed assertions.",
+      "description_length": 487,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Tseitin",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module converts boolean gate expressions into Tseitin-form CNF using new SAT literals for each gate output. It works with boolean terms of type `B.t`, handling logical operations like AND, OR, XOR, NAND, NOR, and constants. Use it to encode digital circuit logic into CNF for tasks like circuit equivalence verification or constraint solving.",
+      "description_length": 347,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Solver",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module provides functions to run SAT solvers on DIMACS-formatted CNF formulas, supporting Minisat, Picosat, and Z3. It includes utilities to execute solvers, parse results, and optionally return satisfying models. Use cases include verifying circuit correctness by solving constraint satisfaction problems derived from digital designs.",
+      "description_length": 340,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Basic_gates",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module provides boolean logic operations (AND, OR, XOR, NOT), comparison primitives (equality, relational operators), and circuit analysis tools (dependency traversal, CNF generation) for manipulating hardware signal representations. It operates on gate structures with unique identifiers, enabling formal verification tasks like SAT solving, constraint checking, and combinatorial circuit analysis through symbolic manipulation and range-bound value generation. Key applications include hardware equivalence checking, logic optimization, and safety-critical system validation.",
+      "description_length": 582,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Sec",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module performs sequential equivalence checking between two circuits using SAT solving to verify their combinational logic equivalence. It operates on `Circuit.t` inputs, generating logical propositions that capture output, register, and instantiation input mismatches. Concrete use cases include validating combinational optimizations or ensuring functional parity after translating Verilog designs to Hardcaml.",
+      "description_length": 417,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Dimacs",
+      "library": "hardcaml_verify.kernel",
+      "description": "Handles reading and writing files in DIMACS format for SAT solving. It writes CNF formulas to output channels and parses or reads SAT solver results from strings or input channels. Used to interface with external SAT solvers like minisat, picosat, and z3 by producing input files and interpreting their output.",
+      "description_length": 310,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Cnf",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module provides operations to construct and manipulate CNF formulas using literals mapped to integer indexes for DIMACS format compatibility. It supports creating and combining disjunctions and conjunctions of literals, converting formulas to solver-friendly formats, and extracting models from SAT solver outputs. Concrete use cases include encoding digital circuit behavior for formal verification and generating test inputs from SAT results.",
+      "description_length": 449,
+      "index": 31,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Sat",
+      "library": "hardcaml_verify.kernel",
+      "description": "Converts a model and its associated SAT solver state into an S-expression representation. Works with generic model types and SAT solver instances. Useful for serializing solver states or models to disk for debugging or later restoration.",
+      "description_length": 237,
+      "index": 32,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Is_one_hot",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module creates a one-hot checker for bit vectors, returning signals that indicate whether no bits, exactly one bit, or multiple bits are set. It operates on `Comb.t` values representing combinational logic signals. Use it to efficiently verify one-hot conditions in hardware descriptions, particularly for proving SAT properties with compact, predictable logic depth.",
+      "description_length": 372,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hardcaml_verify_kernel.Comb_gates",
+      "library": "hardcaml_verify.kernel",
+      "description": "This module provides combinational logic primitives for constructing and manipulating bit vectors using low-level gate representations, supporting arithmetic operations (addition, multiplication), bitwise logic (AND, XOR), comparisons (signed/unsigned), and bit-level transformations (shifting, resizing, priority selection). It operates on fixed-width signals encoded as lists of basic gates (`Comb_gates.t`), enabling both constant and variable-width circuit construction with explicit control over bit ordering and sign semantics. Specific use cases include digital circuit verification, hardware simulation, and formal methods like CNF generation for logical equivalence checking.",
+      "description_length": 684,
+      "index": 34,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Hardcaml_verify_kernel",
       "library": "hardcaml_verify.kernel",
-      "description": "This module provides a comprehensive framework for formal verification of digital circuits through SAT solving, CNF manipulation, and symbolic logic operations. It centers around bitvectors, boolean expressions, and CNF formulas as core data types, with operations for arithmetic, comparison, equivalence checking, and model generation. Users can translate circuits to CNF using Tseitin encoding, validate one-hot conditions, run SAT solvers, analyze results, and export models to external tools like NuSMV. Example workflows include proving circuit equivalence, debugging logic errors via counterexamples, and verifying temporal properties of sequential designs.",
-      "description_length": 663,
-      "index": 38,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides formal verification capabilities for digital circuits through SAT solving, CNF manipulation, and sequential equivalence checking. It works with hardware signal representations, labeled bit vectors, and NuSMV models to enable concrete tasks such as logic optimization validation, one-hot condition checking, and interfacing with external solvers for constraint satisfaction. Key applications include verifying combinational and sequential circuit equivalence, generating test inputs from SAT results, and encoding digital logic for model checking.",
+      "description_length": 567,
+      "index": 35,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 39,
-    "meaningful_modules": 39,
+    "total_modules_in_package": 36,
+    "meaningful_modules": 36,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 915,
-    "min_description_length": 248,
-    "avg_description_length": 456.64102564102564,
-    "embedding_file_size_mb": 0.14208126068115234
+    "max_description_length": 684,
+    "min_description_length": 237,
+    "avg_description_length": 406.44444444444446,
+    "embedding_file_size_mb": 0.5222702026367188
   }
 }

@@ -1,501 +1,397 @@
 {
   "package": "bap-core-theory",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 60,
-  "creation_timestamp": "2025-07-15T23:17:56.914500",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 47,
+  "creation_timestamp": "2025-08-15T15:11:31.476378",
   "modules": [
     {
-      "module_path": "Bap_core_theory.Theory.Parser.Grammar.Float",
+      "module_path": "Bap_core_theory.Theory.Value.Sort.Name",
       "library": "bap-core-theory",
-      "description": "This module provides operations for constructing and transforming IEEE 754 floating-point expressions, including arithmetic (addition, multiplication, remainder), comparisons (min/max), conversions (casts, rounding), and control flow (ite). It works with symbolic floating-point expressions (`exp`), scoped variable bindings, and rounding modes (`rmode`), enabling structured parsing of untyped BIL-style ASTs into typed Core Theory terms. It is particularly useful for representing and analyzing floating-point computations in low-level languages or binary code where precise semantic modeling of floating-point behavior is required.",
-      "description_length": 634,
+      "description": "This module manages unique names for value sorts, ensuring their authenticity through name-based witnesses. It provides operations to declare new names, compare and order existing names, and enforce constraints like clamping values within bounds. These capabilities are essential when defining and distinguishing custom value sorts in semantic analysis tasks, such as representing bitvectors or floating-point formats with guaranteed unique identifiers.",
+      "description_length": 453,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory.Theory.Value.Sort.Top",
       "library": "bap-core-theory",
-      "description": "This module enables manipulation of type-erased value sorts through comparison, ordering, and serialization operations, supporting use in monomorphic data structures like sets and maps. It works with static value representations such as bitvectors, floating-point formats, and memory sorts, preserving their erased type indices while allowing refinement later. Specific use cases include constructing unified collections of heterogeneous sorts and performing bounds checks or clamping operations during semantic analysis of expressions.",
-      "description_length": 536,
+      "description": "This module enables working with type-erased value sorts by providing **comparison**, **ordering**, and **serialization** operations, allowing their use in **monomorphic data structures** like sets and maps while preserving type information for later refinement. It supports operations such as equality checks, min/max computation, bounds validation, and clamping, which are essential for managing heterogeneous value sorts in collections (e.g., `Set.empty (module Value.Sort.Top)`). The erased type indices facilitate polymorphic storage without losing the ability to reconstruct original type distinctions when needed.",
+      "description_length": 620,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Parser.Grammar.Rmode",
-      "library": "bap-core-theory",
-      "description": "This module defines operations for parsing and representing rounding modes in BIL-style intermediate languages. It provides specific functions to map untyped language constructs to Core Theory's `rmode` type, supporting constants like `rne`, `rtz`, `rtp`, `rtn`, and `rna`. Use this module when implementing a parser for a target language that includes floating-point rounding mode specifications.",
-      "description_length": 397,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Parser.Grammar.Mem",
-      "library": "bap-core-theory",
-      "description": "This module provides operations for constructing and manipulating memory terms in a BIL-style intermediate language, including functions for memory stores, variable declarations, conditional expressions, and scoped bindings. It works with untyped abstract syntax trees (ASTs) and maps them to Core Theory memory terms with specific type parameters. Concrete use cases include parsing low-level code into typed memory operations for analysis, handling memory effects in instruction semantics, and building memory models for binary translation.",
-      "description_length": 542,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Parser.Grammar.Stmt",
-      "library": "bap-core-theory",
-      "description": "The module constructs statements for memory, register, and control flow operations, translating untyped BIL-like constructs into typed Core Theory effects. It operates on expressions, effect terms, and low-level data types such as words and rounding modes, enabling structured control flow and state manipulation. This facilitates parsing intermediate representations into analyzable Core Theory terms for binary program verification and disassembly tasks.",
-      "description_length": 456,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Parser.Grammar.Bool",
-      "library": "bap-core-theory",
-      "description": "This module enables parsing untyped expressions into boolean terms and comparison operations for BIL-style intermediate languages, supporting logical operations, memory/bit extractions, and both integer and floating-point condition checks. It operates on untyped `exp` expressions to produce boolean results (`t`), handling use cases like control-flow condition translation, floating-point property checks (e.g., NaN detection), and mapping low-level comparisons to Core Theory's typed terms. Key applications include parsing BIL's conditional statements and arithmetic predicates into the Core Theory's formal representation.",
-      "description_length": 626,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Value.Sort.Name",
-      "library": "bap-core-theory",
-      "description": "This module manages unique symbolic names for value sorts, ensuring their uniqueness and providing comparison operations. It supports declaring new names with optional package scoping and offers total ordering and equality checks. Use cases include defining distinct identifiers for custom value sorts and enforcing name-based constraints in sort hierarchies.",
-      "description_length": 359,
-      "index": 6,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Parser.Grammar.Bitv",
-      "library": "bap-core-theory",
-      "description": "This module provides functions to parse arithmetic, bitwise logic, and type conversion operations on bitvectors from BIL-style intermediate language expressions. It operates on untyped abstract syntax trees (ASTs), mapping them to typed bitvector terms (`t`) while handling memory accesses, variable references, and conditional scoping. Its primary use case involves translating low-level code representations into formal semantic models for verification and binary analysis tasks.",
-      "description_length": 481,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Value.Sort",
-      "library": "bap-core-theory",
-      "description": "This module represents and manipulates value sorts with static properties like bitvector widths or floating-point formats, supporting precise semantic definitions for expressions. It provides operations to construct and inspect sorts directly, such as defining numeric sorts with `int`, composing them using `app`, and decomposing with `hd` and `tl`, while its child modules enable type-erased comparisons and symbolic naming. The type-erased manipulation allows working with heterogeneous sorts in monomorphic structures like sets and maps, and the naming system ensures unique identifiers for custom sorts with total ordering. Example uses include defining `Bitv(i)` for bitvectors, building memory sorts like `Mem(Bitv(i), Bitv(j))`, and managing symbolic sort names with scoped uniqueness.",
-      "description_length": 793,
-      "index": 8,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory.Theory.Float.Format",
       "library": "bap-core-theory",
-      "description": "This module defines and manipulates sorts for floating-point number representations, using bitvectors to specify their structure. It provides operations to define a floating-point sort from a bitvector sort and an interpretation, extract the underlying bitvector sort, and retrieve the expression interpreting the bitvector. Concrete use cases include specifying IEEE 754 floating-point formats and custom floating-point encodings for formal verification tasks.",
-      "description_length": 461,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Role.Register",
-      "library": "bap-core-theory",
-      "description": "This module defines constants for classifying registers and variables into semantic categories such as general-purpose, special-purpose, function arguments, saved registers, and architecture-specific roles. It operates on program entities within the BAP framework, using extensible enumerations to enable precise analysis of low-level code across diverse targets. These classifications support compiler optimizations, reverse engineering, and target-specific extensions through libraries that define architecture-dependent roles.",
-      "description_length": 529,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Basic.Make",
-      "library": "bap-core-theory",
-      "description": "This module provides low-level bitvector arithmetic, boolean logic, and memory manipulation operations, including signed/unsigned comparisons, shifts, casts, and conditional branching. It operates on bitvectors of arbitrary width and memory structures, enabling precise modeling of machine-level computations and state transitions. These capabilities are specifically used for binary analysis, formal verification of program semantics, and structured effect sequencing in emulated environments.",
-      "description_length": 494,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Effect.Sort",
-      "library": "bap-core-theory",
-      "description": "This module defines and manipulates effect sorts that classify static properties of program effects, distinguishing between data and control effects. It provides constructors for primitive effects like memory and register reads/writes, control flow operations, and combinators to build compound effects using intersection and union. Concrete use cases include modeling the static effect of reading from a register, representing control flow changes from jumps, and combining multiple effects into a single effect sort for analysis.",
-      "description_length": 531,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Value.Top",
-      "library": "bap-core-theory",
-      "description": "This module enables order relations and comparisons for semantically denoted values with erased sort type indices, supporting operations like equality checks, min/max determination, and clamping within bounds. It works with abstracted `t` values derived from BAP expression semantics, which encapsulate erased-type data while retaining core properties. Key use cases include type-erased value manipulation in analysis pipelines, binary serialization/deserialization via Bin_prot, and scenarios requiring polymorphic value handling without sort-specific constraints.",
-      "description_length": 565,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Var.Ident",
-      "library": "bap-core-theory",
-      "description": "This module provides operations for serializing, converting, and comparing variable identifiers with a structured, caseless ordering. It works with `ident t` values, which represent variables in a hierarchy where virtual variables precede physical ones, mutable virtual variables precede immutable ones, and versioned or numeric variables are ordered by their version numbers or numeric values. These operations are essential for tasks like semantic analysis, where consistent variable ordering is required for comparisons, optimizations, or generating canonical forms of intermediate representations.",
-      "description_length": 601,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Parser.Make",
-      "library": "bap-core-theory",
-      "description": "This module implements a recursive-descent parser that maps untyped BIL-style ASTs into typed Core Theory terms, supporting six core term sorts: bitv, bool, mem, stmt, float, and rmode. It works with untyped language representations and generates parsers that translate them into structured terms of a specified theory. Concrete use cases include parsing BIL or similar intermediate languages into typed semantic expressions for analysis or transformation.",
-      "description_length": 456,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Documentation.Theory",
-      "library": "bap-core-theory",
-      "description": "This module represents and manages documentation for theories, including their names, descriptions, required dependencies, and provided capabilities. It works with theory documentation structures that capture metadata about semantic theories. Use it to retrieve and inspect theory details like dependencies and functionality in BAP's core semantics framework.",
-      "description_length": 359,
-      "index": 16,
+      "description": "This module defines operations for specifying and manipulating the bitvector representation format of floating-point numbers. It provides functions to define a floating-point sort using an interpretation and a bitvector sort, retrieve the underlying bitvector sort, and obtain the expression that interprets the bits of a floating-point value. Concrete use cases include modeling IEEE 754 floating-point formats and custom floating-point representations for static analysis and binary translation tasks.",
+      "description_length": 503,
+      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bap_core_theory.Theory.Var.Top",
       "library": "bap-core-theory",
-      "description": "This module provides comparison and serialization operations for variables with erased sort indices, enabling their use in ordered collections like sets by comparing only their identifiers. It works with variables whose equality and ordering ignore sort differences, treating same-named variables as equivalent regardless of their original types. Key applications include constructing sets or ordered data structures where variable identity is determined solely by names, not sorts, with support for serialization and order-preserving operations like `max` or `clamp`.",
-      "description_length": 568,
-      "index": 17,
+      "description": "This module provides comparison, serialization, and total ordering operations for variables with erased sort indices, enabling their use in ordered data structures like sets and maps. It operates on unit-indexed variables, comparing them solely by their identifiers, which allows variables of the same name but different sorts to be treated as equal. It is particularly useful for building collections or performing comparisons where sort information is irrelevant, such as tracking variables by name alone or establishing canonical orderings in analysis tools.",
+      "description_length": 561,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Parser.Grammar",
+      "module_path": "Bap_core_theory.Theory.Basic.Make",
       "library": "bap-core-theory",
-      "description": "This module defines grammars for parsing untyped BIL-style languages into Core Theory terms across six term sorts\u2014bitv, bool, mem, stmt, float, and rmode\u2014using recursive-descent parsing rules that map language constructs to typed semantic actions. It coordinates with child modules that handle specific term constructions, such as floating-point expressions, rounding modes, memory operations, boolean logic, bitvector arithmetic, and structured control flow, all operating on untyped ASTs to produce typed Core Theory terms. Main data types include `exp` for expressions, `rmode` for rounding modes, `t` for bitvectors and booleans, and effect-laden `stmt` for memory and control operations, with operations like variable binding, scoped transformations, and semantic lifting of low-level constructs. Examples include translating BIL-like conditionals into Core Theory boolean terms, modeling memory effects from binary code, and parsing floating-point operations with rounding mode handling for formal verification.",
-      "description_length": 1017,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Pass.Desugar",
-      "library": "bap-core-theory",
-      "description": "This module provides desugaring transformations that normalize symbolic expressions, resolve register aliasing, and simplify control flow structures by translating high-level operations into primitive forms. It operates on bitvectors, booleans, floating-point values, memory states, and effectful computations, enabling formal verification tasks like constant propagation, zero-register concretization, and modular arithmetic analysis. The desugaring pass is particularly used to preprocess theories before analysis, ensuring consistent representation of low-level semantics while supporting custom transformations of symbolic programs.",
-      "description_length": 636,
-      "index": 19,
+      "description": "This module offers low-level operations for bitvector arithmetic, bitwise logic, memory access, and control flow modeling, working with variables, typed bitvectors, and memory structures. It supports formal verification and symbolic computation tasks by enabling precise manipulation of signed/unsigned comparisons, shifts, casts, and memory effects. Specific use cases include program analysis, binary translation, and hardware modeling where exact semantic representations of machine-level operations are required.",
+      "description_length": 516,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bap_core_theory.Theory.Basic.Empty",
       "library": "bap-core-theory",
-      "description": "This theory defines symbolic representations of low-level machine operations, including arithmetic, bitwise logic, memory access, and control flow, all expressed as pure, unevaluated terms forming an abstract syntax tree. It operates on bitvectors, memory models, and boolean expressions, enabling formal reasoning about binary programs through symbolic manipulation rather than concrete execution. Its primary use case involves foundational modeling for binary analysis tasks like symbolic execution and formal verification of machine-code semantics.",
-      "description_length": 551,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides symbolic computation operations for bitvectors and memory models, including arithmetic (addition, subtraction, multiplication, division), bitwise logic (AND, OR, NOT), control flow constructs (ITE, jumps), and memory manipulation (load/store). It supports formal verification tasks through pure symbolic value generation and structured effect handling, enabling analysis of low-level program behavior via signed/unsigned comparisons, bitvector casting, and sequencing primitives. Use cases include symbolic execution, static analysis, and semantic modeling of machine-code programs.",
+      "description_length": 603,
+      "index": 5,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.IEEE754.Sort",
+      "module_path": "Bap_core_theory.Theory.Pass.Desugar",
       "library": "bap-core-theory",
-      "description": "This module defines operations to construct and manipulate IEEE754 floating-point sorts, including extracting exponent, significand, and storage bitvector sorts, as well as retrieving encoding parameters. It works with indexed sorts representing IEEE754 formats, parameterized by bitvector types. Concrete use cases include defining custom floating-point representations and analyzing or manipulating floating-point data in binary programs.",
-      "description_length": 440,
-      "index": 21,
+      "description": "This module specializes in desugaring and simplifying expressions in BAP's core theory, focusing on variable alias resolution, constant propagation, and bitvector/floating-point operation normalization. It operates on low-level constructs like registers, bitvectors (`bitv`), memory (`mem`), effects (`eff`), and floating-point values (`float`), optimizing transformations such as eliminating redundant assignments to constant registers, concretizing zero-register accesses, and normalizing arithmetic or control-flow primitives. It serves in automated theory instantiation pipelines and custom transformation workflows to streamline symbolic representations for analysis or compilation tasks.",
+      "description_length": 693,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Parser.Grammar",
+      "library": "bap-core-theory",
+      "description": "This module defines grammars for six sub-languages corresponding to each sort of Core Theory terms, enabling the construction of recursive-descent parsers for untyped BIL-style languages. It provides rules that map language constructs to Core Theory terms, handling variable binding and context management to ensure semantic correctness during parsing. Concrete use cases include implementing parsers for intermediate languages like BIL, where each grammar rule translates expressions or statements into typed terms while maintaining contextual type information and variable scoping.",
+      "description_length": 583,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory.Theory.Target.Options",
       "library": "bap-core-theory",
-      "description": "This module provides operations to manage extensible target configuration options, including creating, serializing, comparing, and clamping sets of properties that define execution environments. It works with `Bap_core_theory.Theory.Target.Options.t` values\u2014structured as `KB.Value.t`\u2014to represent domain-specific attributes like CPU features, ABI constraints, or microarchitectural details. These capabilities enable use cases such as persisting target descriptions across BAP versions, dynamically extending target metadata, and normalizing divergent hardware/software configurations during program analysis.",
-      "description_length": 610,
-      "index": 22,
+      "description": "This module enables managing and comparing extensible target architecture properties, supporting operations like serialization, equality checks, and bounded value comparisons. It operates on `Target.Options.t` values\u2014a set of key-value properties stored via `KB.Value.t`\u2014with functions for S-expression and bin_prot encoding, pretty-printing, and domain-specific clamping. It is used to define and persist target-specific configurations, such as custom architectural extensions or microarchitectural details, while ensuring cross-version compatibility and efficient runtime representation.",
+      "description_length": 589,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.IEEE754.Sort",
+      "library": "bap-core-theory",
+      "description": "This module defines operations to construct and manipulate IEEE754 floating-point sorts, including extracting their exponent, significand, and storage bitvector sorts. It works with parameterized IEEE754 formats and associated bitvector types to represent floating-point components. Concrete use cases include defining custom floating-point representations and decomposing them into their constituent fields for analysis or transformation.",
+      "description_length": 439,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Value.Sort",
+      "library": "bap-core-theory",
+      "description": "This module defines and manipulates value sorts that encode static properties of values, such as bitvector widths or floating-point formats. It supports constructing, deconstructing, and comparing sorts using operations like `int`, `sym`, `@->`, `hd`, `tl`, and `same`, enabling precise semantic representations in expression denotations. Concrete use cases include defining `int8` as a bitvector of width 8 or building compound sorts for structured data types.",
+      "description_length": 461,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Documentation.Theory",
+      "library": "bap-core-theory",
+      "description": "This module represents and manages documentation for theories in the BAP semantics framework. It provides access to a theory's fully qualified name, description, required dependencies, and provided capabilities through dedicated retrieval functions. It is used to inspect and document the metadata of theories within the core BAP theory system.",
+      "description_length": 344,
+      "index": 11,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Role.Register",
+      "library": "bap-core-theory",
+      "description": "This module provides an extensible set of semantic roles for classifying registers, such as general-purpose, stack pointer, function arguments, and status flags, represented via the `Role.t` type. It supports architecture-agnostic analysis by categorizing register behavior and usage patterns, enabling applications like calling convention modeling, static analysis, and cross-architecture reasoning. Specific use cases include identifying caller/callee-saved registers, handling target-specific extensions, and abstracting hardware versus pseudo-registers in program representations.",
+      "description_length": 584,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory.Theory.Value.Match",
       "library": "bap-core-theory",
-      "description": "This module provides an embedded domain-specific language for pattern matching and refining value sorts in semantic analysis. It supports operations like `can` for conditional refinement of values based on sort descriptors, and `both` for parallel refinement of multiple values, enabling precise dispatch on complex value types. It is used to implement logic that reacts to the specific static properties of evaluated expressions, such as bitvector widths or floating-point formats, within BAP's semantic framework.",
-      "description_length": 515,
+      "description": "This module provides a domain-specific language for pattern matching on value sorts using two core operators: `can` for conditional refinement of values based on sort, and `let|` for sequencing match cases. It works with value types defined in the `Bap_core_theory.Theory.Value` module, allowing functions to dispatch logic based on the runtime sort of values, such as bitvectors or floating-point representations. Concrete use cases include writing interpreters or analyzers that perform different operations depending on the value's type, like extracting integer ranges or handling arithmetic based on bitvector widths.",
+      "description_length": 621,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Parser.Make",
+      "library": "bap-core-theory",
+      "description": "This module generates a recursive-descent parser that maps untyped BIL-style ASTs into typed Core Theory terms, using a set of six top-level parsing rules corresponding to term sorts. It operates on abstract syntax trees derived from intermediate languages like BIL, translating constructs such as expressions and statements into their semantic equivalents while enforcing type correctness. A concrete use case is the BIL parser, which maps BIL expressions into Core Theory terms, using the parser to infer context and produce error terms for invalid constructs.",
+      "description_length": 562,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Effect.Sort",
+      "library": "bap-core-theory",
+      "description": "This module defines and manipulates effect sorts that classify static properties of program effects, distinguishing between control (`Ctrl`) and data (`Data`) effects. It provides constructors like `data` and `ctrl` to define effect kinds, operations such as `both`, `union`, and `join` to combine effect sets, and predefined effects like `rreg`, `wmem`, and `jump` for modeling register, memory, and control flow behavior. It is used to represent and reason about the impact of instructions on program state and execution flow in a structured and composable way.",
+      "description_length": 563,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Value.Top",
+      "library": "bap-core-theory",
+      "description": "This module enables operations on semantically typed values with erased sort information, specifically supporting comparison, clamping, and binary serialization. It works with abstract values of type `t` that encapsulate heterogeneous data (e.g., bitvectors, floats) after type erasure, allowing uniform storage, deserialization, and ordered manipulation. Key use cases include persisting values across systems, enforcing value ranges in analyses, and dynamically restoring type context via refinement for domain-specific interpretations.",
+      "description_length": 538,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Var.Ident",
+      "library": "bap-core-theory",
+      "description": "This module provides operations for serializing, comparing, and converting variable identifiers with case-insensitive semantics, supporting binary and S-expression formats. It defines a structured total ordering for identifiers based on their intrinsic properties, such as virtual/physical status, mutability, and version numbers, while ensuring deterministic sorting of numeric components. These capabilities are critical for tasks like canonicalizing variable representations, enforcing consistent identifier hierarchies in program analysis, or clamping identifiers within versioned or numerically bounded ranges.",
+      "description_length": 615,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.IEEE754",
+      "library": "bap-core-theory",
+      "description": "This module provides functions to construct and manipulate IEEE754 floating-point formats using specific parameters for binary and decimal representations of varying bit widths. It works with parameterized floating-point formats and associated bitvector types to represent and decompose floating-point components such as exponent and significand. Concrete use cases include defining custom floating-point sorts and extracting their internal fields for analysis or transformation in semantic representations.",
+      "description_length": 507,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Semantics",
+      "library": "bap-core-theory",
+      "description": "This module defines program semantics as effects, providing operations to compare, serialize, and manipulate semantic values using knowledge slots and domains. It supports binary and S-expression serialization, ordering functions (ascending, descending, clamping), and comparison witness handling for data structures like effect classes, semantic value representations, and predefined slots storing program memory states. These capabilities enable use cases such as analyzing program behavior, optimizing code transformations, and persisting semantic data across sessions.",
+      "description_length": 572,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Bool",
+      "library": "bap-core-theory",
+      "description": "This module defines the boolean sort and operations for working with one-bit boolean values in the BAP semantics representation. It provides the type `t` for boolean values, the sort `t` for classifying boolean expressions, and the `refine` function to narrow a unit sort to a boolean sort if applicable. It is used to represent and manipulate logical truth values in BAP's intermediate representation of program semantics.",
+      "description_length": 423,
+      "index": 20,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Source",
+      "library": "bap-core-theory",
+      "description": "This module supports comparison, serialization, and metadata management for source code artifacts represented as `Source.t` values within BAP's knowledge base. It operates on extensible `KB.Value.t` structures associated with source code properties like file names, languages, and text, enabling use cases such as tracking compilation unit provenance or analyzing source-level semantics during program decompilation. Key operations include clamping source ranges, ordering values, and persisting custom metadata through `KB` slot manipulations.",
+      "description_length": 544,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Role",
+      "library": "bap-core-theory",
+      "description": "This module defines semantic roles for program entities like variables and registers, offering operations to declare, compare, and serialize role classifications based on architectural or usage traits (e.g., general-purpose registers, stack pointers). It works with an extensible enumeration type representing roles, supporting use cases in architecture-agnostic analysis, domain modeling, and persistent storage via S-expressions or binary formats. Key functions include role comparison, clamping, and serialization, enabling structured reasoning about target-specific semantics across different platforms.",
+      "description_length": 607,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Fabi",
+      "library": "bap-core-theory",
+      "description": "This module provides operations for managing an enumeration type representing floating-point binary interface (FABI) conventions, including named element declaration, comparison, hashing, and property inspection. It supports data structures like `Fabi.t` values, which encapsulate FABI identifiers, and offers utilities for serialization, sorting, clamping, and domain-specific persistence. The predefined `hard` and `soft` values exemplify use cases for specifying floating-point operation semantics in compiled code, distinguishing hardware-accelerated versus software-emulated execution contexts.",
+      "description_length": 599,
       "index": 23,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory.Theory.Value",
       "library": "bap-core-theory",
-      "description": "This module represents semantically denoted values with static sort information, enabling creation, inspection, and transformation based on properties like bitvector sizes or floating-point formats. It supports typed operations on values within a shared knowledge class, such as constructing empty values, refining sorts during evaluation, and erasing type indices for polymorphic handling, with direct use in BIL expression denotations. The sort module allows construction and decomposition of static value types, including numeric and composite sorts, while the compare module enables type-erased ordering and equality checks on abstracted values. Use cases include defining bitvector and memory sorts, performing type-agnostic comparisons, and refining value semantics using pattern-based rules in analysis pipelines.",
-      "description_length": 820,
+      "description": "This module represents the denotation of expressions using sorted values, where each value has a sort that encodes static properties like bitvector width or floating-point format. It provides operations to create, inspect, and transform values based on their sorts, supporting concrete tasks such as constructing bitvectors of specific widths or dynamically refining value representations. Key use cases include semantic analysis of machine instructions, where precise value representation is required for operations like constant propagation or symbolic evaluation.",
+      "description_length": 566,
       "index": 24,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Basic",
+      "module_path": "Bap_core_theory.Theory.Origin",
       "library": "bap-core-theory",
-      "description": "This module formalizes core operations for symbolic bitvector manipulation, memory access, and control flow structuring in a machine model, combining low-level arithmetic, bitwise logic, and memory operations with symbolic representations of machine semantics. It supports signed and unsigned arithmetic, shifts, casts, boolean logic, and structured branching over bitvectors and memory states, enabling precise modeling of low-level computations and symbolic reasoning. The module's API allows direct manipulation of bitvectors and memory, while its submodules provide symbolic term representations for formal verification and binary analysis tasks like symbolic execution. Example uses include modeling machine instructions, verifying program semantics, and analyzing binary code through structured effect sequencing and abstract syntax tree manipulation.",
-      "description_length": 857,
+      "description": "This module defines the relationship between aliased registers and their origin registers using the `('s,'k) Origin.t` type, where `'s` represents the width and `'k` the kind of relationship\u2014either `sub` for subsets or `sup` for supersets. It provides functions like `cast_sub`, `cast_sup`, `reg`, `regs`, `hi`, and `lo` to inspect and manipulate these relationships. Use cases include analyzing register aliasing in low-level code, extracting bit ranges for sub-registers, and reconstructing composite registers from smaller components.",
+      "description_length": 537,
       "index": 25,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Fabi",
+      "module_path": "Bap_core_theory.Theory.Language",
       "library": "bap-core-theory",
-      "description": "This module introduces an enumeration type for managing floating-point binary interface (FABI) conventions, offering comparison, ordering, and serialization operations. It includes predefined values `hard` and `soft` to specify hardware-accelerated or software-emulated floating-point handling, primarily used to model compiler and runtime behavior in binary analysis or toolchain development.",
-      "description_length": 393,
+      "description": "This module provides an enumeration type for representing source code languages, supporting operations like comparison, hashing, and serialization. It includes predefined constants for common languages (C, C++, Ada, etc.) and order manipulation functions to manage language hierarchies. Designed for use in analysis tools, it enables precise language identification and processing within semantic frameworks.",
+      "description_length": 408,
       "index": 26,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Unit",
+      "module_path": "Bap_core_theory.Theory.Target",
       "library": "bap-core-theory",
-      "description": "This module provides operations for creating and managing code units, which represent structured regions of code such as files or memory segments with metadata like paths, addresses, and compiler information. It supports comparison logic, ordering operations, and binary serialization (via Bin_prot) for use in analysis workflows that require precise partitioning and persistence of code fragments. Key applications include binary analysis frameworks where distinct instruction sets must be organized, compared, or serialized for tasks like reverse engineering or program verification.",
-      "description_length": 585,
+      "description": "This module manages abstract execution environments through operations that compare, serialize, and inspect target architectures. It works with `Target.t` values to expose properties like endianness, bitwidth, memory alignment, and hierarchical relationships (e.g., parent/child families), alongside utilities for naming, classification, and ABI-specific configurations. These capabilities are used to model system-specific semantics in binary analysis tasks, such as cross-architecture program verification or target-aware disassembly.",
+      "description_length": 536,
       "index": 27,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Semantics",
+      "module_path": "Bap_core_theory.Theory.Label",
       "library": "bap-core-theory",
-      "description": "This module defines operations for comparing, serializing, and managing empty semantics values represented as effect-based semantics (Semantics.t), which encapsulate program semantics, effect values, and code representations. It provides utilities for ordering semantics (e.g., ascending/descending comparisons) and Bin_prot serialization for persistent storage or transmission, enabling use cases like program analysis, optimization, and formal verification. The inclusion of comparator witnesses and domain-specific serialization logic supports efficient handling of semantic data in both memory-constrained and distributed systems.",
-      "description_length": 634,
+      "description": "This module provides functions to access and manipulate label properties such as address, name, and semantics, construct labels from addresses or symbolic identifiers, and perform comparisons, serialization, and ordered collection operations. It operates on `label` values representing program locations, interacting with the `program` class through `KB.slot` to manage metadata and semantic associations. Use cases include uniquely identifying code locations, persisting label data efficiently via binary I/O, and maintaining ordered relationships between program points in analysis workflows.",
+      "description_length": 594,
       "index": 28,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Filetype",
+      "module_path": "Bap_core_theory.Theory.Program",
       "library": "bap-core-theory",
-      "description": "This module manages enumerated file type values, enabling equality checks, comparison, serialization, and conversions to strings or S-expressions. It defines a `filetype` type with predefined constants like `elf`, `coff`, and `macho` to represent executable file formats, alongside utilities for handling unknown values. These features are used in binary analysis workflows to identify or specify binary file formats during program processing or semantic modeling.",
-      "description_length": 464,
+      "description": "This module provides operations to analyze and manipulate abstract program semantics through equality checks, ordering relations, and range constraints. It operates on program values tied to a knowledge domain, using labels as abstract pointers to associate semantic denotations with control flow targets. These capabilities enable use cases like verifying semantic equivalence of code segments, establishing execution orderings, and enforcing behavioral bounds during program analysis.",
+      "description_length": 486,
       "index": 29,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.IEEE754",
-      "library": "bap-core-theory",
-      "description": "This module implements IEEE754 floating-point formats through a set of indexed sorts and parameterized bitvector types, enabling precise modeling of floating-point operations in semantic analysis. It provides predefined formats like `binary32` and `decimal64`, along with functions to generate format parameters by size, supporting both binary and decimal variants. Child modules extend this functionality with operations to construct and manipulate floating-point sorts, including extracting exponent and significand components or retrieving encoding details. Together, they allow users to define custom floating-point representations and analyze or transform floating-point data in low-level programs.",
-      "description_length": 703,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Compiler",
-      "library": "bap-core-theory",
-      "description": "This module enables comparison and ordering of compiler metadata values, supporting operations like equality checks, min/max determination, and clamping, while also facilitating structured manipulation of compiler descriptors. It works with compiler-specific data such as name, version, compilation options, and string-mapped specs, alongside binary serialization and pretty-printing capabilities. It is particularly useful in semantic analysis workflows where precise tracking of compilation provenance or cross-referencing of compiler configurations is required, such as in binary translation or program verification tasks.",
-      "description_length": 625,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.System",
-      "library": "bap-core-theory",
-      "description": "This module provides operations to define and manipulate operating system models through an enumerated type, supporting tasks like declaring named elements, testing unknown status, and comparing values with functions such as `ascending` or `clamp`. It works with system values represented as an enumerated type, augmented with domain properties and persistence metadata, alongside predefined constants for common OS environments like Linux, Darwin, and Windows. These features enable binary analysis workflows where target platforms must be classified or platform-specific behaviors modeled, such as cross-system compatibility checks or OS-aware disassembly.",
-      "description_length": 658,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Minimal",
-      "library": "bap-core-theory",
-      "description": "This module provides foundational operations for symbolic computation and low-level program semantics, including bitvector arithmetic, memory manipulation, conditional branching, and control-flow primitives. It works with bitvectors, boolean values, memory states, and effect types to model data transformations and program behavior in formal verification or binary analysis scenarios. Specific capabilities include signed/unsigned arithmetic, bitwise operations, memory access, and effect composition for branching logic in stateful computations.",
-      "description_length": 547,
-      "index": 33,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Origin",
-      "library": "bap-core-theory",
-      "description": "This module defines the relationship between aliased registers and their origin registers using the parameterized `Origin.t` type. It supports two kinds of relationships: `sub` for subsets of a single register and `sup` for supersets formed by concatenating multiple registers. Key operations include extracting the base register, checking if a register is an alias, and retrieving bit ranges or constituent registers for subset and superset relationships, respectively.",
-      "description_length": 470,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Trans",
-      "library": "bap-core-theory",
-      "description": "This module provides transcendental mathematical operations on floating-point numbers, including exponential, logarithmic, trigonometric, hyperbolic, and their inverse functions, all configurable with rounding modes for precision control. It operates on `float` values and `rmode` (rounding mode) parameters, enabling precise numerical computations with customizable error handling. These functions are essential for applications requiring high-accuracy arithmetic in scientific computing, formal verification, or numerical analysis where rounding behavior must be explicitly managed.",
-      "description_length": 584,
-      "index": 35,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Label",
-      "library": "bap-core-theory",
-      "description": "The module provides operations to create and manipulate program labels that uniquely identify locations in a program's semantic representation. It works with `Label.t` values, which encapsulate properties like addresses, names, encoding, and compilation unit associations, supporting use cases such as semantic analysis, binary serialization, and label comparison for ordered collections. Functions include creating labels from addresses or interrupt vectors, querying metadata, and efficient binary serialization for storage or transmission.",
-      "description_length": 542,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Bool",
-      "library": "bap-core-theory",
-      "description": "This module defines the boolean sort and operations for working with one-bit boolean values in the BAP semantics representation. It provides the type `t` for boolean values, the `t` function to access the boolean sort, and the `refine` function to check and convert a value sort to the boolean sort. It is used to represent and manipulate boolean expressions in BAP's intermediate representation, such as modeling program conditions and control flow decisions.",
-      "description_length": 460,
-      "index": 37,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Memory",
-      "library": "bap-core-theory",
-      "description": "This module defines operations for manipulating memory structures with typed keys and values. It provides `load` and `store` functions to retrieve and update values at specific memory addresses, represented as bitvectors. Use cases include modeling low-level memory access in program analysis and simulating memory state transitions during instruction execution.",
-      "description_length": 362,
-      "index": 38,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Parser",
-      "library": "bap-core-theory",
-      "description": "This module generates recursive-descent parsers that translate untyped BIL-style ASTs into typed Core Theory terms across six term sorts: bitv, bool, mem, stmt, float, and rmode. It processes untyped input languages by mapping their constructs to typed semantic representations, enabling formal analysis or transformation. Key data types include `exp` for expressions, `rmode` for rounding modes, `t` for bitvectors and booleans, and `stmt` for effectful operations like memory and control flow. Examples include parsing BIL conditionals into boolean terms, modeling memory effects from binary code, and translating floating-point operations with rounding mode handling for verification.",
-      "description_length": 687,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Mem",
-      "library": "bap-core-theory",
-      "description": "This module defines and manipulates memory sorts as associative containers mapping bitvectors to bitvectors. It provides operations to define memory types with specified key and value sorts, refine existing sorts into memory sorts, and retrieve key and value sorts from memory sorts. Concrete use cases include modeling memory state in program analysis and defining memory transformations in binary semantics.",
-      "description_length": 409,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Bitv",
-      "library": "bap-core-theory",
-      "description": "This module supports arithmetic, bitwise, and shift operations on typed bitvectors (`bitv`) parameterized by their sort, with arithmetic performed modulo bitwidth and explicit handling of signed/unsigned comparisons. It provides structured composition through concatenation and appending of bitvectors, ensuring sort-directed casting during combination. These capabilities are designed for precise semantic modeling in binary analysis, enabling formal verification tasks like symbolic execution and low-level program reasoning where rigorous bitvector semantics are required.",
-      "description_length": 575,
-      "index": 41,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory.Theory.Rmode",
       "library": "bap-core-theory",
-      "description": "This module defines the type `t` representing rounding modes used in floating-point operations and provides the `refine` function to restore the specific rounding mode type from a generic value sort. It works with the `Value.sort` type to ensure correct typing during semantic analysis. Concrete use cases include specifying rounding behavior in floating-point arithmetic and validating rounding mode constraints in BAP's intermediate representation.",
-      "description_length": 450,
-      "index": 42,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Language",
-      "library": "bap-core-theory",
-      "description": "This module enables the declaration, comparison, and serialization of named programming languages within an enumeration, operating on `Language.t` values that represent source code languages like C, Ada, and Fortran. It provides ordering operations (e.g., `ascending`, `between`), equality checks, and persistence integration via binary/S-expression formats, supporting use cases in program analysis tools where precise language identification and cross-representation consistency are critical. Predefined constants simplify referencing common languages in tooling workflows.",
-      "description_length": 575,
-      "index": 43,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Target",
-      "library": "bap-core-theory",
-      "description": "This module models execution environments with structured target descriptors that capture architectural and microarchitectural properties such as endianness, bitness, and ABI conventions. It provides operations to query, compare, and manipulate these descriptors, supporting tasks like target selection, serialization, and dependency resolution across platforms. Child modules extend functionality with configurable options represented as structured values, enabling dynamic attribute management and cross-version persistence. Examples include resolving CPU-specific behaviors during binary translation or normalizing memory alignment settings for analysis pipelines.",
-      "description_length": 667,
-      "index": 44,
+      "description": "This module defines the type `t` representing rounding modes used in floating-point operations and provides the `refine` function to restore the specific type of a rounding mode sort. It works with the `Value.sort` type to enable precise type handling in semantic representations. Use cases include modeling IEEE 754 rounding modes in program analysis and ensuring correct type interpretation during value refinement.",
+      "description_length": 417,
+      "index": 30,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Var",
+      "module_path": "Bap_core_theory.Theory.Pass",
       "library": "bap-core-theory",
-      "description": "This module manages typed variables with support for creation, inspection, and transformation, incorporating structured identifiers and sort relationships. It enables precise control over variable properties like mutability and scope, while its child modules provide ordering and serialization for both structured identifiers and sort-erased variables. Operations include comparing variables based on name or version, constructing canonical forms, and building ordered collections that treat variables equivalently regardless of type. Use cases include formal analysis, program optimization, and serialization where consistent variable representation and ordering are critical.",
-      "description_length": 677,
-      "index": 45,
+      "description": "This module implements transformation passes for BAP's core theory, focusing on expression desugaring, simplification, and optimization. It operates on low-level semantic constructs such as registers, bitvectors, memory, effects, and floating-point values, performing tasks like constant propagation, variable alias resolution, and normalization of arithmetic or control-flow operations. Concrete use cases include streamlining symbolic representations for analysis tools and optimizing intermediate forms during automated theory instantiation.",
+      "description_length": 544,
+      "index": 31,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Source",
+      "module_path": "Bap_core_theory.Theory.Parser",
       "library": "bap-core-theory",
-      "description": "This module supports comparison, serialization, and metadata management for source code artifacts represented as `Source.t` values within BAP's Knowledge Base (KB). It operates on extensible `KB.Value.t` structures, enabling properties like source language, file name, and text content to be stored, retrieved, and compared, with use cases in program analysis tools that track compilation unit artifacts. The module facilitates integration with BAP's domain system by providing total ordering, binary persistence, and S-expression serialization for these artifacts.",
-      "description_length": 565,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Empty",
-      "library": "bap-core-theory",
-      "description": "This module defines foundational operations for bitvector and boolean expressions, including arithmetic, bitwise logic, memory access, and control-flow primitives like jumps and sequencing. It operates on typed bitvectors, floating-point numbers, memory, and effect types, supporting precise numeric representations, IEEE-compliant floating-point arithmetic, and low-level program semantics modeling. These capabilities are used in binary analysis, formal verification, and compiler optimizations where accurate manipulation of data and control flow is critical.",
-      "description_length": 562,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Init",
-      "library": "bap-core-theory",
-      "description": "This module defines fundamental operations for constructing and manipulating symbolic expressions in a semantic representation. It provides functions to reference variable values, create unknown values of a specified sort, bind expressions to variables, and conditionally select values based on boolean expressions. These operations are used to build and reason about low-level program semantics, such as modeling register values, memory states, and control flow conditions in binary analysis.",
-      "description_length": 493,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Alias",
-      "library": "bap-core-theory",
-      "description": "This module provides operations to define and manipulate register aliasing relationships using a domain-specific language. It works with register variables and part lists to express concatenations and subparts of CPU registers, such as defining a register as a composition of smaller parts or referencing specific segments of larger registers. Concrete use cases include modeling x86-style register subparts (like AH within RAX) or AVR-style register pairs (like Y composed of R19 and R18).",
-      "description_length": 490,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Effect",
-      "library": "bap-core-theory",
-      "description": "This module formalizes computational effects within a semantic framework, enabling precise modeling of low-level behaviors through operations like state updates, control transfers, and structured execution. It introduces typed variables, labels, and conditions to represent effects such as memory and register modifications, while supporting composition via sequencing, branching, and loops. The effect sort system classifies and combines data and control effects using intersection and union, allowing analysis of compound behaviors like combined memory access and control flow changes. Examples include tracking register writes alongside conditional jumps or analyzing the combined effect of a loop that modifies state and branches based on runtime values.",
-      "description_length": 758,
-      "index": 50,
+      "description": "This module generates recursive-descent parsers that translate untyped BIL-style abstract syntax trees into typed Core Theory terms, using a set of six top-level parsing rules corresponding to term sorts. It works with untyped ASTs from intermediate languages like BIL, mapping expressions and statements to semantic terms while enforcing type correctness and handling variable binding. A concrete use case is the BIL parser, which uses these rules to convert BIL code into Core Theory terms, inferring context and producing error terms for invalid expressions.",
+      "description_length": 561,
+      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory.Theory.Documentation",
       "library": "bap-core-theory",
-      "description": "This module organizes and exposes theory documentation, providing a structured way to access and inspect semantic theories in BAP. It includes the `theories` function, which returns a list of documented theories represented by the `Theory.t` type, capturing their metadata, dependencies, and capabilities. Child modules enhance this functionality by managing detailed documentation structures, allowing users to query specific aspects like required dependencies or provided features. Use this module to generate reports or analyze the formal semantics that underpin BAP's behavior.",
-      "description_length": 581,
-      "index": 51,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Program",
-      "library": "bap-core-theory",
-      "description": "This module provides operations for comparing, ordering, and serializing program semantics represented as abstract values associated with control flow labels. It works with `Program.t` values, which model program semantics linked to labels, enabling precise control flow modeling and integration with knowledge domains through clamping, comparison, and binary serialization capabilities. These features are utilized in semantic analysis, program reasoning, and scenarios requiring bounded value manipulation or persistent storage of semantic representations.",
-      "description_length": 558,
-      "index": 52,
+      "description": "This module provides functions to retrieve and inspect documentation for theories in the BAP semantics framework, including their names, descriptions, dependencies, and capabilities. It works with theory metadata structures to enable introspection of the core theory system. A concrete use case is querying the list of all declared theories and their associated documentation to generate reference materials or validate theory dependencies.",
+      "description_length": 440,
+      "index": 33,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Endianness",
+      "module_path": "Bap_core_theory.Theory.Abi",
       "library": "bap-core-theory",
-      "description": "This module provides operations to manage endianness as an extensible enumeration, supporting equality checks, ordering comparisons, and serialization to formats like S-expressions and binary. It works with a polymorphic `endianness` type representing byte-ordering strategies, including predefined variants for big endian, little endian, and bi-endian storage. These capabilities are used to model memory layout conventions for multibyte data in cross-platform binary analysis and low-level system interactions.",
-      "description_length": 512,
-      "index": 53,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module manages named Application Binary Interface (ABI) conventions, providing operations to create, compare, and serialize ABI identifiers like `gnu`, `cdecl`, or `fastcall`. It supports hashing, ordering, and standard equality checks, along with utilities for converting ABIs to strings, S-expressions, or binary representations. These capabilities are used in binary analysis tools to model calling conventions and disassembly contexts.",
+      "description_length": 444,
+      "index": 34,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_core_theory.Theory.Pass",
+      "module_path": "Bap_core_theory.Theory.Var",
       "library": "bap-core-theory",
-      "description": "This module implements desugaring transformations that normalize symbolic expressions, resolve register aliases, and simplify control flow by translating high-level constructs into primitive operations. It operates on bitvectors, booleans, floating-point values, memory states, and effectful computations, supporting tasks like constant propagation, zero-register concretization, and modular arithmetic analysis. These transformations preprocess theories for formal verification, ensuring a consistent low-level semantic representation while allowing custom symbolic program transformations. Example uses include converting complex expressions into basic arithmetic operations and resolving indirect register references into direct accesses.",
-      "description_length": 741,
-      "index": 54,
+      "description": "This module facilitates the creation, inspection, and type-safe manipulation of versioned variables (`Var.t`), parameterized by their sort, alongside identifiers and structured ordering mechanisms. It supports serialization via `Bin_prot` and `Sexp`, handles variable properties like virtual/mutable status, and enables scoped variable generation, catering to semantic analysis and compiler tools requiring precise variable identity tracking, version control, and structured comparison.",
+      "description_length": 486,
+      "index": 35,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory.Theory.Float",
       "library": "bap-core-theory",
-      "description": "This module combines floating-point sort definitions with bitvector-based representations to enable precise modeling of numeric formats like IEEE 754. It supports creating and refining floating-point sorts from bitvectors, extracting format details, and accessing underlying bitvector structures. Operations include defining custom floating-point encodings, converting between bitvector and floating-point sorts, and analyzing floating-point behavior in program verification. Example uses include specifying 32-bit and 64-bit floating-point formats and enabling bit-level reasoning in static analysis tools.",
-      "description_length": 607,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_core_theory.Theory.Core",
-      "library": "bap-core-theory",
-      "description": "This module enables symbolic computation and manipulation of low-level program semantics through foundational operations on booleans, bitvectors, memory, and floating-point values. It supports arithmetic, bitwise logic, control-flow branching, and memory access for bitvector and boolean types, alongside precise floating-point conversions, mathematical functions, and rounding mode management. These capabilities are applied in binary analysis, program verification, and modeling numeric behaviors in software systems.",
-      "description_length": 519,
-      "index": 56,
+      "description": "This module defines floating-point sorts using bitvector representations and provides operations to construct, query, and manipulate these sorts. It works with floating-point formats specified via the `Format` submodule and bitvector sorts from the `Bitv` module. Concrete use cases include defining IEEE 754 floating-point types and extracting bitvector components for analysis or translation tasks.",
+      "description_length": 400,
+      "index": 36,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bap_core_theory.Theory.Role",
+      "module_path": "Bap_core_theory.Theory.Compiler",
       "library": "bap-core-theory",
-      "description": "This module provides an extensible system for representing and manipulating target-specific roles of program entities such as variables and registers. It defines an abstract type `t` for roles, supporting operations like declaration, comparison, and serialization to strings or S-expressions, enabling consistent role handling across program analysis tasks. The child module supplies predefined constants for common semantic categories, including general-purpose and special-purpose registers, function arguments, and saved registers, facilitating precise analysis and transformation of low-level code. Together, they allow developers to classify entities, persist role metadata, and extend role sets for architecture-specific use cases like binary translation and reverse engineering.",
-      "description_length": 785,
-      "index": 57,
+      "description": "This module manages compiler descriptors that encapsulate metadata such as names, versions, and configuration options, enabling precise representation of translation tools used in binary analysis. It supports creation, inspection, and bidirectional serialization of these descriptors, along with comparison operations to establish ordering or equivalence between compiler instances. These capabilities are particularly useful for tracking provenance in binary translation workflows, ensuring compatibility across analysis pipelines, or debugging compiler-specific behaviors in low-level code.",
+      "description_length": 592,
+      "index": 37,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Empty",
+      "library": "bap-core-theory",
+      "description": "This module supports symbolic manipulation of bitvectors, booleans, and floating-point values through arithmetic, bitwise, and control-flow operations, including memory access, type casting, and transcendental functions. It operates on structured data types like typed bitvectors, memory models, and rounded floating-point representations, enabling formal reasoning about low-level code semantics and numeric behavior. Specific applications include program verification, binary analysis, and symbolic execution where precise modeling of machine-level operations and mathematical properties is required.",
+      "description_length": 602,
+      "index": 38,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Mem",
+      "library": "bap-core-theory",
+      "description": "This module defines operations for working with memory sorts, where each memory is an associative container mapping bitvectors to bitvectors. It provides functions to define memory sorts with specified key and value types, extract key and value sorts from existing memory sorts, and attempt to refine a sort into a memory type. Concrete use cases include modeling memory state in program analysis and defining transformations over memory contents in a formal semantics framework.",
+      "description_length": 479,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Filetype",
+      "library": "bap-core-theory",
+      "description": "This module manages enumeration values representing file type identifiers, enabling comparison, hashing, and serialization operations. It operates on a named enumeration type (`filetype`) with predefined constants like `elf`, `coff`, and `macho` to represent executable file formats. These capabilities support binary analysis workflows where file types must be identified, persisted, or integrated into knowledge systems for program analysis tasks.",
+      "description_length": 449,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Alias",
+      "library": "bap-core-theory",
+      "description": "This module provides operations to define and manipulate register aliasing relationships in CPU architectures, using a DSL for expressing concatenations and parts of registers. It works with register variables and alias definitions, enabling the construction of systems of equations that describe how registers overlap or combine. Concrete use cases include modeling x86 byte registers like `AH` as parts of `RAX`, or representing AVR register pairs such as `Y` as a concatenation of `R19` and `R18`.",
+      "description_length": 500,
+      "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Endianness",
+      "library": "bap-core-theory",
+      "description": "This component defines operations for managing endianness types, including big, little, and bi-endian representations, and provides functions for comparison, serialization, and pretty-printing. It operates on an abstract type `t` that encapsulates byte-ordering semantics for multibyte word storage in memory. Primarily used in BAP's core theory to model memory representation, enabling analysis of systems where data encoding depends on architectural byte orderings.",
+      "description_length": 467,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.System",
+      "library": "bap-core-theory",
+      "description": "This module enables operations on enumerated operating system types, supporting declaration, comparison, and persistence of system identifiers such as Linux, Darwin, and Windows. It provides utilities to manage system values through ordering (e.g., `ascending`, `clamp`), classification (e.g., RTOS vs. general-purpose OS), and serialization to formats like S-expressions, while also handling unknown status checks and string representations. Typical use cases include system environment classification, version comparison logic, and persisting system metadata across BAP analyses.",
+      "description_length": 581,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_core_theory.Theory.Unit",
+      "library": "bap-core-theory",
+      "description": "This module provides operations for creating and managing code units that represent files or memory regions, including constructors (`for_file`, `for_region`), comparison operators, and binary serialization. It works with knowledge base objects (`Unit.t`) that encapsulate metadata such as file paths, address biases, target architectures, source information, and compiler details. These capabilities are used to partition instructions into semantically coherent units, enabling tasks like provenance tracking, memory layout analysis, and cross-referencing in binary reverse engineering workflows.",
+      "description_length": 597,
+      "index": 44,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bap_core_theory.Theory",
       "library": "bap-core-theory",
-      "description": "This module structures program semantics modeling with abstractions for boolean logic, bitvector arithmetic, memory states, and effects, while enabling symbolic computation, low-level program reasoning, and binary analysis. It provides core data types such as typed bitvectors, memory sorts, floating-point formats, and effect-based semantics, alongside operations for value creation, refinement, comparison, and transformation, supporting tasks like instruction modeling, symbolic execution, and program verification. Child modules extend this foundation with specialized capabilities including register aliasing, compiler metadata handling, endianness modeling, and floating-point transcendental functions, enabling precise semantic analysis across diverse architectures and toolchains. Example uses include formalizing machine instruction semantics, tracking compiler provenance, and performing architecture-aware binary transformations.",
-      "description_length": 940,
-      "index": 58,
+      "description": "This module provides semantic analysis and transformation operations for program representations, focusing on typed reasoning about machine code. It works with structured semantic terms like bitvectors, boolean expressions, memory models, and floating-point values, alongside metadata such as register aliases, calling conventions, and architecture properties. Key use cases include binary decompilation, cross-architecture analysis, formal verification of low-level code, and optimizing program transformations through theory-driven simplification and knowledge-based manipulation.",
+      "description_length": 582,
+      "index": 45,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_core_theory",
       "library": "bap-core-theory",
-      "description": "This module provides a semantic framework for modeling program behavior with precise abstractions over bitvector arithmetic, memory states, boolean logic, and computational effects. It defines core data types such as typed bitvectors, memory sorts, and floating-point formats, along with operations for symbolic computation, value transformation, and effect tracking. You can use it to formalize instruction semantics, perform symbolic execution, verify program properties, and analyze binary code across different architectures. Specific applications include modeling machine instructions, tracking compiler transformations, and enabling architecture-aware binary analysis.",
-      "description_length": 674,
-      "index": 59,
+      "description": "This module provides typed semantic representations and operations for analyzing binary programs, including bitvector arithmetic, boolean logic, memory operations, and floating-point computations. It works with structured terms that model program values and effects, such as registers, memory states, and control flow changes. Concrete use cases include formal verification of machine code, binary decompilation, and architecture-agnostic program analysis.",
+      "description_length": 456,
+      "index": 46,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 62,
-    "meaningful_modules": 60,
-    "filtered_empty_modules": 2,
-    "retention_rate": 0.967741935483871
+    "total_modules_in_package": 47,
+    "meaningful_modules": 47,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 1017,
-    "min_description_length": 359,
-    "avg_description_length": 578.1,
-    "embedding_file_size_mb": 0.21828365325927734
+    "max_description_length": 693,
+    "min_description_length": 344,
+    "avg_description_length": 528.1702127659574,
+    "embedding_file_size_mb": 0.6817464828491211
   }
 }

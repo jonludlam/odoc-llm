@@ -1,605 +1,477 @@
 {
   "package": "osdp",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 73,
-  "creation_timestamp": "2025-07-15T23:18:50.129564",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 57,
+  "creation_timestamp": "2025-08-15T15:29:23.309486",
   "modules": [
     {
-      "module_path": "Osdp.Dualize.Make.ScalarLinExpr",
+      "module_path": "Osdp.Dualize.Q.ScalarLinExpr",
       "library": "osdp",
-      "description": "This module represents and manipulates scalar linear expressions, combining variables with coefficients and a constant term. It supports arithmetic operations like addition, subtraction, scalar multiplication, and variable substitution, along with normalization, comparison, and inspection functions. Use cases include building and simplifying linear constraints for optimization problems or symbolic algebraic manipulation.",
-      "description_length": 424,
+      "description": "This module represents and manipulates scalar linear expressions with variables and constant terms, supporting construction from coefficient lists, arithmetic operations, variable substitution, and normalization. It works with linear expressions composed of identifiers and coefficients, enabling precise manipulation of affine forms in preprocessing steps for SDP optimization. Concrete use cases include building and simplifying expressions like `2x + 3y + 5`, substituting variables with other expressions, and extracting structural properties such as checking if an expression is a constant or a single variable term.",
+      "description_length": 621,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp.Dualize.Q.ScalarLinExpr",
+      "module_path": "Osdp.Dualize.Float.ScalarLinExpr",
       "library": "osdp",
-      "description": "This module represents and manipulates scalar linear expressions with variables and constant terms, supporting construction from coefficient lists, arithmetic operations, variable substitution, and normalization. It works with identifiers (`Osdp.Ident.t`) paired with coefficients (`Coeff.t`) and provides precise operations like scalar multiplication, addition, subtraction, and variable replacement with other expressions. Concrete use cases include building and transforming affine expressions for preprocessing in SDP optimization, such as eliminating redundant variables or simplifying expressions before solving.",
-      "description_length": 618,
+      "description": "This module represents scalar linear expressions over variables identified by unique keys, supporting construction from coefficient lists, arithmetic operations like addition and scalar multiplication, variable substitution, and normalization. It works with linear expressions composed of variables, coefficients, and constants, internally managing simplifications such as zero coefficient removal. Concrete use cases include building and manipulating affine expressions for optimization problems, such as forming objective functions or constraints in a preprocessed SDP context.",
+      "description_length": 579,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Osdp.Dualize.Float.ScalarLinExpr",
+      "module_path": "Osdp.Dualize.Make.ScalarLinExpr",
       "library": "osdp",
-      "description": "This module represents scalar linear expressions with variables and coefficients, supporting operations like addition, subtraction, scalar multiplication, and variable substitution. It provides functions to construct expressions from coefficient lists, extract components, and manipulate expressions algebraically. Use cases include building and transforming linear constraints or objectives in optimization problems.",
-      "description_length": 417,
+      "description": "This module represents and manipulates scalar linear expressions, combining variables with coefficients and constants. It supports arithmetic operations like addition, subtraction, scalar multiplication, and variable substitution, along with conversions to and from coefficient lists. Use cases include building and transforming linear constraints or objectives in optimization problems.",
+      "description_length": 387,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp.LinExpr.S-Coeff",
+      "module_path": "Osdp.Scalar.Make",
       "library": "osdp",
-      "description": "This module provides arithmetic operations (addition, subtraction, multiplication, division, negation, inversion), comparison functions (equality, ordering, sign determination), and conversion utilities for a numeric coefficient type implemented using rational numbers to ensure exact arithmetic. These operations are specifically designed for manipulating coefficients in linear expressions, making them suitable for applications requiring precise numerical computations, such as symbolic mathematics, optimization algorithms, or formal verification systems where floating-point inaccuracies must be avoided.",
-      "description_length": 609,
+      "description": "This module extends scalar arithmetic with algebraic operations (negation, inversion, comparisons) and type conversions (integers, floats, rationals), operating over a scalar type `t` defined by an underlying module `M`. It supports numerical computations requiring precise algebraic manipulation and interoperability with other numeric representations, particularly useful for constructing matrices, polynomials, or algorithms needing exact inverses and overflow-aware integer conversions.",
+      "description_length": 490,
       "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Osdp.Lmi.S-Mat-Coeff",
+      "module_path": "Osdp.LinExpr.Q",
       "library": "osdp",
-      "description": "This module offers arithmetic operations (addition, subtraction, multiplication, division, negation, inversion), comparisons (equality, ordering), and conversions between integers, floats, and rational numbers for coefficients stored in `Mat.Coeff.t` structures. These operations facilitate the manipulation and analysis of numerical values during the transformation of linear matrix inequalities into semidefinite programming problems. Specific use cases include optimizing coefficient representations and ensuring accurate numerical handling when interfacing with SDP solvers.",
-      "description_length": 578,
+      "description": "This module represents affine expressions with rational coefficients, supporting construction from variable-coefficient pairs, arithmetic operations like addition and scalar multiplication, and variable substitution. It provides functions to inspect expressions, check if they are constants or single variables, and normalize their representation. Use cases include symbolic manipulation of linear expressions in optimization or algebraic computations.",
+      "description_length": 452,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp.Ident.Set",
+      "module_path": "Osdp.Monomial.Set",
       "library": "osdp",
-      "description": "This module supports creating, modifying, and querying sets of uniquely ordered identifiers (`Osdp.Ident.t`) using operations like union, intersection, difference, and ordered element retrieval (min/max/any). It provides transformations, bulk iteration/folding, and predicates for set comparison, while ensuring correctness through `Ord.compare`-based ordering. Use cases include managing ordered identifier collections, efficient set arithmetic, and converting between sets and sequences for ordered traversal or bulk updates.",
-      "description_length": 527,
+      "description": "This module implements ordered collections of monomials with operations for set algebra (union, intersection, difference), structural transformations (filtering, mapping, partitioning), and ordered traversal. It works with monomial sets maintained in a sorted structure using a custom comparator, supporting efficient membership checks and ordered sequence conversions. These capabilities are particularly useful for algebraic computations requiring term ordering, such as Gr\u00f6bner basis calculations or polynomial ideal manipulations where ordered monomial processing is essential.",
+      "description_length": 581,
       "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Sos.S",
-      "library": "osdp",
-      "description": "This module provides symbolic construction and manipulation of polynomial expressions, supporting arithmetic operations, composition, derivation, and conversion to monomial representations, alongside syntactic operators for polynomial building and inequality handling. It operates on symbolic polynomials (including parametric and homogeneous forms), variable mappings, positive semi-definite matrices, and monomial lists, enabling use cases like transforming sum-of-squares constraints into semidefinite programs, optimizing polynomial objectives with configurable SDP-based solving, and verifying SOS properties through numerical validation of witness matrices or rounded solutions. Applications include symbolic-numeric verification of polynomial identities and optimization tasks in control theory, formal verification, and mathematical modeling.",
-      "description_length": 850,
-      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Osdp.Lmi.Make",
       "library": "osdp",
-      "description": "This module provides operations for constructing and manipulating structured matrix expressions using symbolic representations like constants, variables, and operations (transpose, addition, multiplication, block matrices, Kronecker products), centered around the `matrix_expr` type. It supports defining semidefinite programming (SDP) objectives with minimization or maximization goals, solving SDP problems under positive semi-definite constraints, and evaluating expressions with variable substitutions. Designed for LMI optimization workflows, it enables symbolic manipulation, constraint checking, and integration with numerical solvers for applications in control theory, robust optimization, and matrix inequality analysis.",
-      "description_length": 730,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.PreSdp.S-Scalar",
-      "library": "osdp",
-      "description": "This module provides arithmetic operations (addition, multiplication, inversion), comparisons (equality, ordering), and conversions between scalar values and numeric types like floats, integers, and exact rationals (Q.t). It operates on the abstract `Scalar.t` type, which represents scalars during SDP preprocessing, enabling precise manipulation of values before conversion to floating-point numbers. These capabilities are critical for tasks like eliminating redundant variables in SDP problems while maintaining numerical precision ahead of solver execution.",
-      "description_length": 562,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Ident.Map",
-      "library": "osdp",
-      "description": "This module offers operations for manipulating ordered maps with keys of type `Osd.Ident.t`, supporting additions, deletions, and updates to key-value pairs, along with merging and list-based accumulation via functions like `add_to_list`. It provides transformations, ordered iteration, and bulk conversions between maps and sequences or lists, enabling efficient processing of bindings in ascending or descending key order. Such functionality is useful for managing dynamic collections where key ordering is critical, such as merging hierarchical data or aggregating values under unique identifiers.",
-      "description_length": 600,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Sos.S-Poly-Coeff",
-      "library": "osdp",
-      "description": "This module provides arithmetic operations (addition, multiplication, division, negation) and comparison capabilities (equality, ordering) for numerical coefficients in polynomial expressions. It works with an abstract type representing coefficients, supporting conversions to and from integers, floats, and rational numbers. These operations are used during polynomial manipulation in SOS optimization workflows, such as constructing SDP formulations or reconstructing solutions from solver outputs.",
-      "description_length": 500,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Dualize.Float",
-      "library": "osdp",
-      "description": "This module extends semidefinite programming capabilities by handling floating-point coefficients and sparse matrix representations, enabling efficient solutions for large-scale SDP problems with reduced variable sets. It supports solving and printing extended SDP formulations, returning primal solutions, objective bounds, and constraint details. Scalar linear expressions\u2014built from variables and coefficients\u2014can be manipulated algebraically, allowing construction and transformation of objectives and constraints. Example tasks include optimizing structured matrix expressions and inspecting constraint components after variable elimination.",
-      "description_length": 646,
-      "index": 11,
+      "description": "This module provides operations for constructing and manipulating symbolic matrix expressions with arithmetic, transposition, and block/kron structures, while supporting semidefinite programming through inequality constraints and objective functions. It works with algebraic data types representing matrix expressions (`matrix_expr`) and environments for variable substitution, enabling tasks like LMI validation, solution evaluation, and positive semi-definiteness checks. Specific use cases include transforming LMI problems into SDP form, solving optimization problems with matrix inequalities, and verifying solutions via symbolic evaluation and constraint checking.",
+      "description_length": 670,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Osdp.Matrix.Q",
       "library": "osdp",
-      "description": "This module offers linear algebra operations for rational-coefficient matrices, including arithmetic (addition, multiplication, exponentiation), decomposition (Gaussian elimination), and structural manipulations (transposition, block embedding, pruning). It works with dense matrices containing exact rational values (`Q.t`), enabling precise symbolic computations and exact linear system solving. Typical use cases involve formal verification, computer algebra systems, and numerical analysis requiring rigorous arithmetic.",
-      "description_length": 524,
-      "index": 12,
+      "description": "This module enables precise linear algebra operations on matrices with rational coefficients represented via Zarith's `Q.t` type, emphasizing exact arithmetic for symbolic and numerical stability. It supports matrix construction from lists or arrays, block assembly, transposition, scalar multiplication, arithmetic operations, exponentiation, symmetry validation, and Gaussian decomposition. Such functionality is critical in applications requiring exact fractional computations, such as symbolic mathematics, exact linear system solving, or algorithmic research in computational algebra.",
+      "description_length": 589,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.LinExpr.MakeScalar",
+      "library": "osdp",
+      "description": "This interface provides scalar arithmetic operations (addition, subtraction, multiplication, negation) and constants (zero, one) for linear expressions, along with conversions to and from floats and rationals. It enforces linearity by raising errors for invalid operations like division or products of two non-constant expressions, while supporting comparisons like equality and ordering. Useful in symbolic manipulation of affine expressions, such as in optimization or constraint-solving contexts where maintaining linear relationships is essential.",
+      "description_length": 551,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Osdp.Monomial.Set",
+      "module_path": "Osdp.Monomial.Map",
       "library": "osdp",
-      "description": "This module provides operations for managing ordered, unique collections of monomials, supporting set algebra (union, intersection, difference), membership checks, and transformations via mapping or filtering. It works directly with monomial values and their set representations, enabling efficient iteration, ordered sequence conversions, and functional manipulation patterns. Typical applications include algebraic computations requiring canonical forms, polynomial ideal operations, or symbolic processing pipelines where element uniqueness and deterministic ordering are critical.",
-      "description_length": 584,
-      "index": 13,
+      "description": "This module provides ordered finite maps with monomial keys, supporting operations like addition, removal, and querying of key-value bindings, as well as ordered traversal, filtering, and bulk transformations. It leverages comparison-based ordering of `Osdp.Monomial.t` keys for efficient range queries, merging, and structural manipulations such as splitting or partitioning. Typical use cases include polynomial arithmetic, symbolic computation, and optimization tasks where maintaining and processing terms in graded or lexicographic order is critical.",
+      "description_length": 555,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Osdp.Sos.Make",
       "library": "osdp",
-      "description": "This module enables symbolic SOS programming by providing operations to construct polynomial expressions from constants, variables, arithmetic operations, and higher-level constructs like composition and derivation, all represented via a GADT-like type. It manipulates polynomial expressions, variable assignments (`values`), and matrices (`Q`) to solve optimization problems under SOS constraints and verify proofs using witness matrices and rounding checks. Applications include optimizing objectives in mathematical programming and validating SOS solutions for systems analysis or machine learning models.",
-      "description_length": 608,
+      "description": "This module provides operations to construct and manipulate polynomial expressions using arithmetic, composition, and scalar multiplication, enabling the formulation of sum-of-squares constraints through symbolic variables and coefficients. It supports evaluating polynomials at concrete values, verifying SOS properties via witness matrices, and integrates with SDP solvers for optimization tasks like stability analysis in control systems or polynomial optimization in machine learning. The core data structures include polynomial expressions, positive definite matrices, and coefficient types to represent and validate SOS decompositions.",
+      "description_length": 641,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Polynomial.Make",
+      "library": "osdp",
+      "description": "This module provides operations for constructing and manipulating multivariate polynomials, including arithmetic (addition, multiplication, scalar multiplication, exponentiation), derivation, evaluation, composition, and structural analysis (degree computation, homogeneity checks, term classification). Polynomials are represented as normalized",
+      "description_length": 345,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Scalar.Q",
+      "library": "osdp",
+      "description": "This module supports arithmetic operations (addition, subtraction, multiplication, division, negation, inversion), comparisons, and conversions for rational numbers represented by the `Q.t` type. It enables precise fractional calculations with utilities for sign determination, equality checks, and ordering, alongside interconversion with integers and floating-point values. Designed for applications requiring exact numerical precision, such as symbolic mathematics, financial modeling, or algorithmic computations where lossless arithmetic is critical.",
+      "description_length": 555,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Osdp.Lmi.Float",
+      "library": "osdp",
+      "description": "This module provides a domain-specific language for constructing and manipulating matrix expressions involving symmetric matrices, scalars, and operations like addition, multiplication, transposition, and Kronecker products to define Linear Matrix Inequalities (LMIs). It transforms LMIs into Semidefinite Programming (SDP) problems, optimizes under positive semi-definite constraints, and includes utilities for evaluating expressions, checking matrix properties (e.g., symmetry, PSD), and debugging value environments. Applications include optimization in control theory, system identification, and robust design, where matrix inequalities must be analyzed or maximized under structural constraints.",
+      "description_length": 701,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Scalar.Float",
+      "library": "osdp",
+      "description": "This module implements standard arithmetic operations (addition, subtraction, multiplication, division, negation, inversion) and comparison operators (equality, ordering) for a wrapped `float` type represented as `Osdps.Scalar.Float.t`. It supports conversions to and from `float`, `int`, and `Q.t`, enabling use in algebraic structures like matrices and polynomials where precise scalar manipulation and numeric interoperability are required.",
+      "description_length": 443,
       "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Matrix.S-Coeff",
-      "library": "osdp",
-      "description": "This module defines scalar coefficients with arithmetic operations (addition, multiplication, inversion), ordering relations, and numeric conversions, serving as the foundational algebraic structure for matrix computations. It works with scalar values of type `t` used as matrix elements, enabling precise numerical and symbolic manipulation in linear algebra tasks like solving systems, eigenvalue calculations, and numerical simulations where exactness and type flexibility are critical.",
-      "description_length": 489,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.PreSdp.Float",
-      "library": "osdp",
-      "description": "This module solves extended sparse SDP problems with float coefficients by preprocessing to eliminate redundant free variables before invoking the SDP solver. It operates on sparse matrices and vectors represented as lists of index-value pairs, along with bounds and solver options. It is used to handle optimization problems where constraints involve linear combinations of variables that can be simplified before solving.",
-      "description_length": 423,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Matrix.Float",
-      "library": "osdp",
-      "description": "This module implements dense float matrices with operations for numerical linear algebra, including arithmetic (addition, multiplication, exponentiation), structural transformations (transposition, block assembly), and decomposition (Gaussian splitting). It supports specialized tasks like symmetric matrix validation, zero-row/column elimination, and Kronecker delta construction, working on 2D float arrays represented as `Osdp.Matrix.Float.t`. Typical applications include scientific computing, optimization problems, and data manipulation workflows requiring precise matrix manipulations.",
-      "description_length": 592,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Dualize.S",
-      "library": "osdp",
-      "description": "This module solves extended formulations of semidefinite programs by eliminating redundant free variables and calling into the Sdp module. It operates on sparse matrices and vectors represented as lists of index-coefficient pairs, along with block-diagonal structures and bounds. Concrete use cases include preprocessing and solving SDP problems with extended variables, and printing formatted representations of objectives, constraints, and problem data.",
-      "description_length": 455,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Polynomial.Q",
-      "library": "osdp",
-      "description": "This module enables precise manipulation of multivariate polynomials with rational coefficients through structural operations like arithmetic (including scalar division), differentiation, composition, and term-wise transformations. It represents polynomials as monomial collections, supporting queries for homogeneity, degree, and variable counts, while providing utilities for evaluation, term folding, and human-readable formatting. Its design suits symbolic algebra tasks requiring exact rational arithmetic, such as solving Diophantine equations, modeling algebraic dependencies, or implementing polynomial normalization algorithms in computational mathematics.",
-      "description_length": 665,
-      "index": 19,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Osdp.PreSdp.Make",
       "library": "osdp",
-      "description": "This module provides functions to solve extended sparse semidefinite programs with preprocessing that eliminates redundant free variables. It works with sparse matrices, constraints in extended form, and bound specifications, returning solution data along with variable assignments. A concrete use case is optimizing SDP problems where constraints imply linear dependencies among variables, allowing the solver to skip redundant variables and improving performance.",
-      "description_length": 465,
+      "description": "This module solves sparse extended SDP problems by preprocessing to eliminate redundant free variables before invoking the SDP solver. It handles constraints where variables can be expressed as linear combinations of others, reducing problem size by solving only for independent variables. It works with sparse matrices, block-diagonal matrices, and vector representations of variable coefficients.",
+      "description_length": 398,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Dualize.Float",
+      "library": "osdp",
+      "description": "This module solves extended sparse SDP problems with floating-point coefficients, returning primal solutions and detailed results. It operates on sparse matrices and vectors with integer keys, using preprocessed objective and constraint expressions. Concrete use cases include solving optimization problems where variables and constraints are represented sparsely for efficiency, such as in large-scale semidefinite programming.",
+      "description_length": 428,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Osdp.Lmi.Q",
+      "library": "osdp",
+      "description": "This module provides a domain-specific language for symbolic manipulation of matrix expressions and LMI-to-SDP problem transformation, supporting operations like matrix creation (identity, Kronecker), variable declaration, and algebraic manipulations (addition, multiplication, transposition). It works with symbolic matrix expressions (`matrix_expr`) and environments mapping scalar variables to values, enabling the formulation and solving of semidefinite programs derived from linear matrix inequalities. Specific use cases include convex optimization problems in control theory, system analysis, and robust design, where LMIs are transformed into SDP format, solved via external solvers, and solutions are reconstructed for analysis.",
+      "description_length": 737,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Matrix.Float",
+      "library": "osdp",
+      "description": "This module enables linear algebra operations on dense matrices with floating-point precision, supporting transformations like transposition, arithmetic operations, and matrix exponentiation. It works with two-dimensional numeric structures, offering utilities for decomposition, symmetry validation, and block matrix construction while enforcing dimensional consistency. Applications include numerical simulations, eigenvalue computations, and scientific workflows requiring precise manipulation of real-number matrices.",
+      "description_length": 521,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.LinExpr.Make",
+      "library": "osdp",
+      "description": "This module represents affine expressions as linear combinations of variables with coefficients, supporting construction from lists, variable and constant creation, scalar multiplication, addition, subtraction, variable replacement, and removal. It provides operations to inspect and compare expressions, check if they are single variables or constants, and extract components for analysis or code generation. Concrete use cases include symbolic manipulation in optimization algorithms, expression simplification, and constraint system construction.",
+      "description_length": 549,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Ident.Set",
+      "library": "osdp",
+      "description": "This module implements ordered set operations for unique identifiers, supporting standard manipulations like union, intersection, and difference alongside element search with monotonic predicates (`find_first`, `find_last`). It maintains elements in sorted order using a comparison function and provides safe and unsafe retrieval methods, with conversions to and from lists and sequences for flexible data processing. This enables efficient handling of ordered identifier collections in scenarios requiring membership checks, ordered iteration, or combining sets through common operations.",
+      "description_length": 589,
       "index": 20,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp.LinExpr.S",
+      "module_path": "Osdp.PreSdp.Float",
       "library": "osdp",
-      "description": "This module represents affine expressions as linear combinations of variables with coefficients, supporting construction from coefficient lists, variable and constant creation, scalar multiplication, addition, subtraction, variable replacement and removal, and structural comparison. It operates on lists of identifier-coefficient pairs and standalone coefficients, ensuring normalized representations without duplicates or zero coefficients in outputs. Concrete use cases include symbolic manipulation of linear constraints, building and transforming expressions for optimization problems, and evaluating algebraic structures in formal verification tasks.",
-      "description_length": 656,
+      "description": "This module solves extended sparse SDP problems with float coefficients by preprocessing to eliminate redundant free variables before invoking the SDP solver. It operates on sparse matrices and vectors represented as lists of index-scalar pairs, along with bounds and solver options. It is used to efficiently handle SDP constraints where variables are linearly dependent, such as in optimization problems with equality constraints that allow variable elimination.",
+      "description_length": 464,
       "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Polynomial.Q",
+      "library": "osdp",
+      "description": "This module provides arithmetic operations (addition, multiplication, scalar division), structural analysis (degree calculation, homogeneity checks, term enumeration), and calculus operations (differentiation, composition) on polynomials with rational coefficients in multiple variables. It represents polynomials as sums of monomials, enabling symbolic computation and algebraic simplification through precise manipulation of variable bindings, coefficient scaling, and term-wise transformations. These capabilities support applications in symbolic mathematics, algorithm development for algebraic systems, and formal verification of polynomial-based models.",
+      "description_length": 659,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Dualize.Q",
+      "library": "osdp",
+      "description": "This module solves extended formulations of semidefinite programs (SDPs) in sparse matrix format, handling objective and constraint matrices along with variable bounds. It computes primal solutions and detailed output including variable mappings and block diagonal structures. Concrete use cases include solving sparse SDP problems with extended variables, such as those arising in control theory or combinatorial optimization, and extracting structured results for further processing or analysis.",
+      "description_length": 497,
+      "index": 23,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Osdp.PreSdp.S",
+      "module_path": "Osdp.Sos.Float",
       "library": "osdp",
-      "description": "This module solves extended semidefinite programming problems with sparse matrices, handling redundant free variables by preprocessing constraints to eliminate them before invoking the SDP solver. It operates on types like `vector`, which represents sparse vectors as lists of index-coefficient pairs, and works with extended objective and constraint matrices in sparse format. It is useful for optimizing problems where linear dependencies between variables exist, such as in certain control theory or combinatorial optimization formulations.",
-      "description_length": 543,
-      "index": 22,
+      "description": "This module enables symbolic manipulation of polynomial expressions through arithmetic operations, differentiation, and parametric variable construction, while supporting introspection into properties like degree and variable counts. It operates on symbolic polynomial trees, monomial lists, and numerical matrices to facilitate SDP-based constraint solving and sum-of-squares decomposition. Applications include optimizing polynomial functions, numerically verifying SOS proofs via witness data, and extracting solutions from semidefinite programs.",
+      "description_length": 549,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Osdp.Sos.Q",
       "library": "osdp",
-      "description": "This module provides operations to construct and manipulate polynomial expressions with rational coefficients, supporting arithmetic operations, inequality constraints, and sum-of-squares (SOS) formulations. It enables solving optimization problems by transforming SOS constraints into semidefinite programs (SDPs), handling objectives like minimization or feasibility, and verifies solutions using witness data to confirm polynomial properties. Use cases include formulating SOS optimization tasks, solving them via SDP relaxation, and validating results through evaluation and rounding procedures.",
-      "description_length": 599,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.LinExpr.MakeScalar",
-      "library": "osdp",
-      "description": "This structure provides scalar arithmetic (addition, subtraction, multiplication, inversion) and comparison operations for linear expressions represented by a dedicated type, enforcing linearity constraints. It supports conversions between numeric types and symbolic expressions but explicitly disallows non-linear operations like multiplying two non-constant expressions by raising exceptions. Useful for symbolic manipulation in domains requiring strict affine arithmetic, such as linear programming or algebraic modeling.",
-      "description_length": 524,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Scalar.Make",
-      "library": "osdp",
-      "description": "This module provides extended arithmetic operations (addition, subtraction, multiplication, division, negation, inversion) and comparison operators for scalar values built over a numeric module `M`. It supports conversions to and from floats and rational numbers (`Q.t`), along with derived utilities like `sign`, `geq`, and overflow-aware integer casting via `of_int`. These operations are particularly useful for numerical computations in structures like matrices or polynomials where precise scalar manipulation and overflow handling are critical.",
-      "description_length": 550,
+      "description": "This module supports symbolic manipulation of polynomial expressions with rational coefficients, offering arithmetic operations, differentiation, and structural analysis (e.g., degree, homogeneity). It specializes in transforming sum-of-squares constraints into semidefinite programs (SDP) for numerical solving, with configurable solver options, and validates solutions using witness data to confirm polynomial identities or SOS decompositions under variable substitutions.",
+      "description_length": 474,
       "index": 25,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp.Dualize.S-ScalarLinExpr",
+      "module_path": "Osdp.Polynomial.Float",
       "library": "osdp",
-      "description": "This module represents and manipulates scalar linear expressions, combining variables with coefficients and a constant term. It supports arithmetic operations like addition, subtraction, scalar multiplication, and variable substitution, along with conversions to and from coefficient lists. Use cases include building and transforming linear constraints or objectives in optimization problems.",
-      "description_length": 393,
+      "description": "This module provides arithmetic operations (addition, multiplication, scalar operations), structural analysis (degree, homogeneity checks), and transformations (derivation, composition) for polynomials with float coefficients in multiple variables. It operates on polynomials represented as lists of monomials, leveraging `Osdp.Monomial.t` and `Coeff.t` for term-level manipulations. These capabilities support symbolic computation, calculus operations, and algebraic analysis in multivariate polynomial contexts.",
+      "description_length": 513,
       "index": 26,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp.Dualize.Q",
+      "module_path": "Osdp.Ident.Map",
       "library": "osdp",
-      "description": "This module combines dualization techniques with sparse matrix representations to solve extended semidefinite programming problems, eliminating redundant variables and returning structured primal solutions with objective bounds and constraint details. It uses key data types like `vector` for sparse variables and `details` for solution metadata, integrating scalar linear expressions from its child module to support expression manipulation, substitution, and normalization. Operations include building and simplifying affine expressions for preprocessing, solving large-scale SDP problems with structured constraints, and extracting detailed solution information in sparse formats. The module enables end-to-end workflows from expression construction to optimized solving and solution analysis.",
-      "description_length": 796,
+      "description": "This module manages key-value associations where keys are unique identifiers ordered by their inherent structure, supporting operations like insertion, deletion, ordered traversal, and merging of maps. It provides transformations, ordered queries (e.g., range searches), and conversions to sequences or lists for iterative processing. Such maps are ideal for handling collections of uniquely identified entities requiring ordered access, bulk updates, or efficient combination of datasets.",
+      "description_length": 489,
       "index": 27,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp.Scalar.M",
+      "module_path": "Osdp.LinExpr.Float",
       "library": "osdp",
-      "description": "This module defines a scalar type with arithmetic operations, comparisons, and conversions to and from floats and rational numbers. It supports building structures like matrices and polynomials by providing core scalar functionality. Concrete use cases include numerical computations over custom scalar types, such as exact arithmetic with rationals or specialized numeric representations.",
-      "description_length": 389,
+      "description": "This module represents affine expressions with floating-point coefficients and provides operations to construct, manipulate, and evaluate them. It supports creating expressions from variable-coefficient pairs, adding or subtracting expressions, scaling by constants, substituting variables, and extracting structural information like coefficients or constants. Concrete use cases include building and transforming linear constraints for optimization problems or symbolic manipulation in numerical analysis.",
+      "description_length": 506,
       "index": 28,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp.Lmi.S-Mat",
+      "module_path": "Osdp.Matrix.Make",
       "library": "osdp",
-      "description": "This module provides matrix construction, transformation, and arithmetic operations tailored for LMI-to-SDP conversion, handling matrices with `Coeff.t` coefficients. It supports specialized tasks like Kronecker product creation, block assembly, symmetry checks, and Gaussian elimination, alongside overloaded arithmetic operators, enabling structural manipulation and optimization problem reformulation for SDP solver integration.",
-      "description_length": 431,
+      "description": "This module provides matrix construction, decomposition, and arithmetic operations over a coefficient type `Coeff`, including Gaussian elimination, block matrix handling, and specialized matrix generation (identity, Kronecker). It works with matrices of type `t` and supports transformations like transpose, scalar multiplication, and row/column pruning. Use cases include linear algebra workflows, numerical algorithms requiring matrix factorization, and data transformation tasks involving structured matrices.",
+      "description_length": 512,
       "index": 29,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Osdp.Dualize.Make",
       "library": "osdp",
-      "description": "This module implements dualization logic for extended SDP formulations, handling sparse matrix representations and variable elimination. It provides functions to solve extended SDP problems with preprocessing, returning primal solutions alongside metadata like bounds and variable details. The scalar linear expression submodule represents and manipulates expressions combining variables with coefficients and a constant term, supporting arithmetic operations, substitution, normalization, and inspection. Together, they enable optimizing semidefinite programs with structured constraints and analyzing solution details for custom scalar expressions.",
-      "description_length": 650,
+      "description": "This module implements dualization of extended SDP formulations by transforming sparse matrices and constraints through preprocessing that removes redundant free variables. It operates on types like `vector`, `sparse_matrix`, and `details`, which capture structured coefficient data and variable mappings for optimization problems. Concrete use cases include solving sparse SDP problems with custom scalar expressions and generating detailed diagnostic outputs for primal solutions.",
+      "description_length": 482,
       "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Scalar.Float",
-      "library": "osdp",
-      "description": "This module implements scalar arithmetic (addition, subtraction, multiplication, division), comparison operators, and conversion routines for a wrapped float type, supporting numerical operations in structures like matrices and polynomials. It provides constants for common values, sign determination, and formatting capabilities, enabling precise floating-point manipulations in mathematical computations.",
-      "description_length": 406,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.LinExpr.Make",
-      "library": "osdp",
-      "description": "This module represents affine expressions built from variables and coefficients, supporting construction from lists of variable-coefficient pairs, arithmetic operations like addition, subtraction, and scalar multiplication, and variable substitution. It provides precise manipulation of linear expressions through functions like `replace`, `remove`, and `choose`, and includes comparison and pretty-printing capabilities. Concrete use cases include symbolic manipulation in optimization problems and algebraic transformations in code analysis.",
-      "description_length": 543,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Matrix.S",
-      "library": "osdp",
-      "description": "This module offers matrix construction, arithmetic, decomposition, and property analysis operations for linear algebra tasks. It manipulates matrices represented as type `t` built from lists, arrays, or blocks, interacting with coefficient types for scalar operations and formatting. Key use cases include solving linear systems via Gaussian elimination, matrix transformations, symmetry verification, and generating structured matrices like identity or Kronecker products.",
-      "description_length": 473,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Dualize.S-Scalar",
-      "library": "osdp",
-      "description": "This module provides arithmetic and comparison operations on scalar values, including addition, multiplication, inversion, and ordering, with support for precise conversions between floats, integers, and rational numbers. It works with scalar types designed to represent numerical coefficients during preprocessing steps of semidefinite programming (SDP) optimization, where exact arithmetic is required to eliminate redundant variables. These scalars enable accurate symbolic manipulation and normalization of SDP problems before numerical solving.",
-      "description_length": 549,
-      "index": 34,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Lmi.Float",
-      "library": "osdp",
-      "description": "This module provides a domain-specific language for constructing matrix expressions with symmetric variables, Kronecker products, and block matrices, supporting arithmetic operations and inequality constraints. It transforms these expressions into semidefinite programming (SDP) problems for optimization, handling value environments to evaluate results or validate positive semi-definite properties. Key use cases include formulating LMI-based optimization problems, debugging constraint validity, and retrieving numerical solutions through solver integration.",
-      "description_length": 561,
-      "index": 35,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.LinExpr.Q",
-      "library": "osdp",
-      "description": "This module represents affine expressions with rational coefficients, supporting construction from variable-coefficient pairs, arithmetic operations like addition and scalar multiplication, and variable substitution. It provides functions to inspect expressions, check if they are constants or single variables, and remove variables. Use cases include symbolic manipulation of linear expressions, building and evaluating affine combinations in optimization or algebraic computations.",
-      "description_length": 483,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Polynomial.Make",
-      "library": "osdp",
-      "description": "This module enables arithmetic operations, symbolic manipulation, and structural analysis of multivariate polynomials represented as coefficient-weighted monomial lists. It supports polynomial values (`t`) with dynamic variable handling, offering degree calculations, homogeneity checks, differentiation, and evaluation against symbolic or numeric inputs. Designed for applications in algebraic modeling, symbolic computation, and polynomial equation solving where precise term-level control is required.",
-      "description_length": 504,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Sos.S-Poly",
-      "library": "osdp",
-      "description": "This module provides symbolic polynomial manipulation capabilities, focusing on arithmetic operations (addition, multiplication, exponentiation), structural analysis (degree computation, homogeneity checks), and transformation workflows (composition, derivation). It operates on sparse polynomial representations using `Poly.t` structures that map monomials to coefficients, with explicit support for monomial ordering and coefficient arithmetic through `Monomial.t` and `Coeff.t types. These capabilities enable use cases like symbolic optimization problem formulation, polynomial ideal generation, and semidefinite programming relaxation construction in computer algebra systems.",
-      "description_length": 681,
-      "index": 38,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Osdp.PreSdp.Q",
       "library": "osdp",
-      "description": "This module solves extended semidefinite programming problems with sparse matrices, handling redundant free variables by preprocessing constraints to eliminate them before invoking the SDP solver. It works with vectors represented as lists of index-coefficient pairs, sparse matrices, and block-diagonal matrix structures, providing precise solutions with dual bounds and reconstructed variable values. Concrete use cases include optimizing quantum information protocols and solving physical simulations where variable dependencies reduce problem dimensionality.",
-      "description_length": 562,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Matrix.Make",
-      "library": "osdp",
-      "description": "This module offers matrix construction, arithmetic, and structural manipulation capabilities, including operations like transposition, decomposition, and block assembly, with enforced size constraints for correctness. It works with matrices over a coefficient type `Coeff`, supporting tasks such as linear algebra computations, matrix normalization, and symbolic manipulations. Specific applications include solving systems of equations, analyzing matrix properties (e.g., symmetry), and handling structured data transformations requiring rigorous dimensional consistency.",
-      "description_length": 572,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Scalar.Q",
-      "library": "osdp",
-      "description": "Implements a comprehensive set of arithmetic and comparison operations for rational numbers represented by the `Q.t` type, including addition, multiplication, division, and ordering relations. Supports precise numeric manipulations through conversions to and from integers, floats, and other scalar representations, with utilities for negation, inversion, and formatted output. This enables applications requiring exact arithmetic, such as symbolic computation, polynomial matrix operations, or numerical algorithms where floating-point precision is insufficient.",
-      "description_length": 563,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.LinExpr.Float",
-      "library": "osdp",
-      "description": "This module represents affine expressions with float coefficients over identifiers, supporting construction from coefficient lists, variable and constant creation, scalar multiplication, addition, subtraction, variable replacement, and removal. It provides precise normalization operations like `to_list` that return simplified, sorted terms without duplicates or zero coefficients, and enables structural comparison, pattern matching for variables or constants, and pretty-printing. Concrete use cases include symbolic manipulation of linear expressions for optimization problems or algebraic computations.",
-      "description_length": 607,
-      "index": 42,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Scalar.S",
-      "library": "osdp",
-      "description": "This module provides standard arithmetic operations (addition, subtraction, multiplication, division, negation, inversion), comparison operators (equality, ordering), and conversions between scalar values and numeric types like float, Q.t, and int. It is designed for scalar types that support algebraic structures such as matrices and polynomials, enabling numerical computations requiring arithmetic and ordering. The inclusion of a three-way sign comparison further supports use cases needing precise ordering distinctions, such as sorting algorithms or interval analysis.",
-      "description_length": 575,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Polynomial.S-Coeff",
-      "library": "osdp",
-      "description": "This module provides scalar coefficient operations for polynomial arithmetic, supporting addition, multiplication, negation, inversion, and total ordering comparisons on values of type `Coeff.t`. It works with scalar coefficients represented as `Coeff.t`, enabling their use in multivariate polynomial constructions and numerical evaluations. Specific applications include polynomial simplification, symbolic computation with mixed numeric types, and exact rational arithmetic in algebraic manipulations.",
-      "description_length": 504,
-      "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Polynomial.Float",
-      "library": "osdp",
-      "description": "This module supports arithmetic operations (addition, subtraction, multiplication, scalar multiplication and division, exponentiation), derivation, evaluation, and composition for multivariate polynomials with float coefficients. It operates on polynomials structured as lists of monomials using the type `t`, with coefficients represented by `Coeff.t` and monomial components via `Osdp.Monomial.t`, while offering predicates to analyze properties like homogeneity, constancy, or variable relationships. Designed for symbolic manipulation in numerical applications, it enables tasks such as mathematical modeling, algorithmic differentiation, and polynomial analysis, with syntactic conveniences for construction and formatting.",
-      "description_length": 728,
-      "index": 45,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Polynomial.S",
-      "library": "osdp",
-      "description": "This module provides algebraic manipulation of multivariate polynomials through operations like arithmetic, differentiation, evaluation, and structural analysis. It operates on polynomials represented as type `t` with coefficients of type `Coeff.t` and monomials of type `Osdp.Monomial.t`, supporting transformations via term list conversions. Key applications include symbolic computation, polynomial simplification, and mathematical modeling requiring precise handling of multivariate expressions.",
-      "description_length": 499,
-      "index": 46,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Dualize",
-      "library": "osdp",
-      "description": "This module preprocesses semidefinite programming (SDP) problems by eliminating redundant free variables and transforming constraints into canonical form, supporting matrix and vector data structures for optimization workflows involving dualization and constraint simplification. It integrates submodules for handling scalar linear expressions with arithmetic operations, sparse matrix representations for efficient large-scale problem solving, and dualization techniques that return structured primal solutions and objective bounds. Examples include building and simplifying affine constraints, solving SDP problems with extended variables, and extracting solution metadata in sparse formats. Key data types include vectors, scalar expressions, and block-diagonal matrices, with operations spanning variable elimination, algebraic manipulation, and formatted printing of problem components.",
-      "description_length": 891,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.NewtonPolytope",
-      "library": "osdp",
-      "description": "This module provides the `filter` function, which processes lists of monomials by selecting those whose doubled exponents lie within the convex hull of a given set of monomials. It operates specifically on `Osdm.Monomial.t` lists, leveraging convex hull inclusion checks for selection. A typical use case involves preprocessing monomial bases in sum-of-squares optimization to reduce problem size while preserving solution validity.",
-      "description_length": 432,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.PreSdp",
-      "library": "osdp",
-      "description": "This module preprocesses semidefinite programming problems by eliminating redundant free variables, simplifying constraint matrices and variable sets before passing them to the core SDP solver. It supports operations on sparse vectors and matrices represented as index-coefficient pairs, working with extended-form constraints and block-diagonal structures to improve solving efficiency. The Scalar submodule enables precise arithmetic and comparisons on abstract scalar values during preprocessing, while the various solver submodules handle sparse SDP problems with float coefficients, returning optimized variable assignments and dual bounds. Example use cases include control theory, quantum information protocols, and combinatorial optimization where variable dependencies reduce problem dimensionality.",
-      "description_length": 808,
-      "index": 49,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Osdp.Utils",
-      "library": "osdp",
-      "description": "This module provides functions for formatting lists, arrays, and matrices with customizable separators and delimiters, enabling precise output control for debugging or logging. It includes utilities for converting rational numbers to floating-point intervals or nearest values, setting rounding modes, and profiling function execution times. These operations are used to handle numerical precision, format complex data structures, and measure performance in analysis and verification tasks.",
-      "description_length": 490,
-      "index": 50,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Sdpa",
-      "library": "osdp",
-      "description": "This module directly interfaces with SDPA solvers to handle semidefinite programming problems. It operates on block-diagonal matrices and constraint lists to compute primal and dual solutions, supporting high-precision arithmetic via SDPA-GMP. Use it to solve optimization problems in control theory, combinatorics, or quantum information where matrix constraints are block-diagonal and exact numerical solutions are required.",
-      "description_length": 426,
-      "index": 51,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Posdef",
-      "library": "osdp",
-      "description": "This module provides functions to rigorously check whether a given matrix is symmetric positive definite or positive semi-definite. It operates on square matrices of floating-point intervals, rational numbers, and supports exact arithmetic for complete proofs. Concrete use cases include formal verification of matrix properties in safety-critical systems and symbolic computation where numerical stability and exactness are essential.",
-      "description_length": 435,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Sdp",
-      "library": "osdp",
-      "description": "This module supports solving semidefinite programming problems using dense or sparse matrices, offering conversion between these representations, primal-dual optimization with constraints and bounds, and pretty-printing capabilities for debugging. It operates on sparse and dense matrices, vectors, constraints, and bounds, with support",
-      "description_length": 336,
-      "index": 53,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Polynomial",
-      "library": "osdp",
-      "description": "This module provides multivariate polynomial arithmetic with support for exact rational and floating-point coefficients, enabling operations such as addition, multiplication, evaluation, differentiation, and variable substitution. It structures polynomials as monomial collections of type `t`, allowing structural analysis like degree computation, homogeneity checks, and term-level transformations, while supporting symbolic and numeric manipulations across different coefficient domains. The module handles scalar coefficient operations through its Coeff submodule, and represents monomials using Osdp.Monomial.t, enabling precise construction and manipulation of polynomial expressions. Use cases include symbolic mathematics, algebraic modeling, numerical analysis, and polynomial equation solving where exact or approximate multivariate computations are required.",
-      "description_length": 868,
-      "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Sos",
-      "library": "osdp",
-      "description": "This module enables sum-of-squares optimization by transforming SOS constraints into semidefinite programs, solving them numerically or exactly, and reconstructing solutions. It centers on polynomial expressions with support for arithmetic, derivation, composition, and conversion to monomial or SDP forms, using rational or floating-point coefficients. Users can formulate and solve optimization problems, verify polynomial non-negativity, or synthesize Lyapunov functions, leveraging symbolic construction and numeric validation via witness matrices or rounding checks. Submodules handle coefficient arithmetic, polynomial manipulation, and structured SDP transformations for applications in control theory, formal verification, and mathematical programming.",
-      "description_length": 760,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Scalar",
-      "library": "osdp",
-      "description": "This module defines scalar values and fundamental arithmetic operations over them, supporting the construction of matrices and polynomials. It includes submodules for rational numbers (Q), floating-point numbers (Float), and a functor (Make) to generate scalar modules from a base type. Concrete use cases include numerical computations in linear algebra and polynomial arithmetic. The module provides operations like addition, multiplication, comparison, and conversions to and from floats and integers, with submodules offering specialized implementations for exact and floating-point arithmetic.",
-      "description_length": 598,
-      "index": 56,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Monomial",
-      "library": "osdp",
-      "description": "This module handles multivariate monomials with operations like multiplication, division, LCM, GCD, and differentiation, using exponent lists and variable-to-exponent mappings. It supports dynamic variable sets and symbolic algebra tasks such as generating monomials of specific degrees or performing calculus operations. The child module extends this with set-based manipulation, enabling union, intersection, and ordered transformations over collections of monomials. Together, they facilitate algebraic computations, polynomial ideal processing, and symbolic pipelines requiring structured monomial sets.",
-      "description_length": 607,
-      "index": 57,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Csdp_path",
-      "library": "osdp",
-      "description": "Contains the path to the CSDP executable used for solving semidefinite programming problems. Works with string data representing file paths. Used to configure and locate the CSDP binary in external calls.",
-      "description_length": 204,
-      "index": 58,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Moseksdp",
-      "library": "osdp",
-      "description": "This module directly interfaces with the Mosek C library to solve semidefinite programming (SDP) problems. It provides low-level functions to define and solve SDP problems in primal or extended form, working with block-diagonal matrices and constraint lists. Concrete use cases include optimizing quantum information protocols, verifying matrix inequalities, and solving relaxations of combinatorial optimization problems.",
-      "description_length": 422,
-      "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Matrix",
-      "library": "osdp",
-      "description": "This module provides tools for creating and manipulating matrices with elements of arbitrary types, supporting arithmetic operations, structural transformations, and decomposition methods. It enables solving linear systems, computing determinants, performing matrix multiplication, and validating matrix properties such as symmetry or sparsity, with concrete implementations for dense float matrices and exact rational matrices. The module works with scalar coefficients for precise algebraic operations and constructs matrices from lists, arrays, or blocks while enforcing size constraints for correctness. Specific applications include scientific computing, symbolic computation, formal verification, and numerical simulations requiring exact or high-precision linear algebra.",
-      "description_length": 778,
-      "index": 60,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.LinExpr",
-      "library": "osdp",
-      "description": "This module represents and manipulates affine expressions over numeric types, combining variable terms and constants into normalized linear combinations. It supports core operations such as addition, scalar multiplication, variable substitution, and evaluation, enabling symbolic differentiation, linear optimization, and expression tree construction. Child modules refine these capabilities with type-specific arithmetic for rationals and floats, structural manipulation of expression terms, and strict enforcement of linearity constraints. Specific applications include algebraic modeling, formal verification, and numerical solvers requiring precise manipulation of linear expressions.",
-      "description_length": 688,
-      "index": 61,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Sdpa_lexer",
-      "library": "osdp",
-      "description": "This module implements a lexer for parsing SDP-A formatted data, providing functions to convert raw input into structured tokens. It operates on `Lexing.lexbuf` input buffers and produces tokens consumed by the SDP-A parser. It is used to process access control messages in security systems adhering to the OSDP protocol.",
-      "description_length": 321,
-      "index": 62,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Sdpa_paths",
-      "library": "osdp",
-      "description": "This module defines string constants representing file paths used in the SDPA (Semidefinite Programming Algorithm) toolchain. It provides direct access to paths for the main SDPA executable, the GMP library file, and the DD configuration file. These values are used to locate and invoke external SDPA tools during execution.",
-      "description_length": 324,
-      "index": 63,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Sdp_default",
-      "library": "osdp",
-      "description": "This module defines a variant type representing supported SDP solvers and provides a default solver selection. It works with the `solver` variant type, which includes options like Csdp, Mosek, and various SDPA configurations. Concrete use cases include selecting a solver when running semidefinite programming tasks where a default choice is needed.",
-      "description_length": 349,
-      "index": 64,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Osdp.Lmi",
-      "library": "osdp",
-      "description": "This module solves Linear Matrix Inequality (LMI) optimization problems by converting them into Semidefinite Programming (SDP) form, leveraging structured matrix expressions and symbolic manipulation to represent and transform constraints. It supports arithmetic on rational and floating-point coefficients, constructs complex matrix expressions using symbolic variables and operations like Kronecker products and block matrices, and integrates with SDP solvers for numerical optimization. Users can define LMI constraints, minimize or maximize objectives under those constraints, and evaluate solutions using variable substitutions. Specific applications include control system design, robust optimization, and convex matrix inequality analysis.",
-      "description_length": 746,
-      "index": 65,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Csdp_parser",
-      "library": "osdp",
-      "description": "Parses CSDP output streams into structured tokens and extracts optimization results. It processes lex buffers to yield objective values, solution statuses, and matrix data from semidefinite programming runs. Use to integrate CSDP solver outputs into OCaml workflows for numerical optimization and result analysis.",
-      "description_length": 313,
-      "index": 66,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Osdp.Ident",
-      "library": "osdp",
-      "description": "This module generates and manages unique identifiers by transforming strings into distinct symbols, ensuring uniqueness through numeric suffixes, and supporting comparison and formatting operations. It enables the creation of identifiers for variables or resources where duplicate names are problematic, such as in code generation or symbol tables. The associated set module handles ordered collections of identifiers, supporting set arithmetic, ordered traversal, and bulk transformations, ideal for managing sorted name spaces or tracking unique symbols. The map module builds on this by associating values with ordered identifiers, enabling structured data aggregation, ordered iteration, and efficient key-based updates, useful in scenarios like hierarchical resource management or sorted key-value storage.",
-      "description_length": 811,
-      "index": 67,
+      "description": "This module solves extended semidefinite programming problems with sparse matrices, handling redundant free variables by preprocessing constraints to eliminate them before invoking the SDP solver. It works with sparse matrices, vectors represented as lists of index-value pairs, and block-diagonal matrices, along with bounds and solver options. Concrete use cases include optimizing quantum information problems where constraints involve linear combinations of variables that can be simplified to reduce the problem's dimensionality.",
+      "description_length": 534,
+      "index": 31,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Osdp.SdpRet",
       "library": "osdp",
-      "description": "This module defines return codes for SDP (Semidefinite Programming) operations, including success, partial success, primal/dual infeasibility, and unknown results. It provides functions to check if a result indicates success and to print result values. Use this module to interpret and handle outcomes of SDP computations.",
-      "description_length": 322,
-      "index": 68,
+      "description": "This module defines return codes for SDP operations, including success, partial success, and various infeasibility states. It provides a function to check if a return code indicates success and a pretty-printer for formatting the codes. Use cases include handling SDP solver outcomes and reporting solver status in a structured way.",
+      "description_length": 332,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Sdp_default",
+      "library": "osdp",
+      "description": "Implements default solver selection logic for SDP (semidefinite programming) problems. It defines an enumerated type `solver` representing available SDP solvers such as Csdp, Mosek, and various SDPA variants, and provides the `sdp_default` value indicating the default solver to use. This module is used to configure solver backends in optimization workflows without requiring explicit user selection.",
+      "description_length": 401,
+      "index": 33,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Osdp.Csdp",
       "library": "osdp",
-      "description": "This module directly interfaces with the CSDP library to solve semidefinite programming (SDP) problems using block-diagonal matrices. It accepts an objective matrix and a list of constraint matrices, each paired with scalar values, and returns the optimized primal and dual objective values along with the corresponding matrices and vectors. It is used for numerical optimization in fields like control theory, combinatorial optimization, and machine learning where SDP formulations are applicable.",
-      "description_length": 498,
-      "index": 69,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Osdp.Csdp_lexer",
-      "library": "osdp",
-      "description": "This module implements a lexer for parsing S-expressions in the context of the Csdp_parser. It provides the `token` function to convert input from a `lexbuf` into a structured token, and uses `__ocaml_lex_tables` to manage internal lexing state. It is used to tokenize input streams for further parsing into cryptographic protocol definitions.",
-      "description_length": 343,
-      "index": 70,
-      "embedding_norm": 1.0
+      "description": "This module directly interfaces with the CSDP library to solve semidefinite programming (SDP) problems. It operates on block-diagonal matrices represented as lists of blocks, each containing matrix data, and supports solving with customizable options like verbosity and iteration limits. It is used to compute optimal solutions for SDP problems expressed in terms of objective and constraint matrices, returning primal and dual results along with solution witnesses.",
+      "description_length": 466,
+      "index": 34,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Osdp.Sdpa_parser",
       "library": "osdp",
-      "description": "Parses SDPA input files into structured optimization data, handling tokens like numeric values and matrix indicators. Processes lexed input into result objects capturing primal/dual statuses, objective values, and variable matrices. Used to read and interpret SDPA-formatted optimization problem solutions.",
-      "description_length": 306,
-      "index": 71,
+      "description": "Parses SDPA-formatted input into structured optimization data, handling tokens like numeric values and matrix indicators. Processes lex buffers to extract objective values, constraint matrices, and variable assignments. Useful for reading SDP problem instances from files or streams into memory for further computation.",
+      "description_length": 319,
+      "index": 35,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Osdp.Posdef",
+      "library": "osdp",
+      "description": "This module provides functions to rigorously check positive definiteness and semi-definiteness of square matrices, supporting both floating-point interval matrices and exact rational matrices. It includes optimized and complete verification methods, with `check_itv` handling interval matrices and `check`, `check_complete`, and `check_PSD` operating on `Q.t` matrices. Use cases include formal verification of matrix properties in safety-critical systems and numerical analysis where guaranteed positivity is required.",
+      "description_length": 519,
+      "index": 36,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Osdp",
+      "module_path": "Osdp.Moseksdp",
       "library": "osdp",
-      "description": "This module suite provides comprehensive tools for semidefinite programming, polynomial arithmetic, and matrix manipulation. It supports preprocessing SDP problems through variable elimination and constraint transformation, handles exact and numeric polynomial operations, and enables interfacing with external solvers like SDPA, Mosek, and CSDP. Key data types include block-diagonal matrices, monomials, scalar expressions, and affine forms, with operations for dualization, convex hull filtering, LMI conversion, and solution validation. Users can formulate and solve optimization problems in control theory, quantum information, and symbolic verification, while leveraging utilities for formatting, profiling, and identifier management.",
-      "description_length": 740,
-      "index": 72,
+      "description": "This module directly interfaces with the Mosek C library to solve semidefinite programming (SDP) problems. It provides low-level functions to define and solve SDP problems using block-diagonal matrices and linear constraints, returning primal and dual solutions. It is used to maximize a linear matrix objective subject to equality or inequality constraints, producing numerical results and solution witnesses for further analysis or verification.",
+      "description_length": 447,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Lmi",
+      "library": "osdp",
+      "description": "This module provides symbolic construction and manipulation of matrix expressions with arithmetic, transposition, and Kronecker/block structures, transforming linear matrix inequalities into semidefinite programming problems for optimization. It operates on symbolic matrix expressions and variable environments, enabling tasks such as LMI validation, solution evaluation, and constraint checking. Concrete use cases include solving convex optimization problems in control theory, system analysis, and robust design by converting LMIs to SDP form, optimizing with external solvers, and reconstructing solutions.",
+      "description_length": 611,
+      "index": 38,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Osdp.Dualize",
+      "library": "osdp",
+      "description": "This module dualizes extended SDP formulations by transforming sparse matrices and constraints through preprocessing that removes redundant free variables. It works with `vector`, `sparse_matrix`, and `details` types to represent optimization data structures. Use it to solve sparse SDP problems with custom scalar expressions and to generate detailed diagnostics for primal solutions.",
+      "description_length": 385,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Sdpa_paths",
+      "library": "osdp",
+      "description": "This module defines string constants representing file paths used in the SDPA (Security Domain Protocol Adapter) component. It provides direct access to paths for the main SDPA executable, the GMP (GNU Multiple Precision) library, and the DD (Data Definition) file. These paths are used in system integration and testing workflows to locate critical SDPA resources.",
+      "description_length": 365,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.PreSdp",
+      "library": "osdp",
+      "description": "This module preprocesses semidefinite programming problems to eliminate redundant free variables, reducing problem size by solving only for independent variables. It works with sparse matrices, block-diagonal matrices, and vector representations of variable coefficients. Concrete use cases include optimizing quantum information problems and handling SDP constraints with linearly dependent variables, such as those arising from equality constraints that allow variable elimination.",
+      "description_length": 483,
+      "index": 41,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Osdp.Csdp_lexer",
+      "library": "osdp",
+      "description": "This module implements a lexer for parsing S-expressions in the context of the Csdp protocol. It provides the `token` function to convert input from a `lexbuf` into a structured token representation, handling low-level character stream analysis. The lexer works directly with `Lexing.lexbuf` and produces tokens consumed by the `Csdp_parser`, specifically tailored for parsing cryptographic data structures like certificates and keys.",
+      "description_length": 434,
+      "index": 42,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Osdp.Polynomial",
+      "library": "osdp",
+      "description": "This module implements multivariate polynomial arithmetic with rational or floating-point coefficients, supporting operations like addition, multiplication, differentiation, and evaluation. It works with polynomials represented as normalized sums of monomials, enabling symbolic manipulation and algebraic simplification. Concrete use cases include symbolic mathematics, formal verification of polynomial models, and algorithm development for algebraic systems.",
+      "description_length": 461,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.NewtonPolytope",
+      "library": "osdp",
+      "description": "Performs convex hull filtering of monomials in sum-of-squares optimization. Takes two lists of monomials and returns the subset of the first list whose elements, when doubled, lie within the convex hull of the second list. Useful for preprocessing variables in polynomial optimization problems to reduce problem size while preserving feasibility.",
+      "description_length": 346,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Scalar",
+      "library": "osdp",
+      "description": "This module defines scalar types and algebraic operations for precise numerical computations. It includes support for rational numbers (`Q`), floating-point values (`Float`), and generic scalar structures via `Make`, enabling exact arithmetic, comparisons, and conversions between numeric representations. It is used to implement matrices, polynomials, and algorithms requiring controlled scalar manipulation and numeric interoperability.",
+      "description_length": 438,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Ident",
+      "library": "osdp",
+      "description": "This module manages unique identifiers with operations to create, compare, and format them, ensuring uniqueness by appending numeric suffixes when necessary. It provides dedicated `Set` and `Map` submodules for handling ordered collections and key-value associations based on these identifiers. Use cases include generating fresh variable names in compilers, tracking uniquely named entities in configurations, and managing ordered sets of identifiers in data processing pipelines.",
+      "description_length": 481,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Sdpa",
+      "library": "osdp",
+      "description": "This module directly interfaces with SDPA solvers to handle semidefinite programming problems. It operates on block-diagonal matrices and constraints represented as lists of matrix-dimension pairs, supporting exact or high-precision arithmetic through SDPA-GMP. Use it to solve optimization problems in control theory, combinatorics, or quantum information by specifying objectives and constraints over symmetric positive semidefinite matrices.",
+      "description_length": 444,
+      "index": 47,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Monomial",
+      "library": "osdp",
+      "description": "Multivariate monomials, represented as exponent lists over variable indices, support arithmetic operations like multiplication, division, GCD/LCM, derivation, and degree analysis. Ordered sets and finite maps built on monomial keys enable efficient term ordering, merging, and traversal in symbolic computations, particularly for polynomial manipulation and graded algebraic tasks.",
+      "description_length": 381,
+      "index": 48,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Utils",
+      "library": "osdp",
+      "description": "This module provides functions for pretty-printing lists, arrays, and matrices using custom separators and formatting, along with utilities for converting rational numbers to floating-point intervals or nearest values, setting rounding modes, profiling function execution time, and performing tail-recursive list mapping. It operates on lists, arrays, matrices, and rational numbers. Concrete use cases include debugging output for structured data, precise numeric conversion, performance measurement, and efficient list transformations.",
+      "description_length": 537,
+      "index": 49,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Csdp_parser",
+      "library": "osdp",
+      "description": "Parses CSDP output streams into structured tokens, extracting optimization results and matrix data. Processes lex buffers to yield objective values, solution statuses, and primal/dual variable bindings. Used to interpret CSDP solver output files or streams into OCaml data structures for further analysis or post-processing.",
+      "description_length": 324,
+      "index": 50,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Sdp",
+      "library": "osdp",
+      "description": "This module provides operations for solving semidefinite programming (SDP) problems using primal-dual optimization with dense and sparse symmetric matrices, including support for block-diagonal structures, alongside matrix format conversion and solver configuration for backends like Csdp, Mosek, and Sdpa. It works with symmetric matrices, vectors, constraints, bounds, and primal-dual variables, offering utilities to define and visualize SDP problems with optional limits or extended formulations. These capabilities are applied in optimization tasks such as control theory, combinatorial optimization, and machine learning, where precise feasibility criteria and structured problem representation are critical.",
+      "description_length": 714,
+      "index": 51,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.LinExpr",
+      "library": "osdp",
+      "description": "This module represents and manipulates affine expressions as linear combinations of variables with coefficients, supporting operations such as addition, scalar multiplication, variable substitution, and normalization. It works with variables and constants, offering inspection and comparison functions to extract components or verify expression structure. Concrete use cases include symbolic manipulation in optimization algorithms, constraint system construction, and expression simplification in algebraic or numerical computations.",
+      "description_length": 534,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Sos",
+      "library": "osdp",
+      "description": "This module provides operations to construct and manipulate polynomial expressions using arithmetic, composition, and scalar multiplication, enabling the formulation of sum-of-squares constraints through symbolic variables and coefficients. It supports evaluating polynomials at concrete values, verifying SOS properties via witness matrices, and integrates with SDP solvers for optimization tasks like stability analysis in control systems or polynomial optimization in machine learning. The core data structures include polynomial expressions, positive definite matrices, and coefficient types to represent and validate SOS decompositions.",
+      "description_length": 641,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Matrix",
+      "library": "osdp",
+      "description": "The module implements matrix construction, decomposition, and arithmetic operations over a generic coefficient type, supporting Gaussian elimination, block matrix handling, and specialized matrix generation. It works with structured matrices of type `t`, enabling transformations such as transpose, scalar multiplication, and row/column pruning. Use cases include linear algebra workflows, numerical algorithms requiring matrix factorization, and data transformation tasks involving structured matrices.",
+      "description_length": 503,
+      "index": 54,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Csdp_path",
+      "library": "osdp",
+      "description": "Contains the path to the CSDP executable used for solving semidefinite programming problems. Works directly with file system paths represented as strings. Used to configure and run CSDP solvers within optimization workflows.",
+      "description_length": 224,
+      "index": 55,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Osdp.Sdpa_lexer",
+      "library": "osdp",
+      "description": "This module implements a lexer for parsing OSDP (Open Supervised Device Protocol) SDP/A messages. It provides functions to convert raw input into structured tokens, such as `token` which processes a lex buffer and returns the next parsed token. The lexer operates on `Lexing.lexbuf` input and produces tokens defined in the `Sdpa_parser` module, supporting concrete operations like command and response parsing in access control systems.",
+      "description_length": 437,
+      "index": 56,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 77,
-    "meaningful_modules": 73,
-    "filtered_empty_modules": 4,
-    "retention_rate": 0.948051948051948
+    "total_modules_in_package": 58,
+    "meaningful_modules": 57,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9827586206896551
   },
   "statistics": {
-    "max_description_length": 891,
-    "min_description_length": 204,
-    "avg_description_length": 548.2602739726027,
-    "embedding_file_size_mb": 0.26560306549072266
+    "max_description_length": 737,
+    "min_description_length": 224,
+    "avg_description_length": 496.280701754386,
+    "embedding_file_size_mb": 0.8266115188598633
   }
 }

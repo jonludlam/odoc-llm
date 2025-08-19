@@ -1,57 +1,57 @@
 {
   "package": "ledgerwallet",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:05:26.804290",
+  "creation_timestamp": "2025-08-14T22:58:02.028313",
   "modules": [
     {
       "module_path": "Ledgerwallet.Transport",
       "library": "ledgerwallet",
-      "description": "This module handles communication with Ledger hardware wallets using HIDAPI or proxy paths, supporting asynchronous operations for device enumeration, connection management, and APDU command exchange. It provides functions to send and receive APDU commands, ping devices, and handle transport-level errors with structured result types. Concrete use cases include securely interacting with Ledger devices for cryptocurrency operations like signing transactions and retrieving wallet information.",
-      "description_length": 494,
+      "description": "This module implements low-level communication with Ledger hardware wallets using HID devices or proxy paths. It provides functions to open and close connections, send and receive APDU commands, and handle transport-level errors with precise status reporting. Use cases include interacting with Ledger devices for cryptocurrency operations like signing transactions or retrieving wallet data.",
+      "description_length": 392,
       "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ledgerwallet.Transport_hidapi",
+      "library": "ledgerwallet",
+      "description": "This module implements low-level communication with Ledger hardware wallets over HIDAPI. It provides functions to send APDU commands, read responses with status codes, and send ping packets, all handling binary data through `Cstruct.t` buffers. These operations are used to interact directly with Ledger devices for cryptocurrency operations like signing transactions or retrieving wallet information.",
+      "description_length": 401,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ledgerwallet.Apdu",
+      "library": "ledgerwallet",
+      "description": "This module constructs and serializes APDU commands for communication with hardware wallets. It supports creating APDU packets with custom class, instruction, parameters, and data payloads, enforcing size limits. Use it to send structured binary commands over USB or Bluetooth to devices like Ledger wallets.",
+      "description_length": 308,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ledgerwallet.Status",
       "library": "ledgerwallet",
-      "description": "This module defines a set of status codes representing possible outcomes of operations, particularly in interaction with a ledger device. It includes functions to convert status codes to strings, register custom string mappings, and format statuses for display or logging. Use cases include error reporting in wallet operations, command-line interface feedback, and debugging communication failures with hardware devices.",
-      "description_length": 421,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ledgerwallet.Transport_hidapi",
-      "library": "ledgerwallet",
-      "description": "This module implements low-level communication with Ledger devices over HIDAPI, handling APDU command transmission, response reading, and device pings. It works with `Hidapi.t` device handles, `Cstruct.t` buffers, and structured APDU/status types. Concrete use cases include sending cryptographic commands to a Ledger wallet and receiving signed transaction responses.",
-      "description_length": 368,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ledgerwallet.Apdu",
-      "library": "ledgerwallet",
-      "description": "This module constructs and serializes APDU commands for interacting with hardware wallets. It supports creating APDU structures with command metadata, parameters, and payload data, either from raw bytes or strings. The module handles APDU serialization into Cstruct buffers, ensuring correct byte layout and size constraints for transmission.",
-      "description_length": 342,
+      "description": "This module defines a set of error and status codes returned by Ledger wallet operations, including specific conditions like invalid PIN, incorrect data length, and security violations. It provides functions to convert status codes to strings, format them for display, and register custom string or help message handlers. These operations are used to interpret and report device responses during cryptographic operations or firmware interactions.",
+      "description_length": 446,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ledgerwallet.Transport_proxy",
       "library": "ledgerwallet",
-      "description": "This module implements a transport layer for communicating with a Ledger wallet device using APDU commands. It provides functions to create and close a connection, send APDU packets, and read responses including status and payload data. The module handles low-level device interaction, making it suitable for applications that need to directly exchange data with a Ledger hardware wallet over USB or similar interfaces.",
-      "description_length": 419,
+      "description": "This module implements a transport layer for communicating with a Ledger wallet device using APDU commands. It provides functions to create and close a connection, send APDU packets, and read responses including status codes and payloads. It handles errors during communication and supports concrete workflows like querying device status or signing transactions.",
+      "description_length": 362,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Ledgerwallet",
       "library": "ledgerwallet",
-      "description": "This module enables secure communication with Ledger hardware wallets through HIDAPI or proxy transports, supporting asynchronous device enumeration, connection management, and APDU command exchange. It provides core data types such as `Hidapi.t` for device handles, `Cstruct.t` buffers for binary data, and structured APDU and status types for command and response handling. Operations include sending and receiving APDU commands, error handling via status codes, and device pinging, allowing tasks like signing cryptocurrency transactions or retrieving wallet data. Specific use cases include building wallet interfaces, command-line tools for blockchain interactions, and secure cryptographic operations with hardware-backed keys.",
-      "description_length": 733,
+      "description": "This module provides operations for constructing APDU commands, interpreting device status codes, and managing communication with hardware wallets using HID or proxy transports. It works with binary data structures like `Cstruct.t` to handle APDU packets, error codes, and device responses during cryptographic operations. Concrete use cases include signing cryptocurrency transactions, authenticating with a device, and retrieving wallet metadata over USB or Bluetooth.",
+      "description_length": 470,
       "index": 5,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -61,9 +61,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 733,
-    "min_description_length": 342,
-    "avg_description_length": 462.8333333333333,
-    "embedding_file_size_mb": 0.02221393585205078
+    "max_description_length": 470,
+    "min_description_length": 308,
+    "avg_description_length": 396.5,
+    "embedding_file_size_mb": 0.08738327026367188
   }
 }

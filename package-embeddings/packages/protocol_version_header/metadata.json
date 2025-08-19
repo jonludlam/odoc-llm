@@ -1,65 +1,65 @@
 {
   "package": "protocol_version_header",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:06:06.892433",
+  "creation_timestamp": "2025-08-14T23:04:11.665234",
   "modules": [
     {
-      "module_path": "Protocol_version_header.Known_protocol.For_test",
+      "module_path": "Protocol_version_header.For_test.Make_list_with_max_len",
       "library": "protocol_version_header",
-      "description": "This module defines known protocol magic numbers and associated metadata for testing purposes. It provides functions to retrieve and manipulate protocol versions and additional magic numbers used in connection headers. Concrete use cases include testing version negotiation logic and validating error handling for unsupported protocols.",
-      "description_length": 336,
+      "description": "This module implements a fixed-length list structure that enforces a maximum length constraint, using a configuration parameter to specify the limit. It provides bin_io and s-expression serialization functions for this constrained list type, ensuring data integrity during transmission or storage. The primary use case is to safely handle protocol headers that include lists with length restrictions, such as magic number enumerations or version identifiers.",
+      "description_length": 458,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Protocol_version_header.For_test.Make_list_with_max_len",
+      "module_path": "Protocol_version_header.Known_protocol.For_test",
       "library": "protocol_version_header",
-      "description": "This module implements a bounded list structure that enforces a maximum length constraint, using the provided `Config` to determine the maximum allowed length. It supports serialization via `Bin_prot` and S-expressions, including functions for reading, writing, and measuring values of this bounded list type. The primary use case is to safely handle protocol headers that contain lists with a fixed upper bound on their length, ensuring that overly long lists are rejected early during parsing.",
-      "description_length": 495,
+      "description": "This module defines known protocol constants and magic numbers used during connection setup for testing purposes. It provides functions to retrieve and manipulate protocol identifiers and associated metadata, ensuring compatibility and correct version negotiation during testing. Concrete use cases include validating protocol handshake behavior and simulating version mismatches in test environments.",
+      "description_length": 401,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Protocol_version_header.Known_protocol",
-      "library": "protocol_version_header",
-      "description": "This module defines an enumerated type representing specific protocols such as Kerberos, test mode, and RPC, each identified by a unique magic number for use in version negotiation and header identification during network connections. It supports mapping protocols to and from their magic numbers, comparison, and S-expression-based serialization and deserialization. The child module extends this functionality by providing test-specific metadata and utilities for manipulating protocol versions and magic numbers, enabling validation of version negotiation and error handling for unsupported protocols. Together, they allow concrete operations such as serializing a protocol to an S-expression, parsing a magic number from a connection header, and testing protocol version compatibility.",
-      "description_length": 789,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Protocol_version_header.Pair",
-      "library": "protocol_version_header",
-      "description": "This module represents a pair of protocol version headers, one for the local endpoint and one for the remote endpoint, used during protocol negotiation. It facilitates comparing and handling version mismatches by pairing the expected and received protocol versions. Concrete use cases include tracking client-server protocol compatibility and managing header data exchange during connection setup.",
-      "description_length": 397,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Protocol_version_header.Expert",
-      "library": "protocol_version_header",
-      "description": "This module provides direct access to the raw version list within a protocol header, along with values to represent and check for an empty header. It operates on the `Protocol_version_header.t` type, which encapsulates version and magic number data for protocol negotiation. Use it to inspect or construct protocol headers explicitly, such as when implementing custom version checks or handling special connection setup logic.",
-      "description_length": 426,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Protocol_version_header.For_test",
       "library": "protocol_version_header",
-      "description": "This module tests protocol version handling by validating magic numbers and version constraints against known protocols, ensuring compatibility during connection setup. It works with string-based magic numbers and integer versions, enforcing limits on version ranges and header metadata. The bounded list submodule enforces maximum length constraints on protocol headers, supporting safe parsing and serialization via `Bin_prot` and S-expressions. Example uses include verifying protocol negotiation and rejecting malformed headers with overly long lists.",
-      "description_length": 555,
+      "description": "This module defines a protocol header structure that includes a magic number, protocol version, and a list of additional magic numbers with a fixed maximum length. It provides functions to serialize and deserialize this header, ensuring correct bin_io and s-expression representations for reliable transmission. It is used to enforce protocol version compatibility and to carry extra metadata in the connection header, such as flags or identifiers for peer-specific behavior.",
+      "description_length": 475,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Protocol_version_header.Expert",
+      "library": "protocol_version_header",
+      "description": "This module provides low-level access to protocol version headers, allowing direct manipulation of version lists and inspection of header properties. It works with the `Protocol_version_header.t` type, representing protocol metadata including version numbers and optional magic identifiers. Concrete use cases include decoding raw version data from network connections and validating header contents during protocol negotiation.",
+      "description_length": 428,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Protocol_version_header.Pair",
+      "library": "protocol_version_header",
+      "description": "This module handles pairs of protocol version headers, typically used during version negotiation between two endpoints. It stores two `Protocol_version_header.t` values, representing the local and remote protocol versions. It is used to facilitate protocol version negotiation by bundling the local and peer headers for functions like `negotiate`.",
+      "description_length": 347,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Protocol_version_header.Known_protocol",
+      "library": "protocol_version_header",
+      "description": "This module defines a fixed set of known protocols with associated magic numbers used for version negotiation and connection setup. It supports operations to retrieve protocols by magic number, compare protocols, and serialize/deserialize protocol values. Concrete use cases include identifying protocol versions during connection handshake and ensuring correct error messages when version mismatches occur.",
+      "description_length": 407,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Protocol_version_header",
       "library": "protocol_version_header",
-      "description": "This module enables protocol version negotiation and header management for network services, using magic numbers and version constraints to enforce compatibility and carry metadata. It defines a structured header type that encapsulates version ranges and auxiliary identifiers, supporting operations such as version comparison, magic number parsing, and explicit header construction. Child modules provide enumerated protocols with serialization, paired headers for endpoint negotiation, raw version list access, and bounded header validation. Example uses include negotiating protocol versions between client and server, embedding service-specific identifiers in headers, and validating connection metadata against known protocols.",
-      "description_length": 732,
+      "description": "This module enables protocol version negotiation and metadata exchange through structured headers containing magic numbers and version lists. It operates on binary and s-expression encoded data structures to support cross-service communication, with use cases including peer-specific metadata signaling (e.g., authorization flags in Kerberos) and robust error handling during protocol mismatches. Core functionality includes version negotiation, magic number validation, and extensible header manipulation via specialized submodules for testing and low-level operations.",
+      "description_length": 570,
       "index": 6,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -69,9 +69,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 789,
-    "min_description_length": 336,
-    "avg_description_length": 532.8571428571429,
-    "embedding_file_size_mb": 0.02587127685546875
+    "max_description_length": 570,
+    "min_description_length": 347,
+    "avg_description_length": 440.85714285714283,
+    "embedding_file_size_mb": 0.10188674926757812
   }
 }

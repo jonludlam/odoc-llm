@@ -1,261 +1,229 @@
 {
   "package": "randii",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 30,
-  "creation_timestamp": "2025-07-15T23:12:46.580461",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 26,
+  "creation_timestamp": "2025-08-15T12:26:05.025102",
   "modules": [
     {
       "module_path": "Utils.Version",
       "library": "randii.utils",
-      "description": "This module defines a single value `t` representing the current version of the application as a string. It is used to store and retrieve version information in a standardized format. Concrete use cases include displaying the version in logs, exposing it via an API endpoint, or using it in error messages to identify the software release.",
-      "description_length": 338,
+      "description": "This module defines a single value `t` representing the current version of the application as a string. It is used to store and retrieve version information in a standardized format. Concrete use cases include displaying the version in logs, CLI output, or API responses.",
+      "description_length": 271,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Utils.Utop_init",
       "library": "randii.utils",
-      "description": "This module implements a pseudorandom number generator using a cryptographic counter mode. It provides `r` to generate a random value from a key and counter, and `u` to produce an integer array of random values. The module works with types `R.t` for cryptographic keys and counters, and is used to initialize and run deterministic random streams for cryptographic operations.",
-      "description_length": 375,
+      "description": "This module implements a pseudo-random number generator using a cryptographic permutation. It provides functions to initialize and run the generator with a key and counter, producing random bytes or integer arrays. The module is used to deterministically generate random values for testing or simulation purposes.",
+      "description_length": 313,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Utils",
       "library": "randii.utils",
-      "description": "This module provides version information and cryptographic random number generation. It includes a string value `t` for storing and retrieving the application version, and functions `r` and `u` for generating deterministic random values from a cryptographic key and counter. You can use `t` to log or expose version details, and `u` to produce random integer arrays for secure cryptographic operations.",
+      "description": "This module contains two submodules focused on random number generation and version management. `Utop_init` provides functions to initialize and run a cryptographic pseudo-random number generator, producing random bytes or integer arrays for deterministic testing and simulations. `Version` defines a string value representing the application's version, used for logging, CLI output, and API responses.",
       "description_length": 402,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cbrn.Threefry.Make",
-      "library": "randii.cbrn",
-      "description": "This module implements a customizable Threefry counter-based random number generator with support for integer and string array conversions, increment/decrement operations, and various sampling routines. It operates on a state type `t` derived from integer arrays, enabling deterministic generation of random values through configurable rounds and keys. Concrete use cases include cryptographic nonce generation, reproducible stochastic simulations, and secure sampling from arbitrary distributions via the `draw_from` function.",
-      "description_length": 527,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cbrn.Types.RNG_MAKER-Make",
-      "library": "randii.cbrn",
-      "description": "This module implements a cryptographic random number generator using a specified number type. It provides the `rand_R` function to generate an array of random numbers from a key and counter, with configurable rounds and integer conversion. The function is designed for use in cryptographic applications requiring secure random number generation with arbitrary-precision numbers.",
-      "description_length": 378,
-      "index": 4,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Cbrn.Rng.Digits",
-      "library": "randii.cbrn",
-      "description": "This module defines a type `t` with two variants, `Two` and `Four`, representing digit lengths. It provides functions to convert between string representations and the `t` type, along with a function to get the numeric length each variant represents. It is useful for specifying and validating fixed-length numeric codes such as 2-digit or 4-digit identifiers.",
-      "description_length": 360,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cbrn.Threefry.Gen_4_64",
-      "library": "randii.cbrn",
-      "description": "This module implements a 64-bit Four-round Threefry random number generator with direct conversions to and from integer and string arrays. It supports incrementing and decrementing generator states, generating random values with configurable rounds, and producing uniform integer or floating-point arrays. It is used for cryptographic and simulation tasks requiring high-quality pseudorandom output.",
-      "description_length": 399,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cbrn.Rng_threefry_4_digits.Make",
-      "library": "randii.cbrn",
-      "description": "This module implements cryptographic random number generation using the Threefish cipher, providing low-level arithmetic operations on ref-wrapped numeric types and fixed rotation constants for permutation phases. It operates on segmented numeric representations (digits and words) and numeric arrays, employing key-based encryption with counter values to produce pseudorandom outputs. The design supports high-precision cryptographic operations requiring guaranteed statistical quality and backtracking resistance in security-sensitive applications.",
-      "description_length": 550,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cbrn.Rng_threefry_2_digits.Make",
-      "library": "randii.cbrn",
-      "description": "This module implements the Threefry pseudorandom number generator using a 2-digit counter mode. It operates on numeric types represented by the `Num` module, specifically handling digit-based arithmetic for counter and key manipulation. The module performs core operations like round-based permutation (`rand_R`), digit rotation (`rot_num*`), and auxiliary state updates (`aux1`, `aux3`), with a fixed maximum number of rounds (`max_rounds`). It is used to generate deterministic, high-quality random numbers from a seed key and counter in cryptographic or simulation contexts.",
-      "description_length": 577,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cbrn.Types.NUM",
-      "library": "randii.cbrn",
-      "description": "This module provides numeric abstractions for arithmetic operations (addition, subtraction, modulus), bitwise manipulations (XOR), value rotations, and equality comparisons on a parameterized numeric type representing structured digit and word sequences. It supports conversions between integers, strings, and its custom type, alongside predefined constants for boundary values and cryptographic configurations. Designed for low-level numeric processing, it facilitates implementations requiring precise bit-level control, such as cryptographic algorithms leveraging Skein hashing or rotation-based transformations.",
-      "description_length": 615,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cbrn.Threefry.Gen_2_32",
-      "library": "randii.cbrn",
-      "description": "This module implements a 32-bit Threefry pseudorandom number generator with support for incrementing and decrementing generator states. It operates on 32-bit unsigned integers, providing functions to convert between integer and string arrays, generate random values, and produce uniformly distributed integers or floats. It is used for cryptographic and simulation tasks requiring high-quality random number generation with precise control over the generation process.",
-      "description_length": 468,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Cbrn.Rng.RngName",
       "library": "randii.cbrn",
-      "description": "This module defines a structured representation of random number generator (RNG) identifiers, composed of word size, digit specification, and algorithm type. It provides functions to parse string representations into these structured values, convert them back to strings, and determine the length of the identifier. This module is used to standardize and validate RNG configuration inputs in cryptographic contexts.",
-      "description_length": 415,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cbrn.Types.RNG_MAKER",
-      "library": "randii.cbrn",
-      "description": "This module defines a type `digits` and a functor `Make` that generates random number generators based on the provided digit representation. It works with custom numeric digit structures to produce RNG implementations tailored to specific digit-based data types. Use this module to create efficient, type-safe random number generators for non-standard numeric representations.",
-      "description_length": 376,
-      "index": 12,
+      "description": "This module defines a structured representation of random number generator configurations, including word size, digit count, and algorithm type. It provides parsing from and formatting to string representations, along with determining the length of the generated name. Use this module to uniquely identify and serialize RNG configurations for logging, configuration files, or API communication.",
+      "description_length": 394,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cbrn.Types.GEN",
+      "module_path": "Cbrn.Rng.Algo",
       "library": "randii.cbrn",
-      "description": "This module defines a type `t` representing fixed-size arrays of integers and provides conversions to and from both `int array` and `string array`. It includes arithmetic operations like `succ` and `pred`, and functions for generating random values such as `rand`, `uniform`, and `uniform01`. These operations are used to manipulate and generate cryptographic nonces or random data, with `draw_from` selecting elements from a list based on a random index derived from the internal state.",
-      "description_length": 487,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cbrn.Threefry.Gen_4_32",
-      "library": "randii.cbrn",
-      "description": "This module implements a 32-bit Four-round Threefry random number generator with support for converting between string and integer arrays, incrementing and decrementing generator states, and generating uniform random integers and floats. It operates on a generator type `t` backed by 32-bit unsigned integers, and supports cryptographic random number generation with configurable rounds and key/counter inputs. Concrete use cases include generating secure random values for simulations, sampling, and cryptographic protocols.",
-      "description_length": 525,
-      "index": 14,
+      "description": "This module defines a single random number generator algorithm, Threefry, and provides operations to convert between its string representation and the corresponding type, as well as to determine the state length of the algorithm. It works with the variant type `t` representing RNG algorithms and string values for parsing and serialization. Concrete use cases include selecting and configuring RNG instances based on algorithm names and retrieving state sizes for initialization purposes.",
+      "description_length": 489,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cbrn.Rng.Word_size",
       "library": "randii.cbrn",
-      "description": "This module defines a type `t` representing word sizes of 32 or 64 bits. It provides functions to convert word sizes to and from strings and to retrieve the length in bits. It is used to configure or interpret the word size of a PRNG, such as when initializing or serializing RNG state.",
-      "description_length": 286,
-      "index": 15,
+      "description": "This module defines a type `t` representing word sizes of 32 or 64 bits. It provides functions to convert word sizes to and from strings and to retrieve the bit length. It is used to configure or interpret the word size in random number generators that operate at specific bit widths.",
+      "description_length": 284,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cbrn.Threefry.Gen_4_32",
+      "library": "randii.cbrn",
+      "description": "This module implements a 32-bit Four-round Threefry random number generator with support for converting between string and integer arrays, incrementing and decrementing generator states, and generating uniform random integers and floats. It works directly with 4-element arrays of 32-bit unsigned integers represented as `int array` and `string array`. Concrete use cases include cryptographic applications requiring high-quality pseudorandom number generation, such as key derivation, nonce generation, and randomized testing.",
+      "description_length": 527,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cbrn.Threefry.Gen_2_32",
+      "library": "randii.cbrn",
+      "description": "This module implements a 32-bit Threefry pseudorandom number generator with support for incrementing and decrementing generator states. It operates on generator states represented as arrays of 32-bit unsigned integers, providing functions to convert between these states and integer or string arrays. It supports generating uniform random integers, floats in [0,1), and arbitrary data types via the `draw_from` function, making it suitable for cryptographic and high-quality randomization tasks.",
+      "description_length": 495,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cbrn.Threefry.Make",
+      "library": "randii.cbrn",
+      "description": "This module implements a cryptographic pseudorandom number generator based on the Threefry algorithm, providing operations to convert between internal state and arrays of integers or strings, increment and decrement state values, and generate random outputs. It works with a custom state type `t` representing the internal cipher state, along with arrays of integers and floats for output generation. Concrete use cases include generating cryptographically secure random integers within a specified range, producing uniformly distributed floating-point values between 0 and 1, and drawing random elements from a provided list using a key and counter for deterministic randomness.",
+      "description_length": 679,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cbrn.Rng_threefry_4_digits.Make",
+      "library": "randii.cbrn",
+      "description": "This module supports cryptographic pseudorandom number generation through operations like digit/word-level rotation and in-place numeric manipulation, leveraging precomputed rotated values and a Threefish-512-based encryption round function. It operates on numeric types represented via digits and words, structured with a `Num` module, and applies rotation constants (`rot_num16`, `rot_num17`) and configurable rounds to transform keys and counters into secure random outputs. It is specifically suited for high-security applications requiring deterministic randomness, such as cryptographic key derivation or nonce generation.",
+      "description_length": 628,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cbrn.Rng.Digits",
+      "library": "randii.cbrn",
+      "description": "Represents and manipulates digit lengths for random number generation, supporting values of Two or Four digits. Converts between string representations and enumerated types, and provides the numeric length for each variant. Used to specify and validate the number of digits in generated codes or identifiers.",
+      "description_length": 308,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cbrn.Threefry.Gen_2_64",
       "library": "randii.cbrn",
-      "description": "This module implements a 64-bit Threefry random number generator with support for integer and string array conversions, increment and decrement operations, and functions to generate uniform random integers, floats, and custom-distribution values. It operates on a state type `t` composed of two 64-bit unsigned integers, enabling deterministic random number generation with configurable key and counter inputs. Concrete use cases include cryptographic applications, simulations requiring reproducible randomness, and statistical sampling with controlled entropy sources.",
-      "description_length": 570,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cbrn.Rng.Algo",
-      "library": "randii.cbrn",
-      "description": "This module defines a single algorithm variant, `Threefry`, for random number generation. It provides functions to convert the algorithm to and from string representations, and to determine the output length in bytes. This module is used to specify and configure the cryptographic RNG algorithm for generating secure random values.",
-      "description_length": 331,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cbrn.Types",
-      "library": "randii.cbrn",
-      "description": "This module defines numeric types for 2-digit, 4-digit, 32-bit, and 64-bit values, supporting precise random number generation with uniform and 0-1 float distributions for simulations and testing. It includes a cryptographic RNG using arbitrary-precision numbers via `rand_R`, and a numeric abstraction layer for arithmetic, bitwise, and rotation operations with conversions between integers and strings. A functor-based system builds custom RNGs for structured digit types, while another module handles fixed-size integer arrays with random generation and selection operations for cryptographic use cases like nonce generation. Example uses include secure random array generation, Skein-based cryptographic transformations, and structured digit RNG implementations.",
-      "description_length": 766,
-      "index": 18,
+      "description": "This module implements a 2x64-bit Threefry random number generator with operations to convert between integer and string arrays, increment and decrement the counter, and generate random values. It supports generating uniform integers, floating-point numbers in [0,1), and string representations of random values based on a cryptographic counter mode. The module is designed for high-performance random number generation with configurable rounds and seed inputs from arrays or strings.",
+      "description_length": 484,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cbrn.Rng_threefry_2_digits",
+      "module_path": "Cbrn.Rng_threefry_2_digits.Make",
       "library": "randii.cbrn",
-      "description": "This module implements the Threefry 2x64 random number generator, producing 64-bit unsigned integers as pairs of 32-bit digits. It provides functions to seed the generator, advance its internal state, and generate random values, with core operations including round-based permutations, digit rotations, and auxiliary state updates. The generator supports deterministic, high-quality random number sequences suitable for cryptographic applications and simulations. Specific operations allow setting the initial key and counter, performing a fixed number of encryption rounds, and extracting random output in digit-based formats.",
-      "description_length": 627,
-      "index": 19,
+      "description": "This module implements the Threefry2 random number generator algorithm specialized for digit-based number representations. It provides core operations for initializing and advancing the generator state, including bitwise rotations, key and counter updates, and round function execution. The module is used for cryptographic and high-quality pseudorandom number generation where large word sizes and precise bit manipulation are required.",
+      "description_length": 437,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cbrn.Threefry.Gen_4_64",
+      "library": "randii.cbrn",
+      "description": "This module implements a 64-bit Four-round Threefry random number generator with direct conversions to and from integer and string arrays. It supports incrementing and decrementing generator states, generating random values within specified bounds, and producing uniformly distributed floats in [0,1). Concrete use cases include cryptographic applications and simulations requiring high-quality pseudorandom number generation with precise control over the generator state.",
+      "description_length": 472,
+      "index": 13,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cbrn.Threefry",
       "library": "randii.cbrn",
-      "description": "This module implements the Threefry family of counter-based random number generators, offering both 32-bit and 64-bit variants with two or four rounds. It provides a unified interface for generating unsigned integers and floating-point numbers within specified ranges, supporting configurable rounds, key and counter inputs, and state manipulation via increment and decrement operations. Each sub-module specializes in a specific bit width and round count, exposing conversions between integer and string arrays, and enabling advanced use cases such as cryptographic nonce generation, reproducible simulations, and sampling from custom distributions. The core state type `t` is consistently backed by unsigned integer arrays, ensuring deterministic and parallelizable random sequences across all configurations.",
-      "description_length": 811,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cbrn.Rotations",
-      "library": "randii.cbrn",
-      "description": "This module represents and manipulates 3D rotation matrices using a fixed set of integer indices. It provides functions to construct a rotation matrix from a sequence of integers, access elements by position, and initialize matrices with zero values. Concrete use cases include transforming coordinates in 3D space and composing rotation operations for geometric computations.",
-      "description_length": 376,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cbrn.Num_uint64_2",
-      "library": "randii.cbrn",
-      "description": "This module supports arithmetic, bitwise, and rotational operations on a fixed-digit-size 64-bit unsigned integer type (`U.t`), including addition, XOR, left rotation (`rotL`), and conversions to/from integers and strings. It provides specialized constants like Skein key schedule parity values and bit-width markers (_63, _64) for precise low-level bit manipulation. Typical use cases include cryptographic algorithms requiring exact 64-bit unsigned arithmetic, such as hash function implementations, and systems needing efficient bit rotation or overflow-aware numeric operations.",
-      "description_length": 582,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cbrn.Rng_threefry_4_digits",
-      "library": "randii.cbrn",
-      "description": "This module implements the Threefry random number generator specialized for 4-digit output, generating uniformly distributed integers between 0000 and 9999. It supports seeding for reproducibility and integrates cryptographic-grade permutation phases using key-based encryption with counter values from its child module. The child module provides low-level arithmetic on ref-wrapped numeric types and fixed rotations, enabling secure, segmented processing of digits and words. Use this module to generate cryptographically sound 4-digit PINs or lottery codes with controlled randomness and statistical integrity.",
-      "description_length": 612,
-      "index": 23,
+      "description": "This module provides constants and submodules for implementing Threefry pseudorandom number generators in 32-bit and 64-bit variants with 2 or 4 rounds. Each submodule operates on generator states as arrays of unsigned integers, offering state manipulation, random value generation, and conversions to and from string and integer arrays. It is used for cryptographic operations such as key derivation, nonce generation, and high-quality randomization in simulations and testing.",
+      "description_length": 478,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cbrn.Num_uint32_2",
       "library": "randii.cbrn",
-      "description": "This module provides arithmetic operations (addition, subtraction, remainder), bitwise manipulations (XOR, left rotation), and conversion utilities for 32-bit unsigned integers represented by the type `U.t`. It includes specialized constants and bit rotation functions like `rotL`, which are critical for low-level cryptographic algorithms or hashing operations requiring precise 32-bit unsigned integer handling. The module supports equality checks, numeric conversions, and bit-level transformations, making it suitable for scenarios like cryptographic key generation or data integrity verification.",
-      "description_length": 601,
-      "index": 24,
-      "embedding_norm": 0.9999998807907104
+      "description": "This module supports arithmetic operations (addition, subtraction, remainder), bitwise manipulations (XOR), and left rotation tailored for 32-bit unsigned integers (`U.t`). It includes predefined constants and conversions, with applications in cryptographic algorithms like Skein's key schedule and parity computations, leveraging dedicated rotation logic and bitwidth-specific values.",
+      "description_length": 385,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Cbrn.Num_uint32_4",
+      "module_path": "Cbrn.Num_uint64_2",
       "library": "randii.cbrn",
-      "description": "This module provides arithmetic, bitwise, and rotation operations for 32-bit unsigned integers (`word_32`), including conversions to integers/strings, XOR, addition, subtraction, remainder, and configurable bitwise rotations. It works with 32-bit unsigned integer values and predefined constants like zero, one, max_int, and specialized bit patterns. These operations are optimized for cryptographic algorithms requiring precise bit manipulation and rotation setups, such as those in the `Cbrn.Rotations` module.",
-      "description_length": 512,
-      "index": 25,
+      "description": "This module supports arithmetic and bitwise operations on 64-bit unsigned integers, including addition, subtraction, XOR, and left rotation via the `rotL` function. It provides constants like zero, one, and Skein-specific parity values, along with utilities for converting between integers, strings, and bit-level representations. Designed for cryptographic applications such as Skein hashing, it enables precise bit manipulation and arithmetic critical for algorithms requiring 64-bit unsigned integer operations.",
+      "description_length": 514,
+      "index": 16,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cbrn.Rotations",
+      "library": "randii.cbrn",
+      "description": "This module represents rotations as numeric transformations, supporting creation from individual components or zero-initialization. It stores rotations as tuples of eight integers, transformed into a generic numeric type via a provided conversion function. Direct access to rotation elements by index enables integration with mathematical operations or serialization routines.",
+      "description_length": 376,
+      "index": 17,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cbrn.Errors",
       "library": "randii.cbrn",
-      "description": "This module defines a polymorphic variant type for representing specific error conditions in data processing, including errors related to invalid input, unsupported algorithms, and resource limits. It provides a single conversion function `to_string` to serialize these errors into human-readable messages. Concrete use cases include validating cryptographic parameters, handling data size constraints, and reporting unsupported operations in parsing or generation routines.",
-      "description_length": 474,
-      "index": 26,
+      "description": "This module defines a polymorphic variant type for representing specific error conditions in data processing tasks, such as handling missing data, invalid sizes, or unrecognized algorithms. It includes a function to convert these error values into human-readable strings. Concrete use cases include validating input formats, enforcing size constraints, and reporting unsupported algorithm names in cryptographic or data transformation workflows.",
+      "description_length": 445,
+      "index": 18,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cbrn.Num_uint32_4",
+      "library": "randii.cbrn",
+      "description": "This module provides arithmetic, bitwise, and rotation operations for 32-bit unsigned integers, including specialized cryptographic constants and predefined rotation tables. It works with low-level numeric representations like `word_32` and structured bit patterns, enabling precise bit manipulation through fixed rotation configurations. These capabilities are applied in cryptographic algorithms such as Skein for key schedule generation and parity calculations.",
+      "description_length": 464,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cbrn.Num_uint64_4",
+      "library": "randii.cbrn",
+      "description": "This module provides arithmetic, bitwise, and rotation operations for 64-bit unsigned integers represented by the type `U.t`, supporting conversions to and from integers and strings. It includes predefined constants like zero, one, and max_int, along with specialized rotation schedules (`rotations_0`, `rotations_1`) designed for cryptographic algorithms requiring precise control over fixed-size integer manipulation and bitwise transformations.",
+      "description_length": 447,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cbrn.Types",
+      "library": "randii.cbrn",
+      "description": "Defines types for fixed-size integers and floating-point numbers, including 2-digit, 4-digit, 32-bit, and 64-bit word representations. Supports operations through module types `NUM`, `RNG_MAKER`, and `GEN` for random number generation and value sampling, with specific support for uniform distributions over integer ranges or [0,1). Used in statistical modeling and simulation code requiring strict numeric representation and sampling controls.",
+      "description_length": 444,
+      "index": 21,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cbrn.Rng_threefry_4_digits",
+      "library": "randii.cbrn",
+      "description": "This module implements a cryptographic pseudorandom number generator based on the Threefish-512 block cipher, using digit-level operations and fixed rotation constants to transform keys and counters. It operates on 4-digit numeric structures, applying a configurable number of encryption rounds to produce deterministic, secure random outputs. It is designed for cryptographic applications such as key derivation and nonce generation where high security and reproducibility are required.",
+      "description_length": 487,
+      "index": 22,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cbrn.Rng",
       "library": "randii.cbrn",
-      "description": "This module generates cryptographically secure random values using configurable algorithms, word sizes, and digit specifications. It supports creating random strings and identifiers with controlled entropy, such as API keys and one-time passwords, by combining algorithm selection, word size, and digit length configurations. The module defines types for word sizes (32 or 64 bits), digit lengths (2 or 4 digits), and the `Threefry` cryptographic algorithm, each with conversion and validation functions. Submodules structure RNG identifiers by combining these components, enabling standardized parsing, string representation, and length computation for cryptographic configurations.",
-      "description_length": 683,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements core random number generation functionality with support for configurable word sizes (32 or 64 bits), digit lengths (Two or Four), and the Threefry algorithm. It provides structured RNG configuration through RngName, enabling serialization and parsing of generator settings, and includes a `gen` function to produce random values from specified configurations. Use it to generate cryptographically safe random strings with controlled bit-width, digit count, and algorithm selection.",
+      "description_length": 505,
+      "index": 23,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Cbrn.Num_uint64_4",
+      "module_path": "Cbrn.Rng_threefry_2_digits",
       "library": "randii.cbrn",
-      "description": "This module implements arithmetic (addition, subtraction, remainder), bitwise (XOR), and rotation operations for 64-bit unsigned integers represented by the `U.t` type, alongside conversions between integers, strings, and bit patterns. It includes predefined constants like `max_int`, `skein_ks_parity`, and rotation maps (`rotations_0`, `rotations_1`) that define bitwise rotation logic for specific indices. These capabilities are tailored for low-level numeric manipulation, cryptographic hashing (e.g., Skein), and systems requiring precise control over 64-bit unsigned integer representations.",
-      "description_length": 598,
-      "index": 28,
+      "description": "This module implements the Threefry2 random number generator algorithm tailored for 2-digit word representations. It provides functions to initialize the generator state, perform bitwise rotations, update keys and counters, and execute rounds to produce pseudorandom output. It is used in cryptographic applications requiring deterministic, high-quality randomness with precise control over bit-level operations.",
+      "description_length": 412,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cbrn",
       "library": "randii.cbrn",
-      "description": "This module provides numeric abstractions and cryptographic random number generation across multiple bit widths and structured formats. It supports precise arithmetic, bitwise, and rotation operations on 32-bit and 64-bit unsigned integers, with specialized variants for structured digit types like 2-digit and 4-digit values. The core Threefry generator produces high-quality, deterministic random sequences in various configurations, enabling use cases such as secure nonce generation, cryptographic key derivation, and structured random sampling. Concrete examples include generating 4-digit PINs, transforming 3D rotation matrices, and implementing Skein-based cryptographic primitives with exact bit-width control.",
-      "description_length": 719,
-      "index": 29,
+      "description": "This module implements cryptographic random number generation using the Threefry algorithm with configurable word sizes and digit counts. It provides structured RNG configuration, state manipulation, and deterministic random value generation through submodules for 2-digit and 4-digit 32-bit and 64-bit unsigned integer operations. Concrete use cases include key derivation, nonce generation, and cryptographic protocol implementation requiring high-quality, reproducible randomness.",
+      "description_length": 483,
+      "index": 25,
       "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 30,
-    "meaningful_modules": 30,
+    "total_modules_in_package": 26,
+    "meaningful_modules": 26,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 811,
-    "min_description_length": 286,
-    "avg_description_length": 511.3333333333333,
-    "embedding_file_size_mb": 0.10941314697265625
+    "max_description_length": 679,
+    "min_description_length": 271,
+    "avg_description_length": 447.03846153846155,
+    "embedding_file_size_mb": 0.37743473052978516
   }
 }

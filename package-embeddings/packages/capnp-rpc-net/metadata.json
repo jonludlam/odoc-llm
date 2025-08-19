@@ -1,277 +1,165 @@
 {
   "package": "capnp-rpc-net",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 32,
-  "creation_timestamp": "2025-07-15T23:12:37.555645",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 18,
+  "creation_timestamp": "2025-08-15T12:24:35.941011",
   "modules": [
     {
       "module_path": "Capnp_rpc_net.Auth.Digest.Map",
       "library": "capnp-rpc-net",
-      "description": "This module provides associative map operations for cryptographic digest keys, enabling efficient insertion, deletion, and lookup of bindings between digests and arbitrary values. It supports ordered traversal, merging, and transformation of these maps, which are essential for managing authentication state, such as tracking principals or sessions in secure RPC communications. Typical applications include maintaining access control policies, verifying client identities, and handling key exchanges in distributed systems.",
-      "description_length": 524,
+      "description": "This module implements map operations for cryptographic digest keys, supporting insertion, ordered traversal, and sequence-based conversions. It handles key-value pairs where values can be single items or lists, maintaining key order for efficient lookups and bulk updates. Designed for authentication systems in distributed environments, it facilitates secure key management and ordered data processing to establish trusted connections between services.",
+      "description_length": 454,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Capnp_rpc_net.Restorer.LOADER",
+      "module_path": "Capnp_rpc_net.Restorer.Id",
       "library": "capnp-rpc-net",
-      "description": "This module handles the restoration of services from storage keys derived from hashes of identifiers, converting sturdy references into URIs and loading capabilities using those keys. It operates on `t`, `Capnp_rpc.Std.Sturdy_ref.t`, and `string` values, producing a `resolution` result that is cached based on the input digest. It is used to securely map internal service identifiers to network-visible URIs and to resume services from persisted state using a consistent key derived from the ID hash.",
-      "description_length": 501,
+      "description": "This module generates and manipulates service identifiers for secure network communication. It supports creating unguessable IDs using cryptographic randomness, deriving deterministic IDs from secrets and names using HMAC-SHA256, and converting IDs to strings or digests. These operations are used to identify and authenticate services in a networked environment where security and uniqueness are critical.",
+      "description_length": 406,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Capnp_rpc_net.Networking.Vat",
       "library": "capnp-rpc-net",
-      "description": "This module manages networked actors in a CapTP-based distributed system, enabling creation of vats that host and route capabilities across network connections. It provides functions to establish connections, generate sturdy references and URIs for remote capability invocation, and manage authentication via secret keys. Concrete use cases include setting up peer-to-peer communication between distributed services and securely exporting or importing remote capabilities via URIs.",
-      "description_length": 481,
+      "description": "This module manages a Vat in the CapTP network, handling secure communication between distributed actors. It creates and operates networked Vats, establishes connections, and handles sturdy references for remote capability invocation. Use cases include setting up secure peer-to-peer communication, exporting and importing remote service references as URIs, and managing network addresses for distributed systems.",
+      "description_length": 413,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.S.VAT_NETWORK-Vat",
-      "library": "capnp-rpc-net",
-      "description": "This module implements a Vat as an actor in the CapTP network, enabling creation, connection management, and sturdy reference handling. It provides functions to establish network connections (`run_connection`), generate and parse sturdy references (`sturdy_ref`, `import`, `export`), and manage Vat identity and addressing (`public_address`, `create`). Concrete use cases include securely connecting distributed services, restoring and exporting capabilities across networked Vats, and managing peer-to-peer communication in applications using CapTP.",
-      "description_length": 550,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.Capnp_address.Location",
-      "library": "capnp-rpc-net",
-      "description": "This module defines and manipulates address locations for Cap'n Proto RPC endpoints, supporting both Unix domain sockets and TCP addresses. It provides pretty-printing and equality testing for these address types. Concrete use cases include formatting connection endpoints for logging and comparing addresses to determine endpoint identity.",
-      "description_length": 340,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.Two_party_network.Address",
-      "library": "capnp-rpc-net",
-      "description": "This module defines network addresses for a two-party communication system, supporting parsing and serialization to URIs, equality checks, cryptographic digest generation, and formatted output. It operates on a concrete address type `t` and pairs with service identifiers. It is used to establish and verify secure, bidirectional connections between two endpoints using URIs that encode both the address and the target service.",
-      "description_length": 427,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.Restorer.Table",
-      "library": "capnp-rpc-net",
-      "description": "This module implements a table for managing mappings between service IDs and capabilities, supporting operations to add, remove, and look up entries. It works with `Capnp_rpc_net.Restorer.Id.t`, `Uri.t`, and `Capability.t` types, and integrates with Eio switches for resource management. Concrete use cases include restoring remote services using sturdy references and caching capabilities for efficient access over a network.",
-      "description_length": 426,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.Restorer.Id",
-      "library": "capnp-rpc-net",
-      "description": "This module generates and manipulates service identifiers using cryptographic operations. It supports creating fresh unguessable IDs, deriving IDs from secrets and names via HMAC-SHA256, and converting IDs to and from raw byte strings. Use cases include securely identifying remote services, restoring connections to known services, and ensuring service identity integrity in distributed systems.",
-      "description_length": 396,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.S.VAT_NETWORK-CapTP",
-      "library": "capnp-rpc-net",
-      "description": "This module implements the CapTP protocol for securely sharing capabilities over a network link. It provides functions to establish connections, handle message exchanges, and manage remote capabilities using endpoints and a restorer function. Key operations include connecting to a remote endpoint, running the message loop, accessing bootstrap capabilities, and disconnecting with a reason.",
-      "description_length": 391,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.S.VAT_NETWORK",
-      "library": "capnp-rpc-net",
-      "description": "This module coordinates network communication for capability-based RPC, managing connections and message routing between distributed services. It handles capability references and service identifiers, enabling secure interactions over the network. Concrete use cases include establishing and maintaining remote procedure calls between distributed components in a system using CapTP for protocol handling and Vat instances for endpoint management.",
-      "description_length": 446,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.S.VAT_NETWORK-Network-Address",
-      "library": "capnp-rpc-net",
-      "description": "This module defines operations for parsing and constructing URIs that encode network addresses and service identifiers. It supports bidirectional conversion between URIs and address-service ID pairs, ensuring round-trip integrity. The module works with `Network.Address.t` and `Uri.t`, enabling concrete use cases such as service discovery and secure endpoint verification in distributed systems.",
-      "description_length": 396,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.S.NETWORK-Address",
-      "library": "capnp-rpc-net",
-      "description": "This module defines network addresses and operations for parsing and constructing URIs that identify remote services. It provides functions to convert between URIs and address-service ID pairs, compare addresses for equality, generate authentication digests, and format addresses for display. It is used to locate and authenticate remote services over a network using the Cap'n Proto RPC protocol.",
-      "description_length": 397,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.S.ADDRESS",
-      "library": "capnp-rpc-net",
-      "description": "This module defines network addresses for remote services, supporting parsing and serialization to and from URIs. It includes operations to convert addresses and service identifiers to URIs and back, ensuring round-trip integrity. Use cases include securely identifying and connecting to remote Cap'n Proto RPC services over networks using URIs.",
-      "description_length": 345,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.S.NETWORK",
-      "library": "capnp-rpc-net",
-      "description": "This module handles establishing network connections with TLS support, authenticating peers using secret keys, and parsing third-party capability identifiers from Cap'n Proto messages. It operates on network addresses and Cap'n Proto message pointers, enabling secure remote procedure calls between distributed services. Concrete use cases include connecting to remote endpoints, verifying peer identities during TLS handshakes, and extracting capability IDs from serialized data.",
-      "description_length": 480,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.Auth.Digest",
-      "library": "capnp-rpc-net",
-      "description": "This module provides cryptographic authentication for networked vats using digest-based identity verification. It supports conversion between digest identities and URIs, peer authentication via public key digests, and identity derivation from X.509 certificates, enabling secure server-client connections and authenticated remote service access. Its child module offers associative map operations for digest keys, allowing efficient management of authentication state, such as tracking sessions or access control policies. Together, they facilitate secure, scalable communication in distributed systems through both direct cryptographic operations and structured state management.",
-      "description_length": 680,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.S.VAT_NETWORK-Network",
-      "library": "capnp-rpc-net",
-      "description": "This module handles network connections with TLS support, providing `connect` to establish authenticated endpoints using a secret key and `parse_third_party_cap_id` to extract capability identifiers from Cap'n Proto messages. It operates on network addresses and secret keys, working with endpoints and capability IDs as core data structures. Concrete use cases include securely connecting to remote services and parsing capability references from serialized data.",
-      "description_length": 464,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.Networking.CapTP",
-      "library": "capnp-rpc-net",
-      "description": "This module implements the CapTP protocol for securely sharing capabilities over a network connection. It manages message exchange, capability bootstrapping, and connection lifecycle events using `Endpoint.t` and `Restorer.t`. Use it to establish peer-to-peer capability-based communication, handle remote object references, and gracefully terminate connections with error reporting.",
-      "description_length": 383,
-      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Capnp_rpc_net.Auth.Secret_key",
       "library": "capnp-rpc-net",
-      "description": "This module manages cryptographic secret keys for secure network communication, providing operations to generate, serialize, and derive digests and TLS configurations from keys. It works with secret keys stored in memory and PEM-encoded data, supporting secure client and server authentication. Use cases include initializing a vat's identity, configuring TLS for secure connections, and persisting or loading keys for consistent network identity across restarts.",
-      "description_length": 463,
-      "index": 17,
+      "description": "This module manages cryptographic secret keys for secure network communication, providing operations to generate, serialize, and derive digests and TLS configurations from secret keys. It works with the `t` type representing a secret key, along with associated types like `Digest.t`, `Tls.Config.client`, and `Tls.Config.server`. Use this module to create and persist secret keys for vats, configure TLS clients and servers with those keys, and verify identities via fingerprints or equality checks.",
+      "description_length": 499,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Capnp_rpc_net.Tls_wrapper",
+      "module_path": "Capnp_rpc_net.Two_party_network.Address",
       "library": "capnp-rpc-net",
-      "description": "This module handles establishing TLS-secured connections for Cap'n Proto RPC endpoints. It provides `connect_as_server` and `connect_as_client` to set up server and client endpoints with optional TLS authentication using secret keys and digests. It works directly with Eio flows and Capnp_rpc_net's endpoint and authentication types, enabling secure communication where TLS is conditionally applied based on key digests.",
-      "description_length": 420,
-      "index": 18,
+      "description": "This module handles network addresses for a two-party communication setup, providing operations to parse and construct URIs that encode both the address and a service identifier. It supports address equality checks, digest generation for authentication, and formatted printing. Typical use cases include securely connecting to remote services over a network using URIs that uniquely identify both the endpoint and the target service.",
+      "description_length": 433,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Capnp_rpc_net.VAT_NETWORK-CapTP",
+      "module_path": "Capnp_rpc_net.Networking.CapTP",
       "library": "capnp-rpc-net",
-      "description": "This module implements the CapTP protocol for securely sharing capabilities over a network link. It provides functions to establish a connection, handle incoming messages, access remote bootstrap objects, and gracefully disconnect with error reporting. The module works with network endpoints, capability objects, and restoration identifiers to enable secure, bidirectional communication between distributed services.",
-      "description_length": 417,
-      "index": 19,
+      "description": "This module implements the CapTP protocol for sharing capabilities over a network link. It provides functions to connect to a remote endpoint, bootstrap capabilities, run the message handling loop, and disconnect with a reason. The primary data type is `t`, representing a protocol handler, along with capabilities and endpoints for communication. Use this module to establish and manage a capability-based network connection for remote service interaction.",
+      "description_length": 457,
+      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Capnp_rpc_net.Endpoint",
+      "module_path": "Capnp_rpc_net.Capnp_address.Location",
       "library": "capnp-rpc-net",
-      "description": "This module sends and receives Capnp messages over a byte-stream connection. It manages message queuing, transmission, and reception with support for TLS authentication, logging, and flow control. Concrete use cases include implementing remote procedure calls over network connections and handling bidirectional message exchange with authenticated peers.",
-      "description_length": 354,
-      "index": 20,
+      "description": "This module defines and manipulates address locations for Cap'n Proto RPC endpoints, supporting both Unix domain sockets and TCP addresses. It provides pretty-printing and equality testing for these address types. Useful for routing connections in distributed systems using Cap'n Proto's URI format.",
+      "description_length": 299,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Capnp_rpc_net.Restorer.Table",
+      "library": "capnp-rpc-net",
+      "description": "This module manages mappings between service IDs and capabilities, supporting restoration via sturdy references. It provides operations to add, remove, and look up entries, along with creating caching or loader-backed tables. Use cases include tracking remote services backed by URIs or external loaders, enabling resurrection of capabilities using stable identifiers.",
+      "description_length": 368,
+      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Capnp_rpc_net.Restorer",
+      "module_path": "Capnp_rpc_net.Auth.Digest",
       "library": "capnp-rpc-net",
-      "description": "This module maps service IDs to capabilities using restorers that either reject requests or restore specific capabilities based on provided IDs. It supports creating restorers from ID tables and restoring capabilities using service IDs, enabling secure handling of service restoration in networked environments. Child modules handle storage key derivation from ID hashes, URI conversion, capability caching, and table-based ID-to-capability mappings with support for resource-managed lookups and cryptographic ID generation. Examples include restoring remote services from sturdy references, caching resolved capabilities by digest, and deriving secure service identifiers using HMAC-SHA256.",
-      "description_length": 691,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.VAT_NETWORK-Network",
-      "library": "capnp-rpc-net",
-      "description": "This module handles network connections for remote service endpoints, supporting TLS authentication. It provides functions to establish authenticated connections using a secret key and return communication endpoints. It works with network addresses and cryptographic keys to enable secure inter-service communication in distributed systems.",
-      "description_length": 340,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.S",
-      "library": "capnp-rpc-net",
-      "description": "This module defines the core abstractions for network communication in a capability-based RPC system, including interfaces for addresses, transports, and virtual network environments (vats) that enable secure, typed message passing. It provides key data types such as network addresses, URIs, service identifiers, and TLS-secured endpoints, along with operations to establish connections, route messages, and manage capability references across distributed services. Submodules implement CapTP protocol handling, Vat actors for peer-to-peer communication, URI parsing for service discovery, and TLS-secured transports for authenticated messaging. Specific capabilities include securely connecting Vats using TLS, exporting and importing sturdy references, routing RPC calls between distributed components, and converting between URIs and network addresses for endpoint identification and authentication.",
-      "description_length": 903,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Capnp_rpc_net.VAT_NETWORK-Network-Address",
-      "library": "capnp-rpc-net",
-      "description": "This module handles network address parsing and serialization for Cap'n Proto RPC services. It provides functions to convert between network addresses and URIs, supporting service discovery and routing. The module works with `Network.Address.t` and `Uri.t` types, enabling concrete use cases like reconstructing service endpoints from URIs or validating addresses via cryptographic digests.",
-      "description_length": 390,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.Two_party_network",
-      "library": "capnp-rpc-net",
-      "description": "This module implements a two-party network protocol for establishing secure, authenticated communication channels between exactly two endpoints. It provides functions to connect to a remote address using a secret key and returns a communication endpoint, while its child module defines the concrete address type `t` used to represent endpoints, supporting operations such as URI serialization, equality checks, and cryptographic digest generation. The combined functionality enables setting up verified, bidirectional connections using URIs that encode both address and service information. Example usage includes initiating a secure connection to a remote service by parsing a URI, authenticating via a shared secret, and exchanging data over the resulting endpoint.",
-      "description_length": 767,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Capnp_rpc_net.VAT_NETWORK-Vat",
-      "library": "capnp-rpc-net",
-      "description": "This module implements a Vat in the CapTP network, enabling secure communication between distributed actors. It provides functions to create a Vat with a secret key and network configuration, establish and manage connections in client or server mode, and export or import sturdy references as URIs. It works with types like `Vat.t`, `Network.Address.t`, `Capnp_rpc.Std.Sturdy_ref.t`, and `Uri.t`, supporting use cases such as setting up authenticated network services, restoring remote references, and securely exchanging capabilities between distributed components.",
-      "description_length": 566,
-      "index": 26,
+      "description": "This module handles cryptographic digest-based authentication for networked services. It provides operations to parse and embed digest information in URIs, create X.509 authenticators from certificates, and compare digest values. It works with X.509 certificates, TLS authenticators, and URI values to establish secure, authenticated connections between vats over networks where identity verification is critical.",
+      "description_length": 413,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Capnp_rpc_net.Capnp_address",
       "library": "capnp-rpc-net",
-      "description": "This module handles the parsing and construction of capnp:// URIs into network addresses and service identifiers, supporting secure endpoint verification through authentication digests. It operates on URI values and `Location.t` types, which encapsulate address information for both Unix domain sockets and TCP connections. The module enables concrete operations such as converting remote service endpoints to URIs for communication setup, and comparing or formatting addresses for logging and endpoint identification. It integrates direct URI manipulation with address representation and comparison capabilities from its child modules.",
-      "description_length": 636,
-      "index": 27,
+      "description": "This module handles Cap'n Proto RPC addresses in URI format, parsing and constructing URIs to extract network endpoints and service identifiers. It supports Unix domain sockets and TCP addresses, providing equality checks, pretty-printing, and digest computation for authentication. Concrete use cases include routing connections and verifying endpoint integrity in distributed systems using Cap'n Proto.",
+      "description_length": 404,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Capnp_rpc_net.Auth",
+      "module_path": "Capnp_rpc_net.Tls_wrapper",
       "library": "capnp-rpc-net",
-      "description": "This module secures distributed service vats through cryptographic authentication and encryption, using secret keys and SHA256 to verify identities and protect communication. It generates, persists, and reloads keys to maintain consistent identity across restarts, ensuring clients trust reconnected services and enabling secure server-client communication over untrusted networks. The first child module handles digest-based identity verification, converting between digests and URIs, authenticating peers via public key digests, and managing authentication state with associative maps. The second child module focuses on key lifecycle operations, generating, serializing, and deriving TLS configurations from secret keys, supporting both in-memory and PEM-encoded storage for flexible deployment and secure connection setup.",
-      "description_length": 826,
-      "index": 28,
+      "description": "This module handles TLS-secured connections for RPC endpoints, providing `connect_as_server` and `connect_as_client` to establish server and client endpoints with authentication. It works with Eio flows, secret keys, and authentication digests to enable secure, authenticated communication over network transports. Use it to implement RPC clients and servers that require mutual TLS authentication for secure service interactions.",
+      "description_length": 430,
+      "index": 10,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Capnp_rpc_net.Networking",
       "library": "capnp-rpc-net",
-      "description": "This module enables secure, capability-based communication across a network by managing vats that route remote references and handle connection lifecycle events. It provides key data types like `Endpoint.t` and `Restorer.t`, along with operations for establishing connections, exchanging capabilities, and generating sturdy references and URIs. You can use it to set up peer-to-peer services, securely export or import remote capabilities, and manage authentication via secret keys. Example workflows include bootstrapping remote object access and securely terminating connections with error reporting.",
-      "description_length": 602,
-      "index": 29,
+      "description": "This module implements network communication for capability-based distributed systems, using the CapTP protocol. It provides functions to connect to remote endpoints, bootstrap capabilities, run message loops, and disconnect securely, working with capabilities, endpoints, and TLS-backed connections. Concrete use cases include establishing secure peer-to-peer links, exporting and importing remote services as URIs, and managing sturdy references across a network.",
+      "description_length": 465,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Capnp_rpc_net.VAT_NETWORK",
+      "module_path": "Capnp_rpc_net.S",
       "library": "capnp-rpc-net",
-      "description": "This module handles network communication for distributing capability references across nodes. It supports operations for establishing and managing remote connections using CapTP protocols over a network. Concrete use cases include enabling remote method calls and secure exchange of capabilities between distributed services.",
-      "description_length": 326,
-      "index": 30,
+      "description": "This module defines core abstractions for network communication in a capability-based RPC system. It includes interfaces for addresses, network transports, and virtual network environments (vats). These abstractions enable secure, typed, and structured message passing between distributed services over networks with support for features like TLS. Concrete use cases include implementing remote procedure calls across distributed nodes and managing secure communication channels in a capability-secure manner.",
+      "description_length": 509,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Capnp_rpc_net.Two_party_network",
+      "library": "capnp-rpc-net",
+      "description": "This module implements a two-party network protocol for secure, bidirectional communication between exactly two endpoints. It provides functions to establish authenticated connections using TLS, exchange capabilities, and manage endpoints over a network. Key operations include connecting to a remote address with a secret key, parsing capability identifiers from messages, and handling endpoint lifecycle management.",
+      "description_length": 417,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Capnp_rpc_net.Endpoint",
+      "library": "capnp-rpc-net",
+      "description": "This module sends and receives Cap'n Proto messages over byte streams, handling message queuing, transmission loops, and connection shutdown. It works with byte-stream flows and message types from the Capnp library, including support for TLS authentication via peer IDs. Concrete use cases include implementing networked RPC services that require reliable message transmission, reading remote procedure call responses, and managing secure connections with peer identity verification.",
+      "description_length": 483,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Capnp_rpc_net.Restorer",
+      "library": "capnp-rpc-net",
+      "description": "This module provides operations to restore capabilities using service IDs, working with cryptographic identifiers and capability references. It supports creating restorers that map specific IDs to capabilities, reject all, or use a table for dynamic lookups. Concrete use cases include securely resolving remote services from stable IDs during network communication or resurrecting capabilities from stored references.",
+      "description_length": 418,
+      "index": 15,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Capnp_rpc_net.Auth",
+      "library": "capnp-rpc-net",
+      "description": "This module implements cryptographic authentication for networked vats using secret keys and X.509 certificates. It provides functions to generate, serialize, and use secret keys for TLS configuration, along with digest operations to verify identities and embed authentication data in URIs. Use it to secure connections between distributed services where each vat must prove its identity to peers.",
+      "description_length": 397,
+      "index": 16,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Capnp_rpc_net",
       "library": "capnp-rpc-net",
-      "description": "This module enables secure, distributed capability-based communication using Cap'n Proto RPC with TLS support. It centers around network endpoints, service identifiers, and sturdy references, providing operations to establish authenticated connections, exchange capabilities, and route remote procedure calls. Key functionalities include TLS-secured client-server connections, CapTP protocol handling, URI-based service discovery, and capability restoration using cryptographic digests. Examples include securely connecting to a remote service via URI, exporting a local capability as a sturdy reference, and routing RPC calls between distributed vats using authenticated TLS channels.",
-      "description_length": 685,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides networking support for Cap'n Proto RPC systems with TLS integration. It includes components for secure bidirectional communication, cryptographic authentication, capability restoration, and URI-based addressing. Concrete use cases include establishing authenticated RPC connections between distributed services, securely transmitting Cap'n Proto messages over network transports, and managing sturdy references to remote capabilities using TLS-secured endpoints.",
+      "description_length": 483,
+      "index": 17,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 32,
-    "meaningful_modules": 32,
+    "total_modules_in_package": 18,
+    "meaningful_modules": 18,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 903,
-    "min_description_length": 326,
-    "avg_description_length": 500.40625,
-    "embedding_file_size_mb": 0.11670303344726562
+    "max_description_length": 509,
+    "min_description_length": 299,
+    "avg_description_length": 430.44444444444446,
+    "embedding_file_size_mb": 0.2612781524658203
   }
 }

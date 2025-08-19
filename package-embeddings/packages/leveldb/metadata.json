@@ -1,47 +1,47 @@
 {
   "package": "leveldb",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:27.094988",
+  "creation_timestamp": "2025-08-14T22:58:05.542247",
   "modules": [
     {
       "module_path": "LevelDB.Batch",
       "library": "leveldb",
-      "description": "This module supports batched write operations on a LevelDB database, allowing multiple `put`, `delete`, and substring variants to be grouped and applied atomically. It works with `LevelDB.writebatch` to collect operations, and interacts directly with `LevelDB.db` when writing the batch. Concrete use cases include efficiently applying multiple updates or deletions to a database without intermediate states being visible.",
-      "description_length": 422,
+      "description": "This module supports batched write operations on a LevelDB database, allowing multiple `put`, `delete`, and substring variants to be grouped and applied atomically. It works with `LevelDB.writebatch` to collect operations and `LevelDB.db` to apply them. Concrete use cases include efficiently updating large numbers of key-value pairs or performing atomic deletions and inserts without intermediate states being visible.",
+      "description_length": 420,
       "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "LevelDB.Read_access",
+      "library": "leveldb",
+      "description": "This module provides direct read operations on a database or snapshot, including key-value retrieval with `get`, existence checks with `mem`, and both forward and reverse iteration over key ranges. It works with string keys and values, exposing functions that support precise queries and scans. Concrete use cases include fetching specific records, checking key presence, and streaming data in lexicographic order or from a given starting point.",
+      "description_length": 445,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "LevelDB.Iterator",
+      "library": "leveldb",
+      "description": "This module provides functions to iterate over key-value bindings in a LevelDB database in both forward and reverse lexicographic order. It supports operations like positioning the iterator at a specific key, retrieving the current key and value, and scanning through the database. Concrete use cases include efficiently traversing large datasets, implementing range queries, and processing data in sorted order without loading the entire database into memory.",
+      "description_length": 460,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "LevelDB.Snapshot",
       "library": "leveldb",
-      "description": "This module creates and manages database snapshots, enabling consistent read operations over a database state. It provides functions to retrieve, check existence, and iterate over key-value pairs as they existed at the snapshot's creation. Use cases include atomic reads across multiple keys, consistent backups, and long-running scans without interference from concurrent writes.",
-      "description_length": 380,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "LevelDB.Iterator",
-      "library": "leveldb",
-      "description": "This module provides functions to traverse key-value bindings in a LevelDB database in both forward and reverse lexicographic order. It supports operations like moving to the first or last key, seeking to a specific key, and stepping through bindings one at a time. Use cases include scanning all entries in a database, paginating through results, or processing a subset of keys starting from a given point.",
-      "description_length": 407,
-      "index": 2,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "LevelDB.Read_access",
-      "library": "leveldb",
-      "description": "This module supports read-only queries on LevelDB databases, providing direct access to key-value lookups, existence checks, and iteration over the database contents. It operates on string keys and values, with functions for retrieving values optionally, checking membership, and iterating in both directions, either from the start or a specific key. Concrete use cases include fetching stored records, scanning key ranges, and validating data presence without modifying the database.",
-      "description_length": 484,
+      "description": "This module creates and manages database snapshots, enabling consistent read operations over a point-in-time view of the database. It supports key-value lookups, existence checks, and iteration over the snapshot using both forward and reverse scans, starting optionally from a specific key. Use cases include atomic reads across multiple keys, consistent backups, and long-running scans unaffected by concurrent writes.",
+      "description_length": 419,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "LevelDB",
       "library": "leveldb",
-      "description": "This module provides access to LevelDB databases, offering a comprehensive interface for managing and querying key-value data with support for atomic operations, snapshots, and ordered traversal. It includes `writebatch` for grouping multiple updates and deletions into atomic writes, `snapshot` for consistent reads over a fixed database state, and `iterator` for efficiently traversing key-value pairs in lexicographic order. Direct operations allow single-key lookups, existence checks, and iteration, enabling tasks like record retrieval, key-range scans, and data validation. Together, these features support complex workflows such as transactional updates, point-in-time backups, and paginated result processing.",
-      "description_length": 718,
+      "description": "This module provides key-value storage operations for string-based entries, including inserts, deletions, existence checks, and ordered iteration with forward and reverse scans. It supports atomic batch writes, consistent snapshots for isolated reads, and range compaction to optimize storage, alongside metadata queries and comparator customization, making it suitable for applications requiring efficient ordered data management, such as caching systems, logging infrastructures, or embedded databases with atomic update needs.",
+      "description_length": 529,
       "index": 4,
       "embedding_norm": 1.0
     }
@@ -53,9 +53,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 718,
-    "min_description_length": 380,
-    "avg_description_length": 482.2,
-    "embedding_file_size_mb": 0.018589019775390625
+    "max_description_length": 529,
+    "min_description_length": 419,
+    "avg_description_length": 454.6,
+    "embedding_file_size_mb": 0.07281017303466797
   }
 }

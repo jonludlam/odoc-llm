@@ -1,469 +1,445 @@
 {
   "package": "goblint-cil",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 56,
-  "creation_timestamp": "2025-07-15T23:18:06.697796",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 53,
+  "creation_timestamp": "2025-08-15T15:16:25.538616",
   "modules": [
-    {
-      "module_path": "Ptranal",
-      "library": "goblint-cil.pta",
-      "description": "This module provides pointer analysis operations for resolving variable relationships in C code, focusing on aliasing and flow analysis through abstract location modeling. It works with CIL AST elements like `varinfo`, `lval`, and `exp` to compute points-to sets, perform may-alias checks, and map variables to abstract memory locations using constraint-based type resolution. Specific applications include static analysis for optimizing compiler transformations, detecting pointer-related bugs, and enabling interprocedural dataflow analysis by tracking potential memory references and type-constrained value flows.",
-      "description_length": 616,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Dataslicing",
       "library": "goblint-cil.dataslicing",
-      "description": "This module implements precise data slicing for CIL-based programs, providing operations to extract program slices based on data dependencies. It works with CIL expressions, statements, and global variables to identify and isolate relevant code fragments. Concrete use cases include optimizing program analysis by reducing code to only what affects specific variables or tracking information flow in security analyses.",
-      "description_length": 418,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Syntacticsearch.ResultPrinter",
-      "library": "goblint-cil.syntacticsearch",
-      "description": "This module provides functions to process and display results from syntactic queries. It includes checking list membership, calculating column widths for formatted output, and printing query results with aligned columns. It works with lists of result tuples containing file names, locations, matched code, and line numbers, alongside query configurations. Concrete use cases include formatting and displaying matched code snippets with their source locations in a terminal-friendly manner.",
-      "description_length": 489,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Syntacticsearch.CodeQuery",
-      "library": "goblint-cil.syntacticsearch",
-      "description": "This module serializes and deserializes structured code queries to and from JSON, enabling programmatic construction and manipulation of syntactic search criteria. It operates on types representing query components\u2014such as selections, code element kinds, structural patterns, and constraints\u2014alongside records that map these components to JSON fields for storage or API interactions. Typical use cases include building query interfaces for code analysis tools, persisting search configurations, or processing syntactic patterns across codebases using JSON-based query definitions.",
-      "description_length": 580,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Syntacticsearch.FuncDatatype",
-      "library": "goblint-cil.syntacticsearch",
-      "description": "This module provides functions for searching and analyzing C code structures in GoblintCil, such as locating function definitions, variable uses, and type variable occurrences within a file or specific scopes. It operates on CIL data types like `file`, `global`, `varinfo`, and `fundec`, and returns detailed location and context information for matches. Concrete use cases include identifying where a function is defined, finding all uses of a variable in conditionals or non-conditionals, and tracking type variable usage across functions.",
-      "description_length": 541,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Syntacticsearch.FuncVar",
-      "library": "goblint-cil.syntacticsearch",
-      "description": "This module facilitates syntactic analysis and transformation of CIL AST structures by enabling precise searches for variable and function usages, declarations, and definitions. It operates on CIL representations like expressions, statements, functions, and global lists, returning detailed metadata (e.g., variable names, locations, line numbers) with support for context-specific filtering (e.g., conditional contexts, read/write operations). Key use cases include identifying variable dependencies, removing redundant elements, and scoping analysis to specific functions or global contexts for tasks like code optimization or static analysis.",
-      "description_length": 645,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Syntacticsearch.QueryMapping",
-      "library": "goblint-cil.syntacticsearch",
-      "description": "This module resolves syntactic queries in CIL-processed code by analyzing variable, datatype, and function elements across global and scoped contexts. It operates on `CodeQuery.query` and `GoblintCil.file` structures, producing filtered, intersected, or deduplicated lists of matches that include identifiers, source locations, and metadata. Typical applications include identifying variable declarations, tracking function definitions, and mapping uses of symbols within conditionals or specific scopes.",
-      "description_length": 504,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Syntacticsearch",
-      "library": "goblint-cil.syntacticsearch",
-      "description": "This module processes, queries, and transforms CIL-based code structures to support syntactic searches across variables, functions, and types, with context-aware filtering and location tracking. It defines operations over CIL data types like `file`, `fundec`, and `varinfo`, and structured query formats that can be serialized to JSON, enabling both programmatic and terminal-driven analysis. Users can locate function definitions, trace variable uses in specific contexts, format and display results with aligned columns, or construct and persist complex queries via JSON. Example tasks include extracting all conditional uses of a variable, generating human-readable reports of matched code snippets, or building tool interfaces that manipulate syntactic search criteria.",
-      "description_length": 773,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Liveness.Usedef.VS",
-      "library": "goblint-cil.liveness",
-      "description": "This component implements set operations (union, intersection, difference) and collection manipulations (iteration, filtering, mapping) for variable sets, with utilities to safely extract elements or convert between sequences and sets. It operates on `varinfo` elements, facilitating liveness analysis and use-def chain construction to track variable interactions during program execution. The design supports dataflow analysis workflows through sequence interoperability and ordered traversal patterns.",
-      "description_length": 503,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Liveness.LiveFlow",
-      "library": "goblint-cil.liveness",
-      "description": "This module tracks variable liveness information through control flow graphs using sets of variables (`VS.t`). It provides operations to combine liveness data at statement starts and function exits, process statements and instructions to update liveness state, and filter statements based on liveness. Concrete use cases include determining which variables are live at each point in a function for optimization or analysis purposes.",
-      "description_length": 432,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Liveness.L",
-      "library": "goblint-cil.liveness",
-      "description": "Performs liveness analysis on a list of CIL statements, determining which variables are live at each point in the code. Works directly with CIL statements and leverages the analysis to optimize code by identifying dead variables. Useful in static analysis tools for detecting unused variables and optimizing register allocation.",
-      "description_length": 328,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Liveness.Usedef",
-      "library": "goblint-cil.liveness",
-      "description": "This module analyzes variable usage and definitions in CIL code, tracking liveness information across expressions, instructions, and statements. It identifies which variables are used or defined at each point in the program and supports customization of analysis through global references that control handling of function calls, reads, address-of operations, and type annotations. The set operations submodule provides efficient manipulation of variable sets, enabling union, intersection, and difference operations, along with iteration, filtering, and mapping over `varinfo` elements. Together, these components support static analysis tasks such as dead code elimination, use-def chain construction, and alias analysis through precise variable tracking and set-based dataflow workflows.",
-      "description_length": 790,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Liveness",
-      "library": "goblint-cil.liveness",
-      "description": "This component performs flow-sensitive liveness analysis on CIL code, tracking variable usage and definitions across statements, expressions, and control flow graphs. It uses variable sets (`VS.t`) to represent liveness information, combining data at statement boundaries and function exits while supporting customizable predicates for filtering and processing. The analysis enables dead variable detection, use-def chain construction, and register allocation optimization, with direct operations on CIL labels, files, and instructions. Submodules provide set manipulation, traversal strategies, and expression-level tracking, supporting static analysis tasks like alias analysis and dead code elimination through precise variable tracking and dataflow workflows.",
-      "description_length": 763,
-      "index": 12,
+      "description": "This module implements precise data slicing for CIL-based program representations, focusing on extracting relevant data flow subsets. It operates on CIL expressions, statements, and control flow graphs to identify dependencies and propagate values through program paths. Concrete use cases include optimizing static analysis precision by reducing irrelevant code paths and enabling targeted analysis of specific variables or expressions.",
+      "description_length": 437,
+      "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Makecfg.MakeCFG",
       "library": "goblint-cil.makecfg",
-      "description": "This module analyzes CIL instruction lists and modifies CIL files to support control flow graph (CFG) construction. It provides operations to detect function calls in instructions, mark end nodes of basic blocks, and ensure global uniqueness of variable IDs. These functions are used during CFG generation to handle branching, function call detection, and variable scoping in C programs.",
-      "description_length": 387,
-      "index": 13,
+      "description": "Performs control flow graph (CFG) transformations and analyses on CIL-processed code. It identifies instructions containing function calls, modifies basic blocks to end at calls, ensures global uniqueness of variable IDs, and provides a CIL feature for integrating CFG construction into analysis pipelines. Works directly with CIL instructions, files, and basic blocks to support static analysis tasks like call graph construction or interprocedural analysis.",
+      "description_length": 459,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Makecfg",
       "library": "goblint-cil.makecfg",
-      "description": "This module processes CIL instruction lists to enable control flow graph construction by identifying function calls, marking basic block boundaries, and ensuring unique variable identifiers. It operates on CIL instructions and variables, providing transformations and analyses needed for accurate CFG generation. Example uses include detecting control flow branches, handling function call edges, and resolving variable scoping across C program constructs.",
-      "description_length": 456,
-      "index": 14,
+      "description": "Performs control flow graph transformations on CIL code, splitting basic blocks at function calls and ensuring unique variable IDs. Works with CIL instructions, files, and basic blocks to support static analysis tasks such as call graph construction. Provides a CIL feature for integrating CFG construction into analysis pipelines.",
+      "description_length": 331,
+      "index": 2,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Liveness.Usedef.VS",
+      "library": "goblint-cil.liveness",
+      "description": "This module implements a set structure for managing collections of CIL variable information, supporting operations like union, intersection, element queries, and subset comparisons. It provides functional traversal, transformation, and sequence conversion utilities (e.g., `map`, `filter`, `to_seq`) to enable efficient analysis of variable liveness in compiler optimizations such as dead code elimination and register allocation.",
+      "description_length": 430,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Liveness.LiveFlow",
+      "library": "goblint-cil.liveness",
+      "description": "This module tracks variable liveness across control flow in a program. It uses a set-based representation (`VS.t`) to model live variables at each statement and function exit, and provides operations to combine and propagate liveness information through statements and instructions. Key use cases include computing live variables at specific program points and merging liveness data from multiple control flow paths.",
+      "description_length": 416,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Liveness.Usedef",
+      "library": "goblint-cil.liveness",
+      "description": "This module tracks variable usage and definitions in CIL expressions and statements using a custom set structure. It provides functions to compute liveness information for expressions, instructions, and statement kinds, supporting compiler analyses like dead code elimination and register allocation. Key operations include `computeUseExp`, `computeUseDefInstr`, and `computeUseDefStmtKind`, which return variable sets indicating uses and definitions based on configurable policies such as `considerVariableUse` and `considerVariableDef`.",
+      "description_length": 538,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Liveness.L",
+      "library": "goblint-cil.liveness",
+      "description": "Performs liveness analysis on a list of CIL statements, determining which variables are live at each point in the code. Works directly with CIL statements and their associated control flow structures. Useful for optimizing dead code removal and improving static analysis precision in the Goblint framework.",
+      "description_length": 306,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Liveness",
+      "library": "goblint-cil.liveness",
+      "description": "This module performs liveness analysis by tracking variable definitions and uses, computing live variables at program points, and propagating liveness information through control flow graphs. It operates on CIL statements and instructions, enabling optimizations such as dead code elimination and register allocation while allowing selective exclusion of instructions or calls. Additional utilities analyze and print liveness data for CIL files, supporting debugging and verification of label-level liveness properties.",
+      "description_length": 519,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ptranal",
+      "library": "goblint-cil.pta",
+      "description": "This module enables static analysis of pointers and types through operations that resolve expressions to definitions, map lvalues to abstract locations, and determine aliasing relationships via points-to sets. It works with CIL AST components such as variables, expressions, and function declarations, alongside abstract representations of memory locations. Its functionality supports tasks like alias analysis, points-to computation, and debugging of static analysis results in low-level code.",
+      "description_length": 494,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Zrapp",
       "library": "goblint-cil.zrapp",
-      "description": "This module manages configuration flags and provides a CIL printer for instrumenting and analyzing C code. It includes functions for pretty-printing expressions and a feature object for integrating with the Goblint analysis framework. Concrete use cases include enabling debug output, eliminating temporary variables, and printing CIL structures during static analysis.",
-      "description_length": 369,
+      "description": "This module configures analysis behavior through mutable flags like `debug` and `deputyAttrs`, which control logging and attribute handling. It provides a CIL printer for formatting expressions and a `pp_exp` function for pretty-printing expressions within a function context. It is used to customize output and analysis phases during CIL processing, such as enabling temporary elimination or debugging information.",
+      "description_length": 415,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Syntacticsearch.QueryMapping",
+      "library": "goblint-cil.syntacticsearch",
+      "description": "This module processes syntactic queries on CIL-derived abstract syntax trees to resolve variable and function-related code patterns. It operates on CIL files and structured result lists containing identifiers, locations, and metadata, offering operations to filter, combine, and deduplicate matches based on syntactic context\u2014such as conditional function uses or variable declarations. Typical applications include analyzing C codebases for definition sites, usage occurrences, and function return points.",
+      "description_length": 505,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Syntacticsearch.ResultPrinter",
+      "library": "goblint-cil.syntacticsearch",
+      "description": "This module provides functions to process and display results from syntactic queries. It handles lists of result entries containing file names, locations, code snippets, and line numbers, with operations to determine column widths for formatting and to generate output strings. It is used to print structured query results in a readable text format, such as when displaying matches from a code search.",
+      "description_length": 401,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Syntacticsearch.FuncDatatype",
+      "library": "goblint-cil.syntacticsearch",
+      "description": "This module provides functions for searching and locating definitions and uses of variables, types, and functions within CIL-processed C code. It operates on CIL data structures such as `file`, `global`, `varinfo`, and `fundec`, and returns detailed location information including file names, line numbers, and context. Specific use cases include identifying where a function is defined, finding all uses of a variable in conditional or non-conditional contexts, and locating type variable occurrences across translation units.",
+      "description_length": 527,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Syntacticsearch.FuncFunction",
+      "library": "goblint-cil.syntacticsearch",
+      "description": "This module provides operations for analyzing and transforming C code structures through AST traversal, focusing on function definitions, variable usage tracking, and control-flow analysis. It works with CIL/GoblintCil AST elements like `fundec`, `varinfo`, and `global`, alongside string and location data, to enable tasks such as identifying function call sites, extracting variable dependencies in conditional contexts, and generating metadata for static analysis. Specific capabilities include list deduplication, return statement detection, and mapping functions over global declarations to support code transformation workflows.",
+      "description_length": 634,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Syntacticsearch.FuncVar",
+      "library": "goblint-cil.syntacticsearch",
+      "description": "This module enables syntactic analysis of C code by searching for variable and function declarations, definitions, and usages within a GoblintCil AST. It processes CIL files to extract detailed metadata about variable occurrences in expressions, conditionals, and function scopes, supporting tasks like static analysis, code navigation, and transformation through scoped searches and precise location tracking. Operations include identifying variable uses, locating global or intra-function definitions, and filtering matches by name, line, or context to return structured results with associated code positions and scopes.",
+      "description_length": 623,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Syntacticsearch",
+      "library": "goblint-cil.syntacticsearch",
+      "description": "This module performs syntactic analysis and querying of C code using the GoblintCil AST, enabling precise searches for variables, functions, and types across files and scopes. It provides targeted operations for locating definitions, uses, and declarations with contextual filtering, returning structured results that include file names, line numbers, and code snippets. Concrete use cases include identifying where a specific function is defined, finding all conditional uses of a variable, and extracting variable dependencies within a function body.",
+      "description_length": 552,
       "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "GoblintCil.Dataflow.BackwardsTransfer",
-      "library": "goblint-cil",
-      "description": "Implements backward dataflow analysis by defining transfer functions for statements and instructions, combining data from successors to predecessors. Operates on control-flow graphs with block-level data represented by type `t`, using hash tables to track state at statement starts and function exits. Used to analyze CIL code by propagating constraints or properties from function exits toward entry points, refining state based on instruction effects in reverse execution order.",
-      "description_length": 480,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "GoblintCil.Dataflow.BackwardsDataFlow",
       "library": "goblint-cil",
-      "description": "Implements backward data flow analysis over CIL control-flow graphs by propagating data from given sink statements toward their predecessors. It operates on CIL statements and uses a user-defined module `T` to define transfer functions and data flow lattice operations. This module is useful for analyses like reaching definitions or liveness analysis where information flows against the control-flow direction.",
-      "description_length": 411,
+      "description": "Implements backward data flow analysis over CIL control-flow graphs by propagating state from sink statements to predecessors. It operates on CIL statements and uses a user-defined module `T` to represent and merge data flow facts. This module is used to compute reaching definitions, liveness, or other reverse-direction analyses directly on CIL code after CFG construction.",
+      "description_length": 375,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Pretty.MakeMapPrinter",
+      "library": "goblint-cil",
+      "description": "This module formats maps using customizable pretty-printing functions. It provides `docMap` for converting map entries into formatted documents with a specified separator and `d_map` for defining custom formatting of key-value pairs, including delimiters and layout. It works with any map type adhering to the `Map` module signature, allowing structured and readable output of key-value data structures.",
+      "description_length": 403,
       "index": 17,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "GoblintCil.Dataflow.ForwardsDataFlow",
       "library": "goblint-cil",
-      "description": "Implements forward data flow analysis over CIL control-flow graphs by propagating state through statements starting from provided initial points. It modifies `T.stmtStartData` entries to capture data flow facts at the beginning of each statement. Useful for analyses like constant propagation or live variable detection where pre-initialization of statement start states is required.",
-      "description_length": 383,
+      "description": "Implements forward data flow analysis over CIL control-flow graphs by propagating abstract values through statements. It computes data flow information starting from initial statements, updating `T.stmtStartData` with the results. This module is used to analyze properties like variable liveness, constant propagation, or interval analysis in C programs.",
+      "description_length": 354,
       "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Pretty.MakeMapPrinter",
-      "library": "goblint-cil",
-      "description": "This module formats maps using customizable pretty-printing functions. It constructs `Pretty.doc` objects for map values, supporting key-value delimiters, separators, and indentation. It is used to generate readable string representations of maps with alignment and layout control.",
-      "description_length": 281,
-      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil.Pretty.MakeSetPrinter",
       "library": "goblint-cil",
-      "description": "This module formats sets using the pretty-printing combinators, providing two functions: `docSet` for formatting set elements with a custom printer and optional separator, and `d_set` for formatting sets with a fixed element printer and label. It operates on any module matching the `Set` signature, producing `Pretty.doc` values that can be rendered to strings or output streams. Concrete use cases include pretty-printing sets of expressions, variables, or constraints in static analysis reports.",
-      "description_length": 498,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Dataflow.ForwardsTransfer",
-      "library": "goblint-cil",
-      "description": "This module implements a forwards data flow analysis framework for CIL code, providing operations to propagate analysis states through control flow graphs. It defines transfer functions for instructions, statements, and branch guards, and manages data state transformations using deep copies and hash tables indexed by statement IDs. Concrete use cases include tracking variable values, liveness, or constant propagation during static analysis of C programs.",
-      "description_length": 458,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Expcompare",
-      "library": "goblint-cil",
-      "description": "This module provides functions for comparing expressions, lvalues, types, and attributes with varying levels of strictness and preprocessing. It supports operations like cast stripping, deep comparison, and volatile type checking, working directly with CIL expressions, types, lvalues, offsets, and attributes. Concrete use cases include determining expression equivalence during static analysis, normalizing expressions for comparison, and validating type compatibility while ignoring or preserving specific attributes.",
-      "description_length": 520,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Cabs2cil",
-      "library": "goblint-cil",
-      "description": "This module translates CABS (C Abstract Binding Syntax) into CIL (C Intermediate Language) by providing core conversion routines, transformation control flags, and type handling customization hooks. It operates on CIL expressions and types, managing variables, environments, and implicit casts during translation, with support for arithmetic type conversions and binary operations. The functionality is particularly useful for static analysis tools requiring precise C code modeling, such as Goblint, where fine-grained control over evaluation order, warning generation, and code duplication is necessary.",
-      "description_length": 605,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Feature",
-      "library": "goblint-cil",
-      "description": "This module manages extensible features that can be registered, enabled, and executed on CIL files. It provides operations to define custom transformations with command-line options, enable or disable them by name, and apply them to CIL files. Use cases include adding analysis passes or code transformations that integrate with CIL's command-line interface and processing pipeline.",
-      "description_length": 382,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "GoblintCil.Whitetrack",
-      "library": "goblint-cil",
-      "description": "Handles lexical processing and output management for CIL-based analyses. It provides functions for wrapping lexers, setting and printing whitespace, managing output channels, and tracking locations in CABS syntax trees. Useful for custom parsing and pretty-printing C code during static analysis.",
-      "description_length": 296,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Check",
-      "library": "goblint-cil",
-      "description": "This module performs semantic checks on CIL files and expressions to validate correctness. It supports operations like `checkFile` for validating entire CIL files with customizable flags and `checkStandaloneExp` for verifying standalone expressions in the context of given variables. It works with CIL intermediate representations such as `file`, `exp`, and `varinfo`, and is used to enforce constraints during analysis, such as ensuring valid expressions or filtering irrelevant instructions.",
-      "description_length": 493,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Cfg",
-      "library": "goblint-cil",
-      "description": "This module computes and manipulates control-flow graphs (CFGs) for CIL functions and files. It fills in predecessor and successor statement lists for each node, assigns unique statement IDs, and provides functions to print CFGs in DOT format. It is used to prepare CIL code for dataflow analysis and other CFG-dependent analyses.",
-      "description_length": 330,
-      "index": 27,
+      "description": "This module formats sets using customizable element printers. It provides `docSet` and `d_set` to convert sets into pretty-printed documents with specified separators and element formatting. Use it to display sets of CIL types like variables, types, or expressions in a readable layout.",
+      "description_length": 286,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil.Errormsg",
       "library": "goblint-cil",
-      "description": "The module provides error and log reporting through colored output, configurable output channels, and global flags for verbosity and color control. It operates on formatted strings, source location data, and lex buffers to support parsing initialization, error handling during compilation, and context-aware logging with positional tracking. Key use cases include managing diagnostic messages with hierarchical severity levels, correlating errors to source code positions, and instrumenting parser workflows with location-aware buffers.",
-      "description_length": 536,
-      "index": 28,
+      "description": "This module offers utilities for diagnostic reporting, context-aware logging, and location tracking during parsing, with operations to control output behavior (e.g., verbosity, color) and halt execution on critical errors. It works with format strings for message construction, lexing buffers and source locations for parsing-related diagnostics, and maintains global state to track error counts and warning flags. These tools are particularly useful in static analysis or compiler development for managing error contexts, correlating diagnostics with source code positions, and handling input parsing with precise error attribution.",
+      "description_length": 633,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "GoblintCil.Dominators",
+      "module_path": "GoblintCil.Cabshelper",
       "library": "goblint-cil",
-      "description": "This module computes dominator relationships and structures within control flow graphs of CIL functions. It provides functions to calculate immediate dominators, build dominator trees, check domination relations, and identify natural loops using back edges. The primary data structures are control flow statements and hash tables mapping statement IDs to dominator information, along with tree structures representing dominator hierarchies. Concrete use cases include analyzing control flow dependencies, optimizing code by identifying loop structures, and supporting static analysis tasks that require precise dominator information.",
-      "description_length": 633,
-      "index": 29,
+      "description": "Handles Cabs location tracking and manipulation, including location creation, joining, and string conversion. Provides utilities for inspecting Cabs declarations and statements, such as checking static, extern, inline, and typedef specifiers, and retrieving definition and statement locations. Supports processing string literals and digits for analysis purposes.",
+      "description_length": 363,
+      "index": 21,
       "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil.Cil",
       "library": "goblint-cil",
-      "description": "This module provides comprehensive manipulation of C intermediate representation components, focusing on abstract syntax tree transformations, type system operations, and control flow analysis. It works with structured data like function definitions, global variables, type descriptors, and low-level code elements such as expressions, statements, and memory offsets, supporting tasks like static analysis and compiler optimizations. Key capabilities include type construction/inspection, CFG preparation, attribute management, and customizable pretty-printing for code generation or debugging, particularly useful in program analysis frameworks and transformation passes.",
-      "description_length": 672,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Mergecil",
-      "library": "goblint-cil",
-      "description": "Merges multiple CIL files into a single file, resolving conflicts according to global flags. It operates on CIL file structures, handling inline function definitions and conflict resolution during the merge process. Used when combining analysis results from separate compilation units into a unified representation for whole-program analysis.",
-      "description_length": 342,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Util",
-      "library": "goblint-cil",
-      "description": "This module provides efficient list manipulation functions like tail-recursive append and optimized map, along with utilities for option handling, filtering with mapping, and safe value extraction. It supports common operations on lists and hash tables, including memoization and structural equality checks that handle cyclic data. Concrete use cases include processing abstract syntax trees, optimizing repeated computations, and transforming or filtering structured data during analysis tasks.",
-      "description_length": 495,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Frontc",
-      "library": "goblint-cil",
-      "description": "This module parses C source code into CIL (C Intermediate Language) representations, providing functions to convert C files or expressions into structured CIL or Cabs ASTs. It handles low-level parsing tasks, including preprocessing and error handling, and returns parsed CIL files or abstract syntax trees. Use it to analyze or transform C code programmatically, such as in static analysis tools or compilers targeting CIL.",
-      "description_length": 424,
-      "index": 33,
+      "description": "This module provides comprehensive utilities for manipulating C Intermediate Language (CIL) abstract syntax trees (ASTs), including operations for type inspection and construction, control flow graph (CFG) generation, serialization of CIL files, and transformation of code structures like functions, variables, and expressions. It operates on core CIL data structures such as `file`, `fundec`, `typ`, `stmt`, `exp`, and `lval`, enabling tasks like type unrolling, attribute management, constant folding, and safe lvalue manipulation. Specific use cases include static analysis tooling, compiler optimizations, code generation, and debugging workflows that require precise AST traversal, modification, or pretty-printing with architecture-dependent type handling.",
+      "description_length": 762,
+      "index": 22,
       "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil.Machdepenv",
       "library": "goblint-cil",
-      "description": "Handles parsing and retrieval of machine-dependent configuration values from string-based input. It provides functions to extract specific types like integers, booleans, and strings from a hash table representation of key-value pairs. Commonly used to process command-line arguments or configuration files for setting up architecture-specific parameters such as word size or endianness.",
-      "description_length": 386,
-      "index": 34,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "GoblintCil.Alpha",
-      "library": "goblint-cil",
-      "description": "This module implements ALPHA conversion for name mangling during CIL processing, primarily used to generate unique variable or label names. It provides operations to create and track unique name suffixes using a hash table, register existing names to avoid collisions, and undo prior name changes. Concrete use cases include ensuring fresh variable names during code transformations like inlining or loop unrolling.",
-      "description_length": 415,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Cprint",
-      "library": "goblint-cil",
-      "description": "This module combines stateful text formatting with C-specific AST printing, offering operations to manage indentation levels, line breaks, and spacing through mutable global variables, while also rendering structured C declarations, types, and expressions. It works with strings, lists, and Cabs AST nodes such as specifiers, field groups, and enum items, enabling use cases like generating human-readable C code from abstract syntax trees or formatting complex type definitions with precise layout control. The integration of low-level layout primitives and high-level C syntax printers supports customizable output generation for compiler tooling or static analysis visualizations.",
-      "description_length": 683,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Cabsvisit",
-      "library": "goblint-cil",
-      "description": "This module enables traversal and transformation of CABS (C Abstract Syntax) structures by defining visitor functions for key elements like types, declarations, statements, and expressions. It operates on CIL's abstract syntax tree nodes, allowing modifications during traversal while preserving context such as variable scoping and function definitions. Concrete use cases include rewriting C code during analysis, instrumenting functions, or extracting specific constructs like type definitions or control flow elements.",
-      "description_length": 522,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.RmUnused",
-      "library": "goblint-cil",
-      "description": "Removes unused global variables and functions from a CIL file based on configurable root filters. It operates on CIL's `global` and `file` structures, using predicates to determine which globals to retain. This module is used during static analysis to eliminate dead code, reducing the program's size for more efficient analysis and transformation.",
-      "description_length": 348,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Inthash",
-      "library": "goblint-cil",
-      "description": "This module implements a hash table that maps integers to arbitrary values, supporting efficient insertion, lookup, and removal operations. It provides standard imperative hash table functions such as `add`, `find`, `remove`, and `mem`, along with higher-order functions like `iter` and `fold` for traversing key-value pairs. Concrete use cases include tracking integer-indexed data during CIL analysis, such as variable bindings or expression evaluations.",
-      "description_length": 456,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Patch",
-      "library": "goblint-cil",
-      "description": "Performs structural comparison between two Cabs ASTs, identifying and merging differences from the second file into the first. Works with Cabs AST structures to align and combine top-level declarations. Useful for merging preprocessed C files while preserving structural equivalence.",
-      "description_length": 283,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Cabs",
-      "library": "goblint-cil",
-      "description": "This module defines core data types and structures for representing C abstract syntax trees, including location information (`cabsloc`) and type specifiers (`typeSpecifier`). It supports parsing and manipulating C language constructs such as structs, unions, enums, and type expressions. Concrete use cases include building and analyzing C code representations during static analysis or transformation tasks.",
-      "description_length": 408,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Dataflow",
-      "library": "goblint-cil",
-      "description": "This module provides a framework for forward and backward data flow analysis over CIL control-flow graphs, enabling analyses such as liveness, reaching definitions, and constant propagation by defining transfer functions and lattice operations. It operates on CIL functions and statements, using hash tables to track state at statement starts, function entries, and exits, with support for deep copies and statement-level data transformations. The child modules refine this functionality by implementing specific directional analyses: backward modules propagate constraints from exits to entry points or from sinks to predecessors, while forward modules track state changes from initial points through the CFG. Together, they allow precise computation of data flow facts at various program points using customizable analysis logic.",
-      "description_length": 831,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Cilint",
-      "library": "goblint-cil",
-      "description": "Arbitrary-precision integers (`cilint`) support arithmetic operations with customizable rounding modes, bitwise manipulations (NOT, AND, OR, XOR, shifts), and truncation functions for signed/unsigned n-bit integers, which explicitly indicate precision loss. These operations are tailored for compiler intermediate representations requiring precise low-level integer handling, such as static analysis and code generation. Conversion utilities to and from fixed-size integers, strings, and comparisons with overflow detection enable robust integration with systems demanding exact arithmetic semantics.",
-      "description_length": 600,
-      "index": 43,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "GoblintCil.Cillower",
-      "library": "goblint-cil",
-      "description": "Performs lowering transformations on CIL code, specifically replacing enumeration constants with their corresponding integer values. Works directly with CIL's abstract syntax tree and type definitions. Useful for simplifying C code representations during static analysis or compilation stages.",
-      "description_length": 293,
-      "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Machdep",
-      "library": "goblint-cil",
-      "description": "This module defines a `mach` record type that captures machine-specific properties such as type sizes, alignment requirements, and platform conventions. It provides predefined instances like `gcc`, `gcc32`, and `gcc64` to represent common machine configurations, and `theMachine` serves as the default reference for analysis. Use this module to configure or query target architecture details during CIL-based analysis or transformation tasks.",
-      "description_length": 442,
-      "index": 45,
+      "description": "This module processes and interprets command-line arguments and configuration settings during CIL preprocessing. It provides functions to extract specific values\u2014strings, integers, booleans\u2014from a hash table based on keys and positional indices, with support for error handling and string normalization. Typical use cases include parsing model files, retrieving architecture-dependent parameters like `sizeof` or `alignof`, and handling command-line flags with typed values.",
+      "description_length": 474,
+      "index": 23,
       "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil.Pretty",
       "library": "goblint-cil",
-      "description": "This module enables structured document construction and layout-aware formatting through combinators for alignment, indentation, and conditional line breaks, producing human-readable representations of hierarchical data. It operates on document descriptions (`doc` values) that encode content and layout constraints, supporting nested structures like lists, arrays, and options while allowing customization of type-specific rendering logic. The child modules extend this functionality to container types, generating `doc` objects for maps with customizable key-value formatting and for sets with configurable element printers and separators. Typical applications include pretty-printing abstract syntax trees, configuration dumps, or analysis results where readable, width-constrained textual output with controlled nesting and truncation is required.",
-      "description_length": 851,
-      "index": 46,
-      "embedding_norm": 1.0000001192092896
+      "description": "This module enables the construction and manipulation of structured documents using layout primitives like indentation and line breaks, along with combinators for composing complex formats. It supports pretty-printing for lists, arrays, maps, sets, and numeric types, with customizable separators and output targets such as strings or channels. Typical use cases include generating human-readable representations of CIL data structures for debugging, documentation, or analysis, while configuration flags allow tuning performance and formatting behavior like automatic indentation or line counting.",
+      "description_length": 598,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Cabs",
+      "library": "goblint-cil",
+      "description": "This module defines core data types and structures for representing C abstract syntax trees, including location information (`cabsloc`) and type specifiers (`typeSpecifier`) with detailed variants for primitive types, structs, unions, enums, and type queries. It supports parsing and manipulation of C code by providing precise type and expression representations. Concrete use cases include building and analyzing C AST nodes for static analysis tools or compilers.",
+      "description_length": 466,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Cabsvisit",
+      "library": "goblint-cil",
+      "description": "This module enables traversal and transformation of CABS (C Abstract Syntax) structures by defining visitor functions for key elements like types, declarations, statements, and expressions. It operates on CIL's intermediate representation of C code, supporting precise modifications during analysis or transformation passes. Concrete use cases include rewriting specific expressions, collecting or altering variable references, and adjusting type specifiers during semantic analysis.",
+      "description_length": 483,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Alpha",
+      "library": "goblint-cil",
+      "description": "This module manages name alpha conversion during CIL processing, primarily handling fresh name generation and registration to avoid collisions. It operates on hashtables mapping name prefixes to alpha table data, and uses undo lists to track and revert changes. Functions like `newAlphaName` generate unique names with numeric suffixes, while `registerAlphaName` ensures existing names are reserved, and `undoAlphaChanges` rolls back prior modifications.",
+      "description_length": 454,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Dataflow",
+      "library": "goblint-cil",
+      "description": "Implements forward and backward data flow analysis over CIL control-flow graphs by propagating abstract values through statements. It works with CIL statements and user-defined data structures to track properties like variable liveness, constant propagation, and reaching definitions. Use to compute analysis results starting from initial or sink statements, leveraging the control-flow graph built via `Cfg.computeFileCFG`.",
+      "description_length": 424,
+      "index": 28,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil.Stats",
       "library": "goblint-cil",
-      "description": "Tracks timing statistics for function executions using hierarchical tasks, supporting both single and repeated timing measurements. It works with string-labeled functions, accumulating time and optionally counting invocations, with results organized in a tree structure of subtasks. Useful for profiling analysis phases in a CIL-based static analysis tool, identifying performance bottlenecks in specific transformation or inspection routines.",
-      "description_length": 443,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Trace",
-      "library": "goblint-cil",
-      "description": "This module controls conditional tracing within the CIL API, enabling selective logging of subsystems and structured indentation for readability. It works with strings to identify subsystems and Pretty.doc values for formatted output. Concrete use cases include debugging specific parts of CIL processing by activating traces for subsystems like \"cil\" or \"analysis\" and formatting nested trace outputs with indentation.",
-      "description_length": 419,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.Escape",
-      "library": "goblint-cil",
-      "description": "This module provides functions to escape characters and strings according to C lexical rules, handling both standard and wide character types. It operates on `char`, `string`, `wchar`, and `wstring` data types, converting them into their escaped string representations. Concrete use cases include generating valid C string literals from arbitrary character sequences and properly escaping wide characters for output in C-compatible formats.",
-      "description_length": 440,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "GoblintCil.GrowArray",
-      "library": "goblint-cil",
-      "description": "This module implements a dynamic array structure that supports indexed access, in-place modification, and iteration over elements. It handles operations like creating arrays with default values, retrieving and setting elements, clearing contents, and copying arrays, including deep copies with custom element duplication. It is used for managing variable-length collections of CIL constructs where elements may need to be lazily regenerated or compared during analysis phases.",
-      "description_length": 476,
-      "index": 50,
+      "description": "Tracks timing statistics for function executions using hierarchical timers. It provides functions to measure and accumulate execution times for labeled tasks, with support for repeated runs to average timing results. Useful for profiling performance-critical sections of code during analysis or compilation passes.",
+      "description_length": 314,
+      "index": 29,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "GoblintCil.Cabshelper",
+      "module_path": "GoblintCil.RmUnused",
       "library": "goblint-cil",
-      "description": "Cabshelper manages CABS (C Abstract Syntax) identifiers, locations, and declarations. It provides operations for retrieving and manipulating source code locations, handling static/extern/inline/typedef specifiers, and extracting location information from CABS nodes. This module is used for tracking declaration contexts, managing comment associations, and supporting precise error reporting or analysis based on source locations.",
-      "description_length": 430,
-      "index": 51,
+      "description": "Removes unused CIL globals from a file based on configurable root filters. It operates directly on CIL files and uses rootsFilter functions to determine which globals to retain. This module is used during analysis to eliminate dead code while preserving specified root symbols.",
+      "description_length": 277,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Feature",
+      "library": "goblint-cil",
+      "description": "This module manages extensible features that can be registered, enabled, and executed on CIL files. It provides operations to define custom transformations with command-line options, track their state, and apply them to CIL file structures. Concrete use cases include adding analysis passes or code modifications triggered via command-line flags during CIL processing.",
+      "description_length": 368,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Cillower",
+      "library": "goblint-cil",
+      "description": "Performs CIL lowering passes, including replacing enumeration constants with integer constants using the `lowerEnumVisitor` function. Operates directly on CIL abstract syntax trees. Useful for transforming high-level C constructs into lower-level representations suitable for analysis or compilation.",
+      "description_length": 300,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Cilint",
+      "library": "goblint-cil",
+      "description": "This module provides arbitrary-precision integer values (`cilint`) with arithmetic, bitwise, and shift operations, including explicit truncation functions for signed and unsigned n-bit integers. It supports conversions between `cilint` and native types like `int`, `int64`, `big_int`, and strings, with defined overflow handling and truncation behaviors. These capabilities are critical for static analysis and compiler development, where precise modeling of integer semantics and overflow conditions is required.",
+      "description_length": 513,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Formatcil",
+      "library": "goblint-cil",
+      "description": "Constructs and deconstructs CIL expressions, lvalues, types, instructions, and statements using format strings and argument substitutions. Works with CIL AST nodes like `exp`, `lval`, `typ`, `instr`, and `stmt`, allowing pattern-based creation and analysis of code fragments. Used to generate or parse CIL constructs from string templates with named placeholders, such as building expressions like `%e:x + %e:y` or analyzing existing nodes into their components.",
+      "description_length": 462,
+      "index": 34,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "GoblintCil.Cprint",
+      "library": "goblint-cil",
+      "description": "This component offers utilities for precise textual formatting of C-based abstract syntax trees, managing indentation levels, line breaks, and buffer states during code generation. It operates on CIL intermediate representations, handling declarations, type definitions, structured data (structs/enums), and expression trees while supporting customizable output width and tabulation settings. Its functionality is particularly useful for compiler backends or analysis tools requiring readable C code emission, such as Goblint's internal representation dumps or debugging visualizations.",
+      "description_length": 586,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Dominators",
+      "library": "goblint-cil",
+      "description": "This module computes dominator relationships and structures in control flow graphs. It provides functions to calculate immediate dominators, build dominator trees, check domination between statements, and identify natural loops. The primary data types are control flow statements and trees representing dominator hierarchies, used for analysis and traversal in compiler optimizations.",
+      "description_length": 384,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Cfg",
+      "library": "goblint-cil",
+      "description": "Computes and manipulates control-flow graphs (CFGs) for C functions and files. It fills in predecessor and successor statement lists for each node in the CFG, assigns unique statement IDs, and provides functions to print CFGs in DOT format. Works directly with CIL-processed functions (`fundec`) and files (`file`), enabling analysis tasks like dataflow that depend on CFG structure.",
+      "description_length": 383,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Frontc",
+      "library": "goblint-cil",
+      "description": "This module parses C source files into CIL or Cabs representations, handling preprocessing and error resets. It supports parsing entire files or standalone expressions, returning structured ASTs. Use it to analyze or transform C code programmatically, such as in static analysis tools or compiler extensions.",
+      "description_length": 308,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Mergecil",
+      "library": "goblint-cil",
+      "description": "Merges multiple CIL files into a single file, resolving conflicts according to global flags. It operates on CIL file structures, handling inline function definitions and conflict resolution during the merge process. Useful for combining analysis results from separate translation units into a unified representation.",
+      "description_length": 316,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Util",
+      "library": "goblint-cil",
+      "description": "This module includes optimized list operations like tail-recursive append and efficient mapping, functions for working with options such as extracting values or mapping over optional lists, and utilities for memoization and structural equality checks. It operates on standard data types including lists, options, and hash tables. Concrete use cases include transforming and filtering lists with custom logic, safely unwrapping options, caching function results, and comparing complex or cyclic structures for equality.",
+      "description_length": 518,
+      "index": 40,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "GoblintCil.Inthash",
+      "library": "goblint-cil",
+      "description": "This module implements a hash table that maps integers to arbitrary values, supporting efficient insertion, lookup, and removal operations. It provides standard imperative hash table functions such as `add`, `find`, `remove`, and `mem`, along with higher-order functions like `iter` and `fold` for traversing key-value pairs. Concrete use cases include tracking integer-indexed data during CIL analysis, such as variable identifiers or statement labels, with support for memoization via the `memoize` function.",
+      "description_length": 510,
+      "index": 41,
       "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil.Ciltools",
       "library": "goblint-cil",
-      "description": "This module includes functions for analyzing and manipulating CIL expressions and types, such as checking if an expression is a constant one, determining volatility of types and variables, and converting between OCaml and CIL integer representations. It operates on CIL expressions, types, and variable information, with utilities for handling composite types and comparing expressions safely. Concrete use cases include normalizing CIL code during analysis, ensuring unique identifiers in CIL files, and extracting integer type properties for precise value tracking.",
-      "description_length": 567,
-      "index": 52,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module includes functions for analyzing and manipulating CIL expressions and types, such as checking if an expression is the integer one, determining volatility of types or variables, and converting between OCaml and CIL integer representations. It handles CIL expressions, types, and variable information, with utilities for type inspection, integer unboxing, and attribute checking across composite types. Concrete use cases include normalizing CIL code by ensuring unique variable and struct IDs, comparing expressions safely, and transforming integer literals during static analysis.",
+      "description_length": 592,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Escape",
+      "library": "goblint-cil",
+      "description": "This module provides functions to escape characters and strings according to C lexical rules, specifically handling both standard and wide character types. It operates on `char`, `string`, `wchar`, and `wstring` data types, transforming them into their escaped string representations. Concrete use cases include generating valid C string literals from arbitrary input and correctly formatting wide characters and strings for C code generation or analysis.",
+      "description_length": 455,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Whitetrack",
+      "library": "goblint-cil",
+      "description": "This module tracks and outputs whitespace during parsing, handling `cabsloc` location data to maintain proper formatting. It wraps lexers to capture whitespace, sets final whitespace, and prints strings or lists of strings to an output channel. Concrete use cases include preserving whitespace in C AST transformations and pretty-printing parsed code.",
+      "description_length": 351,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Expcompare",
+      "library": "goblint-cil",
+      "description": "This module provides functions for comparing and normalizing CIL expressions, lvalues, and types, particularly for handling casts and type qualifiers during pointer arithmetic. It supports operations like stripping casts from expressions and offsets, comparing expressions and types with customizable attribute handling, and checking type volatility. Concrete use cases include canonicalizing expressions for equivalence checks, normalizing types during analysis, and simplifying expressions for constraint solving.",
+      "description_length": 515,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Check",
+      "library": "goblint-cil",
+      "description": "This module performs semantic checks on CIL files and expressions to validate correctness. It works with CIL files, expressions, and variables, ensuring structural and contextual integrity. Use cases include verifying that a transformed CIL file adheres to expected semantics or validating standalone expressions in analysis passes.",
+      "description_length": 332,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.GrowArray",
+      "library": "goblint-cil",
+      "description": "This module implements a dynamic array structure that supports indexed access, in-place modification, and iteration over elements. It handles arrays with potentially sparse initialization, tracking both allocated size and the highest initialized index, and allows for controlled growth and resetting. Use cases include managing variable-length collections of CIL constructs like expressions or statements, where elements are frequently added, updated, or traversed in order.",
+      "description_length": 474,
+      "index": 47,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Machdep",
+      "library": "goblint-cil",
+      "description": "This module defines a `mach` record type that specifies machine-dependent properties such as type sizes, alignment requirements, and platform-specific behaviors. It includes predefined configurations like `gcc`, `gcc32`, and `gcc64` for common compiler targets, and a mutable reference `theMachine` to select the active configuration. It is used to configure CIL's behavior for different architectures and compilers during analysis or transformation of C code.",
+      "description_length": 460,
+      "index": 48,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "GoblintCil.Trace",
+      "library": "goblint-cil",
+      "description": "This module provides functions for managing and outputting structured trace messages with subsystem filtering, indentation, and pretty-printing. It works with strings for subsystem identifiers and messages, and `Pretty.doc` for formatted output. Concrete use cases include debugging specific parts of CIL analysis by enabling traces for subsystems like \"analysis\" or \"simplify\", and visualizing nested operations through indented output.",
+      "description_length": 437,
+      "index": 49,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil.Cilutil",
       "library": "goblint-cil",
-      "description": "This module provides functions for analyzing and transforming CIL (C Intermediate Language) code during static analysis. It operates on CIL data structures such as `file`, `fundec`, and `stmt`, enabling tasks like control flow graph construction, variable tracking, and code slicing. Concrete use cases include implementing custom static analysis passes, optimizing intermediate representations, and extracting program properties for verification.",
-      "description_length": 447,
-      "index": 53,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides functions for analyzing and transforming CIL (C Intermediate Language) code during static analysis. It includes operations for processing global variables, checking code properties, and managing analysis stages. Concrete use cases include slicing global variables for optimization, validating code correctness during transformations, and tracking analysis statistics.",
+      "description_length": 388,
+      "index": 50,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "GoblintCil.Formatcil",
+      "module_path": "GoblintCil.Patch",
       "library": "goblint-cil",
-      "description": "This module provides functions to construct and deconstruct CIL expressions, lvalues, types, instructions, and statements using format strings and argument lists. It works with CIL's intermediate representation, allowing concrete manipulation of program elements through pattern-based parsing. Use cases include generating specific CIL code fragments from templates or extracting structured information from existing CIL constructs.",
-      "description_length": 432,
-      "index": 54,
-      "embedding_norm": 0.9999999403953552
+      "description": "Performs structural comparison between two Cabs ASTs, identifying and merging differences from the second file into the first. Works with Cabs AST structures to align and combine code elements like functions, declarations, and statements. Useful for integrating modified C source files while preserving existing analysis context.",
+      "description_length": 329,
+      "index": 51,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "GoblintCil",
       "library": "goblint-cil",
-      "description": "This module provides a comprehensive toolkit for analyzing and transforming C code through CIL (C Intermediate Language) representations. It enables manipulation of abstract syntax trees, type introspection, expression simplification, control flow graph (CFG) construction, and attribute management, supporting structured data like files, functions, statements, and typed expressions. With submodules handling tasks like semantic validation, CFG analysis, dominator computation, and lexical processing, it supports advanced static analysis, code optimization, and transformation workflows. Specific capabilities include constant folding, dead code elimination, liveness analysis, and precise modeling of architecture-dependent types, all integrated with customizable pretty-printing, error reporting, and configuration handling.",
-      "description_length": 828,
-      "index": 55,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides utilities for manipulating CIL abstract syntax trees, control flow graphs, and type systems, with operations for binary serialization, type introspection, constant folding, and code generation. It works with CIL data structures like `file`, `fundec`, `typ`, `exp`, and `stmt`, enabling tasks such as static analysis, compiler optimizations, and semantic transformations. Specific use cases include analyzing C codebases, building analysis tools, optimizing intermediate representations, and handling architecture-dependent type semantics for precise program modeling.",
+      "description_length": 588,
+      "index": 52,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 95,
-    "meaningful_modules": 56,
-    "filtered_empty_modules": 39,
-    "retention_rate": 0.5894736842105263
+    "total_modules_in_package": 93,
+    "meaningful_modules": 53,
+    "filtered_empty_modules": 40,
+    "retention_rate": 0.5698924731182796
   },
   "statistics": {
-    "max_description_length": 851,
-    "min_description_length": 281,
-    "avg_description_length": 497.01785714285717,
-    "embedding_file_size_mb": 0.20383644104003906
+    "max_description_length": 762,
+    "min_description_length": 277,
+    "avg_description_length": 449.47169811320754,
+    "embedding_file_size_mb": 0.7684011459350586
   }
 }

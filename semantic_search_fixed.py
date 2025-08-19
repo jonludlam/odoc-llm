@@ -222,6 +222,10 @@ class SemanticSearchEngine:
             package_descriptions_dir = Path("package-descriptions")
         self.load_package_descriptions(package_descriptions_dir)
         
+        # Load module type information from module-descriptions
+        self.module_type_info = {}
+        self.load_module_type_info()
+        
         logger.info(f"Search engine ready with {len(self.embeddings)} modules")
         
     def load_package_descriptions(self, descriptions_dir: Path) -> None:
@@ -242,6 +246,39 @@ class SemanticSearchEngine:
                 logger.warning(f"Failed to load package description {json_file}: {e}")
                 
         logger.info(f"Loaded {loaded_count} package descriptions")
+    
+    def load_module_type_info(self) -> None:
+        """Load module type information from module-descriptions directory."""
+        descriptions_dir = Path("module-descriptions")
+        if not descriptions_dir.exists():
+            logger.warning(f"Module descriptions directory not found: {descriptions_dir}")
+            return
+            
+        loaded_count = 0
+        module_type_count = 0
+        for json_file in descriptions_dir.glob("*.json"):
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    
+                # Extract module type info from each library
+                for library_data in data.get('libraries', {}).values():
+                    for module_path, module_info in library_data.get('modules', {}).items():
+                        if isinstance(module_info, dict) and 'is_module_type' in module_info:
+                            is_module_type = module_info['is_module_type']
+                            self.module_type_info[module_path] = is_module_type
+                            loaded_count += 1
+                            if is_module_type:
+                                module_type_count += 1
+                        elif isinstance(module_info, str):
+                            # Old format - assume not a module type
+                            self.module_type_info[module_path] = False
+                            loaded_count += 1
+                    
+            except Exception as e:
+                logger.warning(f"Failed to load module type info from {json_file}: {e}")
+                
+        logger.info(f"Loaded module type info for {loaded_count} modules ({module_type_count} module types)")
     
     def calculate_package_boost(self, query_embedding: np.ndarray, package_names: List[str]) -> Dict[str, float]:
         """Calculate package description similarity boost for modules using pre-computed embeddings."""
@@ -326,18 +363,25 @@ class SemanticSearchEngine:
             package_boost_weight * boost_scores
         )
         
-        # Get top-k indices
-        top_indices = np.argsort(combined_scores)[-top_k:][::-1]
+        # Get more results initially to account for filtering (estimate ~10% module types)
+        initial_k = min(len(self.metadata), max(top_k * 2, 50))
+        top_indices = np.argsort(combined_scores)[-initial_k:][::-1]
         
-        # Build results
+        # Build results, filtering out module types
         results = []
         for idx in top_indices:
             module_info = self.metadata[idx]
+            module_path = module_info['module_path']
             package_name = module_info['package']
+            
+            # Skip module types
+            is_module_type = self.module_type_info.get(module_path, False)
+            if is_module_type:
+                continue
             
             result = {
                 'package': package_name,
-                'module_path': module_info['module_path'],
+                'module_path': module_path,
                 'description': module_info['description'],
                 'similarity_score': float(similarities[idx]),
                 'popularity_score': float(popularity_scores[idx]),
@@ -351,6 +395,10 @@ class SemanticSearchEngine:
                 result['package_description'] = self.package_descriptions[package_name]
                 
             results.append(result)
+            
+            # Stop when we have enough results
+            if len(results) >= top_k:
+                break
             
         return results
 

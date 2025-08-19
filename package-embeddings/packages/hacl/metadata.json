@@ -1,125 +1,109 @@
 {
   "package": "hacl",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 13,
-  "creation_timestamp": "2025-07-15T23:07:16.513547",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 11,
+  "creation_timestamp": "2025-08-14T23:11:57.102186",
   "modules": [
     {
       "module_path": "Hacl.Hash.SHA256.HMAC",
       "library": "hacl",
-      "description": "This module computes HMAC-SHA256 digests using 32-byte keys. It provides `write` to hash messages into a pre-allocated buffer and `digest` to compute a new digest directly. Typical use cases include message authentication and cryptographic signing of data payloads.",
-      "description_length": 265,
+      "description": "This module computes HMAC-SHA256 digests using 32-byte keys. It provides `write` to hash messages into a pre-allocated buffer and `digest` to compute and return a new digest buffer directly. These functions are used for message authentication in cryptographic protocols and secure data verification.",
+      "description_length": 299,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Hacl.Hash.SHA512.HMAC",
       "library": "hacl",
-      "description": "This module computes HMAC-SHA512 message authentication codes using 64-byte bigstring outputs. It provides `write` to hash messages incrementally into a pre-allocated buffer and `digest` for one-shot hashing of a message with a key. These functions are used to verify data integrity and authenticate communications in cryptographic protocols.",
-      "description_length": 342,
+      "description": "This module computes HMAC-SHA512 message authentication codes using 64-byte keys and arbitrary-length input messages. It provides two operations: `write` for incremental updates to a pre-allocated buffer and `digest` for computing the final 64-byte authentication code. Typical use cases include securing API requests and verifying data integrity in network protocols.",
+      "description_length": 368,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hacl.Hash.S-HMAC",
-      "library": "hacl",
-      "description": "This module implements HMAC-SHA256 signing operations using Bigstring keys and messages. It provides `write` to hash data into a pre-allocated buffer and `digest` to compute a new hash buffer directly. These functions are used for cryptographic authentication of messages in security-critical applications like TLS or secure messaging.",
-      "description_length": 335,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hacl.Hash.S",
-      "library": "hacl",
-      "description": "This module implements cryptographic hash functions with support for both incremental and direct hashing operations. It provides functions to initialize a hash state, update it with data, and finalize the hash computation, working with bigstrings for efficient memory handling. The HMAC submodule enables secure message authentication code generation using the hash function.",
-      "description_length": 375,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hacl.Hash.SHA512",
       "library": "hacl",
-      "description": "This module implements the SHA-512 cryptographic hash algorithm, supporting both one-shot and incremental hashing of `Bigstring.t` data. It maintains an internal state for stepwise updates and produces a 512-bit hash, useful for data integrity checks and HMAC-based authentication. The HMAC submodule extends this functionality to generate and verify message authentication codes using a key and message pair. For example, `digest` computes a hash in one call, while `write` and `digest` in the HMAC module handle streaming authentication securely.",
-      "description_length": 548,
-      "index": 4,
+      "description": "This module implements the SHA-512 cryptographic hash function, providing both incremental and direct hashing operations. It works with `Bigstring.t` for input data and produces a 64-byte hash output, maintaining internal state for incremental updates. Concrete use cases include generating message digests for data integrity verification and as a building block for HMAC-SHA512 in secure communication protocols.",
+      "description_length": 413,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hacl.Hash.SHA256",
       "library": "hacl",
-      "description": "This module implements the SHA-256 cryptographic hash algorithm, supporting both incremental updates and direct hashing of `Bigstring.t` data. It maintains an internal state for stepwise hashing and produces 32-byte fixed-size digests for data integrity verification and cryptographic signatures. The HMAC submodule extends this functionality to provide message authentication using 32-byte keys, with `write` and `digest` operations for secure signing and verification of payloads. Example uses include validating file integrity, generating secure message digests, and authenticating network transmissions using HMAC-SHA256.",
-      "description_length": 625,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hacl.Hash",
-      "library": "hacl",
-      "description": "This module computes cryptographic hashes for byte sequences using SHA-256 and SHA-512, supporting both one-shot and incremental hashing with fixed-size digests. It maintains internal state for stepwise updates, finalizes hashes, and works efficiently with bigstrings for data integrity, cryptographic signatures, and secure message authentication. The HMAC submodules extend SHA-256 and SHA-512 with keyed message authentication, using `write` for streaming input and `digest` to produce secure MACs, commonly applied in TLS, file verification, and authenticated network protocols. Direct operations like `digest` hash data in one call, while stateful updates via `write` enable hashing large streams incrementally.",
-      "description_length": 716,
-      "index": 6,
+      "description": "This module implements SHA-256 hashing with both incremental and direct interfaces. It processes data using `Bigstring.t` buffers, maintaining computation state in a `state` type. Use it for cryptographic hashing in applications like digital signatures, data integrity checks, and secure communications.",
+      "description_length": 303,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hacl.Sign",
+      "module_path": "Hacl.Nonce",
       "library": "hacl",
-      "description": "This module implements cryptographic digital signature operations using the Hacl library. It provides functions for generating key pairs, signing messages with secret keys, and verifying signatures with public keys, operating on `Bigstring.t` for message and signature data. Key operations include converting keys to and from byte strings, securely blitting key material, and deriving public keys from secret keys.",
-      "description_length": 414,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hacl.Rand",
-      "library": "hacl",
-      "description": "This module generates cryptographically secure random bytes, filling a given buffer or creating a new buffer of specified length. It operates on `Bigstring.t`, providing direct access to low-level random data. Useful for generating nonces, keys, or random identifiers in cryptographic applications.",
-      "description_length": 298,
-      "index": 8,
+      "description": "This module manages nonce values as bigstrings, providing operations to generate random nonces, increment them by a specified step, and convert byte sequences into nonces with or without validation. It ensures nonces meet cryptographic requirements for uniqueness and size, typically used in encryption and authentication protocols. Concrete use cases include generating initialization vectors for AES-GCM or sequence numbers in secure communication channels.",
+      "description_length": 459,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hacl.Secretbox",
       "library": "hacl",
-      "description": "This module implements authenticated encryption using the XSalsa20-Poly1305 cipher. It provides functions to generate secret keys, encrypt messages with a key and nonce, and decrypt and verify ciphertexts. The module works directly with large byte arrays (`Bigstring.t`) for keys, nonces, messages, and ciphertexts, requiring precise buffer management for secure operations.",
-      "description_length": 374,
-      "index": 9,
+      "description": "This module implements authenticated encryption using the XSalsa20-Poly1305 cipher suite. It provides functions to generate cryptographic keys, encrypt messages with a secret key and nonce, and decrypt and verify ciphertexts. The module works with `Bigstring.t` for binary data and a `key` type representing 256-bit secret keys. Common use cases include secure message transmission and storage where both confidentiality and integrity are required.",
+      "description_length": 448,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hacl.Rand",
+      "library": "hacl",
+      "description": "This module generates cryptographically secure random bytes, providing functions to fill a buffer with random data or create a new buffer of a specified length. It operates on Bigstring.t, a mutable byte buffer type. Use it for generating random keys, nonces, or initialization vectors for cryptographic operations.",
+      "description_length": 315,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hacl.Hash",
+      "library": "hacl",
+      "description": "This module provides cryptographic hash functions for secure data processing. It includes implementations of SHA-256 and SHA-512 that operate on `Bigstring.t` buffers, supporting both one-shot and incremental hashing with explicit state management. These are used for generating fixed-size message digests in security-critical contexts such as certificate generation, checksum verification, and cryptographic protocol implementation.",
+      "description_length": 433,
+      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Hacl.Box",
       "library": "hacl",
-      "description": "This module implements cryptographic operations for secure key exchange and authenticated encryption using Curve25519 and the X25519 Diffie-Hellman function. It handles key generation, conversion, and blinding operations, along with functions to securely encrypt and decrypt messages using a shared secret derived from key pairs. Concrete use cases include establishing secure communication channels and encrypting data with public-key cryptography.",
-      "description_length": 449,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements cryptographic operations for secure key exchange and authenticated encryption using the Curve25519 elliptic curve and the XSalsa20-Poly1305 cipher. It handles key generation, key exchange (Diffie-Hellman), and sealed-box encryption/decryption with strong forward secrecy and message integrity. Concrete use cases include secure peer-to-peer communication, encrypted messaging, and cryptographic protocol implementations requiring ephemeral key exchange and symmetric encryption.",
+      "description_length": 501,
+      "index": 8,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Hacl.Nonce",
+      "module_path": "Hacl.Sign",
       "library": "hacl",
-      "description": "This module manages nonce values for cryptographic operations, providing functions to generate, increment, and convert byte sequences into nonces. It works with `Bigstring.t` as the underlying data type, ensuring correct size and format for cryptographic primitives. Concrete use cases include generating fresh nonces for encryption and safely incrementing nonces in counter mode operations.",
-      "description_length": 391,
-      "index": 11,
-      "embedding_norm": 1.0
+      "description": "This module implements cryptographic digital signature operations using the Hacl* library. It provides functions for generating key pairs, signing messages with secret keys, and verifying signatures with public keys, operating on `Bigstring.t` for binary data and keys encapsulated in abstract `key` values. Concrete use cases include secure message authentication and digital signature verification in cryptographic protocols.",
+      "description_length": 427,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Hacl",
       "library": "hacl",
-      "description": "This module provides a comprehensive suite of cryptographic tools for secure communication, data integrity, and key management. It supports hashing with SHA-256 and SHA-512 through both one-shot and incremental APIs, including HMAC for keyed authentication, enabling applications like secure logging and message verification. Digital signatures are handled with key generation, signing, and verification operations on `Bigstring.t`, suitable for authenticating software updates or API requests. Random byte generation, nonce manipulation, and authenticated encryption via XSalsa20-Poly1305 and X25519-based key exchange allow for secure channel setup, encrypted storage, and robust protocol implementation.",
-      "description_length": 706,
-      "index": 12,
+      "description": "This module provides cryptographic primitives for secure data processing, including random byte generation, hashing, nonce manipulation, symmetric and asymmetric encryption, and digital signatures. It operates primarily on `Bigstring.t` for binary data, with specialized types for cryptographic keys, nonces, and signatures. Concrete use cases include implementing secure communication protocols, generating cryptographic keys and nonces, signing and verifying messages, and encrypting data with authentication.",
+      "description_length": 511,
+      "index": 10,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 13,
-    "meaningful_modules": 13,
+    "total_modules_in_package": 11,
+    "meaningful_modules": 11,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 716,
-    "min_description_length": 265,
-    "avg_description_length": 449.0769230769231,
-    "embedding_file_size_mb": 0.04769420623779297
+    "max_description_length": 511,
+    "min_description_length": 299,
+    "avg_description_length": 407.0,
+    "embedding_file_size_mb": 0.15977001190185547
   }
 }

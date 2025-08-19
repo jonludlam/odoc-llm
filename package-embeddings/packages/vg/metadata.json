@@ -1,113 +1,113 @@
 {
   "package": "vg",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 13,
-  "creation_timestamp": "2025-07-15T23:08:20.336422",
+  "creation_timestamp": "2025-08-14T23:19:07.234164",
   "modules": [
     {
       "module_path": "Vgr_pdf",
       "library": "vg.pdf",
-      "description": "This module renders vector graphics as multi-page PDF 1.7 documents, converting sequences of renderables into pages. It supports font embedding via OpenType fonts and built-in PDF fonts, handling glyph layout and text extraction mappings during rendering. Use cases include generating PDF reports, invoices, or diagrams with precise typography and vector graphics fidelity.",
-      "description_length": 373,
+      "description": "This module renders vector graphics as multi-page PDF 1.7 documents, supporting both built-in and custom OpenType fonts. It processes `Vg.I.cut_glyphs` images and maps glyphs to text for PDF extraction, using a configurable font resolver during rendering. Use cases include generating PDF reports with precise typography and exporting vector graphics with embedded fonts for consistent display in Adobe Acrobat Reader.",
+      "description_length": 418,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Vg.Vgr.Private.Font",
       "library": "vg",
-      "description": "This module provides functions to convert font properties into CSS-compatible string representations. It operates on the `Vg.font` type, extracting attributes such as size, weight, and slant. These functions are used when rendering text in environments that require CSS styling, such as HTML canvas or SVG outputs.",
-      "description_length": 314,
+      "description": "This module provides functions to convert font properties into CSS-compatible string representations. It operates on the `Vg.font` type, extracting values for font weight, slant, and size in specified units. Useful for rendering vector graphics to web-based targets where CSS styling is required.",
+      "description_length": 296,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Vg.Vgr.Private.Data",
+      "module_path": "Vg.Vgr.Private.P",
       "library": "vg",
-      "description": "This module defines low-level data representations for paths, images, and transformations used internally by Vg renderers. It includes types for path segments, affine transformations, blending modes, and image primitives such as gradients, rasters, and glyph runs. These structures directly encode the internal rendering operations needed to implement backends like SVG, PDF, or Cairo.",
-      "description_length": 385,
+      "description": "This module provides functions for converting path data into usable path types, calculating ellipse arc parameters, and determining miter limits for outlines. It operates on geometric types such as `Gg.p2`, `Gg.v2`, and `Vg.P.t`, primarily used in rendering vector graphics. Concrete use cases include path construction, arc rendering, and stroke outline calculations in custom image renderers.",
+      "description_length": 394,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vg.Vgr.Private.I",
       "library": "vg",
-      "description": "Converts an internal image representation into a user-facing image type. Works with `Vg.Vgr.Private.Data.image` and `Vg.I.t`. Used when finalizing image construction for rendering.",
-      "description_length": 180,
+      "description": "This module provides a function `of_data` that converts an internal image representation into a concrete image value. It operates on `Vg.Vgr.Private.Data.image` and produces `Vg.I.t` values. Use this to construct images from raw internal data during rendering.",
+      "description_length": 260,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Vg.Vgr.Private.P",
+      "module_path": "Vg.Vgr.Private.Data",
       "library": "vg",
-      "description": "This module provides functions to convert and manipulate path data, including extracting paths from internal representations, computing ellipse arc parameters, and calculating miter limits for outlines. It operates on geometric types such as `Gg.p2`, `Gg.v2`, and `Vg.P.t`, and is used in rendering vector graphics with precision. Concrete use cases include path construction for SVG or PDF output, and handling complex arc and stroke operations during image rendering.",
-      "description_length": 469,
+      "description": "This module defines low-level data representations for paths, images, and transformations used internally by Vg renderers. It includes types for path segments, affine transformations, blending modes, and primitives like gradients and raster images, along with conversion functions to matrix representations. These structures are used to implement rendering operations such as path traversal, image composition, and transformation application.",
+      "description_length": 442,
       "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vg.Vgr.Manual",
-      "library": "vg",
-      "description": "Handles manual memory management for rendering operations by providing direct access to byte buffers. Works with `Vg.renderer` instances and raw byte arrays to control output storage during rendering. Enables precise buffer allocation and reuse, useful when rendering images into pre-allocated memory regions or streaming output incrementally.",
-      "description_length": 343,
-      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vg.Vgr.Private",
       "library": "vg",
-      "description": "This module provides low-level primitives for implementing custom image renderers, including functions for managing rendering state, handling output destinations, and emitting warnings. It works with internal data structures like `renderer`, `render_target`, and continuation-based rendering functions, along with utilities for writing binary or textual data during rendering. The font module converts font properties into CSS-compatible strings for use in text rendering, while the data module defines core types for paths, images, and transformations used in backends like SVG and PDF. Together, these components enable the creation of custom renderers that integrate with Vg's pipeline, supporting tasks like converting vector graphics to specific formats or rendering to custom display targets.",
-      "description_length": 798,
+      "description": "This module implements low-level rendering operations for 2D vector graphics, handling path construction, image composition, and transformation application. It works with geometric types like `Gg.p2`, `Gg.v2`, and internal representations of paths, images, and fonts, converting them into renderable structures such as `Vg.I.t` and CSS font strings. Concrete use cases include building custom image renderers, generating stroke outlines, rendering elliptical arcs, and exporting vector graphics to web-compatible formats using CSS styling and XML encoding.",
+      "description_length": 556,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Vg.Vgr.Manual",
+      "library": "vg",
+      "description": "This module manages manual render destinations for image rendering, providing direct access to memory buffers for writing pixel data. It works with `renderer` objects and raw byte arrays to control output storage and track remaining buffer space. Concrete use cases include rendering images into pre-allocated memory blocks and monitoring buffer utilization during incremental rendering steps.",
+      "description_length": 393,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vg.I",
-      "library": "vg",
-      "description": "This module defines operations to create, transform, and combine 2D images using primitives such as solid colors, axial and radial gradients. It supports image manipulation through cutting paths, blending, and affine transformations like translation, rotation, and scaling. Concrete use cases include building complex vector graphics by layering transformed and blended images, or applying gradients and masks to paths and shapes.",
-      "description_length": 430,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Vg.P",
-      "library": "vg",
-      "description": "This module enables constructing and transforming 2D vector paths through primitives like lines, curves, and arcs, as well as styling operations for fills and strokes. It works with `path` values and associated types like `outline` for stroke styles and `area` for fill rules, supporting structured manipulation via combinators and affine transformations. Key use cases include building complex shapes incrementally, applying smooth B\u00e9zier curves, and analyzing path geometry through folding or equality checks.",
-      "description_length": 511,
-      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vg.Font",
       "library": "vg",
-      "description": "This module defines font specifications for 2D vector graphics, including attributes like name, slant, weight, and size. It provides comparison and formatting functions to test equality, order fonts, and generate textual representations. Use this module to configure text appearance when rendering vector graphics with custom font settings.",
-      "description_length": 340,
-      "index": 9,
+      "description": "This module defines font specifications for 2D vector graphics, including attributes like name, slant, weight, and size. It provides operations to compare and format font values, with customizable equality and ordering for floating-point size fields. Use this module to describe fonts when laying out or rendering text in a graphics pipeline, where concrete rendering is handled externally.",
+      "description_length": 390,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vg.Vgr",
       "library": "vg",
-      "description": "This module implements image renderers for converting 2D vector graphics into output formats such as PDF, SVG, HTML canvas, and Cairo. It provides a unified renderer interface that processes renderables\u2014defined by size, bounding box, and image\u2014and supports metadata injection via XMP packets, enabling use cases like exporting multi-page PDFs or embedding interactive graphics in HTML. Child modules offer low-level primitives for custom renderer development, including memory management with byte buffers, rendering state control, and utilities for emitting binary or textual output. Specific operations include rendering to pre-allocated memory regions, streaming output incrementally, and converting vector graphics into structured formats like SVG or PDF with precise layout and styling control.",
-      "description_length": 799,
+      "description": "This module implements image rendering targets for 2D vector graphics, handling pixel output to buffers, channels, or manual destinations. It processes renderables\u2014comprising size, bounding box, and images\u2014using a renderer that reports unsupported features via warning callbacks. Use it to export vector graphics to image formats, embed metadata, or stream pixel data incrementally.",
+      "description_length": 382,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Vg.P",
+      "library": "vg",
+      "description": "This module provides operations for constructing and transforming 2D vector paths through primitives like lines, curves, and arcs, as well as subpath manipulation, styling (outlining, filling), and geometric transformations. It works with path data structures (`Vg.path`), 2D points (`Gg.p2`), sizes (`Gg.size2`), and styling parameters (`cap`, `join`, `dashes`), supporting precise floating-point control for comparisons and serialization. It is suited for declarative vector graphic composition, interactive path editing, and rendering workflows requiring fine-grained control over shape geometry and appearance.",
+      "description_length": 614,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Vg.I",
+      "library": "vg",
+      "description": "This module defines operations for creating, transforming, and combining 2D images using geometric and color-based primitives. It supports solid colors, axial and radial gradients, and path-based clipping, with functions to translate, rotate, scale, and blend images. Concrete use cases include building complex vector graphics from simple shapes, applying gradients to backgrounds, and layering images with alpha blending.",
+      "description_length": 423,
       "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Vgr_svg",
       "library": "vg",
-      "description": "This module provides an SVG render target for creating and outputting vector graphics to a stored destination, with configurable XML declarations and XMP metadata. It supports rendering of basic shapes, paths, and text, where text is rendered using SVG's CSS font mechanism without glyph-level control. Use cases include generating standalone SVG files for web display, exporting diagrams or visualizations with embedded metadata, and producing scalable graphics for print or interactive applications.",
-      "description_length": 501,
+      "description": "This module provides an SVG render target for creating and writing vector graphics to a stored destination, supporting optional XML declarations and XMP metadata. It handles 2D vector graphics with Vg's image type, including shapes, paths, and text, though text rendering relies on SVG's CSS font mechanism and ignores glyph-level parameters. It is used to generate standalone SVG files or embed vector graphics in web content with customizable styling and metadata.",
+      "description_length": 466,
       "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Vg",
       "library": "vg",
-      "description": "This module enables the creation and manipulation of 2D vector graphics through paths, images, and text, supporting operations like shape construction, gradient application, and font styling. It provides core data types such as `path`, `image`, `font`, and `renderer`, with operations to transform, combine, and render these elements using affine transformations, blending, and custom styling. You can build complex vector scenes by layering masked images, define scalable shapes with B\u00e9zier curves, configure text appearance with precise font settings, and export results to formats like PDF, SVG, or HTML canvas. Submodules extend this functionality with specialized tools for path construction, image compositing, font management, and renderer implementation.",
-      "description_length": 762,
+      "description": "This module provides operations for defining and manipulating 2D vector graphics declaratively, including font handling, path construction, image composition, and rendering. It works with data types such as `font`, `glyph`, `path`, `image`, and `renderer`, integrating with geometric types from `Gg` for positioning and sizing. Concrete use cases include laying out and rendering text with custom fonts, creating scalable vector shapes with styling, applying gradients and transformations, and exporting graphics to pixel-based formats via rendering targets.",
+      "description_length": 558,
       "index": 12,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -117,9 +117,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 799,
-    "min_description_length": 180,
-    "avg_description_length": 477.3076923076923,
-    "embedding_file_size_mb": 0.047699928283691406
+    "max_description_length": 614,
+    "min_description_length": 260,
+    "avg_description_length": 430.15384615384613,
+    "embedding_file_size_mb": 0.18880081176757812
   }
 }

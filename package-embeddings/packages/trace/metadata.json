@@ -1,197 +1,165 @@
 {
   "package": "trace",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 22,
-  "creation_timestamp": "2025-07-15T23:11:49.644204",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 18,
+  "creation_timestamp": "2025-08-15T12:16:13.890224",
   "modules": [
     {
       "module_path": "Trace_event.Subscriber.Callbacks",
       "library": "trace.event",
-      "description": "This module defines callbacks invoked during tracing events such as span entry/exit, thread/process naming, counter updates, and log messages. It works with trace events, spans, thread IDs, timestamps, and user-defined data annotations. Use it to implement custom tracing logic like logging, metrics collection, or visualization during program execution.",
-      "description_length": 354,
+      "description": "This module defines callback functions invoked during tracing events such as initialization, thread/process naming, span entry/exit, data addition, logging, and counter updates. It operates on trace events, spans, and subscriber state, handling both synchronous and manual (async) spans with associated metadata. Concrete use cases include logging span durations, tracking thread names, recording counter metrics, and capturing structured data during trace execution.",
+      "description_length": 467,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Trace_event.Event",
-      "library": "trace.event",
-      "description": "This module defines a polymorphic variant type `t` representing various trace events such as initialization, message logging, span definition and exit, counter updates, and thread/process naming. It supports structured event handling with timestamped data, thread identifiers, span identifiers, and optional metadata. Concrete use cases include capturing trace data for performance analysis, logging structured messages with context, and tracking asynchronous operations across threads.",
-      "description_length": 486,
-      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Trace_event.Subscriber",
       "library": "trace.event",
-      "description": "This module routes trace events to custom consumers and manages multiple subscribers through its callback system. It provides core types like `event_consumer` and `subscriber`, along with operations to register callbacks for span transitions, log messages, counter updates, and thread/process events. The `Callbacks` submodule allows grouping and coordinating multiple subscribers, enabling use cases like real-time logging, metrics aggregation, or trace visualization. For example, you can define a subscriber that logs span entries or sends counter data to an external metrics backend.",
-      "description_length": 587,
+      "description": "Handles tracing events by invoking callbacks for initialization, span entry/exit, logging, and counter updates. Works with trace events, spans, and subscriber state to support use cases like logging span durations, tracking thread names, and recording metrics. Directly consumes events via an event_consumer interface and emits them through a subscriber mechanism.",
+      "description_length": 364,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_event.Event",
+      "library": "trace.event",
+      "description": "This module defines a polymorphic variant type `t` representing various trace events such as span creation, message logging, counters, and process/thread naming. It includes structured data like timestamps, thread IDs, span identifiers, and user-defined metadata for tracing application behavior. Concrete use cases include capturing execution spans for performance analysis, logging thread-specific messages, and tracking counter metrics with timestamps.",
+      "description_length": 455,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Trace_event",
       "library": "trace.event",
-      "description": "This module handles trace events and their structured processing through a flexible callback system. It defines a polymorphic variant type `t` to represent events like spans, logs, counters, and thread operations, each with timestamps, thread IDs, and metadata. Consumers and subscribers can be registered to react to specific event types, enabling real-time logging, metrics collection, and trace visualization. For example, a subscriber can log span entries or forward counter updates to a metrics service.",
-      "description_length": 508,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Trace_private_util.Domain_util",
-      "library": "trace_private_util",
-      "description": "Implements low-level operations for managing CPU relaxation and domain counting. Provides `cpu_relax` to yield the CPU in tight loops and `n_domains` to retrieve the number of active domains. Useful in concurrent programs where domain coordination or performance tuning is required.",
-      "description_length": 282,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Trace_private_util.Rpool",
-      "library": "trace_private_util",
-      "description": "This module manages a pool of reusable resources, such as buffers, with a bounded size. It supports creating new resources when needed, recycling used ones, and temporarily allocating a resource for a computation. It is useful for efficiently managing limited buffer resources in high-throughput scenarios.",
-      "description_length": 306,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_private_util",
-      "library": "trace_private_util",
-      "description": "This module provides utilities for low-level system coordination and resource management. It includes operations for CPU relaxation during busy loops and tracking active domains, along with a reusable resource pool for efficient buffer handling. You can use `cpu_relax` to reduce CPU contention, `n_domains` to monitor parallelism, and the resource pool to allocate, reuse, and release limited objects like buffers. For example, it can smooth high-throughput data processing by balancing domain load and minimizing memory allocation overhead.",
-      "description_length": 542,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_core.Collector.S",
-      "library": "trace.core",
-      "description": "This module defines operations for implementing tracing backends, including creating and managing spans with structured metadata, emitting messages and counters, and handling process and thread naming. It works with spans represented as `int64` identifiers or explicit span contexts, and supports structured data in key-value form using a variant type for primitive values. Concrete use cases include recording function execution spans, adding metadata to ongoing spans, emitting log-like messages with context, and tracking performance metrics via counters.",
-      "description_length": 558,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Trace_core.Meta_map.Key",
-      "library": "trace.core",
-      "description": "This module defines a polymorphic key type for use in metadata maps, supporting creation, identity retrieval, and equality checks. It works with abstract key implementations generated via the `create` function, each tied to a unique type. Concrete use cases include associating typed metadata with trace events, where keys ensure type-safe access and comparison.",
-      "description_length": 362,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_core.Meta_map.M",
-      "library": "trace.core",
-      "description": "This module offers a comprehensive set of associative map operations for integer-keyed data structures, supporting value types of arbitrary polymorphism. It enables efficient key-based lookups, transformations, and bulk updates through functions like `add_seq` for sequence-driven map construction, alongside standard operations such as filtering, folding, and ordered traversal. Designed for scenarios requiring precise control over integer-indexed data, it facilitates use cases like dynamic value aggregation, ordered key-value serialization, and incremental map evolution from sequential input streams.",
-      "description_length": 606,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_core.Meta_map.KEY_IMPL",
-      "library": "trace.core",
-      "description": "Implements comparison and hashing operations for keys used in a metadata map. Works with abstract key types that include an integer identifier. Enables efficient key-based lookups and equality checks in metadata tracking systems.",
-      "description_length": 229,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_core.Meta_map",
-      "library": "trace.core",
-      "description": "This module provides a type-safe map for managing heterogeneous metadata, where each key determines the type of its associated value. It supports core operations like insertion, lookup, and iteration, along with polymorphic key handling and exception management for robust access. The polymorphic key module enables type-preserving key creation and identity checks, while the integer-keyed map module offers efficient associative operations and sequence-driven construction. Together, they facilitate structured metadata tracking, such as annotating trace events with typed properties and performing key-based aggregations or transformations.",
-      "description_length": 642,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Trace_core.Collector",
-      "library": "trace.core",
-      "description": "The module provides core types and interfaces for building a global collector that manages tracing data, including span and trace identifiers, along with a signature for implementing collectors that store, forward, or process messages and spans. It integrates with the child module, which offers concrete operations for creating and managing spans, emitting structured messages, and tracking metrics using key-value pairs and `int64` identifiers. Main data types include span contexts, trace IDs, and structured metadata, with operations for span creation, message logging, and counter updates. Example uses include setting up test fixtures with dummy span values, recording function execution spans with metadata, and implementing custom backends for trace collection and export.",
-      "description_length": 780,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_core.Level",
-      "library": "trace.core",
-      "description": "This module defines a set of severity levels for tracing, ranging from `Error` to `Trace`, allowing selective enablement of trace output based on verbosity. It includes functions to convert levels to strings and compare their severity. Useful for controlling tracing detail in production versus debug environments without recompilation.",
-      "description_length": 336,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_core",
-      "library": "trace.core",
-      "description": "This module enables hierarchical tracing with spans that support structured metadata, numeric counters, and timestamped events, while allowing both manual and automatic lifecycle management. It provides core types like trace identifiers and span contexts, along with operations for creating spans, logging messages, and tracking metrics, supporting use cases such as distributed system monitoring and performance profiling. Child modules enhance this functionality with a type-safe metadata map for associating typed properties with trace events, a global collector interface for handling trace data, and severity-based filtering to control diagnostic output. Examples include annotating spans with typed key-value metadata, implementing custom trace backends, and dynamically adjusting trace verbosity based on environment.",
-      "description_length": 824,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_subscriber.Callbacks.Dummy",
-      "library": "trace.subscriber",
-      "description": "This module provides minimal no-op implementations for all subscriber callbacks, allowing developers to selectively override only the events they need to handle. It works with the generic subscriber state and tracing event types, offering placeholders for lifecycle events like initialization, thread/process naming, span entry/exit, and data addition. Concrete use cases include building custom subscribers that focus on specific tracing events without needing to implement the full callback interface.",
-      "description_length": 503,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_subscriber.Callbacks.S",
-      "library": "trace.subscriber",
-      "description": "This module defines a set of first-class callbacks that handle trace events such as span entry/exit, counter updates, log messages, and thread/process naming. It works with custom state types paired with tracing data structures like `Trace_core.span` and `Trace_core.trace_id`. Concrete use cases include implementing custom logging, performance monitoring, and distributed tracing integrations by reacting to low-level tracing events in a structured way.",
-      "description_length": 455,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Trace_subscriber.Callbacks",
-      "library": "trace.subscriber",
-      "description": "This module defines the callback interface for trace subscribers, specifying how events like spans, logs, and traces are processed with custom state maintained across invocations. It includes minimal no-op implementations to simplify building partial subscribers and provides first-class callbacks for handling low-level tracing events such as span entry, counter updates, and log messages. Main data types include custom state, `Trace_core.span`, and `Trace_core.trace_id`, with operations for initializing, updating, and finalizing state in response to events. Example uses include implementing logging backends, metrics collection, and custom tracing logic that reacts to span or trace lifecycle events.",
-      "description_length": 706,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Trace_subscriber.Subscriber",
-      "library": "trace.subscriber",
-      "description": "This module defines a subscriber as a set of callbacks that process trace events. It supports combining multiple subscribers into one using `tee` and `tee_l`, allowing events to be forwarded to all subscribers. It works with the `t` type representing a subscriber with internal state and callbacks, and is used to build collectors that route trace events to multiple destinations.",
+      "description": "This module provides operations for capturing and handling trace events with structured data, including span creation, message logging, and counter updates. It works with polymorphic variant types representing events, spans, thread IDs, and metadata. Concrete use cases include performance analysis through span durations, thread-specific logging, and timestamped metric tracking.",
       "description_length": 380,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Trace_subscriber.Span_tbl",
-      "library": "trace.subscriber",
-      "description": "Stores and manages per-span metadata, allowing insertion, lookup, and removal of values associated with specific spans. It supports thread-safe operations when threads are enabled, enabling reliable tracking of span-related data across span lifecycle events. Useful for correlating span start and end events with custom context or aggregating span-specific diagnostics during tracing.",
-      "description_length": 384,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Trace_subscriber",
-      "library": "trace.subscriber",
-      "description": "This module enables defining and combining subscribers that handle trace events through customizable callbacks, supporting data types like `user_data`, `flavor`, and `collector` to route events and maintain state. It allows combining multiple subscribers into a single collector using `tee_l`, and provides mechanisms for logging, filtering, and aggregating trace data. Child modules define the callback interface for handling span and trace events, implement subscriber composition, and manage per-span metadata with thread-safe operations. Specific uses include building logging backends, collecting metrics, and enriching trace events with contextual data across span lifecycles.",
-      "description_length": 682,
-      "index": 20,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Trace",
       "library": "trace",
-      "description": "The module enables structured tracing through span creation, modification, and annotation with metadata or logs, alongside numeric counters and trace collector configuration. It operates on spans, trace identifiers, user-defined metadata, and extension events, supporting use cases like distributed system monitoring, performance metric tracking, and diagnostic logging with contextual data attachment.",
-      "description_length": 402,
-      "index": 21,
+      "description": "This module supports creation and lifecycle management of trace spans with structured data attachment, alongside instrumentation capabilities like thread/process naming and integer/floating-point counter tracking. It operates on tracing constructs such as spans, logging levels, and collector modules, enabling distributed execution context tracking and runtime performance monitoring. Use cases include distributed tracing systems, metric-based telemetry, and dynamic trace data collection control with conditional logging.",
+      "description_length": 524,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_subscriber.Callbacks",
+      "library": "trace.subscriber",
+      "description": "This module defines callback interfaces for handling trace events with custom state. It supports operations like processing span entries, counter updates, and event timestamps, working with generic state types and tracing event data. Concrete use cases include implementing custom logging or metrics collection logic by overriding specific callbacks while using defaults for others.",
+      "description_length": 382,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Trace_subscriber.Subscriber",
+      "library": "trace.subscriber",
+      "description": "This module represents a trace subscriber with an internal state and callbacks for handling trace events. It supports combining multiple subscribers into one using `tee` or `tee_l`, ensuring each event is forwarded to all subscribers. It is used to implement custom logging or monitoring logic by aggregating and processing trace data.",
+      "description_length": 335,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_subscriber.Span_tbl",
+      "library": "trace.subscriber",
+      "description": "This module provides a thread-safe table for storing and retrieving values associated with spans. It supports operations to add, find, remove, and list span-value pairs, enabling tracking of span-related data across begin and end events. Useful for correlating span lifecycle events, such as measuring duration or aggregating context between span start and finish.",
+      "description_length": 364,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_subscriber",
+      "library": "trace.subscriber",
+      "description": "This module implements trace subscribers with customizable callbacks for handling span events, counters, and timestamps, using thread-safe span tables to track associated data. It allows combining multiple subscribers into a single collector for unified trace processing. Concrete use cases include building custom logging backends, aggregating metrics, or correlating span start and end events for duration tracking.",
+      "description_length": 417,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Trace_core.Meta_map.Key",
+      "library": "trace.core",
+      "description": "This module implements a type-safe key system for managing heterogeneous maps. It provides operations to create unique key identifiers, compare keys for equality, and associate values of specific types with those keys. The structure is used to store and retrieve metadata of varying types in a type-preserving way, such as tracking execution context or diagnostic data across different parts of a tracing system.",
+      "description_length": 412,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_core.Meta_map.M",
+      "library": "trace.core",
+      "description": "This module implements an ordered map structure with integer keys and polymorphic values, offering operations for insertion, deletion, merging, and ordered traversal. It supports transformations like filtering, mapping, and folding over key-value pairs, along with bidirectional conversion to sequences and lists. The structure is suited for scenarios requiring efficient ordered key-value management, such as maintaining sorted collections or combining maps with custom merge strategies.",
+      "description_length": 488,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Trace_core.Level",
+      "library": "trace.core",
+      "description": "This module defines a set of severity levels for tracing, ranging from `Error` to `Trace`, allowing selective enablement of trace output based on verbosity. It includes functions to convert levels to strings and compare their severity. Useful for controlling trace output in production versus debug environments without recompilation.",
+      "description_length": 334,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_core.Meta_map",
+      "library": "trace.core",
+      "description": "This module implements a type-safe heterogeneous map for storing metadata with unique key identifiers, supporting operations like insertion, lookup, and removal of values with preserved type information. It works with a binding type that pairs keys and values existentially, and uses an ordered integer-keyed map internally for efficient storage and retrieval. Concrete use cases include tracking diagnostic data across tracing components, such as associating timestamps, identifiers, or context-specific values with trace events.",
+      "description_length": 530,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_core.Collector",
+      "library": "trace.core",
+      "description": "This module provides values representing placeholder or default span and trace identifiers, along with a signature defining the interface for a global collector responsible for handling trace messages and spans. It operates on span identifiers, trace IDs, and explicit span context types defined in the `Types` module. Concrete use cases include setting up minimal or test tracing environments where dummy values are needed, or implementing collectors that forward or store tracing data.",
+      "description_length": 487,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_core",
+      "library": "trace.core",
+      "description": "This module enables tracing operations including span lifecycle management, structured metadata handling, and severity level control. It operates on trace spans, structured metadata maps (Meta_map), numeric counters, and hierarchical trace identifiers, supporting both synchronous and asynchronous contexts. Key use cases include diagnostics with dynamic logging levels, performance instrumentation via counters, and manual span management for complex workflows like distributed transactions.",
+      "description_length": 492,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_private_util.Domain_util",
+      "library": "trace_private_util",
+      "description": "Implements low-level operations for managing CPU relaxation and domain count queries. Works with unit types and integer return values. Used in concurrent systems to control thread execution and query available domains for resource allocation.",
+      "description_length": 242,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Trace_private_util.Rpool",
+      "library": "trace_private_util",
+      "description": "This module manages a pool of reusable resources, such as buffers, with operations to create, allocate, and recycle them. It supports a generic type `'a` and is designed for efficient resource handling in scenarios like network communication or logging. Use cases include reducing memory allocations by reusing pre-allocated buffers or managing limited resource instances.",
+      "description_length": 372,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Trace_private_util",
+      "library": "trace_private_util",
+      "description": "Implements low-level operations for managing CPU relaxation and domain count queries with unit types and integer returns, used in concurrent systems to control thread execution and allocate resources. Manages a pool of reusable resources like buffers, supporting generic types for efficient allocation and recycling in network communication or logging scenarios.",
+      "description_length": 362,
+      "index": 17,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 22,
-    "meaningful_modules": 22,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 19,
+    "meaningful_modules": 18,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9473684210526315
   },
   "statistics": {
-    "max_description_length": 824,
-    "min_description_length": 229,
-    "avg_description_length": 496.09090909090907,
-    "embedding_file_size_mb": 0.08042049407958984
+    "max_description_length": 530,
+    "min_description_length": 242,
+    "avg_description_length": 411.5,
+    "embedding_file_size_mb": 0.2614164352416992
   }
 }

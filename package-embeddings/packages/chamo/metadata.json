@@ -1,288 +1,64 @@
 {
   "package": "chamo",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 44,
-  "creation_timestamp": "2025-07-15T23:14:49.103526",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 45,
+  "creation_timestamp": "2025-08-15T14:33:43.242741",
   "modules": [
+    {
+      "module_path": "Chamo_main",
+      "library": "chamo.main",
+      "description": "This module initializes and integrates the core components of the application, providing entry points for execution. It works with application-specific modules and the `chamo` library to enable customization and extension. A typical use case involves linking it with user-defined modules to create a standalone executable with tailored behavior.",
+      "description_length": 345,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "Chamo_byte.Eval",
       "library": "chamo.byte",
-      "description": "This module evaluates OCaml code directly within the editor, supporting interactive execution, file loading, and command-line evaluation. It operates on string-based OCaml source code and bytecode files, providing specific commands to evaluate code from user input, files, or command-line arguments. Concrete use cases include running snippets interactively via the minibuffer, loading precompiled bytecode, and launching the editor with an OCaml script to execute immediately.",
-      "description_length": 477,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module evaluates OCaml code directly within the editor, supporting operations like loading bytecode files, running source files, and prompting for code input. It works with string arrays for command arguments and provides Lwt-based asynchronous command handlers for interactive evaluation. Concrete use cases include executing user scripts at launch via `--run`, dynamically loading compiled modules, and evaluating expressions entered through the editor's minibuffer.",
+      "description_length": 473,
+      "index": 1,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Chamo_byte",
       "library": "chamo.byte",
-      "description": "This module evaluates OCaml code interactively or from files, supporting direct execution of source strings, bytecode loading, and command-line evaluation. It provides operations to run code snippets via the minibuffer, load precompiled bytecode files, and execute OCaml scripts at launch. Concrete use cases include embedding interactive OCaml evaluation in an editor, running ad-hoc expressions, and automating script execution from the command line. Key data types include source code strings and bytecode file paths, with operations tailored to evaluation context and execution environment.",
-      "description_length": 594,
-      "index": 1,
+      "description": "This module evaluates OCaml code interactively, supporting operations like running source files, loading bytecode, and evaluating expressions. It works with string arrays for arguments and provides Lwt-based handlers for asynchronous execution. Use cases include launching user scripts with `--run`, dynamic module loading, and minibuffer expression evaluation.",
+      "description_length": 361,
+      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Chamo.Log.LevMap",
       "library": "chamo",
-      "description": "This module implements a map structure optimized for associating polymorphic values with `Logs.level` keys, supporting insertion, deletion, traversal, and list-accumulating operations like `add_to_list`. It enables functional transformations (mapping, filtering, folding) and structural combinations (union, merge) over key-value pairs, with utilities for sequence-based construction and decomposition. Typical applications include managing log-level-specific configurations, aggregating heterogeneous log entries, or processing hierarchical logging data with ordered traversal requirements.",
-      "description_length": 591,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Chamo.Outputs",
-      "library": "chamo",
-      "description": "Manages a tabbed window interface for displaying output boxes. Provides access to the outputs window through the `outputs` function, which ensures the window exists and returns it for further manipulation. Useful for organizing multiple output displays within a single UI container.",
-      "description_length": 282,
+      "description": "This module implements a persistent, ordered map structure with log levels as keys, supporting associative operations like insertion, deletion, and lookup, alongside list accumulation for grouping values. It enables ordered traversal, transformations",
+      "description_length": 250,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Chamo.Ocamlbuild",
+      "module_path": "Chamo.Mode_ocaml_rc",
       "library": "chamo",
-      "description": "This module handles OCaml compilation tasks, particularly integrating with ocamlbuild. It tracks compilation commands per file, generates default build commands, and captures, analyzes, and displays compilation output, including positioning the user on specific errors or warnings. It works with source views, text outputs, and structured problem data to manage build processes and feedback directly within an editor interface.",
-      "description_length": 427,
+      "description": "This module defines configuration parameters and key bindings for editing OCaml files, including global and local configuration file handling, color settings for call visualization, and functions to bind keyboard shortcuts specific to OCaml mode. It works with strings, key state lists, color values, and configuration options for persistent settings. Concrete use cases include setting up custom compilation commands, defining syntax highlighting behavior, and configuring per-project or per-user preferences through `.rc` files.",
+      "description_length": 530,
       "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.View_rc",
-      "library": "chamo",
-      "description": "This module manages configuration settings for an output view, handling associations between filename patterns and view names, along with a default view fallback. It provides functions to read and write the configuration file, which stores these settings. It is used to customize how files are displayed based on their names, enabling per-filetype view selection.",
-      "description_length": 363,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Gui_rc",
-      "library": "chamo",
-      "description": "This module manages the configuration file for GUI settings, including key bindings and history size. It provides functions to read and write the configuration, along with options for global key bindings, abort key sequence, and minibuffer history size. Use this module to customize and persist user interface behavior for chamo windows.",
-      "description_length": 337,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Mode_makefile",
-      "library": "chamo",
-      "description": "This module defines a source view mode tailored for editing and syntax highlighting of Makefiles. It includes configurations for parsing, formatting, and displaying Makefile-specific syntax elements. Use this mode when implementing or extending support for Makefile editing in a text editor or IDE interface.",
-      "description_length": 308,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.View",
-      "library": "chamo",
-      "description": "This module manages view factories for creating or reusing GUI views based on file types or extensions. It provides functions to register, retrieve, and iterate over view factories, as well as to open files or hidden views using specified factories. Concrete use cases include associating XML-based file formats with specific view creation logic and dynamically selecting the appropriate view factory when opening files in a multi-view application.",
-      "description_length": 448,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Xml",
-      "library": "chamo",
-      "description": "This module provides functions to parse and serialize XML trees, working with a custom algebraic data type representing XML elements and text nodes. It supports converting XML trees to strings with optional XML declaration, parsing XML strings into trees, and reading XML files directly. Concrete use cases include processing configuration files, generating XML output for data serialization, and validating XML structures in file-based workflows.",
-      "description_length": 447,
-      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Chamo.Config",
       "library": "chamo",
-      "description": "This module defines configuration constants for user-specific and local directory paths, along with functions to generate corresponding configuration file names. It provides wrappers for serializing and deserializing key states and bindings, and a function to retrieve the path to ocamlfind. Concrete use cases include managing editor configuration files stored either in the user's home directory or the current working directory, and handling keyboard input settings.",
-      "description_length": 469,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Gui",
-      "library": "chamo",
-      "description": "This module manages GUI windows and their interactions, providing functions to create, activate, and manipulate windows with specific dimensions and positions. It supports command execution within new or existing windows and includes utilities for prompting user commands through a minibuffer. Key data structures include `gui_window` and `gui_windows`, with support for optional active window tracking and Lwt-based asynchronous operations.",
+      "description": "This module defines configuration constants and functions for handling user-specific and local configuration files. It provides operations to construct file paths for different configuration contexts and includes wrappers for serializing key states and bindings. Concrete use cases include managing editor settings stored in the user's home directory or in the launch directory, and converting key state data for persistence or transmission.",
       "description_length": 441,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Multiclip_rc",
-      "library": "chamo",
-      "description": "This module configures the \"multiclip\" view by managing key bindings and reading/writing configuration files. It works with key state lists, strings, and configuration options to define command shortcuts. Concrete use cases include adding key bindings like `Ctrl+C` to copy commands or `Alt+V` to paste, either programmatically or via a configuration file.",
-      "description_length": 356,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Fstack",
-      "library": "chamo",
-      "description": "This module implements a stack with bidirectional navigation capabilities, allowing elements to be pushed, popped, and revisited using the `forward` operation. It maintains two internal states: one for the current top of the stack and another for elements that can be restored via `forward`, enabling undo-like behavior after pops. Concrete use cases include implementing browser-style navigation history, where `push` represents visiting a new page, `pop` navigates back, and `forward` redoes the navigation forward after a pop.",
-      "description_length": 529,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Binannot",
-      "library": "chamo",
-      "description": "This module processes OCaml compiler metadata from `.cmt` files to extract type information and source location details. It supports querying expressions by source position, mapping untyped ASTs, and folding over expression identifiers. Concrete use cases include building IDE features like type tooltips, jump-to-definition, and code analysis tools that require precise type and location data from compiled OCaml sources.",
-      "description_length": 422,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Multiclip_view",
-      "library": "chamo",
-      "description": "This module implements multi-clipboard views with support for creating, copying, and managing multiple clipboard entries. It works with `view` structures and integrates with minibuffers, clipboxes, and storable clipboard data. Concrete use cases include copying selected content to a named clipboard view, removing clipboard entries, and pasting from a source view into a target context.",
-      "description_length": 387,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Multiclip_gui",
-      "library": "chamo",
-      "description": "Implements a graphical interface for managing multiple clipboard entries, allowing users to view, select, and paste stored content. Works with clipboard data structures containing text or structured values. Enables quick access to recent clipboard items through a searchable, selectable list in a dedicated window.",
-      "description_length": 314,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Mode_changelog",
-      "library": "chamo",
-      "description": "This module provides a function to add a new day entry to a sourceview specifically for ChangeLog files, using the current username and email. It operates on a sourceview data structure and works with string arrays to format the entry. A concrete use case is automatically inserting date headers into version control changelogs.",
-      "description_length": 328,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Find",
-      "library": "chamo",
-      "description": "This module traverses directory hierarchies to locate files based on criteria like depth, type, modification time, or custom predicates. It supports filtering with conditions such as maximum search depth, file type matching, symbolic link handling, and regular expression patterns. Use it to implement file discovery logic, such as finding all log files modified in the last hour or locating executable files up to a certain depth in a directory tree.",
-      "description_length": 451,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Mode_ocaml",
-      "library": "chamo",
-      "description": "This module implements an OCaml source code editing mode with functions to indent lines or entire buffers, navigate between interface and implementation files, and display or copy type and identifier annotations from compiled OCaml files. It operates on strings, sourceview buffers, and file paths, integrating directly with OCaml development workflows. Concrete use cases include automatic code indentation, type inspection during editing, and seamless navigation between `.ml` and `.mli` files.",
-      "description_length": 496,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Log",
-      "library": "chamo",
-      "description": "This module provides structured logging with severity levels and configurable formatting, including color and layout options, while integrating UI controls to toggle log visibility dynamically. It leverages an optimized map structure for associating log sources with rendering rules, supporting operations like insertion, traversal, and level-based filtering. You can use it to build interactive CLI tools with real-time diagnostics, custom log aggregation pipelines, or applications requiring dynamic log filtering and user-configurable output styles. The map submodule enhances this functionality by enabling complex log data transformations and hierarchical log management with efficient key-based operations.",
-      "description_length": 712,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Core_rc",
-      "library": "chamo",
-      "description": "This module manages reading from and writing to a UTF-8 encoded configuration file. It provides direct access to the file name and encoding settings, and handles loading and saving configuration data automatically. It is used to persist application-specific settings between sessions.",
-      "description_length": 284,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Sourceview_rc",
-      "library": "chamo",
-      "description": "This module configures a source code editing view with key bindings, syntax highlighting rules, and theme settings. It handles configuration files for global and mode-specific settings, supports bookmark storage, and provides functions to bind keys to commands for different editing modes. Concrete use cases include setting up custom keymaps per language mode and defining filename patterns to trigger specific syntax highlighting.",
-      "description_length": 432,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Bookmarks",
-      "library": "chamo",
-      "description": "This module implements a generic bookmark system that supports creating, retrieving, modifying, and removing bookmarks with string keys and arbitrary data values. It provides functions to serialize bookmarks to a file and deserialize them, using custom data conversion functions or predefined wrappers. Use cases include persisting user-defined bookmarks in applications like text editors or configuration managers.",
-      "description_length": 415,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Chamo.Minibuffer_rc",
-      "library": "chamo",
-      "description": "This module manages the configuration of a minibuffer interface, handling key bindings, exit keys, and history settings through user-defined options. It provides functions to read and write configuration files, modify key bindings, and associate command names with key sequences. Concrete use cases include customizing keyboard shortcuts for minibuffer navigation and defining exit triggers in interactive applications.",
-      "description_length": 419,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Commands",
-      "library": "chamo",
-      "description": "This module supports defining, registering, and executing named commands with argument handling, enabling synchronous or Lwt-based asynchronous workflows, command chaining, and input/output conversion between string and array formats. It manages key bindings and global configurations through handler trees and keystate representations, operating on command descriptions, string arrays, and global state containers. Use cases include building extensible command-line interfaces, orchestrating async operations with Lwt, and mapping keyboard events to actions in interactive applications.",
-      "description_length": 587,
-      "index": 25,
+      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Chamo.Mode_changelog_rc",
       "library": "chamo",
-      "description": "This module defines configuration settings for a changelog editing mode, including key bindings and file handling. It works with strings for mode names and configuration files, and lists of key states for binding definitions. It is used to customize and persist key mappings specific to changelog mode in a text editor.",
-      "description_length": 319,
-      "index": 26,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Chamo.Rc",
-      "library": "chamo",
-      "description": "This module manages application configuration through operations to load and save core and GUI settings. It works with configuration files stored in a designated directory, supporting key-value updates and structured options via `Ocf.conf_option`. Concrete use cases include persisting user preferences, binding keystrokes to actions, and converting key event representations for input handling.",
-      "description_length": 395,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Args",
-      "library": "chamo",
-      "description": "This module handles command line argument parsing and command management. It provides functions to add and retrieve commands, parse options, and manage remaining arguments. Use it to build command-line interfaces with support for multiple commands, custom options, and initialization logic.",
-      "description_length": 290,
-      "index": 28,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Chamo.Sourceview",
-      "library": "chamo",
-      "description": "The module supports buffer and view management for text editing, including creation, switching, and history tracking, while handling text manipulation tasks like clipboard operations, cursor navigation, and undo/redo on structured selections and sourceview components. It provides configuration options for syntax modes, display settings, and encoding, enabling use cases such as multi-buffer editing with syntax highlighting and asynchronous command execution with Lwt. Key data structures include buffers, views, string arrays for selections, and history mechanisms for both buffers and minibuffer interactions.",
-      "description_length": 613,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Messages",
-      "library": "chamo",
-      "description": "This module defines string constants for predefined application messages, including software metadata, user-facing labels, and error templates. It provides direct access to static message values used for UI elements like about dialogs, preferences, and error notifications. Functions like `error_unknown_action` generate formatted error strings for invalid user input in command-line or GUI contexts.",
-      "description_length": 400,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Chamo.Sourceview_expand",
-      "library": "chamo",
-      "description": "This module provides word expansion in source views using regular expressions, tracking expansion state with a context record that includes buffer content, position, and history. It supports operations like searching for matches, retrieving next propositions, and expanding words based on a pattern derived from the source view. Concrete use cases include auto-expanding identifiers or keywords in a text editor buffer based on predefined patterns.",
-      "description_length": 448,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Ocaml_lexer",
-      "library": "chamo",
-      "description": "This module performs lexical analysis of OCaml code by defining token classifications (keywords, operators, literals) and handling indentation-sensitive parsing through stack-based state management. It operates on lexing buffers, tokens, and integer indentation levels to track syntactic contexts like `let` or `struct` blocks, while providing utilities for error handling, location tracking, and string/escape processing. Key use cases include parsing nested indentation structures, managing lexical elements (comments, parentheses), and maintaining line/column position metadata during source code scanning.",
-      "description_length": 609,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Minibuffer",
-      "library": "chamo",
-      "description": "This module manages minibuffer history and display constraints in a text-based interface. It provides access to the minibuffer's history and sets the maximum display height in lines. Use it to retrieve historical input entries or control the visible size of the minibuffer during interactive sessions.",
-      "description_length": 301,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Layout",
-      "library": "chamo",
-      "description": "This module handles the serialization and deserialization of window layouts, allowing applications to persist and restore complex UI configurations. It defines data structures like `layout_window`, `layout_contents`, and `layout_view` to represent window geometry, container types, and view-specific metadata. Concrete use cases include saving the position and size of windows between sessions and reconstructing notebook or paned layouts from stored configuration files.",
-      "description_length": 471,
-      "index": 34,
+      "description": "This module defines configuration settings for a changelog mode, including key bindings and file handling. It works with strings for mode names and configuration file paths, and uses lists of key states for binding definitions. Concrete use cases include reading and writing the configuration file, and adding key bindings specifically for interacting with changelog entries in a source view.",
+      "description_length": 392,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
@@ -290,84 +66,316 @@
       "library": "chamo",
       "description": "This module manages application preferences, specifically providing access to a table of source view settings and an action to edit preferences asynchronously. It works with OCaml data structures like tables and Lwt promises. Concrete use cases include retrieving source view configurations and launching the preferences editor in a GUI application.",
       "description_length": 349,
-      "index": 35,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Chamo.Multiclip",
+      "module_path": "Chamo.Core_rc",
       "library": "chamo",
-      "description": "This module manages clipboards that store multiple named text entries with optional abstract descriptions. It supports creating, adding, retrieving, and removing entries by unique identifiers, and provides persistent storage to load and save clipboards from files. The module is useful for applications requiring a categorized clipboard history, such as text snippet managers or GUI-based copy-paste tools.",
-      "description_length": 406,
-      "index": 36,
+      "description": "This module manages reading from and writing to a configuration file, handling UTF-8 encoding settings. It provides direct access to the config file name and encoding option, along with functions to persist and load configuration data. It is used to store and retrieve application-specific settings in a structured file format.",
+      "description_length": 327,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Chamo.Ocamloutput",
+      "module_path": "Chamo.Gui",
       "library": "chamo",
-      "description": "This module manages the output from evaluating OCaml code in an interactive environment. It provides access to the default output object, creates it if necessary, and handles printing of output lines through a customizable text output function. It is used to capture and display results from OCaml expressions evaluated at runtime.",
-      "description_length": 331,
-      "index": 37,
+      "description": "This module manages graphical windows and user interaction through commands and prompts. It provides functions to create and manipulate windows, execute commands in new windows, and handle user input via a minibuffer. Key data structures include `gui_window` and `gui_windows`, with use cases like launching interactive commands and maintaining command history.",
+      "description_length": 361,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Chamo.Com_history",
+      "module_path": "Chamo.Misc",
       "library": "chamo",
-      "description": "Stores and manages a list of previously executed commands. Provides operations to add a command to the history, retrieve the full history as a list of strings, and initialize the history system once core configuration is loaded. Useful for implementing command-line interfaces with history navigation or persistent command logging.",
-      "description_length": 331,
-      "index": 38,
+      "description": "This module provides functions for string manipulation, file operations, and list processing, along with error handling, resource cleanup, and user interaction via minibuffer prompts. It operates on strings, files, directories, string lists, and UTF-8 encoded data, incorporating asynchronous input handling with Lwt.t and LablGTK-specific state management. Use cases include text processing, logging, directory traversal, safe resource deallocation, and GUI-driven user input workflows.",
+      "description_length": 487,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Chamo.Mode_makefile_rc",
+      "module_path": "Chamo.Messages",
       "library": "chamo",
-      "description": "This module defines configuration settings for a makefile editing mode, including key bindings and user configuration file handling. It works with key state lists and strings to map input events to commands. Concrete use cases include reading and writing the mode's configuration file, and adding custom key bindings specific to makefile syntax.",
+      "description": "This module defines string constants for predefined application messages, including software metadata, user interface labels, and error templates. It provides direct access to static message values used for display or configuration purposes. Useful for consistent labeling in GUI elements, error reporting, and application metadata presentation.",
       "description_length": 345,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Chamo.Mode_ocaml_rc",
-      "library": "chamo",
-      "description": "This module defines configuration parameters and key bindings for editing OCaml files, including global and local configuration file handling, color settings for call visualization, and functions to bind keyboard shortcuts to commands. It works with strings, key state lists, color values, and association lists for commands and key bindings. Concrete use cases include setting up custom key shortcuts for OCaml compilation or analysis tools and configuring display colors for non-tail call indicators in an editor.",
-      "description_length": 515,
-      "index": 40,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Chamo.Constant",
       "library": "chamo",
-      "description": "This module provides operations to define command identifiers and configuration parameters for a GUI application, using string constants to represent user actions like file editing, UI configuration, and window management, alongside integer constants for system-level settings such as history and log sizes. The string identifiers map to internal logic for behaviors including help display, plugin reloading, and exit handling, while the integer constants tune application behavior. It is used to standardize UI interactions, manage state transitions, and enforce consistent configuration across the system.",
-      "description_length": 607,
+      "description": "This module defines string constants for user commands and UI actions in a graphical application, enabling operations like window management, file handling, plugin control, and interface updates. These constants act as identifiers to trigger specific behaviors, such as reloading views, displaying documentation, or executing exit routines, primarily serving user interaction workflows in GUI-driven systems.",
+      "description_length": 408,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Com_history",
+      "library": "chamo",
+      "description": "Stores and manages a list of previously executed commands. Provides operations to add a new command to the history, retrieve the full history as a list of strings, and initialize the history after core configuration is loaded. Useful for implementing command-line interfaces with history navigation or persistent command logging.",
+      "description_length": 329,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Chamo.Bookmarks",
+      "library": "chamo",
+      "description": "This module implements a generic bookmark system that allows creating, retrieving, modifying, and removing bookmarks with string keys and arbitrary data values. It supports loading and storing bookmarks to files using custom serialization functions or Ocf wrappers. Use cases include persisting user-defined bookmarks in applications like text editors or document viewers.",
+      "description_length": 372,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Chamo.Commands",
+      "library": "chamo",
+      "description": "This framework enables defining asynchronous commands with argument parsing and execution chaining, supporting dynamic command creation and Lwt-based workflows. It operates on command descriptors, string arrays for arguments, and key binding configurations using `Stk.Key.keystate` or string-encoded shortcuts, while managing global state with fallback defaults. Typical use cases include building extensible command systems with pre/post-execution hooks, context-aware key binding updates in windowing interfaces, and orchestrating async operations with dependency sequencing.",
+      "description_length": 577,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Layout",
+      "library": "chamo",
+      "description": "This module handles the serialization and deserialization of window layouts to and from XML files. It defines data structures for representing window positions, sizes, and nested UI components such as notebooks and panes, along with their associated attributes and child elements. It is used to persist and restore complex GUI configurations, such as multi-window editors or tool layouts, by saving window geometry and structure to disk and reconstructing it later.",
+      "description_length": 465,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Outputs",
+      "library": "chamo",
+      "description": "This module manages an output window with tabbed notebooks, allowing the display and organization of multiple output objects. It provides a central interface for retrieving or creating the main output window and adding output tabs dynamically. Concrete use cases include displaying logs, results, or diagnostics in separate tabs within a GUI application.",
+      "description_length": 354,
+      "index": 17,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Chamo.Gui_rc",
+      "library": "chamo",
+      "description": "This module manages the configuration file for window settings, providing functions to read and write the file, along with options for key bindings and history size. It works with basic types like integers and strings, as well as structured types such as key state lists and Ocf configuration groups. Concrete use cases include setting the abort key binding (e.g., C-g), defining global window key bindings, and adjusting minibuffer history size.",
+      "description_length": 446,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Binannot",
+      "library": "chamo",
+      "description": "This module processes OCaml compiler metadata from `.cmt` files to extract detailed information about expressions, types, and locations. It supports querying by source position, mapping untyped ASTs, and folding over expression identifiers to analyze code structure. Concrete use cases include building custom linters, type-aware refactoring tools, and source-level debugging utilities.",
+      "description_length": 386,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Rc",
+      "library": "chamo",
+      "description": "This module handles loading and saving configuration files for both core and GUI components, using functions like `save_core`, `load_core`, `save_gui`, and `load_gui`. It works with configuration data through the `Ocf` module, particularly using `Ocf.path` and `Ocf.conf_option` types, and supports key binding management via `Stk.Key.keystate`. Concrete operations include adding configuration options to files, converting key event representations, and binding key states to actions in the application.",
+      "description_length": 504,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Find",
+      "library": "chamo",
+      "description": "This module traverses file hierarchies, applying filters such as depth limits, file types, regular expressions, and custom predicates to select files. It supports error handling modes like ignoring errors, printing to stderr, or raising exceptions, and can return filtered file paths as a list or process them with a callback. Concrete use cases include searching for log files matching a pattern, finding files modified within a specific time range, or traversing directories while excluding symbolic links.",
+      "description_length": 508,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Sourceview_expand",
+      "library": "chamo",
+      "description": "This module provides word expansion in source views using regular expressions, tracking expansion state with a context record that includes buffer content, position, and history. It supports operations like searching for matches, retrieving next propositions, and expanding words based on a pattern derived from the source view. Concrete use cases include auto-expanding identifiers or keywords in a text editor buffer during code input.",
+      "description_length": 437,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Sourceview_rc",
+      "library": "chamo",
+      "description": "This module configures the source view component of an editor, handling key bindings, syntax highlighting rules, and theme settings. It works with strings, key state lists, and configuration options to map file patterns to languages and modes, and to manage per-mode key bindings. Concrete use cases include setting up custom key shortcuts for specific editing modes and defining which syntax highlighting theme applies based on file names.",
+      "description_length": 440,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Minibuffer",
+      "library": "chamo",
+      "description": "This module manages minibuffer history operations, providing access to a shared history object and defining the maximum display height in lines. It works with `minibuffer_history` to store and retrieve historical input entries. Concrete use cases include maintaining user input history in interactive prompts and limiting displayed history based on available screen space.",
+      "description_length": 372,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Args",
+      "library": "chamo",
+      "description": "This module handles command line argument parsing and execution, supporting the addition and management of commands and options. It works with string lists for commands and arguments, and uses `Arg.spec` for defining option behaviors. Concrete use cases include building command-line interfaces with support for script execution via `-e` flags and handling initialization commands separately from runtime commands.",
+      "description_length": 414,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Multiclip_gui",
+      "library": "chamo",
+      "description": "Implements a graphical interface for managing multiple clipboard entries. Provides widgets to display and interact with clipboard history, supporting selection and storage of items. Designed for integration with a clipboard management application.",
+      "description_length": 247,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Xml",
+      "library": "chamo",
+      "description": "This module directly handles XML tree construction, parsing, and serialization. It provides functions to convert XML trees to strings, parse strings into XML trees, and read XML from files, operating on a custom recursive XML tree type composed of tags and text nodes. Concrete use cases include building, modifying, and querying XML documents programmatically, such as generating configuration files or processing XML-based data formats.",
+      "description_length": 438,
+      "index": 27,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Chamo.Multiclip",
+      "library": "chamo",
+      "description": "This module manages clipboards that store multiple named text entries with optional abstract descriptions. It supports creating, adding, retrieving, and removing entries by unique identifiers, and provides persistent storage to load and save clipboards from a file. Concrete use cases include managing a collection of code snippets with labels or storing frequently used text fragments with metadata for quick access.",
+      "description_length": 417,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Mode_ocaml",
+      "library": "chamo",
+      "description": "This module implements an OCaml source code editing mode with functions to indent lines or entire buffers, navigate between interface and implementation files, and display or copy type and identifier annotations based on `.annot` files. It operates on `sourceview` objects and string arrays, integrating directly with editor commands for interactive code manipulation. Concrete use cases include on-demand code indentation, type information lookup at the cursor position, and switching between `.ml` and `.mli` files.",
+      "description_length": 517,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.View_rc",
+      "library": "chamo",
+      "description": "This module manages configuration settings for an output view system, handling associations between file patterns and view names. It provides operations to read and write a configuration file, supporting dynamic view selection based on filename matches or a default view. Concrete use cases include setting up custom display rules for log files or source code based on naming conventions.",
+      "description_length": 388,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Multiclip_view",
+      "library": "chamo",
+      "description": "This module implements multi-clipboard views with support for creating, copying, and managing multiple clipboard entries. It works with `view` structures and integrates with minibuffers, clipboxes, and storable clipboard data. Concrete use cases include copying selected content to named clipboards, removing clipboard entries, and pasting from a source view into a target context.",
+      "description_length": 381,
+      "index": 31,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Chamo.View",
+      "library": "chamo",
+      "description": "This module manages view factories for creating or reusing GUI views based on file types or extensions. It provides functions to register, retrieve, and iterate over factories, as well as to open or create views with specific attributes or XML configurations. Concrete use cases include associating file extensions with specific view types and dynamically instantiating views when opening files in a GUI application.",
+      "description_length": 416,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Mode_makefile",
+      "library": "chamo",
+      "description": "This module defines the syntax highlighting and parsing rules specific to Makefiles for use in a source viewer. It includes tokenization of Makefile directives, variable assignments, and command blocks. A concrete use case is enabling code editing interfaces to display Makefile content with structured visual cues.",
+      "description_length": 315,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Mode_makefile_rc",
+      "library": "chamo",
+      "description": "This module defines configuration settings and key bindings specific to the makefile editing mode, including operations to read and write the user's configuration file. It works with key state lists and strings to map keyboard shortcuts to commands, enabling customized navigation and editing actions. Concrete use cases include setting up key bindings for building targets or navigating dependencies directly within a makefile.",
+      "description_length": 428,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Ocamloutput",
+      "library": "chamo",
+      "description": "This module manages the output display for evaluating OCaml code in an interactive environment. It provides access to the default ocamltop output object, creates it if missing, and prints OCaml execution results to a specified text output. Use it to capture and display OCaml session outputs programmatically, such as in custom REPLs or logging systems.",
+      "description_length": 353,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Sourceview",
+      "library": "chamo",
+      "description": "This module enables text editing workflows through buffer management, source code navigation, and syntax-aware customization. It operates on `sourceview` and `buffered_file` types to support tasks like multi-buffer editing, undo/redo history tracking, and filename-driven syntax mode selection, with features such as clipboard manipulation, cursor positioning, and display configuration (e.g., line numbers, wrap modes). Use cases include source code modification with interactive commands, encoding-aware file handling, and persistent buffer state management for collaborative or multi-file editing sessions.",
+      "description_length": 609,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Fstack",
+      "library": "chamo",
+      "description": "This module implements a stack with bidirectional navigation capabilities, allowing elements to be pushed, popped, and revisited using a forward operation. It maintains two separate stacks internally to track navigation history, enabling users to move backward and forward through previously accessed elements, similar to a web browser's history management. The module supports operations like `push`, `pop`, `forward`, `top`, and checks for navigability with `can_forward`, working with any data type `'a` to manage structured histories in interactive applications.",
+      "description_length": 566,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Ocamlbuild",
+      "library": "chamo",
+      "description": "This module handles OCaml compilation tasks, particularly with ocamlbuild, by providing functions to generate build commands, capture and analyze compilation output, and navigate to errors or warnings in source files. It works with strings for file paths and commands, integers for positioning, and a custom `problem` type that describes compilation issues with locations and messages. Concrete use cases include running ocamlbuild commands, parsing their output for errors, and automatically navigating users to problem locations in a source view.",
+      "description_length": 548,
+      "index": 38,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Chamo.Mode_changelog",
+      "library": "chamo",
+      "description": "This module provides a function to add a new day entry in a sourceview buffer for ChangeLog files, using the current username and usermail. It works with the sourceview data structure and string arrays for user information. A concrete use case is automatically inserting date headers in ChangeLog files when new entries are created.",
+      "description_length": 332,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Multiclip_rc",
+      "library": "chamo",
+      "description": "This module configures the \"multiclip\" view by managing key bindings and reading/writing configuration files. It works with key states, strings, and configuration options to define user interactions. Concrete use cases include binding keyboard shortcuts to commands and persisting those settings to a file.",
+      "description_length": 306,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Minibuffer_rc",
+      "library": "chamo",
+      "description": "This module manages the configuration of a minibuffer interface, handling key bindings, exit keys, and history-specific controls. It works with key state lists, strings for command names, and configuration files to define interaction behaviors. Concrete use cases include setting custom key combinations to trigger commands, defining keys that exit the minibuffer, and loading or saving these configurations to a file.",
+      "description_length": 418,
       "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Ocaml_lexer",
+      "library": "chamo",
+      "description": "This module implements lexical analysis for OCaml code, focusing on token recognition (keywords, operators, literals), error handling, and indentation-sensitive parsing. It manages structured data like token streams, error diagnostics, source locations, and indentation states through block stacks and newline tracking. Key applications include parsing nested syntax (e.g., modules, structs) and handling context-dependent lexing rules for comments, strings, and parenthetical expressions.",
+      "description_length": 489,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Chamo.Log",
+      "library": "chamo",
+      "description": "This module supports logging operations with configurable severity levels, output formatting, and UI visibility controls. It utilizes persistent level-keyed maps for structured log grouping and ordered traversal, while integrating with text-based UI components to display logs in interactive windows. Typical applications include real-time log monitoring, environment-specific logging configurations, and structured analysis of hierarchical log data.",
+      "description_length": 450,
+      "index": 43,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Chamo",
       "library": "chamo",
-      "description": "This module orchestrates a comprehensive development environment with integrated UI, configuration, and language tooling. It centers around `gui_window` and `sourceview` data structures, supporting tabbed output management, multi-clipboard views, and customizable editing modes for OCaml, Makefiles, and ChangeLog files. Users can compile OCaml code with error navigation, inspect types from `.cmt` files, indent code, and navigate between `.ml` and `.mli` files. Additional features include structured logging, XML processing, persistent bookmarks, and Lwt-based asynchronous command execution, all configurable through UTF-8 encoded files for key bindings, themes, and window layouts.",
-      "description_length": 686,
-      "index": 42,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Chamo_main",
-      "library": "chamo.main",
-      "description": "This module initializes and configures the core runtime environment for Chamo, handling setup tasks such as loading plugins, registering modules, and starting the event loop. It works directly with module descriptors, plugin registries, and runtime configuration structures. Use this module to bootstrap a custom Chamo-based application with loaded extensions and initialized services.",
-      "description_length": 385,
-      "index": 43,
+      "description": "This module provides operations for command parsing, structured data navigation, persistent state management, syntax-directed editing, and XML tree manipulation. It works with string lists, recursive XML node types, token streams, source views, and UI components, supporting use cases like multi-mode code editing (OCaml/Makefile), user preference persistence, XML configuration generation, and interactive GUI layout control. Key patterns include abstract data traversal, mode-specific syntax handling, and declarative UI customization.",
+      "description_length": 537,
+      "index": 44,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 75,
-    "meaningful_modules": 44,
-    "filtered_empty_modules": 31,
-    "retention_rate": 0.5866666666666667
+    "meaningful_modules": 45,
+    "filtered_empty_modules": 30,
+    "retention_rate": 0.6
   },
   "statistics": {
-    "max_description_length": 712,
-    "min_description_length": 282,
-    "avg_description_length": 434.47727272727275,
-    "embedding_file_size_mb": 0.16026020050048828
+    "max_description_length": 609,
+    "min_description_length": 247,
+    "avg_description_length": 418.4,
+    "embedding_file_size_mb": 0.6525716781616211
   }
 }

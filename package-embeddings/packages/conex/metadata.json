@@ -1,373 +1,317 @@
 {
   "package": "conex",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 44,
-  "creation_timestamp": "2025-07-15T23:14:03.069314",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 37,
+  "creation_timestamp": "2025-08-15T12:38:27.194341",
   "modules": [
     {
-      "module_path": "Conex_unix_persistency",
-      "library": "conex.unix",
-      "description": "This module performs file system operations such as creating directories, reading and writing files, and checking file types. It works with strings representing file paths and provides error handling through result types. Concrete use cases include safely writing files with atomic replacement, collecting directory contents, and managing file existence checks and deletions.",
-      "description_length": 375,
+      "module_path": "Conex_openssl.O_V",
+      "library": "conex.openssl",
+      "description": "This module computes cryptographic digests of strings and structured data, and verifies digital signatures against public keys. It operates on strings, encoded wire data, and maps of identifiers to digests, producing signature validation results or errors. Use it to ensure data integrity and authenticity in cryptographic operations involving OpenSSL.",
+      "description_length": 352,
       "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Conex_openssl.V",
+      "library": "conex.openssl",
+      "description": "This module verifies cryptographic signatures using RSA-PSS with SHA256 and checks OpenSSL version compatibility. It operates on string-based keys, data, and signatures, producing verification results or version check outcomes. It is used to validate signed resources in contexts requiring secure cryptographic verification via OpenSSL.",
+      "description_length": 336,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Conex_openssl",
+      "library": "conex.openssl",
+      "description": "This module provides cryptographic verification using RSA-PSS with SHA256, signature validation against public keys, and OpenSSL version compatibility checks. It works with string-based keys, data, signatures, and identifier-to-digest mappings. It is used to validate signed resources and ensure data integrity in secure cryptographic workflows involving OpenSSL.",
+      "description_length": 363,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_unix_private_key",
+      "library": "conex.unix",
+      "description": "This module manages private key storage on Unix systems by listing available key identifiers, reading key contents with timestamps, and writing keys securely. It operates on identifiers, strings, and timestamp values from the Conex_resource module. Typical use cases include loading and saving cryptographic private keys for authentication or signing operations.",
+      "description_length": 362,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Conex_unix_provider",
       "library": "conex.unix",
-      "description": "This module provides functions to create data providers backed by the Unix file system, supporting both read-write and read-only access. It works with file system paths and returns result values indicating success or failure of provider initialization. Concrete use cases include loading configuration or key material from disk, or setting up isolated storage roots for applications.",
-      "description_length": 383,
-      "index": 1,
+      "description": "This module provides functions to create file system-backed data providers, supporting both read-write and read-only access. It works with file system paths and returns result values encapsulating either an IO provider or an error message. Concrete use cases include initializing storage backends for applications that interact with local files, such as configuration loaders or persistent state managers.",
+      "description_length": 405,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Conex_unix_private_key",
+      "module_path": "Conex_unix_persistency",
       "library": "conex.unix",
-      "description": "This module manages private key storage on Unix systems. It provides operations to list available key identifiers, read key contents and timestamps, and write keys persistently. Use cases include loading and saving cryptographic private keys for authentication or encryption workflows.",
-      "description_length": 285,
-      "index": 2,
+      "description": "This module performs file system operations such as creating directories, reading and writing files, checking file types, and managing file paths with error handling. It works with strings representing file paths and provides result types for safe error propagation. Concrete use cases include safely writing files with atomic replacement, checking if a path exists, and listing directory contents.",
+      "description_length": 398,
+      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Conex_resource.Expression.KS",
       "library": "conex",
-      "description": "This module offers operations for managing ordered collections of key references, supporting set algebra (union, intersection, difference), element-wise transformations (`map`, `filter`), and ordered traversal via sequences. It works with immutable, sorted sets (`KS.t`) where elements are compared using a total ordering to enforce uniqueness and efficient lookups. These capabilities are particularly useful for access control policy composition, dependency resolution in package repositories, and maintaining verifiable audit trails of cryptographic key interactions.",
-      "description_length": 570,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_verify.Make",
-      "library": "conex",
-      "description": "This module computes raw and structured data digests and verifies cryptographic signatures over encoded wire data. It operates on strings, wire-encoded resources, and signature and key maps, producing digest values and validation errors. It is used to ensure data integrity and authenticity in signed resource exchanges.",
-      "description_length": 320,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_resource.Delegation",
-      "library": "conex",
-      "description": "Handles delegation data structures with paths, validity expressions, and termination flags. It supports converting to and from wire format, equality checks, and pretty-printing. Used to represent and persist delegation metadata in a package repository system.",
-      "description_length": 259,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_resource.Expression",
-      "library": "conex",
-      "description": "This module defines a recursive expression language for representing delegation keys with operations like quorum thresholds, logical AND, and OR compositions, integrating with key references, digests, and unsigned integers to evaluate access policies. It supports encoding and validating multi-sig key configurations and threshold-based authorization rules, particularly for package repositories. The child module provides ordered collections of key references with set algebra, element-wise transformations, and ordered traversal over immutable, sorted sets. Together, they enable complex policy composition, dependency resolution, and audit trail management through a combination of logical expressions and structured key set operations.",
-      "description_length": 739,
+      "description": "This module implements an immutable set abstraction for key references, supporting efficient membership queries, ordered traversal, and set algebra operations like union and difference. It operates on monotonic ordered collections of `keyref` elements, leveraging their inherent ordering for optimized transformations such as filtering, folding, and sequence conversions with controlled iteration direction. These capabilities are particularly useful for managing access control policies through authorization key sets, maintaining repository dependency graphs, and performing ordered digest comparisons in package management workflows.",
+      "description_length": 636,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_resource.Header",
-      "library": "conex",
-      "description": "This module defines the structure and serialization of a common header used for persistent resources on disk, including fields like version, creation timestamp, counter, epoch, name, and type. It provides functions to convert headers to and from a wire format, format them as strings, and construct counter-epoch identifiers. It is used to manage metadata for resources such as identities, authorizations, and release digests in a consistent binary and textual format.",
-      "description_length": 468,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_utils.M",
-      "library": "conex",
-      "description": "This module provides a comprehensive set of operations for manipulating string-keyed maps, including functional updates (insertion, deletion, merging), ordered key-based access, and safe/unsafe value retrieval. It supports transformations, filtering, and comparison operations, making it suitable for managing hierarchical configurations, dictionary-like structures, or structured data processing pipelines. Additional utilities for pretty-printing and sequence-based iteration enhance its applicability in debugging and data serialization tasks.",
-      "description_length": 546,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_verify.S",
-      "library": "conex",
-      "description": "This module computes raw and structured data digests and verifies cryptographic signatures against provided keys and signed data. It operates on strings, encoded wire data, and maps of identifiers to digests, producing validated signature results and error diagnostics. Concrete use cases include verifying signed software artifacts and validating cryptographic checksums in package management workflows.",
-      "description_length": 404,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_utils.LOGS-Tag",
-      "library": "conex",
-      "description": "This module defines operations for managing sets of log tags, enabling the creation, manipulation, and querying of tag sets. It works with the abstract type `set` representing a collection of unique tags. Concrete use cases include filtering log messages by tag, grouping logs under specific categories, and checking membership of tags within a set.",
-      "description_length": 349,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_utils.String",
-      "library": "conex",
-      "description": "This module provides string manipulation functions such as splitting (`cuts`, `cut`), slicing (`slice`), case conversion (`to_lower`), trimming whitespace (`trim`), and comparison (`compare`, `compare_insensitive`). It works directly with OCaml's built-in `string` type, offering operations for parsing, filtering, and transforming strings without external dependencies. Concrete use cases include path manipulation via `cuts`, prefix/suffix checks, safe string slicing, and case-insensitive comparisons for identifiers or configuration keys.",
-      "description_length": 542,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_resource.Digest",
-      "library": "conex",
-      "description": "This module handles digest values paired with their algorithm (`SHA256`), providing parsing, comparison, and serialization. It converts digests to and from string and wire format, ensuring correct encoding and decoding for storage or transmission. Use cases include verifying integrity of opam repository data and managing signed resource references.",
-      "description_length": 350,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_utils.Uint",
-      "library": "conex",
-      "description": "This module implements 64-bit unsigned integers with explicit overflow handling, supporting operations like increment with carry detection, comparisons, and conversions to and from strings and numeric types. It works directly with the abstract type `t`, representing values in the range [0, 2^64 - 1], and includes functions for parsing hexadecimal strings, converting to decimal strings, and safely casting from integers and floats. Concrete use cases include low-level arithmetic where overflow behavior must be controlled, such as in network protocols or embedded systems.",
-      "description_length": 575,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_resource.Key",
-      "library": "conex",
-      "description": "This module handles public key data structures with operations for serialization, deserialization, and identity computation. It works with keys composed of identifiers, timestamps, algorithms (`RSA`), and string-encoded key material, supporting exact equality checks and pretty-printing. It is used to parse and emit key data from wire formats, validate key consistency, and compute key identifiers using a hash function.",
-      "description_length": 421,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_verify.S_RSA_BACK",
-      "library": "conex",
-      "description": "This module verifies RSA-PSS signatures and computes SHA256 digests. It operates on strings for keys, data, signatures, and identifiers. Use it to authenticate data integrity and verify cryptographic signatures in secure communication protocols.",
-      "description_length": 245,
-      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Conex_resource.Wire",
       "library": "conex",
-      "description": "This module defines a structured format for encoding and decoding resource data used in persistent storage and digest computations. It supports operations to convert complex data structures like maps, lists, pairs, and integers into a canonical string representation, primarily for cryptographic verification and disk serialization. Concrete use cases include encoding resource headers with metadata (name, type, timestamp) and structured content (identities, authorizations, release digests) for secure storage and integrity checks.",
-      "description_length": 533,
+      "description": "This module defines a recursive algebraic data type for representing structured values used in wire encoding and decoding, including maps, lists, identifiers, integers, and compound types. It provides a `to_string` function that serializes these values into a string format used for digest computation and persistent storage. Concrete use cases include encoding resource metadata for disk storage and preparing data structures for cryptographic signing in package verification workflows.",
+      "description_length": 487,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_resource.Expression",
+      "library": "conex",
+      "description": "This module defines a recursive algebraic data type for representing key delegation expressions, supporting operations like quorum thresholds, logical conjunction, and disjunction. It works with key reference sets, identifiers, digests, and unsigned integers to model access control policies and repository metadata dependencies. Concrete use cases include evaluating authorization requirements against known keys, serializing and deserializing policy expressions for storage or transmission, and extracting key dependencies for validation or auditing purposes.",
+      "description_length": 561,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_resource.Digest",
+      "library": "conex",
+      "description": "This module handles digest values used to uniquely identify resources in the conex system. It provides operations to convert digests to and from string and wire representations, compare and check equality of digests, and format them for display. The module works with digests composed of an algorithm type and a string value, primarily used to verify integrity of resources like `Releases` and `Release` in storage and transmission.",
+      "description_length": 432,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_utils.S",
+      "library": "conex",
+      "description": "This module provides operations for creating, modifying, and querying ordered string sets, including union, intersection, difference, and membership checks, alongside transformations like mapping and filtering. It works with a concrete ordered string set type supporting efficient iteration, comparison, and ordered traversal. Typical use cases involve maintaining sorted collections of unique strings, filtering or transforming string data with set semantics, and serializing sets to lists or formatted output.",
+      "description_length": 511,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_resource.Header",
+      "library": "conex",
+      "description": "This module defines the structure and serialization of headers used for persistent resources on disk. It includes operations to convert headers to and from a wire format, pretty-print them, and format counter and epoch values. The module works with the `Wire.t` and `Header.t` types, which represent serialized and structured header data, respectively.",
+      "description_length": 352,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_resource.Digest_map",
+      "library": "conex",
+      "description": "This module supports dictionary operations for persistent, immutable maps where keys are cryptographic digests and values represent resource data like identities, access controls, or repository metadata. It provides functions for insertion, merging, filtering, ordered traversal, and sequence conversion, while respecting key ordering and enabling efficient lookups. These maps are used to manage versioned resources, regulate package access policies, and track cryptographic digests in opam repositories.",
+      "description_length": 505,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Conex_resource.Delegation",
+      "library": "conex",
+      "description": "Handles delegation data structures with paths, validity expressions, and termination flags. Provides equality checks, pretty-printing, conversion to and from wire format. Used to represent and persist hierarchical delegation information in the opam repository.",
+      "description_length": 260,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_resource.Root",
+      "library": "conex",
+      "description": "This module defines operations for constructing and manipulating root resource records, including adding cryptographic signatures and serializing to and from wire format. It works with structured data types such as timestamps, key maps, expressions, and signatures, along with file system paths for data and key storage. Concrete use cases include signing and verifying root resource data, and converting between in-memory and on-disk representations for persistence and transmission.",
+      "description_length": 484,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Conex_resource.Key",
+      "library": "conex",
+      "description": "This module handles public key data with operations to serialize, deserialize, and compare keys. It works with timestamped identifiers, cryptographic algorithms (`RSA`), and string-encoded keys, along with wire format representations. Use cases include parsing keys from storage, generating key identifiers via hashing, and validating key consistency in signed resources.",
+      "description_length": 371,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Conex_private.Make",
+      "library": "conex",
+      "description": "This module manages private key operations including generation, reading, and signing. It works with RSA backends, private key data types, and associated metadata like identifiers, timestamps, and bit lengths. Concrete use cases include generating RSA private keys with specified bit sizes, reading stored keys by identifier, and signing wire data using a given algorithm.",
+      "description_length": 372,
       "index": 16,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Conex_utils.Tree",
       "library": "conex",
-      "description": "This module implements a tree structure where edges are strings and nodes store lists of values. It supports operations like inserting a value at a given path, looking up values by path, and folding over the tree with path and value access. Use cases include hierarchical data representation, prefix-based lookups, and managing nested collections with string-indexed branches.",
-      "description_length": 376,
+      "description": "This module implements a tree structure where edges are strings and nodes store lists of values, supporting operations like insertion, lookup, folding, and pretty-printing. It allows building hierarchical data representations with path-based access, where paths are sequences of strings. Use cases include representing directory-like structures, accumulating values along paths, and diffing trees based on custom equality checks.",
+      "description_length": 429,
       "index": 17,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Conex_resource.Root",
+      "module_path": "Conex_verify.Make",
       "library": "conex",
-      "description": "This module manages root resources that regulate access to package data in the opam repository. It provides operations to construct, serialize, and manipulate root data, including adding cryptographic signatures and handling key and role metadata. Concrete use cases include initializing and updating repository root metadata with signed attestations and validating access policies.",
-      "description_length": 382,
+      "description": "This module computes cryptographic digests and verifies signatures for wire-encoded resources. It operates on strings, wire-encoded data, keys, and signatures, producing digest values and validation results. It is used to ensure data integrity and authenticity in cryptographic protocols.",
+      "description_length": 288,
       "index": 18,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Conex_resource.Digest_map",
+      "module_path": "Conex_utils.Uint",
       "library": "conex",
-      "description": "This module implements ordered map manipulations for digest-keyed dictionaries, supporting insertion, deletion, and structural transformations while preserving persistence. It operates on immutable maps indexed by resource digests, enabling efficient traversal, filtering, and ordered key searches. These capabilities are critical for managing opam repository metadata, such as consolidating release manifests or validating package integrity through digest comparisons.",
-      "description_length": 469,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_private.S_RSA_BACK",
-      "library": "conex",
-      "description": "This module defines operations for handling RSA private keys, including decoding, generating, and extracting public keys. It works with RSA key data structures, timestamps, and string-based identifiers. Concrete use cases include generating RSA key pairs, signing data using PSS, and converting private keys to public keys.",
-      "description_length": 323,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_resource.Signature",
-      "library": "conex",
-      "description": "This module handles cryptographic signatures for resources, providing operations to serialize and deserialize signatures to and from wire format, compare them for equality, and format them for output. It works with signature data structures containing identifiers, timestamps, algorithms, and raw signature strings. It is used to verify and store signatures of resources like team memberships or release digests in persistent storage.",
-      "description_length": 434,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_utils.S",
-      "library": "conex",
-      "description": "Implements a sorted string set with efficient membership checks, ordered traversal, and set algebra operations. It works with string collections structured as balanced trees, supporting transformations like `map`, `filter`, and `fold`, while preserving physical equality for performance. This is useful for deduplicating strings, ordered range queries, and scenarios requiring precise control over set comparisons or iterative processing in sorted order.",
-      "description_length": 454,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_utils.LOGS",
-      "library": "conex",
-      "description": "This module provides functions for logging messages at different severity levels\u2014debug, info, and warn\u2014along with a counter for warning messages. It works with a custom source type (`src`) and leverages the `Tag` submodule for log tagging. Concrete use cases include tracking runtime events, debugging application flow, and monitoring for potential issues through structured logging.",
+      "description": "This module implements 64-bit unsigned integers with explicit overflow handling, supporting operations like increment with carry detection. It provides conversions to and from strings (hexadecimal and decimal), comparison, and safe integer parsing. Use cases include low-level arithmetic requiring overflow tracking, such as cryptographic counters or bit-accurate data serialization.",
       "description_length": 383,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_private.Make",
-      "library": "conex",
-      "description": "This module handles private key operations including generation, reading, and signing. It works with RSA backends, private key values, and associated metadata like identifiers and timestamps. Use it to create and manage private keys, sign data, or retrieve key details such as bit length and creation time.",
-      "description_length": 306,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_resource.Targets",
-      "library": "conex",
-      "description": "This module constructs and manipulates target resources that regulate access to package data in the opam repository. It supports creating target records with metadata such as timestamps, keys, and expressions, and modifies them by adding signatures. The module serializes and deserializes these records to and from a wire format, enabling storage and transmission while preserving structure and integrity.",
-      "description_length": 405,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_resource.Target",
-      "library": "conex",
-      "description": "This module defines operations for validating, serializing, and comparing target resources, specifically checking filename conventions, converting to and from wire format, and printing. It works with the `t` type representing a file path, digest list, and size. Used when handling opam repository targets to ensure correct structure and encoding.",
-      "description_length": 346,
-      "index": 26,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_private.FS",
-      "library": "conex",
-      "description": "This module defines IO operations for managing private key identifiers, including listing available IDs, reading key content with timestamps, and writing key data persistently. It works with identifiers, strings, and timestamp options, returning result types for error handling. Concrete use cases include loading and saving private keys with metadata tracking.",
-      "description_length": 361,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex.Make",
-      "library": "conex",
-      "description": "This module verifies cryptographic signatures for package releases and repository metadata using provided IO implementations. It operates on repository maps of resource digests to warrantors and handles target lists signed by authors. Functions support root verification, target validation, and diff-based repository updates with configurable quorum and validity checks.",
-      "description_length": 370,
-      "index": 28,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Conex_utils.Uint_map",
       "library": "conex",
-      "description": "This module provides ordered collection operations for maps with unsigned integers as keys, supporting standard map functions like insertion, lookup, and iteration alongside specialized utilities for merging list-valued entries, maintaining ascending key order during traversal, and transforming bindings. It works with map structures that enforce key ordering and enable efficient querying, filtering, and aggregation operations. Typical use cases include managing ordered associations where keys are non-negative integers, combining maps with list values, or processing sequences of key-value pairs with ordered traversal requirements.",
-      "description_length": 637,
-      "index": 29,
+      "description": "This module implements a sorted associative array for unsigned integer keys, enabling ordered traversal, key-range selection, and efficient lookups. It supports transformations through filtering, partitioning, and merging operations while maintaining compatibility with lists and sequences for data interchange. Typical applications include tracking numeric identifiers in sorted order, aggregating values across key ranges, or building indexed collections from sequential data streams.",
+      "description_length": 486,
+      "index": 20,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Conex.Make",
+      "library": "conex",
+      "description": "This module verifies cryptographic signatures for package releases and repository metadata using provided I/O and cryptographic implementations. It operates on repository data structures that map resource digests to warrantors, validating trust based on root and target verification. Concrete use cases include checking the integrity of downloaded packages and ensuring repository consistency across updates.",
+      "description_length": 408,
+      "index": 21,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Conex_private.S",
+      "module_path": "Conex_resource.Target",
       "library": "conex",
-      "description": "This module defines operations for managing private keys, including generating, reading, and signing data. It works with private key objects (`t`), identifiers, timestamps, and cryptographic algorithms. Functions support key creation with specified bit lengths, signature generation, and public key extraction, handling errors related to decoding, reading, or missing keys.",
-      "description_length": 373,
-      "index": 30,
+      "description": "This module defines operations for validating, serializing, and comparing target resources, specifically checking filename conventions, converting to and from wire format, and comparing structural equality. It works with the `t` type, representing a target resource with a filename, digest list, and size. Concrete use cases include verifying opam repository file paths, serializing targets for storage or transmission, and comparing targets for equality in package management workflows.",
+      "description_length": 487,
+      "index": 22,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Conex",
+      "module_path": "Conex_resource.Targets",
       "library": "conex",
-      "description": "This module verifies cryptographic signatures for package releases and repository metadata using custom IO implementations. It operates on repository maps that associate resource digests with sets of warrantors, supporting root verification, target validation, and repository updates via diffs. Functions include checking author signatures over target lists, validating package integrity against trusted roots, and applying repository changes with quorum and validity constraints. Example usage includes verifying a package release against a trusted root key or updating a repository state while enforcing multi-signature requirements.",
-      "description_length": 635,
-      "index": 31,
+      "description": "This module constructs and manipulates target resources that regulate access to package data in the opam repository. It supports creating targets with metadata such as timestamps, keys, delegations, and signatures, and provides operations to add signatures, compare targets, serialize to and from wire format, and pretty-print. Concrete use cases include managing trust metadata for package repositories and verifying signed target files during repository updates.",
+      "description_length": 464,
+      "index": 23,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Conex_diff_provider",
+      "module_path": "Conex_resource.Signature",
       "library": "conex",
-      "description": "This module provides functions to apply a list of diffs to a data provider and to compute the resulting provider along with the applied diffs. It works with `Conex_io.t` as the primary data structure, representing the provider state, and `Conex_diff.t` for representing changes. Concrete use cases include updating provider data incrementally and tracking changes as diffs for synchronization or versioning.",
-      "description_length": 407,
-      "index": 32,
+      "description": "This module handles cryptographic signatures for resources, including parsing from and converting to wire format, equality checks, and pretty-printing. It works with signature data containing identifiers, timestamps, algorithms (`RSA_PSS_SHA256`), and raw signature strings. Concrete use cases include verifying and serializing signatures for `Author`, `Team`, and `Authorisation` resources during disk storage or network transmission.",
+      "description_length": 435,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Conex_io",
+      "module_path": "Conex_utils.M",
       "library": "conex",
-      "description": "This module defines an IO provider interface for reading and writing files using paths as keys, supporting basic file types. It includes functions to read and write root and target resources, compute checksums for files, and list available targets. Use cases include loading and persisting cryptographic resource files, validating file structure, and generating checksum trees for directory contents.",
-      "description_length": 400,
-      "index": 33,
-      "embedding_norm": 1.0
+      "description": "This module offers operations for creating, modifying, and querying maps with string keys, supporting insertion, deletion, ordered traversal, and conversion to/from lists or sequences. It emphasizes ordered key handling and provides both safe (option-returning) and total access variants for lookups, along with utilities for filtering, merging, and pretty-printing. Typical use cases include managing configuration data, processing key-value pairs with deterministic ordering, or transforming hierarchical data structures.",
+      "description_length": 523,
+      "index": 25,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Conex_utils",
+      "module_path": "Conex_utils.String",
       "library": "conex",
-      "description": "This module combines list and set operations, hierarchical tree structures, and monadic error handling to manage complex data transformations and path-based computations. It provides data types for trees with string-labeled edges, custom path representations, and result-aware operations, enabling tasks like hierarchical data insertion, structured traversal, and safe path validation. Functions for logging with tag sets, unsigned integer arithmetic with overflow detection, and string manipulation support use cases such as structured logging, low-level numeric processing, and path parsing. Submodules enhance these capabilities with ordered maps, sorted string sets, and functional updates, allowing efficient configuration management, ordered data aggregation, and precise control over string and numeric transformations.",
-      "description_length": 826,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_repository",
-      "library": "conex",
-      "description": "This module manages repository state with operations to access and update targets, root metadata, and key directories. It works with trees of digests, sizes, and signatures, and handles validation of target files against expected hashes and sizes. Concrete use cases include verifying file integrity in a repository and managing delegation of trust to subdirectories.",
-      "description_length": 367,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_private",
-      "library": "conex",
-      "description": "This module provides interfaces for private key management, focusing on RSA-specific operations like key generation, signing, and public key extraction. It works with private key data structures, identifiers, and timestamps, supporting core actions such as loading, saving, and signing data with result-based error handling. Submodules handle RSA key details, cryptographic backends, and IO operations for persistent key storage. Examples include generating RSA key pairs, signing messages with PSS, and managing key identifiers with timestamps.",
-      "description_length": 545,
-      "index": 36,
+      "description": "This module provides string manipulation functions including splitting, slicing, trimming, case conversion, and prefix/suffix checks. It operates on standard OCaml strings and supports operations like `cut` for splitting at a separator or `slice` for extracting substrings. Concrete use cases include parsing file paths, validating string formats, and normalizing input for case-insensitive comparisons.",
+      "description_length": 403,
+      "index": 26,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Conex_verify",
       "library": "conex",
-      "description": "This module enables cryptographic verification tasks such as base64 decoding, public key validation, and signature checking, working with identifiers, keys, and signatures from the broader Conex system. Its core functions support verifying signed resources in trust-on-first-use setups and validating cryptographic material during secure configuration updates. Submodules handle digest computation, signature verification over encoded data, and RSA-PSS signature checks, producing validation results, checksums, or error diagnostics. Use it to authenticate software artifacts, verify signed packages, or ensure data integrity in secure communication flows.",
-      "description_length": 656,
-      "index": 37,
+      "description": "This module computes cryptographic digests and verifies signatures for wire-encoded resources. It operates on strings, keys, and signatures to produce digest values and validation results, ensuring data integrity and authenticity. Concrete use cases include validating signed messages and verifying resource authenticity in network protocols.",
+      "description_length": 342,
+      "index": 27,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Conex_utils",
+      "library": "conex",
+      "description": "This module offers utilities for string manipulation, unsigned integer arithmetic with overflow detection, hierarchical tree structures with string-keyed nodes, and path-based data transformations. It operates on collections like sets and maps, serialized integer representations, and path-like sequences, supporting use cases such as directory tree modeling, safe numeric operations, and structured logging workflows. Key patterns include monadic error handling, tree traversal, and path comparison for hierarchical data management.",
+      "description_length": 533,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_repository",
+      "library": "conex",
+      "description": "This module manages repository state with operations to access and update root metadata, key directories, data directories, and target files. It works with custom types for repository handles, paths, digests, and validation results, supporting structured manipulation of cryptographic resources. Concrete use cases include validating target file integrity, collecting delegation metadata, and creating or updating repository structures with verified cryptographic expressions.",
+      "description_length": 476,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_diff_provider",
+      "library": "conex",
+      "description": "This module applies diffs to existing data providers, enabling incremental updates. It works with `Conex_io.t` and `Conex_diff.t` types to compute and apply changes. Use it to efficiently update datasets based on versioned differences without full replacement.",
+      "description_length": 260,
+      "index": 30,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Conex_opam_encoding",
       "library": "conex",
-      "description": "This module decodes and encodes Opam file content to and from a structured in-memory representation. It operates on strings in Opam file format and converts them to or from `Conex_resource.Wire.t` values. Use this module to read Opam files into a structured format or write structured data back to Opam file syntax.",
-      "description_length": 315,
-      "index": 38,
+      "description": "This module provides `decode` and `encode` functions to convert between a string in opam file format and the `Conex_resource.Wire.t` data structure. It directly works with opam-formatted strings and the `Wire.t` type representing decoded opam data. It is used to read and write opam repository metadata files while preserving their specific format.",
+      "description_length": 348,
+      "index": 31,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Conex_resource",
+      "library": "conex",
+      "description": "This module provides operations for managing versioned, cryptographically signed resources with structured metadata, including serialization to wire formats, integrity verification via cryptographic digests, and manipulation of immutable maps indexed by timestamped identifiers. It works with hierarchical data structures like signed headers containing typed resources, delegation expressions for access control, and digest-mapped collections of package metadata (e.g., release manifests). Specific use cases include tracking identity ownership in package repositories, enforcing authorization policies through signed delegation records, and maintaining verifiable histories of repository state changes using epoch counters and timestamped cryptographic proofs.",
+      "description_length": 761,
+      "index": 32,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Conex_diff",
       "library": "conex",
-      "description": "This module decodes patch files into structured diff hunks and supports applying diffs to strings. It handles operations like file edits, renames, deletions, and creations, along with formatting and equality checks for these operations. Use cases include parsing Git-style patches, generating modified file content, and tracking changes across file versions.",
-      "description_length": 358,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Conex_resource",
-      "library": "conex",
-      "description": "This module manages persistent resource data with structured headers, cryptographic signatures, and content-addressed digests, enabling secure storage and verification of metadata in package repositories. It provides types for signed resources, delegation expressions, and key sets, along with operations for serialization, integrity checking, and policy evaluation\u2014supporting tasks like root metadata signing, release digest tracking, and access control enforcement. Submodules handle low-level header encoding, digest comparisons, and key management, while higher-level components model delegation hierarchies, target resources, and immutable digest-mapped collections. Examples include verifying repository root signatures, constructing threshold-based authorization policies, and persisting release manifests with cryptographic digests.",
-      "description_length": 840,
-      "index": 40,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_openssl.V",
-      "library": "conex.openssl",
-      "description": "This module provides cryptographic verification operations using RSA-PSS with SHA256, including signature validation and digest computation. It works with string-based keys, data, and signatures, returning result types that indicate success or specific verification errors. It is used to verify the integrity and authenticity of data using OpenSSL's command-line interface.",
-      "description_length": 373,
-      "index": 41,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Conex_openssl.O_V",
-      "library": "conex.openssl",
-      "description": "This module computes cryptographic digests of strings and structured data, and verifies digital signatures against known keys. It operates on strings, encoded wire data, and maps of identifiers to digests, producing verified identity mappings and error reports. Concrete use cases include validating artifact signatures using preloaded keys and detecting digest mismatches during verification workflows.",
+      "description": "This module decodes patch files into structured hunks and operations, supporting the application of diffs to strings and extraction of modified identifiers. It works with strings, lists of hunk values, and operation types like Edit, Rename, and Delete. Concrete use cases include parsing Git-style diffs, applying patches to text files, and tracking changes to file identifiers in a directory structure.",
       "description_length": 403,
-      "index": 42,
+      "index": 33,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Conex_openssl",
-      "library": "conex.openssl",
-      "description": "This module enables cryptographic verification and digest computation using OpenSSL's command-line interface, focusing on RSA-PSS with SHA256. It supports signature validation, digest generation, and identity mapping verification, operating on strings, encoded data, and key-value mappings. Users can verify artifact signatures, detect digest mismatches, and ensure data integrity using string-based keys and signatures. Example workflows include validating signed software artifacts and confirming data authenticity through preloaded keys.",
-      "description_length": 540,
-      "index": 43,
-      "embedding_norm": 0.9999998807907104
+      "module_path": "Conex",
+      "library": "conex",
+      "description": "This module verifies cryptographic signatures and attests to the integrity of package releases using a repository of signed resource digests. It operates on signed data structures including public keys and package manifests, mapping resource digests to sets of warrantors. Concrete use cases include validating package authenticity in a community repository and verifying author identities through cryptographic proofs.",
+      "description_length": 419,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_private",
+      "library": "conex",
+      "description": "This module handles private key operations for RSA and other cryptographic backends, providing functions for key generation, loading, and signing. It works with abstract private key types defined in signatures like `S` and `RSA_BACK`, along with filesystem integration via `FS`. Concrete use cases include securely generating private keys, signing data with a loaded key, and loading keys from disk in a backend-specific format.",
+      "description_length": 428,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Conex_io",
+      "library": "conex",
+      "description": "This module defines an IO provider interface for reading and writing files identified by paths, supporting operations like `read`, `write`, `read_dir`, and `exists`, and works with file types and paths from `Conex_utils`. It includes functions to handle resource files such as reading and writing root and target data, computing checksums, and handling errors like `NotFound` or `ParseError`. Concrete use cases include loading and validating configuration files, managing directory contents, and ensuring data integrity through checksum calculations.",
+      "description_length": 551,
+      "index": 36,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 44,
-    "meaningful_modules": 44,
+    "total_modules_in_package": 37,
+    "meaningful_modules": 37,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 840,
-    "min_description_length": 245,
-    "avg_description_length": 446.54545454545456,
-    "embedding_file_size_mb": 0.160247802734375
+    "max_description_length": 761,
+    "min_description_length": 260,
+    "avg_description_length": 432.81081081081084,
+    "embedding_file_size_mb": 0.5365085601806641
   }
 }

@@ -1,277 +1,213 @@
 {
   "package": "csvfields",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 32,
-  "creation_timestamp": "2025-07-15T23:12:16.082240",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 24,
+  "creation_timestamp": "2025-08-15T12:22:31.755876",
   "modules": [
     {
       "module_path": "Csvfields.Xml.Restriction.Format",
       "library": "csvfields",
-      "description": "This module parses string representations into specific format types used for XML field restrictions, including string, decimal, date, datetime, time, and integer. It directly supports converting user-defined format strings into typed values for validating or generating XML data structures. Use this module to enforce precise data formatting when mapping OCaml types to XML for external systems like Excel.",
-      "description_length": 407,
+      "description": "Handles formatting and parsing of XML field values based on predefined data types such as strings, decimals, dates, and times. It supports converting these values to and from string representations required for Excel communication. Use cases include validating and transforming data during XML serialization and deserialization for spreadsheet interchange.",
+      "description_length": 356,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Csvfields.Csv.Csvable",
+      "module_path": "Csvfields.Csv.Make_csvable_simple",
       "library": "csvfields",
-      "description": "This module defines a type `t` and associated functions for converting between CSV rows and OCaml values. It provides operations to generate CSV headers, parse rows into values (`t_of_row`), and serialize values into rows (`row_of_t`). It supports loading from and saving to CSV files or channels, making it suitable for data import/export workflows involving structured records.",
-      "description_length": 379,
+      "description": "This module provides functions to convert values to and from CSV-compatible string representations, specifically handling atomic values that map directly to individual CSV columns. It operates on data types that can be serialized as single strings, such as integers, floats, and identifiers. A typical use case is transforming record fields into CSV rows where each field corresponds to a named column.",
+      "description_length": 402,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Csvfields.Csv.Stringable",
-      "library": "csvfields",
-      "description": "This module defines a type `t` with conversions to and from strings. It includes `to_string` for serializing `t` values and `of_string` for parsing them from string input. It is used to handle string-based representations of structured data, such as CSV fields, with precise encoding and decoding.",
-      "description_length": 297,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Csvfields.Xml.Atom",
-      "library": "csvfields",
-      "description": "Handles XML atom values for Excel communication by converting OCaml field types to and from XML representations. It supports parsing and formatting strings according to XSD specifications, ensuring compatibility with Excel's expected data formats. Used when exporting or importing spreadsheet data that requires strict XML schema adherence.",
-      "description_length": 340,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Csvfields.Csv.Record",
-      "library": "csvfields",
-      "description": "This module provides functions to convert between CSV rows and records of type `t`, including loading from and saving to CSV files. It defines the CSV header structure, maps fields to record components, and handles serialization with customizable separators. Concrete use cases include importing data from CSV files into typed records, exporting record data to CSV, and validating CSV field mappings.",
-      "description_length": 400,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Csvfields.Csv.Csvable_simple",
-      "library": "csvfields",
-      "description": "This module defines a type `t` that represents data which can be converted to or from a CSV field. It includes a value `is_csv_atom` indicating whether the type is treated as a single CSV column within a record. Use this module when mapping individual record fields to CSV cells, such as serializing user data fields like names or IDs into a CSV row.",
-      "description_length": 350,
-      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Csvfields.Csv.Atom",
       "library": "csvfields",
-      "description": "This module generates a Csvable implementation using a module's string conversion functions. It supports parsing and serializing records to CSV rows, with functions to load from and save to files or channels. It works with any type through the `S` module, handling headers, row conversion, and file I/O with specified separators.",
-      "description_length": 329,
+      "description": "This module generates a Csvable module with functions to convert between a custom type and CSV rows, including loading from and saving to CSV files. It works with a user-defined type `S.t`, using string conversion functions to map values to and from CSV columns. Concrete use cases include serializing records of a specific type to CSV files, parsing CSV data into typed values, and handling labeled fields in CSV headers for structured data interchange.",
+      "description_length": 454,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Csvfields.Xml.Make",
+      "library": "csvfields",
+      "description": "This module converts OCaml field types into XML structures and back, specifically handling serialization and deserialization of `Atom.t` values. It provides `xsd` for defining XML schemas, `to_xml` for converting `Atom.t` to XML lists, and `of_xml` for parsing XML into `Atom.t`. Use this when mapping OCaml record fields to XML for Excel-compatible data exchange.",
+      "description_length": 364,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Csvfields.Xml.Parser_state",
+      "library": "csvfields",
+      "description": "Tracks parsing state during XML conversion of OCaml field types. Provides functions to manage node nesting, attribute collection, and error handling while translating between CSV and XML structures. Used internally to maintain context when reading or generating XML for Excel-compatible data formats.",
+      "description_length": 300,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Csvfields.Csv.Helper",
+      "library": "csvfields",
+      "description": "This module provides operations to manipulate and write CSV field data. It includes functions to prepend field names to lists, sum integers during field traversal, and format field values into CSV lines with proper delimiters and line breaks. These functions are designed for use during CSV serialization, particularly when folding over field definitions to generate output.",
+      "description_length": 374,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Csvfields.Csv.Record",
+      "library": "csvfields",
+      "description": "This module provides functions to convert between CSV rows and a structured type `t`, including loading from and saving to CSV files. It defines headers and field mappings for CSV serialization, supporting operations like parsing rows into records and generating rows from records. Use cases include importing data from CSV files into typed structures and exporting structured data to CSV with custom separators.",
+      "description_length": 412,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Csvfields.Xml.Restriction",
       "library": "csvfields",
-      "description": "This module generates XML schema restrictions for data validation, such as numeric ranges, string lengths, and regex patterns, using functions like `min_inclusive`, `max_length`, and `pattern`. It includes a child module that parses string representations into typed format values\u2014like decimal, date, and time\u2014for precise field validation and generation. Together, they enable defining and enforcing data constraints when converting OCaml types to XML, particularly for Excel interoperability. For example, you can restrict a string field to a maximum length of 10 or enforce a date format matching \"YYYY-MM-DD\".",
-      "description_length": 612,
+      "description": "This module creates XML schema restrictions for field validation and formatting in Excel-compatible XML. It defines constraints like length, numeric ranges, and patterns, working with string, decimal, date, and time data types. Use cases include enforcing data integrity during XML serialization for spreadsheet import/export operations.",
+      "description_length": 337,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Csvfields.Csv.Make_csvable_simple",
-      "library": "csvfields",
-      "description": "This module provides functions to convert values to CSV-compatible representations, specifically handling atomic values that map directly to individual CSV columns. It works with basic data types like strings, integers, and booleans, ensuring they are properly formatted for CSV output. Use this when serializing simple record fields to CSV rows, where each field corresponds to a single column.",
-      "description_length": 395,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Csvfields.Csv.Helper",
-      "library": "csvfields",
-      "description": "This module provides functions for manipulating and writing CSV field data. It includes operations to prepend field names to lists, sum integers during field folding, and write formatted field values to a CSV output stream. These functions are designed for use in a field-processing pipeline that handles structured data serialization.",
-      "description_length": 335,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Csvfields.Csv.Spec",
       "library": "csvfields",
-      "description": "This module defines a tree-based specification for CSV headers, supporting hierarchical field structures. It provides operations to calculate the depth of a header tree, generate a CSV representation, validate CSV data against a header specification, and apply a function to validated CSV data. Use cases include parsing and validating nested CSV headers, ensuring data conforms to a structured schema, and transforming hierarchical CSV content into processed results.",
-      "description_length": 468,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Csvfields.Xml.Make",
-      "library": "csvfields",
-      "description": "This module converts OCaml field types to and from XML using an atom module, generating XSD schemas and handling serialization. It operates on XML data structures and atom-based types, enabling precise XML parsing and construction. Use it to interface OCaml data with Excel-compatible XML formats.",
-      "description_length": 297,
-      "index": 11,
+      "description": "This module defines a tree-based specification for CSV headers, supporting hierarchical field structures. It provides operations to calculate the depth of the header tree, generate a CSV representation, validate if a CSV matches the specification, and safely apply functions to conforming CSV data. Concrete use cases include parsing and validating nested CSV headers, ensuring data structure consistency, and transforming hierarchical CSV content.",
+      "description_length": 448,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Csvfields.Xml.Write",
       "library": "csvfields",
-      "description": "Converts OCaml field data structures into XML format for Excel communication. Works with typed records and sum types via the provided `X` module. Used to serialize application data into Excel-compatible XML for export or inter-process communication.",
-      "description_length": 249,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Csvfields.Xml.Parser_state",
-      "library": "csvfields",
-      "description": "Tracks parsing state during XML document processing for Excel communication. It manages field type conversions and maintains context for element nesting and attribute handling. Useful for implementing custom XML parsers that interface with spreadsheet data.",
-      "description_length": 257,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Csvfields.Xml.X",
-      "library": "csvfields",
-      "description": "Handles XML node creation and attribute assignment for converting OCaml data structures into XML documents. Works directly with the `t` type to build hierarchical XML elements and attach string-based attributes. Used to generate Excel-compatible XML output from in-memory data representations.",
-      "description_length": 293,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Csvfields.Xml.Xmlable",
-      "library": "csvfields",
-      "description": "This module defines the interface for converting OCaml types to and from XML structures, specifically for integration with Excel. It includes functions to generate XSD definitions, serialize values to XML, and parse XML back into OCaml values. It operates on a single type `t` and works directly with XML trees represented as `Csvfields.Xml.xml` lists and values.",
-      "description_length": 363,
-      "index": 15,
+      "description": "Converts OCaml data structures into XML format for Excel communication. Works with typed records and fields defined in the `X` module. Used to serialize data for export to Excel spreadsheets.",
+      "description_length": 191,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Csvfields.Xml",
       "library": "csvfields",
-      "description": "This module provides XML parsing, traversal, and validation for converting OCaml field types\u2014such as integers, strings, and records\u2014into Excel-compatible XML representations. It supports data serialization through typed XML trees, enforces constraints like numeric ranges and regex patterns, and handles XSD schema generation for structured data interchange. Specific operations include converting a record field to an XML element with attributes, restricting a string to a maximum length of 10, or parsing a date string into a typed value for validation. Submodules manage atom value formatting, schema restriction generation, and stateful parsing to enable precise control over XML structure and content during data export or import.",
-      "description_length": 735,
-      "index": 16,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Csvfields.Csv",
-      "library": "csvfields",
-      "description": "This module enables bidirectional conversion between CSV rows and structured OCaml data, supporting typed field parsing, ratio serialization, and incremental processing of `string list` inputs. It includes core types like `t` for record-like structures with row-level serialization, string-based conversion types, and atomic CSV field representations, along with operations for header generation, file I/O, and custom separator handling. Submodules extend this functionality with tree-based header validation, field manipulation pipelines, and string-based encoding for basic types like integers and booleans. Example uses include deserializing CSV rows into typed records, exporting structured data to CSV files with proper formatting, and validating nested CSV headers against a schema.",
-      "description_length": 788,
-      "index": 17,
+      "description": "This module transforms OCaml types into XML structures for structured data interchange, focusing on Excel-compatible serialization. It handles conversions for primitive types, collections, and numeric extensions while enforcing schema restrictions through validation and XSD generation. Key applications include bidirectional mapping between OCaml values and XML nodes, with support for complex type manipulation and schema-aware data exchange workflows.",
+      "description_length": 454,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Csvfields",
       "library": "csvfields",
-      "description": "This module combines XML and CSV processing to handle structured data serialization and validation. It supports converting OCaml records and primitive types to and from XML and CSV formats, with typed operations for parsing, formatting, and schema enforcement. Key data types include XML trees with constraints and CSV rows with headers, enabling tasks like exporting data to Excel-compatible XML, validating CSV input against structured schemas, or converting between typed records and comma-separated values with custom separators.",
-      "description_length": 533,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xml_light.Xml.X",
-      "library": "csvfields.xml-light",
-      "description": "This module provides functions to construct XML data incrementally by appending characters or strings to a buffer. It works with the abstract type `t`, representing an XML buffer. Concrete use cases include building XML fragments dynamically, such as generating XML responses in web applications or assembling XML data from streaming input.",
-      "description_length": 340,
-      "index": 19,
+      "description": "This module provides functions to convert OCaml values to and from CSV rows and XML documents. It supports structured data interchange with a focus on Excel-compatible XML serialization and schema-aware data handling. Concrete use cases include importing and exporting tabular data to CSV files, and generating XML representations of OCaml data with XSD validation.",
+      "description_length": 365,
+      "index": 11,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Xml_light.Xml.Make",
       "library": "csvfields.xml-light",
-      "description": "This module provides a function `write` that serializes an OCaml data structure into an XML document using the provided module `X` for handling specific data types. It works with the `Xml_light.Xml.xml` type to represent XML elements and integrates with the `X` module's operations to convert structured data into XML nodes. A concrete use case is exporting application data models to XML format for storage or transmission.",
-      "description_length": 424,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xml_light.XmlParser",
-      "library": "csvfields.xml-light",
-      "description": "This module creates and configures XML parsers with options like DTD validation, end-of-file checking, and PCData concatenation. It processes XML input from files, channels, strings, or lex buffers into structured XML data. Use cases include parsing XML documents with custom DTD resolution, validating well-formedness, and handling mixed content with configurable whitespace behavior.",
-      "description_length": 385,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xml_light.Xml_parser",
-      "library": "csvfields.xml-light",
-      "description": "Parses DTD element declarations from XML input using a lexer function. It processes tokens like `OPEN`, `CLOSE`, and `IDENT` to construct DTD child structures. Useful for validating XML structure against DTD definitions during parsing.",
-      "description_length": 235,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xml_light.Types",
-      "library": "csvfields.xml-light",
-      "description": "This module defines core data structures for representing XML documents and DTD schemas in memory. It includes algebraic data types for XML nodes, parsing errors with positional information, and DTD constructs like elements, attributes, and content models. Concrete use cases include building, traversing, or validating XML trees and handling DTD declarations during XML parsing or serialization.",
-      "description_length": 396,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xml_light.Dtd0",
-      "library": "csvfields.xml-light",
-      "description": "This module defines data types and structures for representing XML Document Type Definitions (DTDs), including element types, attribute types, and content models. It provides constructors for building and pattern matching on DTD components such as element declarations, attribute lists, and content model operators like choice and repetition. Concrete use cases include parsing and validating XML documents against DTD specifications, and generating XML structure definitions programmatically.",
-      "description_length": 493,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xml_light.Dtd",
-      "library": "csvfields.xml-light",
-      "description": "This module provides functions to parse, validate, and enforce XML Document Type Definitions (DTDs) against XML documents. It supports operations like parsing DTDs from files or strings, checking DTD consistency, and validating XML documents against a DTD, returning an expanded document or raising specific errors. It works with DTD structures defined through types like `dtd`, `dtd_element_type`, and `dtd_attr_type`, and is used to ensure XML documents conform to a specified structure and attribute constraints.",
-      "description_length": 515,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Xml_light.Xml",
-      "library": "csvfields.xml-light",
-      "description": "This module parses and prints XML documents, converting between textual XML and a tree-based in-memory representation of elements, attributes, and content. It supports DTD validation, error handling, and direct manipulation of XML nodes, enabling tasks like reading configuration files or generating XML programmatically. The first child module builds XML incrementally using a buffer, ideal for dynamic generation or streaming output, while the second serializes OCaml data structures into XML using a customizable conversion module. Together, they support both manual and automated XML construction and transformation.",
-      "description_length": 620,
-      "index": 26,
+      "description": "This module provides a single operation, `write`, which serializes an OCaml data structure of type `X.t` into an XML document. It works with the `Xml_light.Xml.xml` type to construct the output document. A concrete use case is converting structured OCaml data into XML format for configuration files or data interchange.",
+      "description_length": 320,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Xml_light.Xml_lexer",
       "library": "csvfields.xml-light",
-      "description": "This module provides functions for lexing XML documents, including parsing tokens like tags, text data, and document type declarations. It processes input using standard OCaml lexing buffers and reports errors related to malformed XML syntax or DTD declarations. Concrete use cases include reading XML streams, validating document structure, and extracting DTD information from XML files.",
-      "description_length": 388,
-      "index": 27,
+      "description": "This module provides functions for lexing XML documents into tokens such as tags, text data, and document type declarations. It processes input using standard lexing buffers and tracks position information for error reporting. Concrete use cases include parsing XML streams, validating document structure, and extracting DTD information during XML processing.",
+      "description_length": 359,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xml_light.Xml_parser",
+      "library": "csvfields.xml-light",
+      "description": "Parses XML DTD (Document Type Definitions) by converting lexed input into structured DTD elements. It processes tokens like identifiers, operators, and XML structure markers to build DTD child nodes. Useful for validating XML structure during parsing or processing schema definitions.",
+      "description_length": 284,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xml_light.Xml",
+      "library": "csvfields.xml-light",
+      "description": "This module provides functions to parse XML documents into an OCaml data structure, supporting error handling for malformed input and access to node properties like tags, attributes, and child elements. It enables transformations through folding operations, pretty-printing to formatted strings, and serialization of OCaml data into XML via a functor-based code generator, making it suitable for tasks like data conversion, DTD-aware validation, and structured document generation.",
+      "description_length": 481,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xml_light.XmlParser",
+      "library": "csvfields.xml-light",
+      "description": "This module creates and configures XML parsers with options like DTD validation, EOF checking, and PCData handling. It supports parsing from files, channels, strings, or lex buffers into XML data structures. Use cases include validating XML against DTDs, custom DTD resolution, and parsing fragmented XML streams.",
+      "description_length": 313,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Xml_light.Dtd0",
+      "library": "csvfields.xml-light",
+      "description": "This module defines data types and structures for representing XML Document Type Definitions (DTDs), including element types, attribute types, and content models. It provides constructors for building and pattern matching on DTD components such as element declarations, attribute declarations, and content particles like choices and repetitions. Concrete use cases include parsing and validating XML documents against DTD specifications, and generating XML structure definitions programmatically.",
+      "description_length": 496,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xml_light.Dtd",
+      "library": "csvfields.xml-light",
+      "description": "This module processes DTD (Document Type Definition) specifications for XML validation. It parses DTDs from files, strings, or input channels, checks their internal consistency, and validates XML documents against them, enforcing structure and attribute constraints. It supports core DTD features like element declarations, attribute types, and default values, while handling common XML entities and quoted attribute values.",
+      "description_length": 424,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xml_light.Types",
+      "library": "csvfields.xml-light",
+      "description": "This module defines core data structures for representing XML documents and DTD schemas in a recursive, algebraic format. It includes types for XML elements with attributes and text nodes, detailed error messages with positional information, and DTD components like element types, attribute declarations, and validation rules. These structures are used to model and validate XML content during parsing or transformation tasks.",
+      "description_length": 426,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Xml_light",
       "library": "csvfields.xml-light",
-      "description": "This module processes XML input into structured data, supporting parsing, validation, and serialization with configurable options like DTD handling and whitespace treatment. It defines core types for XML nodes, DTD elements, attributes, and content models, enabling tree construction, traversal, and validation against schema definitions. You can parse XML from files or strings, validate well-formedness and DTD compliance, generate XML dynamically, or serialize OCaml values to XML with custom formatting. Lexing, error reporting, and streaming output are also supported for robust XML manipulation workflows.",
-      "description_length": 611,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Csvlib.State",
-      "library": "csvfields.csvlib",
-      "description": "This module manages the state transitions of a CSV parser, tracking whether the parser is at the start of a field, inside an unquoted field, inside a quoted field, or after a quote within a quoted field. It provides functions to update and query the current parsing state as characters are processed. This module is used during the low-level parsing of CSV content to correctly handle quoted strings and field boundaries.",
-      "description_length": 421,
-      "index": 29,
+      "description": "This module processes XML documents and DTD schemas with functions for parsing, validating, and transforming structured data. It works with recursive algebraic types representing XML elements, attributes, text nodes, and DTD components like element declarations and content models. Concrete use cases include validating XML against DTDs, parsing and serializing structured documents, and programmatically generating or inspecting XML and DTD definitions.",
+      "description_length": 454,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Csvlib.Csv",
       "library": "csvfields.csvlib",
-      "description": "This module parses and manipulates CSV data represented as lists of lists of strings. It provides functions to load CSV data from files or strings, process large CSV files row by row, count lines and columns, trim empty cells, square rows, associate headers with row data, and print or save formatted output. Use cases include importing structured data from CSV files, processing large datasets that don't fit in memory, and exporting data to CSV with customizable formatting.",
-      "description_length": 476,
-      "index": 30,
+      "description": "This module parses and manipulates CSV data represented as lists of lists of strings. It supports loading from files or strings, trimming empty cells, squaring rows, associating headers with rows, and printing or saving formatted output. Use cases include processing spreadsheet-like data, handling large CSV files row by row, and converting CSV content into structured formats for further analysis.",
+      "description_length": 399,
+      "index": 21,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Csvlib.State",
+      "library": "csvfields.csvlib",
+      "description": "This module manages the state transitions of a CSV parser, tracking whether the parser is at the start of a field, inside an unquoted field, inside a quoted field, or after a quote within a quoted field. It provides functions to update and query the current parsing state as characters are processed. Concrete use cases include implementing CSV parsing logic that correctly handles quoted fields and embedded commas.",
+      "description_length": 416,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Csvlib",
       "library": "csvfields.csvlib",
-      "description": "This module provides tools for parsing, manipulating, and processing CSV data, handling both low-level parsing state transitions and high-level data operations. It supports parsing from files or strings, managing headers, trimming and formatting data, and processing large datasets row by row. Key data types include lists of lists of strings for representing CSV data and state tracking for parsing context. Example uses include importing structured data, transforming rows with header associations, and exporting formatted CSV output.",
-      "description_length": 536,
-      "index": 31,
+      "description": "This module provides functions to parse and manipulate CSV data structured as lists of lists of strings, supporting operations like loading from files or strings, trimming empty cells, squaring rows, and associating headers with rows. It includes state management for handling complex CSV parsing scenarios such as quoted fields and embedded commas. Use cases include processing spreadsheet-like data, streaming large CSV files, and converting CSV content into structured formats for analysis or transformation.",
+      "description_length": 511,
+      "index": 23,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 33,
-    "meaningful_modules": 32,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9696969696969697
+    "total_modules_in_package": 26,
+    "meaningful_modules": 24,
+    "filtered_empty_modules": 2,
+    "retention_rate": 0.9230769230769231
   },
   "statistics": {
-    "max_description_length": 788,
-    "min_description_length": 235,
-    "avg_description_length": 427.09375,
-    "embedding_file_size_mb": 0.11670875549316406
+    "max_description_length": 511,
+    "min_description_length": 191,
+    "avg_description_length": 389.1666666666667,
+    "embedding_file_size_mb": 0.3481884002685547
   }
 }

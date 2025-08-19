@@ -1,245 +1,229 @@
 {
   "package": "atd",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 28,
-  "creation_timestamp": "2025-07-15T23:11:02.163634",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 26,
+  "creation_timestamp": "2025-08-15T12:17:51.385304",
   "modules": [
     {
       "module_path": "Atd.Import.Option.O",
       "library": "atd",
-      "description": "This module provides a bind operator for composing computations that return optional values, enabling chaining of operations that may fail. It works with the standard OCaml `'a option` type, allowing for concise handling of optional data without explicit pattern matching. A concrete use case is processing a sequence of operations where each step depends on the successful result of the previous, such as parsing or lookup operations.",
-      "description_length": 435,
+      "description": "This module provides a monadic bind operator for composing sequences of computations that may fail, where each step returns an `option` type. It works with values of type `'a option`, enabling chaining operations that depend on the success of prior steps. A concrete use case is processing nested optional data, such as traversing a structure where each field may be missing, and only proceeding if all required fields are present.",
+      "description_length": 431,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Atd.Ast.Map",
-      "library": "atd",
-      "description": "This module transforms nodes in an abstract syntax tree by recursively applying user-defined mappings. It supports traversal and modification of type expressions, variants, fields, type definitions, and module structures. Use it to implement custom AST transformations, such as rewriting specific type constructs or updating field attributes during code generation.",
-      "description_length": 365,
-      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atd.Import.List",
       "library": "atd",
-      "description": "This module offers a suite of list manipulation primitives centered on creation (cons, append), transformation (map, fold), and optimized sorting algorithms, alongside utilities for predicate-driven filtering (filteri, take_while), sequence splitting, and association list operations with key-based queries. It operates on polymorphic lists and pair-structured association lists, facilitating tasks like merging sorted sequences, partitioning data with custom conditions, and efficiently managing key-value mappings. Performance-critical functions include early-termination comparisons and in-place reversals to minimize overhead in common traversal patterns.",
-      "description_length": 659,
+      "description": "This module provides functions for element access, structural manipulation (cons, append, reverse), traversal (folds, iterators), transformation (map, filter), sorting, and associative lookups. It operates on generic `'a list` types, pairs of lists, and sequences, supporting use cases like accumulation with left/right folds, partitioning lists based on predicates, merging sorted sequences, and managing key-value associations with efficient lookup and update operations.",
+      "description_length": 473,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Atd.Ast.Map",
+      "library": "atd",
+      "description": "Transforms nodes in an ATD abstract syntax tree by applying user-defined functions to each node and recursively processing their children. It operates on AST components like type expressions, variants, fields, type definitions, and module elements. Use this module to modify specific parts of an ATD AST while preserving its overall structure, such as rewriting type annotations or adjusting field attributes during code generation or analysis.",
+      "description_length": 444,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Atd.Sort.Make",
       "library": "atd",
-      "description": "Implements topological sorting for directed graphs with potential cycles, organizing nodes into ordered groups where each group is either a single node or a cycle. Works with nodes of type `P.t` and their identifier lists. Useful for dependency resolution in build systems or task scheduling where cyclic dependencies must be detected and handled.",
-      "description_length": 347,
+      "description": "Implements a topological sort that handles cycles by grouping nodes into acyclic singletons or cyclic groups marked with a boolean. It operates on directed graphs represented as lists of nodes paired with their dependencies, producing a partitioned list where each group is either a non-cyclic single element or a cycle. This is particularly useful for sorting type definitions into dependency order while minimizing recursive groups, improving performance and code clarity in code generation tasks.",
+      "description_length": 499,
       "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Atd.Import.Option",
       "library": "atd",
-      "description": "This module enhances working with `option` values by providing core operations like `map`, `bind`, and `value` for transforming, chaining, and extracting optional data safely. It supports handling computations that may fail, such as parsing or lookups, by allowing concise, type-safe code without explicit pattern matching. For example, `map` can apply a function to a value inside an `option`, while `bind` enables chaining of dependent operations. These functions, along with helpers for checking presence or providing defaults, make it easier to work with optional fields in data structures or fallible computations.",
-      "description_length": 619,
+      "description": "This module provides functions for working with `'a option` values, including mapping over options, extracting values with or without a default, and checking presence. It supports operations like `map`, `value_exn`, `value`, and `is_some`, which facilitate handling optional data safely. A concrete use case is processing JSON fields that may be missing, where each function allows structured and safe unwrapping or transformation of optional values.",
+      "description_length": 450,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Atd.Sort.Param",
+      "module_path": "Atd.Parser",
       "library": "atd",
-      "description": "This module defines the required interface for customizing topological sorting behavior, including functions to extract node identifiers and convert them to strings. It operates on abstract data types `t` representing nodes and `id` representing unique identifiers. Concrete use cases include configuring sorting logic for dependency graphs where nodes require custom identity or display logic.",
-      "description_length": 394,
+      "description": "Parses ATD files into abstract syntax trees using a token stream generated from lexing buffers. It handles the full structure of ATD modules, including type definitions and inheritance. Useful for processing ATD specifications to generate code or analyze type declarations.",
+      "description_length": 273,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Atd.Util",
+      "module_path": "Atd.Jsonschema",
       "library": "atd",
-      "description": "This module parses ATD files from various input sources like strings, channels, or lex buffers, producing abstract syntax trees and expanded type definitions. It supports configurable parsing options for schema annotations, type expansion, and position tracking. Useful for processing ATD specifications into structured data for code generation or analysis tools.",
-      "description_length": 363,
+      "description": "Translates ATD type definitions into JSON Schema, supporting Draft 2019-09 and Draft 2020-12 versions. It processes an ATD AST module, applies schema transformations based on `<json ...>` annotations, and outputs the resulting JSON Schema to a channel. Useful for generating validation schemas from ATD type declarations for external JSON validation tools.",
+      "description_length": 356,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Atd.Doc_types",
+      "module_path": "Atd.Version",
       "library": "atd",
-      "description": "This module defines basic document structures for representing formatted text, with `inline` handling text and code fragments and `block` organizing them into paragraphs or preformatted blocks. It supports building and manipulating structured documents, particularly for lightweight markup processing. Concrete use cases include parsing and rendering documentation with inline code snippets and formatted paragraphs.",
-      "description_length": 416,
+      "description": "Contains a single value representing the version of the ATD library as a string. It is used to check or display the current version of the library at runtime. Useful for debugging, logging, or ensuring compatibility in systems that depend on specific ATD versions.",
+      "description_length": 264,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Atd.Ast",
+      "module_path": "Atd.Lexer",
       "library": "atd",
-      "description": "The module processes abstract syntax trees derived from ATD data, offering utilities to traverse and transform type expressions, variants, fields, and module structures. It centers around data types like `type_expr`, `loc`, and `annot`, enabling operations such as normalizing variant representations, simplifying type definitions by removing wrappers, and rewriting type constructs. Submodules allow applying recursive transformations to AST nodes, making it possible to update field attributes or perform analysis during code generation. Examples include rewriting specific type expressions, extracting metadata, and restructuring module definitions for consistency or further processing.",
-      "description_length": 690,
+      "description": "This module implements a lexer for parsing ATD files, handling tasks like reading tokens, processing string literals, and managing comments. It operates on lex buffers and uses mutable accumulators to track parsing state, such as depth in nested comments and buffered string content. Concrete use cases include converting hexadecimal and decimal character sequences into bytes, lexing quoted strings with escape handling, and recognizing ATD-specific syntax elements like type definitions and annotations.",
+      "description_length": 505,
       "index": 8,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Atd.Doc",
       "library": "atd",
-      "description": "This module processes documentation annotations embedded in ATD type definitions, supporting structured text formatting with paragraphs, inline code, and preformatted blocks. It parses and prints documentation in a specialized text format, handling escaping and whitespace preservation, and converts parsed documentation into HTML. It is used to extract and render documentation from ATD source files, particularly for code generation tools that need to include documentation in their output.",
-      "description_length": 492,
+      "description": "This module processes documentation annotations embedded in ATD type definitions, providing functions to parse, print, and convert documentation blocks into HTML. It handles structured documentation elements like paragraphs, inline code, and preformatted text blocks. Use it to extract and render documentation from ATD source files into formatted output such as HTML or custom documentation generators.",
+      "description_length": 403,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atd.Sort",
       "library": "atd",
-      "description": "This module performs topological sorting on directed graphs, handling cycles by grouping them into strongly connected components and returning a partial order. It works with nodes and edges represented as adjacency lists, using identifiers defined by a child module that also allows customization of node identity and display. Main operations include sorting a graph into ordered groups and detecting cycles, with concrete applications in dependency resolution and task scheduling. Users can define custom node types and identifier logic through the provided interface, enabling integration with various graph structures.",
-      "description_length": 621,
+      "description": "Performs topological sorting on directed graphs, handling cycles by grouping nodes into acyclic singletons or cyclic groups marked with a boolean. Works with lists of nodes paired with their dependencies, producing a partitioned list that orders dependencies while isolating cycles. Used to sort type definitions by dependency for code generation, reducing unnecessary recursive groups and improving compiler performance and output clarity.",
+      "description_length": 440,
       "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Atd.Annot",
+      "module_path": "Atd.Util",
       "library": "atd",
-      "description": "This module processes annotation structures with functions to check for the existence of sections and fields, extract and parse field values with type conversion, and set or merge fields within annotations. It operates on annotation data types that include sections, fields, and location information, supporting validation against predefined schemas. Concrete use cases include parsing configuration flags, extracting metadata from annotated AST nodes, and validating correct placement of annotations in code generation or analysis tools.",
-      "description_length": 538,
+      "description": "This module parses ATD files from various input sources like strings, channels, or lex buffers, producing abstract syntax trees and expanded type definitions. It supports configurable parsing through optional parameters for schema annotations, type expansion, and position tracking. The `tsort` function organizes type definitions into topologically sorted groups for dependency resolution.",
+      "description_length": 390,
       "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atd.Predef",
-      "library": "atd",
-      "description": "This module defines a list of predefined types recognized by the ATD system, including their names, identifiers, and optional type definitions. It provides a function to build a hash table mapping these type names to their identifiers and type definitions. This is used to support type resolution during ATD parsing and code generation.",
-      "description_length": 336,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atd.Inherit",
-      "library": "atd",
-      "description": "Expands inherit statements within sum and product types in a module body. Accepts flags to control expansion of fields and variants, transforming the structure by incorporating inherited definitions directly. Useful for processing ATD files with inheritance, ensuring types are fully resolved for code generation or analysis.",
-      "description_length": 325,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atd.Lexer",
-      "library": "atd",
-      "description": "This module implements a lexer for parsing ATD files, handling tasks like tokenization of integers, strings, and comments. It processes input using `Lexing.lexbuf` and maintains state in an `accu` record for buffering and tracking depth. It is used to convert raw input into structured tokens for the ATD parser, supporting features like hexadecimal and UTF-8 decoding.",
-      "description_length": 369,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Atd.Expand",
-      "library": "atd",
-      "description": "Monomorphizes type expressions by replacing repeated type constructs with fresh, unique type definitions, generating a transformed module body along with a mapping of original types. Works with AST representations of type definitions and expressions, handling nested and polymorphic types. Useful for compiling or analyzing complex type structures where unique type identifiers are required, such as in code generation or type-based optimizations.",
-      "description_length": 447,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atd.Loc",
-      "library": "atd",
-      "description": "This module represents and compares source code locations using pairs of Lexing.position values. It provides a `compare` function to determine the order of two locations based on their positions in the source. Useful for tracking and comparing the positions of tokens or expressions in a parsed file.",
-      "description_length": 300,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atd.Reflect",
-      "library": "atd",
-      "description": "Converts an abstract syntax tree (AST) value into OCaml source code that reconstructs it. Works with Atd.Ast.full_module structures, generating code into a buffer under a specified name. Useful for code generation tools that emit OCaml modules from parsed ATD definitions.",
-      "description_length": 272,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Atd.Version",
-      "library": "atd",
-      "description": "Holds a string value representing the current version of the Atd library. This module provides direct access to the version string through the `version` value. Useful for runtime checks or logging the version in applications that use Atd-generated code.",
-      "description_length": 253,
-      "index": 18,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Atd.Jsonschema",
-      "library": "atd",
-      "description": "Translates ATD type definitions into JSON Schema documents, supporting customization through `<json ...>` annotations in the source. It operates on ATD abstract syntax trees and emits JSON Schema to an output channel. Useful for generating validation schemas for JSON data structures derived from ATD type declarations.",
-      "description_length": 319,
-      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atd.Print",
       "library": "atd",
-      "description": "This module provides functions for pretty-printing ATD abstract syntax trees into formatted strings using the `Easy_format` library. It operates on data structures defined in `Atd.Ast`, such as `full_module`, `type_expr`, and `annot_section`. Concrete use cases include generating readable ATD code from parsed ASTs and converting type expressions or annotated type names into string representations for display or code generation.",
-      "description_length": 431,
-      "index": 20,
+      "description": "This module provides functions for pretty-printing ATD abstract syntax trees into formatted strings using the `Easy_format` library. It supports converting type expressions, type names with arguments, and full modules into human-readable representations. Concrete use cases include generating readable output for ATD definitions and debugging ATD AST structures during parsing or transformation tasks.",
+      "description_length": 401,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Atd.Ast",
+      "library": "atd",
+      "description": "This module enables manipulation of abstract syntax trees through operations like transforming type expressions, handling source locations, and traversing nodes. It operates on ATD data structures such as type definitions, annotations, and module-level constructs, supporting tasks like code analysis, type representation optimization, and structural simplification of AST elements. Specific transformations include variant specialization, wrapper removal, and type expression normalization for improved AST processing.",
+      "description_length": 519,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Atd.Doc_types",
+      "library": "atd",
+      "description": "This module defines basic document structures for representing formatted text, with `inline` handling text and code fragments and `block` organizing them into paragraphs or preformatted blocks. It is used to model lightweight markup documents, such as comments or documentation extracts, in a structured way. Concrete use cases include parsing and rendering simple documentation formats where inline styling and code snippets are needed.",
+      "description_length": 437,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Atd.Expand",
+      "library": "atd",
+      "description": "Monomorphizes type expressions in AST module bodies by replacing repeated type structures with references to generated type definitions. Works with abstract syntax trees and hash tables mapping original types to their monomorphized counterparts. Useful for optimizing type representations in code generation pipelines by eliminating redundant type expressions.",
+      "description_length": 360,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Atd.Predef",
+      "library": "atd",
+      "description": "This module defines a list of predefined types used by ATD, including their names, identifiers, and optional type definitions. It provides a function to create a hash table mapping type names to their associated identifiers and type definitions. These are used during type processing and resolution in ATD-based code generation and parsing workflows.",
+      "description_length": 350,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atd.Json",
       "library": "atd",
-      "description": "This module defines data types and functions for specifying how ATD types are serialized to and deserialized from JSON. It includes types like `json_int`, `json_float`, `json_record`, and `json_sum` to control the JSON representation of ATD primitives and algebraic data types. Functions like `get_json_int`, `get_json_record`, and `get_json_sum` are used to extract JSON-specific type annotations during code generation.",
-      "description_length": 421,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines data types and functions for specifying how ATD types map to JSON representations, including handling of integers, floats, lists, records, and variants. It supports custom adapters for normalization and restoration, and controls JSON formatting aspects like null handling and enum representation. Concrete use cases include configuring JSON serialization for ATD-defined types, mapping field names to JSON keys, and defining custom parsing logic for specific JSON structures.",
+      "description_length": 495,
+      "index": 17,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Atd.Check",
+      "module_path": "Atd.Import",
       "library": "atd",
-      "description": "Validates the semantic correctness of ATD files by ensuring type definitions are unique and properly structured. Operates on `Atd.Ast.module_body` to detect logical inconsistencies beyond syntax errors. Useful for enforcing constraints during ATD schema compilation or validation pipelines.",
-      "description_length": 290,
-      "index": 22,
+      "description": "This module includes submodules for list and option types, offering operations like mapping, filtering, folding, and safe value extraction. It provides functions for string formatting and output, including `sprintf`, `printf`, and `bprintf`, which handle formatted text generation and logging. Use cases include parsing and transforming structured data, managing optional values safely, and generating formatted output for debugging or file logging.",
+      "description_length": 449,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Atd.Doc_lexer",
       "library": "atd",
-      "description": "This module processes ATD documentation comments by parsing structured text into blocks and inline elements. It handles lexing of paragraphs, verbatim text, and inline verbatim sections, operating on lex buffers and string lists to build block and inline document structures. Concrete use cases include extracting and formatting documentation from ATD interface files during code generation or documentation rendering.",
-      "description_length": 418,
-      "index": 23,
+      "description": "This module handles lexing and parsing of structured documentation text, converting raw strings into typed block and inline document structures. It provides functions for processing paragraphs, verbatim text, and inline elements, managing lexing state through lexbuf. Concrete use cases include parsing documentation comments into structured formats for pretty-printing or further processing.",
+      "description_length": 392,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Atd.Loc",
+      "library": "atd",
+      "description": "This module represents and compares source code locations using pairs of Lexing.position values. It provides a `compare` function to determine the order of locations based on their positions in the source file. Useful for tracking and comparing the positions of tokens or expressions in parsed files.",
+      "description_length": 300,
+      "index": 20,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Atd.Parser",
+      "module_path": "Atd.Check",
       "library": "atd",
-      "description": "This module defines a set of token types representing elements of the ATD syntax, such as identifiers, punctuation, and keywords. It provides a function `full_module` that parses a complete ATD module from a lex buffer using a given tokenizer. Concrete use cases include parsing ATD files into abstract syntax trees for further processing or code generation.",
-      "description_length": 358,
-      "index": 24,
-      "embedding_norm": 1.0000001192092896
+      "description": "Validates the semantic correctness of ATD files by checking for unique type definitions and other structural constraints. Operates directly on the abstract syntax tree (`Atd.Ast.module_body`) to enforce validity rules. Ensures that no duplicate type names exist and that all type references are well-formed.",
+      "description_length": 307,
+      "index": 21,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Atd.Import",
+      "module_path": "Atd.Reflect",
       "library": "atd",
-      "description": "This module extends core data manipulation capabilities through enhanced list and option operations, combined with flexible formatting tools for structured output. It provides list functions for creation, transformation, and optimized sorting, along with utilities for filtering, splitting, and managing association lists, while the option submodule enables safe, concise handling of optional values through map, bind, and default extraction. Formatted output functions support logging, serialization, and user-facing text generation with precise control over channels, buffers, or strings. Examples include merging sorted sequences, chaining fallible computations, and building custom log messages with controlled formatting.",
-      "description_length": 726,
-      "index": 25,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module converts an ATD AST value into OCaml source code that reconstructs the value. It operates on data structures defined in the Atd.Ast module, particularly `full_module`. A concrete use case is generating OCaml code from an in-memory ATD tree representation for serialization or debugging purposes.",
+      "description_length": 307,
+      "index": 22,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Atd.Unique_name",
       "library": "atd",
-      "description": "This module translates identifiers to ensure uniqueness and compatibility with reserved names in target languages like Python. It maintains mappings between original and translated names, using suffixes or prefixes to resolve conflicts while preserving readability. Use `create` to assign unique names from a source collection, and `translate` to adapt names for a target language with reserved keywords.",
-      "description_length": 404,
-      "index": 26,
+      "description": "This module manages the translation of identifiers between source and destination spaces, ensuring uniqueness by adding suffixes or prefixes compatible with Python syntax. It provides functions to initialize translation tables, create and reserve identifiers, and perform bidirectional translations. Concrete use cases include generating unique variable names during code generation or avoiding naming conflicts when mapping identifiers between different programming language contexts.",
+      "description_length": 485,
+      "index": 23,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Atd",
+      "module_path": "Atd.Annot",
       "library": "atd",
-      "description": "This module processes ATD specifications into structured data for code generation and analysis, centered around parsing, transforming, and emitting abstract syntax trees. It defines core data types like `type_expr`, `annot`, and `full_module`, supporting operations such as type expansion, monomorphization, inheritance resolution, and JSON schema generation. It enables tasks like extracting and rendering documentation, validating type definitions, and converting ATD types into OCaml code or JSON representations. Specific examples include normalizing variant types, generating code from parsed ASTs, and translating ATD schemas into JSON validation documents.",
-      "description_length": 663,
-      "index": 27,
+      "description": "This module provides functions to query and manipulate structured annotations, including checking for the existence of sections and fields, extracting and parsing field values with type-specific logic, and setting or merging annotation fields. It works with annotation data structures that contain nested sections, fields, and associated values, along with location information for error reporting. Concrete use cases include validating and interpreting configuration directives embedded in annotations, such as flags or parameters controlling code generation or schema constraints.",
+      "description_length": 582,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Atd.Inherit",
+      "library": "atd",
+      "description": "Expands `inherit` statements within sum and product types in ATD module bodies. Accepts flags to control inheritance of fields and variants, transforming the structure by merging inherited definitions. Useful for processing ATD specifications that use inheritance to share type definitions across modules.",
+      "description_length": 305,
+      "index": 25,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 28,
-    "meaningful_modules": 28,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 27,
+    "meaningful_modules": 26,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.9629629629629629
   },
   "statistics": {
-    "max_description_length": 726,
-    "min_description_length": 253,
-    "avg_description_length": 438.25,
-    "embedding_file_size_mb": 0.1021127700805664
+    "max_description_length": 582,
+    "min_description_length": 264,
+    "avg_description_length": 408.34615384615387,
+    "embedding_file_size_mb": 0.3771839141845703
   }
 }

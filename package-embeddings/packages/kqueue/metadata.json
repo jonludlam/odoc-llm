@@ -1,73 +1,73 @@
 {
   "package": "kqueue",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:05:56.918797",
+  "creation_timestamp": "2025-08-14T23:03:12.922530",
   "modules": [
     {
       "module_path": "Kqueue.Event_list.Event",
       "library": "kqueue",
-      "description": "This module provides direct access to individual event descriptors within a kqueue event list, allowing precise manipulation of event fields such as identifier, filter, flags, and user data. It operates on the `t` type representing a kqueue event structure, enabling configuration and inspection of event parameters for I/O monitoring and system-level event handling. Concrete use cases include setting up file descriptor monitoring with specific filters and flags, retrieving triggered event details after a kqueue wait, and associating user-defined data with events for callback dispatching.",
-      "description_length": 593,
+      "description": "This module represents individual events within a kqueue-based event notification system. It provides accessors and mutators for event fields such as identifier, filter, flags, fflags, data, and udata, allowing precise configuration and inspection of event parameters. It is used to manage I/O and system event notifications efficiently on BSD-derived systems.",
+      "description_length": 360,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Kqueue.Util",
       "library": "kqueue",
-      "description": "This module provides direct conversions between Unix file descriptors and integers, primarily for use in constructing or deconstructing `kevent` identifiers that track file descriptor events. It works with `Unix.file_descr` and `int` types, enabling low-level event registration and handling with kqueue-based systems. Concrete use cases include preparing file descriptors for `kevent` registration or recovering file descriptors from event notifications.",
-      "description_length": 455,
+      "description": "Converts between Unix file descriptors and integers for use with kevent identifiers. Works with `Unix.file_descr` and `int` types. Enables registration of file descriptor-based events in kqueue by transforming descriptors into integer identifiers and vice versa.",
+      "description_length": 262,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kqueue.Note",
-      "library": "kqueue",
-      "description": "This module defines a set of constants representing event types for use with the kqueue system call, such as file descriptor readiness, process state changes, and signal delivery. It provides direct mappings to kevent filter flags like EVFILT_READ, EVFILT_WRITE, and NOTE_EXIT, enabling precise monitoring of system events. Concrete use cases include implementing network servers that react to socket activity, tracking child process lifecycle events, and handling asynchronous file I/O notifications.",
-      "description_length": 501,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kqueue.Filter",
-      "library": "kqueue",
-      "description": "This module defines constants and operations for working with event filters used in the kqueue interface. It provides predefined filter values for monitoring file descriptors, timers, vnode events, and process status changes. These filters are used directly with kqueue system calls to track specific types of I/O or system events.",
-      "description_length": 331,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Kqueue.Event_list",
-      "library": "kqueue",
-      "description": "This module organizes and manages a collection of event entries for `kqueue`-based event loops, combining high-level list operations with low-level event configuration. It supports creating, modifying, and querying event lists, while its child module enables fine-grained access to individual event properties like file descriptors, filters, and user data. You can use it to monitor socket readiness, handle process signals, or track file changes efficiently in system-level applications. The combined interface simplifies building and processing event-driven workflows, such as dispatching I/O callbacks or managing asynchronous system notifications.",
-      "description_length": 651,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Kqueue.Flag",
-      "library": "kqueue",
-      "description": "This module defines bitwise flags used to configure event filters and actions in the kqueue interface. It supports operations like combining flags with `+`, checking intersections with `intersect`, and provides specific flags such as `enable`, `disable`, `delete`, and `oneshot` for controlling event registration and behavior. These flags are essential for setting up and managing event notifications on BSD-based systems, including handling conditions like `eof` and `error`.",
-      "description_length": 477,
-      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Kqueue.Timeout",
       "library": "kqueue",
-      "description": "This module defines timeouts for `kevent` calls using `t` as the timeout type. It provides `never` for indefinite waits, `immediate` for non-blocking polls, and `of_ns` to specify a timeout duration in nanoseconds. It is used to control event loop behavior when waiting for kernel events.",
-      "description_length": 288,
-      "index": 6,
+      "description": "This module defines a `t` type representing timeouts for event notifications and provides constants `never` and `immediate` for controlling wait behavior. It includes `of_ns` to create timeouts from nanosecond durations. Use this module to specify how long to wait for events when calling kevent-based I/O operations.",
+      "description_length": 317,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Kqueue.Filter",
+      "library": "kqueue",
+      "description": "This module defines constants representing event filters for use with the kqueue system call, such as read, write, timer, vnode, and proc. These values are used to specify the type of event to monitor when registering or modifying events in a kqueue instance. They are essential for setting up asynchronous I/O, file descriptor monitoring, process state changes, and timer-based events.",
+      "description_length": 386,
+      "index": 3,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kqueue.Flag",
+      "library": "kqueue",
+      "description": "This module represents event flags used with the kqueue system call, supporting bitwise operations to combine and test flags. It provides constants for common flags like `add`, `delete`, `enable`, and `disable`, along with functions to check intersection, equality, and inclusion. These flags configure and control event registration and behavior in kqueue-based I/O monitoring systems.",
+      "description_length": 386,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kqueue.Note",
+      "library": "kqueue",
+      "description": "This module defines a set of constants representing event flags used with the kqueue system call for monitoring file descriptors and process events. It provides direct mappings to `EVFILT_*` filters and related flags like `EV_ADD`, `EV_DELETE`, and `EV_ENABLE`, enabling precise control over event registration and handling. These values are used when setting up or modifying events in a kqueue instance, such as watching for file descriptor readiness, process state changes, or signal delivery.",
+      "description_length": 495,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Kqueue.Event_list",
+      "library": "kqueue",
+      "description": "This module manages a list of event objects for use with the kqueue system call, providing operations to create and access event entries. It works with the `t` type, which represents a collection of events, and interacts directly with the `Event` submodule to retrieve individual event structures. Concrete use cases include setting up event buffers for monitoring file descriptors, handling I/O readiness notifications, and processing kernel-level events in high-performance network servers.",
+      "description_length": 492,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Kqueue",
       "library": "kqueue",
-      "description": "This module provides low-level access to the kqueue event notification system, enabling creation of kernel event queues, registration of file descriptor events, and retrieval of triggered events with optional timeouts. It works directly with file descriptors, event lists, and system-specific flags and filters to monitor I/O, signals, and process state changes, with support for converting between file descriptors and integers, specifying event types and filters, and configuring event behavior with bitwise flags. You can use it to build high-performance network servers, real-time file monitoring systems, or asynchronous event-driven applications on BSD-based systems by registering events like socket readiness, process exits, or file modifications and processing them efficiently in a custom event loop.",
-      "description_length": 810,
+      "description": "This module provides direct access to the kqueue system call interface for monitoring file descriptors, process events, and timers. It supports creating and managing event queues with precise control over event registration using filters like read, write, and timer, along with timeout configuration and flag manipulation. Concrete use cases include implementing high-performance network servers, handling asynchronous I/O, and monitoring file or process state changes with low-level kernel integration.",
+      "description_length": 503,
       "index": 7,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -77,9 +77,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 810,
-    "min_description_length": 288,
-    "avg_description_length": 513.25,
-    "embedding_file_size_mb": 0.02948474884033203
+    "max_description_length": 503,
+    "min_description_length": 262,
+    "avg_description_length": 400.125,
+    "embedding_file_size_mb": 0.11632823944091797
   }
 }

@@ -1,117 +1,109 @@
 {
   "package": "dokeysto",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:07:11.063141",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 11,
+  "creation_timestamp": "2025-08-14T23:11:41.387239",
   "modules": [
     {
-      "module_path": "Dokeysto.Db_gen.RO",
+      "module_path": "Dokeysto.Db.RO",
       "library": "dokeysto",
-      "description": "This module implements a read-only interface for accessing persistent hash tables stored on disk, using a key-value storage backend provided by the `KV` module. It supports opening existing databases, checking key membership, retrieving values, and iterating or folding over key-value pairs. Typical use cases include efficiently querying large, immutable datasets stored in files without loading them entirely into memory.",
-      "description_length": 423,
+      "description": "This module provides read-only access to a persistent hash table stored in a file, allowing operations like key existence checks, value retrieval, and iteration over key-value pairs. It works with string keys and values, using an index file for efficient lookups. Concrete use cases include querying a prebuilt key-value store without modifying it, such as serving static data in an application.",
+      "description_length": 395,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dokeysto.Db_gen.RW",
-      "library": "dokeysto",
-      "description": "This module implements a persistent hash table with read-write capabilities, using a key-value storage system backed by disk files. It supports operations like adding, replacing, removing, and retrieving key-value pairs, as well as iterating and folding over all stored entries. Use this module to manage large, mutable datasets that need to persist across program executions, such as caching systems or on-disk dictionaries.",
-      "description_length": 425,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Dokeysto.Db.RW",
       "library": "dokeysto",
-      "description": "This module implements a persistent hash table with read-write access, storing key-value pairs in a file-backed database. It supports operations like adding, replacing, removing, and retrieving bindings, as well as iterating and folding over all entries. Use cases include maintaining a durable key-value store across program restarts and efficiently managing large datasets that fit on disk.",
-      "description_length": 392,
+      "description": "This module implements a persistent hash table with read-write access, storing key-value pairs in a file-backed structure. It supports operations like adding, replacing, and removing bindings, as well as checking membership, retrieving values, and iterating or folding over the contents. Use cases include managing durable key-value storage for applications needing persistence across sessions, such as caching systems or lightweight databases.",
+      "description_length": 444,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dokeysto.Db_gen.RW",
+      "library": "dokeysto",
+      "description": "This module implements a persistent hash table with read-write capabilities, storing key-value pairs in a file-based database indexed for efficient access. It supports operations like adding, replacing, removing, and retrieving bindings, as well as iterating and folding over all entries. Typical use cases include managing large datasets that exceed memory limits or require durable storage between sessions.",
+      "description_length": 409,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dokeysto.Db.RO",
-      "library": "dokeysto",
-      "description": "This module implements a read-only interface for accessing persistent hash tables stored in files. It supports opening existing databases, checking key existence, retrieving values by key, and iterating or folding over key-value pairs. Use cases include efficiently querying large, disk-based datasets without modifying them, such as serving static configuration or lookup tables in applications.",
-      "description_length": 396,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dokeysto.Db_gen.Key_val",
-      "library": "dokeysto",
-      "description": "This module defines functions for converting keys and values to and from strings. It works with any types `'k` and `'v` that support bidirectional string serialization. Concrete use cases include persisting key-value pairs to a file or transmitting them over a network.",
-      "description_length": 269,
-      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Dokeysto.Db_gen",
+      "module_path": "Dokeysto.Db_gen.RO",
       "library": "dokeysto",
-      "description": "This module provides persistent hash tables for mapping arbitrary keys to arbitrary values using disk-backed storage, offering separate read-only and read-write interfaces. It supports efficient lookups, inserts, updates, and iteration, with key-value pairs serialized to strings for storage in files or transmission over networks. The read-only interface allows querying and traversal of existing datasets without full in-memory loading, while the read-write interface enables mutation and persistence of dynamic data across runs. Examples include building durable caches, querying large immutable datasets, and transmitting serialized key-value pairs over a network.",
-      "description_length": 668,
-      "index": 5,
+      "description": "This module implements a read-only interface for accessing a persistent hash table stored in a file, using the provided `KV` module for key-value serialization. It supports opening an existing database, checking key membership, retrieving values by key, and iterating or folding over all key-value pairs. Typical use cases include efficiently querying large, immutable datasets stored on disk, such as configuration data or precomputed caches.",
+      "description_length": 443,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dokeysto.Utls",
       "library": "dokeysto",
-      "description": "Handles file input/output operations for serializing and deserializing values. Works with filenames as strings and arbitrary OCaml values using standard channels. Use to read from or write to files safely, ensuring channels close properly after operations.",
-      "description_length": 256,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dokeysto.Db",
-      "library": "dokeysto",
-      "description": "This module provides persistent hash tables for disk-based key-value storage, supporting both read-only and read-write access. It allows efficient lookups, inserts, iteration, and atomic updates, with concrete operations for opening, querying, modifying, and traversing databases. The read-write submodule enables durable changes across sessions, such as caching dynamic data or managing configuration updates, while the read-only submodule supports fast, non-modifying access to static datasets like lookup tables or precomputed indexes.",
-      "description_length": 538,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dokeysto.Internal",
-      "library": "dokeysto",
-      "description": "This module implements a key-value store with operations for creating, opening, and closing databases, managing data and index files, and performing atomic reads, writes, and deletions. It works with a `db` type that holds file descriptors and an in-memory hash table mapping keys to positions. Use cases include persistent storage for string-based keys and values, such as caching, configuration storage, or lightweight database systems.",
-      "description_length": 438,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dokeysto.Common",
-      "library": "dokeysto",
-      "description": "This module defines basic types for representing file names and byte positions within files. It includes operations for manipulating position values, such as shifting offsets and extending lengths. These types and functions are used to support precise file region tracking in parsing and analysis tasks.",
-      "description_length": 303,
-      "index": 9,
+      "description": "Handles file input/output operations for serializing and deserializing values. Works with filenames as strings and arbitrary OCaml values that can be marshaled. Use this module to persist data structures to disk or read them back, such as saving application state or loading configuration data.",
+      "description_length": 294,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Dokeysto.Gen_gen",
       "library": "dokeysto",
-      "description": "This module provides bidirectional conversion functions between strings and abstract key and value types. It supports serialization and deserialization of keys and values, enabling use cases like reading and writing key-value pairs from text-based storage or network protocols. The module works directly with string, 'k, and 'v types, assuming appropriate implementations for each conversion function.",
-      "description_length": 401,
-      "index": 10,
+      "description": "This module provides bidirectional conversion functions between strings and abstract key and value types. It supports serialization and deserialization of keys and values, enabling storage or transmission of structured data as strings. Concrete use cases include converting database keys to string identifiers and parsing string-based configuration values into typed settings.",
+      "description_length": 376,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dokeysto.Common",
+      "library": "dokeysto",
+      "description": "This module defines basic types for representing file names and byte positions within files. It includes operations for manipulating and querying these types, such as combining offsets and lengths. Concrete use cases include tracking source code locations in a compiler or analyzing binary file structures.",
+      "description_length": 306,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dokeysto.Db_gen",
+      "library": "dokeysto",
+      "description": "This module implements read-only and read-write persistent hash tables stored in files, supporting efficient disk-based lookups, inserts, deletes, and iteration. It works with generic keys and values through serialization modules, enabling durable storage and indexed access to large datasets. Concrete use cases include managing disk-backed caches, handling configuration data, and storing large mappings that exceed memory capacity.",
+      "description_length": 434,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dokeysto.Db",
+      "library": "dokeysto",
+      "description": "This module implements a persistent key-value store with both read-only and read-write access modes. It works with string keys and values, using file-backed storage and an index for efficient lookups and modifications. Concrete use cases include serving static data from a prebuilt store and maintaining durable key-value mappings for caching or lightweight data storage across application sessions.",
+      "description_length": 399,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dokeysto.Internal",
+      "library": "dokeysto",
+      "description": "This module implements a key-value store with operations for creating, opening, and managing database files. It supports in-memory indexing of key positions, reading and writing values directly to disk, and provides iteration and folding over stored data. Concrete use cases include persistent storage for key-value records with efficient lookups and updates.",
+      "description_length": 359,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dokeysto",
       "library": "dokeysto",
-      "description": "This module implements a disk-backed key-value store with separate read-only and read-write interfaces, enabling efficient storage, retrieval, and mutation of arbitrary key-value pairs. It supports serialization of keys and values to strings, atomic updates, iteration, and precise file positioning for direct access to stored data. Use it to build persistent caches, manage configuration data across sessions, or transmit serialized key-value pairs over a network. The system combines in-memory performance with durable storage by mapping keys to file offsets and maintaining data integrity through structured serialization and safe I/O operations.",
-      "description_length": 649,
-      "index": 11,
+      "description": "This module provides persistent key-value storage with efficient disk-based lookups, supporting both read-only and read-write access. It works with string keys and values, using file-backed storage and in-memory indexing for fast operations. Concrete use cases include serving static data from a prebuilt store and maintaining durable key-value mappings for caching or lightweight data storage across application sessions.",
+      "description_length": 422,
+      "index": 10,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 12,
-    "meaningful_modules": 12,
+    "total_modules_in_package": 11,
+    "meaningful_modules": 11,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 668,
-    "min_description_length": 256,
-    "avg_description_length": 429.8333333333333,
-    "embedding_file_size_mb": 0.04399681091308594
+    "max_description_length": 444,
+    "min_description_length": 294,
+    "avg_description_length": 389.1818181818182,
+    "embedding_file_size_mb": 0.15975475311279297
   }
 }

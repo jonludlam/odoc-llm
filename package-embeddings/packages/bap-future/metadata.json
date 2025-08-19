@@ -1,269 +1,237 @@
 {
   "package": "bap-future",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 31,
-  "creation_timestamp": "2025-07-15T23:12:35.937449",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 27,
+  "creation_timestamp": "2025-08-15T12:24:33.772542",
   "modules": [
     {
       "module_path": "Bap_future.Std.Future.Collection.Eager",
       "library": "bap-future",
-      "description": "This module provides eager evaluation combinators for working with collections of futures, enabling operations like mapping, folding, filtering, and parallel execution over container elements. It supports data types that conform to a collection interface, allowing functions to be applied to each element with results aggregated in a future. Concrete use cases include processing asynchronous computations in bulk, such as running multiple I/O-bound tasks concurrently and collecting their results, or sequentially executing side-effecting operations over a list of values.",
-      "description_length": 573,
+      "description": "This module provides eager evaluation of futures within a collection, enabling operations like mapping, folding, filtering, and parallel execution over containers of futures. It works with any container type `T` that supports standard collection operations and elements wrapped in `Bap_future.Std.Future.t`. Concrete use cases include processing asynchronous computations over lists, arrays, or sequences where all futures must be evaluated, such as aggregating results from multiple concurrent tasks or filtering data based on asynchronous predicates.",
+      "description_length": 552,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_future.Std.Future.Let_syntax.Let_syntax",
       "library": "bap-future",
-      "description": "This module enables writing asynchronous code in a direct style using `let%bind` and `let%map`, simplifying composition of `Future.t` values by eliminating explicit calls to `bind` or `map`. It supports sequencing and transforming futures, such as chaining network requests or handling results from concurrent system calls. The syntax extensions allow expressive, readable pipelines of asynchronous operations. While it includes an empty submodule, the core functionality focuses on ergonomic, syntax-driven future manipulation.",
-      "description_length": 528,
+      "description": "This module provides syntactic support for writing asynchronous code using `let`-based syntax extensions, specifically for working with futures. It enables concise expression of sequential and parallel compositions of futures using `let%bind`, `let%map`, and `let%both` constructs. The module operates directly on future values, allowing developers to express dependencies between asynchronous computations in a natural, linear style without explicit use of `bind`, `map`, or `both`.",
+      "description_length": 483,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_future.Std.Future.Collection.Delay",
       "library": "bap-future",
-      "description": "This module provides operations for working with collections of futures, enabling parallel and sequential computation patterns over container types. It includes functions like `map`, `fold`, `filter`, and `find`, which operate on containers where elements are processed asynchronously. Concrete use cases include processing multiple futures in parallel with `all`, performing side effects across a collection with `iter`, or reducing a collection of values asynchronously using `fold` or `reduce`.",
-      "description_length": 497,
+      "description": "This module provides operations to process collections of futures with asynchronous effects, enabling tasks like parallel execution, sequential processing, and conditional evaluation. It works with any container type `'a T.t` containing futures and applies functions across their values, handling results once all futures are resolved. Concrete use cases include batch processing of asynchronous computations, filtering and transforming collections based on future results, and aggregating values from multiple futures into a single result.",
+      "description_length": 540,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_future.Std.Future.Collection.S",
-      "library": "bap-future",
-      "description": "This module provides operations for working with collections of futures, enabling parallel and sequential computation patterns. It supports data structures like lists, arrays, and sequences, and offers functions for mapping, filtering, folding, and reducing elements within a monadic context. Concrete use cases include executing multiple asynchronous tasks concurrently with `all`, performing side effects in sequence with `iter`, and aggregating results with `fold` or `reduce` while maintaining ordering constraints.",
-      "description_length": 519,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_future.Std.Future.Lift",
-      "library": "bap-future",
-      "description": "This module lifts functions of various arities into the future monad, enabling them to operate on future values instead of immediate values. It supports functions taking 0 to 5 arguments, transforming them into computations that resolve once their input futures are fulfilled. Use cases include composing asynchronous operations like combining results from multiple concurrent tasks or chaining dependent future-based computations.",
-      "description_length": 431,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_future.Std.Future.List",
-      "library": "bap-future",
-      "description": "This module provides operations to process lists of values in a concurrent and asynchronous manner using futures. It supports transformations, filtering, folding, and searching over lists, where each element is processed via a function that returns a future. Concrete use cases include parallel execution of independent tasks, such as fetching multiple remote resources, processing log entries concurrently, or validating a list of inputs with early exit on failure.",
-      "description_length": 466,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_future.Std.Future.Variadic",
-      "library": "bap-future",
-      "description": "This module provides operations for building and applying variadic arguments to functions in the context of futures. It supports constructing argument lists and partially applying functions that will eventually receive those arguments when futures resolve. Concrete use cases include composing asynchronous computations where functions take multiple arguments that become available at different times.",
-      "description_length": 401,
-      "index": 6,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bap_future.Std.Future.Monad_infix",
       "library": "bap-future",
-      "description": "This module provides infix operators for monadic composition of futures, enabling chaining and transformation of asynchronous computations. It works with the `Future.t` type, representing values that will be available at some point in time. Concrete use cases include sequencing dependent asynchronous tasks, transforming future results with mapping functions, and building complex workflows from simpler futures without blocking execution.",
-      "description_length": 440,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_future.Std.Variadic.Make",
-      "library": "bap-future",
-      "description": "This module implements a variadic argument collection interface for co-inductive types, allowing functions to be applied to a variable number of future-typed arguments. It works with future values of different types and structures argument lists that match a target function's arity and types. Concrete use cases include merging multiple futures like architecture, language, ABI, and API specifications into a single type-checking operation.",
-      "description_length": 441,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_future.Std.Future.Seq",
-      "library": "bap-future",
-      "description": "This module provides operations to process sequences of values in a concurrent and asynchronous manner using futures. It supports transformations, aggregations, and filtering of sequences through functions like `map`, `fold`, `filter`, and `reduce`, where each element computation can be performed independently or in a specified order. Concrete use cases include parallel execution of sequence element processing, asynchronous filtering of data streams, and concurrent reduction of sequence elements using a monoid.",
-      "description_length": 516,
-      "index": 9,
-      "embedding_norm": 1.0
+      "description": "This module provides infix operators for monadic composition of futures, enabling chaining asynchronous computations. It works with the `Future.t` type, representing values that will be available at some point. Use it to sequence dependent asynchronous tasks, like handling results of non-blocking I/O operations or orchestrating parallel computations with defined dependencies.",
+      "description_length": 378,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bap_future.Std.Future.Syntax",
       "library": "bap-future",
-      "description": "This module provides monadic operators for composing and transforming future values, including bind, map, and function lifting operations. It works with the future type, representing values determined asynchronously. Use it to sequence dependent computations, apply functions to future values, and combine multiple futures into new results.",
-      "description_length": 340,
+      "description": "This module provides monadic operators for composing and transforming asynchronous computations represented as futures. It supports operations like bind, map, function lifting, and applicative application over futures, enabling sequential and parallel composition of asynchronous tasks. Concrete use cases include chaining dependent asynchronous operations, mapping functions over completed futures, and lifting multi-argument functions to operate on futures.",
+      "description_length": 459,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_future.Std.Future.Applicative_infix",
+      "library": "bap-future",
+      "description": "This module provides applicative-style composition operators for combining futures, enabling sequential and parallel computation chaining. It works with the `Future.t` type, representing asynchronous values that may be filled at some point in time. Concrete use cases include composing asynchronous computations where the result of one future determines the input of another, or combining multiple futures into a single result without explicit callbacks.",
+      "description_length": 454,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_future.Std.Future.Collection",
+      "library": "bap-future",
+      "description": "This module provides functors that lift collection operations into the future monad, enabling both eager and delayed processing of containers with asynchronous values. It supports standard collection types like lists, arrays, and sequences, where elements are wrapped in futures, allowing operations such as map, fold, filter, and parallel execution. Use cases include aggregating results from concurrent tasks, filtering data based on asynchronous predicates, and transforming collections of futures into final values once all are resolved.",
+      "description_length": 541,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_future.Std.Future.Variadic",
+      "library": "bap-future",
+      "description": "This module provides operations for building and applying variadic arguments to functions in the context of futures. It works with futures that represent asynchronous computations and supports constructing argument lists incrementally using a type-safe applicative interface. Concrete use cases include composing asynchronous function calls with varying numbers of arguments, such as invoking a multi-argument function once all its inputs are available as futures.",
+      "description_length": 464,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_future.Std.Stream.Variadic",
+      "library": "bap-future",
+      "description": "This module merges and processes multiple streams using a single function, enabling variadic composition of stream arguments. It works with streams of arbitrary types, combining them into argument lists that can be applied to functions with matching arities. Concrete use cases include aggregating data from multiple asynchronous sources, such as combining sensor inputs or event streams, and applying a transformation or reduction function to the merged values.",
+      "description_length": 462,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_future.Std.Future.Let_syntax",
+      "library": "bap-future",
+      "description": "This module provides syntactic conveniences for composing asynchronous computations using futures. It supports operations like `let%bind` for sequential composition, `let%map` for transforming future values, and `let%both` for parallel composition. These constructs simplify working with futures by allowing direct, imperative-style binding of asynchronous results while maintaining monadic structure.",
+      "description_length": 401,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_future.Std.Future.Exn",
+      "library": "bap-future",
+      "description": "This module provides the `expect` function for handling exceptions within future computations. It allows catching exceptions raised during the execution of a future and recovering by providing an alternative future value, with optional cleanup via a `finally` callback. It works directly with futures that may fail, enabling error propagation and resource management in asynchronous workflows.",
+      "description_length": 393,
       "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_future.Std.Future.Pair",
+      "module_path": "Bap_future.Std.Future.List",
       "library": "bap-future",
-      "description": "This module provides `fst` and `snd` operations lifted into the future monad, allowing extraction of the first and second elements from a future pair. It works with values of type `('a * 'b) Bap_future.Std.Future.t`, enabling asynchronous access to individual components of a paired future. A concrete use case is retrieving separate results from a computation that produces two distinct values, each of which may become available at different times.",
-      "description_length": 450,
+      "description": "This module provides operations to process lists of futures and apply asynchronous transformations and aggregations over list elements. It supports data types involving lists of futures and future values, enabling tasks like parallel execution of list elements, filtering, mapping, and reduction with asynchronous effects. Concrete use cases include concurrently processing multiple independent asynchronous computations, filtering a list based on asynchronous predicates, or reducing a list using asynchronous functions while preserving evaluation order.",
+      "description_length": 555,
       "index": 11,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_future.Std.Future.Args",
+      "module_path": "Bap_future.Std.Future.Lift",
       "library": "bap-future",
-      "description": "This module provides operations for building and transforming argument lists for functions that operate on futures. It supports constructing argument sequences with `cons` or `@>`, modifying arguments with `step`, and applying functions to arguments via `applyN` or `mapN`. These operations enable composing asynchronous computations where each argument is itself a future value, allowing for structured, monadic chaining of dependent future computations.",
-      "description_length": 455,
+      "description": "This module lifts functions of various arities into the future monad, enabling them to operate on asynchronous values. It provides functions to transform pure functions into ones that accept futures as arguments, handling binary, ternary, and up to quinary function lifting. Use it to compose computations that depend on multiple asynchronously computed inputs without explicitly waiting for each.",
+      "description_length": 397,
       "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bap_future.Std.Future.Let",
+      "module_path": "Bap_future.Std.Future.Triple",
       "library": "bap-future",
-      "description": "This module provides monadic and applicative operators for composing asynchronous computations that produce values in the future. It works with the `Future.t` type, representing values that may become available at some point in time. These operators enable chaining and combining futures, such as sequentially binding results with `let*`, applying functions to future values with `let+`, and running futures in parallel with `and*` or `and+`.",
-      "description_length": 442,
+      "description": "This module provides functions `fst`, `snd`, and `trd` to extract the first, second, and third elements from a future-resolved triple. It operates on futures that hold three-element tuples, allowing individual components to be accessed asynchronously. Use this when working with computations that produce a tuple result, and you need to process each element independently as it becomes available.",
+      "description_length": 396,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_future.Std.Future.Fn",
       "library": "bap-future",
-      "description": "This module provides function combinators for composing and transforming monadic future computations. It works with functions that return future values, enabling operations like identity, negation, repeated application, and composition of these functions. Concrete use cases include building complex asynchronous workflows, chaining repeated transformations, and combining conditional logic with future-based computations.",
-      "description_length": 422,
+      "description": "This module provides function combinators for composing and transforming monadic future computations. It works with functions that return future values, enabling operations like negation, identity, composition, and repeated application of functions. Concrete use cases include building complex asynchronous workflows by chaining and modifying functions that produce futures, such as composing multiple stages of a pipeline or applying a transformation function multiple times in sequence.",
+      "description_length": 488,
       "index": 14,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_future.Std.Future.Exn",
+      "module_path": "Bap_future.Std.Future.Seq",
       "library": "bap-future",
-      "description": "This module handles exceptions within future computations, providing the `expect` function to catch exceptions and handle errors asynchronously. It works with futures that may raise exceptions during evaluation, allowing recovery via a catch handler and optional cleanup with a finally clause. Use it to manage error scenarios in asynchronous workflows, such as handling failed I/O operations or exceptional conditions in concurrent tasks.",
-      "description_length": 439,
+      "description": "This module provides operations to process sequences of values asynchronously using futures. It supports transformations like mapping, filtering, and folding over sequences, where each element can be processed concurrently or in sequence, depending on the function. Key use cases include parallel execution of independent computations, asynchronous data processing pipelines, and concurrent accumulation of results from distributed tasks.",
+      "description_length": 438,
       "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_future.Std.Future.Applicative_infix",
+      "module_path": "Bap_future.Std.Future.Pair",
       "library": "bap-future",
-      "description": "This module provides applicative-style composition operators for combining futures, enabling sequential and parallel computation chaining. It works with the `Future.t` type, representing values that will be available at some point in time. Concrete use cases include composing asynchronous computations where the result of one future determines the input of another, or combining multiple futures into a single result without explicit callbacks.",
-      "description_length": 445,
+      "description": "This module provides `fst` and `snd` operations to extract the first and second elements from a future pair. It works with values of type `('a * 'b) Bap_future.Std.Future.t`, allowing access to individual components once the pair future is resolved. Use this when handling asynchronous computations that produce paired results, such as concurrent data fetching or parallel task outputs.",
+      "description_length": 386,
       "index": 16,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bap_future.Std.Future.Triple",
+      "module_path": "Bap_future.Std.Variadic.Make",
       "library": "bap-future",
-      "description": "This module provides functions `fst`, `snd`, and `trd` to extract the first, second, and third elements from a future-wrapped triple. It operates on futures containing 3-tuples of any types. Use this when working with asynchronous computations that produce triple results and you need to access individual components of the tuple once the future is resolved.",
-      "description_length": 358,
+      "description": "This module provides operations to build and apply variadic argument lists using an applicative style, enabling functions to be applied to a variable number of arguments in a type-safe manner. It works with abstract argument types and future values, allowing for the composition of functions that take multiple heterogeneous arguments. Concrete use cases include merging multiple futures into a single result via a function like `typecheck`, and generalizing cartesian product operations over collections to an arbitrary number of inputs.",
+      "description_length": 538,
       "index": 17,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_future.Std.Stream.Variadic",
+      "module_path": "Bap_future.Std.Future.Args",
       "library": "bap-future",
-      "description": "This module provides operations for merging and processing multiple streams using variadic functions, enabling the combination of stream elements into a single computation. It works with streams of arbitrary types, allowing functions to be applied across a dynamic number of streams, where each stream contributes an argument to the function. Concrete use cases include aggregating values from multiple independent streams into a single result, such as combining sensor inputs or event streams into a coordinated output.",
-      "description_length": 520,
+      "description": "This module provides operations to build and manipulate argument lists for functions that operate on futures. It supports constructing argument lists using `cons` or `@>`, transforming arguments with `step`, and applying functions to these argument lists using `applyN` and `mapN`. These operations enable composing asynchronous function calls with multiple future arguments, allowing for structured, sequential application of values that become available at different points in time.",
+      "description_length": 484,
       "index": 18,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bap_future.Std.Variadic.S",
+      "module_path": "Bap_future.Std.Future.Let",
       "library": "bap-future",
-      "description": "This module provides operations to build and apply variadic argument lists using a functional approach, enabling functions to be applied to a variable number of future-typed arguments in a type-safe manner. It works with future values of different types, such as `arch`, `lang`, `abi`, and `api`, allowing them to be combined and passed to a target function once all are resolved. Concrete use cases include merging multiple futures into a single result, such as passing resolved configuration values to a type-checking function.",
-      "description_length": 529,
+      "description": "This module provides monadic and applicative operators for composing asynchronous computations that produce values in the future. It works with the `Future.t` type, representing values that may become available at some point in time. These operators enable concise chaining and combination of futures, such as sequentially binding results with `let*` or pairing independent futures with `and*`.",
+      "description_length": 394,
       "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_future.Std.Future.Let_syntax",
-      "library": "bap-future",
-      "description": "This module integrates syntactic support for asynchronous programming with futures, enabling direct-style code through `let%bind` and `let%map` to sequence and transform `Future.t` values. It simplifies composition of asynchronous operations such as chaining network requests or handling deferred computations, avoiding deeply nested callbacks. The core functionality centers on ergonomic, readable pipelines using future values, while a child module reinforces this syntax-driven approach. Examples include structuring concurrent system calls and mapping results across dependent futures.",
-      "description_length": 589,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_future.Std.Applicable.S",
-      "library": "bap-future",
-      "description": "This module provides `map` and `apply` operations for transforming and combining values within a type constructor that supports applicative-style computation without a `return` function. It works with types that represent delayed or co-inductive computations, such as streams or futures, where pure lifting is not available. Concrete use cases include composing asynchronous computations and applying functions across effectful structures without introducing new values into the context.",
-      "description_length": 487,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_future.Std.Future.Collection",
-      "library": "bap-future",
-      "description": "This module lifts collection operations into a monadic context, enabling asynchronous processing of container elements through parallel and sequential computation patterns. It provides key operations like `map`, `fold`, `filter`, and `iter` that work on collections of futures, supporting data types such as lists, arrays, and sequences. These operations allow tasks like running I/O-bound computations concurrently with `all`, aggregating results with `fold`, or applying side effects across elements in sequence. Concrete examples include processing HTTP requests in parallel, transforming a list of futures into a future of a transformed list, or reducing a sequence of asynchronous values into a single result.",
-      "description_length": 714,
-      "index": 22,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_future.Std.Applicable",
-      "library": "bap-future",
-      "description": "This module enables applicative-style composition of asynchronous computations over future values, using `map` and `apply` to transform and combine pending results. It supports types like futures and streams, where functions are applied across effectful structures without introducing new values. You can use it to chain non-blocking operations, merge multiple futures, or lift functions into asynchronous pipelines. Submodules extend this capability to more general delayed computations, broadening the range of applicable data types and operations.",
-      "description_length": 550,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_future.Std.Future",
-      "library": "bap-future",
-      "description": "This module represents values determined asynchronously, supporting composition and transformation through a rich set of monadic and applicative operations. It enables concurrent and sequential processing of lists, sequences, and collections, with utilities to lift functions, handle exceptions, and extract components from tuples of futures. Specific capabilities include chaining dependent tasks with infix operators, combining results from parallel computations, and structuring workflows using direct-style syntax. Concrete use cases span parallel HTTP request handling, asynchronous data stream processing, and building complex futures from simpler ones using combinators and lifted functions.",
-      "description_length": 698,
-      "index": 24,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_future.Std.Promise",
       "library": "bap-future",
-      "description": "This module provides operations to fulfill a promise and check if a promise has already been fulfilled. It works with promise values that represent pending computations of a future value. Concrete use cases include coordinating asynchronous tasks where a result must be explicitly set once available, such as handling results from background computations or external events.",
-      "description_length": 374,
-      "index": 25,
+      "description": "Works with promises to manage asynchronous value resolution. Provides `fulfill` to set a promise's value and `is_fulfilled` to check completion status. Useful for coordinating tasks that depend on values not yet available, like handling deferred computations or event-driven results.",
+      "description_length": 283,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_future.Std.Variadic",
+      "module_path": "Bap_future.Std.Future",
       "library": "bap-future",
-      "description": "This module enables type-safe composition of functions with variable numbers of heterogeneous future arguments, using an applicative interface that supports argument collection, extension, and function application. It defines core operations to build and merge futures\u2014such as `args`, `$`, and `apply`\u2014allowing functions like `typecheck` to accept dynamically constructed sequences of typed futures (e.g., `arch`, `lang`, `abi`, `api`) and execute once all values are resolved. Submodules refine this structure by implementing variadic argument collection for co-inductive types and functional construction patterns, ensuring type correctness without requiring empty argument lists. Example usage includes aggregating asynchronously computed configuration parameters and passing them as a unit to a validation or processing function.",
-      "description_length": 833,
-      "index": 26,
+      "description": "This module enables asynchronous computation management through monadic and applicative operations on single-assignment values that resolve over time, supporting sequential and parallel composition, error handling, and structured data flow. It operates on futures\u2014time-dependent values representing deferred results\u2014and leverages constructs like bind, map, and applicative operators to model nonlinear temporal dependencies. Typical applications include coordinating I/O-bound tasks, event-driven workflows, and branching logic where outcomes depend on asynchronous signals or conditional resolution paths.",
+      "description_length": 606,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_future.Std.Applicable",
+      "library": "bap-future",
+      "description": "This module implements applicative functors for future values, enabling composition of asynchronous computations through `map` and `apply` operations. It works with `t` type values representing pending results within a future context. Use it to combine multiple futures into a single computation without blocking, such as aggregating results from parallel tasks.",
+      "description_length": 362,
+      "index": 22,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_future.Std.Signal",
       "library": "bap-future",
-      "description": "Handles value production in streams by sending or repeating elements. Works with `signal` types to push values into associated streams. Useful for generating controlled sequences or duplicating values in stream-based data processing.",
-      "description_length": 233,
-      "index": 27,
-      "embedding_norm": 1.0
+      "description": "This module provides functions to send values to streams, including sending a value once or repeating it a specified number of times. It operates on signal types associated with streams, enabling controlled value production in asynchronous data flows. Concrete use cases include generating test data streams, implementing rate-limited event emission, or duplicating stream elements for parallel processing.",
+      "description_length": 406,
+      "index": 23,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bap_future.Std.Stream",
+      "module_path": "Bap_future.Std.Variadic",
       "library": "bap-future",
-      "description": "This module handles infinite, coinductive streams of values, supporting corecursive transformations and lazy evaluation through subscription tracking. It enables stream creation, filtering, merging, zipping, and windowed aggregation, while managing concurrency and flow control via optional pushback mechanisms. Subscribers can react to changes with `on_subscribe` and `on_unsubscribe`, and coordinate rates using `wait` and `on_wait`. For example, it can model real-time sensor data pipelines where multiple streams are merged, filtered, or zipped to produce synchronized outputs under controlled consumption rates.",
-      "description_length": 616,
-      "index": 28,
+      "description": "This module enables the construction and application of variadic argument lists in an applicative style, supporting functions that take a variable number of heterogeneous arguments. It works with future values and abstract argument types, allowing type-safe composition of argument lists and deferred function application. Concrete use cases include combining multiple futures into a single result using a function like `typecheck`, and generalizing cartesian product operations over collections to an arbitrary number of inputs.",
+      "description_length": 529,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_future.Std",
       "library": "bap-future",
-      "description": "This module provides a comprehensive framework for composing and manipulating asynchronous computations using futures, promises, and streams. Core data types include futures for representing pending results, promises for explicitly setting values, and streams for handling sequences of values with support for lazy evaluation and flow control. Operations allow chaining, combining, and transforming asynchronous values through applicative and monadic interfaces, with utilities for parallel and sequential processing, exception handling, and dynamic argument aggregation. Examples include coordinating background tasks with promises, merging real-time sensor data streams with rate control, and building complex asynchronous workflows by lifting functions over futures and composing them with infix operators or applicative combinators.",
-      "description_length": 836,
-      "index": 29,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements applicative functors for future values, enabling composition of asynchronous computations through `map` and `apply` operations. It works with `t` type values representing pending results within a future context. Use it to combine multiple futures into a single computation without blocking, such as aggregating results from parallel tasks.",
+      "description_length": 362,
+      "index": 25,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_future",
       "library": "bap-future",
-      "description": "This module enables asynchronous programming through futures, promises, and streams, allowing the composition and manipulation of deferred computations. It supports chaining and combining asynchronous operations with applicative and monadic interfaces, along with parallel and sequential processing, exception handling, and dynamic argument aggregation. You can coordinate background tasks using promises, merge real-time data streams with flow control, and build complex workflows by lifting functions over futures and composing them with infix operators or combinators.",
-      "description_length": 571,
-      "index": 30,
+      "description": "This module implements applicative functors for handling future values, supporting operations like `map` and `apply` to compose asynchronous computations. It works with the `t` type, representing pending results that will be available later. Use it to combine multiple futures into a single non-blocking computation, such as aggregating outputs from parallel tasks.",
+      "description_length": 365,
+      "index": 26,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 32,
-    "meaningful_modules": 31,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.96875
+    "total_modules_in_package": 29,
+    "meaningful_modules": 27,
+    "filtered_empty_modules": 2,
+    "retention_rate": 0.9310344827586207
   },
   "statistics": {
-    "max_description_length": 836,
-    "min_description_length": 233,
-    "avg_description_length": 506.8709677419355,
-    "embedding_file_size_mb": 0.11305522918701172
+    "max_description_length": 606,
+    "min_description_length": 283,
+    "avg_description_length": 448.74074074074076,
+    "embedding_file_size_mb": 0.39177989959716797
   }
 }

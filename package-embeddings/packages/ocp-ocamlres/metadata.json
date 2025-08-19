@@ -1,221 +1,189 @@
 {
   "package": "ocp-ocamlres",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 25,
-  "creation_timestamp": "2025-07-15T23:10:47.501929",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 21,
+  "creation_timestamp": "2025-08-15T12:15:47.478750",
   "modules": [
     {
-      "module_path": "OCamlResFormats.Res",
+      "module_path": "OCamlResSubFormats.Lines",
       "library": "ocplib-ocamlres",
-      "description": "This module outputs OCaml source code representing a resource tree, using a provided formatter module. It works with resource trees structured as `data OCamlRes.Res.root` and formatting parameters specific to resource serialization. A concrete use case is generating OCaml modules that embed static resource hierarchies for runtime access.",
-      "description_length": 339,
+      "description": "This module processes text input by splitting it into individual lines, represented as a list of strings. It provides functions to parse raw string data into line-based structures, serialize them back to strings, and generate OCaml representations for resource storage. Use cases include handling multi-line text files like configuration files or logs within a resource tree.",
+      "description_length": 375,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "OCamlResRegistry.Raw",
+      "module_path": "OCamlResRegistry.ExtensionDispatcherSubFormat",
       "library": "ocplib-ocamlres",
-      "description": "This module handles raw string data as the base format for resource trees, providing functions to parse, dump, and pretty-print resources. It associates file extensions with subformats using dynamic dispatch and maintains mappings between command line names and OCaml implementations. It is used to generate OCaml code from raw file contents, supporting customization through headers, footers, and type annotations.",
-      "description_length": 415,
+      "description": "This module dispatches output subformats based on file extensions and command-line options, using pre-instantiated `Format` and `SubFormat` instances. It operates on string-based resource representations, parsing and dumping resources to and from raw strings using registered subformats. Concrete use cases include generating OCaml source files from in-memory resources, with customizable headers, footers, and type annotations based on the selected subformat.",
+      "description_length": 460,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "OCamlResRegistry.SubFormat",
+      "module_path": "OCamlResScanners.PathFilter",
       "library": "ocplib-ocamlres",
-      "description": "This module defines the interface for subformat plugins that process raw string data into structured values and back, supporting command-line integration through dynamic dispatch based on file extensions. It includes functions for parsing, pretty-printing, and managing metadata such as type names and module names, with concrete use cases in generating OCaml code from resource trees and handling file-based configuration formats. The module works with string-valued resource trees and leverages an associative table to map command-line names to OCaml implementations.",
-      "description_length": 569,
+      "description": "This module defines predicates for filtering file and directory paths during scanning operations. It provides combinators like `all_of`, `any_of`, and `exclude` to build complex filters, along with utilities such as `has_extension` and `limit` for specific file selection. These filters are applied to `OCamlRes.Path.t` values to control which paths are included or excluded during resource scanning.",
+      "description_length": 400,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OCamlResRegistry.Lines",
+      "module_path": "OCamlResSubFormats.Int",
       "library": "ocplib-ocamlres",
-      "description": "This module processes text files by splitting their contents into lines for resource management. It provides parsing, pretty-printing, and serialization functions for handling string lists as resources. Use it to register line-based text formats with custom extensions, enabling command-line tools to dynamically dispatch to OCaml code based on file type.",
-      "description_length": 355,
+      "description": "This module implements a simple integer-based resource subformat with parsing, serialization, and pretty-printing operations. It works directly with integer values and uses file paths to manage resource identity and location. Concrete use cases include demonstrating how to define custom resource formats for storing and reconstructing integer values within a resource tree.",
+      "description_length": 374,
       "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "OCamlResRegistry.OCaml",
       "library": "ocplib-ocamlres",
-      "description": "This module implements command-line integration for OCaml resource formats by pre-instantiating Format and SubFormat modules. It maps file extensions to subformat implementations using an associative table and handles dynamic dispatch based on input file types. The module processes string-valued resource trees, provides output generation, command-line argument parsing, and format description for help pages.",
-      "description_length": 410,
+      "description": "This module defines the `\"ocaml\"` format for command-line integration, providing `output` to serialize resource trees as OCaml code, `info` for help documentation, and `options` to configure format-specific command-line arguments. It works with `string OCamlRes.Res.root` structures representing resource hierarchies. Concrete use cases include generating OCaml source files from resource definitions and extending the `ocp-ocamlres` tool with custom resource formats via dynamic linking.",
+      "description_length": 488,
       "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OCamlResSubFormats.Int",
+      "module_path": "OCamlResRegistry.Int",
       "library": "ocplib-ocamlres",
-      "description": "This module defines a formatter for integer values in a resource tree, providing functions to parse integers from strings, convert them back, and pretty-print them as OCaml code. It works directly with `int` values and uses `OCamlRes.Path.t` to track resource locations. Concrete use cases include embedding numeric configuration values in generated OCaml modules and ensuring consistent serialization and deserialization of integer resources.",
-      "description_length": 443,
+      "description": "This module defines the runtime representation and serialization of integer resources. It provides parsing, pretty-printing, and name resolution for integer values used in resource definitions. Use cases include embedding numeric identifiers or counts directly into generated OCaml code from resource files.",
+      "description_length": 307,
       "index": 5,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OCamlResSubFormats.SubFormat",
+      "module_path": "OCamlResFormats.Res",
       "library": "ocplib-ocamlres",
-      "description": "This module defines an abstract type `t` with operations for parsing, printing, and inspecting resource data during generation. It supports converting raw string data to and from an intermediate representation, producing OCaml code fragments, and retrieving metadata like type and module names. Concrete use cases include formatting CSV or JSON files into OCaml values while allowing custom handling of headers, footers, and type definitions.",
-      "description_length": 442,
+      "description": "This module outputs OCaml source code representing a resource tree, using a provided formatter module. It works with OCamlRes tree structures and formatting parameters to generate a `root` value that can be used at runtime. A concrete use case is embedding preprocessed resource trees directly into OCaml source files for efficient runtime access.",
+      "description_length": 347,
       "index": 6,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OCamlResRegistry.ExtensionDispatcherSubFormat",
+      "module_path": "OCamlResRegistry.Files",
       "library": "ocplib-ocamlres",
-      "description": "This module implements dynamic dispatch of subformats based on file extensions and command-line options, using pre-registered format and subformat mappings. It operates on string-based resource trees, parsing and serializing data via registered subformat implementations. Concrete use cases include selecting the appropriate subformat at runtime for processing resource files, generating OCaml code from resources, and handling file-type-specific headers or footers during resource compilation.",
-      "description_length": 494,
+      "description": "Registers file-based resource formats and subformats for command-line use, enabling custom data handling during output generation. It works with string-based resource roots and provides an interface for defining format-specific options and documentation. Concrete use cases include extending the tool with new file formats that dictate how resources are structured and output in response to command-line arguments.",
+      "description_length": 414,
       "index": 7,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OCamlResFormats.OCaml",
+      "module_path": "OCamlResRegistry.PredefOptions",
       "library": "ocplib-ocamlres",
-      "description": "This module generates OCaml source code from a resource tree, creating submodules for directories and values for files. It takes a pretty-printing function and a resource tree as input, producing formatted OCaml output to a document. It is used to serialize resource trees into compilable OCaml code with customizable formatting.",
-      "description_length": 329,
+      "description": "This module defines command-line options and global state for configuring resource formatting, including width, output file, and subformat mappings. It works with references to integers, strings, and maps binding extension strings to subformat implementations. These options are used to customize resource generation behavior when invoking the tool from the command line.",
+      "description_length": 371,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "OCamlResRegistry.Files",
+      "module_path": "OCamlResRegistry.Raw",
       "library": "ocplib-ocamlres",
-      "description": "Implements command-line integration for handling file-based resource formats. It manages dynamic dispatch of subformats based on file extensions and maps format names to their OCaml implementations. Used to register and process custom resource formats with `ocp-ocamlres`, supporting external extensions via recompilation or dynamic linking.",
-      "description_length": 341,
+      "description": "This module handles raw string data as the base format for resource registration, providing functions to parse, serialize, and pretty-print resources. It defines conversions between file data and in-memory representations, along with optional OCaml code fragments for formatting output. Use cases include embedding static files directly into OCaml code and generating resource definitions for external tools.",
+      "description_length": 408,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OCamlResSubFormats.Raw",
       "library": "ocplib-ocamlres",
-      "description": "This module treats resource leaves as raw string values, directly preserving their contents. It provides functions to parse and dump strings, along with pretty-printing capabilities to generate OCaml code representations, including optional header and footer code blocks. It is used when storing and retrieving unstructured text resources directly as strings in the resource tree.",
-      "description_length": 380,
+      "description": "This module represents resource leaves as raw string values, providing direct parsing and serialization for file contents. It supports pretty-printing to OCaml document format and includes optional header/footer generation for embedding in OCaml code. It is used to handle unstructured or custom-formatted resources directly as strings during resource tree scanning and code generation.",
+      "description_length": 386,
       "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OCamlResRegistry.Int",
-      "library": "ocplib-ocamlres",
-      "description": "This module defines an integer format for resource compilation, handling conversion between raw string data and in-memory `int` values. It provides parsing, pretty-printing, and serialization functions tailored for integer resources, including optional OCaml code generation for headers and footers. Concrete use cases include embedding numeric identifiers or counters directly from text files into compiled OCaml code.",
-      "description_length": 419,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OCamlResRegistry.PredefOptions",
-      "library": "ocplib-ocamlres",
-      "description": "This module defines command-line options for configuring resource formatting, including setting output width, mapping file extensions to subformats, and specifying output files. It works with string-based resource trees and uses a dynamic dispatch mechanism to select subformats based on file extensions. Concrete use cases include customizing how resources are processed and output during command-line execution of ocp-ocamlres.",
-      "description_length": 429,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OCamlResScanners.ResFilter",
-      "library": "ocplib-ocamlres",
-      "description": "This module provides combinators for building filters to select or exclude resources based on conditions like file presence, directory structure, or custom criteria. It operates on resource trees parsed from the filesystem, enabling precise post-import filtering. Use cases include excluding empty directories, selecting files matching specific attributes, or combining multiple filter conditions to refine resource sets.",
-      "description_length": 421,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OCamlResSubFormats.Lines",
-      "library": "ocplib-ocamlres",
-      "description": "This module splits input strings into lists of lines and provides functions to convert between raw strings and line-based representations. It supports parsing from files, dumping to strings, and generating OCaml code for embedding line-separated data in resource trees. Use cases include handling text files like configuration files or logs where line boundaries are significant.",
-      "description_length": 379,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OCamlResRegistry.Format",
-      "library": "ocplib-ocamlres",
-      "description": "This module defines format plugins for the command-line interface of `ocp-ocamlres`, specializing in handling string-based resource trees derived from file contents. It supports dynamic dispatch of subformats based on file extensions and maintains mappings between command-line names and OCaml implementations. Concrete use cases include registering custom output formats and extending the tool with new subformats via command-line arguments and dynamic linking.",
-      "description_length": 462,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OCamlResRegistry.Res",
-      "library": "ocplib-ocamlres",
-      "description": "This module defines the interface between OCaml format implementations and the command-line tool `ocp-ocamlres`, enabling dynamic dispatch of subformats based on file extensions. It maintains associative tables mapping format and subformat names to their OCaml implementations, supporting extension via recompilation or dynamic linking. Concrete operations include `output` for rendering resource trees, `info` for command-line help, and `options` for defining format-specific command-line arguments.",
-      "description_length": 500,
-      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OCamlResRegistry.Variants",
       "library": "ocplib-ocamlres",
-      "description": "Implements command-line interface integration for format and subformat definitions, enabling dynamic dispatch based on file extensions. Maintains associative tables mapping command-line names to OCaml module implementations for extensible format handling. Used to register and select output formats and subformats at runtime, driven by file type and user options.",
-      "description_length": 363,
-      "index": 17,
+      "description": "Registers variant-based resource formats for command-line handling, enabling serialization and output of structured data trees. It works with string-indexed resource roots and supports custom command-line arguments for format configuration. Used to define and extend output formats like JSON or XML variants in `ocp-ocamlres` tooling.",
+      "description_length": 334,
+      "index": 11,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "OCamlResScanners.ResFilter",
+      "library": "ocplib-ocamlres",
+      "description": "This module provides combinators for building filters to select or exclude resources in a parsed directory tree. It works with resource store structures, allowing operations like selecting all files, excluding specific subtrees, or combining filters logically. Concrete use cases include filtering out empty directories, selecting files based on parsed metadata, or composing inclusion/exclusion rules for resource processing pipelines.",
+      "description_length": 436,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "OCamlResFormats.Format",
+      "module_path": "OCamlResRegistry.Res",
       "library": "ocplib-ocamlres",
-      "description": "This module defines formatters for converting resource trees into structured output. It provides the `output` function, which takes formatting parameters and a resource tree, then produces a pretty-printed document using PPrint. It works with resource trees (`OCamlRes.Res.root`) and custom formatting configurations.",
-      "description_length": 317,
-      "index": 18,
+      "description": "This module defines the root format instance for handling OCaml resource definitions, providing direct output generation from structured data. It works with string-based resource trees and command-line argument specifications. Concrete use cases include registering custom output formats and extending the `ocp-ocamlres` tool with new resource serialization logic via dynamic linking.",
+      "description_length": 384,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OCamlResFormats.Files",
       "library": "ocplib-ocamlres",
-      "description": "This module reproduces the original directory and file structure from a resource tree, using a specified file system representation. It supports operations to write files and directories to disk, creating new ones when necessary in a forged resource store. Concrete use cases include persisting in-memory resource trees to disk in a structured and reproducible way.",
-      "description_length": 365,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "OCamlResScanners.PathFilter",
-      "library": "ocplib-ocamlres",
-      "description": "Defines predicates to filter file and directory paths during scanning operations. Works with `OCamlRes.Path.t` values, allowing inclusion or exclusion based on extension, depth, or composition of multiple filters. Useful for restricting scans to specific file types, limiting recursion depth, or combining multiple filtering criteria.",
-      "description_length": 334,
-      "index": 20,
+      "description": "Handles file structure serialization and pretty-printing for resource trees. It works with file data types structured as `SF.t` and resource roots containing file metadata. This module is used to generate human-readable file listings or formatted output for resource stores during debugging or logging.",
+      "description_length": 302,
+      "index": 14,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "OCamlResSubFormats",
+      "module_path": "OCamlResFormats.OCaml",
       "library": "ocplib-ocamlres",
-      "description": "This module formats resource leaves into string representations for text output, supporting integers, raw strings, and line-based structures with indentation. It provides direct operations to serialize and deserialize values like integers and strings, while submodules handle specialized cases such as line splitting, custom intermediate representations, and OCaml code generation. You can use it to convert configuration data into OCaml modules, format logs with indentation, or embed structured text like CSV or JSON as OCaml values. The API combines low-level parsing and printing with higher-level formatters for structured and line-oriented data.",
-      "description_length": 651,
-      "index": 21,
+      "description": "This module generates OCaml source code from a resource tree, creating submodules for directories and values for files. It takes a pretty-printing function and a resource tree as input, producing formatted OCaml output to standard output or a file. It is used to serialize resource trees into compilable OCaml modules with customizable formatting.",
+      "description_length": 347,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OCamlResRegistry.Lines",
+      "library": "ocplib-ocamlres",
+      "description": "This module processes text files by parsing and serializing them as lists of strings. It provides functions to convert raw file content into in-memory string lists, format them as OCaml values, and optionally inject header/footer code during resource generation. It supports command-line configuration and integrates pre-defined format instances for line-based text handling.",
+      "description_length": 375,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "OCamlResFormats",
       "library": "ocplib-ocamlres",
-      "description": "This module combines resource tree formatting with customizable output options, enabling conversion of resource hierarchies into OCaml code, filesystem structures, or variant-based representations. It supports operations that accept formatting parameters such as output width, target channel, variant usage, and base directory, working directly with `OCamlRes.Res.root` structures. The child modules specialize in generating OCaml modules with submodules for directories and values for files, producing pretty-printed documents via PPrint, and exporting resource trees to disk with directory creation. Examples include embedding static resources into compilable OCaml code, customizing output with sum types, and persisting in-memory trees to structured filesystem representations.",
-      "description_length": 781,
-      "index": 22,
+      "description": "This module formats resource trees into OCaml source code and structured output. It includes submodules for generating compilable OCaml modules with customizable formatting, serializing resource trees into runtime values, and producing human-readable file listings. It works with resource tree structures, formatting parameters like output width and channels, and file metadata types, used to embed resources directly into OCaml code or log structured file data.",
+      "description_length": 462,
+      "index": 17,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "OCamlResScanners",
-      "library": "ocplib-ocamlres",
-      "description": "This module defines scanners for traversing directory structures and importing files as resource trees, centered around the `scan_unix_dir` function. It supports filtering paths and processing results through optional path and result filters, enabling the construction of structured resource hierarchies from disk contents. The child modules provide combinators for building complex inclusion and exclusion rules, such as filtering by file extension, directory depth, or custom predicates on resource trees. Together, they allow precise control over which files and directories are scanned, processed, and included in the final resource structure.",
-      "description_length": 647,
-      "index": 23,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "OCamlResRegistry",
       "library": "ocplib-ocamlres",
-      "description": "This module manages registries for format and subformat implementations, enabling dynamic lookup and registration by name. It works with string-valued resource trees and file extensions to dispatch subformats, using associative tables that map names to packed modules. You can register custom output formats, associate file extensions with subformat handlers, and generate OCaml code from raw file contents with custom headers and footers. Submodules handle line-based text, integer resources, command-line options, and dynamic dispatch, supporting external extensions via recompilation or dynamic linking.",
-      "description_length": 606,
-      "index": 24,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module manages registries for format and subformat implementations used by the `ocp-ocamlres` command-line tool. It allows registration, lookup, and retrieval of named format and subformat modules that define how resources are parsed, serialized, and output. Concrete use cases include embedding raw files, integers, and line-based text into OCaml code, and extending the tool with custom output formats based on file extensions or command-line options.",
+      "description_length": 458,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OCamlResScanners",
+      "library": "ocplib-ocamlres",
+      "description": "This module defines path and resource filtering combinators for selective directory scanning. It provides functions to build inclusion/exclusion rules for file paths and processed resources, supporting operations like extension-based selection, subtree exclusion, and logical filter composition. It is used to control which files and directories are included during resource tree construction from a filesystem directory.",
+      "description_length": 421,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "OCamlResSubFormats",
+      "library": "ocplib-ocamlres",
+      "description": "This module implements formatters for handling resource leaves in a tree structure, supporting operations like parsing, serialization, and pretty-printing. It works with integers, raw strings, and line-based text data, each corresponding to a specific resource subformat. It is used for embedding structured and unstructured data such as integer values, file contents, and multi-line text files directly into OCaml code during resource tree processing.",
+      "description_length": 452,
+      "index": 20,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 25,
-    "meaningful_modules": 25,
+    "total_modules_in_package": 21,
+    "meaningful_modules": 21,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 781,
-    "min_description_length": 317,
-    "avg_description_length": 447.64,
-    "embedding_file_size_mb": 0.09123802185058594
+    "max_description_length": 488,
+    "min_description_length": 302,
+    "avg_description_length": 395.2857142857143,
+    "embedding_file_size_mb": 0.30459022521972656
   }
 }

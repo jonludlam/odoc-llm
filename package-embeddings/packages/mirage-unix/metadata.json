@@ -1,41 +1,41 @@
 {
   "package": "mirage-unix",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:53.072245",
+  "creation_timestamp": "2025-08-14T22:52:19.334473",
   "modules": [
     {
-      "module_path": "Unix_os.Lifecycle",
+      "module_path": "Unix_os.Time",
       "library": "mirage-unix",
-      "description": "This module provides a function to await shutdown requests in a Unix-based MirageOS environment, returning whether the system should power off or reboot. It works with Lwt threads and returns a variant type indicating the requested shutdown action. Concrete use cases include handling graceful shutdowns in server applications or virtualized environments where MirageOS runs as a unikernel.",
-      "description_length": 390,
+      "description": "This module provides functions for measuring and manipulating time, including retrieving the current time and converting between different time representations. It works with `float`, `int64`, and custom time types such as `span` and `t`. Concrete use cases include timing operations, implementing delays, and converting between seconds, milliseconds, and nanoseconds.",
+      "description_length": 368,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Unix_os.Time",
+      "module_path": "Unix_os.Lifecycle",
       "library": "mirage-unix",
-      "description": "Handles time-related operations using POSIX time functions. Provides functions to retrieve the current time in seconds and nanoseconds, and to sleep for a specified duration in nanoseconds. Useful for precise timing measurements and delays in concurrent programs.",
-      "description_length": 263,
+      "description": "Implements lifecycle management operations for Unix domains, primarily providing `await_shutdown_request` to block until a shutdown signal is received. Works with Lwt threads and domain lifecycle events, allowing callers to specify supported shutdown modes like poweroff or reboot. Useful for coordinating graceful shutdowns in server applications or virtual machine monitors.",
+      "description_length": 376,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Unix_os.Main",
       "library": "mirage-unix",
-      "description": "Implements the entry point for Unix-based MirageOS applications, defining the `run` function that executes Lwt threads. Coordinates initialization and shutdown of Unix-specific runtime components. Used to launch unikernels with Unix OS hooks.",
-      "description_length": 242,
+      "description": "Implements the entry point for executing a MirageOS unikernel on Unix, providing the `run` function that starts the event loop and initializes the runtime environment. Works with Lwt threads and Unix-specific system resources like file descriptors, network interfaces, and process signals. Used to launch and manage the lifecycle of a Unix-based MirageOS application, including handling command-line arguments and system interrupts.",
+      "description_length": 432,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Unix_os",
       "library": "mirage-unix",
-      "description": "This module integrates Unix-specific functionality for MirageOS unikernels, enabling control over shutdown behavior, precise time management, and application execution. It offers a variant type to represent shutdown actions, functions to retrieve time and sleep with nanosecond precision, and a `run` function to launch and manage Lwt-based applications. You can use it to gracefully shut down a server, schedule timed events, or start a unikernel with Unix runtime support.",
-      "description_length": 474,
+      "description": "This module implements core runtime and system interaction capabilities for MirageOS unikernels on Unix. It provides lifecycle management with controlled shutdown handling, a main entry point for application execution and event loop initialization, and precise time measurement and conversion functions. It is used to build self-contained Unix-based MirageOS applications that can manage time, respond to system signals, and coordinate clean termination.",
+      "description_length": 454,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 474,
-    "min_description_length": 242,
-    "avg_description_length": 342.25,
-    "embedding_file_size_mb": 0.014925003051757812
+    "max_description_length": 454,
+    "min_description_length": 368,
+    "avg_description_length": 407.5,
+    "embedding_file_size_mb": 0.058394432067871094
   }
 }

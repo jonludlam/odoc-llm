@@ -294,20 +294,30 @@ def extract_module_path_with_types(file_path: str) -> tuple[List[str], Dict[int,
     
     # Check for module-type pattern and handle specially
     if '-module-type-' in filename:
-        # Split on '-module-type-' to separate the module path from the type name and rest
-        module_part, rest = filename.split('-module-type-', 1)
-        # Split the module part on '-' for nested modules
-        module_parts = module_part.split('-') if module_part else []
-        # The rest might contain the type name followed by more nested modules
-        # Split the rest on '-' and add all parts
-        rest_parts = rest.split('-') if rest else []
+        # Handle multiple module-type markers
+        # Example: Base-Map-module-type-For_deriving-module-type-Sexp_of_m
+        # Should produce: ['Base', 'Map', 'For_deriving', 'Sexp_of_m'] with indices {2, 3} as module-type
         
-        # The first element in rest_parts is the module type
         type_info = {}
-        if rest_parts:
-            type_info[len(module_parts)] = 'module-type'
+        module_parts = []
         
-        module_parts.extend(rest_parts)
+        # Split the entire filename into tokens
+        tokens = filename.split('-')
+        
+        i = 0
+        while i < len(tokens):
+            if i + 1 < len(tokens) and tokens[i] == 'module' and tokens[i + 1] == 'type':
+                # Skip 'module' and 'type', mark the next token as a module type
+                i += 2
+                if i < len(tokens):
+                    type_info[len(module_parts)] = 'module-type'
+                    module_parts.append(tokens[i])
+                    i += 1
+            else:
+                # Regular module name
+                module_parts.append(tokens[i])
+                i += 1
+                
         return (module_parts, type_info)
     
     # Split on '-' for nested modules

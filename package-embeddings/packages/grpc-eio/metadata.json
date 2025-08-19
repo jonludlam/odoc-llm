@@ -1,65 +1,65 @@
 {
   "package": "grpc-eio",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:06:32.402620",
+  "creation_timestamp": "2025-08-15T07:41:34.623809",
   "modules": [
     {
-      "module_path": "Grpc_eio.Client.Rpc",
+      "module_path": "Grpc_eio.Server.Service",
       "library": "grpc-eio",
-      "description": "This module implements gRPC client-side RPC handlers for different streaming patterns. It works with sequences, promises, and string-encoded messages to manage request/response interactions. Use it to define client logic for unary, server-streaming, client-streaming, or bidirectional-streaming gRPC calls with Eio's concurrency model.",
-      "description_length": 335,
+      "description": "This module manages gRPC service definitions by mapping named RPCs to their implementations. It provides operations to create a service, add RPC handlers with associated names, and route incoming HTTP/2 requests to the appropriate RPC based on the request path. A concrete use case is building a gRPC server that dispatches client requests to specific RPC functions registered under their method names.",
+      "description_length": 402,
       "index": 0,
-      "embedding_norm": 0.9999998807907104
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Grpc_eio.Server.Rpc",
       "library": "grpc-eio",
-      "description": "This module defines and handles the four core gRPC RPC types\u2014unary, client streaming, server streaming, and bidirectional streaming\u2014by processing HTTP/2 requests and managing data exchange using strings and sequences. It works directly with `H2.Reqd.t` to handle incoming HTTP/2 requests and uses function values to process payloads, returning gRPC statuses and optional responses. Concrete use cases include implementing gRPC service handlers that receive and send serialized protocol buffer messages over HTTP/2 connections.",
-      "description_length": 526,
+      "description": "This module implements gRPC server RPC handlers for unary, client streaming, server streaming, and bidirectional streaming operations. It works with H2 request descriptors and byte strings for request and response payloads. Use it to define and handle gRPC service methods that process single requests, streams of requests, or push multiple responses over HTTP/2 connections.",
+      "description_length": 375,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Grpc_eio.Server.Service",
+      "module_path": "Grpc_eio.Client.Rpc",
       "library": "grpc-eio",
-      "description": "This module manages gRPC service definitions and routing. It provides operations to create a service, register RPC methods by name, and handle incoming HTTP/2 requests by dispatching them to the appropriate RPC handler. It works with service and RPC structures to implement server-side request routing for gRPC services.",
-      "description_length": 320,
+      "description": "This module implements gRPC client-side RPC handlers for different streaming patterns. It works with functions that handle bidirectional, client-streaming, server-streaming, and unary RPCs, using sequences, writers, and promises over strings for communication. Concrete use cases include sending a sequence of request messages and receiving a sequence of responses, or sending a single request and awaiting a single response.",
+      "description_length": 425,
       "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Grpc_eio.Server",
+      "library": "grpc-eio",
+      "description": "This module implements a gRPC server over HTTP/2 using Eio. It provides operations to create a server instance, register named gRPC services, and route incoming HTTP/2 requests to the appropriate service handler. The server works directly with H2 request descriptors and byte strings for efficient request and response processing.",
+      "description_length": 330,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Grpc_eio.Seq",
       "library": "grpc-eio",
-      "description": "This module offers sequence construction, transformation, filtering, and grouping operations for lazy, potentially infinite sequences (`'a t`), supporting both finite and infinite data processing with on-demand evaluation. It provides utilities for merging, zipping, and Cartesian products between sequences, alongside memoization and dispenser conversions, enabling efficient handling of streaming data. Specific applications include gRPC stream integration via EIO for reading/writing values and managing infinite sequences in resource-constrained environments.",
-      "description_length": 563,
-      "index": 3,
+      "description": "This module enables sequence manipulation through transformations like mapping, filtering, and grouping, alongside element-wise iteration, folding, and lexicographic comparisons. It supports constructing and processing finite or infinite sequences with memoized or ephemeral evaluation, including slicing, concatenation, and product operations, while integrating with gRPC streams for bidirectional communication in EIO contexts. Use cases include streaming data pipelines, protocol buffer message aggregation, and implementing server-side streaming logic over RPC connections.",
+      "description_length": 577,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Grpc_eio.Client",
       "library": "grpc-eio",
-      "description": "This module coordinates client-side gRPC communication over HTTP/2, managing request lifecycle, streaming interactions, and response parsing with support for unary and bidirectional calls. It directly handles H2 requests and responses, structured headers, and trailers, while its child module provides RPC handlers for implementing client logic using sequences, promises, and encoded messages. Together, they enable concrete workflows like sending a unary request and receiving a structured response, or maintaining a bidirectional stream for real-time message exchange with streaming promises. Key data types include H2 request/response objects, gRPC method handlers, and encoded message sequences, used across both direct API calls and submodule-defined streaming patterns.",
-      "description_length": 775,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Grpc_eio.Server",
-      "library": "grpc-eio",
-      "description": "This module implements a gRPC server using `H2.Reqd.t` to handle HTTP/2 requests, supporting all four gRPC streaming types through direct request processing and payload exchange. It enables creating server instances, defining services with typed RPC methods, and routing incoming requests to corresponding handlers based on method and service names. The `Rpc` submodule handles unary, server streaming, client streaming, and bidirectional streaming operations by processing request bodies and returning structured responses, while the `Service` submodule manages service registration and dispatch logic. Example uses include defining a service with a unary RPC that parses a request message, performs an action, and returns a serialized response over HTTP/2.",
-      "description_length": 758,
+      "description": "Implements client-side gRPC RPC handlers for unary, server-streaming, client-streaming, and bidirectional streaming patterns. Works with H2 request/response handlers, sequences of strings, and Eio promises to manage communication over HTTP/2. Used to invoke gRPC methods by sending request messages and handling response streams or single responses, such as making a unary call to fetch data or streaming updates from a server.",
+      "description_length": 427,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Grpc_eio",
       "library": "grpc-eio",
-      "description": "This module provides a comprehensive interface for building and managing gRPC-based communication over HTTP/2, supporting both client and server implementations with typed, streaming-aware operations. It centers around handling gRPC method calls\u2014unary, server streaming, client streaming, and bidirectional\u2014using sequences for lazy data processing, H2 request/response types for transport-level interaction, and RPC handlers for structured message exchange. The module enables concrete workflows such as defining a server that routes incoming requests to typed service handlers, or implementing a client that initiates streaming calls and processes responses incrementally. Specific operations include sending a unary request and awaiting a structured response, maintaining a bidirectional stream with encoded messages, and defining services that return sequences of results over time.",
-      "description_length": 885,
+      "description": "Implements gRPC over HTTP/2 for both server and client communication, handling unary and streaming RPC patterns with direct manipulation of H2 request/response handlers and byte strings. Provides sequence operations for streaming data pipelines, message aggregation, and bidirectional communication over Eio. Used to build and interact with gRPC services through efficient, low-level HTTP/2 transport mechanisms.",
+      "description_length": 412,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -69,9 +69,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 885,
-    "min_description_length": 320,
-    "avg_description_length": 594.5714285714286,
-    "embedding_file_size_mb": 0.025856971740722656
+    "max_description_length": 577,
+    "min_description_length": 330,
+    "avg_description_length": 421.14285714285717,
+    "embedding_file_size_mb": 0.10181331634521484
   }
 }

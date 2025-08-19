@@ -1,261 +1,237 @@
 {
   "package": "nbd",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 30,
-  "creation_timestamp": "2025-07-15T23:12:03.672904",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 27,
+  "creation_timestamp": "2025-08-15T12:21:04.661350",
   "modules": [
-    {
-      "module_path": "Nbd.S.CLIENT",
-      "library": "nbd",
-      "description": "This module handles connecting to and interacting with block devices on a remote NBD server. It provides functions to list available disk exports, establish a connection to a specific disk, and perform read and write operations on that disk. The module works with types like `t` for representing a connected disk, `error` and `write_error` for handling failures, and uses `Cstruct.t` buffers for data transfer. Use this module when implementing disk access over the NBD protocol, such as in virtualization or remote storage applications.",
-      "description_length": 537,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.GlobalFlag",
-      "library": "nbd",
-      "description": "This module defines flags used during NBD protocol negotiation to indicate server capabilities and communication preferences. It includes operations to convert flags to and from string and S-expression representations. Concrete use cases include encoding and decoding protocol handshake messages with specific options like omitting zero-filled padding or signaling support for the fixed newstyle protocol.",
-      "description_length": 405,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.DiskInfo",
-      "library": "nbd",
-      "description": "This module handles disk metadata in the NBD protocol, specifically parsing and serializing disk size and export flags. It works with `Cstruct.t` buffers for binary (un)marshaling and `Sexplib0.Sexp.t` for s-expression representations. It is used to process client export requests, providing structured access to disk properties during protocol negotiation.",
-      "description_length": 357,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.Reply",
-      "library": "nbd",
-      "description": "This module defines the structure and operations for handling server replies in the NBD protocol. It includes functions to serialize and deserialize replies, convert them to strings, and determine their size in bytes. The module works with the `t` type, representing replies with an error result and a request handle, and operates on `Cstruct.t` for efficient memory manipulation.",
-      "description_length": 380,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nbd.Protocol.Request",
-      "library": "nbd",
-      "description": "This module defines the structure and serialization of I/O requests sent from a client to a server after the negotiation phase. It includes functions to convert request values to and from S-expressions, to serialize and deserialize requests to and from Cstruct buffers, and to compute the fixed size of a request. It is used to prepare and parse binary-encoded requests for network transmission.",
-      "description_length": 395,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.Negotiate",
-      "library": "nbd",
-      "description": "This module handles the negotiation phase of the NBD protocol, specifically parsing and serializing the server's initial greeting. It defines types for version 1 and version 2 handshake messages, including disk size, flags, and global flags, and provides functions to convert these types to and from S-expressions. It also includes functions to marshal and unmarshal the negotiation messages to and from binary format, and to convert them to strings for debugging or logging purposes.",
-      "description_length": 484,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.OptionResponseHeader",
-      "library": "nbd",
-      "description": "This module defines the header structure for option responses in the NBD protocol, including the request type, response type, and payload length. It provides functions to serialize and deserialize the header to and from Cstruct buffers, as well as converting to and from S-expressions. It is used to process and construct option response headers during communication between NBD clients and servers.",
-      "description_length": 399,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Nbd.Protocol.ExportName",
       "library": "nbd",
-      "description": "Represents an export name in the NBD protocol, providing serialization and size calculation operations. Works with string values and Cstruct buffers for network transmission. Used to handle the optional export name field in NBD protocol messages during request and response processing.",
-      "description_length": 285,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nbd.Protocol.PerExportFlag",
-      "library": "nbd",
-      "description": "This module defines a set of flags associated with a disk or \"export\" in the NBD protocol, indicating capabilities such as read-only access, support for flush, FUA, trim commands, and whether the medium is rotational. It provides functions to convert these flags to and from S-expressions and to string representations. These flags are used during protocol negotiation to inform the client about the export's properties and supported operations.",
-      "description_length": 445,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nbd.Protocol.Server",
-      "library": "nbd",
-      "description": "This module handles the server-side logic for the NBD protocol's List option, managing the transmission of available disk names and final acknowledgment. It defines a `t` type for representing disk names, along with serialization, deserialization, and size calculation functions. It is used to construct and process server responses during the NBD negotiation phase when listing available disks.",
-      "description_length": 395,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.NegotiateResponse",
-      "library": "nbd",
-      "description": "This module represents the client's response during the NBD protocol handshake, specifically handling a list of client flags. It provides functions to serialize and deserialize the response to and from S-expressions, as well as to marshal and unmarshal it for network transmission. Use cases include parsing incoming handshake responses from a server and preparing client flag lists for transmission.",
-      "description_length": 400,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.OptionRequestHeader",
-      "library": "nbd",
-      "description": "This module defines the header structure for option requests in the NBD protocol, including the option type and data length. It provides functions to serialize and deserialize the header to and from Cstruct buffers, as well as S-expression conversions for debugging or logging. It is used when processing client option negotiation packets in NBD protocol implementations.",
-      "description_length": 371,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.OptionResponse",
-      "library": "nbd",
-      "description": "This module defines the possible responses a server can send to a client's option request, including acknowledgment, rejection, and various error conditions. It works with the `t` variant type to represent these responses and provides functions to convert between S-expressions and string representations. Concrete use cases include handling client requests during NBD protocol negotiation and determining server support for specific options.",
-      "description_length": 442,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Protocol.Announcement",
-      "library": "nbd",
-      "description": "This module defines the version types for the NBD protocol handshake, supporting V1 and V2 announcements. It provides serialization and deserialization functions for converting between in-memory representations and wire format using Cstruct, along with S-expressions for debugging or logging. It is used during initial connection setup to negotiate protocol versions between client and server.",
-      "description_length": 393,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Mux.RPC",
-      "library": "nbd",
-      "description": "Implements asynchronous request-response multiplexing over a shared transport. It tracks pending requests by identifier, ensuring responses are routed correctly even when received out of order. This module is used to manage concurrent client requests to an NBD server, handling packet dispatch and response correlation.",
-      "description_length": 319,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.S.SERVER",
-      "library": "nbd",
-      "description": "This module handles the initial handshake and options negotiation for an NBD server, allowing remote clients to select and access a block device export. It works with `cleartext_channel` to establish connections, offers a list of available block device names, and returns the selected export name and server handle. The `serve` function processes client requests using a Mirage_block device, supporting read-only mode, while `with_connection` ensures proper resource cleanup after handling a client session.",
-      "description_length": 507,
-      "index": 15,
+      "description": "Represents an export name in the NBD protocol, providing serialization and size calculation operations. Works with string values and Cstruct buffers for network transmission. Used to encode and decode export names during protocol handshake and communication.",
+      "description_length": 258,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd.Protocol.Command",
       "library": "nbd",
-      "description": "This module defines the set of commands used to interact with an NBD server after a connection is established. It includes operations for reading, writing, flushing, trimming, and disconnecting, along with serialization and string conversion functions. It directly supports the exchange of command data between client and server during an NBD session.",
-      "description_length": 351,
-      "index": 16,
+      "description": "This module defines the set of commands used to interact with an NBD server after a connection is established. It includes operations for reading, writing, flushing, trimming, and disconnecting, along with serialization and deserialization functions for command exchange. Use cases include handling client requests, managing data transfer, and ensuring connection termination or cleanup.",
+      "description_length": 387,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd.Protocol.Error",
       "library": "nbd",
-      "description": "This module defines error codes used in NBD protocol responses, including standard errors like permission denial, I/O failure, and memory allocation issues, along with an `Unknown` constructor for unrecognized error codes. It provides functions to convert error values to and from S-expressions and to string representations. This module is used to handle and serialize errors returned during NBD protocol communication, such as when a read or write request fails.",
-      "description_length": 464,
-      "index": 17,
+      "description": "This module defines error codes used in NBD protocol responses, including standard errors like permission denial, I/O failure, and out-of-memory conditions. It provides functions to convert error values to and from S-expressions and to string representations. These operations support serialization, debugging, and error reporting in NBD client and server implementations.",
+      "description_length": 372,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nbd.Protocol.DiskInfo",
+      "library": "nbd",
+      "description": "This module handles disk metadata in the NBD protocol, specifically parsing and serializing disk size and export flags. It works with `Cstruct.t` buffers for binary (un)marshaling and `Sexplib0.Sexp.t` for s-expression (de)serialization. Use it to convert between wire format and OCaml values when negotiating exports, such as during response construction or client-side parsing.",
+      "description_length": 379,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Nbd.Protocol.Option",
+      "module_path": "Nbd.Protocol.Request",
       "library": "nbd",
-      "description": "This module defines the set of options used during NBD protocol negotiation, including requests like selecting an export, aborting the connection, listing available disks, and initiating TLS. It provides functions to convert these options to and from S-expressions and to string representations. Concrete use cases include handling client negotiation messages and logging or debugging protocol interactions.",
-      "description_length": 407,
-      "index": 18,
+      "description": "This module defines the structure and serialization of I/O requests sent from a client to a server after the negotiation phase. It includes functions to convert between the request type and S-expressions, to serialize and deserialize requests to and from binary buffers, and to convert requests to string representations. The module works with the `t` record type, which includes command type, handle, offset, and length fields, and is used for handling NBD protocol I/O operations.",
+      "description_length": 482,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.Announcement",
+      "library": "nbd",
+      "description": "This module defines the version types for the NBD protocol handshake, supporting `V1` and `V2` announcements. It provides serialization and deserialization functions for converting between these types and wire format or S-expressions. Use this module when handling initial server greetings during NBD connection setup.",
+      "description_length": 318,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.PerExportFlag",
+      "library": "nbd",
+      "description": "This module defines a set of flags associated with a disk export in the NBD protocol, indicating capabilities such as read-only access, flush support, and I/O scheduling hints. It provides functions to convert these flags to and from S-expressions and to obtain string representations. These flags are used to communicate server capabilities to the client during protocol negotiation.",
+      "description_length": 384,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nbd.Protocol.OptionResponseHeader",
+      "library": "nbd",
+      "description": "This module defines the header structure for option responses in the NBD protocol, including the request type, response code, and payload length. It provides functions to serialize and deserialize the header to and from Cstruct buffers, enabling efficient parsing and transmission over the wire. Use cases include handling negotiation steps during NBD client-server communication, such as responding to option requests with structured metadata.",
+      "description_length": 444,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.Negotiate",
+      "library": "nbd",
+      "description": "This module handles the initial negotiation phase of the NBD protocol, specifically parsing and serializing the server's greeting message. It defines types for version 1 and version 2 of the negotiation response, including disk size, flags, and global flags, and provides functions to convert these types to and from S-expressions. The module also includes functions to serialize the negotiation data to a string or buffer, determine its size, and unmarshal it from a buffer given an announcement.",
+      "description_length": 497,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.Reply",
+      "library": "nbd",
+      "description": "This module defines the structure of a server reply in the NBD protocol, including success/failure status and the associated request handle. It provides functions to serialize and deserialize replies to and from Cstruct buffers, as well as converting to strings and S-expressions. It is used to process out-of-order responses from NBD servers, handling both successful and error conditions.",
+      "description_length": 390,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd.Protocol.ClientFlag",
       "library": "nbd",
-      "description": "This module defines flags used during NBD protocol negotiation to indicate client capabilities, specifically supporting the fixed newstyle protocol and omitting zero padding. It provides serialization to and from S-expressions and string representations of these flags. Useful for encoding client-side protocol preferences when establishing NBD connections.",
-      "description_length": 357,
-      "index": 19,
+      "description": "This module defines flags used during NBD protocol negotiation to indicate client capabilities, specifically supporting the fixed newstyle protocol and omission of zero-padding. It provides serialization to and from S-expressions and conversion to string representations. These flags are used to configure protocol behavior during client-server handshake.",
+      "description_length": 355,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.GlobalFlag",
+      "library": "nbd",
+      "description": "This module defines flags used during NBD protocol negotiation to indicate server capabilities and communication preferences. It includes operations to convert flag values to and from S-expressions and to string representations. Concrete use cases include encoding and decoding protocol handshake messages with flags like `Fixed_newstyle` and `No_zeroes`.",
+      "description_length": 355,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.Option",
+      "library": "nbd",
+      "description": "This module defines the set of options used during NBD protocol negotiation, including actions like selecting an export, aborting the connection, listing available exports, and initiating TLS. It provides functions to convert option values to and from S-expressions and to string representations. These options are used directly during the client-server handshake to specify client intentions and negotiate session parameters.",
+      "description_length": 426,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Mirror.Make",
+      "library": "nbd",
+      "description": "This module implements block device mirroring by synchronizing reads and writes between two underlying block devices. It provides operations to connect and disconnect devices, read and write data with sector-aligned buffers, and retrieve device metadata, while ensuring mirrored writes to both primary and secondary storage. It handles errors specific to block device I/O and includes utilities for error reporting and progress tracking during mirroring setup.",
+      "description_length": 460,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nbd.Protocol.NegotiateResponse",
+      "library": "nbd",
+      "description": "This module represents the client's initial response to the server's greeting in the NBD protocol handshake. It defines a type `t` as a list of client flags and includes functions for serializing and deserializing this response to and from Cstruct buffers. It is used to encode and decode the client's supported features during the protocol negotiation phase.",
+      "description_length": 359,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.OptionResponse",
+      "library": "nbd",
+      "description": "This module defines the possible responses a server can send to a client's option request, including acknowledgment, rejection, and various error conditions. It works with the `t` variant type to represent distinct response codes and an `Unknown` case for unrecognized values. Concrete use cases include handling client requests during NBD protocol negotiation, such as rejecting unsupported options or acknowledging valid ones.",
+      "description_length": 428,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.OptionRequestHeader",
+      "library": "nbd",
+      "description": "This module defines the header structure for client option requests in the NBD protocol. It includes operations to serialize and deserialize the header to and from Cstruct buffers, as well as S-expression conversions. The module is used to process and construct option request headers during NBD client-server communication.",
+      "description_length": 324,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Protocol.Server",
+      "library": "nbd",
+      "description": "This module defines the structure and operations for handling server responses during the NBD protocol's `List` option exchange. It includes serialization, deserialization, and size calculation for the `t` type, which represents an available disk name. It is used to process and transmit disk availability information from the server to the client.",
+      "description_length": 348,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd.Mux.Make",
       "library": "nbd",
-      "description": "Implements a client for multiplexing parallel requests over a single transport channel, handling out-of-order responses via request IDs. Works with request and response types defined by the parameter module `R`, which includes headers, bodies, and transport. Useful for managing concurrent network requests to a server where responses may arrive asynchronously and need to be matched to their corresponding requests.",
-      "description_length": 416,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nbd.Mirror.Make",
-      "library": "nbd",
-      "description": "This module implements a block device mirroring system that synchronizes data between two underlying block devices. It provides operations to connect and disconnect devices, read and write data with error handling, and retrieve device metadata. The module is used to create a live mirror where all I/O operations target the primary device while asynchronously replicating changes to the secondary device.",
-      "description_length": 404,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nbd.Client",
-      "library": "nbd",
-      "description": "This module implements an NBD client for connecting to remote block devices over a network, enabling operations like reading from and writing to remote disks. It works with block device information, Cstruct buffers, and NBD protocol channels, handling errors related to I/O and protocol mismatches. Concrete use cases include mounting remote disk images, performing disk migrations, and accessing virtual machine storage over the network.",
-      "description_length": 438,
-      "index": 22,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nbd.Server",
-      "library": "nbd",
-      "description": "This module implements a network block device (NBD) server that allows remote clients to access a local block device over a cleartext channel. It handles the NBD protocol handshake, name negotiation, and request processing, supporting both read-only and read-write modes. The server works with MirageOS-compatible block device implementations and ensures proper session teardown after use.",
-      "description_length": 389,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nbd.Mirror",
-      "library": "nbd",
-      "description": "This module implements a block device mirroring system that synchronizes data between two underlying devices, directing all I/O operations to the primary device while asynchronously replicating changes to the secondary. It provides data types representing mirrored devices and operations for connecting, disconnecting, reading, writing, and handling errors during replication. With this module, users can create a live mirror pair, perform I/O on the primary device, and ensure eventual consistency with the secondary. For example, a user can write data to the primary device, and the system will queue and apply the write to the secondary in the background.",
-      "description_length": 658,
-      "index": 24,
+      "description": "Implements a client for multiplexing parallel requests over a single transport channel, pairing responses with pending requests by identifier. Works with request and response headers and bodies defined by the parameter module `R`, which includes transport logic. Useful for handling concurrent network requests to a server that processes and replies out-of-order, ensuring each response reaches the correct caller.",
+      "description_length": 414,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd.S",
       "library": "nbd",
-      "description": "This module defines core abstractions for implementing network block device clients and servers, specifying interfaces for handling block-level read and write operations over a network connection. It includes client-side functionality for connecting to remote NBD servers, listing disk exports, and performing I/O operations using types like `t`, `error`, and `Cstruct.t` buffers, as well as server-side logic for handshake negotiation, export selection, and request handling with `cleartext_channel` and Mirage_block devices. Use it to build virtualization storage backends, remote disk access services, or custom NBD servers with support for read-only mode and resource-safe client sessions. Concrete operations include establishing disk connections, reading and writing blocks, and serving client requests over a network.",
-      "description_length": 824,
-      "index": 25,
+      "description": "This module defines core abstractions for implementing network block device protocols, focusing on client-server interactions. It specifies interfaces for handling disk image transfers and remote storage access over a network. Concrete use cases include building virtualization tools that require emulating block devices or managing disk images remotely.",
+      "description_length": 354,
+      "index": 19,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nbd.Mux",
+      "library": "nbd",
+      "description": "Handles concurrent client requests over a single transport channel, pairing asynchronous responses with pending requests using unique identifiers. Works with request and response types defined by a parameter module, including header and body transport logic. Ideal for network protocols where a server processes requests out of order and replies must be routed back to the original caller.",
+      "description_length": 389,
+      "index": 20,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd.Protocol",
       "library": "nbd",
-      "description": "This module implements the NBD protocol message handling, providing structured types and serialization for requests, responses, and negotiation messages. Core data types include `Cstruct.t`-based binary representations, S-expressions, and string conversions for protocol elements such as flags, headers, commands, and errors. It supports operations like parsing and serializing handshake messages, constructing I/O requests, handling option negotiation, and converting between wire format and in-memory representations. Examples include encoding client flags during connection setup, decoding server replies to read requests, and marshaling disk metadata during export selection.",
-      "description_length": 679,
-      "index": 26,
+      "description": "This module implements the NBD protocol message formats and serialization logic for client-server communication. It handles protocol negotiation, command exchange, and error reporting with strict binary format conversions using Cstruct buffers and S-expressions. Concrete use cases include parsing server greetings, encoding client flags, transmitting I/O requests with offsets and handles, and handling structured option responses during connection setup.",
+      "description_length": 456,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Client",
+      "library": "nbd",
+      "description": "This module implements client-side network block device (NBD) operations, enabling connections to remote disk exports, reading and writing data at specific sectors, and querying device metadata. It works with block device handles (`t`), sector addresses (`int64`), and memory buffers (`Cstruct.t list`), and includes functions for listing available exports and negotiating connections. Concrete use cases include virtual machine disk access over a network, remote disk imaging, and distributed storage systems where precise block-level access is required.",
+      "description_length": 555,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nbd.Mirror",
+      "library": "nbd",
+      "description": "Handles bidirectional mirroring of network block devices, providing functions to synchronize and replicate disk state between a source and target device. Works with block device handles and network connections to stream updates in real time. Used for live migration and high-availability setups where disk state must be kept consistent across multiple nodes.",
+      "description_length": 358,
+      "index": 23,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd.Channel",
       "library": "nbd",
-      "description": "This module defines channel types for handling network communication, supporting both TLS-encrypted and cleartext connections. It provides functions to create and convert between these channels, enabling seamless switching between encryption modes. Concrete use cases include implementing secure NBD client-server interactions and managing encrypted data transfer over network sockets.",
-      "description_length": 385,
-      "index": 27,
+      "description": "This module manages network communication channels for NBD (Network Block Device) clients and servers, supporting both TLS-encrypted and cleartext connections. It provides functions to create, convert, and operate on generic channels that unify read, write, and close operations across transport types. Concrete use cases include establishing secure connections via TLS, handling raw data transfers, and abstracting communication for NBD server-client interactions.",
+      "description_length": 465,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Nbd.Mux",
+      "module_path": "Nbd.Server",
       "library": "nbd",
-      "description": "This module implements asynchronous request-response multiplexing over a shared transport, tracking pending requests by identifier to ensure correct response routing even when received out of order. It provides core operations for managing concurrent client requests to a server, using request IDs to correlate responses with their originating requests. The module works with Lwt for asynchronous I/O and relies on an RPC module for message serialization, enabling use cases such as a network server handling multiple clients over a single backend connection. Submodules extend this functionality to specific protocols, including NBD servers and general-purpose RPC clients with customizable request and response types.",
-      "description_length": 719,
-      "index": 28,
+      "description": "This module implements an NBD (Network Block Device) server that allows remote clients to access a MirageOS block device over the network. It handles the NBD protocol handshake, TLS negotiation, and request processing for a provided block device implementation. The server can expose multiple named block devices, enforce read-only access, and ensures proper resource cleanup after client sessions end.",
+      "description_length": 402,
+      "index": 25,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nbd",
       "library": "nbd",
-      "description": "This module implements the Network Block Device (NBD) protocol for remote disk access, supporting both client and server roles with synchronous and asynchronous communication. It provides core data types such as `Cstruct.t` buffers for binary data, `cleartext_channel` and TLS-enabled channels for transport, and structured types for protocol messages including requests, responses, and handshake data. Operations include connecting to remote disks, reading and writing blocks, mirroring devices, and handling concurrent requests with multiplexed responses. Example use cases include mounting remote virtual machine disks over the network, setting up live block device replication, and building secure NBD servers with MirageOS-backed storage.",
-      "description_length": 743,
-      "index": 29,
+      "description": "This module implements the Network Block Device (NBD) protocol for remote disk access, providing client and server components to read, write, and manage block devices over a network. It supports TLS encryption, protocol negotiation, and multiplexing of concurrent requests, enabling secure and efficient remote storage operations. Concrete use cases include virtual machine disk streaming, remote disk imaging, and distributed storage systems requiring precise block-level access.",
+      "description_length": 480,
+      "index": 26,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 30,
-    "meaningful_modules": 30,
+    "total_modules_in_package": 27,
+    "meaningful_modules": 27,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 824,
-    "min_description_length": 285,
-    "avg_description_length": 458.26666666666665,
-    "embedding_file_size_mb": 0.10947513580322266
+    "max_description_length": 555,
+    "min_description_length": 258,
+    "avg_description_length": 401.44444444444446,
+    "embedding_file_size_mb": 0.39159393310546875
   }
 }

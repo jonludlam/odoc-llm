@@ -1,253 +1,229 @@
 {
   "package": "colombe",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 29,
-  "creation_timestamp": "2025-07-15T23:11:35.020701",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 26,
+  "creation_timestamp": "2025-08-15T12:17:39.675095",
   "modules": [
     {
-      "module_path": "Colombe.State.Context",
+      "module_path": "Colombe.Forward_path.Decoder",
       "library": "colombe",
-      "description": "This module manages encoding and decoding state within a context, providing direct access to encoder and decoder instances. It allows creation of contexts with optional custom encoder and decoder initialization functions, returning a structured context object. Use cases include maintaining state during parsing or serialization tasks where both encoder and decoder need to be tracked together.",
-      "description_length": 394,
+      "description": "This module parses email forward paths and associated parameters from strings. It provides functions to decode raw string input into a structured forward path and a list of key-value pairs, where values may be absent. Use this when handling email routing information, such as parsing the envelope sender in SMTP transactions.",
+      "description_length": 325,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Colombe.Sigs.X",
-      "library": "colombe",
-      "description": "This module defines a bidirectional transformation between a type `'a s` and a higher-kinded type `('a, t) Colombe.Sigs.io`. It provides `inj` to wrap values of type `'a s` into the `io` structure, and `prj` to extract them. This enables working with structured data in contexts requiring input/output handling, such as parsing or serialization pipelines.",
-      "description_length": 355,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Colombe.Sigs.Make",
-      "library": "colombe",
-      "description": "This module defines a type `t` and two functions `inj` and `prj` that convert between a polymorphic type `'a s` and an IO type `('a, t) Colombe.Sigs.io`. It operates on a structure `s` provided by the parameter module `T`. Use this module when mapping a custom type `s` to and from an IO representation for serialization or parsing tasks.",
-      "description_length": 338,
-      "index": 2,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.Domain.Peano",
-      "library": "colombe",
-      "description": "This module defines a type `z` representing zero, which serves as the base case for Peano arithmetic structures. It is used to build and manipulate natural numbers at the type level, enabling compile-time computations and constraints. Concrete use cases include encoding numeric literals and performing arithmetic operations in a type-safe manner within the larger context of the `Colombe.Domain` library.",
-      "description_length": 405,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Colombe.Reply.Encoder",
       "library": "colombe",
       "description": "This module encodes SMTP reply values into string representations. It provides functions to serialize `Colombe.Reply.t` values using an encoder, format encoding errors, and convert replies directly to strings. Use cases include generating valid SMTP response messages for network transmission or logging.",
       "description_length": 304,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.Forward_path.Decoder",
-      "library": "colombe",
-      "description": "This module parses email forward paths and associated parameters from strings. It provides functions to decode raw string input into a structured forward path and a list of key-value parameters. The parsed forward path conforms to the `Colombe__Path.t` type, while parameters are represented as a list of tuples with optional values. A typical use case involves processing email headers during message ingestion to extract routing and metadata information.",
-      "description_length": 456,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Colombe.Reply.Decoder",
-      "library": "colombe",
-      "description": "This module decodes SMTP response messages from raw string data, handling both standard and extended SMTP reply formats. It provides functions to parse responses using a decoder state, directly from a string, or in a low-level mode with a position reference. The module returns structured reply data or detailed errors like invalid status codes.",
-      "description_length": 345,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.Request.Encoder",
-      "library": "colombe",
-      "description": "This module encodes HTTP requests into a byte representation suitable for transmission. It works with `Colombe.Request.t` values and uses an `Encoder` to produce output, handling errors specific to the encoding process. Concrete use cases include serializing requests for sending over a network connection or converting requests to string format for logging or debugging.",
-      "description_length": 371,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Colombe.Request.Decoder",
-      "library": "colombe",
-      "description": "This module decodes SMTP request commands from strings or raw input, validating syntax and handling errors such as invalid domains or paths. It processes input using a decoder state machine, supporting operations like parsing individual lines or full requests with optional relaxed parsing. Use cases include processing SMTP client commands like MAIL FROM, RCPT TO, and DATA in a server implementation.",
-      "description_length": 402,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.Domain.Decoder",
-      "library": "colombe",
-      "description": "This module provides parsers and predicates for validating and decoding domain-related components such as IP literals, email domains, and character constraints (alpha, digit, dash). It works with character streams and IP address types to construct domain representations according to email specifications. Concrete use cases include parsing domain names in email addresses and validating IPv4/IPv6 literals in SMTP commands.",
-      "description_length": 424,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Colombe.State.S",
-      "library": "colombe",
-      "description": "This module defines core operations for encoding and decoding values using `encoder` and `decoder` types, producing results wrapped in a stateful computation type `Colombe.State.t`. It provides `encode` and `decode` functions that handle serialization and deserialization with error tracking, working with sendable and receivable types `'a send` and `'a recv`. Concrete use cases include implementing network protocols or binary formats where structured data must be reliably converted to and from byte streams.",
-      "description_length": 511,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.Path.Decoder",
-      "library": "colombe",
-      "description": "This module parses email address components using Angstrom. It handles domains, local parts, quoted strings, and full mailboxes according to SMTP grammar. Use it to validate or extract structured data from email paths in network protocols or mail processing tools.",
-      "description_length": 264,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Colombe.State.Scheduler",
-      "library": "colombe",
-      "description": "This module implements a stateful scheduler for handling protocol-level encoding and decoding operations with contextual state management. It provides monadic composition for stateful computations using operators like `bind`, `let*`, and `let+`, and supports sending and receiving values through `send` and `recv` functions. Concrete use cases include implementing network protocol parsers and serializers that require maintaining connection state or handling structured message formats.",
-      "description_length": 487,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.Forward_path.Encoder",
-      "library": "colombe",
-      "description": "Converts a forward path value into its string representation. Works with `Colombe.Forward_path.t`, which represents email forwarding paths. Useful for serializing email route information for transmission or logging.",
-      "description_length": 215,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.State.C",
-      "library": "colombe",
-      "description": "This module defines core types and operations for encoding and decoding stateful data. It provides functions to convert state values to encoders and decoders, along with a pretty-printing function for debugging. It is used in scenarios requiring structured serialization and deserialization of state, such as network communication or data persistence.",
-      "description_length": 351,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Colombe.Reverse_path.Encoder",
-      "library": "colombe",
-      "description": "This module encodes an optional email reverse path into a string representation. It works with `Colombe__Path.t` values, which represent email paths in SMTP data structures. Use this when serializing reverse path information for transmission or logging in email-related applications.",
-      "description_length": 283,
-      "index": 15,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Colombe.Path.Encoder",
       "library": "colombe",
-      "description": "This module encodes email path components into properly formatted strings, handling escaping of special characters and conversion of structured path types. It provides functions to determine if a character needs escaping, apply escaping, and convert path variants like `Dot_string` or `String` to string representations. Concrete use cases include preparing email addresses or mailbox paths for transmission by ensuring compliance with email formatting standards.",
-      "description_length": 463,
-      "index": 16,
+      "description": "This module encodes email path components into properly escaped string representations. It provides functions to determine if a character needs escaping, perform character escaping, and convert structured path types like `Dot_string` or `String` into strings. It is used to format email addresses and path segments according to email syntax rules.",
+      "description_length": 347,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Colombe.Reverse_path.Encoder",
+      "library": "colombe",
+      "description": "This module encodes an optional email reverse path into a string representation. It operates on `Colombe__Path.t` values, which represent email paths in SMTP transactions. Use this module to serialize a reverse path for transmission in SMTP commands like MAIL FROM.",
+      "description_length": 265,
+      "index": 3,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Colombe.Domain.Decoder",
+      "library": "colombe",
+      "description": "This module provides parsers and predicates for validating and decoding domain-related components such as IP literals, email domains, and individual characters in domain names. It works with character predicates, Angstrom parsers, and domain/IP types to handle concrete tasks like parsing IPv4 and IPv6 address literals, validating domain characters, and decoding full domain strings. Use cases include parsing email addresses and domain names according to RFC standards.",
+      "description_length": 471,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Colombe.Request.Decoder",
+      "library": "colombe",
+      "description": "This module decodes SMTP request commands from strings or raw buffers, validating syntax and structure. It processes input into `Colombe.Request.t` values, handling errors like invalid domains or paths with specific variants. Use it to parse SMTP client commands such as MAIL FROM or RCPT TO directly from network data.",
+      "description_length": 319,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Colombe.Request.Encoder",
+      "library": "colombe",
+      "description": "This module encodes HTTP requests into a string representation suitable for transmission. It provides functions to serialize a `Colombe.Request.t` value using an encoder, handle errors during encoding, and produce a string result. Use it when preparing HTTP requests to send over a network connection, ensuring correct formatting of headers and body.",
+      "description_length": 350,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Colombe.Reverse_path.Decoder",
       "library": "colombe",
-      "description": "This module parses SMTP reverse paths and ESMTP parameters from input strings using Angstrom parsers. It handles data types like `Colombe__Path.t` for email paths and string pairs for ESMTP key-value parameters. Use it to decode `MAIL FROM` commands and associated ESMTP options in SMTP server implementations.",
-      "description_length": 310,
-      "index": 17,
+      "description": "This module parses SMTP reverse paths and ESMTP parameters from input strings. It provides functions to decode a reverse path, extract ESMTP keywords, values, and parameters, and parse a full string into a path and parameter list. Use it when handling SMTP `MAIL FROM` commands to extract the sender address and associated ESMTP options.",
+      "description_length": 337,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Colombe.Path",
+      "module_path": "Colombe.Reply.Decoder",
       "library": "colombe",
-      "description": "This module models email paths with structured local parts and domains, enabling parsing, comparison, and formatting of email routes. It defines core types like domains with optional subdomains and mailbox syntax, supporting precise validation and manipulation of email addresses during network communication or mail processing. The parsing submodule extracts structured data from email components using SMTP grammar, while the encoding submodule ensures proper string representation with escaping for transmission. Examples include validating email routes, comparing path components, and preparing formatted addresses for network protocols.",
-      "description_length": 641,
-      "index": 18,
+      "description": "This module decodes SMTP reply messages from strings or raw input buffers, producing structured reply values. It handles low-level parsing of SMTP response lines, including status codes and message continuation. Use it when implementing or testing SMTP clients to interpret server responses accurately.",
+      "description_length": 302,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Colombe.Path.Decoder",
+      "library": "colombe",
+      "description": "This module parses email address paths and components using Angstrom combinators. It handles low-level lexical elements like domains, local parts, quoted strings, and dot-separated sequences. Concrete use cases include validating email syntax, extracting mailbox components, and decoding SMTP paths in email headers.",
+      "description_length": 316,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Colombe.Domain.Peano",
+      "library": "colombe",
+      "description": "This module defines a type `z` representing zero, the starting point for constructing natural numbers using Peano axioms. It works with algebraic data types to model natural numbers through zero and a successor function. Concrete use cases include formal verification tasks and teaching examples for type-level arithmetic.",
+      "description_length": 322,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Colombe.Forward_path.Encoder",
+      "library": "colombe",
+      "description": "This module provides a single operation, `to_string`, which serializes a `Colombe.Forward_path.t` value into a string representation. It works directly with the `Forward_path.t` algebraic data type, which represents email forwarding paths. A concrete use case is generating valid email message headers where forward paths need to be rendered in a specific textual format.",
+      "description_length": 371,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Colombe.Sigs.Make",
+      "library": "colombe",
+      "description": "This module defines a type `t` and two functions `inj` and `prj` that convert between a polymorphic type `'a s` and an effectful computation `('a, t) Colombe.Sigs.io`. It works with higher-kinded types involving `s` and effectful computations over `t`. A concrete use case is modeling bidirectional transformations between data representations while handling effects like parsing or serialization.",
+      "description_length": 397,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Colombe.State.Scheduler",
+      "library": "colombe",
+      "description": "This module implements a stateful computation engine for encoding and decoding protocols using a context-aware state monad. It provides monadic composition operators like `bind`, `let*`, and `let+`, along with `send` and `recv` functions for performing stateful I/O operations on values parameterized by the `Value` module. Concrete use cases include building network protocol parsers and serializers that track context (e.g., buffers, connection state) and handle errors such as malformed input or protocol violations.",
+      "description_length": 519,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Colombe.State.Context",
+      "library": "colombe",
+      "description": "This module manages a context for encoding and decoding operations, providing access to encoder and decoder instances. It works with `encoder` and `decoder` types that handle byte-level data transformation. Concrete use cases include maintaining state during serialization or parsing processes, such as tracking buffer positions or error states in network protocol implementations.",
+      "description_length": 381,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Colombe.Domain",
       "library": "colombe",
-      "description": "This module handles domain names, IP addresses, and extensions for use in email and network protocols. It supports construction, comparison, and conversion of domains between string and structured forms, including IPv4, IPv6, and domain labels. The module includes a type `z` for zero, used in type-level natural number constructions, enabling compile-time arithmetic and constraints. A parser submodule handles validation and decoding of domain components such as IP literals and email domains, working with character streams and IP types to ensure conformance with email specifications.",
-      "description_length": 588,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.State",
-      "library": "colombe",
-      "description": "This module orchestrates stateful computations with error handling, enabling transformations and compositions of state monads that track and propagate errors. It offers key operations like `reword_error` to remap error contexts and `join` to flatten nested state transitions, working with parameterized state monads that carry both values and errors. Submodules provide concrete encoders and decoders that serialize and deserialize structured data within stateful contexts, using `encode` and `decode` functions that produce results in `Colombe.State.t`. Together, they support building robust parsers, serializers, and protocol handlers that maintain state and manage errors across complex data transformations.",
-      "description_length": 712,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.Encoder",
-      "library": "colombe",
-      "description": "This module provides functions to encode data into a buffer, handling low-level memory operations and error conditions like insufficient space. It works with `encoder` structures that manage output buffers, allowing controlled writes and flushes. Concrete use cases include serializing network protocols or binary formats where precise buffer management and error handling are required.",
-      "description_length": 386,
-      "index": 21,
-      "embedding_norm": 1.0
+      "description": "This module handles domain name and IP address parsing and representation with operations like `of_string`, `to_string`, and `compare`. It works with domain components including IPv4, IPv6, and DNS labels, supporting concrete tasks like validating email domains and decoding RFC-compliant domain strings. Additional utilities include safe and unsafe construction from strings and lists, and parsing combinators for domain-specific syntax.",
+      "description_length": 438,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Colombe.Reply",
       "library": "colombe",
-      "description": "This module handles SMTP reply codes with precise semantic tagging, defining types for positive, intermediate, transient, and permanent responses. It provides constructors, accessors, and comparison functions for replies, along with utilities to extract numeric codes and message lines. The encoding submodule serializes replies to strings for network transmission or logging, while the decoding submodule parses raw response data into structured values, supporting standard and extended SMTP formats. Examples include constructing a reply from a code and message, encoding it for a client, or decoding and validating a server's response stream.",
-      "description_length": 645,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Colombe.Decoder",
-      "library": "colombe",
-      "description": "This module implements byte buffer parsing operations using a decoder type that supports incremental decoding, error handling, and line-based processing with configurable strictness. It manages input inspection, positional tracking, and state management for byte buffers, enabling structured data extraction in scenarios like network protocol parsing, log file analysis, or streaming text processing where whitespace tolerance or precise error recovery is required.",
-      "description_length": 465,
-      "index": 23,
+      "description": "This module defines SMTP reply codes and associated data, providing functions to construct, compare, and inspect replies. It works with polymorphic variant types representing positive, intermediate, and negative SMTP responses, along with a catch-all `Other` case for unrecognized codes. Use it to model and manipulate SMTP server responses in a type-safe manner, such as validating client-server interactions or building SMTP-based applications.",
+      "description_length": 446,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Colombe.Forward_path",
       "library": "colombe",
-      "description": "This module models email forward paths in SMTP, offering direct manipulation of path types such as `Postmaster`, `Domain`, and `Forward_path`, along with equality, comparison, and pretty-printing capabilities. The Decoder submodule parses raw strings into structured paths and parameter lists, enabling precise extraction of routing and metadata from email headers. The Encoder submodule converts path values back into their string representations, supporting serialization for transmission or logging. Together, they provide a complete interface for validating, inspecting, and transforming email routing data according to SMTP standards.",
-      "description_length": 639,
-      "index": 24,
+      "description": "This module defines and manipulates email forward paths using a sum type that includes postmaster, domain, and custom paths. It provides comparison, equality checks, and pretty-printing for these paths. Use it to represent and process email routing addresses in SMTP or email header handling.",
+      "description_length": 292,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Colombe.Sigs",
+      "module_path": "Colombe.State",
       "library": "colombe",
-      "description": "This module provides core abstractions for working with email data structures, enabling the construction, parsing, and validation of email messages, including headers, addresses, and MIME-encoded bodies. It includes submodules that define bidirectional transformations between structured types and IO representations, using `inj` and `prj` to wrap and unwrap values for serialization or parsing pipelines. The main types support operations like building valid email messages from components or extracting header fields in network services. One submodule maps custom types to IO-friendly forms, while another leaves room for future extensions without imposing additional functionality.",
-      "description_length": 684,
-      "index": 25,
+      "description": "This module provides functions for error handling and monadic composition of stateful computations, specifically `reword_error` to transform error values, `join` to flatten nested state monads, and `to_result` to convert state actions into result-bearing state actions. It operates on the polymorphic `('a, 'err) State.t` type, representing computations that carry both a value and an error type. Concrete use cases include managing decoding or encoding steps in network protocols where error recovery or transformation is needed during stateful parsing.",
+      "description_length": 554,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Colombe.Decoder",
+      "library": "colombe",
+      "description": "This module provides functions to parse and validate input from byte buffers, including initializing decoders, inspecting and consuming characters, and handling errors with descriptive messages. It operates on byte buffers and strings, supporting incremental parsing of structured text formats like HTTP headers or tokenized protocols, where whitespace skipping and delimiter validation are critical. Specific operations, such as scanning past whitespace, facilitate efficient navigation through input during lexical analysis.",
+      "description_length": 526,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Colombe.Reverse_path",
       "library": "colombe",
-      "description": "This module handles optional reverse paths in email messages, providing core operations to compare and format them for use in SMTP routing and delivery. It includes submodules for parsing SMTP reverse paths and ESMTP parameters from strings, and for encoding reverse paths into string representations. The main data types include `Colombe__Path.t` for email paths and string pairs for ESMTP parameters, with operations for parsing, serialization, and comparison. Use this module to process `MAIL FROM` commands, handle return addresses, or log email routing data in SMTP clients and servers.",
-      "description_length": 591,
-      "index": 26,
+      "description": "This module handles email reverse paths in SMTP transactions, providing equality checks and pretty-printing for optional path values. The Decoder parses reverse paths and ESMTP parameters from input strings, specifically extracting sender addresses and ESMTP options used in `MAIL FROM` commands. The Encoder serializes optional reverse paths into string representations for use in SMTP command transmission.",
+      "description_length": 408,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Colombe.Path",
+      "library": "colombe",
+      "description": "This module represents and manipulates email address paths, handling structured local parts (strings or dot-separated sequences) and domain names. It provides equality, comparison, and pretty-printing operations for paths and their components, along with parsing and encoding functionality. Use cases include validating and processing email addresses, extracting and formatting SMTP paths, and handling complex local-part syntax in email headers.",
+      "description_length": 446,
+      "index": 21,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Colombe.Sigs",
+      "library": "colombe",
+      "description": "This module defines a type `t` and two functions `inj` and `prj` that convert between a polymorphic type `'a s` and an effectful computation `('a, t) io`. It supports working with higher-kinded types and effectful transformations, particularly useful for bidirectional data conversion with effects like parsing or serialization. A concrete use case is mapping between in-memory data structures and external formats while handling I/O or error effects.",
+      "description_length": 451,
+      "index": 22,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Colombe.Request",
       "library": "colombe",
-      "description": "This module represents SMTP request commands as a polymorphic variant type, including operations like `Hello`, `Mail`, `Recipient`, and `Data`, with support for equality checks and pretty-printing. Its submodules handle encoding requests into byte format for transmission or logging and decoding raw input into structured commands, validating syntax and recovering from malformed lines. Together, they enable building, manipulating, serializing, and parsing SMTP client requests in a type-safe and protocol-compliant way. Example uses include constructing requests for network transmission, converting them to strings for debugging, or parsing incoming commands in an SMTP server loop.",
-      "description_length": 685,
-      "index": 27,
+      "description": "This module defines an algebraic sum type representing SMTP request commands like `Mail`, `Recipient`, and `Data`, along with structured data types such as domains and email paths. It includes functions for equality checking and pretty-printing requests, supporting precise comparison and readable output. The `Decoder` parses SMTP commands from raw input, while the `Encoder` serializes requests into valid string representations for network transmission.",
+      "description_length": 456,
+      "index": 23,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Colombe.Encoder",
+      "library": "colombe",
+      "description": "This module provides functions to encode data into a buffer, handling low-level operations like writing strings, copying memory, and managing space errors. It works with an `encoder` type that wraps a buffer and tracks its state, along with an `error` type to signal when space runs out. Concrete use cases include serializing SMTP commands and efficiently building network protocol messages with bounded memory usage.",
+      "description_length": 418,
+      "index": 24,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Colombe",
       "library": "colombe",
-      "description": "This module suite provides comprehensive tools for modeling, parsing, and manipulating email and network data structures with precise validation and protocol compliance. Core types include structured email paths, domains, SMTP commands, and replies, with operations for encoding, decoding, comparison, and error-aware stateful transformations. It enables tasks like validating email routes, serializing SMTP commands, parsing network responses, and managing stateful protocol interactions with robust error handling. Use cases span building email clients, implementing SMTP servers, and processing structured network data with strict format requirements.",
-      "description_length": 654,
-      "index": 28,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides precise bidirectional conversion between structured data and effectful computations, working with higher-kinded types and effectful transformations. It supports encoding and decoding of SMTP requests and replies, handling I/O effects, byte buffers, and error reporting. Concrete use cases include parsing and serializing SMTP commands, managing email paths and domains, and implementing stateful protocol parsing with error handling.",
+      "description_length": 454,
+      "index": 25,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 30,
-    "meaningful_modules": 29,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9666666666666667
+    "total_modules_in_package": 26,
+    "meaningful_modules": 26,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 712,
-    "min_description_length": 215,
-    "avg_description_length": 460.9655172413793,
-    "embedding_file_size_mb": 0.10584640502929688
+    "max_description_length": 554,
+    "min_description_length": 265,
+    "avg_description_length": 392.88461538461536,
+    "embedding_file_size_mb": 0.3771677017211914
   }
 }

@@ -1,88 +1,360 @@
 {
   "package": "magic-trace",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 66,
-  "creation_timestamp": "2025-07-15T23:16:50.170580",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 61,
+  "creation_timestamp": "2025-08-15T15:00:10.006330",
   "modules": [
     {
-      "module_path": "Magic_trace_lib.Perf_capabilities.Set.Named",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module provides operations to check if one named performance capability set is a subset of another and to compare two sets for equality. It works directly with named sets of performance capabilities, ensuring precise validation of capability relationships. These functions are used to enforce correctness when merging or validating performance configurations in distributed systems.",
-      "description_length": 387,
+      "module_path": "Magic_trace_core.Event.Thread",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a thread event type with optional process and thread identifiers, supporting serialization, comparison, and hashing operations. It works with S-expressions and standard hash/comparison libraries for data manipulation and equality checks. Concrete use cases include tracking and comparing thread events in tracing systems, particularly for debugging and performance analysis.",
+      "description_length": 394,
       "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Elf.Addr_table",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module maps integer addresses to location information using a hash table, enabling efficient lookups of source code locations from memory addresses. It works with integer keys and values of type `Magic_trace_core.Elf.Location.t`, which represent file and line number information. It is used to resolve addresses to source locations during stack trace processing.",
+      "description_length": 367,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Event.Ok",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a structured representation of successful event outcomes, capturing metadata such as thread context, timing, trace state changes, and source/destination locations. It provides serialization and deserialization functions for converting event data to and from S-expressions. Concrete use cases include logging and analyzing execution traces in concurrent or distributed systems.",
+      "description_length": 396,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Event.Location",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a data structure representing a location in a program's execution, including the instruction pointer, associated symbol, and symbol offset. It provides functions to serialize and deserialize these locations using S-expressions, along with predefined constants for special execution states like \"unknown,\" \"untraced,\" \"returned,\" and \"syscall.\" It is used to track and identify specific points in low-level execution traces, particularly during system call monitoring or function return analysis.",
+      "description_length": 515,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Elf_intf.Stop_info",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a type `t` representing information about a stop point in an ELF binary, including its name, address, and a filter string. It is used to capture and manage metadata for breakpoints or tracing points during analysis or debugging of compiled code. The structured data supports precise identification and filtering of execution stops based on symbolic names and memory addresses.",
+      "description_length": 396,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Elf.Symbol_resolver",
+      "library": "magic-trace.magic_trace_core",
+      "description": "Resolves symbol information from ELF files by mapping addresses to their corresponding function names and address ranges. It operates on ELF file data along with offset information to locate symbols dynamically. This module is used to translate raw memory addresses from execution traces into meaningful function names and their boundaries within the binary.",
+      "description_length": 358,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Elf.Stop_info",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a type `t` representing information about a stop point in an ELF binary, including its name, address, and filter. It provides functions to create, manipulate, and query stop point records for debugging or tracing purposes. Use cases include setting breakpoints or tracepoints in low-level code analysis tools.",
+      "description_length": 329,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace_core.Elf_intf.Location",
+      "library": "magic-trace.magic_trace_core",
+      "description": "Represents source code location information with optional filenames, line numbers, and column positions. Serializes and deserializes location data using S-expressions for storage or transmission. Useful for tracking positions in source files during debugging or analysis tasks.",
+      "description_length": 277,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Elf_intf.Addr_table",
+      "library": "magic-trace.magic_trace_core",
+      "description": "Maps integer addresses to location information in ELF files. Provides functions to add, lookup, and iterate over address-location bindings. Useful for symbol resolution and debugging in low-level program analysis.",
+      "description_length": 213,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Event.Decode_error",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a type `t` representing errors encountered during event decoding, including details like the thread, timestamp, instruction pointer, and error message. It provides functions to convert values of type `t` to and from S-expressions. This module is used to serialize and deserialize decoding errors for analysis or logging purposes.",
+      "description_length": 349,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Event.Kind",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a polymorphic variant type `t` representing different kinds of execution events such as function calls, returns, system calls, and hardware interrupts. It includes functions for converting values to and from S-expressions and for comparing values. This module is used to categorize and serialize event types in tracing and logging systems.",
+      "description_length": 359,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Elf.Location",
+      "library": "magic-trace.magic_trace_core",
+      "description": "Represents source code location information with optional filename, line, and column numbers. Serializes and deserializes location data using S-expressions for storage or transmission. Useful for tracking positions in source files during debugging or analysis tasks.",
+      "description_length": 266,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Timer_resolution",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a type `t` representing different timer resolutions, including customizable fields for trace configuration. It provides functions to convert values of type `t` to and from S-expressions, enabling serialization and parsing. The `param` value allows using `t` as a command-line parameter in Core commands, facilitating configuration of tracing tools with specific timer settings.",
+      "description_length": 397,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Decode_result",
+      "library": "magic-trace.magic_trace_core",
+      "description": "Handles decoding of trace data into a stream of events and a final result. Works with asynchronous pipes and deferred values to process event streams and capture decoding outcomes. Useful for consuming trace logs where events are processed incrementally and the final decoding status must be validated.",
+      "description_length": 302,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Trace_state_change",
+      "library": "magic-trace.magic_trace_core",
+      "description": "Represents changes in tracing state with two possible values: `Start` and `End`. Provides serialization to and from S-expressions and comparison functionality. Useful for tracking the beginning and end of traceable operations in a structured format.",
+      "description_length": 249,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Elf_intf",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module handles source code location tracking, address-to-location mapping, and stop point metadata management. It works with S-expressions, integer addresses, and ELF binary symbols. Used for debugging and tracing compiled code by correlating memory addresses with source positions and managing breakpoint metadata.",
+      "description_length": 320,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Perf_map",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module provides functions to load and query performance map files used for symbol resolution in profiling tools. It works with process IDs and filenames to locate and parse perf maps, supporting address-to-symbol translation. A concrete use case is resolving memory addresses to function names during performance analysis of OCaml programs.",
+      "description_length": 345,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Symbol",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a variant type for representing different kinds of symbols encountered during tracing, such as those derived from perf events, perf map locations, or system calls. It includes functions for converting symbols to and from S-expressions, comparing them, and processing symbol names through demangling and display transformations. The module is used to identify and classify low-level execution events in performance tracing data.",
+      "description_length": 447,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Subcommand",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a variant type `t` with two constructors, `Attach` and `Run`, representing subcommands for controlling execution flow. It includes a function `sexp_of_t` that serializes values of type `t` into S-expressions. This module is used to handle command-line subcommands in a structured and type-safe way.",
+      "description_length": 318,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Perf_map_location",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines a data structure representing a function location in a performance map, with a 64-bit start address, size, and function name. It provides serialization to and from S-expressions and comparison functionality for use in performance analysis tools. Concrete use cases include mapping program counter values to function names during profiling or trace analysis.",
+      "description_length": 377,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Backend_intf",
+      "library": "magic-trace.magic_trace_core",
+      "description": "Defines the interface for backends that record processor traces, enabling them to be exposed as trace-generating commands. Works with trace data structures and command execution contexts. Used to implement specific tracing strategies like instruction-level or function-level tracing.",
+      "description_length": 283,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Elf",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module handles ELF binary analysis by mapping addresses to source locations, resolving symbols, and managing stop points. It works with ELF files, symbol tables, and address-location associations, supporting operations like symbol lookup, regex-based function matching, and breakpoint configuration. Concrete use cases include translating memory addresses from stack traces into readable source positions and setting tracepoints based on symbol information.",
+      "description_length": 462,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core.Trace_mode",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines trace modes for capturing execution contexts, supporting selection between userspace, kernel, or combined tracing. It provides serialization to S-expressions, comparison, and equality functions for these modes. A concrete use case is configuring trace collection parameters in command-line tools that require precise control over tracing domains.",
+      "description_length": 366,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace_core.Errno",
+      "library": "magic-trace.magic_trace_core",
+      "description": "Converts C errno values into OCaml error types, specifically `Core.Or_error.t`. Works with integer error codes returned from C stubs. Useful for handling system-level errors like file operations or network calls without exceptions.",
+      "description_length": 231,
+      "index": 23,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace_core.When_to_snapshot",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module defines when to take snapshots during execution by specifying conditions such as function calls or program termination. It works with custom types `which_function` and `t`, and provides a command-line parameter `param` for configuring snapshot triggers. Concrete use cases include selecting a function via fzf or specifying a particular function to trigger a snapshot.",
+      "description_length": 380,
+      "index": 24,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace_core.Event",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module represents execution events as structured values with precise metadata, supporting operations to serialize and deserialize events using S-expressions. It works with result types combining success and error cases, along with thread identifiers, timestamps, and execution locations for tracing. Concrete use cases include decoding, logging, and analyzing low-level execution traces in concurrent systems, particularly for debugging and performance monitoring.",
+      "description_length": 469,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_core",
+      "library": "magic-trace.magic_trace_core",
+      "description": "This module provides low-level tracing and analysis capabilities for execution events, including structured event representation, trace state management, and backend integration for recording and decoding traces. It works with trace data structures, execution contexts, ELF binaries, performance maps, and system-level error codes to support precise address-to-source mapping, symbol resolution, and command-line controlled tracing. Concrete use cases include capturing and analyzing instruction-level traces, correlating stack traces with source locations, and configuring trace snapshots based on runtime conditions.",
+      "description_length": 618,
+      "index": 26,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace.Min_duration",
+      "library": "magic-trace.magic_trace",
+      "description": "This module provides `of_ns` to create a duration threshold from nanoseconds and `over` to check if the time since a start mark exceeds that threshold. It works with the `t` type representing a duration threshold, typically used with timestamps from `Time_stamp_counter`. Concrete use cases include filtering and capturing only long-running operations during tracing by checking if execution duration surpasses a predefined limit.",
+      "description_length": 430,
+      "index": 27,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace.Private",
+      "library": "magic-trace.magic_trace",
+      "description": "This module defines the interface for interacting with the snapshot functionality, primarily used to mark execution points and manage tracing metadata. It works with string identifiers to denote specific trace points, such as `stop_symbol`, which signals the end of a traceable duration. Concrete use cases include setting markers in code to delimit performance-sensitive sections or to capture contextual state during execution for later analysis.",
+      "description_length": 448,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace",
+      "library": "magic-trace.magic_trace",
+      "description": "This module provides functions to mark execution points for tracing, including taking snapshots with optional integer arguments and timestamps, and measuring durations. It works with time-stamp counters and integer thresholds to capture and filter long-running operations. Concrete use cases include pinpointing performance issues by capturing trace data at specific code locations and analyzing execution duration relative to a threshold.",
+      "description_length": 439,
+      "index": 29,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Perf_capabilities.Map.Provide_hash",
       "library": "magic-trace.magic_trace_lib",
-      "description": "Implements hash folding for map structures by leveraging a key module to define equality and ordering. It provides the `hash_fold_t` function to combine hash states of map values using a provided key hasher. This module is used when serializing maps for efficient hashing in performance-critical contexts like trace analysis.",
-      "description_length": 325,
-      "index": 1,
+      "description": "This module provides a function `hash_fold_t` that combines a hash folding function for values with a map structure to produce a hash folding function for the entire map. It works with maps parameterized by a key type and values of any type. A concrete use case is hashing maps of performance capability data where keys are identifiers and values are capability metadata.",
+      "description_length": 371,
+      "index": 30,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Magic_trace_lib.Perf_capabilities.Map.Provide_bin_io",
+      "module_path": "Magic_trace_lib.Perf_capabilities.Set.Named",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module implements binary serialization and deserialization for map values indexed by a specific key type. It provides functions to compute binary size, read and write map data in binary format, and supports versioned serialization through shape and reader/writer combinators. It is used when persisting or transmitting maps with precise binary layout control, such as in storage engines or network protocols.",
-      "description_length": 413,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides operations to check if one named performance capability set is a subset of another and to determine if two named sets are equal. It works directly with `Magic_trace_lib.Perf_capabilities.Set.named` values, which represent sets of named performance capabilities. These functions are used to validate and compare capability requirements in performance tracing contexts.",
+      "description_length": 388,
+      "index": 31,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Perf_capabilities.Map.Provide_of_sexp",
       "library": "magic-trace.magic_trace_lib",
-      "description": "Converts S-expressions into maps with keys of type `Key.t`, using a provided function to parse values. Works with `Sexplib0.Sexp.t` and maps from the `Magic_trace_lib.Perf_capabilities.Map` module. Useful for deserializing map data from S-expressions when the key type is fixed and known.",
-      "description_length": 288,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Perf_capabilities.Set.Provide_of_sexp",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "Converts S-expressions into sets of performance capabilities, specifically parsing input into a structured set type. Works directly with `Sexplib0.Sexp.t` and produces values of `Magic_trace_lib.Perf_capabilities.Set.t`. Useful for deserializing configuration or input data representing sets of capabilities from S-expressions, such as reading capability lists from files or network streams.",
-      "description_length": 391,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Perf_capabilities.Set.Provide_hash",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module implements hash folding and hashing operations for sets of type `t`, where elements are of type `Elt`. It provides the `hash_fold_t` function to fold over set elements during hashing and the `hash` function to compute a hash value for an entire set. These operations are useful when sets need to be used as keys in hash tables or stored in data structures requiring equality or hash-based indexing.",
-      "description_length": 410,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_lib.Perf_capabilities.Map.Key",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module defines key operations for using `Magic_trace_lib.Perf_capabilities.t` as keys in a map. It provides serialization functions to and from S-expressions and a comparator for ordering keys. It is used when building and manipulating maps where keys represent performance capabilities.",
-      "description_length": 292,
-      "index": 6,
+      "description": "This module provides a function `t_of_sexp` that constructs a map from an S-expression, using a provided function to convert the S-expression into values. It works with any key type that supports conversion from S-expressions and produces maps with values of a specified type. A concrete use case is parsing configuration or serialized data into a structured map format where keys and values have known S-expression representations.",
+      "description_length": 432,
+      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Perf_capabilities.Set.Provide_bin_io",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module provides binary serialization and deserialization functions for sets of performance capabilities. It supports reading, writing, and measuring the size of set values in binary format, using the specified element module. Concrete use cases include persisting capability sets to disk or transmitting them over a network in a compact, efficient format.",
-      "description_length": 360,
-      "index": 7,
+      "description": "This module provides binary serialization and deserialization functions for sets of performance capabilities. It supports reading, writing, and measuring the size of set values in binary format, along with defining their shape and type-specific readers and writers. Concrete use cases include persisting capability sets to disk or transmitting them over a network in a compact, efficient format.",
+      "description_length": 395,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Perf_capabilities.Map.Key",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "This module defines key operations for mapping over performance capability values, including serialization to and from S-expressions and a comparator for ordering. It works with the `t` type representing performance capabilities and supports use cases like persisting capability data or comparing capability values in a map. The comparator enables efficient key-based lookups and sorting in map structures.",
+      "description_length": 406,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Perf_capabilities.Set.Provide_of_sexp",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "Converts S-expressions into sets of performance capabilities, specifically parsing input into a structured set type. It operates on `Sexplib0.Sexp.t` values and produces sets defined by the `Elt` module parameter. This is used to deserialize capability data from configuration or input files into a usable set representation.",
+      "description_length": 325,
+      "index": 35,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace_lib.Perf_capabilities.Set.Provide_hash",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "This module implements hash folding and hashing operations for sets of type `t`, specifically handling the accumulation of hash values for set elements. It works directly with `Set.t` structures, using the element type defined in the `Elt` module to compute hash values. Concrete use cases include enabling efficient hashing of sets for use in hash tables or equality comparisons.",
+      "description_length": 380,
+      "index": 36,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Magic_trace_lib.Perf_capabilities.Set.Elt",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module defines the element type and comparison functionality for sets of `Perf_capabilities`. It provides serialization to and from S-expressions and a comparator for ordering elements. Useful for managing performance capability sets in analysis tools or configuration systems.",
-      "description_length": 282,
-      "index": 8,
+      "description": "This module defines operations for a set element type based on `Magic_trace_lib.Perf_capabilities.t`, including serialization to and from S-expressions and a comparator for ordering. It works directly with performance capability data and supports set operations requiring comparison and serialization. Concrete use cases include managing and comparing sets of performance capabilities in tracing and profiling tools.",
+      "description_length": 416,
+      "index": 37,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace_lib.Perf_capabilities.Map.Provide_bin_io",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "This module implements binary serialization and deserialization for map values indexed by a specific key type. It provides functions to compute binary size, read and write map data in binary format, and supports versioned serialization through its reader and writer interfaces. Concrete use cases include persisting map-based data structures to disk or transmitting them over a network in a compact, efficient binary representation.",
+      "description_length": 432,
+      "index": 38,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Magic_trace_lib.Breakpoint.Hit",
+      "module_path": "Magic_trace_lib.Perf_tool_backend.Decode_opts",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module defines a data structure representing a breakpoint hit during program execution, capturing timing, thread identifier, instruction pointer, and value information. It includes serialization functions for converting between the structured data and S-expressions. Use this module to record and analyze breakpoint events with precise temporal and contextual details.",
-      "description_length": 373,
-      "index": 9,
+      "description": "Handles command-line options for decoding performance traces using the `perf` tool. It defines configuration parameters like input format, symbol resolution, and filtering rules. Used to customize trace decoding behavior when analyzing performance data from `perf` recordings.",
+      "description_length": 276,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Perf_tool_backend.Record_opts",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "Handles command-line parameters for configuring `perf`-based recording sessions. It defines options like output file paths, event types, and sampling rates. Used to customize how performance data is collected during tracing.",
+      "description_length": 224,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Trace.For_testing",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "Handles writing trace data from event streams, specifically for testing scenarios. It works with trace modes, debug information, writer objects, breakpoint hits, and decoding results. Useful for validating trace output by simulating trace generation from predefined events and checking decoding outcomes.",
+      "description_length": 304,
+      "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Perf_capabilities.Set",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "This module provides ordered sets of performance capabilities with comparator-based ordering, supporting standard operations like union, intersection, and difference, as well as derived utilities for filtering, transformation, and property testing. It works with `Perf_capabilities.t` values and named capability sets, offering serialization via S-expressions, binary formats, and hashing for data persistence. Key use cases include validating performance tracing configurations, analyzing capability sets with ordered queries (e.g., min/max), and converting between sets and structures like lists, arrays, or hash maps while ensuring deduplication or custom ordering.",
+      "description_length": 668,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Perf_tool_backend.Recording",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "Handles recording performance data using the `perf` tool, including attaching to a process, taking snapshots on demand, and finalizing the recording. Works with process IDs and configuration options for tracing modes, timer resolution, and snapshot triggers. Used to capture execution traces for profiling or debugging specific application behavior during runtime.",
+      "description_length": 364,
+      "index": 43,
       "embedding_norm": 1.0
     },
     {
@@ -90,460 +362,148 @@
       "library": "magic-trace.magic_trace_lib",
       "description": "This module provides serialization and comparison operations for the `t` type, enabling binary and S-expression encoding/decoding. It works directly with the `t` type, which represents performance capabilities, and includes functions for measuring, writing, and reading binary representations, as well as converting to and from S-expressions. Concrete use cases include persisting performance capability data to disk, transmitting it across networks, or comparing instances for ordering and equality.",
       "description_length": 500,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_lib.Perf_tool_backend.Record_opts",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "Handles command-line parameters for configuring performance trace recording. It defines options like output file paths, event types, and sampling rates. Used to customize how perf data is collected during execution profiling.",
-      "description_length": 225,
-      "index": 11,
+      "index": 44,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Magic_trace_lib.Perf_tool_backend.Decode_opts",
+      "module_path": "Magic_trace_lib.Perf_capabilities.Map",
       "library": "magic-trace.magic_trace_lib",
-      "description": "Handles command-line options for decoding performance traces using the `perf` tool. It defines configuration parameters like input formats, symbol resolution, and filtering rules. Used to customize trace decoding behavior when analyzing performance data from `perf` recordings.",
-      "description_length": 277,
-      "index": 12,
+      "description": "This module provides ordered map operations for key-value pairs where keys are performance capability values with total ordering and serialization. It supports map construction from sequences, error-aware transformations, and interval-based queries like range folds and binary search, while offering utilities for merging, partitioning, and invariant-preserving modifications. Use cases include performance-critical scenarios requiring ordered key management, structured data transformation pipelines, and persistent storage via S-expressions or binary serialization.",
+      "description_length": 567,
+      "index": 45,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Magic_trace_lib.Perf_capabilities.Set",
+      "module_path": "Magic_trace_lib.Breakpoint.Hit",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module manages sets of performance capabilities with operations for membership, ordering, union, intersection, and difference, along with selection and transformation of elements. It supports direct manipulation of sets through comparisons, hashing, and serialization to S-expressions and binary formats, enabling tasks like configuration validation and persistent storage. Child modules enhance these capabilities by providing subset checks, S-expression parsing, hash functions, and binary IO, allowing sets to be used as keys, transmitted over networks, or deserialized from structured input. Specific uses include analyzing capability dependencies, enforcing correctness in distributed configurations, and storing structured sets efficiently.",
-      "description_length": 751,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Trace_writer_intf.S_trace",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module manages the creation of process and thread identifiers and records timing events for tracing. It supports writing duration events with start, end, and instantaneous timestamps, along with associated arguments and thread context. It is used to generate structured trace data for performance analysis in applications using the Tracing library.",
-      "description_length": 353,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Trace.For_testing",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "Writes a trace to a file using a list of breakpoint hit events and a decoding result. It supports optional debug information and takes a trace mode, an address table, and a writer as inputs. This function is used to generate trace files for testing and analysis from captured execution events.",
-      "description_length": 293,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Perf_tool_backend.Recording",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module manages performance recordings using the `perf` command line tool. It provides functions to start recording, take snapshots during execution, and finalize the recording process. It works with process identifiers and handles trace data in a directory specified at recording start.",
-      "description_length": 291,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_lib.Perf_tool_backend.Perf_line",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "Processes lines from perf tool output into structured event data. It parses raw string lines and converts them into event records using an optional perf map for symbol resolution. Useful for transforming low-level performance tracing data into actionable event streams for analysis.",
-      "description_length": 282,
-      "index": 17,
+      "description": "This module defines a data structure representing a breakpoint hit during program execution, capturing timing, thread ID, instruction pointer, and value information. It includes serialization functions for converting between the structured data and S-expressions. Use this module to record and analyze breakpoint events in low-level debugging or tracing scenarios.",
+      "description_length": 364,
+      "index": 46,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Perf_capabilities.Replace_polymorphic_compare",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module defines comparison operators and functions for the `t` type, enabling direct ordering and equality checks between values of this type. It includes standard comparison operators like `<`, `>`, `=`, and their combinations, along with `equal`, `compare`, `min`, and `max`. These operations are specifically used to compare and manipulate `t` values when evaluating or sorting performance capabilities in low-level system tracing contexts.",
-      "description_length": 447,
-      "index": 18,
+      "description": "This module defines comparison operators and functions for the `t` type, enabling direct ordering and equality checks between values of this type. It includes standard comparison operators like `<`, `>`, `=`, and their variants, along with `equal`, `compare`, `min`, and `max` functions. These operations support precise control over how `t` values are compared, particularly useful in contexts like sorting, filtering, or selecting optimal values in performance-sensitive scenarios.",
+      "description_length": 483,
+      "index": 47,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Magic_trace_lib.Perf_capabilities.Map",
+      "module_path": "Magic_trace_lib.Perf_tool_backend.Perf_line",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module manages immutable key-value maps with strict key ordering, supporting operations like construction from lists, value transformation, and ordered queries. It enables advanced use cases such as hash folding for efficient serialization, binary encoding with versioning, and S-expression parsing for structured data. Main data types include maps indexed by ordered keys, with operations for mapping, filtering, and merging values. Example uses include building performance-critical data pipelines, persisting maps to disk, and parsing capability-based configurations from S-expressions.",
-      "description_length": 594,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Perf_tool_backend",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module integrates with the `perf` command-line tool to capture and analyze performance data through configurable recordings and structured event decoding. It supports key operations like setting up trace configurations, managing recording sessions, parsing output, and resolving symbols to provide insights into low-level metrics such as CPU cycles and cache misses. Core data types include performance events, trace directories, and symbol maps, with functions to start, snapshot, and finalize recordings, as well as parse and filter event data. For example, users can define sampling rates and output paths, record performance data from a running process, and decode raw traces into structured events for detailed analysis.",
-      "description_length": 730,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Ptrace",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module controls process execution at a low level. It starts a program in a stopped state after forking, allowing inspection or modification before resuming. It works directly with process IDs and system tracing operations. Use it to implement custom debuggers or runtime analysis tools that require precise control over program execution flow.",
-      "description_length": 348,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Env_vars",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module exposes runtime configuration flags and environment variables for debugging and performance monitoring features. It provides direct access to boolean flags like `debug` and `perf_is_privileged`, and an optional string path `perfetto_dir`. These values are used to control tracing behavior and privilege settings in performance-sensitive contexts.",
-      "description_length": 358,
-      "index": 22,
+      "description": "Processes lines from `perf` output into structured events. Parses strings into event data using an optional perf map for symbol resolution. Used to convert raw `perf` traces into typed events for analysis.",
+      "description_length": 205,
+      "index": 48,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Trace_writer_intf",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module defines an interface for writing structured binary trace data to a file descriptor, primarily used by the `Magic_trace` library to record program execution. It abstracts low-level trace event emission, including timestamps, thread IDs, and event categories, enabling tools like `magic-trace` to analyze recorded traces. The child module enhances this by managing process and thread identifiers, and supports writing duration and instantaneous timing events with associated arguments and thread context. Together, they enable detailed performance tracing by capturing structured execution data for later analysis.",
-      "description_length": 624,
-      "index": 23,
+      "description": "This module defines an interface for writing trace data to a file descriptor, primarily used in conjunction with the `Magic_trace` library to record execution traces. It abstracts operations such as writing trace events, flushing buffers, and managing output destinations. The interface works with low-level data types like file descriptors and custom trace event structures, enabling concrete implementations to serialize and store trace information efficiently. A typical use case involves capturing runtime events during program execution for later analysis or debugging.",
+      "description_length": 574,
+      "index": 49,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Magic_trace_lib.Breakpoint",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module manages hardware breakpoints in running processes, using file descriptors to notify when breakpoints are hit. It allows setting and removing breakpoints, retrieving their associated file descriptors, and reading hit events that include timing, thread ID, instruction pointer, and value data. The hit events can be serialized to and from S-expressions for logging or analysis. Use this module to trace program execution at the instruction level, monitor memory accesses, or build custom debugging tools with precise event tracking.",
-      "description_length": 542,
-      "index": 24,
+      "description": "This module manages hardware breakpoints in a target process using `perf_event_open`, allowing breakpoints to be set at specific addresses and providing file descriptors that signal when breakpoints are hit. It works with process IDs, memory addresses, and file descriptors, offering operations to create, destroy, and monitor breakpoints. Use it to implement low-level debugging or tracing tools that require precise control over breakpoint events and their handling.",
+      "description_length": 468,
+      "index": 50,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Magic_trace_lib.Tracing_tool_output",
+      "module_path": "Magic_trace_lib.Perf_tool_backend",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module defines a configuration type for trace output destinations and provides a command parameter for setting up trace output options. It supports writing traces to files and optionally serving them via a Perfetto UI server. A key use case is enabling developers to visualize tracing data either by saving it locally or hosting an interactive web interface for immediate inspection.",
-      "description_length": 388,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_lib.Pow2_pages",
-      "library": "magic-trace.magic_trace_lib",
-      "description": "This module defines a type `t` representing memory allocations in powers of two pages. It provides functions to convert values to S-expressions, parse optional command-line flags, and retrieve the number of pages. It is used to specify and handle memory sizes in trace processing tools.",
-      "description_length": 286,
-      "index": 26,
+      "description": "This module implements performance tracing using the `perf` command line tool, providing functions to configure, record, and decode execution traces. It handles process-level tracing with customizable sampling, event filtering, and symbol resolution, producing structured event data from raw `perf` output. Concrete use cases include capturing and analyzing low-overhead CPU profiles or tracing specific system events during application execution.",
+      "description_length": 447,
+      "index": 51,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Boot_time",
       "library": "magic-trace.magic_trace_lib",
-      "description": "Captures the system's boot time in a high-resolution timestamp format. Works with `Core.Time_ns.t` to provide precise timing information. Useful for measuring durations relative to system startup in performance-sensitive contexts.",
-      "description_length": 230,
-      "index": 27,
+      "description": "Captures the system boot time in a high-resolution monotonic clock format. Works with `Core.Time_ns.t` to provide precise timing measurements. Useful for calculating uptime or measuring intervals since system initialization.",
+      "description_length": 224,
+      "index": 52,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Perf_capabilities",
       "library": "magic-trace.magic_trace_lib",
-      "description": "The module introduces a private 63-bit integer type for representing performance capabilities, supporting comparison, serialization, and bitwise arithmetic, while enabling precise configuration of low-level tracing and core dump mechanisms. It provides direct operations on individual capabilities and extends this functionality through submodules that manage sets and maps for structured, ordered manipulation of capability collections. Set operations include union, intersection, and subset validation with support for hashing, S-expression parsing, and binary IO, enabling configuration analysis and distributed consistency checks. Map operations allow building ordered, immutable key-value structures with transformation, filtering, and versioned binary encoding, suitable for high-performance data pipelines and structured configuration parsing.",
-      "description_length": 850,
-      "index": 28,
+      "description": "The module centers on a private 63-bit integer type `t` representing capability flags, providing integer arithmetic, set-like operations (intersection, complement), and comparison logic via integrated comparators. It leverages ordered collections (`Map`, `Set`) to manage capability sets and supports performance-critical workflows such as configuring hardware tracing parameters (e.g., PSB period, kernel tracing), validating capability states, and serializing flag data through unstable representations. These capabilities are used in low-level system monitoring, asynchronous tracing, and runtime analysis of performance features.",
+      "description_length": 633,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Tracing_tool_output",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "This module defines a configuration type for trace output destinations and provides a command parameter for setting up trace file paths and viewing options. It supports writing traces using a provided function and optionally serves the result via a Perfetto UI server or saves it to disk. It is used to handle trace output configuration and post-processing in command-line tools that generate performance traces.",
+      "description_length": 412,
+      "index": 54,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Ptrace",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "This module controls process execution at a low level, allowing a program to fork and execute a child process in a stopped state, then later resume its execution. It directly manipulates operating system processes using Ptrace system calls, working with process IDs and program arguments. Concrete use cases include debugging and tracing program behavior, such as implementing custom debuggers or sandboxing tools.",
+      "description_length": 414,
+      "index": 55,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Magic_trace_lib.Env_vars",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "This module exposes environment variables as runtime configuration values, including flags for debugging and performance privilege checks, and an optional directory path for perfetto output. It directly provides these values as OCaml constants without requiring additional data structures. This module is used to configure tracing behavior and privilege settings at runtime based on environment variables.",
+      "description_length": 405,
+      "index": 56,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Magic_trace_lib.Pow2_pages",
+      "library": "magic-trace.magic_trace_lib",
+      "description": "This module represents memory regions sized as powers of two, providing operations to convert values to S-expressions, parse optional command-line flags, and retrieve the number of pages. It works with a custom type `t` that encapsulates page counts as powers of two. Concrete use cases include configuring memory sizes in command-line tools and converting these sizes for logging or serialization.",
+      "description_length": 398,
+      "index": 57,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Trace_writer",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module constructs and serializes execution traces by collecting events, associating them with breakpoints and timing information, and outputting structured data in S-expressions. It processes events in a trace, tracks thread activity, and writes final trace output when done. Used to generate detailed trace logs for performance analysis or debugging of traced programs.",
-      "description_length": 375,
-      "index": 29,
+      "description": "This module constructs and serializes execution traces by collecting events, managing breakpoints, and recording timing data. It works with types like `Event.t`, `Trace_mode.t`, `Addr_table.t`, and `Time_ns.Span.t` to build structured trace output. Concrete use cases include generating detailed performance traces for analysis, correlating breakpoint hits with timestamps, and exporting traces in a structured format like S-expressions.",
+      "description_length": 437,
+      "index": 58,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib.Trace",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module provides a command-line tool for capturing and analyzing execution traces in Async applications, centered around trace events and timelines that model asynchronous workflows. It enables recording deferreds and threads over time, and supports generating reports for debugging performance or correctness issues. The child module writes trace files using breakpoint hit events and decoding results, allowing trace reconstruction with optional debug information. Users can analyze execution structure, serialize traces for testing, and inspect asynchronous behavior in detail.",
-      "description_length": 584,
-      "index": 30,
+      "description": "Handles trace data generation and validation from event streams in testing scenarios. Works with trace modes, debug info, writer objects, breakpoints, and decoding results. Used to simulate trace generation from predefined events and verify correctness of trace output.",
+      "description_length": 269,
+      "index": 59,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Magic_trace_lib",
       "library": "magic-trace.magic_trace_lib",
-      "description": "This module captures and analyzes low-level performance data by integrating with system tracing tools, managing process execution, and recording structured trace events. It provides core data types for performance events, trace configurations, memory allocations, and breakpoint hit events, along with operations to control process state, decode traces, and serialize execution data. Users can configure trace output to files or UI servers, set hardware breakpoints for instruction-level tracing, and analyze performance metrics such as CPU cycles and memory usage. Example workflows include recording performance data from a running process, decoding raw traces into structured events, and visualizing execution timelines in a Perfetto interface.",
-      "description_length": 747,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Backend_intf.S",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines the interface for backends responsible for recording Processor Trace data. It includes operations to configure and execute trace recording, along with decoding trace events into structured results. The module works with trace configuration options, performance map data, and asynchronous decoding results.",
-      "description_length": 325,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Backend_intf.S-Recording",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module handles the recording of Processor Trace data by attaching to a target process and capturing execution traces. It provides operations to start recording with specific options, take snapshots during tracing, and finalize the recording. The module works with trace configurations, process identifiers, and recording state to generate trace files for analysis.",
-      "description_length": 369,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Elf_intf.Addr_table",
-      "library": "magic-trace.magic_trace_core",
-      "description": "Maps integer addresses to location information in ELF files, using a hash table for efficient lookups. It supports operations to add, retrieve, and iterate over address-location mappings. This structure is useful for symbol resolution and debugging, where addresses need to be associated with source code positions or function names.",
-      "description_length": 333,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Elf.Stop_info",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a type `t` representing information about a stop point in an ELF binary, including its name, address, and a filter string. It provides functions to create and manipulate stop point records, primarily used for tracking execution points during tracing or debugging. These values are typically used to instrument and analyze low-level program execution in profiling or debugging tools.",
-      "description_length": 402,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Elf_intf.Stop_info",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a type `t` representing information about a stop point in an ELF binary, including its name, address, and a filter string. It is used to capture and manage symbolic breakpoints during tracing or debugging of compiled programs. The data structure supports precise identification and filtering of execution points based on symbol names and memory addresses.",
-      "description_length": 375,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Elf_intf.Location",
-      "library": "magic-trace.magic_trace_core",
-      "description": "Represents source code location information with optional filename, line, and column numbers. Serializes and deserializes location data using S-expressions. Useful for tracking positions in source files during debugging or analysis tasks.",
-      "description_length": 238,
-      "index": 37,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Event.Ok",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a structured representation of events capturing state transitions in a tracing system, including source and destination locations, timestamps, and associated thread identifiers. It provides serialization and deserialization functions for converting these events to and from S-expressions. This module is used to record and process detailed execution traces for debugging and performance analysis.",
-      "description_length": 416,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Event.Location",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a type `t` representing a location in a program's execution, including the instruction pointer, symbol, and symbol offset. It provides constants for special locations like `unknown`, `untraced`, `returned`, and `syscall`, along with serialization functions to and from S-expressions. It is used to track and identify execution points in low-level program analysis, particularly in capturing and interpreting trace events.",
-      "description_length": 441,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Elf.Symbol_resolver",
-      "library": "magic-trace.magic_trace_core",
-      "description": "Resolves symbol names and address ranges from an ELF file based on a given offset. Works with ELF file data structures and symbol tables to map addresses to their corresponding symbols. Useful for debugging and tracing execution by correlating memory addresses with function or variable names in the original binary.",
-      "description_length": 316,
-      "index": 40,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Event.Decode_error",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a type `t` representing errors encountered during event decoding, with fields for thread context, timestamp, instruction pointer, and error message. It provides functions to convert values of type `t` to and from S-expressions. This module is used to handle and serialize decoding errors when processing event streams.",
-      "description_length": 338,
-      "index": 41,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Elf.Location",
-      "library": "magic-trace.magic_trace_core",
-      "description": "Represents source code location information with optional filenames, line, and column numbers. Serializes and deserializes location data using S-expressions for storage or transmission. Useful for tracking positions in source files during debugging or analysis tasks.",
-      "description_length": 267,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Backend_intf.S-Record_opts",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines the command-line parameters and configuration options for controlling trace recording operations. It works with asynchronous command parameters and trace configuration data structures. Concrete use cases include specifying output formats, enabling or disabling specific trace features, and setting target execution constraints for recorded traces.",
-      "description_length": 367,
-      "index": 43,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Elf.Addr_table",
-      "library": "magic-trace.magic_trace_core",
-      "description": "Maps integer addresses to location information in ELF files. Provides functions to add, retrieve, and iterate over address-location bindings. Useful for symbol resolution and debugging in low-level systems.",
-      "description_length": 206,
-      "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Event.Kind",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a variant type `t` representing different kinds of execution events such as function calls, returns, system calls, and hardware interrupts. It includes functions for converting values to and from S-expressions and for comparing values. This module is used to categorize and distinguish event types in execution traces, particularly during system and function transitions.",
-      "description_length": 391,
-      "index": 45,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Backend_intf.S-Decode_opts",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines the interface for backend command parameters used in trace generation. It includes a `param` value that represents command-line options for decoding traces, specifically working with `Decode_opts.t` values. It enables specifying and parsing options that control how execution traces are decoded and processed.",
-      "description_length": 329,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Event.Thread",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a thread event type with optional process and thread identifiers, supporting serialization, comparison, and hashing. It works with S-expressions and standard hash/comparison libraries for data manipulation and equality checks. Concrete use cases include tracking thread events in concurrent systems and persisting or comparing thread state across different execution points.",
-      "description_length": 394,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Trace_state_change",
-      "library": "magic-trace.magic_trace_core",
-      "description": "Represents state transitions in tracing operations with two possible values: `Start` and `End`. Provides serialization to and from S-expressions and comparison functionality. Useful for logging and analyzing the beginning and end of traced events in performance monitoring or debugging tools.",
-      "description_length": 292,
-      "index": 48,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Perf_map_location",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a data structure representing a location in a performance map with a start address, size, and function name. It includes functions for serializing and deserializing the structure to and from S-expressions and comparing instances based on their fields. It is used to map memory addresses to function names during performance tracing and analysis.",
-      "description_length": 365,
-      "index": 49,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Event",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module models events in a tracing system with thread context, timestamps, and success or error states. It provides accessors for thread identifiers and timestamp manipulation, along with functions to process and decode trace events with precise timing information. The module's subcomponents define structured event types, execution locations, decoding errors, event categories, and thread-specific event data. You can use it to record execution traces, track transitions between program states, serialize trace data for storage or transmission, and analyze performance or correctness issues in concurrent and low-level systems.",
-      "description_length": 633,
-      "index": 50,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Trace_mode",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines trace modes for capturing execution traces, supporting userspace-only, kernel-only, and combined tracing. It provides serialization to S-expressions, comparison, equality checks, and command-line parameter parsing for the trace mode type. Useful for configuring trace collection in profiling and debugging tools.",
-      "description_length": 332,
-      "index": 51,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Decode_result",
-      "library": "magic-trace.magic_trace_core",
-      "description": "Handles decoding of trace data into a stream of events and a final result. Works with asynchronous pipes and deferred values to process event streams and capture decoding outcomes. Useful for consuming trace files where events are processed incrementally and the final decoding status must be validated.",
-      "description_length": 303,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Subcommand",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a polymorphic type `t` with two variants, `Attach` and `Run`, representing distinct subcommands for controlling program execution. It includes a function `sexp_of_t` that serializes values of type `t` into S-expressions. This module is used to distinguish and encode subcommand actions for command-line interfaces or runtime control logic.",
-      "description_length": 359,
-      "index": 53,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.When_to_snapshot",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines when to take a snapshot during program execution. It supports selecting a function via `fzf` or specifying a concrete function name, and determines whether to snapshot based on application termination or a function call. The `param` value allows integrating this logic into command-line interfaces for interactive snapshot control.",
-      "description_length": 351,
-      "index": 54,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Backend_intf",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module provides a unified interface for backends that record Processor Trace data, enabling trace generation through consistent initialization, execution, and finalization operations. It defines core data types such as trace configurations, decoding options, and process control parameters, supporting integration with hardware or emulator-based tracing systems. The module allows starting and managing trace sessions, capturing snapshots, and configuring output formats through command-line parameters. Submodules refine this interface by handling trace decoding, process attachment, and configuration parsing, enabling concrete workflows like trace capture with specific backend tools or analysis of structured trace events.",
-      "description_length": 731,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Elf_intf",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module manages address-to-source mappings and symbolic breakpoints for debugging and analysis tasks. It centers around a hash table that associates integer addresses with location information, which includes optional file, line, and column data, and supports operations to add, retrieve, and iterate over these mappings. Breakpoints are represented with structured data that includes name, address, and filter fields, enabling precise control over execution point tracking. For example, it can map a function's entry point to its source code position, or set a breakpoint that triggers only when a specific symbol is accessed.",
-      "description_length": 631,
-      "index": 56,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Perf_map",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module manages performance map files by loading symbol information from a given file and resolving addresses to symbols. It works with process IDs, filenames, and address values to provide symbol lookup capabilities. Use it to analyze and map memory addresses to function symbols during performance tracing or debugging tasks.",
-      "description_length": 331,
-      "index": 57,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Errno",
-      "library": "magic-trace.magic_trace_core",
-      "description": "Converts C errno values into OCaml error types, specifically `Core.Or_error.t`. Works with integer error codes returned from C stubs. Useful for handling system-level errors like file operations or network calls directly in OCaml code.",
-      "description_length": 235,
-      "index": 58,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core.Symbol",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a variant type representing different kinds of symbols encountered during tracing, such as those originating from perf data, perf map locations, or special cases like syscalls and unknown symbols. It includes functions for converting symbols to and from S-expressions, comparing them, and retrieving their display names. The module is used to handle symbol demangling and classification in the context of low-level tracing and performance analysis workflows.",
-      "description_length": 478,
-      "index": 59,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Elf",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module analyzes ELF files for tracing and debugging, offering tools to extract symbols, resolve addresses, and define stop points for instrumentation. It centers around data types like `t` for stop points, which capture names, addresses, and filters, and address-to-location mappings that link memory positions to source code positions with optional line and column numbers. Operations include symbol resolution from ELF data, creating and managing stop records, and serializing location data for storage or communication. For example, it can identify functions by regex, map runtime addresses to source locations, or generate trace points filtered by symbol names.",
-      "description_length": 670,
+      "description": "This module provides low-level tracing, debugging, and performance analysis capabilities. It works with system processes, memory addresses, hardware breakpoints, and high-resolution timestamps to enable precise execution monitoring and trace generation. Concrete use cases include implementing custom debuggers, capturing CPU profiles with `perf`, configuring hardware tracing parameters, and generating structured execution traces for performance analysis.",
+      "description_length": 457,
       "index": 60,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Magic_trace_core.Timer_resolution",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module defines a type `t` representing different timer resolutions, including customizable fields for trace timing parameters. It provides functions to convert values of type `t` to and from S-expressions, and a command-line parameter parser for configuring timer resolution settings. It is used to control the granularity and behavior of timing traces in low-level performance analysis.",
-      "description_length": 392,
-      "index": 61,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace_core",
-      "library": "magic-trace.magic_trace_core",
-      "description": "This module suite handles low-level tracing, performance analysis, and debugging by modeling events, states, and symbolic data with precise control over timing, execution, and trace capture. Core data types include trace events with thread and timestamp metadata, location mappings from addresses to symbols, trace modes for userspace and kernel tracing, and timer resolutions for trace granularity. Operations span event decoding, symbol resolution from ELF and perf data, breakpoint management, and trace configuration via command-line interfaces. Examples include capturing function entry/exit events, mapping memory addresses to source code positions, decoding trace streams with error handling, and configuring trace backends for hardware or emulator-based profiling.",
-      "description_length": 772,
-      "index": 62,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace.Min_duration",
-      "library": "magic-trace.magic_trace",
-      "description": "This module defines a threshold duration for time measurements, using a timestamp counter calibrated in nanoseconds. It provides `of_ns` to create a duration threshold from a nanosecond value, and `over` to check if the time since a previous mark exceeds the threshold. It is used to conditionally trigger actions based on elapsed time, such as logging or sampling, when working with magic-trace's instrumentation features.",
-      "description_length": 423,
-      "index": 63,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace.Private",
-      "library": "magic-trace.magic_trace",
-      "description": "This module defines the interface for interacting with the snapshot functionality used by the profiling tool. It includes a value `stop_symbol` representing the name of a symbol used to mark the end of a profiling interval. It works with low-level binary representations and symbol tables to enable precise control over profiling ranges.",
-      "description_length": 337,
-      "index": 64,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Magic_trace",
-      "library": "magic-trace.magic_trace",
-      "description": "This module integrates with the profiling tool by enabling precise control over trace snapshots and timing markers. It supports unit and integer values for basic snapshots, and `Time_stamp_counter.t` for time-based tracing, allowing developers to mark execution points, attach metadata, and track operation starts. The threshold module enables time-based decisions using calibrated durations, while the snapshot interface provides low-level control over profiling intervals via symbol tables. Example uses include conditional logging based on elapsed time and delimiting profiling ranges in instrumented code.",
-      "description_length": 609,
-      "index": 65,
-      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 67,
-    "meaningful_modules": 66,
+    "total_modules_in_package": 62,
+    "meaningful_modules": 61,
     "filtered_empty_modules": 1,
-    "retention_rate": 0.9850746268656716
+    "retention_rate": 0.9838709677419355
   },
   "statistics": {
-    "max_description_length": 850,
-    "min_description_length": 206,
-    "avg_description_length": 414.3484848484849,
-    "embedding_file_size_mb": 0.24018096923828125
+    "max_description_length": 668,
+    "min_description_length": 205,
+    "avg_description_length": 389.1475409836066,
+    "embedding_file_size_mb": 0.8845720291137695
   }
 }

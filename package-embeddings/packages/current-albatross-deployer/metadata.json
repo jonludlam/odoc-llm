@@ -1,175 +1,175 @@
 {
   "package": "current-albatross-deployer",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 21,
-  "creation_timestamp": "2025-07-15T23:10:39.104469",
+  "creation_timestamp": "2025-08-15T12:11:31.216150",
   "modules": [
     {
       "module_path": "Iptables_client.IpManager",
       "library": "iptables_client",
-      "description": "This module manages IP address allocation and removal through a socket interface. It provides operations to list allocated IPs, request new IP assignments with a specified prefix and list of addresses, and remove existing assignments by identifier. It works directly with IPv4 addresses and prefixes, returning results in a structured error-handling format. Use this module to interact with an IP management daemon for dynamic IP allocation in networked applications.",
-      "description_length": 467,
+      "description": "Manages IP address allocation and removal through a Unix domain socket interface. It provides operations to list allocated IPs, request new allocations with specific network parameters, and remove existing allocations by identifier. This module directly handles IP address data types and interacts with a daemon to enforce network policies.",
+      "description_length": 340,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Iptables_client.Deployments",
       "library": "iptables_client",
-      "description": "This module manages deployment operations via a Unix domain socket, providing functions to list existing deployments, create new ones with port allocation checks, and remove deployments by identifier. It works with `DeploymentInfo.t` structures and handles errors like port conflicts or missing deployments. Concrete use cases include deploying network rules atomically, ensuring port uniqueness, and cleaning up outdated configurations.",
-      "description_length": 437,
+      "description": "This module manages deployment operations via a Unix domain socket, allowing listing, creating, and removing deployments. It works with deployment information structures and handles errors like port conflicts or missing entries. Concrete use cases include deploying network rules atomically, querying active deployments, and cleaning up stale configurations.",
+      "description_length": 358,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Iptables_client",
       "library": "iptables_client",
-      "description": "This module connects to an iptables service over a socket, enabling asynchronous communication for managing firewall rules and deployment states. It defines core operations for socket setup and teardown, along with structured error handling for network-level issues, and coordinates with submodules that handle IP address allocation and deployment management. Use it to remotely assign IP addresses with specific prefixes, list or remove existing assignments, and deploy or clean up network configurations with guaranteed port uniqueness. The interface supports live updates and atomic rule deployments through socket-based commands.",
-      "description_length": 633,
+      "description": "This module provides operations to manage IP address allocation and deployment of network rules through Unix domain sockets. It defines error types for communication failures and handles IP addresses and deployment structures. Concrete use cases include requesting new IP allocations with specific network parameters, deploying or removing network rules atomically, and querying active deployments or allocated IPs.",
+      "description_length": 415,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Current_albatross_deployer.Config.Pre",
       "library": "current-albatross-deployer",
-      "description": "This module defines a configuration type for deploying unikernels, including fields for the service name, unikernel image, command-line arguments based on IP address, memory allocation, and network settings. It is used to specify deployment parameters before launching a unikernel instance. The `args` function generates command-line arguments dynamically using the assigned IPv4 address.",
-      "description_length": 388,
+      "description": "This module defines a configuration type for deploying unikernels, including fields for the service name, unikernel image, command-line arguments based on an IPv4 address, memory allocation, and network settings. It is used to specify deployment parameters before launching a unikernel instance. The `args` function generates command-line arguments dynamically using the assigned IPv4 address.",
+      "description_length": 393,
       "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_albatross_deployer.Deployed",
+      "library": "current-albatross-deployer",
+      "description": "This module defines a type `t` representing deployed instances and provides operations to format, serialize, deserialize, and compute digests of these instances. It works directly with string representations of deployed data through marshaling and unmarshaling, and uses Fmt for human-readable output. Concrete use cases include persisting deployment states to storage, transmitting deployment information across systems, and generating unique identifiers for deployments based on their content.",
+      "description_length": 495,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Current_albatross_deployer.Info",
       "library": "current-albatross-deployer",
-      "description": "This module defines a type `t` representing the state of a deployment process and provides the `status` function to retrieve whether the deployment is currently running or has exited. It works with abstract data structures encapsulating deployment lifecycle information. Concrete use cases include monitoring deployment states in continuous integration pipelines or managing service statuses in cloud environments.",
-      "description_length": 414,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Current_albatross_deployer.Deployed",
-      "library": "current-albatross-deployer",
-      "description": "This module defines a type `t` representing deployed instances in the system. It provides functions to serialize (`marshal`) and deserialize (`unmarshal`) these instances, along with generating a digest for identifying unique deployments. It is used to manage and track deployment state across environments.",
-      "description_length": 307,
+      "description": "This module defines a type `t` representing the state of a deployment instance and provides the `status` function to retrieve whether the instance is currently `Running` or has `Exited`. It is used to monitor the operational state of deployed services or processes. Concrete use cases include checking the health of a deployed application or determining if a restart is needed after a failure.",
+      "description_length": 393,
       "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Current_albatross_deployer.Unikernel",
-      "library": "current-albatross-deployer",
-      "description": "This module constructs unikernel images from Docker or Git sources, producing a target-specific unikernel image. It works with Docker images and Git repositories, generating MirageOS-compatible unikernels for HVt targets. Concrete use cases include deploying MirageOS applications as unikernels by building from a Docker image or a Git commit with Mirage configuration.",
-      "description_length": 369,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Current_albatross_deployer.Port",
-      "library": "current-albatross-deployer",
-      "description": "Handles TCP port mappings between source and target ports in deployment configurations. Works with integer port numbers to define routing rules. Used to specify port forwarding settings when deploying services in cloud environments.",
-      "description_length": 232,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Current_albatross_deployer.Config",
-      "library": "current-albatross-deployer",
-      "description": "This module finalizes deployment configurations by merging a pre-configuration structure with an IPv4 address, producing runtime-ready settings for unikernel deployment. It operates on `Pre.t` and `Ipaddr.V4.t` types, dynamically generating command-line arguments and injecting network-specific details. The `args` function customizes unikernel launch parameters based on the assigned IP, while fields like memory allocation and service name define deployment constraints. It bridges generic configuration templates with environment-specific network data for flexible, context-aware launches.",
-      "description_length": 592,
-      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Current_albatross_deployer.Published",
       "library": "current-albatross-deployer",
-      "description": "This module represents and manages the state of published deployment configurations. It provides functions to serialize, compare, and merge deployment records, which are used to track versioned infrastructure updates. The primary data type `t` encodes structured deployment information such as timestamps, commit hashes, and environment metadata.",
-      "description_length": 346,
+      "description": "This module represents and manages the state of published deployment configurations. It provides functions to serialize, deserialize, and compare deployment states, ensuring consistency across distributed systems. It works with custom algebraic data types representing deployment metadata and network configurations. Use this module when handling versioned deployment records in a distributed orchestration system.",
+      "description_length": 414,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_albatross_deployer.Unikernel",
+      "library": "current-albatross-deployer",
+      "description": "This module constructs unikernel images from Docker or Git sources, producing a target-specific unikernel image assuming an hvt target. It supports customization through additional build instructions, network configuration, and cache settings. Concrete use cases include building and deploying MirageOS-based unikernels from version-controlled configurations or containerized environments.",
+      "description_length": 389,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_albatross_deployer.Port",
+      "library": "current-albatross-deployer",
+      "description": "Handles TCP port mappings by defining a structure to represent source and target port numbers. Provides functions to create, validate, and manipulate port mapping configurations. Useful for deploying network services where port translation is required, such as in containerized environments or reverse proxy setups.",
+      "description_length": 315,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Current_albatross_deployer.Config",
+      "library": "current-albatross-deployer",
+      "description": "This module processes a pre-configuration for deploying unikernels by binding it to a specific IPv4 address, using the `v` function to produce a final deployment configuration. It works with a configuration type that includes service name, unikernel image, memory settings, and network parameters. A concrete use case is generating command-line arguments for a unikernel instance based on its assigned IP address using the `args` function.",
+      "description_length": 439,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Current_albatross_deployer",
       "library": "current-albatross-deployer",
-      "description": "This module orchestrates unikernel deployment and networking through the Albatross hypervisor, combining image construction, configuration finalization, and service publication into a streamlined workflow. It manages deployment state with types like `Config`, `Deployed`, and `Published`, offering operations to build unikernels from Docker or Git sources, allocate IPs, define port mappings, and generate runtime arguments based on network context. Functions like `deploy_albatross`, `get_ip`, and `publish` enable automating deployment pipelines and exposing services with custom port routing in cloud environments. Submodules track deployment status, serialize instance state, and manage versioned infrastructure updates for reliable, context-aware launches.",
-      "description_length": 761,
+      "description": "This module orchestrates unikernel deployments by allocating IP addresses, building images from Docker or Git sources, and managing deployment lifecycles. It handles network configuration through port mappings and provides mechanisms to monitor, publish, and garbage collect deployed instances. Concrete use cases include deploying MirageOS services with custom build and network settings, tracking their runtime status, and maintaining consistent deployment records across distributed systems.",
+      "description_length": 494,
       "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Iptables_daemon_api.Types.DeploymentInfo",
-      "library": "iptables_daemon_api",
-      "description": "This module defines a data structure representing deployment information, including an IP address, a list of port redirections, and a name. It provides a function `pp` to format and print instances of this structure. Use this module when managing network deployment configurations that require associating IP addresses with port mappings and human-readable names.",
-      "description_length": 363,
-      "index": 11,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Iptables_daemon_api.Types.PortRedirection",
       "library": "iptables_daemon_api",
-      "description": "This module defines a type `t` representing port redirection rules with `source` and `target` integer fields. It includes a function `pp` for formatting values of type `t` using the `Fmt` library. Use this module when handling port redirection configurations in iptables rules, particularly for displaying or logging redirection data.",
-      "description_length": 334,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Iptables_daemon_api.Rpc.Tag",
-      "library": "iptables_daemon_api",
-      "description": "This module defines a type `t` for representing RPC tags and provides functions to create, manipulate, and serialize these tags. It includes operations to wrap an RPC value into a tagged structure, split a buffer into a tag and untagged payload, and reassemble a buffer from a tag and payload. The module is used to handle message framing and tagging in RPC communication, specifically working with `Cstruct.t` buffers and RPC values.",
-      "description_length": 434,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Iptables_daemon_api.Spec.Deployments",
-      "library": "iptables_daemon_api",
-      "description": "This module manages deployment records in a daemon-based iptables configuration system. It supports listing existing deployments, creating new deployments with port allocation checks, and deleting deployments by identifier. These operations are used to control network service configurations through RPC calls.",
-      "description_length": 310,
-      "index": 14,
+      "description": "This module defines a type `t` representing port redirection configurations with `source` and `target` integer fields. It includes a function `pp` for formatting values of type `t` using the `Fmt` library. This module is used to manage and display port redirection rules in iptables-based networking setups.",
+      "description_length": 307,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Iptables_daemon_api.Types.Ip",
       "library": "iptables_daemon_api",
-      "description": "This module defines a type `t` representing an IPv4 address paired with a string tag. It includes a function `pp` for formatting values of this type, typically used for logging or debugging. This structure is useful for associating metadata with IP addresses in networking applications.",
+      "description": "This module defines a type `t` representing an IPv4 address paired with a tag string. It includes a function `pp` for formatting values of this type, typically used for logging or debugging. This structure is useful for associating metadata with IP addresses in networking applications.",
       "description_length": 286,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Iptables_daemon_api.Types.DeploymentInfo",
+      "library": "iptables_daemon_api",
+      "description": "This module defines a data structure representing deployment information, including an IP address, a list of port redirections, and a name. It provides a function `pp` to format and print instances of this structure. Use cases include managing and displaying configuration data for network deployments in a structured and human-readable way.",
+      "description_length": 341,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Iptables_daemon_api.Spec.Deployments",
+      "library": "iptables_daemon_api",
+      "description": "This module manages deployment records through RPC calls, supporting operations to list existing deployments, create new ones with port allocation checks, and delete existing deployments by identifier. It works directly with `DeploymentInfo.t` records and standard result types for error handling. Concrete use cases include orchestrating deployment workflows, ensuring port availability during setup, and cleaning up outdated deployments.",
+      "description_length": 439,
+      "index": 14,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Iptables_daemon_api.Spec.IpManager",
       "library": "iptables_daemon_api",
-      "description": "This module manages IP address allocation and release operations. It provides functions to list allocated IPs, request a new IP within a specified subnet and VLAN, and free an allocated IP. It works with IP addresses represented as `Ipaddr.V4.t`, subnets as `Ipaddr.V4.Prefix.t`, and VLANs as strings.",
-      "description_length": 301,
+      "description": "Manages IP address allocation and release operations for IPv4 addresses. It provides functions to list allocated IPs, request new IPs with a specified prefix and list of available addresses, and free a previously allocated IP by its identifier. This module is used to handle dynamic IP assignments in network management scenarios.",
+      "description_length": 330,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Iptables_daemon_api.Rpc.Tag",
+      "library": "iptables_daemon_api",
+      "description": "This module defines a type `t` for representing RPC tags and provides functions to construct, deconstruct, and manipulate tagged RPC messages. It operates on `Cstruct.t` buffers and pairs of tags with untagged buffers, enabling efficient serialization and deserialization of RPC data. Concrete use cases include adding tags to untagged RPC payloads and extracting tags from incoming RPC messages for routing or processing.",
+      "description_length": 422,
       "index": 16,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Iptables_daemon_api.Spec",
       "library": "iptables_daemon_api",
-      "description": "This module coordinates network configuration through two core components: one for managing iptables deployment records with operations for listing, creating, and deleting deployments, and another for handling IP address allocation within subnets and VLANs. It supports precise control over network services via RPC, using structured types like `Ipaddr.V4.t`, `Ipaddr.V4.Prefix.t`, and string-based VLAN identifiers. You can, for example, request an IP address in a specific subnet and VLAN, then create a deployment that uses that IP and port, or list and delete existing deployments to reconfigure the network.",
-      "description_length": 612,
+      "description": "This module defines specifications for managing IP address allocation and deployment records. It includes operations to assign and release IPs with prefix constraints, list available and allocated IPs, and manage deployments with port allocation checks. Used in network orchestration systems to handle dynamic IP assignment and deployment lifecycle operations.",
+      "description_length": 360,
       "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Iptables_daemon_api.Rpc",
-      "library": "iptables_daemon_api",
-      "description": "This module implements a minimal RPC mechanism for bidirectional communication using untagged buffers, with support for explicit error handling during message parsing. It defines core types like `t` for RPC tags and provides operations to wrap, split, and reassemble messages using `Cstruct.t` buffers, enabling precise message framing. Child modules enhance this functionality by managing tag creation and manipulation, allowing the implementation of lightweight network protocols or inter-process communication where structured message exchange is critical. Specific use cases include serializing and deserializing RPC payloads with strict framing, handling client-server message passing, and recovering from malformed buffer inputs.",
-      "description_length": 735,
-      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Iptables_daemon_api.Types",
       "library": "iptables_daemon_api",
-      "description": "This module organizes data structures for managing network configurations, including IP addresses with metadata, port redirection rules, and deployment information. Key types include tagged IPv4 addresses, source-target port mappings, and deployment records with IP, ports, and names. Operations center on formatting values for logging and debugging, using the `pp` function across all structures. For example, you can represent a server's deployment with IP and port mappings, tag IPs for identification, or log iptables redirection rules.",
-      "description_length": 540,
+      "description": "This module defines data structures for managing network configurations, including port redirections, IP addresses with metadata, and deployment information. It provides types and formatting functions for representing iptables rules, associating tags with IPs, and organizing deployment settings. Used to model and display networking setups with structured, printable configurations.",
+      "description_length": 383,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Iptables_daemon_api.Rpc",
+      "library": "iptables_daemon_api",
+      "description": "This module implements a minimal RPC interface for handling untagged binary buffers, primarily used for communication between clients and servers. It provides functions to serialize and deserialize RPC payloads using `untagged_buffer` values, paired with error handling for parsing failures. Concrete use cases include direct client-server message exchange where RPC tags are managed separately, such as in network communication daemons or low-level service interfaces.",
+      "description_length": 469,
       "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Iptables_daemon_api",
       "library": "iptables_daemon_api",
-      "description": "This module enables coordinated network configuration and communication through structured data types and RPC mechanisms. It supports managing iptables deployments, allocating IP addresses within subnets and VLANs, and defining port redirection rules, with core types like `Ipaddr.V4.t`, tagged IP structures, and port mappings. Operations include creating, listing, and deleting deployments, as well as handling bidirectional RPC communication using `Cstruct.t` buffers for precise message framing. Example workflows involve allocating an IP in a VLAN, deploying iptables rules referencing that IP and port, and exchanging structured messages between network components.",
-      "description_length": 671,
+      "description": "This module implements low-level RPC communication for network configuration management, providing serialization and deserialization of binary payloads for client-server interactions. It works with structured network data such as IP addresses, port redirections, and deployment records, enabling precise control over IP allocation, rule formatting, and service configuration. Concrete use cases include managing iptables-based network policies, handling dynamic IP assignments in virtualized environments, and implementing network daemons that require direct binary RPC communication.",
+      "description_length": 584,
       "index": 20,
       "embedding_norm": 1.0
     }
@@ -181,9 +181,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 761,
-    "min_description_length": 232,
-    "avg_description_length": 453.9047619047619,
-    "embedding_file_size_mb": 0.07672405242919922
+    "max_description_length": 584,
+    "min_description_length": 286,
+    "avg_description_length": 398.3809523809524,
+    "embedding_file_size_mb": 0.30474090576171875
   }
 }

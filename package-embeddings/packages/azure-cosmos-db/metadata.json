@@ -1,149 +1,141 @@
 {
   "package": "azure-cosmos-db",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 16,
-  "creation_timestamp": "2025-07-15T23:10:04.344461",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 15,
+  "creation_timestamp": "2025-08-14T23:24:22.068354",
   "modules": [
     {
-      "module_path": "Utilities.Verb",
-      "library": "azure-cosmos-db.utilities",
-      "description": "This module defines a set of HTTP verbs as a variant type and provides a function to convert these verbs to their string representations. It works with the `t` type, which includes `Get`, `Post`, `Put`, and `Delete`. Use this module when handling HTTP method parsing or serialization in web applications or APIs.",
-      "description_length": 312,
+      "module_path": "App_config.Json",
+      "library": "azure-cosmos-db.app-config",
+      "description": "This module handles serialization and deserialization of JSON data for key-value items and result sets used in a configuration service. It defines types `kv_item` and `kv_result` to represent individual key-value entries and collections, and provides functions to convert these types to and from JSON strings. Use cases include reading and writing configuration data to and from JSON buffers or strings, such as when interacting with an external configuration store or API.",
+      "description_length": 473,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Utilities.Ms_time",
-      "library": "azure-cosmos-db.utilities",
-      "description": "This module handles time-related operations using a custom time type. It provides functions to convert timestamp components into human-readable strings, such as weekday and month names, and supports creating time values from timestamps or the current time. Use cases include formatting dates for logging, displaying timestamps in user interfaces, and parsing time values into structured string representations.",
-      "description_length": 410,
+      "module_path": "App_config",
+      "library": "azure-cosmos-db.app-config",
+      "description": "This module computes content hashes, signs HTTP requests, and constructs headers for authenticated API calls. It works with strings, timestamps, URIs, and HTTP headers, producing signed requests for a configuration service. It is used to securely retrieve and manipulate configuration data from a remote store via HTTP.",
+      "description_length": 319,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Utilities",
-      "library": "azure-cosmos-db.utilities",
-      "description": "This module combines list manipulation and time handling with support for HTTP methods and advanced time formatting. It provides core operations like `take_first` for splitting lists and functions to manage time values, while integrating HTTP verb handling and timestamp formatting through its submodules. Use it to process time-stamped data, schedule tasks, format dates for logs or UIs, and manage HTTP method parsing and serialization. Key types include lists, time values, and HTTP verbs such as `Get` and `Post`, with operations to convert and manipulate them directly or through submodule extensions.",
-      "description_length": 606,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
       "module_path": "Cosmos.Databases.Database.Collection.Document",
       "library": "azure-cosmos-db",
-      "description": "This module implements document management operations for a Cosmos DB collection, including creating, retrieving, replacing, deleting, and querying documents with support for partitioning and indexing directives. It works with documents represented as strings, metadata structures like `list_result` and `list_result_meta_data`, and handles consistency levels such as Strong, Bounded, Session, and Eventual. Concrete use cases include storing and querying JSON documents, managing document versions with ETags, and performing bulk operations with configurable timeouts and chunk sizes.",
-      "description_length": 585,
-      "index": 3,
+      "description": "This module implements document management operations for a Cosmos DB collection, including creating, retrieving, replacing, and deleting individual and batches of documents with support for partition keys and indexing directives. It handles JSON documents along with metadata such as resource IDs, timestamps, and ETags, and provides functions for listing and querying documents with configurable consistency levels and pagination. Specific use cases include managing document batches with upserts, executing conditional updates with ETag checks, and performing partition-aware queries with custom consistency settings.",
+      "description_length": 620,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cosmos.Databases.Database.User",
       "library": "azure-cosmos-db",
-      "description": "This module handles user management operations in a database, including creating, listing, retrieving, updating, and deleting users. It works with strings for identifiers and user data, returning results with status codes or errors. Concrete use cases include user account provisioning, user list retrieval for access control, and user data synchronization.",
-      "description_length": 357,
-      "index": 4,
+      "description": "This module handles user management operations in a database, including creating, listing, retrieving, updating, and deleting users. It works with string identifiers and JSON-converted user data, returning result types that include status codes or errors. It is used for direct user data manipulation in a Cosmos database context, such as during user registration, profile updates, or access control management.",
+      "description_length": 411,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cosmos.Databases.Database.Collection",
       "library": "azure-cosmos-db",
-      "description": "This module manages database collections in a Cosmos DB instance, offering operations to list, create, retrieve, and delete collections using string identifiers for databases and collections. It integrates document management through its child module, which supports creating, querying, and deleting individual documents with configurable consistency levels and partitioning. Key data types include `list_result`, `list_result_meta_data`, and operations wrapped in `Lwt.t` for asynchronous handling. Examples include ensuring a collection exists before inserting documents, performing queries with indexing directives, and managing document versions using ETags.",
-      "description_length": 662,
+      "description": "This module manages Cosmos DB collections through operations like listing, creating, retrieving, and deleting collections with optional indexing policies and partition keys. It works with JSON collections and handles responses with status codes and error information. Concrete use cases include ensuring collection existence with specific configurations, querying collection metadata, and managing collection lifecycle with timeouts and ETag-based concurrency control.",
+      "description_length": 468,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cosmos.Databases.Database",
+      "library": "azure-cosmos-db",
+      "description": "This module implements direct management of Cosmos DB databases through HTTP operations, handling creation, deletion, and metadata retrieval. It works with string identifiers and JSON-converted database structures, returning result types that include status codes or errors. Concrete use cases include idempotent database creation, conditional existence checks, and programmatic database lifecycle control with configurable timeouts.",
+      "description_length": 433,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cosmos.Databases.Response_headers",
       "library": "azure-cosmos-db",
-      "description": "This module provides accessors for extracting specific HTTP response headers from Azure Cosmos DB operations, such as `Content-Type`, `ETag`, `Date`, and custom headers like `x-ms-request-charge` and `x-ms-session-token`. It operates on a type `t` that represents a collection of response headers returned by the database service. These functions are used to inspect metadata from Cosmos DB responses, such as tracking request charges, handling pagination via continuation tokens, or validating resource quotas and schema versions.",
-      "description_length": 531,
+      "description": "This module provides access to specific HTTP response headers returned by Cosmos DB database operations. It works with a structured type representing header values, allowing retrieval of optional string fields like content type, date, ETag, and various custom `x-ms-*` headers. Concrete use cases include inspecting request charges, handling continuation tokens for pagination, and managing session tokens for consistency in distributed queries.",
+      "description_length": 445,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Cosmos.Databases.Auth_key",
+      "module_path": "Cosmos.Json_converter_j",
       "library": "azure-cosmos-db",
-      "description": "This module defines the master key and endpoint values for authenticating and connecting to a Cosmos DB container. It provides direct access to the key and endpoint strings, which are essential for initializing database connections and performing secure operations. These values are typically used during client setup to ensure authorized access to the database instance.",
-      "description_length": 371,
+      "description": "This module enables bidirectional conversion between OCaml values and JSON representations for Cosmos DB resource types like users, databases, collections, and indexing policies. It provides structured serialization (via `write_*` and `string_of_*`) and deserialization (via `read_*` and `*_of_string`) functions to handle JSON I/O operations, primarily for interfacing with Cosmos DB APIs. Use cases include parsing API responses into typed OCaml structures, constructing JSON payloads for resource creation, and transforming query results into domain-specific data formats.",
+      "description_length": 575,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cosmos.Databases.Database",
+      "module_path": "Cosmos.Json_converter_t",
       "library": "azure-cosmos-db",
-      "description": "This module orchestrates database operations in a Cosmos DB instance, enabling creation, retrieval, listing, and deletion of databases through HTTP requests with string identifiers and JSON-parsed responses that include status codes and metadata. It ensures database existence before collection setup, supports user management via submodules for account provisioning and access control, and handles collection and document operations with support for consistency levels and partitioning. The API includes functions for database-level actions, while child modules extend functionality to user and collection management, and document operations like querying and version control using ETags. Examples include initializing a database and collection hierarchy, synchronizing user data, and performing indexed document queries within a partitioned collection.",
-      "description_length": 854,
+      "description": "This module defines a set of types used to represent and convert JSON data for interacting with Cosmos DB resources such as users, databases, collections, and indexing policies. It includes structured representations for queries, parameters, and partition keys, enabling precise serialization and deserialization of API requests and responses. These types are directly used to map JSON payloads when managing Cosmos DB entities and configuring database settings.",
+      "description_length": 462,
       "index": 8,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cosmos.Databases",
       "library": "azure-cosmos-db",
-      "description": "This module manages interactions with Azure Cosmos DB, offering core functions to create, delete, and query databases while handling errors and response metadata. It works with `cosmos_error` for failure states and `Response_headers` for inspecting HTTP metadata such as request charges and ETags, enabling precise control over database lifecycle and diagnostics. The module\u2019s API supports direct database operations, while child modules provide header accessors, credential management, and orchestration for collections and documents. Examples include verifying database existence before collection setup, tracking request costs via headers, and initializing secure connections using endpoint and master key values.",
-      "description_length": 716,
+      "description": "This module handles Cosmos DB database operations and error responses. It provides functions for creating, deleting, and querying databases with support for custom headers, status codes, and JSON payloads. It works with string identifiers, structured headers, and result types to enable robust database management, error handling, and response inspection in distributed scenarios.",
+      "description_length": 380,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cosmos.Utility",
       "library": "azure-cosmos-db",
-      "description": "This module provides functions for string manipulation, boolean conversion, host adjustment, and authorization token generation. It operates on basic types like strings and booleans, with specific use cases such as replacing substrings, converting boolean values to strings, modifying host URLs, and creating authorization tokens using a master key. These functions are useful in web service interactions, configuration handling, and secure request generation.",
-      "description_length": 460,
+      "description": "This module provides string manipulation functions including substring replacement, boolean conversion, and host adjustment. It also generates authorization tokens using a master key for secure API requests. These functions operate directly on strings and are used for request preprocessing and URL sanitization in web services.",
+      "description_length": 328,
       "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cosmos.Json_converter_t",
-      "library": "azure-cosmos-db",
-      "description": "This module defines data structures for interacting with Cosmos DB resources, including users, databases, collections, and indexing policies. It includes types for query parameters, partition keys, and JSON responses for listing resources. These structures are used to serialize and deserialize data when making API requests to manage Cosmos DB entities.",
-      "description_length": 354,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cosmos.Json_converter_j",
-      "library": "azure-cosmos-db",
-      "description": "This module provides serialization and deserialization functions for converting OCaml values to and from JSON representations of Cosmos DB entities, including databases, collections, users, and indexing policies. It operates on structured types using `Yojson` for JSON parsing and generation, with support for buffer-based I/O and string conversions. The functionality is used to handle document data, query parameters, and configuration structures when interacting with Cosmos DB APIs.",
-      "description_length": 486,
-      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cosmos",
       "library": "azure-cosmos-db",
-      "description": "This module provides a comprehensive interface for interacting with Azure Cosmos DB by combining core database operations, data structure definitions, and JSON serialization. It supports creating, querying, and managing databases and collections while handling errors and response metadata through dedicated types like `cosmos_error` and `Response_headers`. The module enables precise control over Cosmos DB resources using structured representations of users, databases, collections, and indexing policies, with functions to serialize and deserialize these entities using `Yojson`. Specific capabilities include verifying database existence, generating authorization tokens, modifying host URLs, and tracking request charges through response headers.",
-      "description_length": 751,
+      "description": "This module implements Cosmos DB database operations, JSON serialization for resource types, and utility functions for request preprocessing. It works with string identifiers, structured headers, JSON payloads, and authorization tokens to manage databases, convert data between OCaml and JSON, and sanitize URLs. Concrete use cases include creating and deleting databases, parsing API responses into typed structures, generating JSON payloads for resource creation, and constructing secure API requests with token authentication.",
+      "description_length": 529,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Utilities.Ms_time",
+      "library": "azure-cosmos-db.utilities",
+      "description": "This module represents and manipulates time values with millisecond precision. It provides functions to create time instances from timestamps or the current time, and to format time values as human-readable strings. Concrete use cases include logging events with precise timestamps and displaying formatted dates in user interfaces.",
+      "description_length": 332,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Utilities.Verb",
+      "library": "azure-cosmos-db.utilities",
+      "description": "This module defines an enumeration of HTTP verbs and provides a function to convert them to string representations. It works with the variant type `t` representing common HTTP methods like `Get`, `Post`, `Put`, and `Delete`. A concrete use case is mapping internal verb values to their corresponding string format for logging or HTTP request handling.",
+      "description_length": 351,
       "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "App_config.Json",
-      "library": "azure-cosmos-db.app-config",
-      "description": "This module handles JSON serialization and deserialization for key-value configuration items and result sets. It operates on two main data structures: `kv_item` representing individual key-value entries with metadata, and `kv_result` containing a list of these items. Concrete use cases include reading and writing configuration data to and from JSON-formatted sources, such as files or network streams, with support for efficient buffer-based input/output operations.",
-      "description_length": 468,
+      "module_path": "Utilities",
+      "library": "azure-cosmos-db.utilities",
+      "description": "This module includes utilities for handling time with millisecond precision and working with HTTP verbs. It provides functions to create, manipulate, and format time values, as well as convert HTTP method variants to strings. Use cases include logging with precise timestamps and handling HTTP request methods in web applications.",
+      "description_length": 330,
       "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "App_config",
-      "library": "azure-cosmos-db.app-config",
-      "description": "This module computes request signatures and constructs HTTP requests for an API client, while also handling JSON serialization and deserialization for configuration data. It works with Cohttp headers, URIs, and JSON values to sign requests using HMAC, generate authorization headers, and parse JSON responses. The main data types include `kv_item` for key-value entries with metadata and `kv_result` for collections of these items, supporting operations like reading and writing configuration data from files or network streams. Specific use cases include making signed GET or POST requests with timestamped headers and efficiently serializing configuration state to JSON.",
-      "description_length": 672,
-      "index": 15,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 16,
-    "meaningful_modules": 16,
+    "total_modules_in_package": 15,
+    "meaningful_modules": 15,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 854,
-    "min_description_length": 312,
-    "avg_description_length": 537.1875,
-    "embedding_file_size_mb": 0.058506011962890625
+    "max_description_length": 620,
+    "min_description_length": 319,
+    "avg_description_length": 430.4,
+    "embedding_file_size_mb": 0.21781349182128906
   }
 }

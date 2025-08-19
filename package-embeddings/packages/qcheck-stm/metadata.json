@@ -1,141 +1,125 @@
 {
   "package": "qcheck-stm",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 15,
-  "creation_timestamp": "2025-07-15T23:09:52.395754",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 13,
+  "creation_timestamp": "2025-08-14T23:30:21.588818",
   "modules": [
+    {
+      "module_path": "STM_sequential.MakeExt",
+      "library": "qcheck-stm.sequential",
+      "description": "This module generates and validates command sequences for stateful model checking. It provides precondition checks, command sequence generation, and agreement testing between model and system under test (SUT) behaviors. Concrete use cases include testing STM implementations with arbitrary command sequences and verifying correctness properties like consistency and agreement.",
+      "description_length": 376,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "STM_sequential.Make",
+      "library": "qcheck-stm.sequential",
+      "description": "This module generates and validates sequences of commands for stateful testing. It checks preconditions, creates arbitrary command lists, and verifies agreement between model and system under test (SUT) behaviors. Concrete use cases include testing database transactions, file system operations, or network protocol state transitions.",
+      "description_length": 334,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "STM_sequential",
+      "library": "qcheck-stm.sequential",
+      "description": "This module builds sequential STM tests by generating and validating command sequences with precondition checks, ensuring agreement between model and system under test behaviors. It works with stateful models and arbitrary command lists to simulate scenarios like database transactions, file system operations, or STM implementations. Use it to verify correctness properties such as consistency and agreement during state transitions.",
+      "description_length": 434,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "STM_domain.Make",
       "library": "qcheck-stm.domain",
-      "description": "This module implements parallel STM testing capabilities using `Stdlib.Domains`, generating command sequences and validating consistency across interleavings. It provides functions to create and test command triples, check observational equivalence, and stress-test parallel execution scenarios. Concrete use cases include verifying correctness of concurrent operations under parallel execution, generating test cases with controlled command distributions, and detecting race conditions or state inconsistencies in STM-based systems.",
-      "description_length": 533,
-      "index": 0,
+      "description": "This module implements parallel STM testing capabilities using `Stdlib.Domain`, providing functions to generate and validate command sequences for concurrent execution. It supports asymmetric and symmetric parallel test scenarios, checks observation consistency across interleavings, and offers stress testing to detect runtime anomalies. Concrete use cases include verifying correctness of STM transactions under concurrency, testing recovery from race conditions, and validating system behavior under high-frequency parallel operations.",
+      "description_length": 538,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "STM_domain.MakeExt",
       "library": "qcheck-stm.domain",
-      "description": "This module implements parallel STM testing capabilities using `Stdlib.Domains`, generating command sequences and validating consistency across interleavings. It provides functions to create asymmetric and symmetric parallel test cases, check observational equivalence, and perform stress testing by executing commands concurrently. Concrete use cases include verifying correctness of STM implementations under parallel execution, detecting race conditions, and ensuring expected behavior across varied interleavings of transactions.",
-      "description_length": 533,
-      "index": 1,
+      "description": "This module implements parallel STM testing capabilities using `Stdlib.Domain`, providing functions to generate command sequences, validate consistency across interleavings, and execute stress and agreement tests in parallel domains. It operates on command lists and result traces tied to a state model defined by the `Spec` parameter, supporting asymmetric and symmetric parallel execution scenarios. Concrete use cases include validating correctness of concurrent operations under various interleavings, generating test cases with controlled state transitions, and stress-testing STM implementations for robustness.",
+      "description_length": 617,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "STM_domain",
       "library": "qcheck-stm.domain",
-      "description": "This module enables parallel STM testing with `Stdlib.Domains`, generating command sequences and validating consistency across execution interleavings. It supports creating symmetric and asymmetric test cases, checking observational equivalence, and stress-testing concurrent transactions. Users can verify STM correctness, detect race conditions, and ensure expected behavior under parallel execution. Example use cases include testing transactional memory operations for race-free execution and validating STM implementations under controlled command distributions.",
-      "description_length": 567,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "STM.Internal.Make",
-      "library": "qcheck-stm.stm",
-      "description": "This module generates a test framework from a state machine specification, providing functions to validate command sequences, generate tests, and check consistency between model and system under test. It operates on state and command data types defined in the `Spec` module, supporting sequential and parallel command testing with preconditions, postconditions, and interleaving checks. Concrete use cases include building property-based tests for concurrent systems, validating system behavior against a model, and shrinking failing test cases for debugging.",
-      "description_length": 559,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "STM.SpecDefaults",
-      "library": "qcheck-stm.stm",
-      "description": "This module provides default implementations for state machine specification functions, including `cleanup`, `precond`, and `wrap_cmd_seq`. It operates on generic state machine components such as the system under test (`'sut`), commands (`'cmd`), and state (`'state`). These defaults simplify specification by offering basic behavior that can be extended, such as always satisfying preconditions or performing no cleanup.",
-      "description_length": 421,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "STM.Internal",
-      "library": "qcheck-stm.stm",
-      "description": "This module builds a test framework from a state machine specification to validate command sequences, generate tests, and ensure consistency between a model and the system under test. It works with state and command types from the `Spec` module, supporting sequential and parallel testing with preconditions, postconditions, and interleaving checks. It enables property-based testing of concurrent systems, behavior validation against a model, and shrinking of failing test cases for easier debugging. Example uses include testing database transactions, concurrent data structures, and distributed system protocols.",
-      "description_length": 615,
+      "description": "Implements parallel STM testing with functions to generate command sequences, validate consistency across interleavings, and execute stress and agreement tests in concurrent domains. Works with command lists, result traces, and state models defined by the `Spec` parameter, supporting both symmetric and asymmetric parallel execution. Used to verify STM correctness under concurrency, test race condition recovery, and validate system robustness under high-frequency parallel operations.",
+      "description_length": 487,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "STM.SpecExt",
-      "library": "qcheck-stm.stm",
-      "description": "This module defines a state machine specification with command generation, execution, and validation. It includes functions for initializing and transitioning model states, generating commands based on current state, running commands on a system under test, and verifying postconditions. It is used to model and test concurrent or stateful systems where commands transition both a model and a real system, such as databases, stateful servers, or mutable data structures.",
-      "description_length": 470,
-      "index": 6,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "STM.Spec",
-      "library": "qcheck-stm.stm",
-      "description": "This module defines the core components for modeling state machines in property-based testing. It includes types for commands, model states, and the system under test, along with functions to generate commands, transition states, execute commands on the system, and validate outcomes. It supports precise specification of state transitions and command effects, enabling tests that verify system behavior against a model.",
-      "description_length": 420,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "STM",
-      "library": "qcheck-stm.stm",
-      "description": "This module combines STM test specification with execution and validation through a structured state machine approach. It defines core types like `ty` for OCaml values and `res` for outcome tracking, and provides operations such as `protect` to safely handle exceptions during testing. Submodules offer default specification functions, a test generation framework, and components for modeling state transitions and command execution. Together, they enable robust testing of concurrent systems like databases and distributed protocols through property-based testing, command sequence validation, and model-based shrinking of failures.",
-      "description_length": 633,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "STM_thread.MakeExt",
-      "library": "qcheck-stm.thread",
-      "description": "This module generates and interprets command sequences for testing concurrent systems, using `Spec.cmd` values to represent operations. It provides arbitrary command triples for testing, interprets command lists over a system under test, and checks agreement properties in concurrent executions. It is used to expose concurrency issues in systems where context switches occur at allocations or safepoints, particularly under specific OCaml versions.",
-      "description_length": 449,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "STM_thread.Make",
       "library": "qcheck-stm.thread",
-      "description": "This module generates and interprets command sequences for testing concurrent systems using threads, focusing on agreement properties. It works with lists of commands and results, using specifications to define system behavior and outcomes. Concrete use cases include testing concurrent data structures for consistency under thread scheduling variations.",
-      "description_length": 354,
-      "index": 10,
+      "description": "This module generates command sequences for testing concurrent STM systems using threads. It provides functions to create arbitrary command triples, interpret command effects on a system under test, and validate agreement properties in concurrent executions. Use it to test correctness of concurrent data structures or transactional memory implementations under thread interleavings.",
+      "description_length": 383,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "STM_thread.MakeExt",
+      "library": "qcheck-stm.thread",
+      "description": "This module generates command sequences for testing concurrent systems using threads, supporting both sequential and concurrent command execution. It works with specifications defining commands and system-under-test behaviors, using arbitrary generation and interpretation to validate concurrency properties. Concrete use cases include testing agreement and race conditions in shared memory operations under thread scheduling.",
+      "description_length": 426,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "STM_thread",
       "library": "qcheck-stm.thread",
-      "description": "This module tests concurrent systems by generating and interpreting command sequences that expose race conditions and consistency issues under thread scheduling variations. It uses `Spec.cmd` values and command lists to model operations, focusing on agreement properties across thread interactions. Developers can test concurrent data structures or stateful systems by simulating context switches at allocation and safepoints. For example, it can detect inconsistencies in a shared counter or a concurrent queue under different OCaml versions' threading behaviors.",
-      "description_length": 564,
+      "description": "This module implements concurrency testing frameworks for STM systems using OCaml threads. It generates and runs command sequences to expose race conditions, test agreement properties, and validate correctness under thread interleavings. Concrete use cases include verifying transactional memory behaviors and concurrent data structure operations under controlled scheduling.",
+      "description_length": 375,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "STM.Internal.Make",
+      "library": "qcheck-stm.stm",
+      "description": "This module derives a test framework from a state machine specification, providing functions to generate and validate command sequences against preconditions and postconditions. It works with state, commands, and system under test (SUT) data types, supporting operations like command generation, consistency testing, and checking agreement between model and SUT. Concrete use cases include generating arbitrary command sequences, validating command interleavings, and shrinking command triples for parallel testing scenarios.",
+      "description_length": 525,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "STM.SpecDefaults",
+      "library": "qcheck-stm.stm",
+      "description": "This module provides default implementations for state machine specification functions, including `cleanup`, `precond`, and `wrap_cmd_seq`. It operates on generic state machine components such as the system under test (`'sut`), commands (`'cmd`), and states (`'state`). These defaults are useful for simplifying the creation of test specifications when no special preconditions, cleanup, or command sequencing behavior is required.",
+      "description_length": 431,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "STM.Internal",
+      "library": "qcheck-stm.stm",
+      "description": "This module includes functions for generating command sequences, validating preconditions and postconditions, and checking consistency between a model and a system under test. It operates on state, command, and system-under-test (SUT) data types to support test derivation from state machine specifications. Use cases include generating arbitrary command sequences, validating command interleavings, and shrinking command triples for parallel testing.",
+      "description_length": 451,
       "index": 11,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "STM_sequential.MakeExt",
-      "library": "qcheck-stm.sequential",
-      "description": "This module generates and validates sequences of commands for stateful testing, using a provided specification module. It checks preconditions, creates arbitrary command sequences, and verifies agreement between model and system-under-test behaviors. Concrete uses include testing database transactions, file system operations, or network protocols where state transitions must match expected models.",
-      "description_length": 400,
+      "module_path": "STM",
+      "library": "qcheck-stm.stm",
+      "description": "This module provides operations to define and represent typed values using primitive and container types (e.g., `Unit`, `Bool`, `Option`, `List`, `Array`, `Seq`) for test case specification and rendering. It also includes utilities for state machine testing, such as command sequence generation, precondition validation, exception handling, and parallel test execution, operating on state, command, and system-under-test data types to model and verify complex behaviors.",
+      "description_length": 470,
       "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "STM_sequential.Make",
-      "library": "qcheck-stm.sequential",
-      "description": "This module generates and validates command sequences for testing STM implementations. It provides functions to check preconditions, generate arbitrary command lists, and verify agreement between model and system-under-test behaviors. Concrete use cases include building sequential STM tests that ensure correctness properties like consistency and agreement across different execution paths.",
-      "description_length": 391,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "STM_sequential",
-      "library": "qcheck-stm.sequential",
-      "description": "This module builds sequential STM tests by generating and validating command sequences against a model, ensuring preconditions hold and behaviors align with expected state transitions. It supports arbitrary command generation, precondition checking, and behavior verification between model and system-under-test. Key data types include command sequences and state models, with operations to generate, validate, and test execution paths. Examples include verifying database transactions, file system operations, or network protocols for consistency and correctness under varying command sequences.",
-      "description_length": 596,
-      "index": 14,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 15,
-    "meaningful_modules": 15,
+    "total_modules_in_package": 13,
+    "meaningful_modules": 13,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 633,
-    "min_description_length": 354,
-    "avg_description_length": 500.3333333333333,
-    "embedding_file_size_mb": 0.054940223693847656
+    "max_description_length": 617,
+    "min_description_length": 334,
+    "avg_description_length": 449.7692307692308,
+    "embedding_file_size_mb": 0.18889904022216797
   }
 }

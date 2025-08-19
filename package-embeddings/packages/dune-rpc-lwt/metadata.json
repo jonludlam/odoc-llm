@@ -1,71 +1,71 @@
 {
   "package": "dune-rpc-lwt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:06:28.152050",
+  "creation_timestamp": "2025-08-14T23:02:18.806593",
   "modules": [
-    {
-      "module_path": "Dune_rpc_lwt.V1.Client.Versioned",
-      "library": "dune-rpc-lwt",
-      "description": "This module handles version negotiation for individual RPC methods during client-server sessions, ensuring the correct protocol version is used for each request or notification. It works with versioned request and notification types, producing version-specific variants or errors if negotiation fails. Concrete use cases include preparing method calls with `prepare_request` and notifications with `prepare_notification`, which validate against the session's negotiated version menu before transmission.",
-      "description_length": 503,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Dune_rpc_lwt.V1.Client.Handler",
-      "library": "dune-rpc-lwt",
-      "description": "Implements handlers for responding to RPC requests over Lwt-based connections. It manages incoming messages, routes them to appropriate response handlers, and supports asynchronous processing of requests. This module is used to build custom RPC servers that communicate using the Dune RPC protocol over Lwt conduits.",
-      "description_length": 316,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Dune_rpc_lwt.V1.Client.Stream",
       "library": "dune-rpc-lwt",
-      "description": "This module manages a polling loop for consuming values from an RPC stream. It provides `cancel` to notify the server and stop polling, and `next` to retrieve the next value asynchronously. It works with stream types that produce optional values, supporting use cases like event-driven data retrieval or incremental result processing over a network connection.",
-      "description_length": 360,
-      "index": 2,
+      "description": "This module manages a streaming RPC client connection by providing `cancel` to terminate the polling loop and `next` to retrieve the next value from the stream. It works with stream values of type `'a option Lwt.t`, where each call to `next` blocks until a new value is available. Concrete use cases include consuming incremental build results or real-time log updates from a Dune RPC server.",
+      "description_length": 392,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dune_rpc_lwt.V1.Client.Batch",
       "library": "dune-rpc-lwt",
-      "description": "This module batches multiple RPC requests and notifications into a single submission. It manages a collection of versioned requests and notifications, allowing for efficient batch processing over a single client connection. Use it to reduce network overhead when sending multiple independent RPC calls to a server.",
-      "description_length": 314,
+      "description": "This module batches multiple RPC requests and notifications into a single submission, improving efficiency for bulk operations. It works with versioned RPC requests and notifications, handling responses asynchronously using Lwt. Concrete use cases include sending multiple build commands or status queries to a Dune RPC server in one round trip.",
+      "description_length": 345,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Dune_rpc_lwt.V1.Client.Versioned",
+      "library": "dune-rpc-lwt",
+      "description": "This module handles version negotiation for individual RPC procedures after session startup, ensuring the client uses the correct protocol version for each request or notification. It works with versioned RPC requests and notifications, along with negotiated version menus established during session initialization. Concrete use cases include preparing version-specific method calls and validating notifications against agreed-upon protocol versions before transmission.",
+      "description_length": 470,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dune_rpc_lwt.V1.Client.Handler",
+      "library": "dune-rpc-lwt",
+      "description": "Implements handlers for responding to RPC requests over Lwt-based connections. It works with `Dune_rpc.V1.Message.t` values, managing request-response interactions asynchronously. Use it to define custom logic for handling incoming RPC calls in a client-server communication setup.",
+      "description_length": 281,
       "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Dune_rpc_lwt.V1.Where",
+      "library": "dune-rpc-lwt",
+      "description": "This module resolves and provides configuration paths for Dune RPC services. It works with environment variables and build directory paths to determine where to locate runtime artifacts. Use it to dynamically find socket files or other service-related paths during distributed builds or remote execution.",
+      "description_length": 304,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Dune_rpc_lwt.V1.Client",
       "library": "dune-rpc-lwt",
-      "description": "This module implements an Lwt-based RPC client for sending versioned requests and notifications over a session, supporting individual calls, notifications, streaming, and batching. It provides core operations like `call`, `notify`, `stream`, and `batch`, working with versioned method types to ensure compatibility during session negotiation. Child modules handle version selection, response routing, stream polling, and batch composition, enabling concrete tasks like querying a build server, subscribing to event streams, or sending multiple requests efficiently over a single connection. Specific examples include using `prepare_request` to validate method versions, `next` to consume stream updates asynchronously, and `batch` to group multiple notifications into one transmission.",
-      "description_length": 785,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Dune_rpc_lwt.V1.Where",
-      "library": "dune-rpc-lwt",
-      "description": "This module resolves the location of Dune RPC socket files by determining the appropriate directory based on environment variables and build directory paths. It provides `get` to search for the socket location using environment lookup and `default` to construct a default path when no override is present. The functions work with string paths and environment variable mappings, typically used during client-server communication setup in Dune-based applications.",
-      "description_length": 461,
+      "description": "This module implements an Lwt-based RPC client for handling asynchronous request-response interactions, version negotiation, and streaming with a Dune RPC server. It works with `Dune_rpc.V1.Message.t`, versioned RPC requests and notifications, and stream values of type `'a option Lwt.t`, supporting concrete use cases such as sending versioned method calls, consuming real-time build updates, and batching multiple RPC operations. Functions include sending requests, handling notifications, managing disconnection, and initializing polling loops for subscriptions.",
+      "description_length": 565,
       "index": 5,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Dune_rpc_lwt.V1",
       "library": "dune-rpc-lwt",
-      "description": "This module enables asynchronous communication with Dune RPC services using Lwt channels, offering a `connect_chan` function to establish connections based on target endpoints. It integrates with submodules that handle RPC method execution and socket resolution, supporting operations like versioned requests, notifications, and streaming over established sessions. The first submodule provides methods such as `call`, `notify`, and `stream` for interacting with RPC endpoints, while the second resolves socket locations using environment variables and default paths. Together, they allow tasks like querying a build server, subscribing to event streams, or locating RPC sockets automatically during client setup.",
-      "description_length": 713,
+      "description": "This module implements an Lwt-based RPC client for asynchronous communication with a Dune RPC server, handling version negotiation, streaming, and batched operations. It works with versioned RPC messages, stream values, and channel-based I/O for concrete use cases like sending method calls, receiving build updates in real time, and managing persistent connections. The `connect_chan` function establishes a connection using resolved service paths, while the `Where` submodule locates runtime artifacts such as socket files based on environment and build configuration.",
+      "description_length": 570,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dune_rpc_lwt",
       "library": "dune-rpc-lwt",
-      "description": "This module enables asynchronous communication with Dune RPC services using Lwt channels, supporting operations like versioned requests, notifications, and streaming over established sessions. It provides key functions such as `connect_chan`, `call`, `notify`, and `stream`, along with socket resolution based on environment variables and defaults. Users can query a build server, subscribe to event streams, or automatically locate RPC sockets during client setup. Example tasks include sending a notification to trigger a build or streaming log output from a running process.",
-      "description_length": 577,
+      "description": "Implements an Lwt-based RPC client for asynchronous communication with a Dune RPC server, supporting version negotiation, streaming, and batched operations. Works with versioned RPC messages, stream values, and channel-based I/O to handle concrete tasks like sending method calls, receiving real-time build updates, and managing persistent connections. Uses the `connect_chan` function to establish connections and the `Where` submodule to locate runtime artifacts such as socket files based on environment and build configuration.",
+      "description_length": 531,
       "index": 7,
       "embedding_norm": 1.0
     }
@@ -77,9 +77,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 785,
-    "min_description_length": 314,
-    "avg_description_length": 503.625,
-    "embedding_file_size_mb": 0.029458999633789062
+    "max_description_length": 570,
+    "min_description_length": 281,
+    "avg_description_length": 432.25,
+    "embedding_file_size_mb": 0.11634063720703125
   }
 }

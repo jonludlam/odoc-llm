@@ -1,181 +1,173 @@
 {
   "package": "redis-lwt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 20,
-  "creation_timestamp": "2025-07-15T23:10:52.447924",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 19,
+  "creation_timestamp": "2025-08-15T12:09:56.001351",
   "modules": [
+    {
+      "module_path": "Redis_lwt.Client.SlotMap",
+      "library": "redis-lwt",
+      "description": "This module implements an ordered map structure for integer keys paired with arbitrary values, supporting functional operations like insertion, deletion, lookup, merging, and filtering, along with predicate-based transformations and traversal. It enables efficient sorted access, key-range queries, and sequence conversions, optimized to avoid redundant data copying through physical equality checks. These capabilities are particularly useful for managing Redis cluster slot mappings, partitioning ordered data, and handling key-value sequences with precise range operations.",
+      "description_length": 576,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.ClusterClient.ConnectionSpecMap",
+      "library": "redis-lwt",
+      "description": "This module provides ordered map operations for managing key-value pairs where keys are Redis cluster connection specifications and values are arbitrary data. It supports functional transformations, sorted queries, and structural manipulations like splitting or merging maps, with keys ordered via comparison functions. Typical use cases involve routing logic or configuration management in Redis clusters where connection specs must be efficiently queried, partitioned, or aggregated based on their inherent ordering.",
+      "description_length": 518,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
     {
       "module_path": "Redis_lwt.Client.ConnectionSpecMap",
       "library": "redis-lwt",
-      "description": "This module provides a functional map structure for managing Redis connection specifications as keys, supporting standard operations like creation, insertion, querying, and traversal, along with merging, filtering, and transforming bindings. It works with immutable maps where keys are compared using a predefined ordering, enabling efficient lookups, aggregation, and bulk processing of connection specs. Specific use cases include dynamic Redis connection management, configuration synchronization, and scenarios requiring ordered traversal or combinatorial manipulation of connection parameters.",
-      "description_length": 598,
-      "index": 0,
+      "description": "This module implements a sorted key-value map structure where keys are Redis connection specifications, supporting operations like insertion, deletion, filtering, and value transformations. It relies on ordered key comparisons for consistency and provides utilities to convert sequences into maps or query bindings based on connection parameters. It is particularly useful for managing Redis client configurations, tracking connection states, or merging settings across multiple Redis instances.",
+      "description_length": 495,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.Client.MassInsert",
+      "library": "redis-lwt",
+      "description": "This module provides functions to construct and execute batches of Redis commands for mass insertion, supporting operations like `SET`, `DEL`, `HSET`, `HDEL`, `EXPIRE`, and atomic increments. It works with Redis commands represented as a `command` type, which can be composed into lists and executed together using the `write` function. Concrete use cases include efficiently inserting or updating multiple keys and hashes in a single batch, such as caching bulk data or updating counters in a Redis database.",
+      "description_length": 509,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Redis_lwt.ClusterClient.FloatBound",
       "library": "redis-lwt",
-      "description": "This module defines a type `t` for representing bounded float values with inclusive or exclusive limits, including positive and negative infinity. It provides a `to_string` function to convert these bounds into string representations. Useful for specifying range queries in Redis commands where precise boundary conditions are required.",
-      "description_length": 336,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Redis_lwt.ClusterClient.MassInsert",
-      "library": "redis-lwt",
-      "description": "This module implements batched Redis commands for bulk insertion and manipulation of keys, hashes, and counters. It supports operations like setting and deleting keys, managing hash fields, incrementing counters, and setting expiration times. Use it to efficiently perform large-scale updates across a Redis cluster, such as caching bulk data, updating hash-based records, or atomically modifying counters.",
-      "description_length": 406,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Redis_lwt.ClusterClient.ConnectionSpecMap",
-      "library": "redis-lwt",
-      "description": "This module implements an ordered map structure for managing Redis cluster connection configurations, supporting key-based insertion, deletion, and lookup alongside ordered traversal, range queries, and polymorphic value transformations. It operates on key-value pairs where keys are uniquely identified by Redis connection specifications and values can be arbitrary data, enabling use cases like dynamic configuration routing or load-balanced connection pooling. The module also provides sequence-based construction and iteration, allowing efficient bulk initialization from ordered data sources.",
-      "description_length": 597,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Redis_lwt.ClusterClient.StringBound",
-      "library": "redis-lwt",
-      "description": "This module defines a bounded string type with inclusive and exclusive boundaries, supporting operations like converting bounds to string representations. It works with string-based range queries in Redis, such as `ZRANGEBYSCORE`. Use it when constructing Redis commands that require precise string range constraints, such as querying sorted sets with specific lex orderings.",
-      "description_length": 375,
+      "description": "This module defines a type `t` to represent bounds for floating-point values in Redis commands, including inclusive and exclusive limits, as well as negative and positive infinity. It provides the `to_string` function to convert these bounds into their string representations as used in Redis queries. This is useful when constructing range-based commands like `ZRANGEBYSCORE` or `ZCOUNT` that require precise boundary specifications.",
+      "description_length": 434,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Redis_lwt.Client.MassInsert",
-      "library": "redis-lwt",
-      "description": "This module batches Redis commands for bulk insertion, supporting operations like `set`, `del`, `hset`, `hdel`, `incr`, and `decr`. It works with Redis keys, strings, hashes, and integers, enabling efficient bulk writes through command lists. Use it to perform multiple Redis updates in a single batch, reducing network roundtrips when initializing or synchronizing data.",
-      "description_length": 371,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Redis_lwt.Client.SlotMap",
-      "library": "redis-lwt",
-      "description": "This module implements a polymorphic map for Redis slots with integer keys, supporting insertion, deletion, and value transformations alongside advanced operations like merging, filtering, and union. It provides ordered traversal, range-based processing, and structural sharing optimizations, enabling efficient functional updates for Redis client slot management. Use cases include maintaining slot-to-value mappings with predictable iteration order, converting sequential data into structured maps, and performing set-like algebraic operations on Redis slot partitions.",
-      "description_length": 571,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Redis_lwt.Client.FloatBound",
-      "library": "redis-lwt",
-      "description": "This module defines a type `t` to represent bounded float values with inclusive or exclusive limits, including negative and positive infinity. It provides the `to_string` function to convert these bounds into string representations. Use this module when working with range queries or bounded numerical values that require precise limit handling.",
-      "description_length": 345,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Redis_lwt.ClusterCache.Params",
-      "library": "redis-lwt",
-      "description": "This module defines core types and conversion functions for managing cached data in a Redis cluster. It includes string-based key and data representations, with functions to serialize and deserialize data, and specifies cache expiration settings. It is used to configure caching behavior for session storage, query result caching, and distributed state management in web applications.",
-      "description_length": 384,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Redis_lwt.Client.StringBound",
-      "library": "redis-lwt",
-      "description": "This module defines a bounded string type with inclusive and exclusive boundaries, supporting comparisons and conversions. It works with string values to represent ordered ranges, useful for Redis operations requiring lexicographical scans or bounded queries. Concrete use cases include defining range limits for Redis sorted sets or lex-based key scans.",
-      "description_length": 354,
-      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Redis_lwt.ClusterClient.SlotMap",
       "library": "redis-lwt",
-      "description": "This module implements a polymorphic map for Redis cluster slots, offering standard operations like insertion, deletion, lookup, and transformation alongside higher-order functions for iteration, filtering, and aggregation. It operates on ordered key-value pairs where keys are integers representing Redis slots and values typically encode cluster node metadata or routing information. Designed for Redis cluster management, it supports use cases such as slot-to-node mapping, dynamic cluster topology updates, and efficient batch operations over slot ranges.",
-      "description_length": 559,
+      "description": "This module provides persistent maps associating integer keys with arbitrary values, optimized for modeling Redis cluster slot distributions. It supports key-based updates, bulk transformations (e.g., merging, filtering, mapping), and structural queries (e.g., cardinality, ordering), while maintaining immutability through functional purity. These maps are used to manage Redis cluster configurations, such as initializing slot-to-node mappings from sequences or rebalancing slot assignments across nodes.",
+      "description_length": 506,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.Client.StringBound",
+      "library": "redis-lwt",
+      "description": "This module defines string boundary types for Redis queries, including inclusive and exclusive bounds, as well as negative and positive infinity. It provides a `to_string` function to convert these bounds into string representations suitable for Redis commands. Use this module when constructing range queries for Redis sorted sets with precise boundary conditions.",
+      "description_length": 365,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.ClusterCache.Params",
+      "library": "redis-lwt",
+      "description": "This module defines core types and conversion functions for managing cached data in a Redis cluster. It includes string-based key and data types, with functions to serialize and deserialize data, and specifies cache expiration. Used to handle per-key encoding, decoding, and TTL settings when interacting with Redis.",
+      "description_length": 316,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.Client.FloatBound",
+      "library": "redis-lwt",
+      "description": "This module defines a type `t` to represent bounded float values with inclusive or exclusive limits, including positive and negative infinity. It provides a `to_string` function to convert these bounds into string representations. Useful for specifying range queries in Redis commands where precise float boundaries are required.",
+      "description_length": 329,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.ClusterClient.StringBound",
+      "library": "redis-lwt",
+      "description": "This module defines a bounded string range type with inclusive, exclusive, and infinite bounds. It provides a `to_string` function to convert these bounds into string representations. Useful for defining range queries in Redis commands that require string-based boundaries.",
+      "description_length": 273,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.ClusterClient.MassInsert",
+      "library": "redis-lwt",
+      "description": "This module supports batched Redis commands for efficiently inserting, updating, and deleting keys and hash fields across a Redis cluster. It works with string keys, hash maps, and integer values, enabling operations like setting expiration, incrementing counters, and manipulating hash entries. Concrete use cases include bulk data loading, session management, and caching with fine-grained control over key lifecycle and structure.",
+      "description_length": 433,
       "index": 10,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Redis_lwt.Mutex",
+      "module_path": "Redis_lwt.Cache",
       "library": "redis-lwt",
-      "description": "This module implements distributed mutex functionality using Redis with Lwt for asynchronous operations. It provides functions to acquire and release locks with optional timeouts, and to execute code within a locked context. Use it to synchronize access to shared resources across distributed systems using Redis as the coordination backend.",
-      "description_length": 341,
+      "description": "This module provides functions to interact with a Redis cache using Lwt for asynchronous operations. It supports setting, retrieving, and deleting key-value pairs, where keys and values are determined by the `Params` module. Concrete use cases include caching database query results or session data in web applications.",
+      "description_length": 319,
       "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.ClusterCache",
+      "library": "redis-lwt",
+      "description": "This module implements Redis cache operations for a cluster environment with Lwt concurrency. It provides `set`, `get`, and `delete` functions to store, retrieve, and remove serialized data values associated with string-based keys, using a Redis client connection. The module enforces per-key encoding, decoding, and time-to-live (TTL) settings defined in the `Params` module, enabling type-safe caching of specific data structures like user sessions or API response payloads.",
+      "description_length": 476,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Redis_lwt.Client",
+      "library": "redis-lwt",
+      "description": "This module provides Redis client operations for key management, data structure manipulation, cluster coordination, and transaction handling. It works with Redis data types including strings, hashes, lists, sets, sorted sets, HyperLogLogs, and streams, alongside connection management structures like slot maps and authentication handlers. Typical use cases include caching with atomic expiration control, real-time analytics using HyperLogLog cardinality operations, message queuing with stream primitives, and scalable cluster-aware data partitioning with mass insertion pipelines.",
+      "description_length": 583,
+      "index": 13,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Redis_lwt.Pool",
       "library": "redis-lwt",
-      "description": "This module manages a pool of Redis connections, allowing clients to temporarily acquire connections for operations and ensuring they are returned to the pool. It supports creating and closing connection pools, executing operations with pooled connections, and limiting concurrent access to a fixed number of connections. Concrete use cases include handling Redis queries in a web application where multiple requests need temporary access to Redis without exhausting resources.",
-      "description_length": 477,
-      "index": 12,
+      "description": "This module manages a pool of Redis connections, allowing creation with a specified size and connection spec, execution of operations within a connection's scope, and proper cleanup. It provides functions to retrieve the pool size, acquire and release connections for use, and ensure all connections are closed. Concrete use cases include handling concurrent Redis queries in an Lwt-based application while limiting resource usage and managing connection lifetimes safely.",
+      "description_length": 472,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Redis_lwt.Mutex",
+      "library": "redis-lwt",
+      "description": "This module implements distributed mutex operations using Redis with Lwt for asynchronous concurrency. It provides functions to acquire and release locks with customizable timeouts, and to execute code within a locked context. The module works directly with Redis connections, string keys, and Lwt threads, enabling coordination across distributed systems. Use it to synchronize access to shared resources in concurrent, networked applications.",
+      "description_length": 444,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Redis_lwt.IO",
       "library": "redis-lwt",
-      "description": "This module provides low-level network communication, channel management, and concurrency primitives for asynchronous Redis operations. It works with file descriptors, input/output channels, and Lwt threads to enable non-blocking I/O, stream processing, and synchronized resource management in event-driven applications.",
-      "description_length": 320,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Redis_lwt.Client",
-      "library": "redis-lwt",
-      "description": "This module orchestrates asynchronous Redis client interactions, combining direct support for atomic data operations across core types\u2014strings, integers, floats, hashes, lists, sets, sorted sets, and streams\u2014with advanced features like pipelining, Lua scripting, and cluster-aware slot routing. It enables high-throughput key-value storage with expiration, real-time analytics using HyperLogLog, stream processing for event logs, and publish/subscribe coordination, all through an Lwt-based async interface. Submodules enhance this functionality by managing connection specs as ordered maps, batching bulk writes for efficiency, maintaining Redis slot mappings with ordered integer keys, and handling bounded numerical and string ranges for precise range queries. Together, they support dynamic connection management, efficient data synchronization, and structured Redis command composition across distributed and high-performance use cases.",
-      "description_length": 941,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Redis_lwt.ClusterClient",
-      "library": "redis-lwt",
-      "description": "This module provides asynchronous Redis cluster client operations for connection management, data structure manipulation, and server administration. It supports Redis-specific data types like cluster slots, protocol replies, and keys (strings, hashes, lists, sets, sorted sets, streams) with atomic operations, transactions, and Lua scripting. Use cases include distributed caching, real-time analytics with HyperLogLog, pub/sub messaging, and cluster-aware key management with failover handling. The module includes a type `t` for bounded float values with inclusive or exclusive limits, including infinity, and a `to_string` function for converting these bounds into string representations, useful for range queries in Redis commands. A batched command module enables efficient bulk insertion and manipulation of keys, hashes, and counters across a Redis cluster, supporting operations like caching bulk data, updating hash-based records, and atomic counter modifications. An ordered map module manages Redis cluster connection configurations with key-based insertion, deletion, and lookup, supporting ordered traversal, range queries, and value transformations, ideal for dynamic routing and load-balanced connection pooling. A bounded string type assists with Redis string-based range queries like `ZRANGEBYSCORE`, while a polymorphic map for Redis slots supports cluster management tasks such as slot-to-node mapping and dynamic topology updates.",
-      "description_length": 1451,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Redis_lwt.Cache",
-      "library": "redis-lwt",
-      "description": "This module implements a Redis-based caching layer with Lwt for asynchronous operations. It provides functions to set, get, and delete cached values using a Redis client connection. The module works with keys and data abstracted through the `Params` submodule, making it suitable for use with arbitrary data types that can be serialized to Redis. Concrete use cases include caching database query results, API responses, or session data in web applications.",
-      "description_length": 457,
+      "description": "This module offers low-level I/O and concurrency primitives for asynchronous Redis interactions, including network connection setup, channel management, and resource cleanup via file descriptors, in_channels, out_channels, and Lwt threads. It supports stream and list processing, along with concurrency controls like mutexes and condition variables, enabling efficient implementation of non-blocking Redis clients and concurrent data pipelines. The monadic composition operators (`>>=`, `>|=`, `catch`) facilitate chaining asynchronous operations while handling errors and resource safety.",
+      "description_length": 589,
       "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Redis_lwt.ClusterMutex",
       "library": "redis-lwt",
-      "description": "This module implements distributed mutex functionality using Redis with Lwt for asynchronous operations. It provides functions to acquire and release locks with optional timeout and lease time parameters, and ensures exclusive access to critical sections. The module works directly with Redis connections, string keys, and Lwt threads, making it suitable for coordinating distributed systems or managing shared resources across networked OCaml applications.",
-      "description_length": 457,
+      "description": "This module implements distributed mutex functionality using Redis with Lwt for asynchronous operations. It provides functions to acquire and release locks with optional timeouts, and to execute code within a lock boundary. The module works directly with Redis connections, string keys, and Lwt threads, ensuring safe concurrent access to shared resources across distributed systems.",
+      "description_length": 383,
       "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Redis_lwt.ClusterCache",
-      "library": "redis-lwt",
-      "description": "This module implements a Redis-backed caching layer using Lwt for asynchronous I/O, supporting type-safe operations on abstract key and data types defined in its configuration. It provides core functions to set, get, and delete cached values with expiration, enabling efficient storage and retrieval of serialized data such as API responses or database query results. The module includes submodules for managing string-based keys, data conversion, and expiration policies, which together support use cases like session storage and distributed state management. By combining direct cache operations with configurable data handling, it reduces redundant external requests while maintaining type safety and performance.",
-      "description_length": 716,
-      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Redis_lwt",
       "library": "redis-lwt",
-      "description": "This module provides a comprehensive Redis client library for asynchronous programming with Lwt, enabling distributed coordination, caching, and efficient data manipulation across Redis data types. It supports core operations like atomic locks, connection pooling, pipelining, Lua scripting, and cluster-aware command routing, along with advanced features such as stream processing, HyperLogLog analytics, and publish/subscribe messaging. Key data types include strings, hashes, lists, sets, sorted sets, and streams, with utilities for bounded ranges, ordered maps, and slot-based cluster management. Example uses include caching API responses, synchronizing distributed tasks with mutexes, and managing real-time event streams with Redis.",
-      "description_length": 740,
-      "index": 19,
-      "embedding_norm": 1.0
+      "description": "This module provides Redis integration for asynchronous applications using Lwt, offering low-level I/O, client operations, caching, distributed mutexes, connection pooling, and cluster support. It works directly with Redis data types such as strings, hashes, lists, sets, sorted sets, streams, and HyperLogLogs, along with Lwt threads and connection pools. Concrete use cases include building non-blocking Redis clients, implementing distributed locks with timeouts, caching API responses or session data with TTL control, and managing concurrent access to shared resources in networked systems.",
+      "description_length": 595,
+      "index": 18,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
     "total_modules_in_package": 20,
-    "meaningful_modules": 20,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "meaningful_modules": 19,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.95
   },
   "statistics": {
-    "max_description_length": 1451,
-    "min_description_length": 320,
-    "avg_description_length": 539.8,
-    "embedding_file_size_mb": 0.07306194305419922
+    "max_description_length": 595,
+    "min_description_length": 273,
+    "avg_description_length": 453.42105263157896,
+    "embedding_file_size_mb": 0.2757081985473633
   }
 }

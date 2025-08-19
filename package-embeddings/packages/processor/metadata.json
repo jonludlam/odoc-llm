@@ -1,57 +1,57 @@
 {
   "package": "processor",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:06:06.652962",
+  "creation_timestamp": "2025-08-14T22:59:42.681742",
   "modules": [
     {
-      "module_path": "Amd64",
-      "library": "processor.amd64",
-      "description": "This module provides direct access to CPUID instruction results, allowing retrieval of CPU identification and feature information. It includes functions to query CPU vendor, model, and APIC ID decomposition, returning raw register values as bytes or structured tuples. Concrete use cases include low-level system introspection, CPU feature detection, and hardware-specific configuration.",
-      "description_length": 387,
+      "module_path": "Processor.Affinity",
+      "library": "processor",
+      "description": "This module retrieves and sets the logical CPUs that a process is allowed to run on, using either CPU identifiers or `Cpu.t` values. It works directly with lists of CPU IDs or `Cpu.t` structures to define execution constraints. Concrete use cases include restricting a process to specific cores for performance tuning or isolating critical tasks to dedicated CPUs.",
+      "description_length": 364,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Processor.Topology",
       "library": "processor",
-      "description": "This module builds and provides access to the static CPU topology as a list of logical CPUs upon module initialization. It works directly with `Processor.Cpu.t` values, organizing them to reflect the system's physical and logical core layout. Use this module to query CPU hierarchy and relationships, such as retrieving cores, sockets, or NUMA nodes.",
-      "description_length": 350,
+      "description": "Represents the static CPU topology of the system as a list of logical CPUs. Provides direct access to the list of all logical processors available at runtime. Useful for workload distribution and CPU affinity management in multi-threaded applications.",
+      "description_length": 251,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Processor.Cpu",
-      "library": "processor",
-      "description": "This module defines a logical CPU or thread with specific attributes including performance or energy-efficient type, unique identifier, SMT/thread ID, core ID, and socket ID. It provides functions to construct CPU instances, retrieve CPUs by SMT, core, or socket IDs, and output CPU details to standard output. Concrete use cases include managing and filtering CPU resources based on hardware topology for scheduling or resource allocation tasks.",
-      "description_length": 446,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Processor.Affinity",
-      "library": "processor",
-      "description": "This module provides functions to retrieve and set the CPU affinity of the current process using either CPU identifiers or integer lists. It works directly with logical CPU sets, enabling process pinning to specific cores, which is useful for optimizing performance in multi-threaded applications or isolating workloads. Note that affinity changes have no effect on Apple/Darwin systems.",
-      "description_length": 387,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Processor.Query",
       "library": "processor",
-      "description": "This module provides direct access to system-level hardware metrics, specifically returning the total number of logical CPUs, physical cores, and physical sockets. It works with basic integer values representing hardware components. Use this module to retrieve precise hardware configuration details for performance tuning, resource allocation, or system diagnostics.",
-      "description_length": 367,
-      "index": 4,
+      "description": "This module provides direct access to system-level hardware metrics, specifically returning the total number of logical CPUs (threads), physical cores, and processor sockets. It works with basic integer values to represent these hardware components. Use this module to retrieve precise hardware configuration details for performance tuning, resource allocation, or system diagnostics.",
+      "description_length": 384,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Processor.Cpu",
+      "library": "processor",
+      "description": "This module defines a logical CPU or thread with attributes including performance or energy-efficient type, unique identifier, SMT/thread ID, core ID, and socket ID. It provides functions to construct CPU instances and filter lists of CPUs by SMT, core, or socket identifiers. Use cases include managing CPU affinity, grouping threads by hardware topology, or selecting specific CPUs for task scheduling.",
+      "description_length": 404,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Processor",
       "library": "processor",
-      "description": "This module organizes and manages the system's CPU topology, providing structured access to logical CPUs, their hierarchical relationships, and system-wide hardware metrics. It centers around the `Processor.Cpu.t` type, which captures attributes like thread ID, core ID, socket ID, and performance class, and supports operations to query, filter, and display CPU information. Affinity control allows pinning processes to specific logical CPUs for performance optimization, while system metrics expose counts of logical CPUs, physical cores, and sockets. Example uses include scheduling threads on specific cores, isolating workloads via affinity settings, and gathering hardware details for resource allocation.",
-      "description_length": 711,
-      "index": 5,
+      "description": "This module provides operations to query hardware metrics, manage CPU affinity, and represent CPU topology and attributes. It works with integers, lists of CPU identifiers, and structured `Cpu.t` values to expose details like core count, thread grouping, and socket distribution. Use it to configure process placement on specific CPUs, optimize performance based on hardware layout, or gather system-specific metrics for scheduling decisions.",
+      "description_length": 442,
+      "index": 4,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Amd64",
+      "library": "processor.amd64",
+      "description": "This module executes CPUID instructions to retrieve processor-specific information, such as vendor, model, and APIC ID components. It provides direct access to low-level CPU data through functions like `cpuid_leaf` and `decompose_apic`, returning results in raw or structured formats. Concrete use cases include identifying CPU features, extracting core/thread topology, and inspecting hardware capabilities directly from OCaml code.",
+      "description_length": 433,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -61,9 +61,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 711,
-    "min_description_length": 350,
-    "avg_description_length": 441.3333333333333,
-    "embedding_file_size_mb": 0.022215843200683594
+    "max_description_length": 442,
+    "min_description_length": 251,
+    "avg_description_length": 379.6666666666667,
+    "embedding_file_size_mb": 0.08733940124511719
   }
 }

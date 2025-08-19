@@ -1,22 +1,22 @@
 {
   "package": "sslconf",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 3,
-  "creation_timestamp": "2025-07-15T23:05:07.231916",
+  "creation_timestamp": "2025-08-14T22:54:50.971653",
   "modules": [
     {
       "module_path": "Sslconf.Buf",
       "library": "sslconf",
-      "description": "This module implements a buffer management system with fixed allocation limits and null-initialized memory regions. It provides operations to create buffers with configurable maximum sizes, retrieve their underlying byte storage, and dynamically extend their capacity while enforcing strict bounds. The module is used to handle memory buffers in OpenSSL config file parsing where controlled memory growth and predictable initialization are critical.",
-      "description_length": 449,
+      "description": "This module implements a buffer management system with dynamic allocation policies, specifically handling `Bytes.t` buffers backed by a custom OCaml type `t`. It provides operations to create an empty buffer with a specified size limit (`empty`), access the underlying byte buffer (`data`), and safely extend the buffer to a new length (`extend`), ensuring bounds and allocation limits are respected. Concrete use cases include parsing and handling OpenSSL configuration data where controlled buffer growth and memory safety are critical.",
+      "description_length": 538,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sslconf.Bio",
       "library": "sslconf",
-      "description": "This module implements basic I/O operations for reading lines from input channels, primarily used in parsing OpenSSL config files. It works with standard OCaml input channels and byte buffers, providing the `gets` function to read newline-terminated lines with bounded length. Concrete use cases include reading configuration lines during the parsing of X509 certificate definitions and other OpenSSL config-driven operations.",
+      "description": "This module provides low-level I/O operations for reading lines from input channels, specifically designed for handling OpenSSL config file parsing. It works directly with `in_channel` and mutable byte buffers to efficiently read and process line-based input. A concrete use case is parsing OpenSSL configuration files where line boundaries and byte-level control are critical for correct interpretation of the file structure.",
       "description_length": 426,
       "index": 1,
       "embedding_norm": 1.0
@@ -24,8 +24,8 @@
     {
       "module_path": "Sslconf",
       "library": "sslconf",
-      "description": "This module parses OpenSSL configuration files, supporting operations to load files, retrieve values by name and section, and access entire sections as stacks of name-value pairs. It works with strings, sections, and stacks, handling line continuation, comments, value substitution, and quoted or escaped content according to OpenSSL's parsing rules. The module includes a buffer management system for controlled memory allocation and I/O utilities for reading config lines from input channels. It is used to read and process configuration files for tasks like X.509 certificate generation and CA management, where config-driven settings are critical.",
-      "description_length": 651,
+      "description": "This module parses OpenSSL configuration files into structured data, supporting operations to load files, retrieve values by name or section, and handle name substitution within values. It works with strings, sections, and stacks of name-value pairs, producing optional results for lookups. Concrete use cases include reading and processing OpenSSL config files for certificate generation or TLS configuration without relying on external tools.",
+      "description_length": 444,
       "index": 2,
       "embedding_norm": 1.0
     }
@@ -37,9 +37,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 651,
+    "max_description_length": 538,
     "min_description_length": 426,
-    "avg_description_length": 508.6666666666667,
-    "embedding_file_size_mb": 0.011311531066894531
+    "avg_description_length": 469.3333333333333,
+    "embedding_file_size_mb": 0.043914794921875
   }
 }

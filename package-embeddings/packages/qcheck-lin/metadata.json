@@ -1,149 +1,133 @@
 {
   "package": "qcheck-lin",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 16,
-  "creation_timestamp": "2025-07-15T23:10:28.071389",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 14,
+  "creation_timestamp": "2025-08-14T23:30:23.552775",
   "modules": [
-    {
-      "module_path": "Lin_thread.Make",
-      "library": "qcheck-lin.thread",
-      "description": "This module provides `lin_test` and `neg_lin_test` functions to build concurrent tests that check for sequential consistency in generated programs. It works with test specifications defined via the `Spec` module, which describes the system under test and its possible operations. Concrete use cases include testing concurrent data structures or algorithms where thread interleavings must respect linearizability, such as verifying correct behavior of a lock-free queue or a concurrent counter under various execution schedules.",
-      "description_length": 527,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Lin_thread.Make_internal",
-      "library": "qcheck-lin.thread",
-      "description": "This module generates arbitrary command sequences for concurrent testing and defines properties to validate linearizability in thread interactions. It works with lists of commands defined by a specification module, using them to construct test cases that simulate concurrent execution. Concrete use cases include testing thread-safe data structures like queues or counters under concurrent access to detect linearizability violations.",
-      "description_length": 434,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Lin_thread",
-      "library": "qcheck-lin.thread",
-      "description": "This module enables concurrent testing of linearizability properties by generating and executing interleaved command sequences across threads. It supports specifications that define operations and expected behaviors, allowing tests to validate sequential consistency in systems like lock-free queues or concurrent counters. Using `lin_test` and `neg_lin_test`, it checks whether thread interactions adhere to a given specification under various execution schedules. It leverages Gc.Memprof to increase context switching at allocation sites, improving the likelihood of exposing concurrency issues in compatible OCaml versions.",
-      "description_length": 626,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Lin_effect.Make_internal.EffSpec",
       "library": "qcheck-lin.effect",
-      "description": "This module defines operations for handling effectful computations represented by the `cmd` type, including execution, sequencing, and transformation of effect commands. It works with abstract data structures that model effectful actions and their handlers. Concrete use cases include defining and composing effect-based test cases that interact with Stdlib.Effect handlers.",
-      "description_length": 374,
-      "index": 3,
+      "description": "This module defines effect specifications for modeling and handling `cmd` type operations within an effect system. It provides functions to declare, handle, and compose effects tied to the `cmd` type, enabling precise control over effectful computations. Concrete use cases include building testable effect handlers and structuring effect-based workflows in a type-safe manner.",
+      "description_length": 377,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Lin_effect.Make_internal",
       "library": "qcheck-lin.effect",
-      "description": "This module builds an internal framework for testing effectful computations using Stdlib.Effect and QCheck, generating command sequences to validate linearizability and correctness in concurrent scenarios. It introduces core data types like `cmd` for representing effectful actions, along with operations to execute, sequence, and transform these commands, enabling the construction of both positive and negative test cases. Submodules extend this functionality by providing abstractions for handling effect-based operations and their interactions with external systems. Example use cases include verifying the consistency of effect handlers under concurrent execution and testing recovery paths after failures.",
-      "description_length": 711,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module builds an internal framework for testing `Stdlib.Effect`-based computations using a provided `Spec`. It defines effect specifications, generates arbitrary command sequences, and implements linearizability testing logic tailored for effectful operations. Concrete use cases include verifying correctness of effect handlers and testing concurrent or stateful effect interactions in a structured way.",
+      "description_length": 409,
+      "index": 1,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Lin_effect.Make",
       "library": "qcheck-lin.effect",
-      "description": "This module provides `lin_test` and `neg_lin_test`, which generate effect-based tests for sequential consistency using the Stdlib.Effect module. It works with effect handlers and algebraic effects to validate program behavior under different execution traces. Use it to test concurrency-related properties by checking whether effect interactions adhere to expected sequential specifications.",
-      "description_length": 391,
-      "index": 5,
+      "description": "This module generates Effect-based tests for checking sequential consistency of operations, providing `lin_test` to validate correctness and `neg_lin_test` to find counterexamples. It works with `QCheck.Test.t` and leverages `Stdlib.Effect` to simulate and verify concurrent behaviors. Use it to test if effectful programs behave as expected under concurrency, with automatic shrinking and reporting of failing cases.",
+      "description_length": 417,
+      "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Lin_effect",
       "library": "qcheck-lin.effect",
-      "description": "This module implements cooperative multitasking primitives using effect handlers, enabling the creation of custom concurrency abstractions such as event loops and lightweight thread schedulers. It provides core operations like `fork` for spawning concurrent tasks and `yield` for relinquishing control, while its child modules focus on testing effectful computations for linearizability and correctness. The first child module introduces data types like `cmd` to model effectful actions, supporting the generation and transformation of command sequences for validating behavior under concurrency, including error scenarios and recovery paths. The second child module offers utilities such as `lin_test` and `neg_lin_test` to check sequential consistency and verify that effect interactions conform to expected execution traces under varying concurrency conditions.",
-      "description_length": 864,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Lin_domain.Make",
-      "library": "qcheck-lin.domain",
-      "description": "This module provides functions to construct parallel tests for checking sequential consistency, finding counterexamples, and stress-testing for exceptions. It operates on specifications defined by the `Spec` module, generating and executing concurrent program traces. Concrete use cases include validating concurrency models, identifying race conditions, and ensuring robustness under high-frequency parallel execution.",
-      "description_length": 419,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Lin_domain.Make_internal",
-      "library": "qcheck-lin.domain",
-      "description": "This module generates arbitrary command triples for testing parallel execution scenarios and provides properties and tests to validate linearizability and stress behavior. It works with command lists defined by a specification module to check correctness under concurrent execution. Concrete use cases include testing distributed systems or concurrent data structures for consistency and robustness under load.",
-      "description_length": 410,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Lin_domain",
-      "library": "qcheck-lin.domain",
-      "description": "This module supports the generation and validation of concurrent program traces to test for linearizability, sequential consistency, and robustness under parallel execution. It operates on command sequences and specifications, enabling the discovery of race conditions, counterexamples, and exception-handling issues in concurrent or distributed systems. Key operations include constructing parallel tests, generating command triples, and validating correctness properties under stress conditions. For example, it can validate a concurrent data structure's behavior under high-frequency parallel access or identify consistency violations in a distributed system.",
-      "description_length": 662,
-      "index": 9,
+      "description": "This module provides functions `fork` and `yield` for controlling concurrency in `Stdlib.Effect`-based programs, and includes submodules for generating and running effect-based tests. It works with effectful computations and supports testing sequential consistency and linearizability using arbitrary command sequences. Concrete use cases include verifying correctness of effect handlers and testing concurrent or stateful effect interactions with automatic shrinking of counterexamples.",
+      "description_length": 487,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Lin.Internal.Make",
       "library": "qcheck-lin.lin",
-      "description": "This module generates arbitrary command sequences for testing linearizable systems and validates their consistency under concurrent execution. It operates on command and response lists defined by a specification module, supporting concrete operations like interpreting sequential executions and checking linearization points. Use it to construct and validate complex concurrency scenarios with specific test cases involving command interleavings and expected outcomes.",
-      "description_length": 468,
-      "index": 10,
-      "embedding_norm": 1.0
+      "description": "This module generates arbitrary command sequences and validates linearization properties of concurrent executions. It provides functions to create and check linearizable test cases using a specification's command and response types. Concrete use cases include testing concurrent data structures like queues or registers under linearizable consistency models.",
+      "description_length": 358,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Lin.Internal.CmdSpec",
+      "module_path": "Lin.Internal",
       "library": "qcheck-lin.lin",
-      "description": "This module defines the interface for specifying commands and their execution in a testable module. It includes operations to generate, shrink, and display commands, as well as to initialize, run, and clean up the system under test. It works with abstract types `t`, `cmd`, and `res`, representing the system state, commands, and results, respectively. Concrete use cases include defining command-based tests for modules with side effects, such as file or network operations.",
-      "description_length": 475,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Lin.Spec",
-      "library": "qcheck-lin.lin",
-      "description": "This module defines the structure for specifying the interface of a module under test, including initialization, cleanup, and a list of function signatures with integer keys and typed elements. It works with a polymorphic type `t` representing the system under test and a list of integer-labeled elements describing the API. Concrete use cases include defining testable module interfaces for automated testing and analysis.",
-      "description_length": 423,
-      "index": 12,
+      "description": "This module builds test representations for validating linearization properties of concurrent executions. It works with command and response type specifications to generate arbitrary command sequences and check linearizable behavior. It is used for testing concurrent data structures such as queues and registers under linearizable consistency models.",
+      "description_length": 351,
+      "index": 5,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Lin.MakeCmd",
       "library": "qcheck-lin.lin",
-      "description": "Maps a combinator-based module signature into a raw Lin description for testing. It defines types and functions for commands, results, and system state, enabling generation, execution, and shrinking of commands. Used internally to bridge specification combinators with concrete testable interfaces.",
-      "description_length": 298,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Lin.Internal",
-      "library": "qcheck-lin.lin",
-      "description": "This module provides a domain-specific language of type combinators to encode module interfaces as testable values, primarily working with module types and command specifications. It enables defining command-based tests for module interfaces, generating testable representations of type expectations, and structuring test scenarios using abstract types for system state, commands, and results. The first child module builds and validates arbitrary command sequences for concurrent systems, supporting operations like interpreting sequential executions and verifying linearization points. The second child module defines the core interface for command generation, shrinking, and execution, allowing tests for modules with side effects such as file or network operations.",
-      "description_length": 769,
-      "index": 14,
+      "description": "Maps a combinator-based module signature into a testable `Lin` description. It generates and shrinks commands, interprets them against a system under test, and handles setup and teardown. Useful for defining stateful property tests where commands manipulate an internal state and produce observable results.",
+      "description_length": 307,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Lin",
       "library": "qcheck-lin.lin",
-      "description": "This module provides a domain-specific language for constructing testable interface definitions using type combinators that integrate with QCheck generators. It supports basic and container types, function signatures, and exception-aware return types, enabling precise configuration of test data generation and result comparison for property-based testing and test case visualization. The child modules structure interface definitions, manage system state and command execution, and map combinator-based signatures into testable command sequences, supporting advanced testing scenarios such as concurrent systems and side-effect verification. Specific examples include defining module interfaces with integer-keyed function signatures, generating size-bounded collections for test input, and encoding linearization points for concurrent operations.",
-      "description_length": 848,
-      "index": 15,
+      "description": "This module enables the creation of linearization test specifications through type combinators, targeting the validation of concurrent data structures. It operates on primitive types (e.g., integers, characters), composite containers (e.g., lists, arrays), and function signatures, using QCheck-based generation strategies to control value size, distribution, and constraints like bounded ranges or printable characters. Its utilities specialize in stateful property testing, allowing precise modeling of module interfaces with support for exception handling, result comparison, and weighted command execution to simulate realistic concurrency scenarios.",
+      "description_length": 654,
+      "index": 7,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Lin_domain.Make",
+      "library": "qcheck-lin.domain",
+      "description": "This module provides functions to construct parallel tests for checking sequential consistency, finding counterexamples, and stress-testing for exceptions. It operates on specifications defined by the `Spec` module, generating and executing concurrent programs to validate correctness properties. Concrete use cases include testing concurrent data structures, verifying linearizability, and uncovering race conditions or crashes under high concurrency.",
+      "description_length": 452,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Lin_domain.Make_internal",
+      "library": "qcheck-lin.domain",
+      "description": "This module generates arbitrary command triples for testing parallel execution scenarios and provides properties and tests to validate linearizability and stress behavior. It works with command lists defined by a specification module to create randomized test cases. Concrete use cases include testing concurrent system correctness under interleaved execution and identifying edge cases in parallel command processing.",
+      "description_length": 418,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Lin_domain",
+      "library": "qcheck-lin.domain",
+      "description": "This module implements parallel testing frameworks for validating correctness properties of concurrent systems. It generates randomized command sequences and interleavings to test linearizability, sequential consistency, and exception safety, working with command specifications and execution traces. Concrete use cases include verifying concurrent data structures, detecting race conditions, and stress-testing parallel programs for crashes or consistency violations.",
+      "description_length": 468,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Lin_thread.Make_internal",
+      "library": "qcheck-lin.thread",
+      "description": "This module generates arbitrary command sequences for concurrent testing and defines properties to validate linearizability under thread interference. It works with lists of commands defined by a `Spec` module, using QCheck for property-based testing. Concrete use cases include testing concurrent data structures like queues or counters where thread interactions must preserve correctness.",
+      "description_length": 390,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Lin_thread.Make",
+      "library": "qcheck-lin.thread",
+      "description": "This module generates concurrent tests for sequential consistency using the provided `Spec` module to define operations and their expected behavior. It supports creating both positive tests that ensure consistency and negative tests that search for counterexamples. The tests are designed to expose concurrency issues by iterating over generated programs and reporting failures with reduced counterexamples.",
+      "description_length": 407,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Lin_thread",
+      "library": "qcheck-lin.thread",
+      "description": "This module generates concurrent tests to check linearizability and sequential consistency of operations under thread interference. It works with command sequences defined by a `Spec` module, using QCheck for property-based testing on concurrent data structures like queues or counters. Concrete use cases include validating correctness of thread-safe implementations and exposing race conditions or synchronization issues.",
+      "description_length": 423,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 17,
-    "meaningful_modules": 16,
+    "total_modules_in_package": 15,
+    "meaningful_modules": 14,
     "filtered_empty_modules": 1,
-    "retention_rate": 0.9411764705882353
+    "retention_rate": 0.9333333333333333
   },
   "statistics": {
-    "max_description_length": 864,
-    "min_description_length": 298,
-    "avg_description_length": 543.6875,
-    "embedding_file_size_mb": 0.058587074279785156
+    "max_description_length": 654,
+    "min_description_length": 307,
+    "avg_description_length": 422.7142857142857,
+    "embedding_file_size_mb": 0.20337581634521484
   }
 }

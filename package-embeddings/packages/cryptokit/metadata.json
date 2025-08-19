@@ -1,129 +1,129 @@
 {
   "package": "cryptokit",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 15,
-  "creation_timestamp": "2025-07-15T23:10:07.827066",
+  "creation_timestamp": "2025-08-15T12:14:24.666123",
   "modules": [
     {
-      "module_path": "Cryptokit.Cipher",
+      "module_path": "Cryptokit.Base64",
       "library": "cryptokit",
-      "description": "This module implements symmetric-key ciphers including AES, Chacha20, DES, Triple-DES, Blowfish, and ARCfour, supporting various block chaining modes such as ECB, CBC, CFB, OFB, and CTR. It provides functions to create encryption and decryption transforms using a secret key, initialization vector, and optional padding schemes. These ciphers are used for securing data through encryption and decryption operations in applications requiring confidentiality.",
-      "description_length": 457,
+      "description": "This module provides functions to encode and decode binary data using Base64 encoding. It supports three encoding variants: multiline (with line breaks and padding), compact (no line breaks or padding), and compact with padding. These are useful for safely transmitting binary data in contexts like email or URLs.",
+      "description_length": 313,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cryptokit.Base64",
+      "module_path": "Cryptokit.MAC",
       "library": "cryptokit",
-      "description": "This module encodes and decodes binary data using base 64 format. It provides transformations for multiline encoding with line wrapping and padding, compact encoding without line breaks or padding, and compact encoding with padding. These operations are suitable for transmitting binary data safely in email, URLs, or other text-based protocols where non-printable characters are not allowed.",
-      "description_length": 392,
+      "description": "This module implements message authentication codes (MACs) using various cryptographic algorithms, enabling secure data integrity verification with secret keys. It supports keyed hash functions based on BLAKE2, SHA, RIPEMD, MD5, and SipHash, as well as MACs built from block ciphers like AES, DES, and Triple-DES in CBC or CMAC modes. These functions are used to authenticate messages in security-sensitive applications, ensuring that data has not been tampered with by unauthorized parties.",
+      "description_length": 491,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cryptokit.AEAD",
-      "library": "cryptokit",
-      "description": "This module implements authenticated encryption algorithms AES-GCM and Chacha20-Poly1305, providing confidentiality and integrity for data. It operates on strings with specified initialization vectors and optional associated data headers, supporting encryption and decryption in both directions. Concrete use cases include securing network communications and encrypting sensitive data files with authenticated encryption.",
-      "description_length": 421,
-      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cryptokit.Random",
       "library": "cryptokit",
-      "description": "This module generates cryptographically secure random and pseudo-random data using system entropy sources, hardware instructions, or seeded algorithms. It provides functions to create random byte strings, access OS-level generators like `/dev/random`, and initialize deterministic generators based on Chacha20 or AES-CTR from a seed. Typical uses include generating cryptographic keys, nonces, or challenge values where high-quality randomness is critical.",
-      "description_length": 456,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cryptokit.RSA",
-      "library": "cryptokit",
-      "description": "This module implements RSA public-key encryption and digital signatures using key pairs with components for both standard and CRT-optimized operations. It supports key generation, encryption, decryption, signing, and signature verification, working directly with byte strings as messages and keys. Concrete use cases include securing communications with asymmetric encryption, authenticating data through digital signatures, and exchanging keys for symmetric encryption.",
-      "description_length": 470,
-      "index": 4,
+      "description": "This module implements random and pseudo-random number generators for cryptographic operations such as key, nonce, and challenge generation. It works with byte strings and provides direct access to system entropy sources, hardware instructions, and cipher-based deterministic generators. Specific use cases include reading from `/dev/random`, using RDRAND for hardware entropy, and creating seeded generators with Chacha20 or AES-CTR for high-throughput pseudo-random data.",
+      "description_length": 473,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cryptokit.Stream",
       "library": "cryptokit",
-      "description": "This module implements the ARCfour stream cipher and provides a framework for composing stream ciphers as modular transforms. It operates on byte streams, enabling encryption and decryption through chained cipher transformations. Concrete use cases include secure communication protocols requiring efficient, on-the-fly encryption with support for custom stream cipher integration.",
-      "description_length": 381,
+      "description": "This module implements stream ciphers including ARCfour and Chacha20, providing encryption and decryption through XOR-based transformations. It operates on byte streams, supporting key setup, initialization vectors, and counter values for cipher state control. Concrete use cases include secure data transmission, file encryption, and generating keystreams for custom cryptographic protocols.",
+      "description_length": 392,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cryptokit.Hash",
+      "library": "cryptokit",
+      "description": "This module implements cryptographic hash functions for generating fixed-size message digests from arbitrary input data. It supports modern and legacy hash algorithms including SHA-2, SHA-3, BLAKE2, and BLAKE3, producing outputs of configurable or fixed lengths in bytes. These functions are suitable for ensuring data integrity, generating checksums, and use in cryptographic protocols where collision resistance is required.",
+      "description_length": 426,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cryptokit.Padding",
+      "library": "cryptokit",
+      "description": "The module implements two padding schemes for cryptographic data: PKCS padding, which appends `n` copies of the byte `n` to align data to a block size, and the ISO/IEC 8000 padding, which adds a `0x80` byte followed by zeros. It operates on byte sequences and is used to prepare data for block cipher encryption modes like CBC, where input must match the cipher's block size.",
+      "description_length": 375,
       "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cryptokit.Zlib",
+      "library": "cryptokit",
+      "description": "This module provides compression and decompression transforms using the Lempel-Ziv algorithm via the zlib library. It operates on byte streams, allowing control over compression level and header inclusion during compression or decompression. Concrete use cases include reducing data size before encryption or processing compressed network data.",
+      "description_length": 344,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cryptokit.Cipher",
+      "library": "cryptokit",
+      "description": "This module implements symmetric encryption algorithms including AES, DES, Triple-DES, ARCfour, Blowfish, and ChaCha20. It operates on byte strings using keys of specific lengths and supports various chaining modes like CBC, CFB, OFB, and CTR for block ciphers. Concrete use cases include encrypting and decrypting data streams with a shared secret key, such as securing network communications or protecting stored data.",
+      "description_length": 420,
+      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cryptokit.Hexa",
       "library": "cryptokit",
-      "description": "The Hexa module provides functions to encode binary data into compact hexadecimal strings and decode hexadecimal strings back into binary data. It operates on byte sequences, producing output without spaces or newlines during encoding and ignoring whitespace during decoding. This module is useful for converting cryptographic keys or hashes into a text format suitable for logging, transmission, or storage in environments that require ASCII representation.",
-      "description_length": 458,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cryptokit.Block",
-      "library": "cryptokit",
-      "description": "This module implements block ciphers such as AES, DES, and Blowfish, along with chaining modes like ECB, CBC, and CFB. It allows composing ciphers and modes into transforms for encryption or hashing operations. Use cases include secure data encryption, message authentication, and building custom cryptographic protocols with strong, configurable block cipher pipelines.",
-      "description_length": 370,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cryptokit.Zlib",
-      "library": "cryptokit",
-      "description": "This module provides compression and decompression transforms using the Lempel-Ziv algorithm via the zlib library. It operates on byte streams, allowing control over compression level and header inclusion during compression or decompression. Concrete use cases include reducing data size before encryption or processing compressed network or file data.",
-      "description_length": 352,
+      "description": "The module provides functions to encode binary data into compact hexadecimal strings and decode hexadecimal strings back into binary data. It operates on byte sequences, producing output without whitespace for transmission or storage. This is useful for representing cryptographic keys or hashes in a standardized text format.",
+      "description_length": 326,
       "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cryptokit.MAC",
-      "library": "cryptokit",
-      "description": "This module implements message authentication codes (MACs) using keyed hash functions and block ciphers. It supports HMAC variants over SHA-1, SHA-2, RIPEMD-160, and MD5, BLAKE2 and BLAKE3 keyed hashes with configurable output sizes, CMAC and CBC-based MACs using AES, DES, and Triple-DES, and the SipHash family for fast authentication. These functions are used to verify data integrity and authenticate messages in secure communication protocols, API request signing, and session token validation where secret-key authentication is required.",
-      "description_length": 543,
-      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cryptokit.DH",
       "library": "cryptokit",
-      "description": "This module implements the Diffie-Hellman key agreement protocol, enabling two parties to securely establish a shared secret over an insecure channel. It operates on public parameters (prime number, generator, private secret length) and private secrets, generating messages for key exchange and deriving symmetric keys from the shared secret. Concrete use cases include secure key exchange for encrypted communications and session key derivation in cryptographic protocols.",
-      "description_length": 473,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
+      "description": "Implements Diffie-Hellman key agreement for securely generating and exchanging cryptographic keys. It works with large prime numbers, generators, and private secrets to produce public messages and derive shared secrets. Use this module to establish secure communication channels where two parties compute a shared secret over an insecure network without prior coordination.",
+      "description_length": 373,
+      "index": 9,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Cryptokit.Padding",
+      "module_path": "Cryptokit.AEAD",
       "library": "cryptokit",
-      "description": "This module implements padding schemes for cryptographic block ciphers, providing `length` and `_8000` functions to pad data to a multiple of a block size. It operates on byte sequences, ensuring proper alignment for encryption modes like CBC or ECB. Use cases include preparing plaintext for AES or DES encryption where input must match block size requirements.",
-      "description_length": 362,
+      "description": "This module implements authenticated encryption algorithms AES-GCM and ChaCha20-Poly1305, providing confidentiality and integrity for data encryption. It operates on strings for input data, initialization vectors, and optional header data, producing authenticated transformations for secure communication. Concrete use cases include securing network transmissions and encrypting sensitive data files with built-in integrity checks.",
+      "description_length": 431,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cryptokit.Block",
+      "library": "cryptokit",
+      "description": "This module implements block ciphers such as AES, DES, and Blowfish, along with chaining modes like CBC and CFB. It allows composing ciphers and modes to build flexible encryption pipelines. Use cases include secure data transmission, file encryption, and implementing custom cryptographic protocols with strong symmetric encryption.",
+      "description_length": 333,
       "index": 11,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Cryptokit.Hash",
+      "module_path": "Cryptokit.RSA",
       "library": "cryptokit",
-      "description": "This module implements cryptographic hash functions for generating fixed-size message digests from arbitrary-length input data. It supports modern standards like SHA-2, SHA-3, BLAKE2, and BLAKE3 with configurable output sizes, as well as legacy hashes like SHA-1 and MD5. These functions are used for verifying data integrity, producing digital fingerprints, and in cryptographic protocols where collision resistance is required.",
-      "description_length": 429,
+      "description": "This module implements RSA public-key cryptography, supporting key generation, encryption, decryption, digital signatures, and signature verification. It operates on RSA keys represented as records containing modulus, exponents, and CRT components, and works with string-based inputs for messages and cryptographic data. Concrete use cases include securing communications with asymmetric encryption, authenticating messages via digital signatures, and key exchange protocols using RSA-encrypted symmetric keys.",
+      "description_length": 510,
       "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "CryptokitBignum",
       "library": "cryptokit",
-      "description": "This module implements arithmetic operations on arbitrary-precision integers, including addition, subtraction, multiplication, modular reduction, exponentiation, and inverse calculation. It supports cryptographic operations such as generating random big integers and primes, converting between byte strings and big integers, and performing constant-time operations. Concrete use cases include implementing RSA key generation, Diffie-Hellman key exchange, and other cryptographic protocols requiring large integer manipulation.",
-      "description_length": 526,
+      "description": "This module implements arithmetic operations on arbitrary-precision integers, including addition, subtraction, multiplication, modular exponentiation, inversion, and primality checks. It supports cryptographic operations such as RSA key generation and digital signature algorithms by providing efficient big number computations. Functions like `mod_power_CRT` and `random_prime` enable optimized cryptographic protocols using number-theoretic primitives.",
+      "description_length": 454,
       "index": 13,
-      "embedding_norm": 1.0000001192092896
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Cryptokit",
       "library": "cryptokit",
-      "description": "This library combines symmetric and asymmetric encryption, hashing, authenticated encryption, encoding, and compression into a unified toolkit for building secure applications. It provides core data types like cryptographic keys, ciphers, hash states, and transforms that operate over strings and byte streams, supporting operations such as AES-GCM encryption, RSA signing, SHA-3 hashing, base64 encoding, and zlib compression. Submodules handle specific tasks like secure random generation, Diffie-Hellman key exchange, MAC computation, and stream cipher composition, enabling concrete use cases such as encrypting files with ChaCha20-Poly1305, encoding binary payloads for network transmission, or generating HMACs for API request signing. The interface allows chaining transforms, managing secure memory, and working with both high-level protocols and low-level primitives.",
-      "description_length": 876,
+      "description": "The module provides cryptographic primitives for encryption, hashing, authentication, and key exchange, operating on byte sequences and strings. It includes symmetric ciphers (e.g., AES-GCM), hash functions (e.g., SHA-256), and public-key algorithms (RSA, Diffie-Hellman), enabling secure communication protocols, digital signatures, and data integrity verification. Utilities for Base64 encoding, memory wiping, and constant-time arithmetic support secure data encoding, cryptographic key derivation, and low-level protocol implementations.",
+      "description_length": 541,
       "index": 14,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -133,9 +133,9 @@
     "retention_rate": 0.3409090909090909
   },
   "statistics": {
-    "max_description_length": 876,
-    "min_description_length": 352,
-    "avg_description_length": 464.4,
-    "embedding_file_size_mb": 0.05489349365234375
+    "max_description_length": 541,
+    "min_description_length": 313,
+    "avg_description_length": 413.46666666666664,
+    "embedding_file_size_mb": 0.21784591674804688
   }
 }

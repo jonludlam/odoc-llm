@@ -1,137 +1,137 @@
 {
   "package": "pam",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 16,
-  "creation_timestamp": "2025-07-15T23:08:44.719333",
+  "creation_timestamp": "2025-08-14T23:17:15.006111",
   "modules": [
     {
-      "module_path": "Pam.Pam_acct.Flag",
+      "module_path": "Pam.Pam_authtok.Flag",
       "library": "pam",
-      "description": "This module defines flags used to control account management behavior during PAM authentication. It includes operations to set and check account-related flags such as `PAM_SILENT` and `PAM_DISALLOW_NULL_AUTHTOK`. These flags influence how authentication tokens are validated and whether specific conditions trigger explicit failures or silent handling.",
-      "description_length": 352,
+      "description": "This module defines flags used to modify the behavior of authentication token operations in the PAM library. It supports operations like changing or updating expired authentication tokens. Concrete use cases include controlling whether token changes are performed silently or only applied when the token has expired.",
+      "description_length": 316,
       "index": 0,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Pam.Pam_auth.Flag",
+      "module_path": "Pam.Pam_session.Flag",
       "library": "pam",
-      "description": "This module defines flags used during authentication operations, specifically `PAM_SILENT` to suppress messages and `PAM_DISALLOW_NULL_AUTHTOK` to reject null authentication tokens. It works with PAM authentication contexts to control behavior during user verification. These flags are directly used when invoking authentication functions to enforce security policies or manage interaction verbosity.",
-      "description_length": 400,
+      "description": "This module defines a single flag value `PAM_SILENT`, which suppresses output during PAM session operations. It is used in session management functions to control verbosity. Concrete use cases include running authentication tasks without logging status messages.",
+      "description_length": 262,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pam.Pam_conv.Response",
       "library": "pam",
-      "description": "This module constructs PAM response objects with an optional string field. It defines the `t` type representing a response and a `create` function to instantiate it. Use this to prepare textual responses for PAM authentication challenges.",
-      "description_length": 238,
+      "description": "This module constructs PAM conversation responses with optional string values. It defines the `t` type representing a response and the `create` function to instantiate it. Use it to provide user input or status messages during PAM authentication interactions.",
+      "description_length": 259,
       "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Pam.Pam_acct.Flag",
+      "library": "pam",
+      "description": "This module defines flags used to control account management behavior during PAM authentication. It includes operations to set and check flags that influence how authentication tokens are handled. These flags are used when configuring PAM account modules to enforce policies like silent authentication or disallowing null tokens.",
+      "description_length": 329,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pam.Pam_cred.Flag",
+      "library": "pam",
+      "description": "This module defines a polymorphic variant type representing PAM credential operations, including establishing, deleting, reinitializing, and refreshing credentials. It provides direct mappings to PAM library actions for managing user credentials during authentication sessions. Use cases include controlling credential lifecycle in PAM modules and applications handling user authentication and session management.",
+      "description_length": 413,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Pam.Pam_conv.Result",
+      "library": "pam",
+      "description": "Handles the result of PAM conversation operations, wrapping either a list of responses or a specific PAM error. Works with `Pam_conv.Response.t` and `Pam_conv.Result.error_t`. Used to process authentication responses or errors from PAM modules during login or session management workflows.",
+      "description_length": 289,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pam.Pam_conv.Message",
       "library": "pam",
-      "description": "This module defines operations to construct and manipulate PAM conversation messages with specific display styles. It works with the `t` type representing a message, which encapsulates a `style_t` indicating how the message should be rendered (e.g., prompt with echo off, error message) and a string payload. Concrete use cases include creating prompts for user input or displaying status and error information during PAM authentication flows.",
-      "description_length": 443,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pam.Pam_session.Flag",
-      "library": "pam",
-      "description": "This module defines a flag type used to control the behavior of PAM session operations, specifically supporting the `PAM_SILENT` option to suppress status messages. It works with integer values representing PAM flags. A concrete use case is passing `PAM_SILENT` when starting a PAM session to avoid logging non-critical status information.",
-      "description_length": 339,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pam.Pam_authtok.Flag",
-      "library": "pam",
-      "description": "This module defines flags used to modify the behavior of authentication token operations in the PAM library. It supports operations like changing or updating expired authentication tokens. The flags control aspects such as whether the operation should be silent or whether it applies to expired tokens.",
-      "description_length": 302,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Pam.Pam_cred.Flag",
-      "library": "pam",
-      "description": "This module defines a polymorphic variant type representing PAM credential flags used to specify actions like establishing, deleting, reinitializing, or refreshing credentials during authentication sessions. It provides direct bindings to the corresponding PAM library constants for use in credential management operations. Concrete use cases include setting the appropriate flag when calling `pam_setcred` to control credential state transitions in authentication modules.",
-      "description_length": 473,
+      "description": "This module defines operations to construct and access message objects used for communication in PAM authentication workflows. It supports creating messages with specific display styles like prompts or error messages and retrieving their style or text content. Concrete use cases include prompting users for credentials or displaying authentication status during login processes.",
+      "description_length": 379,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pam.Pam_conv.Result",
-      "library": "pam",
-      "description": "This module represents the result of a PAM conversation, either a list of responses or an error. It works with the `Response.t` type for successful outcomes and the `error_t` type for failures. It is used to handle authentication responses and errors during PAM session management.",
-      "description_length": 281,
-      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Pam.Pam_auth",
+      "module_path": "Pam.Pam_auth.Flag",
       "library": "pam",
-      "description": "This module manages authentication flags that control behavior during user verification, such as suppressing messages or rejecting null tokens. It provides the core data types `PAM_SILENT` and `PAM_DISALLOW_NULL_AUTHTOK`, which are used to modify authentication context settings. These flags are applied directly when invoking authentication routines to enforce security constraints or adjust interaction levels. For example, setting `PAM_DISALLOW_NULL_AUTHTOK` ensures users cannot authenticate with empty credentials.",
-      "description_length": 519,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pam.Pam_authtok",
-      "library": "pam",
-      "description": "This module provides flags to control authentication token operations in the PAM system, particularly for changing or updating expired tokens. It includes options to modify behavior, such as silencing prompts or restricting operations to expired tokens only. These flags are used during PAM session management to influence how authentication tokens are handled. For example, a flag can enforce silent token updates or trigger password expiration checks during login.",
-      "description_length": 466,
-      "index": 9,
+      "description": "This module defines flags used during authentication operations, specifically `PAM_SILENT` to suppress messages and `PAM_DISALLOW_NULL_AUTHTOK` to reject null authentication tokens. It works with PAM authentication contexts to control behavior during user verification. These flags are applied directly in authentication calls to enforce security policies or modify interaction modes.",
+      "description_length": 384,
+      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Pam.Pam_acct",
       "library": "pam",
-      "description": "The module manages account authentication policies through flag manipulation, influencing how credentials are validated during PAM sessions. It provides flags like `PAM_SILENT` and `PAM_DISALLOW_NULL_AUTHTOK`, along with operations to set and query these flags. These controls determine whether authentication failures are reported explicitly or suppressed, and whether null tokens are permitted. For example, setting `PAM_SILENT` prevents error messages during account checks, while enabling `PAM_DISALLOW_NULL_AUTHTOK` blocks authentication when no token is provided.",
-      "description_length": 569,
+      "description": "Handles account management tasks during PAM authentication by applying flags that control behavior such as silent authentication and token validation. It operates on PAM authentication token states and session contexts. Used to enforce account policies like disallowing empty passwords or suppressing authentication prompts.",
+      "description_length": 324,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pam.Pam_conv",
+      "library": "pam",
+      "description": "This module implements the PAM conversation interface for handling interactive authentication tasks. It defines functions to send messages and receive responses during PAM sessions, working with message, response, and result types to manage user interaction flows like password prompts or challenge-response authentication. Use it to integrate custom authentication workflows that require real-time user input during login or account management.",
+      "description_length": 445,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Pam.Pam_session",
+      "library": "pam",
+      "description": "This module manages PAM session lifecycle operations, including starting, ending, and reinitializing sessions. It works with session handles to authenticate, establish, and terminate user sessions. Concrete use cases include managing user login sessions and enforcing session policies during authentication workflows.",
+      "description_length": 317,
       "index": 10,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Pam.Pam_cred",
       "library": "pam",
-      "description": "The module organizes functionality for managing PAM credentials through a polymorphic variant type that directly maps to PAM library constants. It defines operations for specifying credential actions such as establish, delete, reinitialize, and refresh, enabling precise control over credential state during authentication. This allows developers to pass flags like `Establish` or `Delete` when invoking functions such as `pam_setcred`, ensuring correct handling of user credentials in authentication workflows.",
-      "description_length": 511,
+      "description": "This module manages user credentials through operations like establishing, deleting, reinitializing, and refreshing credentials via direct bindings to the PAM library. It works with user credential data and authentication state, specifically supporting credential lifecycle management during login sessions. Concrete use cases include setting up user environments after authentication and handling credential changes during session updates.",
+      "description_length": 440,
       "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Pam.Pam_session",
-      "library": "pam",
-      "description": "This module provides flags to control PAM session behavior, primarily supporting the `PAM_SILENT` option to suppress status messages during session operations. It works with integer values representing PAM flags. For example, passing `PAM_SILENT` when starting a session prevents non-critical status information from being logged. These flags can be combined with other PAM operations to modify session handling behavior.",
-      "description_length": 421,
-      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Pam.Pam_item_type",
       "library": "pam",
-      "description": "This module defines a GADT for PAM item types, each representing a specific kind of authentication-related data such as service name, user, password, or display information. It supports operations to get and set these items in the PAM context using their typed representations. Concrete use cases include retrieving the target authentication service, setting the user name, or handling password prompts during authentication workflows.",
-      "description_length": 435,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines a GADT for PAM item types, each representing a specific kind of authentication-related data such as service name, user, password, or display information. It provides constructors to specify and distinguish these item types when interacting with PAM functions. Concrete use cases include retrieving or setting authentication tokens, user prompts, terminal information, and session-specific data during PAM authentication workflows.",
+      "description_length": 450,
+      "index": 12,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Pam.Pam_conv",
+      "module_path": "Pam.Pam_authtok",
       "library": "pam",
-      "description": "This module handles the construction and manipulation of PAM authentication interactions, including messages, responses, and error handling. It defines core types such as `t` for messages with display styles (`style_t`), `Response.t` for textual responses, and `error_t` for failure conditions. Operations include creating styled prompts, preparing response objects, and managing conversation outcomes. Example uses include prompting for passwords with echo disabled, returning user input, or signaling authentication errors.",
-      "description_length": 525,
+      "description": "This module provides functions to manage and modify authentication tokens within the PAM system, specifically supporting operations like changing or updating expired tokens. It works with PAM handle types and authentication token data structures. Concrete use cases include enforcing token expiration policies and performing silent token updates during authentication workflows.",
+      "description_length": 378,
+      "index": 13,
+      "embedding_norm": 0.9999998807907104
+    },
+    {
+      "module_path": "Pam.Pam_auth",
+      "library": "pam",
+      "description": "This module provides functions to authenticate users against PAM (Pluggable Authentication Modules) services, including `authenticate` and `setcred` operations. It works with user credentials and PAM service configurations to perform system-level authentication checks. Concrete use cases include verifying user passwords, managing authentication tokens, and enforcing access control policies in login systems or security-sensitive applications.",
+      "description_length": 445,
       "index": 14,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Pam",
       "library": "pam",
-      "description": "This module interfaces with the PAM library to manage authentication transactions, including user verification, credential handling, and session control. It operates on PAM handles, authentication tokens, environment variables, and session items, using `Core.Or_error` for robust error handling. Developers can authenticate users, manage password changes, control session behavior, and manipulate PAM items such as service name and user credentials. Flags like `PAM_SILENT` and `PAM_DISALLOW_NULL_AUTHTOK` modify authentication contexts, while GADT-based item types ensure type-safe access to PAM data during login workflows.",
-      "description_length": 625,
+      "description": "This module provides OCaml bindings to the PAM library, enabling low-level authentication, session management, and credential handling through dedicated components for conversation handling, user authentication, account policy enforcement, and session control. It operates on PAM handles, messages, responses, authentication tokens, environment variables, and typed session items",
+      "description_length": 379,
       "index": 15,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -141,9 +141,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 625,
-    "min_description_length": 238,
-    "avg_description_length": 431.1875,
-    "embedding_file_size_mb": 0.058526039123535156
+    "max_description_length": 450,
+    "min_description_length": 259,
+    "avg_description_length": 363.0625,
+    "embedding_file_size_mb": 0.23205852508544922
   }
 }

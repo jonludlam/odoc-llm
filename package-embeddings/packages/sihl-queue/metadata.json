@@ -1,41 +1,41 @@
 {
   "package": "sihl-queue",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:05:38.735668",
+  "creation_timestamp": "2025-08-14T22:54:33.187983",
   "modules": [
-    {
-      "module_path": "Sihl_queue.InMemory",
-      "library": "sihl-queue",
-      "description": "This module provides an in-memory, non-persistent job queue for testing purposes. It supports job dispatching with optional delays, batch dispatching of multiple jobs, and registration of job handlers. The queue works with job data structures defined via `Sihl__.Contract_queue.job` and operates with Lwt-based asynchronous workflows. Concrete use cases include temporarily queuing background tasks during development or testing, such as sending test emails or processing mock events, without requiring persistence or locking.",
-      "description_length": 526,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Sihl_queue.MariaDb",
       "library": "sihl-queue",
-      "description": "This module provides functions for dispatching and managing jobs in a persistent queue with MariaDB as the backend. It supports job registration, delayed execution, batch dispatching, and reverse-order queueing for prioritization. Concrete use cases include processing background tasks like sending emails, handling file uploads, or running scheduled operations with guaranteed delivery and locking.",
-      "description_length": 399,
-      "index": 1,
+      "description": "This module provides functions to dispatch and manage jobs in a persistent MariaDB-backed queue, supporting job registration, delayed execution, and context-based job handling. It works with job data structures defined in `Sihl__.Contract_queue`, including job identifiers, contexts, and delay specifications. Concrete use cases include enqueuing background tasks like email delivery or batch processing with guaranteed persistence and job ordering control.",
+      "description_length": 457,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sihl_queue.PostgreSql",
       "library": "sihl-queue",
-      "description": "This module implements a persistent job queue with PostgreSQL as the backend, providing operations to enqueue jobs, enqueue multiple jobs in reverse order, register job handlers, and create a web dashboard router. It works with job data structures that include processing functions and context metadata, supporting delayed execution and scoped routing. Concrete use cases include managing background tasks like email dispatch or data processing pipelines with guaranteed delivery and visibility into queue state via a web interface.",
-      "description_length": 532,
+      "description": "This module implements a persistent job queue using PostgreSQL, providing operations to enqueue jobs, batch enqueue jobs with reversed processing order, register executable job handlers, and serve a dashboard for monitoring. It works with job data structures that include processing functions and context metadata, along with Ptime.span for scheduling delays. Concrete use cases include background task processing, delayed job execution, and managing job lifecycles through a PostgreSQL-backed queue.",
+      "description_length": 500,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Sihl_queue.InMemory",
+      "library": "sihl-queue",
+      "description": "This module provides in-memory job queuing with non-persistent, unbounded storage. It supports job dispatching with optional delays, batch dispatching in reverse order, and job registration for later execution. Use it to handle temporary background tasks during testing where data loss on shutdown is acceptable.",
+      "description_length": 312,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Sihl_queue",
       "library": "sihl-queue",
-      "description": "This module organizes job management by combining in-memory and database-backed queue systems to handle background tasks with typed payloads. It centers around job data structures that support serialization, retries, failure handling, and timed execution, with operations for dispatching, registering handlers, and batch processing. The in-memory implementation enables lightweight testing of deferred tasks like mock event handling, while the MariaDB and PostgreSQL backends ensure reliable execution for production workflows such as email delivery and data processing with delay support and web-based monitoring. Each implementation works seamlessly with Lwt-based asynchronous workflows and scoped routing for flexible integration into larger applications.",
-      "description_length": 759,
+      "description": "This module defines job and instance data structures for managing background tasks, including status tracking, retries, and scheduling. It provides operations to create and dispatch jobs with custom handling logic, format job and instance data, and determine job execution timing. The module supports concrete use cases like processing queued email deliveries, executing delayed batch operations, and managing task lifecycles with retry policies.",
+      "description_length": 446,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 759,
-    "min_description_length": 399,
-    "avg_description_length": 554.0,
-    "embedding_file_size_mb": 0.014944076538085938
+    "max_description_length": 500,
+    "min_description_length": 312,
+    "avg_description_length": 428.75,
+    "embedding_file_size_mb": 0.058365821838378906
   }
 }

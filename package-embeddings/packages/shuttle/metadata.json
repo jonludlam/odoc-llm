@@ -1,65 +1,65 @@
 {
   "package": "shuttle",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:06:09.581970",
+  "creation_timestamp": "2025-08-14T23:04:49.276566",
   "modules": [
     {
       "module_path": "Shuttle.Output_channel.Flush_result",
       "library": "shuttle",
-      "description": "This module defines a result type for flush operations on output channels, indicating whether data was successfully flushed, the remote end closed the connection, or an error occurred. It includes a function to convert the result type to an S-expression for serialization or debugging. Use this module to handle and inspect outcomes of asynchronous flush operations in networked or I/O-bound applications.",
-      "description_length": 405,
+      "description": "This module defines a result type for flush operations on output channels, indicating whether data was successfully flushed, the remote end was closed, or an error occurred. It includes a function to convert these result values into S-expressions. This is used to handle and log outcomes of network or I/O operations in a structured format.",
+      "description_length": 340,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
+      "module_path": "Shuttle.Tcp_channel",
+      "library": "shuttle",
+      "description": "This module implements TCP client and server functionality using async I/O, providing functions to listen for incoming connections and establish outgoing connections. It works with TCP sockets and wraps input/output channels for data transmission, handling connection lifecycle events like timeouts, errors, and shutdowns. Concrete use cases include building network servers that process incoming requests and clients that communicate with remote services over TCP.",
+      "description_length": 465,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Shuttle.Input_channel",
+      "library": "shuttle",
+      "description": "This module manages input channels for asynchronous data reading, providing operations to create, refill, and consume buffered data with support for timeouts and resource management. It works with file descriptors and integrates with async pipes for streaming data transfer, exposing a view of buffered content as slices. Use cases include implementing custom network protocol parsers, handling large file reads with controlled memory usage, and bridging low-level file descriptors with high-level async pipelines.",
+      "description_length": 514,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
       "module_path": "Shuttle.Output_channel",
       "library": "shuttle",
-      "description": "This module enables asynchronous writing to file descriptors using buffered output channels, supporting timed writes, deferred closures, and state serialization. It defines a result type for flush operations, indicating success, remote closure, or error, and includes utilities to convert these results to S-expressions for debugging or serialization. You can use it to build reliable, non-blocking output systems with configurable timeouts and error recovery, particularly in network services or logging pipelines that require inspection and handling of flush outcomes.",
-      "description_length": 570,
-      "index": 1,
+      "description": "This module provides asynchronous writing capabilities to file descriptors with buffered output management, supporting operations like timed writes, flushing, and closure handling. It operates on output channel objects with customizable buffer sizes and reports flush outcomes via dedicated result types, integrating deferred computations for asynchronous coordination. Typical applications include high-performance I/O pipelines, log aggregation systems, and network protocol implementations requiring precise flow control and error resilience.",
+      "description_length": 545,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Shuttle.Slice",
+      "library": "shuttle",
+      "description": "Represents a slice of a Bigstring with a position and length. Provides a way to serialize slices to S-expressions. Useful for efficiently working with subregions of large binary buffers while tracking their location and size.",
+      "description_length": 225,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shuttle.Bytebuffer",
       "library": "shuttle",
-      "description": "This module enables efficient byte-oriented I/O with dynamically resizable buffers backed by bigstrings, supporting operations like appending data, reading/writing file descriptors, and buffer slicing. It provides both safe interfaces for stream-based data accumulation and unsafe low-level access for direct memory manipulation via slices and indexing. Typical applications include network protocol implementations, binary file processing, and systems programming tasks requiring precise control over byte sequences and memory layout.",
-      "description_length": 535,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Shuttle.Tcp_channel",
-      "library": "shuttle",
-      "description": "This module implements TCP client and server functionality using async I/O, providing functions to create listening servers and establish outgoing connections. It works with TCP sockets and wraps input/output operations through `Input_channel` and `Output_channel` abstractions, handling connection lifecycle and error propagation. Concrete use cases include building TCP-based network services that require asynchronous handling of incoming connections and clients, such as HTTP servers or custom network protocols.",
-      "description_length": 516,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Shuttle.Slice",
-      "library": "shuttle",
-      "description": "This module represents a slice of a Bigstring with a position and length, enabling efficient manipulation of binary data. It provides a way to serialize slices into S-expressions for debugging or logging purposes. Useful for working with binary protocols or file formats where precise memory views are required.",
-      "description_length": 311,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Shuttle.Input_channel",
-      "library": "shuttle",
-      "description": "This module implements an asynchronous input channel for reading data from a file descriptor with support for buffer management, timeouts, and integration with async pipes. It provides operations to create, refill, consume, and close input channels, along with utilities to transfer data between channels and pipes. Concrete use cases include streaming data from network sockets, reading large files in chunks, and managing input buffers in event-driven servers.",
-      "description_length": 462,
+      "description": "This module implements extensible buffers optimized for byte-level I/O and direct memory manipulation, supporting dynamic resizing up to a configurable limit. It operates on bigstrings through the `t` type, enabling zero-copy slicing, unsafe indexing, and appending of diverse byte-oriented data like strings, bytes, or other buffers, making it ideal for high-performance networking, binary serialization, and low-level data processing where efficient memory handling is critical.",
+      "description_length": 480,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Shuttle",
       "library": "shuttle",
-      "description": "This module provides a comprehensive system for asynchronous I/O operations with a focus on efficiency, reliability, and low-level control. It centers around data types like buffered output channels, input channels, and bigstring slices, offering operations for non-blocking reads and writes, buffer management, TCP communication, and direct memory manipulation. You can build network services with async TCP clients and servers, process binary data with precise memory views, and manage streaming input or output with support for timeouts and error handling. Specific tasks include implementing custom protocols, logging with flush control, and parsing binary formats using resizable buffers and slice-based access.",
-      "description_length": 716,
+      "description": "This module provides a suite of components for handling asynchronous I/O and binary data manipulation. It includes modules for managing input and output channels over file descriptors, implementing TCP communication, efficiently handling byte buffers with support for dynamic resizing and zero-copy operations, and representing regions of memory as slices for structured data processing. Use cases include building network services with custom protocols, handling large-scale data transfer with controlled memory usage, and implementing binary serialization formats.",
+      "description_length": 566,
       "index": 6,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -69,9 +69,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 716,
-    "min_description_length": 311,
-    "avg_description_length": 502.14285714285717,
-    "embedding_file_size_mb": 0.025857925415039062
+    "max_description_length": 566,
+    "min_description_length": 225,
+    "avg_description_length": 447.85714285714283,
+    "embedding_file_size_mb": 0.10183143615722656
   }
 }

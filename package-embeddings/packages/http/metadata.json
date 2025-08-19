@@ -1,103 +1,103 @@
 {
   "package": "http",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 12,
-  "creation_timestamp": "2025-07-15T23:07:17.023280",
+  "creation_timestamp": "2025-08-14T23:12:17.985738",
   "modules": [
     {
       "module_path": "Http.Transfer.Private",
       "library": "http",
-      "description": "Handles internal parsing and serialization of HTTP/1.1 message bodies for transfer encodings like chunked and content-length. Works directly with `Http.Transfer.encoding` to determine body presence and format. Used to implement body streaming and decoding logic in HTTP clients and servers.",
+      "description": "Handles internal parsing and serialization of HTTP/1.1 message bodies for transfer encodings like `chunked` and `content-length`. Works directly with `encoding` values to determine body presence and format. Used to implement body streaming and header processing in HTTP servers and clients.",
       "description_length": 290,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Http.Private.Parser",
-      "library": "http",
-      "description": "This module provides functions to parse HTTP requests and chunk lengths from string buffers. It operates on raw string data, returning parsed HTTP request objects or chunk lengths along with the offset of remaining unconsumed content. It is used when processing HTTP messages incrementally, such as in a streaming or network server context.",
-      "description_length": 340,
-      "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Http.Header.Private",
       "library": "http",
-      "description": "Implements case-insensitive string comparison for HTTP header keys. Uses ASCII lowercase conversion to normalize strings before equality checks. Ensures consistent header field matching regardless of case variations in input.",
-      "description_length": 225,
+      "description": "Implements case-insensitive string comparison for HTTP header keys. Uses ASCII lowercase conversion to normalize strings before equality checks. Ensures consistent header key matching regardless of input casing.",
+      "description_length": 211,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Http.Private.Parser",
+      "library": "http",
+      "description": "This module parses HTTP requests and chunk lengths from string buffers. It provides `parse_request` to convert a buffer into an HTTP request and `parse_chunk_length` to extract chunk sizes from chunked encoding. These functions return the parsed value and the offset of remaining data, or an error if parsing fails.",
+      "description_length": 315,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Http.Response",
       "library": "http",
-      "description": "This module defines a type `t` representing HTTP responses, including headers, version, and status code. It provides functions to construct and access response fields, determine connection behavior, and check requirements for content length. Use cases include building and validating HTTP responses, checking if a response should include a content length header, and formatting responses for logging or debugging.",
-      "description_length": 413,
+      "description": "This module defines a type `t` representing HTTP responses, with fields for headers, version, and status code. It provides functions to access these fields, compare responses, and determine connection reuse or content length requirements. Use cases include constructing and inspecting HTTP responses, checking if a content length is required, and formatting responses for debugging or logging.",
+      "description_length": 393,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Http.Transfer",
-      "library": "http",
-      "description": "This module manages HTTP/1.1 transfer-encoding formats, supporting chunked and content-length encodings for reading and writing data streams. It defines core types like `encoding` (with variants `Chunked`, `Fixed` of int64, and `Unknown`) and provides functions to encode and decode message bodies based on these formats. Submodules handle parsing and serialization logic, enabling streaming and decoding of HTTP message bodies in clients and servers. Example uses include processing incoming chunked-encoded responses or constructing outgoing requests with correct content-length framing.",
-      "description_length": 589,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Http.Status",
       "library": "http",
-      "description": "This module defines polymorphic variant types representing HTTP status codes, grouped into informational, success, redirection, client error, and server error categories. It provides functions to convert status codes to integers and strings, compare them, and parse integer codes into their corresponding status types. Use this module to handle HTTP responses in web servers or clients, validate request outcomes, or generate appropriate error messages based on standard HTTP semantics.",
-      "description_length": 486,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Http.Header",
-      "library": "http",
-      "description": "This module manages HTTP headers as ordered, case-sensitive (name, value) pairs, supporting multiple values per field and preserving order and case across operations. It provides functions to add, remove, update, and query headers, along with specialized handling for common HTTP headers and conversion to string representations for transmission. A child module enables case-insensitive key comparison by normalizing strings to ASCII lowercase, ensuring consistent field matching regardless of input case. Examples include folding over all headers, checking if a header exists in a case-insensitive manner, and building valid HTTP header blocks from structured data.",
-      "description_length": 666,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Http.Private",
-      "library": "http",
-      "description": "This module parses HTTP requests and chunk lengths from raw string buffers, returning structured data and the offset of remaining content. It supports incremental processing of HTTP messages, making it suitable for streaming or network server applications. Key operations include parsing request headers and extracting chunk lengths, allowing efficient handling of partial or streaming data. For example, it can parse an HTTP/1.1 request from a buffer or determine the length of a chunked-encoded segment.",
+      "description": "This module defines polymorphic variant types representing HTTP status code categories and individual status codes, along with conversions between integer codes and their string descriptions. It provides functions to convert status codes to strings or integers, compare them, and format them for display. Concrete use cases include handling HTTP responses in a type-safe way, validating status codes from network requests, and generating appropriate error messages based on standard HTTP status semantics.",
       "description_length": 505,
-      "index": 7,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Http.Version",
       "library": "http",
-      "description": "This module defines an enumerated type for HTTP versions, including `HTTP_1_0`, `HTTP_1_1`, and a catch-all `Other` variant for unrecognized versions. It provides functions to convert between string representations and the enumerated type, compare versions, and pretty-print them. Concrete use cases include parsing HTTP headers, validating protocol versions in network clients, and formatting responses in HTTP servers.",
-      "description_length": 420,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Http.Request",
-      "library": "http",
-      "description": "This module defines a type `t` representing HTTP requests, including headers, method, resource path, and HTTP version. It provides accessors to retrieve request components, functions to inspect properties like body presence, keep-alive status, and content length, and utilities to modify headers for chunked trailers. Concrete use cases include constructing and manipulating HTTP requests for servers or clients, validating request structure, and preparing requests for transmission.",
-      "description_length": 483,
-      "index": 9,
+      "description": "This module defines an enumerated type for HTTP versions, including `HTTP_1_0`, `HTTP_1_1`, and a catch-all `Other` variant for unrecognized versions. It provides functions to convert between string representations and the enumerated type, compare versions, and pretty-print them. This is useful when parsing or generating HTTP headers to ensure correct version handling in network communication.",
+      "description_length": 396,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Http.Method",
       "library": "http",
-      "description": "This module defines an enumerated type for HTTP methods, including standard verbs like `GET`, `POST`, and `PUT`, as well as an `Other` constructor for custom methods. It provides functions to convert between strings and method values, check if a method allows a request body, and compare or format method values. Concrete use cases include parsing and validating HTTP request methods in web servers or clients.",
-      "description_length": 410,
-      "index": 10,
+      "description": "This module defines an enumerated type representing HTTP methods, including standard and custom variants. It provides functions to convert between strings and method values, compare methods, and determine if a method allows a request body. Use cases include parsing and validating HTTP method strings in web servers or clients, and controlling request/response handling based on method semantics.",
+      "description_length": 396,
+      "index": 6,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Http.Request",
+      "library": "http",
+      "description": "This module defines a data structure for HTTP requests, including methods to access and manipulate request components like headers, HTTP method, resource path, and version. It provides functions to check properties of the request such as whether a body is expected, if the connection should be kept alive, or if a content length is required. Use cases include building, inspecting, and modifying HTTP requests in a server or client context, such as determining if a request supports chunked trailers or adding trailer support to a request.",
+      "description_length": 539,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Http.Header",
+      "library": "http",
+      "description": "This module supports creating, modifying, and querying HTTP headers stored as key-value lists, enabling case-insensitive key comparisons and duplicate handling. It facilitates tasks like serializing headers into string formats, inspecting specific fields (e.g., content range or transfer encoding), and iterating over header values, making it suitable for HTTP server or client implementations requiring precise header manipulation.",
+      "description_length": 432,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Http.Transfer",
+      "library": "http",
+      "description": "Handles parsing and serialization of HTTP/1.1 message bodies using `chunked` and `content-length` transfer encodings. Works directly with the `encoding` type to manage body streaming and header processing in HTTP servers and clients. Used to determine body presence and format during HTTP communication.",
+      "description_length": 303,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Http.Private",
+      "library": "http",
+      "description": "Parses HTTP requests and chunk lengths from string buffers. Uses `parse_request` to convert a buffer into an HTTP request and `parse_chunk_length` to extract chunk sizes from chunked encoding, returning parsed values with remaining data offsets or errors. Works directly with string buffers and HTTP request structures.",
+      "description_length": 319,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Http",
       "library": "http",
-      "description": "This module handles HTTP message parsing, construction, and manipulation, providing structured types for requests, responses, headers, status codes, and transfer encodings. Core data types include `t` for requests and responses, `encoding` for transfer-encoding handling, polymorphic variants for status codes, and ordered headers with case-insensitive matching. Operations allow parsing HTTP messages from buffers, building and modifying requests and responses, encoding and decoding message bodies, and working with headers and status codes. Examples include parsing an HTTP request, streaming a chunked response, checking if a response requires a content-length header, and constructing a response with correct status and headers.",
-      "description_length": 733,
+      "description": "This module implements core HTTP protocol handling for building and parsing HTTP requests and responses. It works with custom algebraic data types representing HTTP versions, methods, status codes, headers, and message bodies, providing precise control over HTTP semantics. Concrete use cases include parsing raw HTTP messages in network servers, constructing valid HTTP requests with correct transfer encoding, and inspecting or modifying headers and status codes in web clients or proxies.",
+      "description_length": 491,
       "index": 11,
       "embedding_norm": 1.0
     }
@@ -109,9 +109,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 733,
-    "min_description_length": 225,
-    "avg_description_length": 463.3333333333333,
-    "embedding_file_size_mb": 0.04401969909667969
+    "max_description_length": 539,
+    "min_description_length": 211,
+    "avg_description_length": 382.5,
+    "embedding_file_size_mb": 0.1742849349975586
   }
 }

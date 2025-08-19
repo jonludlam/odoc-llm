@@ -1,77 +1,69 @@
 {
   "package": "ortac-qcheck-stm",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:06:03.649765",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 6,
+  "creation_timestamp": "2025-08-14T23:03:52.631659",
   "modules": [
     {
       "module_path": "Ortac_qcheck_stm.Ir",
       "library": "ortac-qcheck-stm.plugin",
-      "description": "This module defines intermediate representations for terms, values, and state transitions used in model-based testing. It includes operations to construct and manipulate terms with associated source text, project values with type information, and specify preconditions, postconditions, and state modifications for functions. These structures are used to represent the behavior of system-under-test components and their interactions with ghost state in property-based testing scenarios.",
-      "description_length": 485,
+      "description": "This module defines intermediate representations for terms, values, and states used in model-based testing. It includes operations to construct and manipulate terms with associated source text, project values with type information, and manage preconditions, postconditions, and state transitions. Concrete use cases involve modeling function specifications, tracking state changes, and encoding testable properties with explicit location and type information.",
+      "description_length": 459,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ortac_qcheck_stm.Ir_of_gospel",
       "library": "ortac-qcheck-stm.plugin",
-      "description": "This module processes Gospel type and value descriptions to generate intermediate representations for stateful model-based testing. It handles operations like type unification, argument splitting, and state transition extraction, working with data types such as `val_description`, `signature_item`, and `core_type`. Concrete use cases include extracting preconditions, postconditions, and state transitions from function specifications to drive property-based testing scenarios.",
-      "description_length": 478,
+      "description": "This module processes Gospel type and value descriptions to generate intermediate representations for stateful model-based testing. It handles operations like type unification, argument splitting, and state invariant extraction, working with data types such as `val_description`, `signature_item`, and `core_type`. Concrete use cases include extracting initial state definitions, postconditions, and next-state transitions from Gospel specifications to drive property-based testing workflows.",
+      "description_length": 492,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ortac_qcheck_stm.Stm_of_ir",
-      "library": "ortac-qcheck-stm.plugin",
-      "description": "This module facilitates the translation of intermediate representations (IR) into OCaml AST constructs for stateful testing scenarios. It provides operations for term substitution, state manipulation, and the generation of expressions, patterns, and structure items from IR elements like types, identifiers, and values, with support for error handling and configuration. These utilities are specifically used to produce QCheck-based test generators, command serializers, and model modules that validate state machine behavior during property-based testing.",
-      "description_length": 556,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ortac_qcheck_stm.Config",
-      "library": "ortac-qcheck-stm.plugin",
-      "description": "This module manages the construction and validation of configuration data for generating test models. It processes PPX AST fragments to build a validated configuration record, handling type definitions, value bindings, and module structures. Key operations include scanning declarations, validating SUT (System Under Test) types, and initializing configurations with context and module prefixes.",
-      "description_length": 395,
-      "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Ortac_qcheck_stm.Plugin",
       "library": "ortac-qcheck-stm.plugin",
-      "description": "This module defines a command-line interface for integrating QCheck-based testing plugins into applications. It provides the `cmd` value, which represents a command that can be executed via the command line to run property-based tests. It is used to enable testing workflows directly through executable commands, specifically for state machine models tested with QCheck.",
-      "description_length": 370,
-      "index": 4,
+      "description": "This module defines a command-line interface for integrating QCheck-based property testing into an application. It provides the `cmd` value, which represents a command that can be executed to run property tests. The module works with QCheck properties and test configurations, enabling developers to validate invariants and edge cases in data processing pipelines or stateful computations.",
+      "description_length": 389,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ortac_qcheck_stm.Reserr",
       "library": "ortac-qcheck-stm.plugin",
-      "description": "This module provides error handling and propagation mechanisms tailored for symbolic test generation, offering utilities to compose error-aware computations using monadic and applicative patterns. It introduces a `reserr` type representing fallible computations alongside error and warning variants for specific failure modes like function arity mismatches, type inconsistencies, or missing specifications, with support for traversing lists and promoting warnings to errors. Its applicative operations (`<$>`, `<*>`) and formatter enable structured error accumulation and reporting, making it suitable for validation pipelines, configuration processing, or any context requiring robust error tracking with human-readable diagnostics.",
-      "description_length": 733,
-      "index": 5,
+      "description": "This module provides error and warning types tailored for symbolic test generation, handling issues like function arity mismatches, type errors, and missing specifications. It offers applicative operations (`fmap`, `<*>`) and pretty-printing for the `reserr` type, which encapsulates error-aware computations, enabling robust composition and traversal of fallible operations. Key use cases include sequencing error-propagating computations, converting between optional and result-based values, and managing warnings in test generation workflows.",
+      "description_length": 545,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ortac_qcheck_stm.Config",
+      "library": "ortac-qcheck-stm.plugin",
+      "description": "This module manages the construction and validation of configuration data for generating test models. It operates on OCaml abstract syntax trees (ASTs) using types like `core_type`, `expression`, and `structure` from `Ppxlib`, along with context and error-handling types from other modules. It supports concrete tasks like extracting SUT (System Under Test) type names, validating type parameters, building configurations from module bindings, and scanning user-provided configuration strings to populate test generation settings.",
+      "description_length": 530,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ortac_qcheck_stm",
       "library": "ortac-qcheck-stm.plugin",
-      "description": "This module compiles and processes formal specifications into executable OCaml code for property-based testing and model validation. It operates on abstract syntax trees and intermediate representations derived from Gospel specifications, enabling use cases such as test case generation, state machine validation, and integration of formal verification into build pipelines. Main data types include terms, values, state transitions, and configurations, with core operations spanning parsing, transformation, code generation, and error handling. Submodules support model construction, type processing, OCaml AST translation, configuration management, CLI integration, and structured error propagation for robust test model development.",
-      "description_length": 734,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements model-based property testing workflows by transforming Gospel specifications into executable QCheck tests. It processes OCaml AST nodes to extract test models, constructs intermediate representations with state transitions and invariants, and generates test configurations with validation rules. Key operations include parsing user-defined models, building stateful test generators, and executing property checks against system-under-test implementations.",
+      "description_length": 478,
+      "index": 5,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 7,
-    "meaningful_modules": 7,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "meaningful_modules": 6,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.8571428571428571
   },
   "statistics": {
-    "max_description_length": 734,
-    "min_description_length": 370,
-    "avg_description_length": 535.8571428571429,
-    "embedding_file_size_mb": 0.025887489318847656
+    "max_description_length": 545,
+    "min_description_length": 389,
+    "avg_description_length": 482.1666666666667,
+    "embedding_file_size_mb": 0.08732891082763672
   }
 }

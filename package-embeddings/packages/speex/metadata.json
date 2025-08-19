@@ -1,71 +1,71 @@
 {
   "package": "speex",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:06:11.529878",
+  "creation_timestamp": "2025-08-14T23:05:08.098581",
   "modules": [
     {
-      "module_path": "Speex.Wrapper.Decoder",
-      "library": "speex",
-      "description": "This module provides functions to open and decode Speex audio streams from Ogg synchronization objects, files, or custom data feeds. It supports decoding audio into floating-point or integer sample formats, with options for mono or stereo output, and allows sequential access to stream metadata like comments and headers. Concrete use cases include playing back Speex-encoded audio files, processing live Speex streams from network sources, or extracting metadata from Speex-encoded content.",
-      "description_length": 491,
+      "module_path": "Speex_decoder",
+      "library": "speex.decoder",
+      "description": "This module implements a decoder for Speex audio streams consumed by the `Ogg_demuxer`. It provides a `register` function that enables Ogg demuxing of Speex-encoded packets. Use this module when extracting and decoding audio from Ogg files containing Speex data.",
+      "description_length": 262,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Speex.Header",
+      "module_path": "Speex.Wrapper.Decoder",
       "library": "speex",
-      "description": "This module defines operations for creating, encoding, and decoding Speex audio headers used in Ogg streams. It works with the `Speex.Header.t` type to store audio codec settings and metadata, and interacts with `Ogg.Stream.packet` for serialization. Concrete use cases include initializing a header with audio parameters, encoding headers into Ogg packets, and extracting header and metadata from incoming Ogg packets.",
-      "description_length": 419,
+      "description": "This module provides functions to decode Speex audio data from OGG streams, supporting both mono and stereo output. It works with types like `Ogg.Sync.t`, `float array`, and `int array` for handling audio samples and metadata. Concrete use cases include opening Speex files or streams, extracting header and comment data, and decoding audio frames for playback or processing.",
+      "description_length": 375,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Speex.Skeleton",
-      "library": "speex",
-      "description": "Generates Ogg skeleton packets for Speex audio streams, including fisbone packets with customizable headers and serial numbers. Works with Speex headers and Ogg packets to define stream metadata. Used to construct Ogg files with proper skeleton structure for streaming or container compatibility.",
-      "description_length": 296,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Speex.Decoder",
-      "library": "speex",
-      "description": "This module initializes and configures a Speex decoder for processing audio data from an Ogg stream. It provides functions to decode mono and stereo audio into floating-point or integer sample arrays, with support for direct feed callbacks. Use cases include real-time audio playback, batch decoding of Speex-encoded files, and integrating Speex audio into custom processing pipelines.",
-      "description_length": 385,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Speex.Encoder",
-      "library": "speex",
-      "description": "This module manages Speex audio encoding operations, including parameter configuration and data encoding. It works with audio data in float or integer arrays, supporting mono and stereo streams. Concrete use cases include streaming audio encoding for VoIP applications or file compression with Ogg containers.",
-      "description_length": 309,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Speex.Wrapper",
       "library": "speex",
-      "description": "This module provides high-level access to Speex audio decoding by integrating Ogg stream handling, file input, and custom data sources into a unified interface. It supports decoding audio into floating-point or integer formats, handles mono and stereo output, and allows sequential access to metadata such as comments and headers. You can use it to play Speex files, process live network streams, or extract metadata from encoded audio. For example, you can open a Speex file, decode its contents into audio samples, and retrieve artist or title information from the stream.",
-      "description_length": 574,
+      "description": "This module provides high-level functions for decoding Speex audio from OGG streams, including opening streams, extracting headers, and decoding frames into float or integer sample arrays. It operates on types such as `Ogg.Sync.t`, `float array`, and `int array`, facilitating direct manipulation of audio data. Use cases include audio playback, batch decoding of Speex files, and integration with audio processing pipelines.",
+      "description_length": 425,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Speex.Decoder",
+      "library": "speex",
+      "description": "This module handles decoding of Speex audio data from Ogg streams, providing functions to decode mono or stereo audio into floating-point or integer sample arrays. It supports direct decoding into lists or streaming through callback functions, enabling real-time audio processing. Specific use cases include extracting audio from Ogg files, implementing audio playback pipelines, and converting encoded Speex data to raw PCM format.",
+      "description_length": 432,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Speex.Skeleton",
+      "library": "speex",
+      "description": "This module generates Ogg skeleton packets for Speex audio streams. It provides the `fisbone` function to create a fisbone packet with parameters such as serial number, start granule, headers, and Speex header data. This is used to structure Ogg files containing Speex audio by defining stream metadata and content type.",
+      "description_length": 320,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Speex.Header",
+      "library": "speex",
+      "description": "This module initializes and encodes Speex audio headers for use in Ogg streams. It constructs headers with audio parameters like sample rate, mode, and channel count, and outputs them as Ogg packets alongside metadata. It also decodes headers and metadata from incoming Ogg packets for processing encoded audio streams.",
+      "description_length": 319,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Speex",
+      "module_path": "Speex.Encoder",
       "library": "speex",
-      "description": "This module encodes, decodes, and manipulates Speex audio data using control parameters like quality, bitrate, and mode, operating on audio frames and streams with support for sampling rate configuration, VBR, and noise suppression. It integrates with child modules that handle Ogg-based serialization, skeleton packet generation, decoder and encoder setup, and high-level decoding from files or streams. The `Speex.Header.t` type stores codec settings, while functions interact with `Ogg.Stream.packet` for structured audio transport, enabling use cases like streaming with adaptive bitrate or compressing voice data for VoIP. Examples include constructing Ogg files with fisbone packets, decoding live audio into sample arrays, and extracting metadata from encoded streams.",
-      "description_length": 775,
+      "description": "This module implements audio encoding operations for the Speex codec, handling mono and stereo input through functions that encode data into Ogg pages. It works with encoder state objects, Ogg streams, and callbacks that supply raw audio samples as float or integer arrays. Concrete use cases include streaming audio encoding for VoIP applications, podcast recording pipelines, and real-time audio compression tools.",
+      "description_length": 416,
       "index": 6,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Speex_decoder",
-      "library": "speex.decoder",
-      "description": "This module implements a Speex audio decoder compatible with the Ogg_demuxer module. It provides the `register` function to enable decoding of Speex streams within Ogg containers. Use this module when extracting and decoding audio from Ogg files containing Speex-encoded tracks.",
-      "description_length": 278,
+      "module_path": "Speex",
+      "library": "speex",
+      "description": "This module provides functions for encoding, decoding, and manipulating Speex audio data, including control operations for bitrate, quality, and voice activity detection. It works with audio samples as float or integer arrays, encoder and decoder state objects, and Ogg packets for streaming. Concrete use cases include real-time audio compression for VoIP, podcast recording pipelines, and batch decoding of Speex files for audio processing.",
+      "description_length": 442,
       "index": 7,
       "embedding_norm": 1.0
     }
@@ -77,9 +77,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 775,
-    "min_description_length": 278,
-    "avg_description_length": 440.875,
-    "embedding_file_size_mb": 0.02948760986328125
+    "max_description_length": 442,
+    "min_description_length": 262,
+    "avg_description_length": 373.875,
+    "embedding_file_size_mb": 0.11638164520263672
   }
 }

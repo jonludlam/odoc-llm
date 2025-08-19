@@ -1,173 +1,181 @@
 {
   "package": "js_of_ocaml-webidl",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 19,
-  "creation_timestamp": "2025-07-15T23:10:16.589634",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 20,
+  "creation_timestamp": "2025-08-15T12:09:01.995858",
   "modules": [
     {
-      "module_path": "Webidl.Parse",
-      "library": "js_of_ocaml-webidl.private-webidl",
-      "description": "This module parses WebIDL specifications from strings, files, or input channels into abstract syntax trees and data definitions. It handles source positioning, error reporting with context, and supports strictness modes for validation. Concrete use cases include loading and processing WebIDL interface definitions for code generation or analysis.",
-      "description_length": 347,
+      "module_path": "Webidl_syntax.Parser_extend.Make",
+      "library": "js_of_ocaml-webidl.private-webidl_syntax",
+      "description": "Parses WebIDL syntax into abstract syntax trees for definitions and extended attributes using a token stream from a lexer. It operates on `lexbuf` inputs and produces AST nodes representing WebIDL constructs. Useful for implementing compilers or analyzers that process WebIDL interfaces and annotations.",
+      "description_length": 303,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Webidl.Data",
-      "library": "js_of_ocaml-webidl.private-webidl",
-      "description": "The module supports bidirectional conversion of WebIDL AST components\u2014including attributes, operations, interfaces, dictionaries, and namespaces\u2014into S-expressions for serialization. It handles metadata like static flags, inheritance, and collection types (maplike, setlike), enabling use cases such as persisting interface definitions, code generation from WebIDL specifications, and parsing structured data in tooling that processes WebIDL.",
-      "description_length": 442,
+      "module_path": "Webidl_syntax.Parser.Make",
+      "library": "js_of_ocaml-webidl.private-webidl_syntax",
+      "description": "Parses WebIDL source code into abstract syntax trees using a lexer function and lex buffer. It processes tokens generated from WebIDL files to construct definitions in the AST. Useful for implementing compilers or static analysis tools that need to read and interpret WebIDL interfaces.",
+      "description_length": 286,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Webidl.Ast_to_data",
-      "library": "js_of_ocaml-webidl.private-webidl",
-      "description": "This module converts abstract syntax trees (AST) from the WebIDL specification into structured data representations. It processes interface members, attributes, operations, dictionaries, namespaces, and mixins, transforming them into corresponding data types like `attribute`, `operation`, `dictionary`, and `interface`. Specific functions handle AST nodes such as `of_attribute`, `of_operation`, and `of_interface`, mapping them to typed data structures used for further analysis or code generation.",
-      "description_length": 500,
+      "module_path": "Webidl_syntax.Parser_extend",
+      "library": "js_of_ocaml-webidl.private-webidl_syntax",
+      "description": "Parses WebIDL syntax into abstract syntax trees for definitions and extended attributes using a token stream from a lexer. It processes `Lexing.lexbuf` inputs and generates AST nodes representing WebIDL constructs. This module is used to implement compilers or analyzers that need to parse and process WebIDL interfaces and annotations.",
+      "description_length": 336,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Webidl",
-      "library": "js_of_ocaml-webidl.private-webidl",
-      "description": "This module processes WebIDL specifications by parsing input into abstract syntax trees, converting those trees into structured data representations, and serializing or deserializing components to and from S-expressions. It supports core WebIDL elements like interfaces, attributes, operations, dictionaries, and namespaces, along with metadata such as inheritance and collection types. Key operations include parsing from strings or files, transforming AST nodes into typed data structures, and bidirectional conversion with S-expressions. Examples include loading and analyzing WebIDL interface definitions, persisting parsed data, and driving code generation workflows.",
-      "description_length": 672,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Js_of_ocaml_webidl.Runtime.Union.Unsafe",
-      "library": "js_of_ocaml-webidl",
-      "description": "This module provides direct access to the individual type components of a WebIDL union type by extracting either the first (`get_a`) or second (`get_b`) variant. It operates on union values wrapped in JavaScript objects, allowing unsafe but efficient type-specific value retrieval. Use this when interfacing with WebIDL-generated code to access concrete values from polymorphic union representations.",
-      "description_length": 400,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Js_of_ocaml_webidl.Runtime.Lwt_promise",
-      "library": "js_of_ocaml-webidl",
-      "description": "Converts between JavaScript promises and Lwt threads. Works with `Js.t` and `Lwt.t` types. Enables using Lwt-based OCaml code with JavaScript APIs that return promises, and vice versa.",
-      "description_length": 184,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Js_of_ocaml_webidl.Runtime.Promise",
-      "library": "js_of_ocaml-webidl",
-      "description": "This module implements JavaScript-style promises in OCaml, providing operations to create resolved or rejected promises, chain asynchronous computations with `_then` and `_catch`, and combine multiple promises using `all` and `race`. It works with `'a Promise.t Js.t` values, representing asynchronous computations that may produce a value or fail. Concrete use cases include handling asynchronous I/O operations, sequencing AJAX requests, and managing concurrent web API calls in client-side applications.",
-      "description_length": 506,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Js_of_ocaml_webidl.Runtime.Union",
-      "library": "js_of_ocaml-webidl",
-      "description": "This module wraps JavaScript values into tagged union representations with two variants, using `of_a` and `of_b` to handle parameters that accept multiple types, such as string or number. Its child module enables direct extraction of the underlying values with `get_a` and `get_b`, providing efficient access to the specific type components of a union. Together, they support working with polymorphic data in WebIDL interfaces, allowing both construction and deconstruction of union-typed values. For example, a function expecting either a string or a number can wrap the input using `of_a` or `of_b`, then later retrieve the exact value using the corresponding getter.",
-      "description_length": 669,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Js_of_ocaml_webidl.Runtime",
-      "library": "js_of_ocaml-webidl",
-      "description": "This module bridges OCaml and JavaScript asynchronous programming by converting between Lwt threads and JavaScript promises, enabling seamless integration of Lwt-based code with JavaScript APIs. It provides core operations to create, chain, and combine asynchronous computations using `Promise.t Js.t` values, supporting patterns like `then`, `catch`, `all`, and `race`. Additionally, it handles polymorphic JavaScript values through tagged unions, allowing values like strings or numbers to be wrapped and extracted safely. Example uses include sequencing AJAX requests, managing concurrent API calls, and interfacing with WebIDL functions that accept multiple input types.",
-      "description_length": 674,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Js_of_ocaml_webidl.Bindings",
-      "library": "js_of_ocaml-webidl",
-      "description": "This module processes WebIDL data to generate OCaml bindings for JavaScript APIs. It provides functions to create a binding context from parsed WebIDL, extract interface declarations for OCaml signatures, and collect any errors encountered during processing. The primary data type is `t`, which holds the binding state, and it works directly with WebIDL parse results and JavaScript object representations.",
-      "description_length": 406,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Js_of_ocaml_webidl",
-      "library": "js_of_ocaml-webidl",
-      "description": "This module integrates OCaml with JavaScript by translating WebIDL definitions into OCaml bindings and managing asynchronous interactions between Lwt and JavaScript promises. It supports creating and composing promises with operations like `then`, `catch`, `all`, and `race`, while handling polymorphic JavaScript values through safe tagged unions. The binding generation process takes parsed WebIDL, extracts interface declarations, and produces OCaml signatures, tracking errors and state throughout. Examples include wrapping DOM API calls, handling AJAX responses in sequence or parallel, and generating type-safe interfaces for JavaScript libraries.",
-      "description_length": 654,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Webidl_syntax.Parser.Make",
-      "library": "js_of_ocaml-webidl.private-webidl_syntax",
-      "description": "Implements a parser for WebIDL syntax by combining a main parsing function with parameterized configurations and extended parsing rules. It processes input through a lexer function, producing abstract syntax trees representing WebIDL definitions. This module is used to parse WebIDL specifications into structured ASTs for further processing or analysis.",
-      "description_length": 354,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Webidl_syntax.Parser_extend.Make",
-      "library": "js_of_ocaml-webidl.private-webidl_syntax",
-      "description": "Parses WebIDL syntax into abstract syntax trees for definitions and extended attributes using a token stream from a lexer. It operates on `lexbuf` input with a custom token type, producing AST nodes for WebIDL constructs. This parser supports extending base WebIDL syntax with custom extensions defined through the `Param` module.",
-      "description_length": 330,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Webidl_syntax.Lexer",
-      "library": "js_of_ocaml-webidl.private-webidl_syntax",
-      "description": "This module implements a lexer for parsing WebIDL syntax by converting character streams into structured tokens. It provides functions to read and skip tokens, including handling nested comments, using a predefined token table and lexing tables. Concrete use cases include tokenizing WebIDL source code for further parsing and syntactic analysis.",
-      "description_length": 346,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Webidl_syntax.Parser",
-      "library": "js_of_ocaml-webidl.private-webidl_syntax",
-      "description": "This module parses WebIDL syntax into structured abstract syntax trees using configurable parsing rules and a lexer. It combines a main parsing function with customizable configurations to handle different input formats. Key operations include lexing input streams, applying parsing rules, and constructing AST nodes representing WebIDL definitions. For example, it can transform a WebIDL interface declaration into an AST node for analysis or code generation.",
-      "description_length": 460,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Webidl_syntax.Tokens",
-      "library": "js_of_ocaml-webidl.private-webidl_syntax",
-      "description": "This module defines a token type representing lexical elements of the WebIDL language, including keywords, identifiers, literals, and punctuation. It provides constructors for categorizing and handling these tokens during parsing, such as recognizing types like `INT32ARRAY`, `PROMISE`, and `INTERFACE`, as well as literal values like `STRING` and `FLOATVAL`. Concrete use cases include tokenizing WebIDL source code and supporting parser implementations that rely on precise lexical analysis.",
-      "description_length": 493,
-      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Webidl_syntax.Keyword",
       "library": "js_of_ocaml-webidl.private-webidl_syntax",
-      "description": "This module provides string constants for representing primitive types, keywords, and punctuation symbols in the Web IDL specification, enabling precise manipulation of type literals and syntactic constructs. It works with string-based data structures to encode semantic categories like numeric types, string variants, and interface modifiers, alongside syntactic elements such as delimiters and operation keywords. These values are specifically used for parsing, generating, and validating WebIDL interfaces and their associated type systems in OCaml code.",
-      "description_length": 557,
-      "index": 16,
+      "description": "This component provides string constants representing primitive types, keywords, and punctuation used in WebIDL syntax processing. It standardizes identifiers for language constructs like numeric types (`unsigned`, `long`), interface modifiers (`getter`, `setter`), and structural elements (`enum`, `typedef`), alongside special symbols for parsing and generating WebIDL code. These values facilitate tasks such as lexing, AST construction, and code generation for WebIDL interfaces and built-in types.",
+      "description_length": 502,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Webidl_syntax.Parser_extend",
+      "module_path": "Webidl_syntax.Ast",
       "library": "js_of_ocaml-webidl.private-webidl_syntax",
-      "description": "This module extends WebIDL parsing capabilities by transforming token streams into abstract syntax trees, supporting custom syntax extensions. It processes `lexbuf` input with a specialized lexer and introduces a flexible AST structure for representing WebIDL definitions and extended attributes. Key operations include parsing base WebIDL constructs and integrating custom extensions via parameterized configurations. For example, it can parse an interface definition extended with custom annotations into a structured AST node.",
-      "description_length": 529,
-      "index": 17,
+      "description": "The module provides bidirectional S-expression conversion functions for WebIDL AST types, including interface members, union types, dictionaries, and extended attributes. It works with polymorphic variants and structured types like `type_with_ext`, `const_value`, and `nullable_non_any`, capturing semantic constructs such as operations, attributes, and callbacks. These utilities enable parsing WebIDL definitions into OCaml AST nodes and serializing them for tasks like code generation and pretty-printing.",
+      "description_length": 508,
+      "index": 4,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Webidl_syntax.Parser",
+      "library": "js_of_ocaml-webidl.private-webidl_syntax",
+      "description": "Parses WebIDL specifications into abstract syntax trees, handling interfaces, dictionaries, and type definitions. It processes input from strings or files, producing structured data for further analysis or code generation. This module is used to extract API definitions from WebIDL for binding generation or documentation tools.",
+      "description_length": 328,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Webidl_syntax.Lexer",
+      "library": "js_of_ocaml-webidl.private-webidl_syntax",
+      "description": "This module implements a lexer for parsing WebIDL syntax by converting character streams into structured tokens. It includes functions to read tokens, handle comments, and maintain state during lexical analysis. The lexer processes input using standard OCaml lexing tables and operates directly on `Lexing.lexbuf` to produce tokens consumed by the WebIDL parser.",
+      "description_length": 362,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Webidl_syntax.Tokens",
+      "library": "js_of_ocaml-webidl.private-webidl_syntax",
+      "description": "This module defines a token type representing lexical elements of the WebIDL language, including keywords, identifiers, literals, and punctuation. It provides constructors for concrete token values used during parsing, such as `IDENTIFIER`, `INTVAL`, and `FLOATVAL`, along with constants for reserved words and symbols. It is used to represent the atomic components of WebIDL interfaces, types, and definitions during syntax analysis.",
+      "description_length": 434,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Webidl_syntax",
       "library": "js_of_ocaml-webidl.private-webidl_syntax",
-      "description": "This module processes WebIDL source code into structured abstract syntax trees by combining lexical analysis and configurable parsing. It defines core data types like tokens, parsed AST nodes, and string constants representing WebIDL syntax and primitives. Operations include tokenizing input streams, recognizing keywords and literals, and building AST representations of interfaces, types, and attributes. For example, it can parse an interface with extended attributes into a typed AST node or extract type information from a WebIDL fragment for further processing.",
-      "description_length": 568,
-      "index": 18,
+      "description": "This module suite processes WebIDL specifications through lexing, parsing, and AST manipulation. It converts WebIDL syntax into structured OCaml types for analysis, code generation, and documentation, supporting constructs like interfaces, dictionaries, and extended attributes. Concrete use cases include generating JavaScript bindings from WebIDL definitions and validating WebIDL-based API descriptions.",
+      "description_length": 406,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Js_of_ocaml_webidl.Runtime.Union.Unsafe",
+      "library": "js_of_ocaml-webidl",
+      "description": "This module provides direct access to the individual components of a WebIDL union type by extracting the first or second possible value. It operates on union values that wrap JavaScript objects, allowing unsafe retrieval of either type without runtime validation. Use this module when working with WebIDL-generated bindings that involve union types, such as handling multiple return types from DOM APIs.",
+      "description_length": 403,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Js_of_ocaml_webidl.Runtime.Promise",
+      "library": "js_of_ocaml-webidl",
+      "description": "This module implements JavaScript-style promises in OCaml, enabling asynchronous computation handling with support for chaining operations. It provides functions to create resolved or rejected promises, handle success and failure cases with `_then` and `_catch`, and compose multiple promises using `all` and `race`. Concrete use cases include managing asynchronous I/O operations, handling API responses, and coordinating concurrent web tasks in client-side OCaml applications.",
+      "description_length": 478,
+      "index": 10,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Js_of_ocaml_webidl.Runtime.Lwt_promise",
+      "library": "js_of_ocaml-webidl",
+      "description": "Converts between JavaScript promises and Lwt threads. Works with `Js_of_ocaml.Js.t` wrapped WebIDL promises and Lwt values. Use to interoperate with JavaScript async APIs like `fetch` or `setTimeout` in Lwt-based OCaml code.",
+      "description_length": 224,
+      "index": 11,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Js_of_ocaml_webidl.Runtime.Union",
+      "library": "js_of_ocaml-webidl",
+      "description": "This module provides functions to construct and deconstruct WebIDL union types by wrapping JavaScript objects as either of two possible values. It works with union values represented as `('a Js.t, 'b Js.t) Union.t Js.t`, where each branch holds a JavaScript object. Use this module to handle DOM APIs that return multiple types, such as functions that may return either an element or a string.",
+      "description_length": 393,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Js_of_ocaml_webidl.Runtime",
+      "library": "js_of_ocaml-webidl",
+      "description": "This module provides operations for working with JavaScript-style promises, converting between promises and Lwt threads, and handling WebIDL union types. It supports asynchronous computation management, interoperability with JavaScript APIs, and type-safe handling of values that may represent one of two types. Use it to integrate OCaml code with web APIs that return promises or union-typed results, such as DOM operations or network requests.",
+      "description_length": 445,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Js_of_ocaml_webidl.Bindings",
+      "library": "js_of_ocaml-webidl",
+      "description": "This module processes WebIDL data to generate OCaml interface and implementation files. It works with parsed WebIDL definitions and produces lists of strings representing `.mli` and `.ml` code, along with any errors encountered during processing. Concrete use cases include compiling WebIDL specifications into OCaml bindings for JavaScript interoperability.",
+      "description_length": 358,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Js_of_ocaml_webidl",
+      "library": "js_of_ocaml-webidl",
+      "description": "This module processes WebIDL definitions to generate OCaml interface and implementation code, handling parsed WebIDL data and producing `.mli`/`.ml` output lines with error tracking. It supports working with JavaScript promises by converting them to and from Lwt threads and managing WebIDL union types, enabling integration with web APIs like DOM operations and network requests. Use cases include generating OCaml bindings from WebIDL specs and writing OCaml code that interops with JavaScript async APIs.",
+      "description_length": 507,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Webidl.Parse",
+      "library": "js_of_ocaml-webidl.private-webidl",
+      "description": "This module parses WebIDL specifications from strings, files, or input channels into abstract syntax trees and data definitions. It handles source locations, lexing, and error reporting with detailed syntax error information including positions and context. Concrete use cases include loading and processing WebIDL interface definitions for validation, code generation, or analysis.",
+      "description_length": 382,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Webidl.Ast_to_data",
+      "library": "js_of_ocaml-webidl.private-webidl",
+      "description": "This module converts abstract syntax trees from the WebIDL specification into structured data representations. It handles transformations for interface members, attributes, operations, dictionaries, namespaces, and mixins, mapping AST nodes to corresponding data types like `attribute`, `operation`, `dictionary`, and `interface`. Specific use cases include parsing WebIDL interface definitions into executable data models and translating AST elements into typed structures for validation or code generation.",
+      "description_length": 508,
+      "index": 17,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Webidl.Data",
+      "library": "js_of_ocaml-webidl.private-webidl",
+      "description": "The module provides bidirectional S-expression conversion for serializing and parsing structured data models of WebIDL constructs, such as attributes, operations, interfaces, and dictionaries. It operates on OCaml types representing syntax trees and definitions with inheritance relationships, enabling precise modeling of interface members, mixins, and top-level specifications. These capabilities support tools that process WebIDL for specification generation and analysis tasks.",
+      "description_length": 481,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Webidl",
+      "library": "js_of_ocaml-webidl.private-webidl",
+      "description": "This module processes WebIDL specifications by parsing input into abstract syntax trees, converting AST nodes into structured data models, and supporting bidirectional S-expression serialization. It operates on OCaml data types representing WebIDL interfaces, attributes, operations, dictionaries, and mixins, with support for inheritance and interface members. Concrete use cases include validating WebIDL definitions, generating code from parsed specifications, and analyzing interface structures with precise type modeling.",
+      "description_length": 526,
+      "index": 19,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 20,
-    "meaningful_modules": 19,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.95
+    "meaningful_modules": 20,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 674,
-    "min_description_length": 184,
-    "avg_description_length": 478.4736842105263,
-    "embedding_file_size_mb": 0.06946563720703125
+    "max_description_length": 526,
+    "min_description_length": 224,
+    "avg_description_length": 408.5,
+    "embedding_file_size_mb": 0.2901639938354492
   }
 }

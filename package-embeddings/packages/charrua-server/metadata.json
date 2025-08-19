@@ -1,39 +1,39 @@
 {
   "package": "charrua-server",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:04:36.879264",
+  "creation_timestamp": "2025-08-14T22:49:52.770611",
   "modules": [
     {
-      "module_path": "Dhcp_server.Input",
+      "module_path": "Dhcp_server.Config",
       "library": "charrua-server",
-      "description": "This module processes incoming DHCP packets, determining whether they are addressed to the server and generating appropriate responses such as replies, lease updates, or error messages. It operates on DHCP packets, lease databases, and configuration data, returning a result that dictates the next action the server should take. Concrete use cases include handling DHCP discovery, request, and release messages to manage IP address allocation and respond to client queries.",
-      "description_length": 473,
+      "description": "This module constructs and manages DHCP server configurations by parsing ISC dhcpd.conf files or building configurations directly from parameters. It works with IP addresses, MAC addresses, DHCP options, and network prefixes to define server behavior, including lease times, address ranges, and host-specific settings. Concrete use cases include initializing a DHCP server with a predefined configuration file or programmatically creating configurations for dynamic network environments.",
+      "description_length": 487,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Dhcp_server.Config",
+      "module_path": "Dhcp_server.Input",
       "library": "charrua-server",
-      "description": "This module parses ISC dhcpd.conf files into structured configurations and constructs server configurations programmatically. It processes IP and MAC address bindings, subnet definitions, lease times, and host-specific options for use in DHCP response generation. Concrete use cases include loading configurations from disk and defining in-memory DHCP server settings for network interfaces.",
-      "description_length": 391,
+      "description": "This module processes incoming DHCP packets, determining whether they are relevant to the server and producing a reply or update action based on the current lease database. It operates on DHCP packets, MAC addresses, and monotonic time values, returning structured outcomes like replies, warnings, or lease database updates. It is used in the server\u2019s main loop to handle packet input and decide the appropriate response without performing any IO.",
+      "description_length": 447,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dhcp_server.Lease",
       "library": "charrua-server",
-      "description": "This module manages dynamic IP address allocation and lease lifecycle operations, including creating time-bound leases, extending or replacing existing leases, and checking expiration states. It operates on a DHCP lease database that maps client identifiers to IPv4 addresses, supporting queries to validate address availability, allocate usable addresses within specified ranges, and enforce lease state transitions. The functionality is specifically designed for handling DHCP request workflows, ensuring conflict-free IP distribution and maintaining lease persistence across server restarts.",
-      "description_length": 594,
+      "description": "This module provides operations for managing DHCP lease records, including time-based lease manipulation (extension, expiration checks), database maintenance (garbage collection, lease replacement), and IP address allocation. It works with lease records containing timestamps, client identifiers, and IPv4 addresses, along with lease databases that track dynamic address assignments. These functions support critical DHCP server tasks like handling lease lifetimes, resolving client address requests, and ensuring efficient reuse of expired or freed IP addresses.",
+      "description_length": 563,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Dhcp_server",
       "library": "charrua-server",
-      "description": "This module implements a DHCP server with components for configuration parsing, packet processing, and lease management. It provides data types for DHCP packets, structured configurations, and lease records, supporting operations like parsing dhcpd.conf files, handling DHCP discovery and request workflows, and managing dynamic IP allocation with time-bound leases. Concrete use cases include loading server settings from disk, responding to client queries, and maintaining conflict-free IP address distribution across network interfaces.",
-      "description_length": 539,
+      "description": "The module implements a DHCP server with submodules for configuration management, lease handling, and packet processing. It works with IP and MAC addresses, DHCP options, lease records, and network prefixes to manage dynamic address assignment and server behavior. Concrete use cases include parsing dhcpd.conf files, managing lease lifetimes and allocations, and processing DHCP requests to generate server responses.",
+      "description_length": 418,
       "index": 3,
       "embedding_norm": 0.9999999403953552
     }
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 594,
-    "min_description_length": 391,
-    "avg_description_length": 499.25,
-    "embedding_file_size_mb": 0.014951705932617188
+    "max_description_length": 563,
+    "min_description_length": 418,
+    "avg_description_length": 478.75,
+    "embedding_file_size_mb": 0.05840778350830078
   }
 }

@@ -1,56 +1,32 @@
 {
   "package": "msat",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 80,
-  "creation_timestamp": "2025-07-15T23:19:02.112253",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 49,
+  "creation_timestamp": "2025-08-15T15:20:01.201120",
   "modules": [
-    {
-      "module_path": "Msat_tseitin.Make",
-      "library": "msat.tseitin",
-      "description": "This module converts arbitrary boolean formulas into equi-satisfiable CNF representations, supporting operations for constructing logical expressions (negation, conjunction, disjunction, implication, equivalence) and extracting their CNF form. It works with atomic propositions represented by the parameter module F and builds formulas using those atoms. Concrete use cases include preprocessing boolean formulas for SAT solvers, simplifying logical constraints for analysis, and transforming complex logical expressions into a standard form for verification tasks.",
-      "description_length": 565,
-      "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_tseitin.S",
-      "library": "msat.tseitin",
-      "description": "This module represents boolean formulas using atoms and logical connectives such as negation, conjunction, disjunction, xor, implication, and equivalence. It provides functions to construct and manipulate these formulas, including conversion to Conjunctive Normal Form (CNF) as a list of clauses. The resulting CNF can be used directly with SAT solvers, while the formula representation supports explicit construction and inspection of logical expressions.",
-      "description_length": 456,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_tseitin.Arg",
-      "library": "msat.tseitin",
-      "description": "This module defines the necessary operations for handling boolean formulas during Tseitin's CNF conversion. It includes functions for negating formulas, generating fresh formulas, and printing formulas. These operations directly support the transformation of arbitrary boolean formulas into equi-satisfiable CNF representations.",
-      "description_length": 328,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_tseitin",
-      "library": "msat.tseitin",
-      "description": "This module transforms arbitrary boolean formulas into equi-satisfiable CNF representations using Tseitin's algorithm, introducing auxiliary variables to preserve equivalence while flattening complex expressions. It supports constructing and manipulating logical expressions with negation, conjunction, disjunction, implication, and equivalence, using atoms from a parameter module F. The resulting CNF output can be directly used with SAT solvers, enabling tasks like constraint analysis, formula verification, and logical simplification. Auxiliary operations for negation, formula generation, and printing facilitate both direct manipulation and debugging of intermediate forms during conversion.",
-      "description_length": 698,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
     {
       "module_path": "Msat_sat.Proof.Tbl",
       "library": "msat.sat",
-      "description": "This module provides a mutable hash table specialized for mapping resolution proof terms (`Msat_sat.Proof.t`) to arbitrary values, supporting efficient insertion, lookup, iteration, and batch operations like sequence-based construction and updates. It works with sequences of key-value pairs to enable bulk manipulation of proof-related bindings, such as aggregating or transforming proof metadata during SAT solving. Use cases include caching proof-derived results or tracking dependencies between resolution steps in formal verification workflows.",
-      "description_length": 549,
-      "index": 4,
+      "description": "This module implements a hash table for mapping resolution proof objects to arbitrary values, supporting imperative operations like insertion, lookup, iteration, and bulk initialization from sequences of key-value pairs. It works with keys representing logical proofs generated during SAT solving and polymorphic values, enabling efficient storage and retrieval of associated data. Typical use cases include caching intermediate proof results, tracking dependencies between clauses, or managing mappings during proof reconstruction in SAT-based verification tasks.",
+      "description_length": 564,
+      "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Msat_sat.Clause.Tbl",
       "library": "msat.sat",
-      "description": "This module provides imperative hash table operations for managing clauses in a SAT solver, using clauses as keys and arbitrary values. It supports efficient insertion, lookup, iteration, and sequence-based construction or modification of tables, optimized for dynamic clause tracking during logical reasoning. Use cases include caching clause evaluations, tracking learned clauses, or maintaining indexed clause databases for conflict analysis and resolution steps.",
-      "description_length": 466,
-      "index": 5,
+      "description": "This module enables efficient storage and retrieval of polymorphic values keyed by clauses, which are represented as integers in the SAT solver. It supports imperative hash table operations like insertion, lookup, and iteration, along with bulk modification via sequences for initializing or updating large sets of clause-value bindings. Typical use cases include tracking metadata (e.g., clause weights, learned clause status) during SAT solving where fast access and batch updates are required.",
+      "description_length": 496,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_sat.Term",
+      "library": "msat.sat",
+      "description": "This module defines operations for manipulating propositional terms in a SAT solver, including equality checking, hashing, and pretty-printing. It works directly with the abstract type `t` representing logical terms. These functions support tasks like term comparison, efficient storage in hash tables, and debugging output generation.",
+      "description_length": 335,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
@@ -58,604 +34,380 @@
       "library": "msat.sat",
       "description": "This module represents propositional formulas using integers to encode atomic propositions. It provides operations for negation, normalization, equality checking, hashing, and debugging output. It is used internally by the SAT solver to manipulate logical expressions in a canonical form.",
       "description_length": 288,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_sat.Term",
-      "library": "msat.sat",
-      "description": "This module defines operations for manipulating propositional terms in a SAT solver, including equality checking, hashing, and pretty-printing. It works directly with the abstract type `t` representing logical terms. These functions support term comparison, efficient storage in hash tables, and readable output for debugging solver states.",
-      "description_length": 340,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_sat.Value",
-      "library": "msat.sat",
-      "description": "This module represents truth values of atomic propositions in a SAT solver, using integers for encoding. It provides a printer function `pp` for converting these values to human-readable strings, primarily for debugging. The module directly supports tracking and printing the assignment of boolean values during SAT solving operations.",
-      "description_length": 335,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_sat.Proof",
-      "library": "msat.sat",
-      "description": "This module builds and manipulates resolution proofs from SAT solving traces, using integer-based clauses and atoms. It supports proving clauses, expanding proofs into steps, extracting unsat cores, and converting hyper-resolution into standard resolution. The child module provides a mutable hash table for mapping proof terms to arbitrary values, enabling efficient storage and batch manipulation of proof metadata. Together, they allow validating SAT outputs, tracking resolution dependencies, and analyzing or transforming proof structures for debugging and optimization.",
-      "description_length": 575,
-      "index": 9,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Msat_sat.Clause",
       "library": "msat.sat",
-      "description": "This module represents clauses in a SAT solver using integer-based atomic propositions, supporting access via arrays or lists, equality checks, name retrieval, and value printing. It enables managing logical clauses during SAT solving, such as tracking and manipulating disjunctions of literals. A child module extends it with imperative hash table operations, using clauses as keys for efficient insertion, lookup, and iteration, ideal for caching evaluations or tracking learned clauses. Together, they provide a foundation for dynamic clause handling in logical reasoning and conflict analysis.",
-      "description_length": 597,
-      "index": 10,
+      "description": "This module represents clauses in a SAT solver using integers to encode atomic propositions. It provides operations to access clause atoms as arrays or lists, compare clauses for equality, retrieve clause names, and format clauses for printing. Concrete use cases include managing and analyzing individual clauses during SAT solving, such as tracking learned clauses or performing clause elimination based on structural properties.",
+      "description_length": 431,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Msat_sat.Atom",
       "library": "msat.sat",
-      "description": "This module represents atomic propositions as integers in a SAT solver, providing operations to manipulate and query these atoms. It includes functions for negation, comparison, hashing, and conversion to formulas, along with utilities to print and check the sign of atoms. Concrete use cases include building and solving propositional logic formulas in a SAT solver context.",
-      "description_length": 375,
-      "index": 11,
+      "description": "This module represents atomic propositions as integers in a SAT solver, providing operations to manipulate and compare these atoms. It supports negation, sign extraction, absolute value computation, and conversion to formulas, along with standard equality, comparison, and hashing functions. Concrete use cases include building and solving propositional logic formulas where atoms are efficiently handled as integers.",
+      "description_length": 417,
+      "index": 5,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_sat.Value",
+      "library": "msat.sat",
+      "description": "Represents truth values of atomic propositions in a SAT solver using integers. Provides a printer function `pp` for converting these integer-based truth values to human-readable string representations, primarily for debugging purposes. Useful when inspecting solver states or logging intermediate results during formula evaluation.",
+      "description_length": 331,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_sat.Proof",
+      "library": "msat.sat",
+      "description": "This module implements a resolution proof system for SAT solving, providing functions to construct and manipulate proofs derived from conflict analysis. It works with clauses, atoms, and proof nodes to build resolution steps, extract unsat cores, and validate proof structures. Concrete use cases include reconstructing unsatisfiability proofs from solving traces, extracting minimal unsat cores for debugging, and verifying resolution steps during proof replay.",
+      "description_length": 462,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Msat_sat.Int_lit",
       "library": "msat.sat",
-      "description": "This module represents atomic propositions as integers in a SAT solver, providing operations to create, compare, negate, and normalize formulas. It includes functions to convert between integers and formula terms, track signs, and apply or set negation. Concrete use cases include managing logical atoms in SAT solving algorithms, where efficient equality, hashing, and normalization are required for solving boolean satisfiability problems.",
-      "description_length": 441,
-      "index": 12,
+      "description": "This module represents atomic propositions as integers for a SAT solver, providing operations to create, negate, normalize, and compare formulas. It includes functions to convert between integers and formula terms, track signs, and apply or set negation. Use cases include efficient manipulation of propositional variables during clause solving and backtracking in a SAT solver.",
+      "description_length": 378,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Msat_sat",
       "library": "msat.sat",
-      "description": "This module implements a SAT solver using integers to represent atomic propositions, enabling the construction and solving of propositional logic problems through clauses and formulas. It provides core operations for creating and manipulating solvers, adding constraints, checking satisfiability, and extracting models or conflict analyses, with support for exporting resolution proofs and unsat cores. Child modules handle formula normalization, term comparison, truth value assignment, clause management, and proof construction, enabling tasks like debugging solver states, caching learned clauses, and validating logical outputs. Specific applications include formal verification, constraint solving, and automated reasoning where symbolic manipulation of boolean formulas is required.",
-      "description_length": 788,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Coq.Simple",
-      "library": "msat.backend",
-      "description": "This module implements a simple Coq proof printer using a formatter, specifically handling proof output from a SAT solver. It works with proof structures defined in the `S` module and formats them for Coq script generation. A concrete use case is exporting SAT resolution proofs to a file in a Coq-compatible format.",
-      "description_length": 316,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Dot.Default",
-      "library": "msat.backend",
-      "description": "This module provides default implementations for printing atomic formulas and proof node metadata in the DOT graph format. It works with proof structures involving clauses and atoms, generating node labels and attributes like color for visualization. Concrete use cases include exporting proof trees to DOT files that can be rendered into images with Graphviz, using custom formatting rules for atoms and clause types.",
-      "description_length": 418,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Dedukti.Make",
-      "library": "msat.backend",
-      "description": "Generates a backend for exporting proofs to the Dedukti type checker by defining how to print proof terms in a specific format. It works with proof structures defined in the `S` module and atomic terms from the `A` module. This module is used to produce proof files compatible with Dedukti's expected input format.",
-      "description_length": 314,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat_backend.Dedukti.Arg",
-      "library": "msat.backend",
-      "description": "Implements argument handling and parsing for proof generation in the Dedukti backend. It processes command-line inputs to configure proof strategies and lemma selection. Directly works with strings, lists, and proof-related types like lemma and formula to drive proof execution.",
-      "description_length": 278,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat_backend.Coq.Arg",
-      "library": "msat.backend",
-      "description": "This module defines data types `hyp`, `lemma`, and `assumption` to represent logical statements in Coq and provides functions `prove_hyp`, `prove_lemma`, and `prove_assumption` to generate Coq proof scripts for these statements. Each proving function takes a formatter, a name, and the corresponding structure, and outputs a Coq term that proves the statement under the given name. It is used to translate SAT solver resolution proofs into Coq hypotheses, ensuring that each clause is encoded as an implication leading to `False`, preserving the original atom order.",
-      "description_length": 566,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Dot.Make",
-      "library": "msat.backend",
-      "description": "This module generates DOT format output for visualizing proofs as graphs, using the `pp` function to print proof structures to a formatter. It operates on proof data from the `S` module and leverages the `A` module's definitions to represent proof components in the graph. Use this to create visual proof traces for debugging or documentation, which can be rendered into images using Graphviz tools.",
-      "description_length": 399,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Coq.Make",
-      "library": "msat.backend",
-      "description": "This module defines a function `pp` that formats and outputs resolution proofs to a file using a specified format. It operates on proof data structures provided by the `S` module and leverages formatting utilities from the `A` module. It supports generating Coq scripts that represent SAT solver proofs, enabling formal verification of solver results.",
-      "description_length": 351,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat_backend.Dot.Arg",
-      "library": "msat.backend",
-      "description": "This module defines the data types and functions needed to print proof elements in the DOT graph format. It includes types for atomic formulas, hypotheses, lemmas, and assumptions, along with functions to format their display, ensuring proper escaping for DOT compatibility. It is used to generate visual representations of proof trees where each proof component appears as a labeled node with associated styling and annotations.",
-      "description_length": 429,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Backend_intf.S",
-      "library": "msat.backend",
-      "description": "This module defines the interface for proof-exporting backends, specifying a type `t` for proof representations and a `pp` function to format and output proofs to a file. It enables concrete implementations to serialize proofs in specific formats, such as DIMACS or SMT-LIB, by defining how to print them. Use cases include generating human-readable or tool-consumable proof logs for verification or debugging purposes.",
-      "description_length": 419,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Dot.Simple",
-      "library": "msat.backend",
-      "description": "This module generates DOT-formatted representations of proofs for visualization with Graphviz. It works with proof structures defined by the `S` module and uses the `A` module for atomic elements. It is used to produce graphical depictions of logical proofs, enabling analysis through visual graphs.",
-      "description_length": 299,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Backend_intf",
-      "library": "msat.backend",
-      "description": "This module defines the interface for proof export functionality, specifying operations to construct and manipulate abstract proof terms, including creating proof nodes, combining proofs, and serializing them. It includes a child module that introduces the type `t` for proof representations and a `pp` function to output proofs to a file, supporting formats like DIMACS or SMT-LIB. Main data types include proof nodes and combinators, while key operations allow building and serializing proofs. Example uses include generating verifiable proof logs for external tools or debugging proof structures during formal verification.",
-      "description_length": 626,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Dot",
-      "library": "msat.backend",
-      "description": "This module converts proof structures into directed graphs in the dot format, enabling visualization through Graphviz. It defines data types for proof components like atomic formulas, hypotheses, and lemmas, and provides functions to format and escape these elements for DOT compatibility. The `pp` function prints proof graphs to a formatter, using customizable node labels and attributes like color to distinguish clause types and logical roles. Submodules supply default styling and metadata printing rules, supporting use cases such as generating proof trees or debugging diagrams from formal proofs.",
-      "description_length": 604,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Dedukti",
-      "library": "msat.backend",
-      "description": "This module provides a Dedukti backend for encoding and verifying proofs by translating logical statements and proof terms into Dedukti's logical framework. It supports operations on proof structures and logical expressions, allowing tasks like proof checking and formal verification of functional programs. The backend generates proof files through a dedicated sub-module that prints proof terms in Dedukti's expected format, while another sub-module handles command-line arguments to control proof strategies and lemma selection. Key data types include proof objects, formulas, and atomic terms, manipulated through functions that build, export, and configure proofs based on Dedukti's type-theoretic foundations.",
-      "description_length": 715,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backend.Coq",
-      "library": "msat.backend",
-      "description": "This module translates SAT solver resolution proofs into Coq scripts, converting logical derivations into Coq terms and tactics. It defines core data types like `hyp`, `lemma`, and `assumption`, along with corresponding proof-generating functions that output Coq assertions under given names. The module includes a formatter that writes resolution proofs to files in Coq-compatible syntax, using structured proof data from the SAT solver. You can use it to automatically generate and export Coq proofs of unsatisfiability, validating logical constraints directly from SAT results.",
-      "description_length": 580,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat_backend",
-      "library": "msat.backend",
-      "description": "This module integrates proof export, visualization, and translation capabilities, enabling the construction, manipulation, and external use of formal proofs. It defines core data types such as proof nodes, logical expressions, and proof terms, with operations to build, combine, and serialize them. Functionality includes exporting proofs to formats like DIMACS, SMT-LIB, and Coq, visualizing proof structures via Graphviz, and encoding proofs in Dedukti for formal verification. Specific uses include generating verifiable proof logs, producing debuggable proof diagrams, and translating SAT solver outputs into Coq scripts for theorem validation.",
-      "description_length": 648,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backtrack.Ref",
-      "library": "msat.backtrack",
-      "description": "This module implements backtrackable references that support setting, getting, and updating values with the ability to save and restore states through push and pop operations. It works with any data type, allowing optional custom copy functions to manage deep copies during backtracking. Use cases include implementing algorithms that require state rollback, such as constraint solvers or search procedures with backtracking.",
-      "description_length": 425,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat_backtrack",
-      "library": "msat.backtrack",
-      "description": "This module provides backtrackable references that support state manipulation through set, get, and update operations, along with push and pop for saving and restoring states. It handles arbitrary data types and allows optional custom copy functions to control deep copying during backtracking. These features enable efficient implementation of algorithms requiring state rollback, such as constraint solvers and backtracking search procedures. For example, one can track variable assignments during a search and revert to earlier states when exploring alternative paths.",
-      "description_length": 571,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_cdcl_t.Proof.Tbl",
-      "library": "msat",
-      "description": "This module supports imperative manipulation of key-value pairs where keys are resolution proof terms and values are arbitrary data, enabling efficient lookups and in-place transformations during SAT solving. It provides bulk operations over sequences for batch insertion/update workflows and supports statistical analysis of table dynamics. Typical use cases involve caching proof derivations, mapping logical clauses to metadata, or tracking evolving proof states during iterative solver execution.",
-      "description_length": 500,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_mcsat.Clause.Tbl",
-      "library": "msat",
-      "description": "This module provides imperative hash table operations for mapping `Clause.t` keys to arbitrary values, supporting creation, insertion, lookup, deletion, and traversal via iterators or functional folds. It emphasizes bulk sequence-based manipulation through `add_seq`, `replace_seq`, and `of_seq`, enabling efficient batch updates and conversions from key-value sequences. Designed for scenarios requiring dynamic clause management with high-performance lookups, it is particularly suited for theorem proving or constraint-solving workflows where clauses must be stored, retrieved, and transformed in bulk while preserving type safety.",
-      "description_length": 634,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_pure_sat.Clause.Tbl",
-      "library": "msat",
-      "description": "This module provides imperative hash table operations for managing mappings from clauses (`Clause.t`) to arbitrary values, supporting efficient insertion, lookup, iteration, and bulk updates via sequences. It specializes in handling clause-based keys within SAT solver workflows, enabling use cases like tracking clause states, storing derived properties, or aggregating solver metadata during logical reasoning tasks.",
-      "description_length": 418,
-      "index": 33,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Make_mcsat.Proof.Tbl",
-      "library": "msat",
-      "description": "This module provides imperative hash table operations for managing mappings from proof terms (`Proof.t`) to arbitrary values, supporting efficient insertion, lookup, deletion, and in-place modification. It includes bulk update capabilities via sequences of key-value pairs, enabling batch population or transformation of tables, along with statistical tracking and iterative traversal. Such functionality is particularly useful in proof analysis or verification workflows where dynamic association of auxiliary data (e.g., metadata, intermediate results) with proof steps is required.",
-      "description_length": 584,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_cdcl_t.Clause.Tbl",
-      "library": "msat",
-      "description": "This module implements imperative hash tables mapping clauses to arbitrary values, offering operations for insertion, deletion, iteration, and bulk sequence-based construction or updates. It specializes in handling dynamic clause sets with efficient lookups and transformations, particularly supporting scenarios like clause learning, caching, or dependency tracking in SAT solving algorithms. The sequence-driven interfaces enable streamlined bulk processing of clauses, useful for batched updates during conflict resolution or formula simplification phases.",
-      "description_length": 559,
-      "index": 35,
+      "description": "This module provides operations for constructing and manipulating propositional logic formulas using integer-based atomic propositions, supporting negation, normalization, clause resolution, and proof generation. It works with literals, terms, clauses, and atoms to enable low-level SAT solving tasks like clause addition, truth evaluation at specific decision levels, and exporting clause sets. These capabilities are applicable to formal verification, automated reasoning, and constraint solving scenarios where efficient logical formula manipulation is required.",
+      "description_length": 565,
+      "index": 9,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Msat.Make_pure_sat.Proof.Tbl",
       "library": "msat",
-      "description": "This module implements a hash table for managing key-value pairs where keys are proof terms, supporting operations like insertion, lookup, and bulk updates from sequences. It facilitates efficient storage and retrieval of data associated with proofs, particularly useful for tracking proof properties or metadata during resolution-based SAT solving processes.",
-      "description_length": 359,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Solver_intf.S-Atom",
-      "library": "msat",
-      "description": "This module defines operations on atoms, including equality, comparison, hashing, negation, and sign manipulation. It provides functions to obtain the underlying formula of an atom and to print atoms using a solver-specific printer. Concrete use cases include managing propositional variables in SAT solvers and handling atomic propositions in formal verification tasks.",
-      "description_length": 370,
-      "index": 37,
+      "description": "This module offers imperative hash table operations optimized for keys of type `Proof.t`, supporting standard manipulations like insertion, lookup, and iteration, alongside batch processing via sequences for bulk operations. It manages associations between proof objects and arbitrary values, enabling efficient traversal, filtering, and in-place transformations over proof-centric data. Such functionality is useful for tracking proof dependencies, aggregating proof metadata, or stream-processing proof traces during SAT solver analysis.",
+      "description_length": 539,
+      "index": 10,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Msat.Solver_intf.PLUGIN_SAT-Formula",
+      "module_path": "Msat.Make_cdcl_t.Clause.Tbl",
       "library": "msat",
-      "description": "This module defines operations for manipulating logical formulas, including negation, normalization, equality checking, hashing, and printing. It works with the abstract type `Formula.t`, representing logical expressions, and supports solver integration by ensuring normalized forms and consistent hashing for equivalent formulas. It is used to interface with SAT solvers, enabling formula transformation and comparison during solving processes.",
-      "description_length": 445,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Solver_intf.S-Proof-Tbl",
-      "library": "msat",
-      "description": "This module provides specialized hash table operations for managing key-value pairs where keys are of type `Proof.t`, supporting imperative modifications like adding, replacing, and in-place filtering or folding over bindings. It works with the `Proof.Tbl.t` data structure, enabling efficient bulk operations via sequences of key-value pairs (e.g., `add_seq`, `replace_seq`, `of_seq`) and use cases such as dynamic proof-state tracking or incremental solver state updates. The focus on proof-indexed tables makes it particularly suited for scenarios requiring precise, high-performance associations between proofs and associated data in formal verification workflows.",
-      "description_length": 668,
-      "index": 39,
+      "description": "This module implements a hash table for mapping logical clauses (`Clause.t`) to arbitrary values, offering imperative operations like insertion, lookup, removal, iteration, folding, and in-place filtering. It supports bulk construction and updates via sequences of key-value pairs, enabling efficient management of clause-indexed data. Such functionality is particularly useful in SAT solvers for tasks like caching clause-derived metadata, tracking clause dependencies, or dynamically reorganizing clause sets during conflict-driven clause learning.",
+      "description_length": 550,
+      "index": 11,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Msat.Solver_intf.PLUGIN_MCSAT-Value",
+      "module_path": "Msat.Make_cdcl_t.Proof.Tbl",
       "library": "msat",
-      "description": "This module defines the interface for value manipulation in a solver, including operations for creating, comparing, and printing values. It works with the abstract type `t` representing solver values and provides a concrete printer function for debugging. Use cases include managing symbolic expressions and handling value representations during constraint solving.",
-      "description_length": 365,
-      "index": 40,
+      "description": "This module implements a mutable hash table with `Proof.t` keys and polymorphic values, supporting imperative operations like `add`, `remove`, `find`, and `fold`, as well as bulk sequence-based manipulations via `add_seq` and `of_seq`. It is designed for efficiently managing and transforming collections of proof objects during SAT solving, enabling use cases such as tracking proof-derived metadata or aggregating resolution steps. The inclusion of specialized operations like `filter_map_inplace` and sequence-driven updates facilitates optimized workflows for proof analysis and transformation tasks.",
+      "description_length": 604,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Solver_intf.PLUGIN_SAT",
+      "module_path": "Msat.Make_pure_sat.Clause.Tbl",
       "library": "msat",
-      "description": "This module defines the interface for pure SAT solvers, including operations for asserting clauses, checking satisfiability, and extracting proofs. It works with propositional formulas and proof objects, enabling concrete solvers to implement core SAT-solving logic. Use cases include verifying logical formulas and generating resolution proofs for unsatisfiable instances.",
-      "description_length": 373,
-      "index": 41,
+      "description": "This module offers imperative hash table operations optimized for keys of type `Clause.t`, supporting additions, removals, bulk updates via sequences, and transformations through folding or filtering. It manages mappings from `Clause.t` to arbitrary values (`'a`), enabling efficient lookups and in-place modifications. Such functionality is particularly useful in SAT solving workflows where clauses are dynamically managed, such as tracking learned clauses or resolving conflicts through batched updates and iterative processing.",
+      "description_length": 531,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Solver_intf.EXPR-Value",
+      "module_path": "Msat.Make_mcsat.Proof.Tbl",
       "library": "msat",
-      "description": "This module defines the interface for solver expressions, providing a type `t` to represent logical expressions and a printing function `pp` for debugging. It works with logical formulas and constraints used in SMT solving. Concrete use cases include constructing and manipulating boolean expressions for verification tasks.",
-      "description_length": 324,
-      "index": 42,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Make_cdcl_t.Term",
-      "library": "msat",
-      "description": "Implements term manipulation for a CDCL-based SMT solver. Provides equality checking, hashing, and pretty-printing for terms. Used to manage and compare symbolic expressions during constraint solving.",
-      "description_length": 200,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Solver_intf.EXPR-Formula",
-      "library": "msat",
-      "description": "This module defines core operations for manipulating logical formulas, including negation, normalization, equality checking, hashing, and pretty-printing. It works with the abstract type `t` representing formulas, which can be normalized into a standard form while tracking whether they are negated. These functions are used to simplify and compare logical expressions during SAT solving, enabling efficient reasoning over propositional logic.",
-      "description_length": 443,
-      "index": 44,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Solver_intf.PLUGIN_CDCL_T-Formula",
-      "library": "msat",
-      "description": "This module defines core operations for manipulating logical formulas in a CDCL-based solver, including negation, normalization, equality checking, hashing, and pretty-printing. It works directly with the abstract type `t` representing formulas, ensuring consistent handling of logical expressions. Concrete use cases include normalizing formulas for internal representation, comparing formulas for equality, and printing formulas during debugging or proof tracing.",
-      "description_length": 465,
-      "index": 45,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Solver_intf.S-Term",
-      "library": "msat",
-      "description": "This module defines core operations for working with terms in a solver, including equality checking, hashing, and pretty-printing. It operates on the abstract type `Term.t`, representing logical terms within the solver. These functions enable term comparison, efficient storage in hash tables, and readable output for debugging.",
-      "description_length": 328,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_pure_sat.Clause",
-      "library": "msat",
-      "description": "This module manages clauses as collections of atoms, offering direct access to their components through arrays or lists, while supporting equality checks and string representations for analysis and transformation in logic solvers. It includes a child module that provides imperative hash table operations for mapping clauses to arbitrary values, enabling efficient tracking of clause states and solver metadata in SAT-solving workflows. You can extract atoms from a clause, compare clauses for equality, store and retrieve associated data using clauses as keys, and iterate over clause mappings to support logical reasoning tasks. The combination of direct clause manipulation and clause-keyed data storage facilitates building and optimizing logic-based systems with dynamic clause handling and state management.",
-      "description_length": 813,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_pure_sat.Atom",
-      "library": "msat",
-      "description": "This module represents propositional atoms and provides operations for manipulating their truth values, including negation, sign extraction, and absolute value. It works with the `atom` type and integrates with the solver's formula type through conversion. Concrete use cases include constructing and transforming logical formulas, checking atom equivalence, and managing atom states during SAT solving.",
-      "description_length": 403,
-      "index": 48,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_cdcl_t.Value",
-      "library": "msat",
-      "description": "Implements the value propagation and assignment management logic for the CDCL-based SAT solver. It handles operations like asserting literals, backtracking, and maintaining the current assignment stack. Works directly with the solver's state and literal values to support decision-making and conflict resolution during search.",
-      "description_length": 326,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Solver_intf.PLUGIN_CDCL_T",
-      "library": "msat",
-      "description": "This module defines the interface for theories used in a CDCL(T) SMT solver, providing operations to manage backtracking levels and perform incremental constraint checking. It works with propositional formulas and proof terms, supporting push and pop of scopes, partial consistency checks, and final model validation. Concrete use cases include integrating theory solvers for arithmetic, bit-vectors, or arrays into the main SAT solver loop.",
-      "description_length": 441,
-      "index": 50,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Solver_intf.S",
-      "library": "msat",
-      "description": "This module provides operations for creating and managing SAT solvers, including adding clauses, terms, and assumptions, solving with conflict callbacks, and evaluating logical atoms or formulas. It operates on data structures representing propositional logic elements like terms, formulas, clauses, and solver states, which encapsulate satisfiability results or proofs. These capabilities are used in formal verification, constraint satisfaction problems, and automated reasoning workflows where model generation or conflict analysis is required.",
-      "description_length": 547,
-      "index": 51,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Solver_intf.S-Clause-Tbl",
-      "library": "msat",
-      "description": "This module implements a hash table optimized for clause management in a SAT solver, offering operations like insertion, lookup, in-place transformation, and bulk construction from sequences. It works with `Clause.Tbl.t` tables where keys are `Clause.t` instances, enabling efficient storage and manipulation of logical clauses. Designed for tasks such as tracking learned clauses, performing garbage collection, or applying iterative clause simplifications during solver execution.",
-      "description_length": 482,
-      "index": 52,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Solver_intf.EXPR-Term",
-      "library": "msat",
-      "description": "This module defines operations for working with logical terms in a solver interface, including equality checking, hashing, and pretty-printing. It manipulates the abstract type `Term.t`, representing logical expressions. Concrete use cases include comparing terms for equivalence, generating hash values for term dictionaries, and formatting terms for debugging output.",
-      "description_length": 369,
-      "index": 53,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Solver_intf.S-Clause",
-      "library": "msat",
-      "description": "This module defines operations for working with clauses, which represent logical disjunctions of atoms. It provides functions to retrieve atoms as arrays or lists, compare clauses for equality, obtain clause names, and pretty-print clauses. A concrete use case includes analyzing or manipulating logical formulas during SAT solving or proof construction.",
-      "description_length": 354,
-      "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_mcsat.Atom",
-      "library": "msat",
-      "description": "This module represents and manipulates propositional atoms in a SAT solver context. It provides operations for negating atoms, extracting their sign and absolute value, comparing and hashing atoms, and converting atoms to formulas. Use cases include managing atomic propositions in logical formulas and implementing decision procedures that require direct atom manipulation.",
-      "description_length": 374,
-      "index": 55,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Solver_intf.S-Formula",
-      "library": "msat",
-      "description": "This module defines the interface for manipulating logical formulas in a solver, including operations for equality, hashing, printing, negation, and normalization. It works with the abstract type `t` representing formulas, ensuring consistent handling of logical expressions. Concrete use cases include normalizing formulas for canonical representation, checking equality, and applying negation during constraint solving or proof construction.",
-      "description_length": 443,
-      "index": 56,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Solver_intf.S-Proof",
-      "library": "msat",
-      "description": "This module provides operations for constructing and manipulating resolution proofs derived from SAT-solving traces. It works with formulas, atoms, lemmas, clauses, and proof structures to support concrete tasks like proving clauses, extracting unsat cores, and expanding proof steps. Key use cases include validating unsatisfiability results, generating resolution steps from hyper-resolution steps, and inspecting proof nodes and their dependencies.",
-      "description_length": 451,
-      "index": 57,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_mcsat.Value",
-      "library": "msat",
-      "description": "Handles value representation and manipulation within the solver, providing operations for creating, comparing, and converting values used in constraint solving. Works directly with the abstract type `t` representing solver values, alongside standard types like integers and booleans. Used during solving to track and evaluate expressions, particularly in debugging and intermediate step reporting.",
-      "description_length": 397,
-      "index": 58,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Make_cdcl_t.Atom",
-      "library": "msat",
-      "description": "This module represents propositional atoms in a SAT solver, providing operations to manipulate and query their logical properties. It supports data types such as `t` for atoms, and boolean signs, and interacts with formulas through the `formula` function. Concrete use cases include creating and negating atoms, comparing and hashing atoms for efficient storage, and extracting the underlying formula representation for solving.",
-      "description_length": 428,
-      "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_cdcl_t.Clause",
-      "library": "msat",
-      "description": "This module represents and manipulates logical clauses in a SAT solver, offering direct access to clause atoms via arrays or lists, equality comparisons, name retrieval, and formatting for printing. It supports imperative hash tables that map clauses to arbitrary values, enabling efficient lookups, insertions, deletions, and bulk operations useful for clause learning, caching, and dependency tracking. With both direct clause manipulation and hash table-based management, it facilitates tasks like conflict resolution, formula simplification, and custom solver extensions. Examples include tracking learned clauses during solving or debugging clause structures in complex logical formulas.",
-      "description_length": 692,
-      "index": 60,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_pure_sat.Value",
-      "library": "msat",
-      "description": "This module represents truth values and assignments in a SAT solver, providing operations to create, compare, and manipulate boolean values. It works with the `t` type, which encodes propositional variables and their negations. Use this module to manage variable assignments and evaluate logical expressions within a SAT solving context.",
-      "description_length": 337,
-      "index": 61,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Solver_intf.PLUGIN_MCSAT-Formula",
-      "library": "msat",
-      "description": "This module defines operations for manipulating logical formulas, including negation, normalization, equality checking, hashing, and pretty-printing. It works with the abstract type `Formula.t`, representing logical expressions, and supports solver-specific operations for formula transformation and comparison. Concrete use cases include normalizing formulas for canonical representation, comparing formulas for equality, and printing formulas during debugging or proof generation.",
-      "description_length": 482,
-      "index": 62,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Msat.Solver_intf.PROOF",
-      "library": "msat",
-      "description": "This module provides operations for constructing and manipulating resolution proofs derived from SAT solving traces. It works with formulas, atoms, lemmas, and clauses to build proof structures and supports concrete operations like proving clauses, converting hyper-resolution steps, and extracting unsatisfiability cores. Use cases include validating SAT solver outputs, generating proof certificates, and analyzing conflict resolution steps in logic formulas.",
-      "description_length": 461,
-      "index": 63,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Msat.Make_mcsat.Proof",
-      "library": "msat",
-      "description": "This module orchestrates the construction and manipulation of resolution proofs from SAT-solving traces, centered around core data types like formulas, atoms, lemmas, and clauses. It enables building proof structures, extracting unsat cores, validating derivations, and converting hyper-resolution steps into standard resolution steps, with direct operations for expanding nodes and traversing proof trees. The integrated imperative hash table submodule facilitates efficient mapping of proof terms to auxiliary data, supporting dynamic annotation and analysis during proof verification. Example workflows include tracking intermediate results during proof traversal, batch-updating metadata across proof nodes, and validating logical consistency of derived clauses.",
-      "description_length": 766,
-      "index": 64,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Msat.Solver_intf.PROOF-Tbl",
-      "library": "msat",
-      "description": "The interface provides imperative hash table operations for binding management, including insertion, lookup, iteration, and bulk transformations using sequences to initialize or update tables in batched steps. It manipulates key-value stores where keys are arbitrary values and stored data can be polymorphic, enabling efficient state tracking for dynamic relationships. This structure supports use cases like maintaining solver state, managing clause dependencies, or handling variable assignments in SAT solving workflows.",
-      "description_length": 524,
-      "index": 65,
+      "description": "This module provides imperative hash table operations for mapping proof terms (`Proof.t`) to arbitrary data, supporting standard manipulations like insertion, lookup, and iteration alongside bulk updates from sequences. It specializes in managing associations between proofs and auxiliary metadata, enabling efficient tracking of annotations, dependencies, or intermediate results during resolution-based proof construction. Use cases include storing proof-specific context or validation artifacts while maintaining structural integrity of the underlying proof system.",
+      "description_length": 568,
+      "index": 14,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Msat.Make_pure_sat.Term",
       "library": "msat",
-      "description": "Implements equality, hashing, and pretty-printing operations for term values. Works directly with the `Term.t` abstract type, ensuring consistent comparisons and representations. Useful for managing term identities in solver algorithms and debugging internal states.",
-      "description_length": 266,
-      "index": 66,
+      "description": "Implements equality, hashing, and pretty-printing for propositional terms in a SAT solver. Works directly with the `Term.t` type representing logical terms. Enables comparison and display of terms for solver operations and debugging.",
+      "description_length": 233,
+      "index": 15,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Make_mcsat.Clause",
+      "module_path": "Msat.Make_cdcl_t.Term",
       "library": "msat",
-      "description": "This module represents logical clauses as structured collections of atoms, offering operations to access, compare, and name clauses, with support for printing and hashing. It enables concrete tasks such as managing clauses in a SAT solver, tracking their provenance, and facilitating formal verification. The associated hash table module extends this functionality by enabling efficient imperative storage and retrieval of clause-associated data, bulk updates via sequences, and type-safe transformations, ideal for dynamic clause manipulation in theorem proving or constraint solving. Together, they provide a cohesive interface for both clause manipulation and indexed, high-performance data association.",
-      "description_length": 706,
-      "index": 67,
+      "description": "Implements term manipulation and comparison operations for a CDCL-based SMT solver. Provides equality checking, hashing, and pretty-printing for term values. Used to manage and compare logical expressions during constraint solving.",
+      "description_length": 231,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Solver_intf.FORMULA",
+      "module_path": "Msat.Make_cdcl_t.Value",
       "library": "msat",
-      "description": "This module defines operations for manipulating logical formulas, including negation, normalization, and equality checks. It works with the abstract type `t` representing formulas, along with boolean, integer, and printer types. It is used to standardize formula representations and support debugging output in solver implementations.",
-      "description_length": 334,
-      "index": 68,
+      "description": "Implements a CDCL (Conflict-Driven Clause Learning) SAT solver with support for incremental solving and backtracking. It provides operations for asserting literals, checking satisfiability, and extracting model values. Works with propositional logic formulas represented as clauses over integer-indexed variables. Useful for applications like formal verification, constraint solving, and automated reasoning where efficient SAT solving is required.",
+      "description_length": 448,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Make_pure_sat.Proof",
+      "module_path": "Msat.Make_cdcl_t.Clause",
       "library": "msat",
-      "description": "This module provides core operations for constructing and manipulating resolution proofs from SAT solving traces, working with formulas, atoms, lemmas, and clauses to support proof building, clause resolution, and unsat core extraction. Its hash table-based subcomponent enables efficient management of proof term metadata, allowing insertion, lookup, and bulk updates over sequences of proof elements. Together, they facilitate tasks like validating SAT solver outputs, generating detailed proof traces, and analyzing resolution steps for debugging or formal certification. Specific operations include expanding proofs through resolution steps and tracking proof properties using the integrated key-value store.",
-      "description_length": 712,
-      "index": 69,
+      "description": "This module represents logical clauses in a SAT solver, providing operations to access their constituent atoms as arrays or lists, compare clauses for equality, retrieve clause names, and format clauses for printing. It works with the `Clause.t` type, which encapsulates logical clauses, and is used in conjunction with the `Tbl` submodule to map clauses to arbitrary values using a hash table. Concrete use cases include managing clause metadata during conflict-driven clause learning, caching derived results per clause, and tracking dependencies between clauses in a solver's internal state.",
+      "description_length": 594,
+      "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Msat.Make_cdcl_t.Proof",
       "library": "msat",
-      "description": "This module organizes resolution proofs from SAT solving traces using formulas, atoms, lemmas, and clauses, offering operations to build, resolve, and validate proof structures. It supports imperative key-value mappings for caching proof derivations, tracking solver states, and batch manipulation of proof terms with statistical analysis. You can extract unsat cores, traverse proof trees, and transform proof data in-place during iterative solving. Concrete workflows include mapping clauses to metadata, resolving hyper-resolution steps, and inspecting proof node relationships.",
-      "description_length": 581,
-      "index": 70,
+      "description": "This module provides operations for constructing and manipulating resolution proofs derived from SAT solving traces. It supports building proofs from clauses, atoms, and hyper-resolution steps, and allows inspecting and traversing proof structures through functions like `parents`, `conclusion`, and `fold`. Concrete use cases include extracting unsatisfiability cores, validating proof steps, and tracking proof metadata using the `Tbl` submodule during proof analysis or transformation tasks.",
+      "description_length": 494,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Solver_intf.PLUGIN_MCSAT-Term",
+      "module_path": "Msat.Make_pure_sat.Clause",
       "library": "msat",
-      "description": "This module defines operations for term manipulation in a solver interface, including equality checking, hashing, and pretty-printing. It works with the abstract type `Term.t`, representing logical terms. Concrete use cases include comparing terms for equivalence, generating hash values for term storage or lookup, and formatting terms for debugging output.",
-      "description_length": 358,
-      "index": 71,
+      "description": "This module represents clauses in a SAT solver, providing operations to access their atoms as arrays or lists, compare clauses for equality, retrieve clause names, and format clauses for printing. It works with the `Clause.t` type, which encapsulates logical clauses composed of atoms. Use cases include managing and manipulating individual clauses during SAT solving, such as for conflict analysis, clause learning, and resolution steps.",
+      "description_length": 438,
+      "index": 20,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Solver_intf.S-Value",
+      "module_path": "Msat.Make_mcsat.Atom",
       "library": "msat",
-      "description": "This module defines the interface for solver values, including a type `t` and a printer function `pp` for debugging. It enables the creation and manipulation of solver instances with concrete implementations provided by functors in `Solver` or `McSolver`. Use cases include integrating custom solvers into the main API and printing solver states during debugging.",
-      "description_length": 363,
-      "index": 72,
+      "description": "This module represents and manipulates propositional atoms in a SAT solver. It provides operations for negating atoms, extracting their sign and absolute value, comparing and hashing atoms, and converting atoms to formulas. Use cases include managing atomic propositions in logical expressions and implementing decision procedures based on propositional logic.",
+      "description_length": 360,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat.Make_cdcl_t.Atom",
+      "library": "msat",
+      "description": "This module represents propositional atoms in a SAT solver, providing operations to manipulate and query their logical properties. It supports data types including atoms, their negations, and associated formulas. Concrete use cases include managing atomic propositions during clause learning and backtracking in CDCL-based SAT solving.",
+      "description_length": 335,
+      "index": 22,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Msat.Solver_intf.PLUGIN_MCSAT",
+      "module_path": "Msat.Make_pure_sat.Atom",
       "library": "msat",
-      "description": "This module defines the interface for theories used in a model-constructing SMT solver. It includes operations for managing backtrack levels, partial and final formula checks, term assignment, and formula evaluation. It works with terms, formulas, and values defined in its submodules to support theory-specific reasoning during solving.",
-      "description_length": 337,
-      "index": 73,
+      "description": "This module represents propositional atoms and provides operations for manipulating their truth values, including negation, sign extraction, and absolute value. It works with the `atom` type and supports comparisons, hashing, and conversion to logical formulas. Concrete use cases include managing atomic propositions in SAT solvers and performing logical transformations on boolean expressions.",
+      "description_length": 395,
+      "index": 23,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Solver_intf.EXPR",
+      "module_path": "Msat.Make_pure_sat.Value",
       "library": "msat",
-      "description": "This module defines the core components for working with logical expressions in an SMT solver. It includes submodules for terms, values, and formulas, along with a type for proofs. It is used to construct and manipulate logical constraints and solutions in mcSAT-based solving.",
-      "description_length": 277,
-      "index": 74,
+      "description": "Handles boolean value assignments and evaluations within a SAT solver. It provides functions to create, manipulate, and query truth values, supporting operations like negation, conjunction, and disjunction. This module is used to represent and compute logical expressions during constraint solving.",
+      "description_length": 298,
+      "index": 24,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Msat.Make_mcsat",
+      "module_path": "Msat.Make_mcsat.Proof",
       "library": "msat",
-      "description": "This module integrates constraint solving with theory reasoning, enabling the creation and manipulation of logical terms, atoms, and clauses within a SAT solver. It supports conflict-driven clause learning, model generation, and proof construction, with customizable decision procedures through theory callbacks. Core data types include atoms, values, clauses, and resolution proofs, each managed through dedicated submodules that handle negation, comparison, value conversion, and proof traversal. Example workflows include building and validating logical formulas, tracking intermediate proof states with annotated terms, and dynamically managing clauses with efficient hash-based indexing for theorem proving and formal verification tasks.",
-      "description_length": 742,
-      "index": 75,
-      "embedding_norm": 0.9999998807907104
+      "description": "This module builds and manipulates resolution proofs derived from SAT solving traces, working with formulas, atoms, lemmas, and clauses. It supports proof construction via resolution steps, unsat core extraction, and traversal with guaranteed parent-first ordering. Concrete use cases include validating conflict clauses, generating minimal unsatisfiable cores, and tracking proof steps for debugging or certificate generation.",
+      "description_length": 427,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat.Make_mcsat.Value",
+      "library": "msat",
+      "description": "Handles value representation and manipulation within the MCSAT solver, providing operations for creating, comparing, and printing values. Works directly with the `t` type, which represents logical values in the solver context. Used during constraint solving to manage and debug value assignments.",
+      "description_length": 296,
+      "index": 26,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Msat.Make_mcsat.Clause",
+      "library": "msat",
+      "description": "This module represents and manipulates logical clauses, providing operations to access constituent atoms, compare clauses, and retrieve clause names. It works with the `Clause.t` type, which encapsulates clauses in a solver context, along with submodules like `Tbl` for efficient clause storage and lookup. Concrete use cases include managing clauses during SAT solving, tracking clause atoms, and implementing conflict analysis mechanisms.",
+      "description_length": 440,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat.Make_pure_sat.Proof",
+      "library": "msat",
+      "description": "This module provides operations for constructing and analyzing resolution proofs derived from SAT solving traces. It supports creating proofs from clauses or atoms, expanding proof nodes, extracting unsatisfiable cores, and folding over proof structures. Concrete use cases include validating SAT solver outputs, generating minimal unsatisfiable subsets, and post-processing resolution steps for proof optimization or transformation.",
+      "description_length": 433,
+      "index": 28,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Msat.Solver_intf",
       "library": "msat",
-      "description": "This module provides the foundational interface for SAT and SMT solvers, defining key types like `lbool`, `Formula.t`, `Clause.t`, and `Proof.t`, along with operations for logic manipulation, normalization, hashing, and proof construction. It supports building and integrating solvers through interfaces for atoms, clauses, terms, and theories, enabling tasks like formula transformation, conflict analysis, and unsat core extraction. Child modules enhance this core with specialized hash tables for proof and clause management, interfaces for CDCL(T) reasoning, and utilities for term comparison and debugging. Together, they enable implementing custom solvers, verifying logical formulas, and managing complex constraint systems with support for incremental solving and theory integration.",
-      "description_length": 791,
-      "index": 76,
+      "description": "This module defines the core interface for SAT solvers, including fundamental types like `lbool`, `negated`, and `void`, along with module types that specify solver components and plugins. It provides operations for formula manipulation, expression handling, and proof construction, enabling concrete solver implementations via functors. Use cases include building and solving propositional logic formulas, managing atomic valuations, and integrating custom plugins for CDCL or MCSAT solving strategies.",
+      "description_length": 503,
+      "index": 29,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Msat.Make_pure_sat",
       "library": "msat",
-      "description": "This module orchestrates imperative SAT solving workflows by combining propositional logic manipulation with stateful operations and proof generation. It provides direct access to atoms, clauses, and truth assignments, supporting operations like clause addition, formula solving, and proof construction with customizable conflict handling. Users can extract and transform logical components, track clause metadata using imperative hash tables, and generate resolution proofs with detailed traceability. The integrated subsystems enable tasks such as formula validation, unsat core extraction, and solver state debugging through combined manipulation of logical terms and their associated data.",
-      "description_length": 693,
-      "index": 77,
-      "embedding_norm": 0.9999999403953552
+      "description": "The module provides operations for propositional logic manipulation, including clause addition, formula solving with conflict callbacks and assumptions, atom evaluation, and proof verification. It works with terms, atoms, clauses, and resolution proofs to construct logical models or derive unsatisfiability certificates. This supports use cases like formal verification, constraint solving, and incremental reasoning over boolean formulas.",
+      "description_length": 440,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat.Make_mcsat",
+      "library": "msat",
+      "description": "This module implements a constraint-solving engine for propositional and SMT problems, offering operations to manage solver states, manipulate logical terms and atoms, and derive resolution proofs. It works with data structures representing solver contexts (`t`), truth values, logical formulas, and clauses, supporting tasks like conflict analysis, theory propagation, and model construction. Key use cases include verifying logical constraints, generating unsatisfiability proofs, and exporting learned clauses for incremental solving or external validation.",
+      "description_length": 560,
+      "index": 31,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Msat.Make_cdcl_t",
       "library": "msat",
-      "description": "This module orchestrates a CDCL SAT solver that dynamically manages constraint systems through clause learning, assumption tracking, and conflict resolution. It integrates term manipulation, value propagation, and assignment management to handle propositional atoms, clauses, and formulas with support for model extraction, proof generation, and theory callbacks. You can assert and backtrack literals, compare and hash terms, resolve proof steps, and track learned clauses in imperative hash tables. Use cases include validating logical assertions, extracting unsat cores, and exporting solver-derived clauses or proofs for external analysis.",
-      "description_length": 643,
-      "index": 78,
-      "embedding_norm": 1.0
+      "description": "This module implements a CDCL-based SAT solver with operations for clause management, logical inference, and model construction. It works with terms, atoms, clauses, and formulas, supporting tasks like satisfiability checking, conflict-driven learning, and proof generation. This is useful in formal verification and automated reasoning systems where efficient solving of logical constraints is required.",
+      "description_length": 404,
+      "index": 32,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Msat",
       "library": "msat",
-      "description": "This module implements SAT and SMT solving algorithms with support for propositional logic and theory reasoning, centered around data types like `lbool`, `Formula.t`, `Clause.t`, and `Proof.t`. It enables creating and manipulating logical variables, asserting clauses, checking satisfiability with CDCL and MCSAT, and generating resolution proofs, with built-in support for negation, hashing, and term comparison. Child modules extend this foundation with imperative state management, customizable theory callbacks, and efficient clause indexing, enabling workflows like model generation, unsat core extraction, and proof validation. Example tasks include building and solving logical formulas incrementally, tracking solver state with annotated terms, and exporting proofs or learned clauses for formal verification.",
-      "description_length": 817,
-      "index": 79,
+      "description": "This module provides core types like `lbool` and `negated` for representing logical truth values and sign manipulations, along with printers for these types. It includes functors to build SAT and SMT solvers supporting operations such as formula construction, clause management, conflict analysis, and proof derivation. Concrete use cases include implementing CDCL or MCSAT-based solvers, verifying logical constraints, and generating unsatisfiability proofs for formal verification tasks.",
+      "description_length": 489,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_tseitin.Make",
+      "library": "msat.tseitin",
+      "description": "This module provides functions to construct and manipulate boolean formulas using atomic propositions from module `F`. It supports logical operations such as negation, conjunction, disjunction, XOR, implication, and equivalence, and converts formulas into equi-satisfiable conjunctive normal form (CNF). The resulting CNF can be used directly with SAT solvers, and formulas can be printed using standard OCaml formatting.",
+      "description_length": 421,
+      "index": 34,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Msat_tseitin",
+      "library": "msat.tseitin",
+      "description": "Transforms boolean formulas into equi-satisfiable CNF using Tseitin's algorithm, supporting logical operations like negation, conjunction, disjunction, XOR, implication, and equivalence. Works with atomic propositions and formulas built from them. Directly enables feeding output to SAT, SMT, or McSat solvers while providing printing capabilities for formulas.",
+      "description_length": 361,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backtrack.Ref",
+      "library": "msat.backtrack",
+      "description": "This module implements backtrackable references that support setting, getting, and updating values with the ability to save and restore states through backtracking levels. It works with any data type `'a`, allowing controlled state management with explicit level-based undo functionality. Use cases include implementing algorithms that require state rollback, such as constraint solvers or transactional memory systems.",
+      "description_length": 419,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backtrack",
+      "library": "msat.backtrack",
+      "description": "This module implements backtrackable references that support setting, getting, and updating values while allowing state to be saved and restored through backtracking levels. It works with values of any type `'a`, enabling controlled state management where changes can be undone at specific levels. It is useful for implementing algorithms requiring state rollback, such as constraint solvers or transactional memory systems.",
+      "description_length": 424,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Dot.Make",
+      "library": "msat.backend",
+      "description": "This module generates DOT format output for visualizing proofs as graphs, using the `pp` function to print proof structures to a formatter. It operates on proof data from the `S` module and uses the `A` module for atomic elements. A concrete use case is creating visual representations of logical proofs for analysis or presentation using Graphviz.",
+      "description_length": 348,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Dot.Simple",
+      "library": "msat.backend",
+      "description": "This module generates DOT-formatted representations of proofs, enabling visualization via Graphviz. It works with proof structures defined by the `S` module and uses the `A` module for atomic propositions. Concrete use cases include exporting proof graphs for debugging or documentation, where each node and edge in the DOT output corresponds to logical steps and dependencies in the proof.",
+      "description_length": 390,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Dot.Default",
+      "library": "msat.backend",
+      "description": "This module provides functions to customize the display of atomic formulas and clauses when exporting proofs to the DOT graph format. It works with atomic formulas and clauses from the parameter module `S`, generating labels and metadata for nodes in the graph. Concrete use cases include defining how hypotheses, lemmas, and assumptions are visually represented in generated proof graphs, such as setting node colors and labels for better readability in tools like Graphviz.",
+      "description_length": 475,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Coq.Simple",
+      "library": "msat.backend",
+      "description": "This module implements a simple Coq proof printer for resolution proofs generated by a SAT solver. It takes proof structures defined by the `S` module and formats them into Coq scripts using the `pp` function. It is used to generate human-readable and machine-checkable proofs in Coq from SAT solver outputs.",
+      "description_length": 308,
+      "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Dedukti.Make",
+      "library": "msat.backend",
+      "description": "This module generates a backend for exporting proofs in a format compatible with the Dedukti type checker. It provides a `pp` function to print proof terms using a user-defined format, enabling concrete use cases like generating `.dk` files for proof checking or proof interchange. It operates on proof structures defined by the `S` and `A` modules, which specify the proof format and atomic terms.",
+      "description_length": 398,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Coq.Make",
+      "library": "msat.backend",
+      "description": "This module defines a function `pp` that formats and outputs resolution proofs to a file using a specified format. It operates on proof data structures provided by the `S` module and uses formatting rules from the `A` module. It supports generating Coq scripts that represent SAT solver proofs for formal verification tasks.",
+      "description_length": 324,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Backend_intf",
+      "library": "msat.backend",
+      "description": "This module defines the interface for proof export backends. It specifies the required operations to serialize and export proofs in various formats. Concrete use cases include generating proof certificates for theorem provers or exporting proof traces for external verification tools.",
+      "description_length": 284,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Coq",
+      "library": "msat.backend",
+      "description": "This module generates Coq scripts from SAT solver resolution proofs, translating logical derivations into formal Coq assertions. It works with proof structures produced by the SAT solver, converting them into Coq terms and tactics. A concrete use case is verifying the correctness of SAT-based logic transformations within the Coq proof assistant.",
+      "description_length": 347,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Msat_backend.Dedukti",
+      "library": "msat.backend",
+      "description": "This module implements a Dedukti backend for encoding and verifying proofs, focusing on translating logical statements and proof terms into Dedukti's logical framework. It operates on proof structures and logical expressions, enabling concrete use cases such as exporting proofs to external proof checkers or integrating with Dedukti-based verification pipelines. The module supports proof interoperability through a well-defined interface for constructing and serializing proof objects.",
+      "description_length": 487,
+      "index": 46,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Msat_backend.Dot",
+      "library": "msat.backend",
+      "description": "This module exports proof structures to the DOT graph format, generating labeled nodes and edges for visualizing proof steps. It works with atomic formulas and clauses to define node metadata, such as labels and colors, during graph generation. Use it to produce input files for Graphviz that illustrate proof dependencies and logical flow, with customizable visual annotations for hypotheses and conclusions.",
+      "description_length": 409,
+      "index": 47,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Msat_backend",
+      "library": "msat.backend",
+      "description": "This module implements proof export backends for SAT solver outputs, providing functions to serialize and transform logical derivations into various formats. It works with proof structures, clauses, and logical expressions to generate Coq scripts, Dedukti encodings, and DOT graphs. Concrete use cases include producing verifiable proof certificates, integrating with Dedukti-based checkers, and visualizing proof dependencies using Graphviz.",
+      "description_length": 442,
+      "index": 48,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 80,
-    "meaningful_modules": 80,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 50,
+    "meaningful_modules": 49,
+    "filtered_empty_modules": 1,
+    "retention_rate": 0.98
   },
   "statistics": {
-    "max_description_length": 817,
-    "min_description_length": 200,
-    "avg_description_length": 481.3,
-    "embedding_file_size_mb": 0.29100513458251953
+    "max_description_length": 604,
+    "min_description_length": 231,
+    "avg_description_length": 422.734693877551,
+    "embedding_file_size_mb": 0.7107143402099609
   }
 }

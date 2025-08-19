@@ -1,41 +1,41 @@
 {
   "package": "picos_mux",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:06:03.324044",
+  "creation_timestamp": "2025-08-14T23:03:44.130579",
   "modules": [
     {
-      "module_path": "Picos_mux_multififo",
-      "library": "picos_mux.multififo",
-      "description": "This module implements a multi-threaded fiber scheduler with per-thread queues that prioritize FIFO execution and allow fiber migration between threads. It provides functions to create scheduling contexts, run fibers across multiple domains, and manage execution with optional quotas and exception handling. Use this to execute concurrent OCaml 5 fiber-based programs with controlled parallelism and cross-thread work stealing.",
-      "description_length": 427,
+      "module_path": "Picos_mux_fifo",
+      "library": "picos_mux.fifo",
+      "description": "This module implements a FIFO scheduler for managing fibers in a single-threaded environment, prioritizing fibers woken by cancellation. It works directly with `Picos.Fiber.t` and supports running fiber-based programs with optional quotas and fatal exception handlers. Use it to execute and manage concurrent fiber workflows in test environments or lightweight single-threaded applications where strict parallelism is not required.",
+      "description_length": 431,
       "index": 0,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Picos_mux_random",
       "library": "picos_mux.random",
-      "description": "This module implements a randomized multi-threaded scheduler for Picos, where each effect triggers a random selection of the next ready fiber to execute. It works with fibers and domains, providing functions to create scheduling contexts, run fibers on threads, and execute programs with controlled concurrency. Use it to test Picos libraries by exposing race conditions or invalid scheduling dependencies through non-deterministic execution order.",
-      "description_length": 448,
+      "description": "This module implements a randomized, multi-threaded scheduler for the Picos fiber interface, where scheduling decisions are made by selecting ready fibers at random. It supports concurrent execution across multiple domains, with functions to configure contexts, launch runners on threads, and execute fibers using random interleaving to expose concurrency bugs. Concrete use cases include stress-testing Picos-based libraries for race conditions or incorrect scheduling assumptions by introducing non-deterministic execution order.",
+      "description_length": 531,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Picos_mux_thread",
-      "library": "picos_mux.thread",
-      "description": "This module provides `run_fiber` and `run` functions to execute Picos fibers in a thread-based scheduler. It works directly with `Picos.Fiber.t` and supports running fibers to completion, handling fatal exceptions, and capturing results from the main function. Use this to test Picos-based libraries or in simple applications where fiber concurrency is needed without the complexity of a thread pool.",
-      "description_length": 400,
+      "module_path": "Picos_mux_multififo",
+      "library": "picos_mux.multififo",
+      "description": "This module implements a multi-threaded scheduler with per-thread queues for distributing fibers, supporting fiber migration between threads and prioritizing cancellation-woken fibers. It works with `Picos.Fiber.t` and provides functions to run fibers across multiple domains, including starting runners on threads and executing fiber-based programs with configurable context. Concrete use cases include testing fiber-based concurrency in Picos and running parallelizable OCaml 5 programs with controlled domain allocation.",
+      "description_length": 523,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Picos_mux_fifo",
-      "library": "picos_mux.fifo",
-      "description": "This module implements a FIFO task scheduler for single-threaded environments, prioritizing canceled fibers for immediate execution. It operates on `Picos.Fiber.t` values and provides `run_fiber` and `run` functions to execute fibers with optional quotas and exception handling. It is suitable for testing and lightweight concurrency scenarios where strict parallel performance is not required.",
-      "description_length": 394,
+      "module_path": "Picos_mux_thread",
+      "library": "picos_mux.thread",
+      "description": "This module provides `run_fiber` and `run` functions to execute Picos fibers using a thread-based scheduler. It works directly with `Picos.Fiber.t` and supports running fiber programs with optional exception handling. Use this to test Picos-based libraries or run simple concurrent applications where fiber count is low and thread-per-fiber scheduling is acceptable.",
+      "description_length": 366,
       "index": 3,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 448,
-    "min_description_length": 394,
-    "avg_description_length": 417.25,
-    "embedding_file_size_mb": 0.014925003051757812
+    "max_description_length": 531,
+    "min_description_length": 366,
+    "avg_description_length": 462.75,
+    "embedding_file_size_mb": 0.058388710021972656
   }
 }

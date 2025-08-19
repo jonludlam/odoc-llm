@@ -1,47 +1,47 @@
 {
   "package": "ssh-agent",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:39.166963",
+  "creation_timestamp": "2025-08-14T23:00:13.516873",
   "modules": [
+    {
+      "module_path": "Ssh_agent.Parse",
+      "library": "ssh-agent",
+      "description": "Parses SSH agent request and response messages, supporting both standard and extended message types. It operates on SSH agent protocol binary data, producing structured values representing the message contents. This parser handles the wire format used for communication between clients and the ssh-agent daemon.",
+      "description_length": 311,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "Ssh_agent.Serialize",
       "library": "ssh-agent",
-      "description": "This module serializes SSH agent requests and responses into a Faraday buffer. It handles the binary encoding of authentication identities and query replies for communication with an SSH agent. Use it to construct valid SSH agent protocol messages for operations like signing data or listing keys.",
-      "description_length": 297,
-      "index": 0,
+      "description": "This module serializes SSH agent requests and responses into a Faraday buffer. It handles the binary encoding of messages such as signing requests, key additions, and identity queries. Use it when implementing an SSH agent server or client to convert structured messages into wire format.",
+      "description_length": 288,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ssh_agent.Pubkey",
+      "library": "ssh-agent",
+      "description": "This module defines data structures and operations for handling SSH public keys and certificates. It supports DSA, RSA, and Ed25519 public key types, along with certificate types such as RSA certificates that include fields like nonce, serial number, validity periods, and critical options. It is used to construct, compare, and manage SSH public keys and their associated certificate metadata for authentication and secure communication.",
+      "description_length": 438,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ssh_agent.Privkey",
       "library": "ssh-agent",
-      "description": "This module defines private key types used in SSH authentication, including DSA, RSA, and Ed25519 keys, along with support for RSA keys with associated certificates and generic blob representations. It provides constructors and accessors to create, inspect, and manipulate private keys in various formats encountered in SSH agent communication. Concrete use cases include parsing and serializing private keys for agent requests, handling certificate-based authentication, and managing key blobs for unsupported key types.",
-      "description_length": 521,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ssh_agent.Parse",
-      "library": "ssh-agent",
-      "description": "Parses SSH agent request and response messages, supporting both standard and extended message formats. It operates on SSH agent protocol binary data, using Angstrom parsers to decode into structured types. This is used for handling communication with the ssh-agent daemon, such as during key operations or identity management.",
-      "description_length": 326,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ssh_agent.Pubkey",
-      "library": "ssh-agent",
-      "description": "This module defines data structures and operations for handling SSH public keys and certificates. It supports DSA, RSA, and Ed25519 public key types, along with certificate data such as validity periods, principals, and critical options. It is used to validate and manage SSH key-based authentication, including certificate signing and verification workflows.",
-      "description_length": 359,
+      "description": "This module defines private key types used in SSH authentication, including DSA, RSA, and Ed25519 keys, along with their certificate variants and an opaque blob representation. It provides constructors and pattern matching for handling different private key formats directly in SSH agent communication. Concrete use cases include parsing, storing, and signing operations for SSH private keys in client implementations.",
+      "description_length": 418,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ssh_agent",
       "library": "ssh-agent",
-      "description": "This module handles SSH agent protocol operations for managing cryptographic identities and signing data, supporting actions like listing, adding, and removing keys, signing blobs with specific hash algorithms, and handling extensions or smartcard-based keys with constraints. It works directly with public and private key types, identity records, and structured protocol messages, enabling concrete use cases such as parsing and serializing keys for agent requests, handling certificate-based authentication, and managing key blobs for unsupported types. The module includes functionality to serialize and parse SSH agent messages using Faraday and Angstrom, allowing construction and decoding of binary protocol data for communication with the ssh-agent daemon. It also supports handling of certificate data such as validity periods, principals, and critical options, enabling full workflows for SSH key-based authentication and certificate signing and verification.",
-      "description_length": 968,
+      "description": "This module implements SSH agent protocol message handling for client and server implementations. It supports constructing, parsing, and serializing SSH agent requests such as identity queries, signing operations, key management, and extension messages. The module works with SSH public and private key types, identity lists, and constraint-based key operations, enabling concrete use cases like signing arbitrary data with RSA keys, managing identities in an agent, and handling certificate-based authentication workflows.",
+      "description_length": 523,
       "index": 4,
       "embedding_norm": 0.9999999403953552
     }
@@ -53,9 +53,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 968,
-    "min_description_length": 297,
-    "avg_description_length": 494.2,
-    "embedding_file_size_mb": 0.01860332489013672
+    "max_description_length": 523,
+    "min_description_length": 288,
+    "avg_description_length": 395.6,
+    "embedding_file_size_mb": 0.07288837432861328
   }
 }

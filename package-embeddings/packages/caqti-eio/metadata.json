@@ -1,69 +1,53 @@
 {
   "package": "caqti-eio",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:05:46.269603",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 4,
+  "creation_timestamp": "2025-08-14T23:01:33.355615",
   "modules": [
     {
-      "module_path": "Caqti_eio.CONNECTION",
-      "library": "caqti-eio",
-      "description": "This module provides SQL execution, transaction control, and connection lifecycle management for PostgreSQL via the `caqti-driver-pgx` driver, operating on SQL requests, result streams, and database connections. It supports patterns like streaming data insertion (`populate`), transactional atomicity (`with_transaction`), and row-oriented result aggregation (`collect_list`), while exposing driver-specific features such as dialect information and connection validation. Designed for Eio's non-Unix runtime, it focuses on PostgreSQL-specific URIs but remains experimental due to ongoing Eio API evolution.",
-      "description_length": 606,
+      "module_path": "Caqti_eio_unix",
+      "library": "caqti-eio.unix",
+      "description": "This module establishes database connections using Eio and provides functions to manage connection lifecycles. It works with `Uri.t` to locate drivers and returns first-class modules implementing `Caqti_connection_sig.S`, supporting operations like `connect`, `with_connection`, and `connect_pool`. Concrete use cases include setting up per-request database access in network servers or managing connection pools for concurrent queries.",
+      "description_length": 436,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Caqti_eio.CONNECTION-Response",
-      "library": "caqti-eio",
-      "description": "This module handles result inspection and retrieval for database queries, providing operations like `returned_count`, `affected_count`, `find`, `fold`, and `to_stream`. It works with response types parameterized over decoded row data and query cardinality. Concrete use cases include extracting single rows with `find`, processing multiple rows lazily with `to_stream`, and aggregating results with `fold` or `iter_s`.",
-      "description_length": 418,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Caqti_eio.Stream",
       "library": "caqti-eio",
-      "description": "This module processes streams of values with functions to fold, iterate, and convert to and from lists, handling errors specific to stream operations. It supports operations like `fold`, `iter_s`, `to_list`, and `map_result` on stream values that may fail with a custom error type. Concrete use cases include consuming result sets from database queries, transforming stream elements with error handling, and accumulating stream data into collections.",
+      "description": "This module provides functions to process and transform streams of database query results using Eio for concurrency. It supports operations like folding, iterating, and converting streams to lists, while handling errors from both the stream source and user-provided callbacks. Concrete use cases include consuming paginated database query results, applying per-row transformations with error handling, and accumulating query results into collections.",
       "description_length": 450,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "index": 1,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Caqti_eio.Pool",
       "library": "caqti-eio",
-      "description": "This module manages a pool of database connections for use with Eio, specifically supporting the caqti-driver-pgx driver. It provides operations to check the current number of open connections, execute a function with a pooled connection, and close all active connections in the pool. Use cases include efficiently handling PostgreSQL database access in Eio-based applications while avoiding connection leaks and excessive reconnection overhead.",
-      "description_length": 445,
-      "index": 3,
-      "embedding_norm": 1.0
+      "description": "This module manages a pool of database connections for use with Eio, providing functions to retrieve the current pool size, execute operations on a connection, and drain all connections. It works with a custom pool type that abstracts over connection resources and result types. Concrete use cases include efficiently handling concurrent PostgreSQL queries via the `pgx` driver while ensuring proper resource cleanup and limiting connection usage.",
+      "description_length": 447,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Caqti_eio",
       "library": "caqti-eio",
-      "description": "This module coordinates PostgreSQL database connections for Eio applications without Unix dependencies, using direct connections or pools backed by the `caqti-driver-pgx` driver. It integrates with Eio's networking and time abstractions to manage connection lifetimes, execute queries, and handle errors through result types and switch-controlled resources. Submodules support query execution, transaction control, result streaming, and connection pooling, enabling patterns like transactional atomicity, streaming data insertion, and row aggregation. Concrete use cases include safely querying with `find`, streaming results with `to_stream`, managing connection pools, and folding over decoded rows with error handling.",
-      "description_length": 721,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Caqti_eio_unix",
-      "library": "caqti-eio.unix",
-      "description": "This module establishes database connections and manages connection pools for applications using Eio, working with URIs to locate and load appropriate database drivers. It provides functions to connect to a database, run operations within a connection context, and create connection pools with optional post-connect initialization. Concrete use cases include setting up PostgreSQL or SQLite connections in Eio-based applications and managing pooled access to database resources.",
-      "description_length": 478,
-      "index": 5,
+      "description": "This module implements Eio-compatible database connection handling for the `pgx` driver, offering `connect`, `with_connection`, and `connect_pool` to establish and manage PostgreSQL connections without Unix dependencies. It works with `stdenv` records containing network and time capabilities, and returns first-class connection modules. Concrete use cases include setting up PostgreSQL-backed services in non-Unix environments, executing queries with automatic connection cleanup, and managing connection pools for concurrent database access.",
+      "description_length": 543,
+      "index": 3,
       "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 6,
-    "meaningful_modules": 6,
+    "total_modules_in_package": 4,
+    "meaningful_modules": 4,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 721,
-    "min_description_length": 418,
-    "avg_description_length": 519.6666666666666,
-    "embedding_file_size_mb": 0.022240638732910156
+    "max_description_length": 543,
+    "min_description_length": 436,
+    "avg_description_length": 469.0,
+    "embedding_file_size_mb": 0.058376312255859375
   }
 }

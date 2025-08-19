@@ -1,1173 +1,773 @@
 {
   "package": "hack_parallel",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 144,
-  "creation_timestamp": "2025-07-15T23:34:56.665447",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 94,
+  "creation_timestamp": "2025-08-18T18:42:32.560123",
   "modules": [
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.WithCache.LocalChanges",
-      "library": "hack_parallel.interface",
-      "description": "This module manages local changes to a shared memory cache using a stack-based approach. It provides operations to track, commit, or revert changes for specific keys, supporting batch and global actions. Concrete use cases include transactional updates to cached data and temporary state modifications during speculative execution.",
-      "description_length": 331,
+      "module_path": "EventLogger",
+      "library": "hack_parallel.stubs",
+      "description": "This system supports logging initialization milestones, exceptions, shared memory interactions, and Watchman/DFind connection events using file descriptors, string identifiers, and garbage collection metrics. It enables system-level monitoring through structured tracking of timeouts, initialization states, and error conditions in distributed environments. Specific applications include diagnosing shared memory contention and Watchman notification failures during daemonized process execution.",
+      "description_length": 495,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.NoCache.LocalChanges",
-      "library": "hack_parallel.interface",
-      "description": "This module manages local changes to shared memory without caching, providing operations to track, revert, and commit batches of key-value updates. It works directly with `KeySet.t` to represent groups of keys affected by local changes. Concrete use cases include transactional updates to shared memory where intermediate states must be discarded or applied atomically.",
-      "description_length": 369,
+      "module_path": "Scheduler",
+      "library": "hack_parallel.scheduler",
+      "description": "This module implements a parallel task execution system using a work-stealing scheduler. It provides `map_reduce`, `iter`, and `single_job` to distribute computations across worker threads, handling lists of arbitrary data types. Concrete use cases include parallelizing batch data processing, such as log analysis or numerical computations, where tasks can be split and processed concurrently.",
+      "description_length": 394,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.WithCache",
-      "library": "hack_parallel.interface",
-      "description": "This module implements a shared memory cache with versioned entries, supporting atomic updates, batch operations, and key-based invalidation. It works with user-defined keys and arbitrary value types, providing direct access, existence checks, and cache-specific actions like old entry retrieval and revival. The local changes module adds transactional capabilities, allowing stack-based tracking, committing, or reverting of changes for specific keys, enabling temporary state modifications and speculative execution. Together, they support managing ephemeral state across distributed workers and versioned caching in incremental computation systems.",
-      "description_length": 651,
+      "module_path": "Socket",
+      "library": "hack_parallel.socket",
+      "description": "Creates and initializes Unix domain sockets for inter-process communication. It provides functions to generate socket paths, retrieve socket file descriptors, and manage address lengths. Useful for setting up local communication channels between processes on the same machine.",
+      "description_length": 276,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.NoCache-KeyMap",
-      "library": "hack_parallel.interface",
-      "description": "This module provides ordered map operations for creating, modifying, and transforming key-value collections where keys maintain a strict ordering. It supports polymorphic values and emphasizes deterministic traversal, combination, and inspection of immutable maps through functions like `merge`, `filter_map`, and `fold`, while enabling key-based queries and ordered binding extraction (e.g., `min_binding`, `max_binding`). Specific use cases include maintaining sorted data structures, merging ordered collections with custom logic, and functional transformations requiring consistent key ordering guarantees.",
-      "description_length": 610,
+      "module_path": "SharedMem.WithCache.LocalChanges",
+      "library": "hack_parallel.heap",
+      "description": "This module manages local changes to shared memory with caching, providing operations to track, revert, and commit batches of key-value updates. It works with key sets to represent groups of modified entries in shared memory. Concrete use cases include transactional updates to shared state, such as during speculative type checking or batched configuration changes.",
+      "description_length": 366,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.WithCache-LocalChanges",
-      "library": "hack_parallel.interface",
-      "description": "This module manages local changes to a shared memory cache using a stack-based approach. It supports operations to track, commit, or revert changes for specific keys, enabling transactional-like behavior. Use cases include temporarily modifying shared state during speculative computations or batch processing with rollback capabilities.",
-      "description_length": 337,
+      "module_path": "SharedMem.NoCache.LocalChanges",
+      "library": "hack_parallel.heap",
+      "description": "This module tracks and manages local changes to shared memory values within a stack-like context. It supports operations to checkpoint changes, roll back or commit specific batches of changes, and revert or commit all changes at once. It is used to ensure consistency when modifying shared memory values across logical execution steps.",
+      "description_length": 335,
       "index": 4,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.UserKeyType",
-      "library": "hack_parallel.interface",
-      "description": "This module defines a custom key type for shared memory operations, including string conversion and comparison functions. It supports efficient key management in concurrent environments by ensuring unique and comparable key representations. Concrete use cases include tracking shared resources or coordinating processes in parallel applications.",
-      "description_length": 345,
+      "module_path": "SharedMem.NoCache",
+      "library": "hack_parallel.heap",
+      "description": "This module provides direct access to shared memory storage with operations to add, retrieve, and remove values associated with custom keys. It supports batch operations for efficient handling of multiple keys and includes mechanisms to manage old and current versions of stored values. Concrete use cases include caching intermediate computation results and synchronizing state across concurrent processes.",
+      "description_length": 407,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.WithCache-KeyMap",
-      "library": "hack_parallel.interface",
-      "description": "This interface supports ordered key-value map operations with polymorphic values, emphasizing ordered traversal via comparator-defined key ordering, safe manipulation of optional bindings, and efficient combination of maps through merging and filtering. It works with polymorphic `KeyMap.t` structures where keys conform to a fixed `Ord.compare` ordering, enabling use cases like incremental map updates with default values, ordered key-range queries, and predicate-driven partitioning of key-value pairs.",
-      "description_length": 505,
+      "module_path": "SharedMem.LocalCache",
+      "library": "hack_parallel.heap",
+      "description": "Implements a thread-local cache with operations to store, retrieve, and remove values associated with custom keys. It supports efficient lookups using user-defined key types and stores values of arbitrary type. Useful for caching per-thread data in multi-threaded environments without synchronization overhead.",
+      "description_length": 310,
       "index": 6,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.CacheType",
-      "library": "hack_parallel.interface",
-      "description": "This module implements a shared memory cache with typed keys and values. It supports adding, retrieving, and removing entries, as well as clearing the cache and getting its current size. Use it to efficiently store and access serialized data in a concurrent environment, such as caching computation results or shared resources.",
-      "description_length": 327,
+      "module_path": "SharedMem",
+      "library": "hack_parallel.heap",
+      "description": "This module orchestrates shared memory management through initialization, garbage collection, and cache invalidation mechanisms, while interfacing with SQLite for persistent storage of dependency graphs and hash tables. It manipulates low-level memory segments, abstract object representations, and structured databases to optimize memory efficiency and handle distributed state across sessions. Key applications include scaling memory-intensive systems with real-time metrics tracking, dependency resolution, and adaptive memory footprint optimization through runtime analysis of table efficiency.",
+      "description_length": 598,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.NoCache-LocalChanges",
-      "library": "hack_parallel.interface",
-      "description": "This module manages local changes to shared memory with operations to track, commit, or revert modifications. It works with key-value stores and uses a stack-based model to handle batches of changes. Concrete use cases include transactional updates and rollbacks in parallel computing environments where shared memory consistency is critical.",
-      "description_length": 342,
+      "module_path": "WorkerCancel",
+      "library": "hack_parallel.heap",
+      "description": "This module provides functions to control worker lifecycle and cancellation behavior, including stopping and resuming workers, checking for exit conditions, and setting callbacks for cancellation events. It works with functions and imperative state to manage worker execution flow. Concrete use cases include gracefully handling interruptions during parallel processing and ensuring cleanup actions run when workers are cancelled.",
+      "description_length": 430,
       "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Value",
+      "library": "hack_parallel.heap",
+      "description": "This module defines core operations for handling dynamic values, including creation, inspection, and transformation of values with associated types. It works with abstract data types representing typed values, such as integers, strings, and structured data. Concrete use cases include runtime evaluation, dynamic dispatch, and serialization of values in a type-safe manner.",
+      "description_length": 373,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Prefix",
+      "library": "hack_parallel.heap",
+      "description": "This module manages key prefixing operations for string identifiers. It provides functions to create a prefix context, apply a prefix to a string key, and remove a prefix from a string key. It is used in scenarios where keys need to be namespaced or scoped, such as in configuration systems or key-value stores.",
+      "description_length": 311,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel.Memory.NoCache.LocalChanges",
+      "library": "hack_parallel",
+      "description": "This module tracks and manages local changes to shared memory in a parallelized environment, providing operations to push and pop state snapshots, commit or revert changes for specific keys, and fully revert or commit all changes. It works directly with shared memory structures through key-value pairs, using `KeySet.t` to represent groups of keys. Concrete use cases include managing speculative state modifications during parallel computations, ensuring atomic updates, and enabling rollbacks when errors occur.",
+      "description_length": 514,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel.Memory.NoCache",
+      "library": "hack_parallel",
+      "description": "This module implements a shared memory store with versioned key-value pairs, supporting concurrent access and speculative execution. It provides atomic operations for adding, retrieving, and removing values, as well as batched operations for efficient bulk updates and rollbacks. Use cases include managing transient state during parallel type checking, handling incremental updates in a transactional manner, and coordinating shared data across worker processes.",
+      "description_length": 463,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hack_parallel.Memory.LocalCache",
+      "library": "hack_parallel",
+      "description": "Implements a thread-local cache with operations to store, retrieve, and remove values associated with custom keys. It supports efficient in-memory caching with explicit size tracking and key serialization. Useful for scenarios requiring fast, isolated lookups in parallel processing contexts like request handling or batch computations.",
+      "description_length": 336,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel.Scheduler.Daemon",
+      "library": "hack_parallel",
+      "description": "Ensures the program starts in a state suitable for parallel execution by verifying that the runtime environment meets necessary prerequisites. Operates directly on the process environment and runtime configuration. Useful for initializing parallel workers correctly in a distributed computing setup.",
+      "description_length": 299,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hack_parallel.Memory",
+      "library": "hack_parallel",
+      "description": "This module offers operations for managing shared memory in parallel environments, including initialization, garbage collection, and persisting data structures like dependency and hash tables to SQLite. It works with shared memory handles, configuration records, and SQLite files, while also providing tools to monitor memory usage, invalidate caches, and measure heap efficiency. Use cases include optimizing memory-intensive applications that require efficient data persistence and scalable concurrency management.",
+      "description_length": 516,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel.Scheduler",
+      "library": "hack_parallel",
+      "description": "This module manages parallel task execution across multiple workers, providing operations to distribute workloads and aggregate results. It works with lists of arbitrary data types, applying map-reduce or iteration logic in parallel. Concrete use cases include parallelizing file processing, computation-heavy transformations, and distributed task coordination.",
+      "description_length": 361,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel",
+      "library": "hack_parallel",
+      "description": "This module provides parallel task scheduling and shared memory management for distributed computation. It supports operations like parallel map-reduce, workload distribution, memory initialization, and SQLite-backed data persistence. Use cases include scaling file processing, accelerating compute-heavy tasks, and managing memory efficiently in concurrent applications.",
+      "description_length": 371,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_parallel_intf.Std.SharedMem.LocalCache",
       "library": "hack_parallel.interface",
-      "description": "Implements a thread-local cache with basic key-value operations including insertion, retrieval, deletion, and size tracking. Uses user-defined key and value types, with string conversion for keys. Useful for optimizing repeated lookups in parallel computations by storing temporary results per thread.",
-      "description_length": 301,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.NoCache",
-      "library": "hack_parallel.interface",
-      "description": "This module provides a shared memory store for key-value pairs with versioning support through current and old states, enabling operations like add, retrieve, remove, and batch processing. It includes a child module that manages local, non-cached changes by tracking, reverting, and committing batches of updates, using `KeySet.t` to represent affected keys. Together, they support transactional updates and state transitions in parallel computations, such as caching intermediate results or handling atomic modifications to shared data. Example usage includes managing configuration changes across threads or versioned state snapshots in distributed systems.",
-      "description_length": 659,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.SharedMem.NoCache-KeySet",
-      "library": "hack_parallel.interface",
-      "description": "This module provides operations for managing ordered sets, including set algebra (union, intersection, difference), element-wise transformations (map, filter), and ordered traversal (ascending/descending iteration, min/max element selection). It works with sets (`KeySet.t`) of totally ordered elements (`KeySet.elt`) and sequences of these elements, enabling use cases like sorted data aggregation, range-based partitioning, and bidirectional conversion between sets and sequences for stream processing.",
-      "description_length": 504,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.Marshal_tools",
-      "library": "hack_parallel.interface",
-      "description": "This module provides functions for serializing and deserializing values to and from file descriptors, including handling remote exceptions with structured error data. It works with arbitrary OCaml values supporting marshaling, and includes support for transmitting exception information with stack traces. Concrete use cases include inter-process communication and distributed task execution where structured data and error propagation are required.",
-      "description_length": 449,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.SharedMem",
-      "library": "hack_parallel.interface",
-      "description": "This module orchestrates shared memory management across distributed processes, combining initialization, cache control, and persistent storage with structured data operations. It centers on shared memory handles, versioned caches, and ordered collections\u2014supporting typed key-value stores, atomic updates, ordered maps, and transactional local changes through stack-based tracking. You can cache computation results with typed keys, manage versioned state transitions with atomic commits, or maintain sorted maps with deterministic merge and traversal operations. Submodules enable thread-local caching, ordered set algebra, and custom key management, making it suitable for parallel computation frameworks needing consistent shared state, versioned snapshots, or ordered data aggregation.",
-      "description_length": 790,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.Lock",
-      "library": "hack_parallel.interface",
-      "description": "This module implements file-based locking mechanisms using Unix file descriptors and `SMap` (string map) keys to manage concurrent access to resources. It provides operations to grab, release, check availability, and perform blocking acquisition of locks, ensuring single-instance server execution and status checks. Concrete use cases include preventing multiple instances of `hh_server` from running concurrently and allowing `hh_client` to detect if a server is active.",
-      "description_length": 472,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.Measure",
-      "library": "hack_parallel.interface",
-      "description": "This module tracks and analyzes performance metrics like timing and value distributions for parallel tasks. It provides operations to create and manipulate measurement records, record timing data, track statistical distributions, and output metrics. Use cases include profiling parallel computations, aggregating performance statistics across threads, and analyzing distribution of values in concurrent contexts.",
-      "description_length": 412,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.String_utils",
-      "library": "hack_parallel.interface",
-      "description": "This module provides string manipulation functions such as splitting, stripping, searching, and replacing characters. It handles basic string operations like checking prefixes/suffixes, extracting substrings, and converting characters to strings. Concrete use cases include parsing text data, processing command-line input, and preparing strings for output formatting.",
-      "description_length": 368,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.MultiWorker",
-      "library": "hack_parallel.interface",
-      "description": "Implements parallel task distribution across worker processes, handling job execution and result aggregation. Works with lists of worker handles, jobs, and shared state. Used to parallelize operations like batched computations or distributed data processing where tasks are split, executed concurrently, and results merged.",
-      "description_length": 323,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel_intf.Std.Bucket",
-      "library": "hack_parallel.interface",
-      "description": "This module distributes elements into buckets for parallel processing. It supports creating buckets from lists, partitioning data across workers, and generating values for each bucket. It is used to divide workloads like batch computations or parallelized data transformations.",
-      "description_length": 277,
+      "description": "Implements a thread-safe in-memory cache with typed keys and values. Supports adding, retrieving, and removing entries, along with clearing the cache and checking its size. Useful for sharing precomputed results or temporary data between parallel tasks in a multicore environment.",
+      "description_length": 280,
       "index": 18,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel_intf.Std.Socket",
+      "module_path": "Hack_parallel_intf.Std.Bucket",
       "library": "hack_parallel.interface",
-      "description": "Creates and initializes Unix domain sockets, providing direct access to low-level socket operations through functions like `unix_socket` and `init_unix_socket`. Works with Unix file descriptors and string-based socket paths, enforcing constraints via constants like `max_addr_length`. Useful for inter-process communication (IPC) where processes connect through local socket files.",
-      "description_length": 381,
+      "description": "This module provides functions to distribute workloads across multiple workers by partitioning lists into buckets. It supports creating a bucketed structure from a list, generating a next-bucket function for dynamic allocation, and splitting work into a fixed number of buckets with custom per-bucket values. Concrete use cases include parallelizing tasks like file processing or batch computations across worker threads.",
+      "description_length": 421,
       "index": 19,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel_intf.Std.Daemon",
+      "module_path": "Hack_parallel_intf.Std.Lock",
       "library": "hack_parallel.interface",
-      "description": "This module provides low-level inter-process communication (IPC) and daemon management capabilities, centered on bidirectional channel serialization, marshaling of values between processes, and process lifecycle operations like spawning, forking, termination, and state coordination. It operates on channels (input/output), file descriptors, and parallel execution contexts, enabling use cases such as distributed systems, parallel computation frameworks, and persistent daemonized services that require fine-grained inter-process coordination, customizable channel setup, and initialization checks for parallel execution environments.",
-      "description_length": 635,
+      "description": "This module implements file-based locking mechanisms using Unix file descriptors and the `SMap` string map type. It provides operations to grab, release, check, and register locks associated with unique keys, typically representing server instances. Concrete use cases include ensuring single-instance server execution per user and allowing clients to detect running servers via lock file status.",
+      "description_length": 396,
       "index": 20,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_parallel_intf.Std.Worker",
       "library": "hack_parallel.interface",
-      "description": "This module manages a pool of worker processes for parallel execution, allowing jobs to be distributed across multiple cores. It provides functions to create workers, assign tasks, and retrieve results, with support for handling job failures and worker lifecycle management. Concrete use cases include parallelizing CPU-intensive computations like type checking or code analysis in a multi-process environment.",
-      "description_length": 410,
+      "description": "This module manages a pool of worker processes for parallel execution, allowing jobs to be distributed across multiple cores. It provides functions to create workers, assign tasks, retrieve results, and handle worker lifecycle events like termination or failure. Concrete use cases include parallelizing type checking or code analysis tasks in a build system.",
+      "description_length": 359,
       "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel_intf.Std.MultiWorker",
+      "library": "hack_parallel.interface",
+      "description": "Implements parallel task distribution across a list of workers, using a bucket-based work queue. It provides `next` to generate a function for retrieving the next batch of work items and `call` to execute a job in parallel, merging results incrementally. Useful for distributing large computations like file processing or data analysis across multiple threads.",
+      "description_length": 360,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel_intf.Std.Measure",
+      "library": "hack_parallel.interface",
+      "description": "This module tracks and analyzes performance metrics such as timing and value distributions for parallel tasks. It provides operations to create and manipulate measurement records, collect statistics like sums and distributions, and output detailed reports. Concrete use cases include profiling execution time of functions, measuring resource usage across distributed computations, and analyzing performance bottlenecks in concurrent systems.",
+      "description_length": 441,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel_intf.Std.Marshal_tools",
+      "library": "hack_parallel.interface",
+      "description": "This module provides functions for serializing and deserializing values to and from file descriptors, including handling remote exceptions with structured error data. It works directly with file descriptors and generic OCaml values, using a preamble to ensure correct data framing. Concrete use cases include transmitting structured data and exceptions across process boundaries in parallel or distributed systems.",
+      "description_length": 414,
+      "index": 24,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hack_parallel_intf.Std.Daemon",
+      "library": "hack_parallel.interface",
+      "description": "This module offers low-level inter-process communication (IPC) mechanisms, subprocess management, and process initialization validation. It operates on custom input/output channels, Unix file descriptors, and environment variables, enabling bidirectional data exchange via pipes or sockets. Typical applications include coordinating daemon processes, serializing values across process boundaries, and ensuring consistent state when setting up parallel execution entry points.",
+      "description_length": 475,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel_intf.Std.SharedMem",
+      "library": "hack_parallel.interface",
+      "description": "This module provides operations for configuring and managing shared memory systems with customizable sizing, including persistence mechanisms for dependency and hash tables via SQLite, garbage collection, and cache invalidation. It works with shared memory configurations, file descriptors, and SQLite databases, offering interfaces to track memory usage, measure object sizes, and enforce cache consistency for key-value pairs. Specific use cases include optimizing memory efficiency in concurrent environments, persisting large datasets to disk, and maintaining accurate statistics for performance tuning.",
+      "description_length": 607,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel_intf.Std.Socket",
+      "library": "hack_parallel.interface",
+      "description": "Creates and manages Unix domain sockets with functions to initialize sockets, retrieve socket paths, and enforce naming constraints. Works directly with Unix file descriptors and string-based socket addresses. Used to establish local inter-process communication channels using strict path naming conventions.",
+      "description_length": 308,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_parallel_intf.Std.String_utils",
+      "library": "hack_parallel.interface",
+      "description": "This module provides string manipulation functions such as splitting, stripping, searching, and case checking. It operates on strings and characters, offering direct operations like substring extraction, line splitting, and character replacement. Concrete use cases include parsing text data, preprocessing input, and implementing custom string formatting.",
+      "description_length": 356,
+      "index": 28,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_parallel_intf.Std",
       "library": "hack_parallel.interface",
-      "description": "This module enables distributed and parallel computation with support for inter-process communication, shared state management, and task orchestration. It provides data types such as file descriptors, shared memory handles, string maps, and worker processes, along with operations for marshaling values, managing locks, distributing workloads, and tracking performance metrics. You can run parallel batch computations, coordinate state across distributed processes, serialize and transmit exceptions with stack traces, and manage Unix domain sockets for local IPC. Specific applications include parallel type checking, distributed task execution with fault tolerance, and coordinating multi-process servers with shared caches and atomic updates.",
-      "description_length": 745,
-      "index": 22,
+      "description": "This module includes submodules for parallel task distribution, shared memory management, worker process coordination, inter-process communication, and string manipulation. It provides concrete functionality for workload partitioning, memory-efficient data sharing, parallel execution control, and system-level resource management. Use cases include parallelizing batch processing tasks, coordinating concurrent processes, and handling low-level system interactions like socket communication or file locking.",
+      "description_length": 508,
+      "index": 29,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_parallel_intf",
       "library": "hack_parallel.interface",
-      "description": "This module enables distributed and parallel computation with inter-process communication, shared state management, and task orchestration. It provides data types such as file descriptors, shared memory handles, string maps, and worker processes, along with operations for marshaling values, managing locks, distributing workloads, and tracking performance metrics. You can run parallel batch computations, coordinate state across distributed processes, serialize and transmit exceptions with stack traces, and manage Unix domain sockets for local IPC. Specific applications include parallel type checking, distributed task execution with fault tolerance, and coordinating multi-process servers with shared caches and atomic updates.",
-      "description_length": 733,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hh_json.Access",
-      "library": "hack_parallel.hh_json",
-      "description": "This module enables monadic traversal and extraction of values from deeply nested JSON objects using a sequence of key accesses, returning detailed error information when any step fails. It supports operations like retrieving boolean, string, integer, and array values from JSON objects, each annotated with a trace of keys accessed to aid in debugging failures. Concrete use cases include safely accessing fields in structured JSON data, such as parsing configuration files or API responses into typed records with error handling.",
-      "description_length": 531,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hh_json",
-      "library": "hack_parallel.hh_json",
-      "description": "The module represents JSON data with constructors for objects, arrays, strings, numbers, booleans, and null, and provides parsing and serialization functions for converting between JSON and external formats. It supports direct access to values with type-specific extractors like `get_string_exn` and `get_array_exn`, enabling tasks such as reading configuration files or processing API responses. The child module adds error-aware traversal of nested JSON structures, allowing safe access to deeply located values with detailed failure tracing. Together, they support both ad-hoc JSON manipulation and robust, structured decoding of complex JSON payloads into typed data.",
-      "description_length": 671,
-      "index": 25,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Scheduler",
-      "library": "hack_parallel.scheduler",
-      "description": "This module manages parallel task execution using a configurable number of worker threads. It supports operations like `map_reduce` for distributed processing of list elements with custom initialization and reduction logic, and `iter` for side-effecting parallel iteration over lists. It is used to efficiently handle batched computations such as file processing or data transformation jobs.",
-      "description_length": 391,
-      "index": 26,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Injector_config",
-      "library": "hack_parallel.injection",
-      "description": "This module defines configuration flags for error tracing and test stubbing. It provides direct access to boolean values that control these behaviors. Useful for enabling diagnostics during development or configuring test environments.",
-      "description_length": 235,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hh_logger.Level",
-      "library": "hack_parallel.utils",
-      "description": "This module defines severity levels for logging and provides functions to control log verbosity. It works with the `t` type, representing levels like `Error`, `Warn`, and `Debug`. Functions like `set_min_level`, `passes_min_level`, and `log` allow setting thresholds, filtering messages, and outputting logs based on severity, while `log_duration` records the time taken for operations at a given level.",
-      "description_length": 403,
-      "index": 28,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_core.List",
-      "library": "hack_parallel.utils",
-      "description": "This module provides element-wise transformations, folds, and filters for polymorphic lists, emphasizing indexed operations, tail recursion, and combinatorial pairings like cartesian products or zipped iterations. It supports advanced list manipulations such as deduplication, merging sorted sequences, and matrix transposition, often accepting custom comparison or mapping functions. Use cases include data processing pipelines with strict length constraints, index-aware transformations, and algorithms requiring efficient list reversal, sorting, or monadic chaining.",
-      "description_length": 569,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Lock",
-      "library": "hack_parallel.utils",
-      "description": "This module implements file-based locking mechanisms using Unix file descriptors and the `Unix.lock_command` operations. It provides functions to grab, release, check, and block until a lock is available, working with string keys mapped to file descriptors and stats. Concrete use cases include ensuring single instance execution of `hh_server` per user and allowing `hh_client` to detect running server instances.",
-      "description_length": 414,
+      "description": "This module provides parallel task execution, shared memory handling, and inter-process communication mechanisms. It works with system-level constructs like processes, sockets, and shared memory blocks. Concrete use cases include distributing batch jobs across workers, synchronizing concurrent tasks, and managing low-level resources like file locks and communication channels.",
+      "description_length": 378,
       "index": 30,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Handle",
-      "library": "hack_parallel.utils",
-      "description": "This module provides direct manipulation of file descriptors as integer handles, including conversion to and from Unix.file_descr and standard I/O channels. It supports low-level handle management, serialization setup on Windows, and lazy initialization. Concrete use cases include handling file descriptor passing, redirecting I/O through channels, and ensuring correct handle behavior across process boundaries.",
-      "description_length": 413,
+      "module_path": "MyMap.Make",
+      "library": "hack_parallel.collections",
+      "description": "This module implements a polymorphic map structure with keys ordered by a comparator, supporting insertion, deletion, ordered traversal, and value transformations. It operates on key-value pairs where keys are strictly ordered, enabling efficient lookups, merging with custom logic, and ordered queries (e.g., min/max bindings or range splits), while also providing conversions to sequences and lists. Typical applications include maintaining sorted associative collections, integrating heterogeneous map manipulations requiring key ordering, and processing entries in a deterministic sequence.",
+      "description_length": 594,
       "index": 31,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Timeout",
-      "library": "hack_parallel.utils",
-      "description": "The module introduces timeout-integrated I/O operations for managing channels, network sockets, and external processes, using specialized timeout objects and `in_channel` structures to enforce time constraints. It enables controlled termination of connections and time-bound execution of input operations, particularly useful for network services requiring graceful shutdowns or handling latency-sensitive communication. By extending standard I/O with timeout semantics, it supports scenarios like bounded-duration socket reads or coordinated process termination.",
-      "description_length": 563,
+      "module_path": "SMap",
+      "library": "hack_parallel.collections",
+      "description": "This module provides operations for manipulating string-keyed maps, including insertion, deletion, lookup, iteration, folding, filtering, and merging. It works with maps that associate string keys with arbitrary values, offering both safe (`option`-returning) and unsafe (exception-raising) variants for key-based operations, along with utilities for conversion to/from sequences and environment-parameterized transformations. It is particularly suited for use cases like configuration management, dictionary processing, and workflows requiring structured traversal or combination of key-value data.",
+      "description_length": 599,
       "index": 32,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Marshal_tools",
-      "library": "hack_parallel.utils",
-      "description": "This module provides functions for serializing and deserializing values to and from file descriptors, including a preamble. It works with arbitrary types `'a` that can be marshaled, along with handling remote exception data containing message and stack information. Concrete use cases include sending structured data over Unix domain sockets or pipes, and handling remote exceptions with descriptive error details.",
-      "description_length": 414,
+      "module_path": "ISet",
+      "library": "hack_parallel.collections",
+      "description": "This module offers standard set operations for integer collections, including membership checks, insertion, deletion, union, intersection, and difference, all while maintaining immutability. It supports transformations through filtering, partitioning, and range-based queries, alongside utilities for retrieving elements (e.g., minimum, maximum) and converting sets to or from lists and sequences. These features are particularly useful for tasks requiring efficient set manipulation, such as tracking unique identifiers, performing mathematical set operations, or integrating with lazy sequence processing pipelines.",
+      "description_length": 617,
       "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "MyMap",
+      "library": "hack_parallel.collections",
+      "description": "This module implements a polymorphic map with ordered keys, supporting insertion, deletion, ordered traversal, and value transformations. It works with key-value pairs where keys are strictly ordered, enabling efficient lookups, merging, and range-based operations. It is useful for maintaining sorted associative collections, performing ordered queries like min/max bindings, and processing entries in a deterministic sequence.",
+      "description_length": 428,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "IntKey",
+      "library": "hack_parallel.collections",
+      "description": "This module defines a type alias `t` for `int` and provides a comparison function `compare` that orders integers. It is used to facilitate integer-based key operations in data structures like maps or sets. Concrete use cases include indexing, sorting, and comparing integer identifiers in collections.",
+      "description_length": 301,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "MyMap_sig",
+      "library": "hack_parallel.collections",
+      "description": "Defines a polymorphic map interface with operations for key-value storage, lookup, and transformation. Works with associative data structures where keys are unique and ordered. Used to implement dictionary-like structures with efficient retrieval and update operations.",
+      "description_length": 269,
+      "index": 36,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "StringKey",
+      "library": "hack_parallel.collections",
+      "description": "This module defines a string-based key type with a comparison function for ordering and a string conversion function. It works primarily with string values to support key-based operations. Concrete use cases include managing string identifiers in data structures like maps or sets where ordering and string representation are required.",
+      "description_length": 335,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "SSet",
+      "library": "hack_parallel.collections",
+      "description": "This module implements a set abstraction for ordered string elements, supporting standard operations like union, intersection, and difference, along with element-wise transformations via map, filter, and fold functions. It operates on collections of `StringKey.t` values, maintaining ordering guarantees, and facilitates conversions to and from lazy sequences (`Stdlib.Seq.t`) for iterative processing. Typical applications include managing sorted string collections, performing set algebra on textual data, and bridging between functional set operations and sequence-based pipelines.",
+      "description_length": 584,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hh_logger.Level",
+      "library": "hack_parallel.utils",
+      "description": "This module defines severity levels for logging and provides functions to control log output. It includes operations to set and check the minimum log level, filter messages based on severity, and log formatted messages or durations. Use cases include controlling debug output in development and production environments, tracking performance metrics, and ensuring only relevant logs are recorded.",
+      "description_length": 395,
+      "index": 39,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Lock",
+      "library": "hack_parallel.utils",
+      "description": "This module implements file-based locking mechanisms using Unix file descriptors and `SMap` (string map) to manage lock states. It provides operations to grab, release, check, and register locks, using `Unix.lock_command` to interact with system-level file locks. Concrete use cases include ensuring single-instance server execution and allowing clients to detect running servers via lock file status.",
+      "description_length": 401,
+      "index": 40,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Stats",
       "library": "hack_parallel.utils",
-      "description": "Tracks heap usage and garbage collection statistics with mutable counters and snapshots. It captures initialization heap sizes, maximum heap size, and GC metrics, providing access and updates through `get_stats`, `update_max_heap_size`, and serialization via `to_json`. Used to monitor and analyze memory consumption during runtime, particularly in performance-sensitive or long-running processes.",
-      "description_length": 397,
-      "index": 34,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Measure",
-      "library": "hack_parallel.utils",
-      "description": "This module tracks performance metrics and distributions for code execution, supporting operations like sampling values, measuring execution time, and recording histograms. It works with named records to store metrics such as sums, counts, and distributions with configurable bucket sizes. Concrete use cases include profiling function performance, aggregating latency data, and analyzing statistical distributions of measured values.",
-      "description_length": 434,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Fork",
-      "library": "hack_parallel.utils",
-      "description": "This module manages process forking with support for registering callbacks to execute before and after forking, specifically handling buffer cleanup in child processes. It works with function callbacks stored in ref lists and provides a fork interface with optional logging. Concrete use cases include safely managing resource cleanup and process logging during fork operations in server or concurrent applications.",
-      "description_length": 415,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "String_utils",
-      "library": "hack_parallel.utils",
-      "description": "This module includes functions for string manipulation such as extracting substrings, checking prefixes/suffixes, splitting strings, and replacing characters. It works directly with strings and characters, offering operations like trimming, partitioning, and case validation. Use cases include parsing text, processing log files, and handling string-based data formats.",
-      "description_length": 369,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Exit_status",
-      "library": "hack_parallel.utils",
-      "description": "This module defines a comprehensive set of exit statuses for handling various runtime conditions and errors, including build failures, server states, and system-level issues. It provides functions to convert these statuses to exit codes, strings, and to trigger program termination. Use cases include signaling specific error conditions in command-line tools, managing server lifecycle events, and handling process status information in system utilities.",
-      "description_length": 454,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hh_logger",
-      "library": "hack_parallel.utils",
-      "description": "This module handles logging across different severity levels\u2014fatal, error, warn, info, and debug\u2014with support for formatted output and custom logging destinations. It includes utilities to log timestamps and measure durations, enabling detailed tracking of runtime events and performance metrics. Submodule functionality lets you set minimum log levels, filter messages, and direct output based on severity, such as logging only warnings and above or recording how long specific operations take. You can write logs to standard output, files, or custom channels, making it flexible for both development and production use.",
-      "description_length": 621,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "PidLog",
-      "library": "hack_parallel.utils",
-      "description": "This module manages logging of process IDs (PIDs) to a file, providing functions to initialize the log file, record PIDs with optional reasons, disable or close logging, and retrieve logged PID entries from disk. It works with strings for file paths and reasons, integers for PIDs, and uses an optional output channel for writing logs. Concrete use cases include tracking spawned processes in a distributed system or debugging process lifecycle in long-running services.",
-      "description_length": 470,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Utils",
-      "library": "hack_parallel.utils",
-      "description": "The module provides utility functions for common data manipulation tasks, including list and string operations, alongside lightweight abstractions for error handling and option types. Its main data types include `option`, `result`, and custom combinators that streamline functional transformations and validations. For example, it supports safe unwrapping of optional values with default fallbacks and chaining operations that propagate errors. While one child module exists, it currently contributes no additional functionality to the module's core interface.",
-      "description_length": 560,
+      "description": "Tracks heap usage and garbage collection statistics with mutable counters and snapshots. It captures initialization heap sizes, maximum heap size, and GC metrics. Use to monitor memory consumption during program execution or export stats to JSON for analysis.",
+      "description_length": 259,
       "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_core",
-      "library": "hack_parallel.utils",
-      "description": "This module offers a comprehensive set of operations for manipulating polymorphic lists with a focus on indexed processing, tail recursion, and combinatorial pairings such as zipped iterations and cartesian products. It includes key data types like lists and functions for transformations, folds, filters, deduplication, merging sorted sequences, and matrix transposition, often allowing custom comparison or mapping functions. You can use it to build data processing pipelines with strict length constraints, perform index-aware transformations, or implement algorithms requiring efficient list reversal, sorting, or monadic chaining. For example, you can zip two lists into pairs, deduplicate elements using a custom equality function, or merge two sorted lists into one while maintaining order.",
-      "description_length": 797,
-      "index": 42,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_path",
       "library": "hack_parallel.utils",
-      "description": "This module provides operations for constructing, manipulating, and interacting with filesystem paths. It supports path concatenation, directory navigation, file existence checks, reading file contents, and escaping/unescaping path strings. Concrete use cases include managing source file locations, handling directory hierarchies, and performing file operations in a type-safe manner.",
-      "description_length": 385,
+      "description": "This module provides operations for constructing, manipulating, and interacting with file paths as values of type `t`, which is a private string. It supports concrete actions such as checking file existence, reading file contents, changing directories, concatenating paths, and serializing/deserializing paths using slash-escaped strings. Use cases include safely handling filesystem paths in cross-platform environments, managing directory navigation, and performing basic file operations like reading and deletion.",
+      "description_length": 516,
+      "index": 42,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "String_utils",
+      "library": "hack_parallel.utils",
+      "description": "This module includes functions for string manipulation such as extracting substrings, checking prefixes/suffixes, splitting strings, and replacing characters. It works directly with strings and characters, offering operations like trimming, partitioning, and case analysis. Use cases include parsing text, processing log files, and handling string-based data formats.",
+      "description_length": 367,
       "index": 43,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Sys_utils",
+      "module_path": "Exit_status",
       "library": "hack_parallel.utils",
-      "description": "This module offers system interaction capabilities centered on file and directory management, process control, and environment manipulation. It operates on file paths, process IDs, environment variables, and system resources through functions like `realpath` for path resolution, `mkdir_p` for directory creation, `terminate_process` for PID-based termination, and `get_total_ram` for resource querying, with error resilience via `option` returns and internal handling. Use cases include cross-platform path normalization, safe file operations avoiding exceptions, system introspection for resource metrics, and managing processes with signal handling or command execution.",
-      "description_length": 673,
+      "description": "This module defines a comprehensive set of exit statuses representing various error and termination conditions. It provides functions to convert these statuses to exit codes, strings, and to trigger program termination. These operations are used to handle and communicate specific failure scenarios in server and worker processes.",
+      "description_length": 330,
       "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Daemon",
-      "library": "hack_parallel.utils",
-      "description": "This module facilitates type-safe inter-process communication and process management through typed channel I/O, marshaling of values, and Unix file descriptor operations. It provides primitives for spawning and managing child processes with explicit resource control (closing, flushing, killing) and includes a runtime guard to enforce correct entry point initialization in daemonized programs. The design emphasizes safety and explicit control over communication channels and process lifecycles, suitable for applications requiring robust IPC with timeout handling or secure daemon initialization.",
-      "description_length": 598,
-      "index": 45,
       "embedding_norm": 1.0
     },
     {
       "module_path": "PrintSignal",
       "library": "hack_parallel.utils",
-      "description": "Converts a signal number to its corresponding string representation, such as turning `2` into `\"SIGINT\"`. Works with integer signal identifiers commonly used in Unix systems. Useful for logging or debugging when handling process signals.",
-      "description_length": 237,
+      "description": "Converts a signal number to its corresponding string representation. Works with integer signal numbers as defined by the system. Useful for logging or debugging when handling process signals like `SIGINT` or `SIGTERM`.",
+      "description_length": 218,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Marshal_tools",
+      "library": "hack_parallel.utils",
+      "description": "This module provides functions for serializing and deserializing values to and from file descriptors, including a preamble. It works with arbitrary types `'a` and uses `Unix.file_descr` for I/O operations. Concrete use cases include transmitting structured data, such as exceptions or custom messages, over file descriptors in distributed or inter-process communication scenarios.",
+      "description_length": 380,
       "index": 46,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.NoCache.LocalChanges",
-      "library": "hack_parallel.memory",
-      "description": "This module tracks and manages local state changes in memory without caching. It provides operations to checkpoint state with `push_stack`, roll back changes for specific keys with `revert_batch`, or apply them permanently with `commit_batch`. Use cases include transactional updates to in-memory data where partial or full rollbacks are needed, such as during speculative analysis or batch processing with rollback capability.",
-      "description_length": 427,
+      "module_path": "Daemon",
+      "library": "hack_parallel.utils",
+      "description": "This module provides type-safe inter-process communication (IPC) mechanisms, including channel I/O, marshaling, and process management. It operates on custom input/output channels, file descriptors, and daemon entry points, enabling secure value transmission, process forking, and controlled I/O stream redirection using pipes or sockets. The functionality supports use cases like daemonizing applications, coordinating subprocesses, and ensuring safe runtime initialization through explicit descriptor handling and environment validation.",
+      "description_length": 539,
       "index": 47,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.WithCache.LocalChanges",
-      "library": "hack_parallel.memory",
-      "description": "This module tracks and manages local modifications to cached data using a stack-based approach, allowing for selective or full reversion and application of changes. It operates on key-value pairs stored in memory, using `KeySet.t` to identify groups of modified keys. Concrete use cases include transactional updates to in-memory caches, such as temporarily modifying configuration settings or user data with the ability to roll back or commit changes in batches.",
-      "description_length": 463,
+      "module_path": "Hh_logger",
+      "library": "hack_parallel.utils",
+      "description": "This module provides functions for logging messages with varying severity levels, including fatal, error, warn, info, and debug. It supports formatted message output, duration tracking, and exception logging, with control over log verbosity and output destination. Concrete use cases include monitoring application behavior in different environments, diagnosing issues through detailed logs, and measuring performance metrics during execution.",
+      "description_length": 443,
       "index": 48,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.UserKeyType",
-      "library": "hack_parallel.memory",
-      "description": "This module defines a key type for user-specific memory operations, including string conversion and comparison functions. It works with a unique abstract type `t` representing user keys. Concrete use cases include managing user-specific data in shared memory systems, where keys must be compared and serialized efficiently.",
-      "description_length": 323,
+      "module_path": "Hack_core",
+      "library": "hack_parallel.utils",
+      "description": "This module extends standard list operations with functions for manipulation, searching, and transformations, including `map`, `filter`, `fold`, and `find`. It works primarily with the built-in `list` type, providing more specialized and optimized variants of common operations. Concrete use cases include processing sequences of values, aggregating data, and composing list transformations in data-processing pipelines.",
+      "description_length": 420,
       "index": 49,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.WithCache-KeyMap",
-      "library": "hack_parallel.memory",
-      "description": "This interface provides ordered key-based map operations for functional manipulation of immutable key-value associations, supporting insertion, deletion, ordered traversal, and transformations like merging, filtering, and value mapping. It works with polymorphic ordered key types and their associated value maps, enabling efficient querying by key ranges, predicate-based filtering, and environment-passing style transformations. Typical use cases include managing hierarchical data with ordered keys, implementing caching layers requiring precise key eviction, and building composable data processing pipelines over sorted key-value pairs.",
-      "description_length": 641,
+      "module_path": "Sys_utils",
+      "library": "hack_parallel.utils",
+      "description": "This module provides functions for file system operations, including path resolution, directory traversal, and error-resilient file I/O, alongside environment variable management and process execution. It operates on file paths, process IDs, and environment variables, supporting use cases like system resource monitoring, cross-platform path normalization, and robust process or file manipulation in production environments.",
+      "description_length": 425,
       "index": 50,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.NoCache",
-      "library": "hack_parallel.memory",
-      "description": "This module implements a memory-based key-value store with versioned updates, batch operations, and temporary state changes, supporting direct manipulation of entries through operations like add, retrieve, remove, and existence checks. Its child module extends this functionality by enabling transactional behavior, allowing checkpointing with `push_stack`, selective rollbacks with `revert_batch`, and permanent application of changes via `commit_batch`. Together, they facilitate efficient management of transient state in multi-version concurrency systems, such as handling speculative analysis or batched updates with rollback support. Key types and operations enable precise control over state evolution, ensuring consistency during concurrent modifications.",
-      "description_length": 763,
+      "module_path": "Measure",
+      "library": "hack_parallel.utils",
+      "description": "This module tracks performance metrics and distributions for code execution, providing operations to create and manage records of measured data. It supports data types `record` and `record_data`, allowing sampling values, timing functions, and tracking statistical distributions by key. Concrete use cases include profiling function execution times, aggregating metric sums, and serializing measurement data for reporting or analysis.",
+      "description_length": 434,
       "index": 51,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.NoCache-KeyMap",
-      "library": "hack_parallel.memory",
-      "description": "This module implements a polymorphic ordered key-value map with functional, immutable operations for insertion, deletion, traversal, and transformation. It works with ordered key types and arbitrary value types (`'a`), supporting set-like operations, predicate-based filtering, and environment-threaded mappings. Use cases include managing hierarchical data, symbolic bindings, or stateful transformations where ordered key access and efficient map manipulation are required.",
-      "description_length": 475,
+      "module_path": "Timeout",
+      "library": "hack_parallel.utils",
+      "description": "This module provides timeout-aware I/O operations, including managing input channels, subprocesses, and network connections with explicit timeout control. It operates on custom `in_channel` types, Unix file descriptors, and sockets, supporting timed reads, channel closure, and graceful termination of connections by shutting down input paths. It is particularly useful for scenarios requiring strict timeout enforcement, such as avoiding indefinite blocking during inter-process communication or network service interactions.",
+      "description_length": 526,
       "index": 52,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.WithCache",
-      "library": "hack_parallel.memory",
-      "description": "This module caches versioned values indexed by keys, supporting efficient lookups, batch removals, and transitions between old and current states. It provides operations like `get`, `get_old`, `oldify_batch`, and `revive_batch` to manage state changes over time, particularly useful in incremental computation or versioned symbol tables. The child module extends this functionality with stack-based local modifications, enabling transactional updates and rollbacks on key-value pairs grouped by `KeySet.t`. Together, they allow complex caching strategies with fine-grained control over both versioning and transient changes.",
-      "description_length": 624,
+      "module_path": "PidLog",
+      "library": "hack_parallel.utils",
+      "description": "This module manages logging of process IDs (PIDs) to a file, allowing initialization with a log file path, logging of PIDs with optional reason and failure handling, retrieval of logged PIDs from a file, and closing the log output channel. It works with integers (PIDs), strings (file paths, reasons), and optional arguments. Concrete use cases include tracking spawned processes in a distributed system or debugging process lifecycle in long-running services.",
+      "description_length": 460,
       "index": 53,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Memory.WithCache-KeySet",
-      "library": "hack_parallel.memory",
-      "description": "This module provides efficient set operations for manipulating ordered collections of unique keys, supporting membership checks, element insertion/removal, union/intersection/difference computations, and ordered traversal. It operates on `KeySet.t` structures with elements of type `key`, leveraging comparator-based ordering for functions like filtering, partitioning, and min/max selection. Use cases include managing sorted unique element groups, incremental set updates with ordered sequence integration, and algorithms requiring ordered iteration or bulk transformations while preserving structural efficiency.",
-      "description_length": 615,
+      "module_path": "Handle",
+      "library": "hack_parallel.utils",
+      "description": "This module provides direct manipulation of file descriptors as integer handles, including conversion to and from Unix.file_descr and standard channels. It supports low-level I/O operations by enabling serialization of handles on Windows and initializing handle management. Concrete use cases include integrating with system-level file descriptors and enabling cross-platform compatibility for channel-based I/O.",
+      "description_length": 412,
       "index": 54,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Memory.WithCache-LocalChanges",
-      "library": "hack_parallel.memory",
-      "description": "This module manages in-memory state with support for local modifications, including operations to track, revert, and commit changes for specific keys. It works with key-value stores and maintains a stack of local changesets to enable transactional behavior. Concrete use cases include temporarily applying and rolling back configuration changes or user data updates before finalizing or discarding them.",
-      "description_length": 403,
+      "module_path": "Fork",
+      "library": "hack_parallel.utils",
+      "description": "This module manages process forking with support for registering callbacks to execute before forking and after forking in the child process. It provides functions to fork a process with optional logging, enabling precise control over buffer handling and initialization in multi-process environments. Use cases include safely managing shared resources and ensuring proper initialization in forked child processes, particularly in server or daemon implementations.",
+      "description_length": 462,
       "index": 55,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.CacheType",
-      "library": "hack_parallel.memory",
-      "description": "This module defines a caching mechanism with operations to add, retrieve, and remove key-value pairs, along with clearing the cache and getting its current size. It works with abstract key and value types, requiring a string representation function for keys. Concrete use cases include memoization of expensive computations and temporary storage of frequently accessed data.",
-      "description_length": 374,
+      "module_path": "Injector_config",
+      "library": "hack_parallel.injection",
+      "description": "This module defines configuration flags for error tracing and test stubbing. It provides direct access to boolean values that control these behaviors. Concrete use cases include enabling detailed error tracking in development and activating test stubs for unit testing.",
+      "description_length": 269,
       "index": 56,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.NoCache-LocalChanges",
-      "library": "hack_parallel.memory",
-      "description": "This module tracks and manages local changes to a state, allowing operations to commit or revert changes for specific keys. It uses a stack-based approach to isolate changes and supports batch reversion and commitment. Concrete use cases include transactional state management in a REPL or speculative execution of state transitions.",
-      "description_length": 333,
+      "module_path": "TestDisk",
+      "library": "hack_parallel.disk",
+      "description": "This module provides direct read and write operations for disk-based key-value storage. It works with string keys and string values, persisting data to disk for retrieval across sessions. Concrete use cases include storing configuration settings, caching small amounts of data, or maintaining state between program executions.",
+      "description_length": 326,
       "index": 57,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory.LocalCache",
-      "library": "hack_parallel.memory",
-      "description": "Implements a thread-local cache with operations to store, retrieve, and remove values by key. It uses user-defined key and value types, supporting efficient in-memory caching with explicit size tracking. Useful for scenarios like per-request caching in web servers or temporary result storage during batch processing.",
-      "description_length": 317,
+      "module_path": "RealDisk",
+      "library": "hack_parallel.disk",
+      "description": "Reads the contents of a file from the filesystem and returns it as a string. Works with file paths represented as strings. Useful for loading configuration files or static resources directly into memory.",
+      "description_length": 203,
       "index": 58,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Memory",
-      "library": "hack_parallel.memory",
-      "description": "This module manages low-level memory operations for shared memory systems, including initialization, caching, garbage collection integration, and SQLite-backed persistence. It provides direct access to memory handles, cache control, and heap metrics, enabling efficient resource monitoring, cache invalidation, and fault-tolerant state persistence. Its submodules support advanced data manipulation patterns, including ordered key-value maps, versioned caches, transactional key-value updates, and thread-local caching. These components work together to enable efficient, concurrent memory management with fine-grained control over transient and persistent state.",
-      "description_length": 663,
+      "module_path": "Disk",
+      "library": "hack_parallel.disk",
+      "description": "Reads the contents of a file at the given path and returns it as a string. Works with file system paths and raw file data. Useful for loading configuration files, scripts, or static resources directly into memory.",
+      "description_length": 213,
       "index": 59,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_core_list.Monad.Monad_infix",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides monadic bind and map operations for list values. It enables chaining list-producing functions using `>>=` and transforming list elements with `>>|`. Useful for flattening nested lists or sequencing list-based computations.",
-      "description_length": 243,
+      "module_path": "Disk_sig",
+      "library": "hack_parallel.disk",
+      "description": "This module defines a signature for disk-based storage operations, including reading from and writing to files, managing file descriptors, and handling serialization formats. It works with abstract data types representing disk blocks, file handles, and binary data buffers. Concrete use cases include implementing persistent storage backends, managing on-disk databases, and handling large data files efficiently.",
+      "description_length": 413,
       "index": 60,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hh_json.Access",
+      "library": "hack_parallel.hh_json",
+      "description": "This module provides composable operations for safely accessing and extracting values from JSON objects, with functions like `get_bool`, `get_string`, and `get_array` that retrieve and type-check values at specific keys. It works with `Hh_json.json` values and tracks key access paths to produce precise error messages when lookups fail. Concrete use cases include parsing structured JSON configurations or API responses where specific nested fields must be validated and extracted reliably.",
+      "description_length": 491,
+      "index": 61,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hh_json",
+      "library": "hack_parallel.hh_json",
+      "description": "This module provides functions to parse JSON from strings or files, convert JSON values to strings or output channels, and extract typed values from JSON structures with strict type checking. It works with a recursive `json` type representing JSON objects, arrays, strings, numbers, booleans, and null. Concrete use cases include reading and validating JSON configuration files, serializing JSON data for network transmission, and extracting specific typed fields from structured JSON responses.",
+      "description_length": 495,
+      "index": 62,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "MultiWorker",
+      "library": "hack_parallel.procs",
+      "description": "Implements parallel task execution across a list of workers, distributing work items and aggregating results. Uses `Worker.t` for managing worker processes and `Hack_bucket.next` to control work item generation. Useful for batch processing tasks like type checking or code analysis where work can be divided and processed concurrently.",
+      "description_length": 335,
+      "index": 63,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Worker",
+      "library": "hack_parallel.procs",
+      "description": "This module manages a pool of worker processes for parallel task execution, handling job distribution and result retrieval. It works with custom entry points, shared memory handles, and process control structures to coordinate work across multiple processes. Concrete use cases include distributing type-checking tasks in a build system and managing background jobs with strict memory and concurrency constraints.",
+      "description_length": 413,
+      "index": 64,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_bucket",
+      "library": "hack_parallel.procs",
+      "description": "This module distributes workloads across multiple workers by partitioning lists into buckets. It provides functions to create a bucketed workload from a list, generate a next-item function for scheduling, and split work into a fixed number of buckets using a custom function. Concrete use cases include parallelizing tasks like file processing or batch computations in a multi-threaded environment.",
+      "description_length": 398,
+      "index": 65,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_monad.Make.Monad_infix",
+      "library": "hack_parallel.hack_core",
+      "description": "This module defines infix operators for monadic composition, specifically `>>=` for chaining monadic actions and `>>|` for applying a pure function to the result of a monadic action. It works with any monad that follows the `M` signature, allowing for sequential composition of effectful computations. Concrete use cases include writing fluent, readable code for asynchronous operations, error handling, or stateful computations using monads like `Result`, `Option`, or custom effect monads.",
+      "description_length": 491,
+      "index": 66,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_monad.Check_S2_refines_S.Monad_infix",
       "library": "hack_parallel.hack_core",
-      "description": "This module defines monadic composition operators for chaining computations that produce values wrapped in a result type with two type parameters. It supports binding with `>>=` to sequence actions and transforming results with `>>|`. These operations are used to build pipelines that handle error propagation and data transformation in a type-safe way.",
-      "description_length": 353,
-      "index": 61,
+      "description": "This module defines monadic composition operators for chaining computations that produce values wrapped in a result type with two type parameters. It supports binding and mapping operations over values of type `('a, 'd) t`, allowing sequential execution where the result of one computation feeds into the next. Concrete use cases include error handling pipelines and asynchronous data processing where both success and error states must be preserved.",
+      "description_length": 450,
+      "index": 67,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hack_core_list.Monad.Monad_infix",
+      "library": "hack_parallel.hack_core",
+      "description": "Implements monadic bind and map operations for lists. Supports chaining transformations that produce lists, enabling sequence processing and combinatorial computations. Useful for scenarios like generating permutations, filtering with nested results, or flattening hierarchical data.",
+      "description_length": 283,
+      "index": 68,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_monad.Make2.Monad_infix",
       "library": "hack_parallel.hack_core",
-      "description": "Implements monadic bind and map operations for a two-parameter monad. Works with values wrapped in a polymorphic monadic type `('a, 'd) M.t`. Enables chaining computations that carry both a result and an associated data context, such as error handling with diagnostics or stateful transformations.",
-      "description_length": 297,
-      "index": 62,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_monad.Make.Monad_infix",
-      "library": "hack_parallel.hack_core",
-      "description": "This module defines infix operators for monadic composition, specifically `>>=` for chaining monadic actions and `>>|` for applying a function to the result of a monadic action. It works with any monad that follows the `M` signature, allowing for sequential composition of effectful computations. Concrete use cases include writing fluent, readable pipelines for asynchronous operations, error handling, or stateful computations without explicitly nesting function calls.",
-      "description_length": 471,
-      "index": 63,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_core_list.Monad",
-      "library": "hack_parallel.hack_core",
-      "description": "This module enhances list processing by implementing monadic operations that allow sequence-like computations with multiple results at each step. It offers core functions like `bind`, `map`, `join`, and applicative operators to compose and transform list-based computations, supporting tasks such as generating combinations, filtering sequences, and handling non-determinism. The child module provides essential bind and map functionality, enabling chaining and transformation of list values with operators like `>>=` and `>>|`. Together, they streamline complex list manipulations while maintaining clarity and composability.",
-      "description_length": 626,
-      "index": 64,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_monad.S",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides core monadic operations for sequencing computations, including binding (`>>=`), mapping (`>>|`), and combining multiple computations (`all`). It works with monadic values of type `'a t`, where `t` represents a computation returning a value of type `'a`. Concrete use cases include composing asynchronous operations, handling optional values, and managing effects like state or error propagation in a type-safe way.",
-      "description_length": 435,
-      "index": 65,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_monad.Make",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides monadic operations for sequencing computations, enabling composition of effectful actions through functions like `bind`, `map`, `return`, and `join`. It abstracts over a parameter module `M`, allowing these operations to work uniformly across different computational contexts such as asynchronous workflows, optional values, or stateful transformations. The child module enhances this by introducing infix operators `>>=` and `>>|`, supporting concise, pipeline-style expression of monadic chains and value transformations. Together, they facilitate writing clear, linear sequences of dependent computations while abstracting boilerplate nesting and callback handling.",
-      "description_length": 689,
-      "index": 66,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_core_list.Assoc",
-      "library": "hack_parallel.hack_core",
-      "description": "This module operates on association lists, providing functions to search, add, remove, and transform key-value pairs with customizable equality checks. It supports lookups with `find` and `mem`, modifies entries with `add` and `remove`, and allows value transformations via `map`. Concrete use cases include managing configuration settings, handling symbol tables, or processing key-value data from external sources.",
-      "description_length": 416,
-      "index": 67,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_monad.S2",
-      "library": "hack_parallel.hack_core",
-      "description": "This module implements a monadic structure for computations with two type parameters, where the second parameter is preserved across operations. It supports binding, mapping, joining nested computations, and handling lists of monadic values. Use it to sequence operations that carry a shared context or state through a series of transformations.",
-      "description_length": 345,
-      "index": 68,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_core_list.Infix",
-      "library": "hack_parallel.hack_core",
-      "description": "Implements list concatenation with the `@` operator, allowing two lists of the same type to be joined end-to-end. Works directly with OCaml's built-in list type, preserving element order. Useful for building larger lists from smaller components in a readable, idiomatic way.",
-      "description_length": 274,
+      "description": "Implements monadic bind and map operations for a two-parameter monad. Works with types `'a` and `'d` within a monadic structure `M`. Enables chaining computations that carry both success and error states, such as parsing or validation pipelines where intermediate results and diagnostics must be tracked.",
+      "description_length": 304,
       "index": 69,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_monad.S2-Monad_infix",
-      "library": "hack_parallel.hack_core",
-      "description": "This module defines monadic bind and map operations for a two-argument monad type. It provides the `>>=` operator for chaining computations that produce monadic values and `>>|` for transforming the result of a monadic computation. These functions support composing asynchronous or effectful computations with two type parameters, typically used for handling results with error or state contexts.",
-      "description_length": 396,
-      "index": 70,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_commutative_group.S",
-      "library": "hack_parallel.hack_core",
-      "description": "This module defines the structure of a commutative group with operations for addition, subtraction, and identity. It works with a single abstract type `t` where values can be combined using `+`, negated using `-`, and compared against the identity element `zero`. Concrete use cases include algebraic structures like integer arithmetic, vector addition, or polynomial manipulation where group properties are required.",
-      "description_length": 417,
-      "index": 71,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_monad.Basic",
-      "library": "hack_parallel.hack_core",
-      "description": "This module implements core monadic operations for a custom monad, providing `bind`, `return`, and `map` functions. It works with a generic type `'a t`, supporting sequencing of computations that produce values wrapped in a monadic context. Concrete use cases include handling asynchronous operations, error propagation, or stateful computations with a consistent interface.",
-      "description_length": 374,
-      "index": 72,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_monad.Infix2",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides monadic bind and map operations for a two-argument monad type. It works with values of type `('a, 'd) t`, where the second type parameter is preserved across operations. Use this to sequence computations that carry a shared context or dependency, like error handling with additional metadata or stateful transformations.",
-      "description_length": 341,
-      "index": 73,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_monad.Infix",
-      "library": "hack_parallel.hack_core",
-      "description": "This module defines monadic sequencing operations for chaining computations. It provides the `>>=` operator to bind a monadic value to a function that returns another monadic value, and `>>|` to apply a pure function to the result of a monadic computation. These operations work with any monadic type `'a t`, enabling concise composition of asynchronous or effectful operations such as I/O, parsing, or concurrent tasks.",
-      "description_length": 420,
-      "index": 74,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_option.Monad_infix",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides infix operators for chaining optional computations. It works with OCaml's built-in `option` type, allowing for concise binding and mapping operations. It is useful when handling sequences of operations that may fail, such as parsing or lookup tasks, where each step depends on the result of the previous.",
-      "description_length": 325,
-      "index": 75,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_monad.S-Monad_infix",
-      "library": "hack_parallel.hack_core",
-      "description": "This module defines monadic sequencing operations for composing asynchronous or effectful computations. It provides the `>>=` operator to chain functions that produce monadic values and `>>|` to map a function over a monadic result. These operations are used to structure workflows where each step depends on the outcome of the previous, such as handling I/O, concurrency, or error propagation.",
-      "description_length": 394,
-      "index": 76,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_monad.Basic2",
-      "library": "hack_parallel.hack_core",
-      "description": "This module implements a multi-parameter monad where the second type parameter remains consistent across computations, enabling operations on structures like `('a, 'b) result`. It provides core monadic operations including `bind`, `map`, and `return`, allowing chaining of effectful computations that share a common context. Concrete use cases include handling computations that produce errors or optional values while preserving the context of the error or option type.",
-      "description_length": 470,
-      "index": 77,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_monad.Check_S2_refines_S",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides a monadic framework for composing computations that yield both a value and diagnostic information, using the type `('a, 'd) t`. It supports sequencing through `bind`, `map`, and `join`, enabling pipelines that track errors or intermediate data, such as validation or analysis passes. The child module enhances this by defining operators like `>>=` and `>>|` for concise, type-safe chaining and transformation of result-bearing actions. Together, they allow writing expressive, effectful computations that propagate both success values and diagnostic context.",
-      "description_length": 579,
-      "index": 78,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_monad.Make2",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides monadic operations for working with parameterized monads that carry both a result and an associated data type, such as errors or state. It supports key operations like bind, map, and join, enabling composition and transformation of computations that thread through additional context. The child module extends this functionality to two-parameter monads, allowing fine-grained control over both the result and the associated data during sequencing. With these tools, users can write concise, effectful pipelines that handle errors, accumulate diagnostics, or manage stateful transformations in a type-safe way.",
-      "description_length": 630,
-      "index": 79,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_result.Monad_infix",
       "library": "hack_parallel.hack_core",
-      "description": "This module defines infix operators for monadic chaining and mapping over result values. It provides `>>=` for flat-mapping success values and `>>|` for transforming success values while preserving error structure. These operations are used to sequence computations that may fail, such as parsing or validation steps, where each step depends on the successful outcome of the previous.",
-      "description_length": 384,
-      "index": 80,
+      "description": "This module defines infix operators for monadic chaining and mapping over `Result` values. It provides `(>>=)` for flat-mapping success values and `(>>|)` for mapping both success and error cases. These operations simplify error propagation and transformation in workflows that return detailed error information.",
+      "description_length": 312,
+      "index": 70,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_core_list.Monad",
+      "library": "hack_parallel.hack_core",
+      "description": "Implements monadic operations for list processing, including bind, map, and join functions that support chaining transformations and handling combinatorial results. Works directly with lists, enabling operations like permutation generation, nested filtering, and hierarchical data flattening. Designed for sequence processing tasks where each step may produce multiple results or require accumulation into a list.",
+      "description_length": 413,
+      "index": 71,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_result.Export",
       "library": "hack_parallel.hack_core",
-      "description": "This module provides functions to convert and manipulate result values, specifically offering operations to map over success and error cases, and to extract values with default fallbacks. It works with the polymorphic result type `('a, 'b) Hack_result.t`, which represents computations that may succeed or fail. Concrete use cases include handling parser outputs, validating data structures, and chaining operations that produce errors.",
-      "description_length": 436,
-      "index": 81,
+      "description": "This module provides functions to convert and manipulate `Result` values, including mapping success and error cases, flattening nested results, and extracting values with default fallbacks. It operates on the `(_, _) Hack_result.t` type, which represents computations that may fail. Use it to handle error propagation, transform result values, or safely extract values from result-aware computations.",
+      "description_length": 400,
+      "index": 72,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_option.Monad_infix",
+      "library": "hack_parallel.hack_core",
+      "description": "This module provides infix operators for chaining optional computations. It works with OCaml's built-in `option` type, allowing for concise binding and mapping operations. Use it to flatten nested `match` expressions when handling sequences of operations that may fail, like parsing or lookup chains.",
+      "description_length": 300,
+      "index": 73,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hack_commutative_group",
+      "module_path": "Hack_core_list.Infix",
       "library": "hack_parallel.hack_core",
-      "description": "This module defines a commutative group structure with addition, inverse, and identity operations, ensuring associativity, commutativity, and invertibility for an abstract type `t`. It supports concrete implementations like integers under addition or non-zero rationals under multiplication, with core operations such as `zero`, `add`, and `neg`. Submodules extend this with direct access to subtraction via `sub` and support for algebraic manipulation of structured types like vectors or polynomials. Specific uses include formal verification of algebraic properties and implementing mathematical computations requiring group-theoretic guarantees.",
-      "description_length": 648,
-      "index": 82,
+      "description": "Implements list concatenation using the `@` operator, allowing direct joining of two lists of the same type. Works with standard OCaml lists containing elements of any type. Useful for building larger lists from smaller segments in a readable, concise manner during data processing or recursive list construction tasks.",
+      "description_length": 319,
+      "index": 74,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_monad.Make2",
+      "library": "hack_parallel.hack_core",
+      "description": "Implements monadic bind and map operations for a two-parameter monad. Works with types `'a` and `'d` within a monadic structure `M`. Enables chaining computations that carry both success and error states, such as parsing or validation pipelines where intermediate results and diagnostics must be tracked.",
+      "description_length": 304,
+      "index": 75,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_monad.Check_S2_refines_S",
+      "library": "hack_parallel.hack_core",
+      "description": "This module implements monadic operations for composing computations that yield result values of type `('a, 'd) t`, where `'a` represents success values and `'d` represents error or context data. It supports binding, mapping, joining, and collecting multiple results, enabling structured error handling and data transformation pipelines. Concrete use cases include validating data structures with detailed error reporting and sequencing operations that require propagating both success and failure states.",
+      "description_length": 505,
+      "index": 76,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hack_monad.Make",
+      "library": "hack_parallel.hack_core",
+      "description": "This module implements monadic operations for sequencing computations, providing `bind`, `return`, `map`, and utilities like `all` for combining lists of monadic values. It works with any type conforming to the `M` signature, enabling structured handling of effects such as asynchronous I/O, error propagation, or state transitions. Concrete use cases include composing database queries, managing optional values, or orchestrating workflows with `Result` or `Lwt`-based monads.",
+      "description_length": 477,
+      "index": 77,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_core_list.Assoc",
+      "library": "hack_parallel.hack_core",
+      "description": "This module operates on association lists, providing functions to search, add, remove, and transform key-value pairs. It supports polymorphic comparisons for custom equality checks and allows inversion of key-value relationships. Use cases include managing configuration settings, mapping identifiers to values, and transforming or filtering list-based key-value data.",
+      "description_length": 368,
+      "index": 78,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hack_result.Stable",
+      "library": "hack_parallel.hack_core",
+      "description": "This module implements a stable version of the `Result` type for handling success and error states, primarily used for propagating and managing errors in a structured way. It provides operations like `map`, `bind`, and `ok_or` to manipulate values within the `Result` context, along with utilities to convert and inspect results. Concrete use cases include parsing operations, validation pipelines, and any computation where failure needs to be explicitly handled.",
+      "description_length": 464,
+      "index": 79,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_caml",
       "library": "hack_parallel.hack_core",
-      "description": "This module provides arithmetic, bitwise, and floating-point operations on integers and floats, comparison and boolean logic, type conversion utilities, and input/output handling for text and binary data. It supports numerical computations, debugging with source position metadata, low-level file operations, and mutable state management via reference cells, with use cases spanning mathematical modeling, binary data processing, and program termination handling.",
-      "description_length": 463,
+      "description": "This module encompasses exception handling, polymorphic comparisons, arithmetic and bitwise operations, type conversions, and input/output utilities. It operates on primitive types like integers, floats, booleans, strings, and characters, alongside structured types such as lists, tuples, and file channels. These capabilities support numerical computations, system-level resource management, data serialization, error propagation, and cross-language interoperability through low-level I/O and binary data handling.",
+      "description_length": 515,
+      "index": 80,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_container",
+      "library": "hack_parallel.hack_core",
+      "description": "This module implements specialized folding operations for counting, summing, and finding minimum and maximum values over collections. It works with polymorphic data structures and leverages custom accumulation functions and comparison logic provided by the user. Concrete use cases include aggregating filtered elements in a collection, computing totals with custom sum types, and determining extremal values using arbitrary comparison functions.",
+      "description_length": 446,
+      "index": 81,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_polymorphic_compare",
+      "library": "hack_parallel.hack_core",
+      "description": "This module provides polymorphic comparison functions including `compare`, `equal`, and their associated operators like `<`, `>`, `<=`, etc., all working uniformly across any type `'a`. It supports sorting and ordering operations with `ascending` and `descending` as direct comparators for `List.sort`. Concrete use cases include sorting heterogeneous lists, implementing ordered collections, and performing comparisons in generic functions where type-specific comparison logic is not available.",
+      "description_length": 495,
+      "index": 82,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_result",
+      "library": "hack_parallel.hack_core",
+      "description": "Provides monadic operations for error handling, value transformation, and result inspection using a sum type representing success or error states. Combines results with custom logic, extracts values with exception-raising options, and captures exceptions into result values, supporting chained",
+      "description_length": 293,
       "index": 83,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_monad",
       "library": "hack_parallel.hack_core",
-      "description": "This module implements a flexible monadic framework for composing effectful computations, supporting both single and multi-parameter monads. It provides core operations like `bind`, `map`, and `return`, along with infix operators `>>=` and `>>|` for fluent, pipeline-style chaining of asynchronous or effectful actions. The type `'a t` represents monadic values encapsulating results with effects such as state, errors, or optionality, while extensions for `('a, 'd) t` preserve a secondary type across operations, enabling context-aware pipelines like error tracking or diagnostic reporting. Examples include sequencing I/O operations, composing validation steps with error metadata, or managing stateful transformations in a type-safe, composable way.",
-      "description_length": 753,
+      "description": "This module implements monadic combinators for structuring computations with effects, supporting operations like `bind`, `map`, and `all` over monadic values. It works with monomorphic and polymorphic monads, including those tracking both success and error states, such as `Result` or `Lwt`. Use cases include composing asynchronous operations, validating data with detailed errors, and sequencing effectful computations in a type-safe manner.",
+      "description_length": 443,
       "index": 84,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_core_printf",
+      "module_path": "Hack_poly",
       "library": "hack_parallel.hack_core",
-      "description": "This module provides functions for formatted output operations, supporting printing to output channels, strings, and buffers with precise control over formatting. It works with standard data types like `out_channel`, `Buffer.t`, and format strings, enabling type-safe string construction and conditional output suppression. Concrete use cases include logging to files or standard streams, building dynamic strings, and generating error messages with formatted arguments.",
-      "description_length": 470,
+      "description": "This module provides polymorphic comparison functions and operators for ordering and equality checks on any type. It includes direct-use comparators like `compare`, `ascending`, and `descending`, along with boolean operators such as `<`, `>`, `=`, and `<>`, and utilities like `min` and `max`. It is useful for sorting collections with custom orderings or performing comparisons where type-specific comparison logic is not available.",
+      "description_length": 433,
       "index": 85,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Hack_commutative_group",
+      "library": "hack_parallel.hack_core",
+      "description": "Implements algebraic operations for a commutative group, including addition, identity element (zero), and inverse element computation. Works with abstract data types that support group-theoretic operations, such as integers, vectors, or polynomials under addition. Useful for cryptographic algorithms, symbolic mathematics, and error-correcting codes where additive group structures are required.",
+      "description_length": 396,
+      "index": 86,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Hack_core_list",
+      "library": "hack_parallel.hack_core",
+      "description": "This module offers a comprehensive toolkit for list manipulation, encompassing element access, transformations, folds, filtering, sorting, and indexed traversal, with both safe (option-returning) and unsafe (exception-raising) variants. It operates on polymorphic lists and association lists, supporting advanced operations like deduplication, merging sorted sequences, and combinatorial data processing with customizable comparisons. Key use cases include algorithm design requiring precise control over list structure, hierarchical data flattening, and functional programming patterns leveraging monadic chaining or tail-recursive optimizations.",
+      "description_length": 647,
+      "index": 87,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Hack_option",
       "library": "hack_parallel.hack_core",
-      "description": "This module enhances OCaml's built-in `'a option` type with utilities for presence checks, transformations, and monadic operations like `bind`, `map2`, and `value_map`. It supports conversions between options and collections, exception-safe workflows via `try_with`, and chaining with infix operators from its child module. Specific uses include safely extracting values with defaults, combining multiple optional values, and sequencing operations that may fail, such as parsing or lookups.",
-      "description_length": 490,
-      "index": 86,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_poly",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides direct access to polymorphic comparison operations, including equality checks, ordering relations, and min/max selection. It works with any type through polymorphic functions, enabling comparisons without requiring explicit comparator values. Concrete use cases include sorting lists with `List.sort` using `ascending` or `descending`, comparing values in conditional logic, and selecting the smaller or larger of two values.",
-      "description_length": 446,
-      "index": 87,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_polymorphic_compare",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides polymorphic comparison operators and sorting functions that work uniformly across all data types. It includes standard comparison functions like `compare`, `equal`, and boolean operators (`<`, `>`, etc.), along with `min` and `max` for selecting extreme values. These functions are particularly useful for sorting collections, implementing order-based logic, and comparing values directly without requiring type-specific comparison functions.",
-      "description_length": 463,
+      "description": "This library provides a rich set of operations for working with optional values, including predicates for inspection, transformations across multiple options, iterative processing, and value extraction with default handling. It supports monadic workflows through infix operators and standard bind/map functions, enabling concise chaining of fallible computations while offering utilities for aggregation, filtering, and error propagation. Designed for scenarios requiring robust optional value handling, it facilitates both imperative-style iteration and functional composition over `option` types.",
+      "description_length": 598,
       "index": 88,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_result",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides monadic operations for handling computations that may fail, centered around the `Hack_result.t` type with `Ok` and `Error` variants. It supports chaining with `>>=`, mapping with `>>|`, and transforming both success and error cases, enabling pipelines that handle validation, parsing, and error propagation. Functions allow combining multiple results, converting exceptions to structured errors, and extracting values with fallbacks. It facilitates building resilient data-processing workflows where failures are explicitly managed and composed.",
-      "description_length": 566,
-      "index": 89,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Hack_core_list",
-      "library": "hack_parallel.hack_core",
-      "description": "This module provides robust tools for list manipulation, combining safe, tail-recursive operations with functional composition and explicit error handling. It supports element-wise transformations, indexed processing, merging sorted sequences, and monadic constructs for chaining operations, making it suitable for data aggregation and algorithmic workflows. Submodules enhance functionality with monadic combinators for non-deterministic computations, utilities for association lists with customizable equality, and an infix operator for list concatenation. Examples include generating combinations, managing key-value configurations, and building lists idiomatically with `@`.",
-      "description_length": 678,
-      "index": 90,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hack_container",
+      "module_path": "Hack_core_printf",
       "library": "hack_parallel.hack_core",
-      "description": "This module implements specialized folding operations for counting, summing, and finding minimum and maximum values over collections. It works with polymorphic data structures and supports custom accumulation logic through function arguments. Concrete use cases include aggregating filtered elements, computing totals with custom mappings, and determining extremal values using arbitrary comparison functions.",
-      "description_length": 409,
+      "description": "This module provides formatted output operations for printing values to output channels, strings, and buffers using type-safe format specifiers. It supports writing to standard output, standard error, arbitrary output channels, string buffers, and constructing strings or other values from formatted output. Concrete use cases include logging messages to stderr, building dynamic strings with sprintf, appending formatted data to buffers, and conditionally suppressing output with ifprintf or ibprintf.",
+      "description_length": 502,
+      "index": 89,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Memory.NoCache.LocalChanges",
+      "library": "hack_parallel.memory",
+      "description": "This module tracks and manages local changes to a heap without using caching. It supports operations to checkpoint the current state, apply or roll back changes for specific keys, and determine if modifications are pending. Use it when implementing transactional updates or undo functionality for a mutable heap.",
+      "description_length": 312,
+      "index": 90,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Memory.WithCache",
+      "library": "hack_parallel.memory",
+      "description": "This module caches values associated with user-defined keys, supporting efficient lookups, batch operations, and versioned state transitions. It works with key-value pairs where keys are hashable and values support in-memory storage and retrieval. Concrete use cases include optimizing repeated value access in stateful computations and managing speculative state changes in transactional workflows.",
+      "description_length": 399,
       "index": 91,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Hack_parallel.Memory.NoCache.LocalChanges",
-      "library": "hack_parallel",
-      "description": "This module tracks and manages local changes to shared memory in a parallelized environment, providing operations to push and pop state snapshots, commit or revert changes for specific keys, and check if changes are pending. It works directly with shared memory structures through a `KeySet` abstraction to represent groups of keys. Concrete use cases include transactional updates during type checking or symbol resolution, where partial changes must be conditionally applied or rolled back.",
-      "description_length": 492,
+      "module_path": "Memory.LocalCache",
+      "library": "hack_parallel.memory",
+      "description": "This module implements a local caching mechanism with key-value storage, supporting operations to add, retrieve, and remove entries. It works with arbitrary key and value types, parameterized by UserKeyType and Value. Useful for temporarily storing and accessing data such as function results or frequently accessed records.",
+      "description_length": 324,
       "index": 92,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Hack_parallel.Memory.WithCache.LocalChanges",
-      "library": "hack_parallel",
-      "description": "This module manages local changes to a shared memory state, allowing for temporary modifications to be tracked, reverted, or committed. It operates on key-value pairs stored in shared memory, using a stack-like structure to maintain changesets. Concrete use cases include transactional updates during type checking or symbol resolution, where partial results need to be rolled back or finalized based on analysis outcomes.",
-      "description_length": 422,
+      "module_path": "Memory",
+      "library": "hack_parallel.memory",
+      "description": "This module provides low-level memory management operations for shared memory systems, including initialization, garbage collection tuning, and persistence mechanisms for serializing data structures like hash tables to SQLite. It works with memory handles, heap statistics, and abstract cache structures, offering utilities to measure object sizes, enforce memory limits, and invalidate cached entries based on usage metrics. Key use cases include optimizing memory-intensive applications through heap overflow detection and configuring garbage collection parameters to balance performance and resource consumption.",
+      "description_length": 615,
       "index": 93,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory.UserKeyType",
-      "library": "hack_parallel",
-      "description": "This module defines a key type for use with shared memory structures, providing comparison and string conversion operations. It works with abstract key values to enable efficient storage and retrieval in concurrent environments. Concrete use cases include indexing shared memory segments in multi-process systems where keys must be compared and serialized.",
-      "description_length": 356,
-      "index": 94,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory.NoCache-KeySet",
-      "library": "hack_parallel",
-      "description": "This module provides functional set operations for ordered collections of unique elements, emphasizing structural sharing to optimize memory efficiency. It supports key-based membership checks, ordered insertion and deletion, and transformations like union, intersection, and partitioning, while enabling safe element access via optional return types. Designed for scenarios requiring precise ordered set manipulation, it integrates sequence conversion utilities to handle bulk operations and ordered traversals for large datasets.",
-      "description_length": 531,
-      "index": 95,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel.Memory.CacheType",
-      "library": "hack_parallel",
-      "description": "This module implements a thread-safe in-memory cache with operations to add, retrieve, and remove key-value pairs. It supports efficient lookups and size tracking, using a string-based key representation. It is suitable for scenarios requiring fast access to cached values, such as memoization or temporary storage in parallel computations.",
-      "description_length": 340,
-      "index": 96,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory.NoCache-LocalChanges",
-      "library": "hack_parallel",
-      "description": "This module tracks and manages local changes to a shared memory state without caching. It provides operations to checkpoint modifications with `push_stack` and `pop_stack`, apply or discard changes for specific keys using `commit_batch` and `revert_batch`, and fully revert or commit all pending changes with `revert_all` and `commit_all`. It is used in parallel processing contexts where atomic updates to a shared state are required, ensuring changes can be selectively rolled back or applied.",
-      "description_length": 495,
-      "index": 97,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory.WithCache-LocalChanges",
-      "library": "hack_parallel",
-      "description": "This module manages local changes to a shared memory state with operations to track, revert, and commit batches of changes. It works with key-value stores and uses a stack-like structure to maintain local modifications. Concrete use cases include transactional updates and speculative execution in parallel processing scenarios.",
-      "description_length": 328,
-      "index": 98,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory.WithCache-KeyMap",
-      "library": "hack_parallel",
-      "description": "This module supports associative map operations for polymorphic key-value pairs, emphasizing ordered key traversal and bulk transformations like `fold`, `merge`, and `filter`. It works with structured data types such as `KeyMap.t` (ordered associative maps), sequences, and key-list collections, enabling environment-threaded mappings and safe/unsafe value retrieval. Specific use cases include maintaining sorted key order during iteration, combining maps with custom merge logic, and transforming values while preserving structural invariants.",
-      "description_length": 545,
-      "index": 99,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Scheduler.Daemon",
-      "library": "hack_parallel",
-      "description": "Ensures the program starts through the correct entry point, typically used in parallel execution contexts. Runs a check that validates the process's initialization state and environment. Useful in distributed or multi-process applications to prevent incorrect process spawning.",
-      "description_length": 277,
-      "index": 100,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory.NoCache-KeyMap",
-      "library": "hack_parallel",
-      "description": "This module provides ordered polymorphic maps with a fixed key type, supporting operations like insertion, deletion, traversal, and aggregation while preserving key ordering and physical equality for efficiency. It works with data structures that map keys to arbitrary values, enabling transformations, comparisons, and conversions to sequences or lists. Use cases include managing ordered key-value collections, merging or splitting maps with custom key comparisons, and scenarios requiring efficient structural equality checks or order-sensitive processing.",
-      "description_length": 559,
-      "index": 101,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory.NoCache",
-      "library": "hack_parallel",
-      "description": "This module implements an in-memory key-value store with versioning support, allowing storage and management of current and old states for keys. It provides operations to add, retrieve, remove, and batch process entries, along with existence checks and key conversion to strings, enabling use cases like managing transient state changes and differential snapshots in parallel processing. The child module extends this functionality by tracking local changes in shared memory, supporting transactional updates through snapshot management, and allowing conditional application or rollback of changes using a `KeySet` abstraction. Together, they facilitate complex state manipulation scenarios such as type checking or symbol resolution where partial updates must be isolated, tracked, and selectively committed.",
-      "description_length": 809,
-      "index": 102,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel.Memory.WithCache",
-      "library": "hack_parallel",
-      "description": "This module provides a key-value store with caching capabilities, supporting arbitrary key and value types and enabling efficient lookups, batch operations, and cache invalidation. It includes a submodule for managing local changes to shared memory, allowing temporary modifications to be tracked, reverted, or committed using a changeset-based approach. Together, they support use cases like transactional updates during type checking, caching expensive computations, and handling versioned or time-sensitive data. You can, for example, perform a batch insert, compute a cached result, and later roll back changes if validation fails.",
-      "description_length": 635,
-      "index": 103,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel.Memory.WithCache-KeySet",
-      "library": "hack_parallel",
-      "description": "This module offers efficient, immutable set operations for ordered collections of unique elements, supporting union, intersection, difference, and membership queries while preserving physical equality for performance. It works with ordered sets represented by `KeySet.t` and facilitates conversions to and from ordered sequences, enabling bulk updates and iterative processing. Designed for functional transformations, it's suited to scenarios requiring ordered traversal, incremental set modifications, or sequence-based construction without side effects.",
-      "description_length": 556,
-      "index": 104,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory.LocalCache",
-      "library": "hack_parallel",
-      "description": "This module implements a thread-local cache with typed keys and values, supporting efficient in-memory storage and retrieval. It provides operations to add, get, remove, and clear entries, along with tracking the current cache size. Suitable for scenarios requiring fast access to transient, thread-specific data like memoization or request-scoped caching.",
-      "description_length": 356,
-      "index": 105,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Hack_parallel.Scheduler",
-      "library": "hack_parallel",
-      "description": "This module coordinates parallel task execution across worker processes, enabling operations like `map_reduce`, `iter`, and `single_job` on a scheduler instance (`t`). It supports workload distribution for batch processing, distributed computation, and background jobs, with utilities for mocking and resource cleanup via `mock` and `destroy`. The child module ensures proper initialization in parallel contexts, validating the process state to prevent incorrect spawning in distributed setups. Together, they enable robust parallel execution while ensuring correct process setup and resource management.",
-      "description_length": 604,
-      "index": 106,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel.Memory",
-      "library": "hack_parallel",
-      "description": "This module manages shared memory and persistence for parallel computing, coordinating initialization, garbage collection, and SQLite-backed serialization of dependency and hash tables. It works with memory handles, configuration records, and garbage collection metrics to enable efficient inter-process data sharing, cache invalidation, and memory usage analysis. Key data types include keys for shared memory indexing, ordered sets and maps for structured data manipulation, and versioned key-value stores for transactional updates. You can, for example, track local changes with `push_stack`, perform ordered map merges, or manage thread-local caches for transient data.",
-      "description_length": 673,
-      "index": 107,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_parallel",
-      "library": "hack_parallel",
-      "description": "This module enables parallel task execution and shared memory coordination for distributed computing. It supports operations like `map_reduce`, `iter`, and `single_job` across worker processes, while managing shared data structures such as versioned key-value stores, ordered maps, and thread-local caches. You can distribute batch jobs, track local memory changes with `push_stack`, or merge ordered data structures across processes. Key data types include scheduler instances, shared memory keys, and configuration records that control garbage collection and persistence.",
-      "description_length": 573,
-      "index": 108,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "EventLogger",
-      "library": "hack_parallel.stubs",
-      "description": "This module records events related to system initialization, resource management, and inter-process communication, focusing on metrics like garbage collection pauses and shared memory interactions. It tracks state changes using file descriptors, string identifiers, and numeric counters, with logging functions designed to integrate into larger systems as diagnostic hooks. Common applications include monitoring connection reliability in distributed systems and auditing memory usage during long-running processes.",
-      "description_length": 515,
-      "index": 109,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Disk_sig.S",
-      "library": "hack_parallel.disk",
-      "description": "Reads the contents of a file at the given path and returns it as a string. Works with file system paths and raw byte data. Useful for loading configuration files or static resources directly into memory.",
-      "description_length": 203,
-      "index": 110,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Disk",
-      "library": "hack_parallel.disk",
-      "description": "Reads the contents of a file at the given path and returns it as a string. Works with file system paths represented as strings. Useful for loading configuration files or text-based resources directly into memory.",
-      "description_length": 212,
-      "index": 111,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "RealDisk",
-      "library": "hack_parallel.disk",
-      "description": "Reads the contents of a file at the given path and returns it as a string. Works with file system paths represented as strings. Useful for loading configuration files or text-based resources directly into memory.",
-      "description_length": 212,
-      "index": 112,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Disk_sig",
-      "library": "hack_parallel.disk",
-      "description": "This module provides a polymorphic disk-based data structure for managing fixed-size blocks with typed identifiers, supporting atomic updates and integrity checks. It includes operations for creating, reading, and writing blocks, along with a submodule for loading file contents directly into memory as strings. The core functionality enables building persistent storage layers for databases or version-controlled file systems, while the file-reading capability simplifies handling configuration files or static resources. Together, they bridge structured disk storage with direct file system access.",
-      "description_length": 600,
-      "index": 113,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "TestDisk",
-      "library": "hack_parallel.disk",
-      "description": "This module provides direct read and write operations for disk-based key-value storage. It works with string keys and values, persisting data to disk for retrieval across sessions. Concrete use cases include storing configuration settings, caching small data, or maintaining state between program executions.",
-      "description_length": 308,
-      "index": 114,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "SharedMem.WithCache.LocalChanges",
-      "library": "hack_parallel.heap",
-      "description": "This module manages local changes to shared memory with stack-based batching, supporting operations to track, commit, or revert changes for specific keys. It works with shared memory structures that use key-value storage and maintains a stack of local modifications. Concrete use cases include transactional updates to shared state, such as during speculative analysis or multi-step configuration changes where rollbacks may be required.",
-      "description_length": 437,
-      "index": 115,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.NoCache.LocalChanges",
-      "library": "hack_parallel.heap",
-      "description": "This module tracks and manages local changes to shared memory values within a stack-like context. It supports operations to checkpoint changes, roll back or commit specific batches of changes, and check whether uncommitted changes exist. It works directly with key sets to identify groups of shared memory entries affected by these operations.",
-      "description_length": 343,
-      "index": 116,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "SharedMem.NoCache",
-      "library": "hack_parallel.heap",
-      "description": "This module provides a versioned key-value store in shared memory, allowing explicit management of current and historical entry versions with support for batch operations. It enables users to define custom key types and store arbitrary values, while child modules introduce stack-based change tracking for local modifications, supporting checkpoints, rollbacks, and commits on groups of entries. Operations include adding or removing values, transitioning versions, and querying by key or key set. Example uses include managing state deltas in distributed systems or implementing transactional memory updates with selective rollbacks.",
-      "description_length": 634,
-      "index": 117,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.LocalCache",
-      "library": "hack_parallel.heap",
-      "description": "This module implements a local in-memory cache with typed keys and values. It supports adding, retrieving, and removing entries, as well as clearing the cache and querying its size. It is used to optimize repeated access to expensive computations or data by storing intermediate results keyed by a custom type.",
-      "description_length": 310,
-      "index": 118,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "SharedMem.WithCache-KeySet",
-      "library": "hack_parallel.heap",
-      "description": "This module provides set operations for membership checks, union, intersection, and difference, along with ordered set manipulations like filtering, mapping, and element retrieval (min/max) leveraging a total ordering. It operates on `KeySet.t` sets of ordered elements and sequences via `Stdlib.Seq.t`, enabling conversions between these structures. These capabilities are suited for efficient, equality-preserving set transformations, ordered data traversal, and integrating set logic with sequence-based processing pipelines.",
-      "description_length": 528,
-      "index": 119,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.NoCache-KeySet",
-      "library": "hack_parallel.heap",
-      "description": "This module supports efficient membership testing, insertion, deletion, and combinatorial set operations (union, intersection, difference) on immutable sets of type `KeySet.t`, using purely functional transformations. It facilitates ordered traversal and bulk manipulation through conversions with `Stdlib.Seq.t` sequences, enabling use cases like incremental set updates, pipeline-based data processing, and ordered element aggregation. The API emphasizes functional composition and deterministic iteration, suitable for scenarios requiring precise control over set evolution and ordered element access.",
-      "description_length": 604,
-      "index": 120,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.WithCache-KeyMap",
-      "library": "hack_parallel.heap",
-      "description": "This module implements a key-value mapping with ordered traversal, safe key operations, and value transformation capabilities. It works with a custom key type and arbitrary value types, offering functions for insertion, deletion, filtered iteration, and merging with customizable conflict resolution. Typical use cases include managing hierarchical data, aggregating configuration settings, or processing ordered key sequences with optional value handling.",
-      "description_length": 456,
-      "index": 121,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "SharedMem.NoCache-KeyMap",
-      "library": "hack_parallel.heap",
-      "description": "This module provides operations for creating, querying, and transforming polymorphic maps with ordered keys, emphasizing structural sharing for efficiency. It works with key-value pairs where keys are of a specific type (`KeyMap.key`) and values are polymorphic, supporting use cases like ordered traversal, functional transformations with environment threading, and precise map combination via customizable merge strategies. Key features include ordered key splitting, arbitrary element selection, and conversions to/from sequences for incremental processing.",
-      "description_length": 560,
-      "index": 122,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.WithCache",
-      "library": "hack_parallel.heap",
-      "description": "This module combines a shared memory cache with stack-based local change management to optimize access and updates for versioned data. It supports key-value operations like `add`, batch retrieval with `get_batch`, and cache invalidation, while its child module enables transactional updates through change tracking and rollback capabilities. Users can efficiently manage cached results across concurrent accesses, such as during speculative analysis or multi-step state transitions requiring atomic commits or rollbacks. Specific examples include batching cache updates and selectively invalidating outdated entries while maintaining local modification history.",
-      "description_length": 661,
-      "index": 123,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.WithCache-LocalChanges",
-      "library": "hack_parallel.heap",
-      "description": "This module manages cached values in shared memory with support for local modifications. It provides operations to track, commit, or revert changes for specific keys, enabling efficient and isolated updates. Use cases include transactional updates to shared state during request processing or speculative execution with rollback.",
-      "description_length": 329,
-      "index": 124,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.NoCache-LocalChanges",
-      "library": "hack_parallel.heap",
-      "description": "This module manages local changes to shared memory without caching, providing operations to track, revert, and commit batches of changes. It works directly with key sets to represent groups of modified keys in shared memory. Concrete use cases include transactional updates to shared state, such as during speculative type checking or batched configuration updates.",
-      "description_length": 365,
-      "index": 125,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.CacheType",
-      "library": "hack_parallel.heap",
-      "description": "Implements a shared memory cache with thread-safe add, get, remove, and clear operations. Works with abstract key and value types, using a provided string_of_key function for key representation. Suitable for caching values in a multi-threaded environment where keys are uniquely identifiable by strings.",
-      "description_length": 303,
-      "index": 126,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem.UserKeyType",
-      "library": "hack_parallel.heap",
-      "description": "This module defines a key type for shared memory operations, including serialization to strings and comparison for ordering. It works with abstract key values represented by the type `t`. Concrete use cases include managing shared memory keys in distributed systems or caching layers where unique identifiers must be efficiently compared and serialized.",
-      "description_length": 353,
-      "index": 127,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Value.Type",
-      "library": "hack_parallel.heap",
-      "description": "This module defines a type `t` representing values with a specific prefix and description. It includes operations to access the prefix and description associated with the type. Useful for scenarios requiring typed values with metadata, such as serialization or structured data processing.",
-      "description_length": 288,
-      "index": 128,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "WorkerCancel",
-      "library": "hack_parallel.heap",
-      "description": "This module provides functions to control worker lifecycle and cancellation behavior, including stopping and resuming workers, checking for exit conditions, and setting callbacks for cancellation events. It works with function handlers and imperative state to manage worker execution flow. Concrete use cases include gracefully shutting down background tasks, pausing worker activity during maintenance, and ensuring cleanup actions run when workers are cancelled.",
-      "description_length": 464,
-      "index": 129,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SharedMem",
-      "library": "hack_parallel.heap",
-      "description": "This module provides versioned key-value storage in shared memory with support for custom key types and batch operations, enabling state delta management and transactional updates. Child modules introduce stack-based change tracking for local modifications, allowing checkpoints, rollbacks, and atomic commits, while additional components support ordered set operations, polymorphic maps with structural sharing, and efficient membership testing. It includes a shared memory cache with thread-safe access and local change management, as well as utilities for key serialization and comparison. Example uses include speculative execution with rollback, batched state transitions, and ordered data aggregation in concurrent systems.",
-      "description_length": 729,
-      "index": 130,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Prefix",
-      "library": "hack_parallel.heap",
-      "description": "This module manages key prefixing operations for string identifiers. It provides functions to create a prefix context, apply a prefix to a string key, and remove a prefix from a string key. It is used in scenarios requiring hierarchical key management, such as organizing key-value stores or isolating namespaces in a shared data structure.",
-      "description_length": 340,
-      "index": 131,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Value",
-      "library": "hack_parallel.heap",
-      "description": "This module represents values with structured metadata, combining core operations for type manipulation and value evaluation with a specialized type `t` that associates values with a prefix and description. It supports tasks like type checking, variable binding, and expression evaluation, while its child module enhances value handling with metadata-driven operations such as structured serialization. Direct APIs allow prefix and description access, enabling use cases like data transformation and typed value tracking across program analysis or interpretation workflows.",
-      "description_length": 573,
-      "index": 132,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "MultiWorker",
-      "library": "hack_parallel.procs",
-      "description": "Implements parallel task execution across a list of worker processes, distributing work items and aggregating results. Uses `Worker.t` to represent worker processes and `Hack_bucket.next` to manage work distribution. Useful for load-balancing compute tasks like type checking or linting across multiple cores.",
-      "description_length": 309,
-      "index": 133,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Hack_bucket",
-      "library": "hack_parallel.procs",
-      "description": "This module distributes workloads across multiple workers by partitioning lists into buckets or generating tasks dynamically. It handles data structures like lists and functions that produce bucket-specific values. Concrete use cases include parallelizing type checking or linting across multiple files in a codebase.",
-      "description_length": 317,
-      "index": 134,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Worker",
-      "library": "hack_parallel.procs",
-      "description": "This module manages a pool of worker processes for parallel task execution. It provides functions to create and kill worker pools, send jobs to individual workers, and retrieve results asynchronously using handles. It works with custom entry points, shared memory handles, and process status types, supporting use cases like distributed computation and background job processing.",
-      "description_length": 379,
-      "index": 135,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Socket",
-      "library": "hack_parallel.socket",
-      "description": "Creates and initializes Unix domain sockets for inter-process communication. It provides functions to create a socket, retrieve the file descriptor, and extract the socket path. This module is used to establish local communication channels between processes using Unix sockets.",
-      "description_length": 277,
-      "index": 136,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "MyMap.Make",
-      "library": "hack_parallel.collections",
-      "description": "This module implements a parameterized map structure with ordered keys, supporting insertion, deletion, and lookup operations alongside transformations like merging, filtering, and partitioning. It operates on maps with type `'a t`, leveraging ordered key sequences to enable efficient traversal, comparison, and hierarchical data manipulation. Use cases include managing key-value associations requiring strict ordering, combining maps with custom merging logic, and processing optional or arbitrarily selected elements in functional pipelines.",
-      "description_length": 545,
-      "index": 137,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "MyMap_sig.S",
-      "library": "hack_parallel.collections",
-      "description": "This module implements a polymorphic ordered map abstraction with operations for ordered traversal, key-based querying, and transformation of key-value pairs. It supports creation, combination, and filtering of maps with customizable comparison logic, along with bidirectional conversion to sequences and state-aware mapping over elements. Typical applications include maintaining sorted associative data structures, performing efficient range queries, and implementing algorithms that require ordered key processing or conditional merging of maps.",
-      "description_length": 548,
-      "index": 138,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "MyMap",
-      "library": "hack_parallel.collections",
-      "description": "This module provides a parameterized map structure with ordered keys, enabling efficient insertion, deletion, lookup, and transformation operations. It supports advanced manipulations such as merging, filtering, and partitioning, leveraging ordered key sequences for traversal and comparison. Users can combine maps with custom logic, process optional elements, and manage hierarchical data associations in functional pipelines. Example use cases include maintaining sorted key-value collections and transforming map data through selective or combinatorial operations.",
-      "description_length": 568,
-      "index": 139,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "MyMap_sig",
-      "library": "hack_parallel.collections",
-      "description": "This module provides a polymorphic map interface with core operations for insertion, lookup, deletion, and traversal over key-value pairs with ordered keys. It supports managing symbol tables, caching computations, and implementing dictionaries with custom ordering. The child module extends this with ordered traversal, key-based querying, and transformation of key-value pairs, enabling efficient range queries and conditional merging of maps. Together, they allow creating, combining, filtering, and converting maps while maintaining order, with direct use in sorted associative structures and state-aware element processing.",
-      "description_length": 628,
-      "index": 140,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "StringKey",
-      "library": "hack_parallel.collections",
-      "description": "This module defines a type alias `t` for `string` and provides a `compare` function for ordering string values. It also includes a polymorphic `to_string` function that returns its input unchanged. Use this module when working with string-based keys in data structures like maps or sets, where a consistent type and comparison function are required.",
-      "description_length": 349,
-      "index": 141,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "IMap",
-      "library": "hack_parallel.collections",
-      "description": "This module provides functions for functional manipulation of immutable maps with integer keys and arbitrary values, supporting operations like creation, traversal, filtering, and set-like merging. It includes utilities for structural comparison, conversion to sequences, and stateful transformations, enabling use cases such as sparse data representation, integer-keyed configuration systems, and algorithms requiring ordered key-value aggregation. The design emphasizes immutability and compositional data processing, with tools to extract keys, values, or combined elements.",
-      "description_length": 577,
-      "index": 142,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "IntKey",
-      "library": "hack_parallel.collections",
-      "description": "This module defines an integer-based key type and a comparison function for ordering integers. It works directly with the built-in `int` type and is used in contexts requiring key comparison, such as in map or set implementations. Concrete use cases include serving as a key module for `Map.Make` or `Set.Make` functors where integer keys are needed.",
-      "description_length": 350,
-      "index": 143,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 153,
-    "meaningful_modules": 144,
-    "filtered_empty_modules": 9,
-    "retention_rate": 0.9411764705882353
+    "total_modules_in_package": 100,
+    "meaningful_modules": 94,
+    "filtered_empty_modules": 6,
+    "retention_rate": 0.94
   },
   "statistics": {
-    "max_description_length": 809,
+    "max_description_length": 647,
     "min_description_length": 203,
-    "avg_description_length": 466.2291666666667,
-    "embedding_file_size_mb": 0.5199060440063477
+    "avg_description_length": 409.9574468085106,
+    "embedding_file_size_mb": 1.3627853393554688
   }
 }

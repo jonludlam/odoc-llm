@@ -1,93 +1,101 @@
 {
   "package": "jupyter-kernel",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 9,
-  "creation_timestamp": "2025-07-15T23:06:36.199978",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 10,
+  "creation_timestamp": "2025-08-14T23:12:18.787447",
   "modules": [
     {
       "module_path": "Jupyter_kernel.Client.Kernel",
       "library": "jupyter-kernel",
-      "description": "This module defines the interface for implementing a custom Jupyter kernel, including functions for executing code, handling completions, inspection, and history requests. It works with data types such as MIME bundles, execution status, completion metadata, and protocol-specific request types. Concrete use cases include building a custom language kernel for Jupyter that supports evaluation, syntax checking, auto-completion, and rich display output.",
-      "description_length": 452,
+      "description": "This module defines the interface for implementing custom Jupyter kernels, enabling execution of code snippets, handling completion, inspection, and history requests. It works with abstract syntax trees, MIME data bundles, and protocol-specific request types like `inspect_request` and `history_request`. Concrete use cases include building domain-specific language kernels, embedding interpreters, or integrating with REPL-based systems.",
+      "description_length": 438,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Jupyter_kernel.Base64",
+      "module_path": "Jupyter_kernel.Protocol_j",
       "library": "jupyter-kernel",
-      "description": "Encodes and decodes strings using Base64 encoding. Works directly with string inputs and outputs, handling binary-safe data conversion. Useful for embedding binary data in text-based formats like JSON or HTTP requests.",
-      "description_length": 218,
+      "description": "This module provides JSON serialization and deserialization operations for structured message types in a Jupyter kernel protocol implementation. It works with data structures representing execution control (e.g., `execute_request`, `execute_reply`), introspection (e.g., `inspect_request`), kernel lifecycle management (e.g., `shutdown`, `interrupt_reply`), and output handling (e.g., `pyout`, `display_data`). These functions enable bidirectional conversion between OCaml values and JSON payloads for use cases like handling code execution requests, reporting errors, supporting code completion, and exchanging connection metadata between frontends and kernels.",
+      "description_length": 662,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Jupyter_kernel.Client",
       "library": "jupyter-kernel",
-      "description": "This module orchestrates communication with a Jupyter kernel, handling message serialization and ZeroMQ transport for sending execution requests and receiving rich mime-typed outputs. It supports direct operations like evaluating code, capturing results, and streaming execution output, while its child module enables implementing custom kernels with features like code evaluation, auto-completion, and rich display. Key data types include execution status, MIME bundles, and protocol-specific requests, allowing both client interaction and kernel implementation with consistent messaging semantics. Use it to embed Jupyter execution in an application or build a new language kernel with full protocol support.",
-      "description_length": 710,
+      "description": "This module implements the client-side logic for interacting with Jupyter kernels, handling message serialization, execution requests, and I/O routing. It works with MIME data bundles, protocol messages, and socket interfaces to manage communication over ZMQ or other transports. Concrete use cases include executing notebook cells, handling user input/output streams, and managing kernel lifecycle events like restarts or shutdowns.",
+      "description_length": 433,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Jupyter_kernel.Message",
       "library": "jupyter-kernel",
-      "description": "This module handles message construction, serialization, and transmission for a Jupyter kernel. It defines a polymorphic variant type `content` representing various message payloads such as execution requests, status updates, and I/O streams, along with functions to convert between JSON and these content types. Key operations include `make`, `send`, and `recv` for building, sending, and receiving messages over ZeroMQ sockets, used to implement communication between the kernel and clients.",
-      "description_length": 493,
+      "description": "This module defines message content types for handling communication in a Jupyter kernel, including requests, replies, execution results, and control signals. It provides functions to serialize and deserialize message content to JSON, construct and send messages over ZeroMQ sockets, and log or retry message transmission. Concrete use cases include responding to client requests like code execution, handling kernel shutdown, and streaming output data to clients.",
+      "description_length": 464,
       "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Jupyter_kernel.Base64",
+      "library": "jupyter-kernel",
+      "description": "Encodes and decodes strings using Base64 encoding. Works directly with string inputs and outputs. Useful for embedding binary data in text-based formats like JSON or HTTP requests.",
+      "description_length": 180,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Jupyter_kernel.Client_main",
+      "library": "jupyter-kernel",
+      "description": "This module parses command line arguments into a configuration object and establishes a connection to run a Jupyter kernel. It works with a `config` type containing connection details and a `Kernel.t` implementation. Concrete use cases include launching a custom kernel over a socket, handling authentication, and managing transport protocols for interactive notebook sessions.",
+      "description_length": 377,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Jupyter_kernel.Protocol_t",
+      "library": "jupyter-kernel",
+      "description": "This module structures data exchanged between a Jupyter frontend and kernel, handling operations like code execution, error reporting, and output management. It defines types for messages such as execution requests, completion replies, display data, and connection metadata, along with control signals for kernel state synchronization. These constructs enable use cases like interactive code evaluation tracking, real-time status updates, and rich output rendering during notebook sessions.",
+      "description_length": 490,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Jupyter_kernel.Log",
+      "library": "jupyter-kernel",
+      "description": "This module configures and manages logging for a Jupyter kernel using the `Logs` library, providing functions to direct log output to files and define log levels. It works with standard `Logs` data types like `Src.t`, `reporter`, and `level`, along with result types for handling errors. Specific use cases include opening and writing to a log file, logging messages at specific severity levels, and handling result values that represent errors with custom formatting and tags.",
+      "description_length": 477,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Jupyter_kernel.Sockets",
       "library": "jupyter-kernel",
-      "description": "This module manages ZeroMQ sockets for communication with Jupyter frontends, handling shell, control, stdin, iopub, and heartbeat channels. It provides functions to open and close these sockets based on connection info, send heartbeat signals, and dump messages from a socket to a stream. Concrete use cases include establishing bidirectional communication with Jupyter kernels, relaying execution commands, and managing real-time output publication.",
-      "description_length": 450,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Jupyter_kernel.Client_main",
-      "library": "jupyter-kernel",
-      "description": "This module handles command-line configuration parsing and establishes a connection to run a Jupyter kernel. It defines a `config` type for storing connection parameters and uses Lwt for asynchronous execution. Concrete use cases include launching a client with custom command-line options and connecting to a running Jupyter kernel over sockets.",
-      "description_length": 346,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Jupyter_kernel.Log",
-      "library": "jupyter-kernel",
-      "description": "This module configures and manages logging for a Jupyter kernel, supporting log output to files and structured log handling. It works with standard logging data types like `Logs.level`, `Logs.Tag.set`, and `result` types for error handling. Concrete use cases include writing logs to a specified file, handling and formatting result errors with custom log levels, and emitting structured log messages at various severity levels.",
-      "description_length": 428,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Jupyter_kernel.Protocol_j",
-      "library": "jupyter-kernel",
-      "description": "This module handles JSON serialization and deserialization for Jupyter kernel protocol messages, focusing on structured data conversion between OCaml types and JSON representations. It operates on protocol-specific types like execution requests/replies, inspection payloads, history queries, code completion responses, and connection metadata, using `Yojson.Safe` and `Buffer.t` for efficient parsing and generation. Key use cases include managing code execution workflows, error reporting, interactive help features, and connection lifecycle operations in Jupyter notebook environments.",
-      "description_length": 587,
-      "index": 7,
+      "description": "This module manages ZeroMQ sockets for communication with Jupyter frontends, handling shell, control, stdin, iopub, and heartbeat channels. It provides functions to open and close these sockets based on connection info, send heartbeat signals, and dump messages from a socket to a file. Concrete use cases include establishing bidirectional communication with Jupyter kernels and logging socket traffic for debugging.",
+      "description_length": 417,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Jupyter_kernel",
       "library": "jupyter-kernel",
-      "description": "This module enables communication with Jupyter kernels by handling message construction, serialization, and transport over ZeroMQ. It supports key operations such as code evaluation, result capture, auto-completion, and rich output display, using data types like MIME bundles, execution status, and polymorphic variant `content` for message payloads. It provides functions to manage ZeroMQ sockets, configure logging, parse command-line options, and encode/decode binary data using Base64. Example uses include embedding Jupyter execution in an application, building custom language kernels, and streaming real-time output over multiple communication channels.",
-      "description_length": 660,
-      "index": 8,
+      "description": "This module implements a Jupyter kernel with direct support for message serialization, client communication, and ZeroMQ socket management. It handles structured data types like MIME bundles, protocol messages, and JSON-serializable values to enable concrete use cases such as executing notebook cells, streaming output, and managing kernel lifecycle events. The module supports logging, authentication, and transport protocols for interactive notebook sessions and custom kernel deployments.",
+      "description_length": 491,
+      "index": 9,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 10,
-    "meaningful_modules": 9,
-    "filtered_empty_modules": 1,
-    "retention_rate": 0.9
+    "meaningful_modules": 10,
+    "filtered_empty_modules": 0,
+    "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 710,
-    "min_description_length": 218,
-    "avg_description_length": 482.6666666666667,
-    "embedding_file_size_mb": 0.03315258026123047
+    "max_description_length": 662,
+    "min_description_length": 180,
+    "avg_description_length": 442.9,
+    "embedding_file_size_mb": 0.14525318145751953
   }
 }

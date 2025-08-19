@@ -1,141 +1,117 @@
 {
   "package": "otoggl",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 15,
-  "creation_timestamp": "2025-07-15T23:09:19.854653",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 12,
+  "creation_timestamp": "2025-08-14T23:22:20.671778",
   "modules": [
     {
-      "module_path": "Toggl.Auth.Client.Oneshot",
+      "module_path": "Toggl.Api.F.Workspace",
       "library": "otoggl.lib",
-      "description": "This module implements HTTP client operations for interacting with the Toggl API, supporting standard methods like GET, POST, PUT, PATCH, DELETE, and custom requests via the `request` function. It works with URIs, HTTP headers, and request bodies using the Piaf library, returning responses or errors asynchronously using Lwt_result. Concrete use cases include authenticating with Toggl's API, fetching time entry data, updating projects, and managing workspace information.",
-      "description_length": 474,
+      "description": "Handles retrieving workspace data from the Toggl API. It provides a function to list all workspaces associated with a Toggl client. The module works directly with the `Client.t` type and returns parsed workspace list data or API errors. Useful for applications needing to display or process Toggl workspace information, such as time-tracking dashboards or team management tools.",
+      "description_length": 378,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Toggl.Api.F.TimeEntry",
       "library": "otoggl.lib",
-      "description": "This module manages time entries in a Toggl tracking system, offering operations to create, start, stop, and update time entries using a client interface. It handles data types like `time_entry`, `time_entry_request`, and `tid`, along with optional parameters for filtering and modifying entries. Concrete use cases include logging new time entries, fetching current or historical entries, and editing or deleting existing entries by ID.",
-      "description_length": 437,
+      "description": "This module manages time entries in a Toggl tracking system, offering operations to create, start, stop, and delete entries, as well as fetch current, detailed, or date-range filtered entries. It works with time entry requests, time entry records, client configurations, and date-time values. Specific use cases include logging work intervals, retrieving ongoing entries, and modifying tracked time data for reporting or billing.",
+      "description_length": 429,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Toggl.Api.F.Workspace",
-      "library": "otoggl.lib",
-      "description": "Handles retrieving workspace data from the Toggl API. It provides a `list` function that fetches a list of workspaces for a given client, returning either the parsed workspace list or an API error. Works directly with `Client.t` and `workspace_list` data types. Useful for applications needing to display or process Toggl workspace information, such as dashboard tools or time-tracking integrations.",
-      "description_length": 399,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Toggl.Api.F.Project",
       "library": "otoggl.lib",
-      "description": "This module handles project management operations in a Toggl workspace, including listing projects for a user, creating new projects, and deleting existing projects. It works with Toggl-specific data structures like `project_list`, `project_request`, and `pid_list`, and uses an authenticated `Client.t` to communicate with the Toggl API. Concrete use cases include automating project setup, synchronizing project data with external systems, and managing project lifecycles in a workspace.",
-      "description_length": 489,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Toggl.Auth.Client",
-      "library": "otoggl.lib",
-      "description": "This module provides authenticated HTTP client operations for interacting with Toggl's API, managing persistent connections and supporting standard HTTP methods like GET, POST, PUT, PATCH, and DELETE. It handles requests and responses asynchronously using Lwt_result, allowing operations such as authenticating, fetching time entries, updating projects, and managing workspace data. The main data types include URIs, HTTP headers, and request bodies, with core operations centered around sending requests and processing responses through the Piaf library. Submodules extend this functionality to specific API interactions, enabling custom requests and structured data handling.",
-      "description_length": 677,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Toggl.Auth.Client-Oneshot",
-      "library": "otoggl.lib",
-      "description": "This module implements HTTP client operations for interacting with the Toggl API, supporting standard methods like GET, POST, PUT, PATCH, DELETE, and custom requests via the `request` function. It works with URIs and HTTP headers, sending requests and returning parsed responses or errors using the `Piaf` library. Concrete use cases include authenticating with Toggl's API, fetching time entry data, updating projects, and managing workspace information.",
-      "description_length": 455,
-      "index": 5,
+      "description": "This module handles project management operations in a Toggl workspace, providing functions to list projects for a user, create a new project, and delete an existing project. It works with Toggl-specific data structures like `project_list`, `project_request`, and `pid_list`, and uses an authenticated `Client.t` to communicate with the Toggl API. Concrete use cases include automating project setup for team members or synchronizing project data between Toggl and an external system.",
+      "description_length": 484,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Toggl.Api.F",
       "library": "otoggl.lib",
-      "description": "This module provides a comprehensive interface to interact with the Toggl API, enabling authentication, time tracking, workspace inspection, and project management. It defines core types such as `Client.t` for authenticated sessions, along with operations to manipulate time entries, workspaces, and projects using data types like `time_entry`, `workspace_list`, and `project_list`. With it, you can log and manage time entries, retrieve workspace lists, and create or delete projects programmatically. Submodules refine these capabilities with focused APIs for precise interactions with each Toggl resource type.",
-      "description_length": 613,
-      "index": 6,
+      "description": "This module implements core functionality for interacting with the Toggl API, centered around client management and operations for time entries, workspaces, and projects. It provides functions to create authenticated clients, manipulate time tracking data, retrieve workspace lists, and manage projects with specific use cases in automated time logging, team dashboard development, and project synchronization workflows. The module works directly with client configurations, time entry records, workspace metadata, and project data structures through Lwt-based asynchronous operations.",
+      "description_length": 585,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Toggl.Util",
+      "module_path": "Toggl.Api",
       "library": "otoggl.lib",
-      "description": "Handles HTTP responses by converting a 200 OK response to a successful result containing the response body, or returning an error result with the associated HTTP error. Works with `Piaf.Response.t` and produces an Lwt-based result type combining string success values and `Piaf.Error.t` error values. Useful for API clients that need to validate and extract response data from HTTP calls made using the Piaf library.",
-      "description_length": 416,
-      "index": 7,
+      "description": "This module implements client authentication, time entry manipulation, workspace retrieval, and project management for the Toggl API. It works with client configurations, time entry records, workspace metadata, and project data through asynchronous operations. Concrete use cases include automated time logging, team dashboard development, and project synchronization workflows.",
+      "description_length": 378,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Toggl.Toggl_t",
+      "library": "otoggl.lib",
+      "description": "This module supports serialization, comparison, and manipulation of data structures used in the Toggl API, including time entries, projects, and workspaces. It defines types for time entry requests, identifiers (user IDs, project IDs), and structured records, along with helper functions for pretty-printing, string conversion, and equality checks\u2014primarily used for constructing API requests, handling responses, and debugging time tracking data.",
+      "description_length": 447,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Toggl.Types",
       "library": "otoggl.lib",
-      "description": "This module handles JSON serialization, deserialization, and structural validation for Toggl API data types such as time entries, projects, workspaces, and identifier types (uids, tids, pids). It supports API integration by providing utilities to convert data to and from JSON, validate record correctness, and compare or format structured values consistently during synchronization or configuration tasks.",
-      "description_length": 406,
+      "description": "This module provides JSON serialization and deserialization capabilities alongside pretty-printing, string conversion, and equality checks for domain-specific data types used in Toggl API integrations. It operates on structured types such as time entries, projects, workspaces, and identifier types (wid, uid, tid, pid), including their wrapped forms and list variants, with support for handling optional fields and validation. These operations facilitate tasks like API request/response handling, data persistence, and human-readable logging or debugging of Toggl-related entities.",
+      "description_length": 582,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Toggl.Toggl_v",
+      "library": "otoggl.lib",
+      "description": "This module provides functions for constructing and validating data structures used in time tracking systems, focusing on time entries, projects, and workspaces. It operates on records like `time_entry_update_request`, `project_request`, and `workspace`, along with identifiers (`wid`, `pid`, `tid`) and temporal values (`datetime`), enforcing correct data modeling for API interactions. These utilities are particularly useful for handling structured time tracking data, ensuring integrity when processing timestamps, project hierarchies, or workspace configurations in external integrations.",
+      "description_length": 593,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Toggl.Toggl_j",
+      "library": "otoggl.lib",
+      "description": "This module facilitates JSON serialization and deserialization of Toggl API data models, focusing on time entries, projects, workspaces, and identifiers like `wid`, `tid`, and `pid`. It provides bidirectional conversion functions for structured data interchange, handling types such as `time_entry_request`, `project`, and `workspace_list` through operations like `write_*` and `read_*`. These utilities are specifically used for API communication tasks like creating time entries, managing project configurations, and parsing workspace hierarchies.",
+      "description_length": 549,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Toggl.Auth",
       "library": "otoggl.lib",
-      "description": "This module manages authentication for Toggl API requests using basic auth or an API token, generating authorization headers as key-value pairs. It enables client implementations to handle authenticated HTTP interactions, supporting methods like GET, POST, and PATCH through a persistent HTTP client that returns results asynchronously with `Lwt_result`. The core types include authentication values, URIs, and HTTP headers, allowing operations such as authenticating, fetching time entries, and modifying project data. Submodules extend this functionality to structured API interactions, handling requests and responses with the `Piaf` library for custom and standard endpoints.",
-      "description_length": 679,
+      "description": "Handles authentication for Toggl API requests using either basic credentials or an API token. Provides `create_header` to generate authorization headers for HTTP clients. Used to authenticate calls to Toggl endpoints for time tracking, workspace configuration, and user data retrieval.",
+      "description_length": 285,
       "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Toggl.Api",
-      "library": "otoggl.lib",
-      "description": "This module offers a structured interface to the Toggl API, supporting authentication, time tracking, and resource management across workspaces, projects, and time entries. Key data types include `Client.t` for sessions, and immutable types like `time_entry`, `workspace_list`, and `project_list` for interacting with API resources. Operations allow creating, querying, and modifying time entries, listing workspaces, and managing projects programmatically. For example, you can log a new time entry, retrieve all projects in a workspace, or delete an inactive project using dedicated functions.",
-      "description_length": 595,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Toggl.Toggl_j",
-      "library": "otoggl.lib",
-      "description": "This module provides JSON serialization and deserialization functions for Toggl API data types, including time entries, projects, workspaces, and identifiers like workspace IDs (wid), user IDs (uid), time entry IDs (tid), and project IDs (pid). It supports converting between OCaml values and JSON representations for API interactions, such as creating/updating time entries or projects, handling both individual and list variants of these types. The operations are designed for seamless data interchange with the Toggl API, leveraging Yojson for parsing and formatting JSON input/output.",
-      "description_length": 588,
-      "index": 11,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Toggl.Toggl_t",
+      "module_path": "Toggl.Util",
       "library": "otoggl.lib",
-      "description": "This module provides utilities for serializing, comparing, and formatting structured data used in time-tracking workflows, such as time entries, project metadata, and workspace identifiers. It operates on records like `time_entry` with timestamps (`Ptime.t`), integer-based identifiers (`uid`, `tid`, `pid`), and wrapped types for projects and API responses, ensuring consistent handling of nested or list-based data. These tools are critical for API interactions requiring precise data serialization, equality checks for synchronization, and human-readable diagnostics during time-tracking operations.",
-      "description_length": 602,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Toggl.Toggl_v",
-      "library": "otoggl.lib",
-      "description": "This module provides validation and construction utilities for Toggl API data models, focusing on time entries, projects, and workspaces. It operates on structured types like `time_entry_update_request`, `project_request`, and identifier lists (e.g., `pid_list`), ensuring schema compliance with Atdgen-based validation. These tools are used to create and validate API requests, handle optional fields, and manage relationships between entities such as time entries and their associated projects or workspaces.",
-      "description_length": 510,
-      "index": 13,
-      "embedding_norm": 1.0
+      "description": "Handles HTTP responses by converting a 200 OK status into a successful result with the response body, or an error result with the corresponding Piaf error. Works with `Piaf.Response.t` and returns an Lwt-based result type. Useful for validating and extracting successful HTTP responses in asynchronous workflows.",
+      "description_length": 312,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Toggl",
       "library": "otoggl.lib",
-      "description": "This module integrates HTTP handling, authentication, JSON serialization, and API client functionality to interact with the Toggl API. It supports operations like creating and managing time entries, querying workspaces and projects, and validating structured data using types such as `time_entry`, `workspace_list`, and `project_list`. Key utilities include converting responses to Lwt-based results, serializing data to and from JSON, and generating authenticated HTTP requests with Piaf. Example uses include logging time entries, synchronizing project data, and retrieving workspace information programmatically.",
-      "description_length": 615,
-      "index": 14,
-      "embedding_norm": 1.0
+      "description": "This module integrates with the Toggl API to manage time entries, projects, and workspaces through authenticated HTTP requests. It supports JSON serialization, data validation, and response handling for structured types like time entries, identifiers, and workspace metadata. Concrete use cases include automating time logging, synchronizing project data, and building dashboards that consume Toggl's API endpoints.",
+      "description_length": 415,
+      "index": 11,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 15,
-    "meaningful_modules": 15,
+    "total_modules_in_package": 12,
+    "meaningful_modules": 12,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 679,
-    "min_description_length": 399,
-    "avg_description_length": 530.3333333333334,
-    "embedding_file_size_mb": 0.05491447448730469
+    "max_description_length": 593,
+    "min_description_length": 285,
+    "avg_description_length": 453.0833333333333,
+    "embedding_file_size_mb": 0.1743021011352539
   }
 }

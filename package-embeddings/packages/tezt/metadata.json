@@ -1,349 +1,293 @@
 {
   "package": "tezt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 41,
-  "creation_timestamp": "2025-07-15T23:14:10.873999",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 34,
+  "creation_timestamp": "2025-08-15T12:34:51.485118",
   "modules": [
+    {
+      "module_path": "Scheduler.Timer",
+      "library": "tezt.scheduler",
+      "description": "This module creates and manages timers that execute functions after a specified delay. It works with floating-point durations and callback functions, returning timer identifiers for individual control. Use it to schedule delayed actions within the scheduler process, such as retrying failed tasks or implementing timeouts.",
+      "description_length": 322,
+      "index": 0,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Scheduler",
+      "library": "tezt.scheduler",
+      "description": "This module manages task execution across multiple forked processes, providing functions to add tasks with customizable lifecycle hooks, run them in parallel, and handle worker process termination. It supports task-specific callbacks for start, message receipt, and completion, along with timers for delayed actions and process status reporting. Concrete use cases include distributing batch jobs across workers, handling inter-process communication with structured messages, and enforcing timeouts on task execution.",
+      "description_length": 517,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "Tezt.Runner.Shell",
       "library": "tezt",
-      "description": "This module represents and constructs shell commands for remote execution via SSH, ensuring proper quoting and syntax. It supports operations like running commands with environment variables, sequencing actions, redirecting output streams, and handling failures by echoing \"false\". Concrete use cases include building secure, dynamically generated shell scripts for remote process management and output redirection during integration testing.",
-      "description_length": 442,
-      "index": 0,
+      "description": "This module represents and constructs shell commands for remote execution via SSH, ensuring proper quoting and syntax. It supports operations like running commands with environment variables, sequencing actions, redirecting output streams, and handling failures by echoing \"false\". Concrete use cases include building complex shell scripts to control remote processes, such as starting and stopping services, capturing logs, or conditionally executing steps based on prior success.",
+      "description_length": 481,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Tezt.Runner.Sys",
       "library": "tezt",
-      "description": "This module extends system operations to support remote execution via SSH runners, enabling file and directory manipulation on remote hosts. It provides functions like `file_exists`, `mkdir`, `readdir`, and `rm_rf` that operate locally or remotely based on the optional `runner` parameter. Concrete use cases include managing temporary directories on remote test machines, checking for the presence of log files after distributed test runs, and cleaning up remote environments post-test execution.",
-      "description_length": 497,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt.Process",
-      "library": "tezt",
-      "description": "This module facilitates interacting with external processes by enabling their execution, output capture, and termination, with support for asynchronous operations and input/output redirection. It operates on commands and environment variables, allowing tasks like verifying executable paths, running integration tests with external tools, and validating stderr outputs against expected results. Key use cases include testing workflows that require spawning background processes, capturing runtime logs, or ensuring dependencies exist before execution.",
-      "description_length": 551,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt.Runner",
-      "library": "tezt",
-      "description": "This module orchestrates remote process execution via SSH for integration testing, centered around a runner type that encapsulates SSH configuration. It provides core operations to create runners, resolve network addresses, and wrap commands for secure remote execution, enabling precise control over distributed test environments. The command submodule constructs shell commands with proper syntax and failure handling, while the system submodule extends file and directory operations to remote hosts, supporting tasks like managing test directories and verifying log files across networks. Together, these components facilitate building and executing complex, dynamic test workflows on remote systems with seamless SSH integration.",
-      "description_length": 733,
+      "description": "This module extends file system operations to support remote execution via SSH runners. It provides functions for checking file existence, creating and removing directories and named pipes, listing directory contents, and recursively deleting paths, all of which can target remote systems when a runner is specified. It is used to manage file structures and resources both locally and on remote hosts during integration testing.",
+      "description_length": 428,
       "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt.Temp",
-      "library": "tezt",
-      "description": "Manages temporary files and directories for test execution. It provides functions to create temporary file paths, directories, and clean up all generated files automatically. Used to ensure tests have isolated, disposable file system resources without manual cleanup.",
-      "description_length": 267,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Tezt.Test",
       "library": "tezt",
-      "description": "This module manages test registration, execution, and lifecycle hooks for writing unit, integration, and regression tests. It supports running asynchronous tests with Lwt, tagging and filtering tests, and provides functions to retrieve test metadata like title, tags, and seed. It handles setup and cleanup operations, failure reporting, and integrates with command-line test selection and execution workflows.",
-      "description_length": 410,
+      "description": "This module manages test registration, execution, and lifecycle hooks for writing unit and integration tests. It supports data types like `seed`, `test_result`, and `t`, and provides functions to register tests, control test setup and teardown, and retrieve metadata about running tests. Concrete use cases include defining tests with tags and titles, injecting pre-test resets or post-test cleanup actions, and programmatically controlling test execution flow with custom schedulers or runtime parameters.",
+      "description_length": 506,
+      "index": 4,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Tezt.Runner",
+      "library": "tezt",
+      "description": "This module manages remote execution environments for integration tests, enabling SSH-based interaction with local and remote systems. It provides structured configuration for SSH connections, command execution via `Shell`, and remote file system operations through `Sys`. Concrete use cases include orchestrating distributed test setups, running services on remote nodes, and managing test artifacts across machines.",
+      "description_length": 417,
       "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Tezt.Temp",
+      "library": "tezt",
+      "description": "Manages temporary files and directories for tests, providing functions to create and track temporary resources with configurable permissions. Uses string paths and integrates with test execution lifecycles to ensure cleanup. Useful for tests requiring isolated filesystem operations, such as simulating file-based workflows or testing directory structures.",
+      "description_length": 356,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Tezt",
       "library": "tezt",
-      "description": "This module streamlines test development by integrating external process execution, remote SSH operations, and temporary resource management. It supports defining tests with structured setup and teardown, enabling asynchronous execution, command-line filtering, and detailed failure reporting. Users can spawn and validate local or remote processes, capture and compare outputs, and manage test-specific files without manual cleanup. For example, integration tests can run commands over SSH, verify JSON API responses, or capture logs while regression tests compare command outputs against baselines using regex substitutions.",
-      "description_length": 626,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Log.Color.BG",
-      "library": "tezt.core",
-      "description": "This module defines constants for background colors used in logging, such as black, red, green, and bright white. It provides direct access to specific background color values of type `Tezt_core.Log.Color.t`. These values are used to set the background color of log output in terminal environments supporting ANSI color codes.",
-      "description_length": 326,
+      "description": "This module provides functions for registering and executing tests with support for titles, tags, and structured execution control. It works with data types such as test configurations, execution seeds, and result tracking structures. Concrete use cases include defining unit tests with assertions, orchestrating integration tests across remote systems via SSH, and managing temporary files and processes for test isolation.",
+      "description_length": 424,
       "index": 7,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Tezt_core.Log.Color.FG",
       "library": "tezt.core",
-      "description": "This module defines constants for foreground text colors used in logging, such as black, red, green, and cyan. It works with the `Tezt_core.Log.Color.t` type to apply color formatting to log output. Concrete use cases include highlighting log messages with specific colors for better visibility during test execution.",
-      "description_length": 317,
+      "description": "This module defines constants for foreground text colors, such as black, red, green, and cyan, all represented as values of type `Tezt_core.Log.Color.t`. These colors are used to style log output in terminal environments. Concrete use cases include highlighting errors in red, success messages in green, or warnings in yellow within test logs.",
+      "description_length": 343,
       "index": 8,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Tezt_core.Check.EQUALABLE",
+      "module_path": "Tezt_core.Log.Color.BG",
       "library": "tezt.core",
-      "description": "This module provides `equal` and `pp` functions for defining equality and pretty-printing of a type `t`. It is used to support assertion checks with consistent error messages, particularly in test cases where values of type `t` need to be compared and displayed. Concrete use cases include testing equality of custom data structures like AST nodes or configuration values in unit tests.",
-      "description_length": 386,
+      "description": "This module defines constants for background colors used in logging, such as black, red, green, and bright white. It provides direct access to specific background color values of type `Tezt_core.Log.Color.t`. These values are used to set background colors in log messages for improved visibility and differentiation in terminal output.",
+      "description_length": 335,
       "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Test.SCHEDULER",
-      "library": "tezt.core",
-      "description": "This module defines a scheduler interface for managing concurrent test execution across multiple workers. It handles requests to run tests with specific titles and returns responses containing test results. The scheduler coordinates worker availability, assigns tasks, and supports retrieving the current worker identifier to manage parallelism in test runs.",
-      "description_length": 358,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tezt_core.Cli.Logs",
-      "library": "tezt.core",
-      "description": "This module defines command-line options for configuring logging behavior, including log level, color output, timestamps, and log file destination. It works with primitive types like booleans, strings, and integers, along with a custom `level` sum type to represent verbosity settings. Concrete use cases include enabling debug logs with `--log-level debug`, writing logs to a file via `--log-file`, or toggling colored output with `--color`.",
-      "description_length": 442,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Test.String_tree",
-      "library": "tezt.core",
-      "description": "This module implements a radix tree for efficiently storing and querying string lists. It supports operations to add paths to the tree and check if a given string list is a prefix of any path in the tree. It is used for managing hierarchical string identifiers in test scenarios where prefix matching is required.",
-      "description_length": 313,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tezt_core.Cli.Reports",
-      "library": "tezt.core",
-      "description": "This module defines command-line flags that configure test output formatting and result persistence. It exposes boolean and string options to enable timing display, record results to files, load from saved records, and generate JUnit XML reports. Directly controls how test outcomes are presented and stored during CLI execution.",
-      "description_length": 329,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Check.COMPARABLE",
-      "library": "tezt.core",
-      "description": "This module defines a comparable type `t` with a total ordering function `compare` and a pretty-printing function `pp`. It supports assertions that require ordered comparisons between values of type `t`, ensuring consistent error messages when comparisons fail. Concrete use cases include testing equality, ordering, and uniqueness of structured values in test cases.",
-      "description_length": 367,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Cli.Commands",
-      "library": "tezt.core",
-      "description": "This module defines command-line operations that control the execution mode of the CLI, such as listing tests or displaying version information. It works with the `command` sum type to represent distinct global actions triggered by flags like `--list` or `--version`. Use this module to determine which high-level operation the user selected before running tests.",
-      "description_length": 363,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tezt_core.Log.Color",
-      "library": "tezt.core",
-      "description": "This module handles text color and style operations for terminal output, combining foreground and background color settings with styling options like bold. It includes submodules that provide specific color constants for both background and foreground, such as red, green, and cyan, all of type `Tezt_core.Log.Color.t`. These colors can be applied directly to strings for formatted log messages, for example highlighting errors in red or success messages in green. The module supports composing styles and colors to produce rich terminal output tailored to different logging needs.",
-      "description_length": 581,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tezt_core.Log.Style",
-      "library": "tezt.core",
-      "description": "This module configures the formatting of log timestamps and prefixes. It defines types to control visibility and transformation of timestamps and prefixes, with functions to set, get, and format these elements. Use cases include customizing log output readability by enabling or disabling timestamps and prefixes, or applying specific formatting like `HH:MM:SS.FFF` for timestamps.",
-      "description_length": 381,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Cli.Options",
-      "library": "tezt.core",
-      "description": "This module defines command-line options for controlling test execution behavior, including timeouts, retries, file cleanup, and regression handling. It works with primitive types like `bool`, `int`, and `float`, as well as custom sum types for modes such as `temporary_file_mode` and `on_unknown_regression_files_mode`. These values are used to configure test runs, control parallelism via `job_count`, and manage test loops or resumption from a file.",
-      "description_length": 452,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Cli.Selecting_tests",
-      "library": "tezt.core",
-      "description": "This module defines command-line options for selecting and filtering tests to execute, using file paths, title patterns, and test indices. It provides variables to access parsed selection criteria like included/excluded files, test titles, and job partitions, along with an AST for complex test selection expressions. Concrete use cases include running specific test files, excluding tests by pattern, and splitting test jobs in CI environments.",
-      "description_length": 445,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Base.String_map",
-      "library": "tezt.core",
-      "description": "The module provides operations for creating, modifying, and querying polymorphic maps with string keys, supporting functions like addition, filtering, and ordered traversal. It works with the `'a t` type, which maps string keys to arbitrary values, enabling functional programming patterns through iteration, folding, and key-based comparisons. Common use cases include processing key-value data from sequences, maintaining ordered associations, and transforming maps with predicate-based operations.",
-      "description_length": 500,
-      "index": 20,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Tezt_core.Base.String_set",
       "library": "tezt.core",
-      "description": "This module provides standard set operations\u2014membership testing, insertion, deletion, union, intersection, and difference\u2014alongside ordered traversal and transformation functions like mapping, folding, filtering, and element selection. It operates on ordered string sets represented as a concrete type, enabling efficient comparisons, iteration in ascending or descending order, and conversions to or from lists and sequences. Typical use cases include managing sorted collections of unique strings, performing set-based computations with ordered traversal guarantees, and integrating with sequence-based data through transformation and pretty-printing utilities.",
-      "description_length": 663,
-      "index": 21,
+      "description": "This module supports standard set operations\u2014union, intersection, difference, and membership testing\u2014for ordered string collections, implemented using a balanced tree structure via `Stdlib.Set.Make`. It includes utilities to convert sets to sequences, filter elements, and generate ordered traversals, enabling efficient handling of unique string identifiers, configuration keys, or log entries where ordered processing and set algebra are required. The ability to interoperate with sequences facilitates integration into data pipelines that require both set semantics and sequential processing.",
+      "description_length": 595,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Tezt_core.Test",
+      "module_path": "Tezt_core.Log.Style",
       "library": "tezt.core",
-      "description": "This module organizes test execution through structured hierarchies, supporting setup, cleanup, and metadata management with labeled trees. It provides data types for test configurations and operations to traverse and manipulate nested elements, enabling precise control over test suites and resource dependencies. The scheduler submodule coordinates concurrent test runs, assigning tasks to workers and returning results, while the radix tree submodule efficiently stores and queries string paths for prefix matching. Together, they allow organizing tests by title hierarchy, scheduling parallel execution, and filtering test paths based on prefix rules.",
-      "description_length": 655,
-      "index": 22,
+      "description": "This module configures the formatting of log timestamps and prefixes. It defines types to control visibility and transformation of timestamps and prefixes, with functions to set, get, and format them. Use it to customize log output appearance, such as hiding timestamps or applying a specific time format.",
+      "description_length": 305,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Tezt_core.TSL",
+      "module_path": "Tezt_core.Cli.Reports",
       "library": "tezt.core",
-      "description": "This module implements a domain-specific language for expressing test selection criteria. It provides operations to parse string expressions into an abstract syntax tree, evaluate them against an environment containing test metadata, and manipulate logical conjunctions of tags. The primary data structures are the TSL abstract syntax tree and an environment record containing test file names, titles, and tags. It is used to filter and select tests based on tag expressions, such as including or excluding tests with specific tags.",
-      "description_length": 532,
-      "index": 23,
+      "description": "This module defines command-line flags that control test output and execution behavior, such as timing tests, recording results, loading from recorded files, and generating JUnit reports. It works directly with boolean and string options, as well as lists of strings, extracted from the command line during initialization. Use it to configure reporting without writing custom argument parsers, for example, to enable time measurements or to generate XML reports for CI integration.",
+      "description_length": 481,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Tezt_core.Version",
+      "module_path": "Tezt_core.Log.Color",
       "library": "tezt.core",
-      "description": "This module provides a single value `full` that represents the complete version number of Tezt as a string, including any development suffixes like \"+dev\". It works directly with string data to expose version information. Use cases include logging the exact version in test outputs or checking compatibility in test environments.",
-      "description_length": 329,
-      "index": 24,
+      "description": "This module provides operations to apply and combine text colors for terminal logging, using the `t` type to represent color styles. It includes functions to apply a color to a string, concatenate color styles, and reset or bold text appearance. Use cases include formatting log messages with specific foreground and background colors, such as displaying errors in red or success messages in green on a black background.",
+      "description_length": 420,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.Cli.Commands",
+      "library": "tezt.core",
+      "description": "This module defines command-line operations that control high-level Tezt behavior, such as listing tests or printing version information. It works with a sum type representing distinct command actions and exposes a parsed command value after CLI initialization. Use it to implement logic that branches based on commands like `--list` or `--version` rather than running tests directly.",
+      "description_length": 384,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.Test.String_tree",
+      "library": "tezt.core",
+      "description": "This module implements a radix tree for efficiently storing and querying string lists. It supports operations to add paths to the tree and check if a given string list is a prefix of any path in the tree. It is used to manage hierarchical string identifiers in test scenarios, such as tracking test case names or directory-like structures during test execution.",
+      "description_length": 361,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.Cli.Selecting_tests",
+      "library": "tezt.core",
+      "description": "This module defines command-line options for selecting and filtering tests to execute, including inclusion/exclusion by file, pattern, or test title, and supports advanced selection via a dedicated expression language. It works with lists of test files, regular expressions, and test identifiers, along with integer-based controls for test sharding and execution limits. Concrete use cases include running only tests matching a specific pattern, excluding certain files, or selecting a subset of tests for parallel execution using the `--job` flag.",
+      "description_length": 548,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.Cli.Logs",
+      "library": "tezt.core",
+      "description": "This module defines command-line options for configuring logging behavior, including log level, color output, timestamps, and log file destination. It works with primitive types like booleans, strings, and integers, along with a custom `level` variant type to represent verbosity settings. Concrete use cases include enabling debug logs with `--log-level Debug`, writing logs to a file via `--log-file`, or toggling colored output with `--color`.",
+      "description_length": 446,
+      "index": 17,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Tezt_core.Process_hooks",
+      "module_path": "Tezt_core.Cli.Options",
       "library": "tezt.core",
-      "description": "This module defines callbacks for monitoring and reacting to process events such as logging and spawning. It provides two main hooks: `on_log` for handling log lines and `on_spawn` for intercepting process creation with command and arguments. These hooks are useful for tracking test execution behavior and capturing process activity during automated testing.",
-      "description_length": 359,
-      "index": 25,
+      "description": "This module defines command-line options for controlling test execution behavior, including timeouts, retries, file cleanup modes, and parallelism. It works with primitive types like booleans, integers, floats, and strings, as well as custom sum types for modes like `temporary_file_mode` and `on_unknown_regression_files_mode`. Concrete use cases include setting global and per-test timeouts, specifying whether to keep temporary files, controlling test loop behavior, and configuring how unknown regression files are handled.",
+      "description_length": 527,
+      "index": 18,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Tezt_core.TSL_parser",
+      "module_path": "Tezt_core.Check",
       "library": "tezt.core",
-      "description": "Parses logical expressions from a token stream into an abstract syntax tree. It processes tokens like strings, boolean operators, and comparison operators to build structured filter expressions. Useful for implementing configuration or query languages where expressions define matching rules.",
-      "description_length": 292,
-      "index": 26,
+      "description": "This module offers assertion operations for validating equality, exception handling, and boolean conditions, alongside checks for file system states and structured data like lists, options, and tuples. It works with primitive types (int, string, bool) and composite types, leveraging custom error messages to clarify failures in test scenarios such as verifying computations, I/O operations, or data structure invariants.",
+      "description_length": 421,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Tezt_core.TSL_lexer",
       "library": "tezt.core",
-      "description": "This module implements a lexer for parsing TSL (Tezt Specification Language) tokens from input buffers. It provides functions to convert raw strings into tokens, handle lexing errors, and process quoted strings with escaping. Concrete use cases include parsing test descriptions and command-line arguments in Tezt test scripts.",
-      "description_length": 327,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements a lexer for parsing TSL (Tezt Specification Language) tokens from input buffers. It provides functions to convert raw input into structured tokens, handle string literals, and manage lexing state using standard OCaml lexing utilities. It is used to process test specification files into an abstract syntax tree for further analysis or execution.",
+      "description_length": 368,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.Test",
+      "library": "tezt.core",
+      "description": "This module enables the definition, execution, and lifecycle management of test cases with support for setup, cleanup, and result tracking, while providing access to metadata like titles, tags, and seeds. It leverages a radix tree structure to organize hierarchical string identifiers (e.g., nested test names or paths), allowing efficient prefix checks and structured querying. These capabilities are particularly useful for managing complex test suites with hierarchical organization and ensuring precise execution control.",
+      "description_length": 525,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.TSL",
+      "library": "tezt.core",
+      "description": "This module implements a parser, evaluator, and manipulation toolkit for a logical expression language used to select tests based on tags. It processes expressions composed of tags and logical operators (like AND), converting them into an abstract syntax tree (AST) for evaluation. Use cases include filtering test suites by tag expressions, combining multiple selection criteria, and validating or extracting tags from expressions.",
+      "description_length": 432,
+      "index": 22,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Tezt_core.Cli",
       "library": "tezt.core",
-      "description": "This module parses command-line arguments using the Clap library, automatically extracting boolean, integer, float, and string values to configure runtime behavior. It enables test-specific parameters like timeouts or flags, which are defined before `Test.run` and accessed within test functions. Submodules extend this functionality by configuring logging, output formatting, execution modes, test behavior, and test selection. For example, users can enable debug logs with `--log-level debug`, run tests with a custom timeout, or filter tests by title pattern in CI pipelines.",
-      "description_length": 578,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Background",
-      "library": "tezt.core",
-      "description": "This module manages background tasks during testing by registering Lwt promises that run concurrently. It supports starting and stopping a registry of these tasks, ensuring they complete before shutdown. Use it to handle asynchronous test fixtures like launching servers or background data processing.",
-      "description_length": 301,
-      "index": 29,
+      "description": "This module handles command-line argument parsing via the Clap library, defining options for test execution, logging, reporting, test selection, and high-level commands. It works with primitive types and custom variants to configure behavior such as timeouts, log levels, test filters, and output formats. Concrete use cases include enabling debug logs, setting per-test retry limits, selecting test subsets with regular expressions, and generating JUnit reports for CI integration.",
+      "description_length": 482,
+      "index": 23,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Tezt_core.Regression",
-      "library": "tezt.core",
-      "description": "Registers regression tests with metadata and captures their output during execution. Works with Lwt asynchronous functions and string-based output streams. Used to verify expected behavior of processes by comparing captured output against known baselines.",
-      "description_length": 255,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Base",
-      "library": "tezt.core",
-      "description": "This module combines core utilities for string manipulation, asynchronous control flow, and data structure transformations with extended functionality for working with maps and sets of strings. It directly supports operations on strings, lists, optional values, and Lwt threads, while its submodules provide structured handling of string-keyed polymorphic maps and ordered string sets, enabling tasks like key-based transformations, ordered traversal, and set algebra. You can, for example, parse and rewrite text using regular expressions, manage asynchronous file I/O with monadic chaining, or manipulate collections through filtering, folding, and ordered iteration. Specific capabilities include converting sequences into maps, computing set intersections with guaranteed order, and applying predicate-based transformations to structured data.",
-      "description_length": 847,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Tezt_core.Diff",
-      "library": "tezt.core",
-      "description": "This module computes differences between two sequences, such as arrays or files, and produces structured reports of additions, removals, and kept elements. It supports filtering and reducing the context of differences, and provides output formatting for logging or display. Use cases include comparing test outputs, tracking changes in configuration files, or visualizing discrepancies in data arrays.",
-      "description_length": 401,
-      "index": 32,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Tezt_core.TSL_AST",
       "library": "tezt.core",
-      "description": "This module defines an abstract syntax tree for a test selection language. It includes operations to represent boolean logic, string comparisons, and tag checks using types like `string_var`, `string_operator`, and recursive expressions. It is used to model conditions that select tests based on file, title, or tags in a structured and composable way.",
-      "description_length": 352,
-      "index": 33,
+      "description": "This module defines an abstract syntax tree for a test selection language, including constructors for boolean literals, string predicates, and logical operators. It works with test descriptions by evaluating conditions based on file names, titles, or tags using equality or regular expressions. Concrete use cases include filtering test cases during execution based on dynamic criteria or organizing test runs by metadata attributes.",
+      "description_length": 433,
+      "index": 24,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Tezt_core.Diff",
+      "library": "tezt.core",
+      "description": "This module computes differences between two sequences, such as arrays or text files, and produces structured reports of additions, removals, and kept elements. It supports filtering and reducing the context of these differences and provides functions to output or log the results in a readable format. Concrete use cases include comparing test outputs, configuration files, or any structured data arrays where precise change tracking is required.",
+      "description_length": 447,
+      "index": 25,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Tezt_core.Check",
+      "module_path": "Tezt_core.Process_hooks",
       "library": "tezt.core",
-      "description": "This module enforces assertions through predicates that trigger Test.fail on failure, offering precise diagnostics for testing scenarios. It supports equality checks, exception validation, file system verifications, and boolean condition testing across basic and composite types, with customizable equality and pretty-printing for user-defined types. Submodules provide structured ways to define equality, ordering, and pretty-printing for custom types, ensuring consistent error messages when comparisons or validations fail. For example, you can validate transformations on AST nodes, verify file existence, or test exception propagation with detailed failure output.",
-      "description_length": 669,
-      "index": 34,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines callbacks for monitoring and logging process activity. It includes hooks for handling log lines and tracking spawned processes with their commands and arguments. Useful for test frameworks needing to trace execution steps or capture output in regression tests.",
+      "description_length": 280,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.Regression",
+      "library": "tezt.core",
+      "description": "Registers regression tests with metadata and execution logic, captures test output for verification, and provides hooks to integrate with processes. Works with strings, lists, and Lwt asynchronous units. Used to define and validate expected outputs of CLI commands or system interactions in test scripts.",
+      "description_length": 304,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.Version",
+      "library": "tezt.core",
+      "description": "Represents and handles version numbers as strings, including development suffixes. Provides direct access to the full version identifier. Useful for runtime version checks and logging.",
+      "description_length": 184,
+      "index": 28,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Tezt_core.Log",
       "library": "tezt.core",
-      "description": "This module provides structured logging with support for log levels, colored output, and test result formatting. It allows conditional logging based on verbosity, secure logging of shell commands, and management of log files and worker IDs, while its submodules enable terminal color styling and customizable timestamp and prefix formatting. Main data types include log levels (debug, info, report, warn, error) and color styles composed from foreground, background, and attributes like bold. Examples include highlighting errors in red, formatting timestamps as `HH:MM:SS.FFF`, and logging test execution traces with colored diagnostic messages.",
-      "description_length": 646,
-      "index": 35,
+      "description": "This module formats and outputs log messages with support for color styling, log levels, and structured test results. It handles strings, formatted messages, and terminal colors through the `Color` submodule, along with test result types to indicate success or failure. Concrete uses include logging shell commands, emitting colored error and warning messages, and reporting test outcomes with custom prefixes and timestamps.",
+      "description_length": 425,
+      "index": 29,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Tezt_core.Background",
+      "library": "tezt.core",
+      "description": "This module manages background tasks during testing by registering promises that run asynchronously. It provides functions to start and stop background execution, handling exceptions and ensuring registered tasks complete before stopping. Use it to run long-lived or concurrent operations during test suites, such as simulating network activity or background processing.",
+      "description_length": 370,
+      "index": 30,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Tezt_core.TSL_parser",
+      "library": "tezt.core",
+      "description": "Parses logical expressions from a stream of tokens into an abstract syntax tree. It processes operators like equality, negation, and logical connectives, working with strings, booleans, and parentheses. Used to interpret filter or query languages in configuration or testing tools.",
+      "description_length": 281,
+      "index": 31,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Tezt_core.Base",
+      "library": "tezt.core",
+      "description": "This module facilitates text processing with regular expressions, safe file I/O, and functional iteration patterns, while providing monadic combinators for Lwt promises and collections like string maps and sets. It operates on strings, lists, options, and asynchronous computations, emphasizing regex capture groups, iterative folds, and persistent storage with atomic file writes. Use cases include log parsing, configuration management, and asynchronous workflow orchestration with structured data transformations.",
+      "description_length": 516,
+      "index": 32,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Tezt_core",
       "library": "tezt.core",
-      "description": "This module organizes test execution with hierarchical structures, manages test selection through a domain-specific language, and coordinates parallel runs via a scheduler. It supports data types like labeled trees for test organization, abstract syntax trees for logical expressions, and environment records for metadata evaluation, with operations for traversal, filtering, and concurrency control. You can select tests by tag expressions, schedule them for parallel execution, and manage asynchronous fixtures like background servers. Additional utilities include version reporting, structured logging with color, string manipulation, and diff generation for output comparison.",
-      "description_length": 680,
-      "index": 36,
+      "description": "This module provides structured test execution with background task management, assertion checking, and command-line configuration. It handles asynchronous workflows, text processing, and hierarchical test organization using a radix tree, supporting concrete use cases like simulating concurrent processes, validating CLI command outputs, and filtering test runs by tags or metadata. Key data types include strings, Lwt promises, test descriptions, and logical expressions parsed into abstract syntax trees for dynamic test selection and evaluation.",
+      "description_length": 549,
+      "index": 33,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "JSON",
-      "library": "tezt.json",
-      "description": "This module provides functions for parsing, encoding, and transforming JSON data through operations that manipulate annotated and unannotated JSON abstract syntax trees. It supports type-safe extraction of values (e.g., integers, strings) using optional variants, merges objects, and inspects structures for tasks like configuration processing or data validation. Key patterns include predicate checks for value types, error handling via `option` types, and equality comparisons that optionally ignore annotations.",
-      "description_length": 514,
-      "index": 37,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Scheduler.Message",
-      "library": "tezt.scheduler",
-      "description": "This module enables bidirectional communication between scheduler and worker processes using typed messages composed of runtime-determined values and unique tags, supporting encoding, decoding, and pattern-matching to recover static type information. It provides operations for sending and receiving messages with optional timeouts, managing dynamic task coordination, and handling events like log aggregation, resource allocation, or dependency-driven task scheduling. Common applications include parallel test execution with isolated failure recovery, build systems with dynamic reverse dependencies, and structured inter-process communication for custom workflows.",
-      "description_length": 667,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Scheduler.Timer",
-      "library": "tezt.scheduler",
-      "description": "This module schedules functions to run after a specified delay in the scheduler process. It provides `on_delay` to create a timer, `cancel` to remove a pending timer, and `cancel_all` to clear all timers. Use cases include triggering task timeouts, delaying follow-up actions after a task completes, or scheduling periodic maintenance during long-running jobs.",
-      "description_length": 360,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Scheduler",
-      "library": "tezt.scheduler",
-      "description": "This module orchestrates parallel task execution across a fixed pool of forked processes, allowing dynamic task addition in response to events such as task completion or incoming messages. It supports task timeouts, inter-process communication via typed messages, and delayed function scheduling. Tasks can send structured messages for logging, resource allocation, or custom coordination, while the scheduler can schedule follow-up actions based on task outcomes or system events. Use cases include parallel test frameworks with isolation and timeout enforcement, and build systems that dynamically schedule reverse dependencies based on prior results.",
-      "description_length": 653,
-      "index": 40,
-      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 41,
-    "meaningful_modules": 41,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "total_modules_in_package": 38,
+    "meaningful_modules": 34,
+    "filtered_empty_modules": 4,
+    "retention_rate": 0.8947368421052632
   },
   "statistics": {
-    "max_description_length": 847,
-    "min_description_length": 255,
-    "avg_description_length": 467.4634146341463,
-    "embedding_file_size_mb": 0.1494464874267578
+    "max_description_length": 595,
+    "min_description_length": 184,
+    "avg_description_length": 418.02941176470586,
+    "embedding_file_size_mb": 0.4931669235229492
   }
 }

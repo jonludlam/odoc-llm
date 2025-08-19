@@ -1,125 +1,117 @@
 {
   "package": "lockfree",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 13,
-  "creation_timestamp": "2025-07-15T23:07:55.348317",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 12,
+  "creation_timestamp": "2025-08-14T23:12:36.990801",
   "modules": [
     {
       "module_path": "Lockfree.Mpmc_relaxed_queue.Not_lockfree.CAS_interface",
       "library": "lockfree",
-      "description": "This module provides `push` and `pop` operations for a thread-safe, multi-producer, multi-consumer queue that uses compare-and-swap (CAS) for synchronization. It works with the generic `'a t` type representing the queue, supporting any element type `'a`. Designed for architectures lacking FAD instructions, it offers better performance on ARM but sacrifices efficiency on x86 compared to the standard implementation.",
-      "description_length": 417,
+      "description": "This module provides `push` and `pop` operations for a thread-safe, multi-producer, multi-consumer queue using a compare-and-swap (CAS) based implementation. It works with the generic `'a t` type representing the queue, supporting any element type `'a`. It is specifically optimized for architectures like ARM that lack fast atomic decrement (FAD) instructions, offering better performance in those environments compared to the standard implementation.",
+      "description_length": 452,
       "index": 0,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Lockfree.Ws_deque.S",
+      "module_path": "Lockfree.Mpmc_relaxed_queue.Spin",
       "library": "lockfree",
-      "description": "Implements a lock-free work-stealing deque for single-producer, multi-consumer scenarios. It supports push and pop operations at the front by the owner domain, and steal operations from the back by other domains. Optimized for high-throughput task scheduling where one domain manages a queue and others steal work to balance load.",
-      "description_length": 330,
+      "description": "This module implements a lock-free multi-producer, multi-consumer queue with relaxed FIFO ordering, using busy-waiting for synchronization. It provides `push` and `pop` operations that block by spinning when the queue is full or empty, respectively. Designed for high-throughput, low-latency scenarios where contention is expected, such as task scheduling or inter-thread communication in multicore applications.",
+      "description_length": 412,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Lockfree.Ws_deque.M",
       "library": "lockfree",
-      "description": "This module implements a lock-free work-stealing deque optimized for single-producer, multi-consumer scenarios. It supports push and pop operations on one end for the owner domain, and steal operations on the other end for non-owner domains. It is ideal for high-throughput task scheduling where work is locally processed in LIFO order and distributed across domains with minimal contention.",
-      "description_length": 391,
+      "description": "Implements a lock-free single-producer, multi-consumer deque optimized for work-stealing scenarios. It supports push and pop operations at the front for the owner domain, and steal operations from the back for other domains. Designed for high-throughput task scheduling where one domain manages a queue and others steal work to balance load.",
+      "description_length": 341,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Lockfree.Mpmc_relaxed_queue.Spin",
-      "library": "lockfree",
-      "description": "This module implements a lock-free multi-producer, multi-consumer queue with busy-waiting on full or empty states. It operates on a pre-allocated, fixed-size buffer and supports `push` and `pop` operations that block via spinning until space or data becomes available. It is suited for high-throughput, low-latency scenarios where predictable memory usage and avoidance of dynamic allocation are critical, such as in real-time systems or high-performance servers.",
-      "description_length": 463,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Lockfree.Mpmc_relaxed_queue.Not_lockfree",
       "library": "lockfree",
-      "description": "This module implements a thread-safe, multi-producer, multi-consumer queue with relaxed FIFO ordering, using non-lockfree synchronization that relies on cooperation between threads for termination. It provides immediate-returning `push` and `pop` operations, making it suitable for concurrent pipelines, task scheduling, and event queues under a fair OS scheduler. The main data type `'a t` represents the queue and supports operations that avoid indefinite busy-waiting, with child modules offering CAS-based variants optimized for architectures like ARM where FAD instructions are unavailable. Specific use cases include coordinating work between threads in a server or managing asynchronous events in a GUI application.",
-      "description_length": 722,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Lockfree.Mpsc_queue",
-      "library": "lockfree",
-      "description": "This module implements a lock-free multi-producer, single-consumer queue with operations for adding elements to the tail or head, removing elements from the head, checking emptiness, and closing the queue. It supports thread-safe concurrent access from multiple producers while ensuring safe consumption by a single consumer. It is suitable for use in schedulers where tasks are enqueued by multiple sources and processed sequentially by a single execution thread.",
-      "description_length": 464,
-      "index": 5,
+      "description": "This module implements a thread-safe, multi-producer, multi-consumer queue with relaxed FIFO ordering, using a compare-and-swap (CAS) mechanism. It supports push and pop operations on a generic `'a t` queue structure, returning `false` or `None` for full or empty states, respectively. Designed for environments without fast atomic decrement instructions, it offers improved performance on architectures like ARM.",
+      "description_length": 413,
+      "index": 3,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Lockfree.Mpmc_relaxed_queue",
-      "library": "lockfree",
-      "description": "This module implements a high-throughput, thread-safe queue with relaxed FIFO semantics, offering two distinct interfaces for different concurrency strategies. The `Spin` interface provides lock-free `push` and `pop` operations that busy-wait on full or empty states, ideal for real-time systems with fixed memory constraints, while the `Not_lockfree` interface offers cooperative, non-lockfree paths that return immediately and support overflow handling. The main data type `'a t` represents the queue, enabling concurrent producers and consumers to exchange data efficiently, with use cases ranging from task scheduling in servers to event handling in GUIs. Child modules refine these behaviors with architecture-specific optimizations and alternative synchronization mechanisms.",
-      "description_length": 781,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Lockfree.Michael_scott_queue",
-      "library": "lockfree",
-      "description": "Implements a lock-free FIFO queue with atomic push and pop operations, supporting concurrent access from multiple producers and consumers. Works with arbitrary typed elements through a persistent internal structure, enabling safe and efficient shared state management in multicore environments. Useful for task scheduling, event streaming, or coordinating asynchronous data flows where order preservation and high concurrency throughput are required.",
-      "description_length": 450,
-      "index": 7,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Lockfree.Spsc_queue",
-      "library": "lockfree",
-      "description": "Implements a single-producer, single-consumer queue with lock-free semantics for efficient inter-thread communication. It supports constant-time push and pop operations on a pre-allocated circular buffer sized as a power of two. Designed for high-throughput, low-latency scenarios such as pipeline stages or producer-consumer workflows in multicore environments.",
-      "description_length": 362,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Lockfree.Ws_deque",
       "library": "lockfree",
-      "description": "This module provides a lock-free work-stealing deque optimized for single-producer, multi-consumer task scheduling. The owner performs push and pop operations at one end, while multiple stealers efficiently take work from the opposite end, minimizing contention and improving throughput. It supports dynamic resizing and prioritizes work locality by processing tasks in LIFO order on the owner's side, making it ideal for parallel runtime systems where load balancing and performance are critical. Submodules refine this behavior with specific implementations tailored for domain-based scheduling and efficient work distribution across cores.",
-      "description_length": 642,
-      "index": 9,
+      "description": "Implements a lock-free single-producer, multi-consumer deque optimized for work-stealing. It provides `push` and `pop` operations for the owner domain and `steal` operations for other domains, enabling efficient task distribution in high-throughput parallel computing. Designed for use in per-core task scheduling where one domain adds and removes tasks locally while others steal from the opposite end to balance workload.",
+      "description_length": 423,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Lockfree.Backoff",
       "library": "lockfree",
-      "description": "This module implements truncated exponential backoff with adjustable min and max wait bounds, using CPU pause instructions to reduce contention in lock-free algorithms. It provides `once` to perform a backoff step and `reset` to restart the sequence, operating on a stateful `t` instance. It is used in retry loops of lock-free data structures to mitigate thread contention during collisions.",
-      "description_length": 392,
-      "index": 10,
+      "description": "This module implements truncated exponential backoff for reducing contention in lock-free algorithms. It provides operations to create a backoff instance with configurable min and max wait bounds, execute a single backoff step, and reset the backoff state. The mechanism uses CPU pause instructions to efficiently manage retries in scenarios like spinlocks or atomic operation contention.",
+      "description_length": 388,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Lockfree.Spsc_queue",
+      "library": "lockfree",
+      "description": "Implements a lock-free single-producer single-consumer queue with bounded size. It supports `push` for adding elements and `pop` for removing elements, both operating on a pre-allocated circular buffer of size 2^N. Useful for high-performance producer-consumer pipelines where one thread writes and another reads without locking overhead.",
+      "description_length": 338,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Lockfree.Mpmc_relaxed_queue",
+      "library": "lockfree",
+      "description": "The module implements a lock-free multi-producer, multi-consumer queue with relaxed FIFO ordering, offering `push` and `pop` operations for concurrent data exchange. It works with a generic `'a t` queue structure, parameterized by a size exponent that determines internal buffer capacity. Concrete use cases include high-throughput task scheduling and inter-thread communication in multicore systems, particularly where low-latency synchronization is required or on architectures with slower atomic operations.",
+      "description_length": 510,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Lockfree.Michael_scott_queue",
+      "library": "lockfree",
+      "description": "Implements a lock-free FIFO queue with atomic push and pop operations, supporting multiple producers and consumers. Works with arbitrary OCaml values through a pointer-based structure. Ideal for concurrent task scheduling, event streaming, or shared data buffering in multicore applications.",
+      "description_length": 291,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Lockfree.Treiber_stack",
       "library": "lockfree",
-      "description": "Implements a lock-free Treiber stack with atomic push and pop operations. Works with arbitrary OCaml values organized in a thread-safe LIFO structure. Ideal for concurrent producer-consumer scenarios where multiple threads safely add or remove elements without locks.",
-      "description_length": 267,
-      "index": 11,
+      "description": "Implements a lock-free Treiber stack with `push` and `pop` operations for LIFO access. Works with any value type `'a` and supports concurrent modification by multiple producers and consumers. Useful in concurrent programming scenarios where threads need to coordinate through a shared stack without locks, such as task scheduling or event handling.",
+      "description_length": 348,
+      "index": 9,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Lockfree.Mpsc_queue",
+      "library": "lockfree",
+      "description": "This module implements a lock-free multi-producer, single-consumer queue with operations for adding elements to the tail or head, removing from the head, checking emptiness, and closing the queue. It supports thread-safe concurrent access from multiple producers and a single consumer, making it suitable for use in task scheduling where a shared run queue must be efficiently accessed by multiple workers. The queue is used in Eio's scheduler to manage tasks concurrently without locking overhead.",
+      "description_length": 498,
+      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Lockfree",
       "library": "lockfree",
-      "description": "This module provides a suite of lock-free data structures optimized for concurrent access in multicore environments. It includes queues with varying producer-consumer models, a Treiber stack, work-stealing deques, and backoff strategies, all centered around efficient, atomic operations on shared state. These structures support high-throughput task scheduling, event streaming, and inter-thread communication, with examples including multi-producer single-consumer queues, single-producer single-consumer buffers, and work-stealing deques for load-balanced parallelism. Each structure is designed to minimize contention and maximize performance through architecture-specific optimizations and synchronization techniques.",
-      "description_length": 721,
-      "index": 12,
+      "description": "This module implements high-performance lock-free data structures for concurrent programming in multicore environments. It includes specialized queues, stacks, and deques optimized for specific producer-consumer and work-stealing patterns, along with backoff mechanisms to reduce contention. These structures enable efficient task scheduling, event handling, and inter-domain communication without locks.",
+      "description_length": 404,
+      "index": 11,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 13,
-    "meaningful_modules": 13,
+    "total_modules_in_package": 12,
+    "meaningful_modules": 12,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 781,
-    "min_description_length": 267,
-    "avg_description_length": 492.46153846153845,
-    "embedding_file_size_mb": 0.04765892028808594
+    "max_description_length": 510,
+    "min_description_length": 291,
+    "avg_description_length": 401.5,
+    "embedding_file_size_mb": 0.17432117462158203
   }
 }

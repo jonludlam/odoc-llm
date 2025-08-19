@@ -1,79 +1,79 @@
 {
   "package": "angstrom",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 9,
-  "creation_timestamp": "2025-07-15T23:06:19.042017",
+  "creation_timestamp": "2025-08-14T23:05:47.664348",
   "modules": [
     {
       "module_path": "Angstrom.Let_syntax.Let_syntax",
       "library": "angstrom",
-      "description": "This module enables the use of `let%bind`, `let%map`, and related syntax extensions for writing concise parser expressions using Angstrom's monadic and applicative combinators. It provides syntactic support for sequencing parsers, transforming results, and combining multiple parser outputs using functions like `bind`, `map`, `both`, and `map2` through the ppx_let pre-processor. Concrete use cases include parsing structured binary or text formats where readability and compositionality of parser steps are critical, such as protocol implementations or file format parsers.",
-      "description_length": 575,
+      "description": "This module provides syntactic support for writing parsers using `let`-binding syntax via the `ppx_let` pre-processor. It includes operations like `return`, `map`, `bind`, and combinators such as `both` and `map2` through `map4` to sequence and transform parser results. These functions enable concise composition of complex parsers that operate on byte streams, such as parsing binary formats or structured text like JSON or HTTP headers.",
+      "description_length": 439,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Angstrom.BE",
-      "library": "angstrom",
-      "description": "This module implements big-endian binary parsers for fixed-size integers and floating-point numbers. It operates on binary input streams, consuming bytes to decode values like 16/32/64-bit signed and unsigned integers, floats, and doubles. Use it to parse binary protocols or file formats that require strict big-endian decoding, such as network packets or structured binary logs.",
-      "description_length": 380,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Angstrom.Unsafe",
-      "library": "angstrom",
-      "description": "This module provides low-level, performance-critical parsing operations that directly manipulate and access Angstrom's internal buffer. It includes functions like `take`, `take_while`, and `peek` that allow precise control over input consumption and inspection, returning slices of the internal buffer to avoid allocations. These operations are ideal for writing highly optimized parsers where direct buffer access is necessary and safety can be guaranteed by the caller, such as parsing binary formats or high-throughput network protocols.",
-      "description_length": 540,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Angstrom.Unbuffered",
-      "library": "angstrom",
-      "description": "This module provides low-level parsing operations that require manual buffer management to enable zero-copy IO. It works directly with user-managed input buffers and parser states, exposing control over input consumption and continuation via `partial.committed` and `partial.continue`. Concrete use cases include high-performance network protocol parsers where precise memory control is critical, such as parsing HTTP or binary protocols in event-driven servers.",
-      "description_length": 462,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Angstrom.Let_syntax",
-      "library": "angstrom",
-      "description": "This module integrates with the ppx_let pre-processor to enable monadic and applicative parsing using Angstrom's `'a t` type, supporting `let%bind` and `let%map` for sequential composition and result transformation. It provides direct access to operations like `bind`, `map`, `both`, and `map2`, allowing parsers to be written in a natural, imperative style while maintaining functional purity. Submodules extend this functionality to handle complex parsing tasks such as structured data extraction, binary protocol decoding, and custom format parsing with clear, composable syntax. Example uses include building JSON parsers, deserializing binary messages, or constructing configuration file readers.",
-      "description_length": 701,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Angstrom.Buffered",
-      "library": "angstrom",
-      "description": "This module provides functions for running parsers with internal buffering, allowing incremental input feeding via the `feed` function and returning unconsumed input upon completion. It works with parsers defined in the Angstrom module, handling input as either bigstrings or strings, and returns results in a state type that tracks progress, success, or failure. Concrete use cases include parsing network streams or file contents in chunks, where input arrives asynchronously or exceeds the initial buffer size.",
-      "description_length": 513,
-      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Angstrom.LE",
       "library": "angstrom",
-      "description": "This module implements parsers for reading and writing little-endian binary data. It supports fixed-size integer comparisons, arbitrary integer reads (signed and unsigned), and floating-point value parsing (float and double). These operations are useful for decoding binary protocols or file formats that require strict little-endian byte ordering, such as network packets or certain disk formats.",
-      "description_length": 397,
-      "index": 6,
+      "description": "This module implements parsers for reading and validating little-endian binary values from input streams. It supports exact matches for 16-bit, 32-bit, and 64-bit integers, as well as reading arbitrary little-endian signed and unsigned integers and floating-point numbers. These parsers are useful for decoding binary protocols or file formats that encode numeric data in little-endian byte order, such as certain network protocols or binary serialization formats.",
+      "description_length": 464,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Angstrom.Buffered",
+      "library": "angstrom",
+      "description": "This module provides functions for running and feeding buffered parsers that internally manage input storage, minimizing memory copying while supporting incremental input consumption. It works with parsers defined in the base module, handling input as bigstrings or strings, and returns unconsumed data in a structured buffer format. Concrete use cases include parsing streaming data from files or network sockets where input arrives in chunks and efficient buffer management is critical.",
+      "description_length": 488,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Angstrom.Consume",
       "library": "angstrom",
-      "description": "This module provides functions to control how much of the input is consumed during parsing, specifically by determining whether to consume only a prefix of the input or the entire input. It works with the `t` variant type, which represents consumption modes, and integrates with parser combinators to influence parsing behavior. Concrete use cases include selectively consuming input when parsing structured formats like binary protocols or custom text encodings where partial consumption is required.",
-      "description_length": 501,
+      "description": "This module provides functions to control how much of the input is consumed during parsing, specifically by determining whether to consume only a prefix of the input or the entire input. It works with the `t` variant type, which represents consumption modes, and integrates with parser combinators to influence parsing behavior. Concrete use cases include selectively consuming input when parsing structured data formats like JSON or binary protocols, where partial consumption is needed to process headers or variable-length fields.",
+      "description_length": 533,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Angstrom.Unsafe",
+      "library": "angstrom",
+      "description": "This module provides low-level, zero-copy parsing operations that directly manipulate the internal buffer during parsing. It works with `bigstring` buffers and exposes functions like `take`, `take_while`, and `peek` to process input without intermediate allocations. These operations are ideal for performance-critical parsers, such as binary protocol decoders or high-throughput log parsers, where avoiding memory allocation is essential.",
+      "description_length": 439,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Angstrom.Unbuffered",
+      "library": "angstrom",
+      "description": "This module provides low-level parsing operations that require manual buffer management, enabling zero-copy input handling by avoiding internal buffering. It works directly with user-managed byte buffers and tracks parser progress through explicit state transitions, using `more` to signal input availability. Concrete use cases include high-performance network protocol parsers and custom streaming data processors where precise memory control is critical.",
+      "description_length": 457,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Angstrom.BE",
+      "library": "angstrom",
+      "description": "This module provides big-endian binary parsers for fixed-size integers and floating-point numbers. It operates on byte streams, consuming exact byte counts to decode values like 16-bit, 32-bit, and 64-bit integers (signed and unsigned) and 32-bit/64-bit floats. Use it to parse binary protocols or file formats that encode numeric data in big-endian format, such as network packets or structured binary logs.",
+      "description_length": 408,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Angstrom.Let_syntax",
+      "library": "angstrom",
+      "description": "This module enables concise parser composition using `let`-binding syntax via `ppx_let`, providing `return`, `map`, and `bind` operations for sequencing and transforming parser results. It works directly with `Angstrom.t` parsers that consume byte streams, supporting operations like `both` and `map2` to `map4` for combining multiple parsers. Concrete use cases include writing structured parsers for binary protocols or text formats like JSON and HTTP, where readable composition of complex parsing logic is required.",
+      "description_length": 519,
       "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Angstrom",
       "library": "angstrom",
-      "description": "Angstrom enables efficient, incremental parsing with monadic and applicative combinators, supporting both buffered and unbuffered input streams for high-performance use cases such as network protocols and binary formats. It provides core operations like `take`, `skip`, `choice`, and `repeat`, with direct buffer access and zero-copy IO through modules like `Buffer` and `Unbuffered`, allowing precise control over input consumption and error handling. Child modules add binary parsing capabilities for big-endian and little-endian data, integration with ppx_let for imperative-style parser composition, and utilities for partial input consumption and structured streaming. Examples include parsing HTTP headers with zero-copy semantics, decoding binary logs with fixed-endianness, or building custom deserializers with monadic sequencing and applicative composition.",
-      "description_length": 867,
+      "description": "This module provides low-level parsing primitives and combinator-based parser construction for incremental, memory-efficient data processing. It operates on character streams and binary data using `bigstring`-backed buffers, supporting zero-copy input manipulation through unbuffered interfaces and endianness-aware binary parsing via specialized combinators. Typical applications include protocol implementation, file format parsing, and high-throughput stream processing where precise control over input consumption and minimal allocation overhead are critical.",
+      "description_length": 563,
       "index": 8,
       "embedding_norm": 1.0
     }
@@ -85,9 +85,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 867,
-    "min_description_length": 380,
-    "avg_description_length": 548.4444444444445,
-    "embedding_file_size_mb": 0.033127784729003906
+    "max_description_length": 563,
+    "min_description_length": 408,
+    "avg_description_length": 478.8888888888889,
+    "embedding_file_size_mb": 0.13085460662841797
   }
 }

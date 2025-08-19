@@ -1,14 +1,14 @@
 {
   "package": "mpp",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 6,
-  "creation_timestamp": "2025-07-15T23:06:00.604445",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 8,
+  "creation_timestamp": "2025-08-14T23:08:40.087960",
   "modules": [
     {
       "module_path": "Mpp_actions.Variable",
       "library": "mpp",
-      "description": "This module manipulates variables within a character stream processing context, providing operations to set, get, try to get, and unset variables. It works with character streams and output targets, handling conditional logic based on variable states. Concrete use cases include managing variable assignments during preprocessing, evaluating conditional directives, and controlling output based on variable presence or absence.",
+      "description": "This module implements variable manipulation and conditional logic for a character stream preprocessor. It provides operations to set, get, unset, and query variables, along with conditional directives like `ifdef`, `ifndef`, and `else`, which control output based on variable state. These functions operate on character streams and output targets, enabling preprocessing of text with variable substitution and branching logic.",
       "description_length": 427,
       "index": 0,
       "embedding_norm": 1.0
@@ -16,54 +16,70 @@
     {
       "module_path": "Mpp_actions.Mpp_conditions",
       "library": "mpp",
-      "description": "Handles conditional logic for character stream processing based on a boolean flag. It takes two character streams, a condition result, and an output channel to selectively route data. Useful for implementing if-else branching in stream transformations.",
-      "description_length": 252,
+      "description": "Handles conditional logic for character stream processing based on a boolean flag. It takes a reference to an optional boolean, a condition result, two character streams (one for true case and one for false), and an output handler. This function directs which stream to process and outputs the result accordingly.",
+      "description_length": 313,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mpp_out",
-      "library": "mpp",
-      "description": "This module provides functions for writing characters, strings, and formatted output to either a buffer or an output channel. It supports operations like `output_char`, `output_string`, `printf`, and `flush`, enabling efficient text output and stream handling. Concrete use cases include generating textual output in memory buffers or writing directly to files and standard output.",
-      "description_length": 381,
-      "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Mpp_charset",
       "library": "mpp",
-      "description": "This library provides a functional, immutable set-like structure for managing Unicode character collections, supporting operations like union, intersection, difference, and membership tests. It works with character sets represented as `Mpp_charset.t`, offering iteration, filtering, and transformation via functions like `fold`, `filter_map`, and `partition`, while also enabling conversion to strings, lists, and sequences. Typical use cases include text processing, character set analysis, and scenarios requiring efficient Unicode-aware set manipulations with predictable memory behavior.",
-      "description_length": 591,
-      "index": 3,
+      "description": "This module offers set operations (union, intersection, difference, membership checks), collection transformations (iteration, mapping, filtering), and conversions between character sets, lists, and sequences. It works with an abstract type representing character sets, handling both individual characters and contiguous ranges efficiently. Applications include text processing, input validation, and serialization where compact, escaped string representations of character sets are needed.",
+      "description_length": 490,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mpp_init",
       "library": "mpp",
-      "description": "The module provides operations for configuring source code parsing, including delimiter handling for comments and nested blocks, character set management, and language-specific location formatting. It works with strings, lists, and custom block descriptors to process foreign code segments with escaping and line-number preservation. This supports use cases like embedding and transforming code blocks in templating systems or multi-language preprocessors.",
-      "description_length": 456,
+      "description": "This module provides operations for configuring token delimiters, whitespace handling, and language-specific location tracking to parse and process source code with customizable syntax. It works with mutable string references for token boundaries, character sets for formatting, and foreign block descriptors to manage embedded code representations. The functionality supports code generation and templating workflows that require integrating multiple syntaxes, escaping strings for languages like bash or PHP, and producing structured output with precise source location metadata.",
+      "description_length": 581,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mpp_stringmap",
+      "library": "mpp",
+      "description": "This module implements a sorted string-keyed map with standard dictionary operations like insertion, deletion, and lookup, alongside functional transformations such as merging, mapping, and filtering. It supports conversion between maps and ordered sequences or lists, enabling efficient iteration over key-value pairs in lexicographical order. The structure is particularly suited for applications requiring ordered key traversal, such as configuration management or priority-based data aggregation tasks.",
+      "description_length": 506,
       "index": 4,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mpp_out",
+      "library": "mpp",
+      "description": "This module provides functions to output data to either a buffer or an output channel. It supports writing strings, characters, formatted output, and streaming character data. Concrete use cases include generating text output in memory or writing directly to files or standard output.",
+      "description_length": 284,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mpp_charstream",
+      "library": "mpp",
+      "description": "This module enables managing and parsing character streams with operations like lookahead, insertion, and position tracking, supporting tasks such as token matching, integer parsing, and selective character extraction. It works with character streams derived from strings or input channels, alongside string transformations like trimming whitespace or converting streams to strings. It is useful for parsing structured text formats, handling input with error recovery, or processing streams where positional context and incremental manipulation are critical.",
+      "description_length": 558,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Mpp_actions",
       "library": "mpp",
-      "description": "This module processes character streams by parsing and executing commands based on built-in or user-defined actions, managing environments and applying transformations with support for lazy evaluation and extensible workflows. It provides data types for commands, environments, and streams, along with operations to evaluate, route, and modify content dynamically, such as filtering text, building interpreters, or orchestrating conditional processing pipelines. The variables submodule manipulates named values within the stream context, enabling assignments, lookups, and conditional checks, while the conditionals submodule routes stream data based on boolean decisions, allowing structured branching in transformations. Together, these components support complex, state-aware text processing tasks like macro expansion, conditional inclusion, and dynamic output routing.",
-      "description_length": 874,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides operations for processing and transforming character streams using command execution, conditional logic, and variable substitution. It works with data structures like `charstream` for input, `Out.t` for output targets, and string-based variables, supporting use cases such as text preprocessing, conditional compilation, and dynamic content generation. Key functionality includes evaluating preprocessor directives, managing state through configuration flags, and registering extensible built-in actions with documentation.",
+      "description_length": 544,
+      "index": 7,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 10,
-    "meaningful_modules": 6,
-    "filtered_empty_modules": 4,
-    "retention_rate": 0.6
+    "meaningful_modules": 8,
+    "filtered_empty_modules": 2,
+    "retention_rate": 0.8
   },
   "statistics": {
-    "max_description_length": 874,
-    "min_description_length": 252,
-    "avg_description_length": 496.8333333333333,
-    "embedding_file_size_mb": 0.022214889526367188
+    "max_description_length": 581,
+    "min_description_length": 284,
+    "avg_description_length": 462.875,
+    "embedding_file_size_mb": 0.11639022827148438
   }
 }

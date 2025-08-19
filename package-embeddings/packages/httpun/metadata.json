@@ -1,145 +1,145 @@
 {
   "package": "httpun",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 17,
-  "creation_timestamp": "2025-07-15T23:08:36.223193",
+  "creation_timestamp": "2025-08-14T23:25:35.240019",
   "modules": [
     {
-      "module_path": "Httpun.Body.Writer",
+      "module_path": "Httpun.Response.Body_length",
       "library": "httpun",
-      "description": "This module provides functions to efficiently write and schedule character, string, and bigstring data for transmission over an HTTP connection. It buffers and combines writes to minimize memory copies and system calls, supporting both owned and externally managed data. Concrete use cases include streaming large payloads, sending text or binary fragments incrementally, and ensuring timely flush of buffered data to the network.",
-      "description_length": 430,
+      "description": "This module defines the possible ways to determine the length of an HTTP response body, including fixed size, chunked encoding, close-delimited, and error conditions. It provides a polymorphic variant type to represent these body length semantics and a pretty-printing function for debugging or logging purposes. Concrete use cases include determining how to read or generate the body of an HTTP response based on the specified length method.",
+      "description_length": 442,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Httpun.Body.Reader",
+      "module_path": "Httpun.Request.Body_length",
       "library": "httpun",
-      "description": "Reads HTTP message bodies incrementally using callbacks for data chunks and end-of-file signaling. Works with `Bigstringaf.t` buffers to handle byte streams efficiently. Used to process incoming HTTP request or response payloads without blocking, enabling streaming and pipelining.",
-      "description_length": 281,
+      "description": "This module defines the length semantics for HTTP request bodies, supporting fixed-length and chunked encoding. It provides a type to represent body length constraints and pretty-printing for diagnostics. Used internally to enforce HTTP/1.1 message framing during request parsing and transmission.",
+      "description_length": 297,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Httpun.Response.Body_length",
+      "module_path": "Httpun.Body.Reader",
       "library": "httpun",
-      "description": "This module defines the possible ways to determine the length of an HTTP response body, including fixed size, chunked encoding, close-delimited, and error conditions. It provides functions to format and inspect these body length indicators. Use cases include determining how to read or generate the body of an HTTP response based on the specified length method.",
-      "description_length": 361,
+      "description": "This module manages the consumption of HTTP message bodies by scheduling read operations and handling end-of-file conditions. It works with `Bigstringaf.t` buffers to efficiently process raw byte chunks as they become available. Concrete use cases include streaming large HTTP payloads without loading the entire body into memory and processing pipelined HTTP requests incrementally.",
+      "description_length": 383,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Httpun.Request.Body_length",
+      "module_path": "Httpun.Body.Writer",
       "library": "httpun",
-      "description": "This module defines the length semantics for HTTP request bodies, supporting fixed-length and chunked encoding. It provides a type-safe way to represent body lengths with variants for exact byte counts, chunked transfer, and error states. Use it when constructing or parsing HTTP requests to determine how the body should be processed or transmitted.",
-      "description_length": 350,
+      "description": "This module writes HTTP message bodies to an output channel using buffered and scheduled writes. It supports writing characters, strings, and bigstrings, with operations that allow for efficient data transmission. Concrete use cases include streaming large payloads, sending responses with dynamic content, and managing efficient buffer usage during HTTP pipelining.",
+      "description_length": 366,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Httpun.Method",
-      "library": "httpun",
-      "description": "This module defines the set of standard HTTP request methods and provides operations to classify and manipulate them. It includes functions to check safety, cacheability, and idempotence properties of standard methods, along with conversions to and from strings. It is used to determine the semantics and expected behavior of HTTP requests, such as deciding whether a method can be cached or retried without side effects.",
-      "description_length": 421,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Httpun.Request",
-      "library": "httpun",
-      "description": "This module represents client-initiated HTTP messages, handling methods, targets, versions, and headers while providing utilities to determine body length and connection reuse. It supports precise request construction and efficient transmission, particularly for HTTP/1.1 clients. The child module defines body length semantics with variants for fixed, chunked, and error states, enabling type-safe handling of request payloads. Together, they allow building fully-formed requests, determining transmission behavior, and managing keep-alive connections in networked applications.",
-      "description_length": 579,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Httpun.Version",
-      "library": "httpun",
-      "description": "This module represents and manipulates HTTP protocol versions using a record type with major and minor integers. It provides constants for HTTP/1.0 and HTTP/1.1, functions for parsing from and converting to strings, and comparison operations. It is used to determine protocol compatibility and behavior during HTTP request and response processing.",
-      "description_length": 347,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Httpun.Status",
-      "library": "httpun",
-      "description": "This module defines types and functions for working with HTTP status codes, including standard classifications like informational, successful, redirection, client error, and server error. It provides operations to convert status codes to and from integers, strings, and reason phrases, along with predicates to check the class of a status code. Concrete use cases include validating HTTP response status codes, generating appropriate response messages, and classifying responses for logging or error handling.",
-      "description_length": 509,
-      "index": 7,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Httpun.Body",
-      "library": "httpun",
-      "description": "This module handles efficient transmission and reception of HTTP message bodies by buffering and scheduling data for sending or processing it incrementally. It supports writing character, string, and bigstring data with minimal memory copies, and reading via callbacks that consume `Bigstringaf.t` buffers. You can stream large payloads, send fragments incrementally, or process incoming data without blocking. For example, it enables sending a large file in chunks over HTTP or reading a JSON stream as it arrives.",
-      "description_length": 515,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Httpun.Response",
-      "library": "httpun",
-      "description": "This module handles the creation and parsing of HTTP responses, managing status codes, headers, and protocol versions. It includes functionality to determine body length and connection behavior, supporting fixed size, chunked encoding, and close-delimited responses. You can build custom HTTP servers, implement proxies, or manage streaming responses by inspecting or constructing response metadata and body transmission strategies. Specific operations include setting response status, reading headers, and choosing the appropriate body length method for transmission.",
-      "description_length": 568,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Httpun.Server_connection",
-      "library": "httpun",
-      "description": "This module manages HTTP/1.x server connections by handling request parsing, response writing, and connection lifecycle events. It works with raw byte buffers, HTTP headers, and body streams to process incoming requests and generate responses. Concrete use cases include handling pipelined HTTP requests, managing backpressure during I/O, and gracefully handling connection errors and shutdowns.",
-      "description_length": 395,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Httpun.Headers",
-      "library": "httpun",
-      "description": "This module manages HTTP header fields with case-insensitive names, enabling creation, modification, and querying of headers while preserving their original transmission order. It operates on header collections that support merging values (e.g., for Set-Cookie), conversion to ordered name-value lists, and serialization into HTTP-compliant string formats. Use cases include parsing request/response headers, handling multi-valued fields per RFC 7230, and transforming headers in proxies or servers while maintaining protocol correctness.",
-      "description_length": 538,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Httpun.IOVec",
-      "library": "httpun",
-      "description": "This module handles efficient manipulation of IO vectors, which represent sequences of bytes split across multiple buffers. It provides operations to measure the total length of a single IO vector or a list of vectors, shift data within vectors by a specified offset, and pretty-print vectors for debugging. These functions are essential for managing HTTP message fragments during parsing and serialization without unnecessary memory copies.",
-      "description_length": 441,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Httpun.Config",
-      "library": "httpun",
-      "description": "This module defines configuration parameters for buffer sizes used in HTTP connection handling. It provides a record type `t` with fields for read, request body, response, and response body buffer sizes, along with a `default` value that sets these fields to standard defaults. It is used to tune memory usage and performance for different HTTP workloads, such as serving large request bodies or handling many small responses.",
-      "description_length": 426,
-      "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Httpun.Client_connection",
       "library": "httpun",
-      "description": "This module manages HTTP/1.x client connections, handling request submission, response reception, and connection lifecycle events. It works with HTTP requests and responses, streaming request bodies and parsing response bodies, while integrating with low-level I/O through bigstrings and IOVecs. Concrete use cases include sending HTTP requests over a network socket, processing server responses incrementally, and managing backpressure during reading and writing.",
-      "description_length": 464,
-      "index": 14,
+      "description": "This module manages client-side HTTP/1.x connections, handling request/response cycles, pipelining, and I/O operations. It works with HTTP requests and responses, streaming request bodies and parsing response bodies. Concrete use cases include sending HTTP requests over a network socket, processing server responses incrementally, and managing connection state for keep-alive or pipelined requests.",
+      "description_length": 399,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Httpun.Headers",
+      "library": "httpun",
+      "description": "This module provides operations to manipulate and transform HTTP header collections, supporting creation, modification, and querying of case-insensitive field names while preserving their original order. It works with `Httpun.Headers.t` values, which model HTTP headers as ordered key-value pairs where values can be single or comma-separated lists, adhering to RFC7230 compliance for handling duplicates and semantic equivalence. Typical use cases include parsing and serializing headers for HTTP messages, merging multi-value fields during proxying, and generating human-readable or wire-ready header representations for logging or transmission.",
+      "description_length": 647,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Httpun.Config",
+      "library": "httpun",
+      "description": "This module defines configuration options for buffer sizes used in HTTP connection handling. It provides a record type `t` with fields to set the size of buffers for reading, request bodies, responses, and response bodies, along with a `default` value that initializes these sizes to standard defaults. It is used to tune performance and memory usage for different HTTP workloads.",
+      "description_length": 380,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Httpun.Response",
+      "library": "httpun",
+      "description": "This module constructs and analyzes HTTP responses, handling status codes, headers, and message body semantics. It defines operations to determine body length and connection persistence, based on request method and proxy context. Concrete use cases include generating correct HTTP 1.1 response metadata and managing connection behavior for servers or proxies.",
+      "description_length": 359,
+      "index": 7,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Httpun.Body",
+      "library": "httpun",
+      "description": "This module represents and manipulates HTTP message payloads, providing functions to create, access, and transform both request and response bodies. It works with `Bigstringaf.t` buffers and `string` values to efficiently handle large data streams, supporting operations such as reading from and writing to network channels. Concrete use cases include buffering incoming request bodies for processing, streaming file uploads, and generating dynamic response content in HTTP servers and clients.",
+      "description_length": 494,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Httpun.Server_connection",
+      "library": "httpun",
+      "description": "This module manages HTTP/1.x server connections by processing incoming requests and generating responses. It provides functions to read request data, write response data, handle errors, and manage connection state through explicit read/write operations and callbacks. It works directly with HTTP requests and responses, using types like `Bigstringaf.t` for efficient data handling, and is used in implementing HTTP servers that support pipelining and keep-alive connections.",
+      "description_length": 474,
+      "index": 9,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Httpun.Reqd",
       "library": "httpun",
-      "description": "This module handles HTTP request processing, response generation, and error reporting for individual client connections. It provides functions to access incoming requests, read request bodies, send responses synchronously or asynchronously, and handle exceptions specific to request handling. Concrete use cases include streaming large responses, upgrading connections to other protocols, and sending error responses like 400 or 500 directly to clients.",
-      "description_length": 453,
+      "description": "This module manages HTTP request-response interactions, providing functions to access incoming requests, send responses, and handle errors. It supports streaming responses, string and bigstring payloads, and HTTP upgrades, working with types like `Httpun.Request.t`, `Httpun.Response.t`, and `Httpun.Body.Reader.t`. Concrete use cases include handling pipelined HTTP requests, streaming large responses efficiently, and upgrading connections to protocols like WebSockets.",
+      "description_length": 471,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Httpun.Request",
+      "library": "httpun",
+      "description": "This module represents client-initiated HTTP messages, providing operations to construct and inspect requests with support for methods, targets, versions, and headers. It works with string targets, HTTP methods, versions, and header collections, enforcing HTTP/1.1 framing rules through body length semantics. Concrete use cases include building HTTP requests for transmission over network connections and inspecting incoming requests for routing or processing.",
+      "description_length": 461,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Httpun.Method",
+      "library": "httpun",
+      "description": "This module defines HTTP request methods and their properties, including standard methods like `GET`, `POST`, and `PUT`, as well as custom methods. It provides functions to check method characteristics such as safety, cacheability, and idempotence, and supports conversion between method values and strings. Use cases include validating incoming HTTP requests, determining how to handle specific methods in a server, and generating appropriate HTTP responses based on method semantics.",
+      "description_length": 485,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Httpun.IOVec",
+      "library": "httpun",
+      "description": "This module implements efficient manipulation of vectorized I/O buffers, specifically handling `IOVec.t` and lists of `IOVec.t`. It provides operations to measure buffer lengths, shift offsets within buffers, and pretty-print buffer contents. Concrete use cases include managing fragmented HTTP message bodies during parsing and serialization, and handling pipelined requests/responses without unnecessary memory copies.",
+      "description_length": 420,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Httpun.Version",
+      "library": "httpun",
+      "description": "This module represents and manipulates HTTP protocol versions using a structured type with major and minor fields. It provides constants for HTTP/1.0 and HTTP/1.1, functions for parsing and formatting versions, and comparison operations. Use this module to validate, convert, or compare HTTP version strings during request or response handling.",
+      "description_length": 344,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Httpun.Status",
+      "library": "httpun",
+      "description": "This module defines types and functions for working with HTTP status codes, including standard classifications like informational, successful, redirection, client error, and server error. It provides operations to convert status codes to and from integers, strings, and formatted output, along with predicates to check the class of a status code. Concrete use cases include validating HTTP response status codes, generating appropriate reason phrases, and classifying responses for handling in HTTP servers and clients.",
+      "description_length": 519,
       "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Httpun",
       "library": "httpun",
-      "description": "This module implements HTTP/1.x request and response handling with precise parsing, efficient transmission, and scalable connection management. It defines core data types for methods, status codes, headers, protocol versions, and message bodies, with operations to construct, classify, and manipulate them according to RFC 7230. You can build and send HTTP requests with correct body length semantics, parse and respond to incoming requests with streaming support, and manage keep-alive or pipelined connections with minimal memory usage. Specific examples include streaming large files, handling chunked transfer encoding, and classifying HTTP methods for caching or retries.",
-      "description_length": 676,
+      "description": "This module implements HTTP/1.x parsing, serialization, and pipelining with support for vectorized I/O buffers, protocol versions, request methods, status codes, and headers. It handles message bodies using `Bigstringaf.t` buffers for efficient data streaming, and provides structures for constructing and inspecting HTTP requests and responses. Concrete use cases include building high-performance HTTP servers and clients that manage pipelined requests, stream large payloads, and handle connection upgrades.",
+      "description_length": 510,
       "index": 16,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -149,9 +149,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 676,
-    "min_description_length": 281,
-    "avg_description_length": 456.11764705882354,
-    "embedding_file_size_mb": 0.062239646911621094
+    "max_description_length": 647,
+    "min_description_length": 297,
+    "avg_description_length": 438.29411764705884,
+    "embedding_file_size_mb": 0.24678421020507812
   }
 }

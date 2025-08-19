@@ -1,77 +1,61 @@
 {
   "package": "anycache",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 7,
-  "creation_timestamp": "2025-07-15T23:05:44.642078",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 5,
+  "creation_timestamp": "2025-08-14T23:01:15.709232",
   "modules": [
     {
       "module_path": "Anycache.PendingLimit.Make",
       "library": "anycache",
-      "description": "This module manages asynchronous computation of values associated with keys in a cache, ensuring that only one computation is active per key at a time. It works with a key type and a monadic result type, supporting operations to create a new pending limit state and bind a key to a computation function. Concrete use cases include limiting parallel evaluation of expensive, concurrent cache misses in LRU or 2Q caching strategies.",
-      "description_length": 430,
+      "description": "Implements a pending operation limiter for cache entries, coordinating asynchronous computations for the same key. It uses a user-defined key module and monad to gate duplicate requests, ensuring only one active computation per key. Useful for preventing thundering herds when populating a cache with expensive or asynchronous lookups.",
+      "description_length": 335,
       "index": 0,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Anycache.PendingLimit",
       "library": "anycache",
-      "description": "This module coordinates asynchronous value computations for keys in a cache, ensuring that each key has at most one active computation at any time. It supports a key type and a monadic result type, providing operations to initialize a computation state and bind keys to their respective computation functions. It can be used to manage concurrent cache misses in eviction policies like LRU or 2Q, preventing redundant evaluations of expensive operations. For example, it ensures that multiple requests for the same uncached resource trigger only a single fetch, with all waiters receiving the result once it completes.",
-      "description_length": 617,
+      "description": "This module enforces a limit on pending operations in a cache, providing functions to track, restrict, and manage concurrent access based on a specified threshold. It works with internal cache state and operation counters to prevent resource exhaustion under high load. Concrete use cases include throttling async cache loads and controlling eviction rates in real-time systems.",
+      "description_length": 378,
       "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Anycache.Direct",
-      "library": "anycache",
-      "description": "This module implements direct computations that can either succeed with a value or fail with an exception. It provides operations to construct successful (`return`) or failed (`fail`) results, and to chain computations using `>>?`, which sequences a computation with a function that handles both success and error outcomes. It is used to express error-aware, sequential computations within a caching context, such as handling cache lookups or updates that may fail due to external dependencies.",
-      "description_length": 494,
-      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Anycache.Make",
       "library": "anycache",
-      "description": "This module creates a cache with customizable key and monadic behavior, supporting operations like `create`, `with_cache`, `with_validator`, `get`, and `set`. It works with key types defined by module `K` and monadic types from module `M`, enabling caching of deferred computations with validation logic. Concrete use cases include caching results of expensive I/O operations, memoizing function calls with dynamic expiration, and managing cached values with custom validation rules.",
-      "description_length": 483,
+      "description": "This module creates a cache with custom key and monad types, supporting operations to retrieve, store, and compute values with optional validation. It works with arbitrary key types and deferred monadic values, enabling asynchronous or lazy computations. Concrete use cases include caching results of expensive I/O operations, memoizing function calls with dynamic expiration logic, and managing limited-size storage for frequently accessed data.",
+      "description_length": 446,
+      "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Anycache.Direct",
+      "library": "anycache",
+      "description": "Handles direct computations that can either succeed or fail, using `return` to wrap successful results and `fail` to signal errors. Chains operations with `>>?` to sequentially process results or handle failures. Useful for composing cache operations where intermediate steps may fail, ensuring error propagation and result handling within the computation pipeline.",
+      "description_length": 365,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Anycache.S",
-      "library": "anycache",
-      "description": "This module implements an LRU/2Q cache with asynchronous value computation. It supports cache creation with a fixed capacity, asynchronous retrieval with on-demand computation via `with_cache` or validation-aware updates via `with_validator`, and direct `get` and `set` operations. It is suitable for scenarios like caching remote data fetches or expensive computations where keys map to non-expiring, but potentially recomputed, values.",
-      "description_length": 437,
-      "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Anycache.Monad",
-      "library": "anycache",
-      "description": "This module implements monadic operations for handling cached computations that may succeed or fail. It provides `return` and `fail` for wrapping values or exceptions, and the `>>?` operator for chaining operations with error propagation. It works with result values wrapped in a monadic type `'a t`, representing either a successful cache retrieval or an error. Use this module to sequence cache operations where each step depends on the result of the previous, handling both success and failure cases explicitly.",
-      "description_length": 514,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Anycache",
       "library": "anycache",
-      "description": "This module implements an LRU/2Q caching system that supports asynchronous value computation and validation, coordinating concurrent cache misses to ensure each key triggers at most one active computation. It provides core operations like `create`, `get`, `set`, and `with_cache` for managing cached values with string keys and arbitrary, possibly deferred, result types. Submodules refine this behavior by introducing monadic error handling via `return` and `fail`, sequencing with `>>?`, and safe computation binding to manage retries or failures during cache population. Concrete uses include caching DNS responses, HTTP payloads, or file reads where values may require revalidation or asynchronous recomputation.",
-      "description_length": 716,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides cache creation, key-value storage, and retrieval operations with support for LRU/2Q eviction policies. It works with string keys and arbitrary value types, offering functions like `with_cache` for memoizing referentially transparent computations and `with_validator` for time-sensitive value validation. Concrete use cases include caching DNS lookups, HTTP responses with conditional revalidation, and throttling concurrent cache loads in async systems.",
+      "description_length": 474,
+      "index": 4,
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 7,
-    "meaningful_modules": 7,
+    "total_modules_in_package": 5,
+    "meaningful_modules": 5,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 716,
-    "min_description_length": 430,
-    "avg_description_length": 527.2857142857143,
-    "embedding_file_size_mb": 0.025854110717773438
+    "max_description_length": 474,
+    "min_description_length": 335,
+    "avg_description_length": 399.6,
+    "embedding_file_size_mb": 0.0728302001953125
   }
 }

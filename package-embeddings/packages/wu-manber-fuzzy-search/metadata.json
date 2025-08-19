@@ -1,245 +1,173 @@
 {
   "package": "wu-manber-fuzzy-search",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 28,
-  "creation_timestamp": "2025-07-15T23:12:12.523588",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 19,
+  "creation_timestamp": "2025-08-15T12:23:53.816374",
   "modules": [
     {
-      "module_path": "Wu_Manber.WuManber.WuManber",
+      "module_path": "Wu_Manber.Matcher.MakeSlowMatcher",
       "library": "wu-manber-fuzzy-search",
-      "description": "Implements the core shift-or variant of the Wu and Manber algorithm using bitvector operations. It provides `initial_bvs` to create initial bitvector arrays based on pattern length and `next_bvs` to update these arrays during pattern matching. This module is used for efficient approximate string matching with bit-parallelism.",
-      "description_length": 327,
+      "description": "This module implements a matcher that recalculates mismatch bitvectors on each match attempt using the `mismatch_bv` function from the `SimpleMismatch` functor. It works with pattern sets and input strings, supporting incremental matching operations. It is suitable for scenarios where memory usage must be minimized, and performance is not a primary concern.",
+      "description_length": 359,
       "index": 0,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Wu_Manber.Matcher.MakeHashTblMatcher",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module implements a fast pattern matcher using precomputed mismatch bitvectors stored in a hash table. It works with character-based patterns and leverages hash tables for efficient lookup during matching operations. It is particularly useful in scenarios requiring rapid substring searches with predefined patterns.",
-      "description_length": 321,
+      "description": "This module implements a fast string matcher using precomputed mismatch bitvectors stored in a randomized hash table. It works with patterns and target strings, supporting efficient substring search by leveraging bitwise operations and hash table lookups. Concrete use cases include high-performance text filtering and pattern matching in large data streams.",
+      "description_length": 358,
       "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Wu_Manber.Utils.Int63",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module implements arithmetic, bitwise, and logical operations for 63-bit signed integers, including addition, subtraction, multiplication, division, bitwise AND/OR/XOR, shifts, and comparisons. It operates on the `t` type, providing conversion functions between `int`, `int32`, and `Int63.t`, as well as string parsing, binary encoding, and bit-level inspection capabilities. These features are particularly useful for low-level system programming, cryptographic implementations, and scenarios requiring fine-grained control over 63-bit integer representations.",
-      "description_length": 566,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.Patterns.PatternWithFoldRight",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module defines a pattern interface with a right fold operation, allowing traversal of a pattern's elements from right to left. It works with a pattern type `t` and an element type `elem`, supporting operations like `fold_right` to accumulate values based on each element. Concrete use cases include scanning patterns in string matching algorithms where right-to-left processing is required.",
-      "description_length": 395,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.Matcher.MakeArrayMatcher",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module implements a fast pattern matcher using precomputed mismatch bitvectors stored in an array. It works with patterns compiled into bitvector representations and processes input data to detect matches efficiently. Concrete use cases include high-performance text searching and pattern matching in large datasets where preprocessing speed and memory usage are critical.",
-      "description_length": 377,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wu_Manber.Patterns.PatternWithFoldLeft",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module defines a pattern interface for data structures that support both left and right folding operations over elements of type `elem`. It includes functions to compute the length of the structure, compare elements for equality, and apply fold operations from either direction. Concrete use cases include processing sequences of characters or tokens in search algorithms where directional folding and element comparison are essential.",
-      "description_length": 440,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.Patterns.ElemsIndexable",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module defines operations for converting between elements and their integer indices, with a fixed maximum index. It works with a specific element type `elem` and integers, ensuring that elements can be consistently mapped to and from indices in a bounded range. Concrete use cases include encoding characters or tokens as integers for algorithms like Wu-Manber that require indexed pattern matching.",
-      "description_length": 404,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.Matcher.SimpleMismatch",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module provides functions for computing mismatch information during pattern matching. It works with elements and patterns defined in the `P` module, using `Optint.Int63.t` for compact integer representations. It is used to implement efficient string or sequence matching with support for handling mismatches.",
-      "description_length": 313,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.Matcher.MakeSlowMatcher",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module implements a matcher that recalculates mismatch bitvectors on each match attempt using the `mismatch_bv` function from the `SimpleMismatch` functor. It works with pattern sets and input texts, supporting pattern matching over sequences of elements like characters or tokens. A concrete use case is implementing basic string search functionality where performance is not critical and correctness is prioritized.",
-      "description_length": 422,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wu_Manber.Patterns.PatternWithIndexableElements",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module defines operations for patterns whose elements can be indexed, including folding over elements, converting elements to and from integers, and comparing elements for equality. It works with a pattern type `t` and an element type `elem`, supporting concrete use cases like efficient pattern matching and index-based element manipulation. The module requires that elements map to a contiguous range of integers up to a defined maximum index.",
-      "description_length": 450,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.Patterns.Pattern",
-      "library": "wu-manber-fuzzy-search",
-      "description": "Defines a basic pattern type with an associated length operation. Works with the abstract type `t` representing patterns and provides the `length` function to retrieve the length of a pattern. Used in pattern matching algorithms where the length of a pattern is needed to determine matching offsets.",
-      "description_length": 299,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wu_Manber.Patterns.PatternWithElemEquality",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module defines a pattern type with an equality operation for comparing character-like elements. It includes functions to determine the length of a pattern and to check equality between individual elements. This supports algorithms that require character-level comparison, such as substring search or pattern matching.",
-      "description_length": 322,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.Utils.Array",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module provides array creation, transformation, and traversal operations for single and paired arrays, including indexed mapping, folding, element-wise iteration, and in-place modifications. It supports working with flat arrays and matrices through functions like `map`, `fold_left`, `iter2`, and matrix-specific initializers, alongside utilities for slicing, concatenation, and conversions to/from lists and sequences. Typical use cases involve complex array processing tasks requiring index-aware computations, stable sorting, custom shuffling, or combining and splitting arrays and lists efficiently.",
-      "description_length": 608,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.WuManber.BitOps",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module implements bitwise operations for detecting pattern matches with error tolerance in the shift-or variant of the Wu and Manber algorithm. It works with arrays of 63-bit integers (`Optint.Int63.t`) to represent bitvectors, supporting approximate string matching by checking for matches and computing error counts. Concrete use cases include fast substring search with mismatches and alignment-free sequence comparison in bioinformatics.",
-      "description_length": 446,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wu_Manber.Patterns.Elems",
-      "library": "wu-manber-fuzzy-search",
-      "description": "Defines operations for handling individual elements, typically characters, within a pattern-matching context. Works with the `elem` type, abstracted to represent atomic units like characters in a string. Used to build and manipulate pattern components in algorithms requiring character-level processing, such as substring search or tokenization.",
-      "description_length": 345,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.StringSearch.Pattern",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module defines operations for working with strings and characters, specifically tailored for pattern matching in the context of fuzzy string search algorithms. It provides functions for folding over characters, comparing characters, and converting between characters and integers, alongside constants like the maximum character index. These operations support the implementation of efficient search routines that process strings character by character, such as those used in the FirstMatch module.",
-      "description_length": 502,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
       "module_path": "Wu_Manber.FirstMatch.Make",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module implements fuzzy search algorithms to find the first match of a pattern in a sequence, returning the error count and position where the match ends. It operates on sequences of elements defined by the `P` module, supporting patterns up to length 63. Concrete use cases include approximate string matching in text processing and bioinformatics where partial matches with bounded errors are required.",
-      "description_length": 409,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Wu_Manber.Patterns.ElemsWithEquality",
-      "library": "wu-manber-fuzzy-search",
-      "description": "Defines equality operations for character-like elements. Provides a type `elem` and a comparison function `elem_eq` to check equality between elements. Useful for pattern matching algorithms requiring character-level comparisons.",
-      "description_length": 229,
-      "index": 17,
+      "description": "This module implements fuzzy search algorithms to find the first match of a pattern in a sequence, returning the error count, match position, and internal state. It operates on sequences of elements defined by the `P` module and supports patterns of up to 63 elements. The module is used to efficiently detect approximate matches in text streams with a bounded number of errors.",
+      "description_length": 378,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wu_Manber.WuManber.RightLeaningWuManber",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module implements the right-leaning variant of the Wu and Manber approximate string matching algorithm using bitvectors. It provides functions to initialize bitvector states, update them based on character matches or mismatches, and handle end-of-text processing via sentinel characters. It works with arrays of 63-bit integers (`Optint.Int63.t`) to represent pattern states, supporting efficient bitwise operations for error-tolerant matching. Use this module when implementing streaming or incremental text search where matches near the end of the input must be detected after the final character is processed.",
-      "description_length": 617,
-      "index": 18,
+      "description": "This module implements a right-leaning variant of the Wu-Manber shift-or algorithm for approximate string matching. It operates on arrays of 63-bit integers (`Optint.Int63.t`) representing bitvectors, updating them as characters are processed, and requires feeding sentinel characters at the end of the input to detect matches near the end. It is used in scenarios where matches must be identified incrementally, such as streaming text processing with bounded errors.",
+      "description_length": 467,
+      "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wu_Manber.Matcher.MakeArrayMatcher",
+      "library": "wu-manber-fuzzy-search",
+      "description": "This module implements a fast pattern matcher using precomputed mismatch bitvectors stored in an array. It works with patterns and targets represented as sequences of elements, typically strings or arrays, and uses bitwise operations to efficiently determine matches. It is particularly useful in scenarios requiring high-speed pattern matching, such as intrusion detection systems or bioinformatics.",
+      "description_length": 400,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wu_Manber.WuManber.BitOps",
+      "library": "wu-manber-fuzzy-search",
+      "description": "This module implements bitwise operations for matching patterns with error tolerance in the shift-or variant of the Wu and Manber algorithm. It works with arrays of 63-bit integers (`Optint.Int63.t`) to represent bitvectors, supporting approximate string matching by checking for matches with up to a specified number of errors. Concrete use cases include fast substring searches in text processing where a certain number of mismatches are allowed.",
+      "description_length": 448,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wu_Manber.StringSearch.Pattern",
+      "library": "wu-manber-fuzzy-search",
+      "description": "This module defines operations and types for working with strings and characters in the context of fuzzy searching. It provides functions for folding over characters, comparing characters, and converting between characters and integers, with a focus on supporting pattern matching algorithms. Concrete use cases include implementing search algorithms that require character-level manipulation and error counting in string matching tasks.",
+      "description_length": 437,
+      "index": 6,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Wu_Manber.Utils.Int63",
+      "library": "wu-manber-fuzzy-search",
+      "description": "This module provides arithmetic, bitwise, and conversion operations for 63-bit signed integers, enabling precise control over low-level bit manipulation and platform-specific representations. It supports conversions between various integer types and strings, along with serialization and optimized FFI interactions through direct access to internal representations. These capabilities are particularly useful in systems programming, data encoding, and scenarios requiring strict 63-bit arithmetic guarantees, such as handling overflow-defined behaviors or bit-level protocol implementations.",
+      "description_length": 591,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wu_Manber.WuManber.WuManber",
+      "library": "wu-manber-fuzzy-search",
+      "description": "Implements the core shift-or variant of the Wu and Manber algorithm using bitvector operations. It provides functions to initialize and update arrays of bitvectors (`Optint.Int63.t array`) based on pattern matching states. This module is used for efficient multiple pattern matching in large texts, particularly when working with large alphabet sizes and performance-critical applications.",
+      "description_length": 389,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wu_Manber.StringSearch.FirstMatch",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module provides functions to perform fuzzy searches in strings, returning results after the first match is found. It works with pattern modules and sequences of elements, yielding match positions, error counts, and metadata. It is useful for efficiently locating approximate substring matches in large texts, such as in search engines or bioinformatics.",
-      "description_length": 358,
-      "index": 19,
+      "description": "This module implements efficient fuzzy string matching algorithms that return upon finding the first valid match in a sequence of characters. It provides two search variants: `first_match` for standard matching and `first_right_leaning_match` which prioritizes matches ending closer to the start of the input. These functions take a preprocessed pattern, a maximum allowed error count, and a character sequence, returning match details including error count, position, and internal state representation, with `report` formatting the result for output.",
+      "description_length": 551,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Wu_Manber.Matcher.Matcher",
+      "module_path": "Wu_Manber.Matcher.SimpleMismatch",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module defines the interface for pattern matching algorithms. It works with `pattern` and `elem` types, representing patterns and individual elements being matched. It supports operations like initializing a pattern and scanning elements to detect matches efficiently.",
-      "description_length": 273,
-      "index": 20,
+      "description": "This module provides functions to compute mismatch information for pattern matching. It works with pattern and element types defined in the parameter module `P`. The `push_mismatch` function updates a bitmask based on element mismatches, while `mismatch_bv` generates a bitmask representing mismatches for a given pattern and element. These operations support efficient substring search algorithms by tracking character mismatches in a bitwise manner.",
+      "description_length": 451,
+      "index": 10,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Wu_Manber.StringSearch",
+      "module_path": "Wu_Manber.Utils.Array",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module implements the Wu and Manber fuzzy search algorithm for approximate string matching, supporting searches with bounded error counts over standard OCaml strings. It provides core operations for matching with both standard and right-leaning variants, returning match positions, error counts, and the number of characters read. The included Pattern module offers character-level utilities like folding, comparison, and integer conversion, enabling customization of matching behavior, while the FirstMatch submodule leverages these to efficiently locate the first approximate match in large texts. Example uses include error-tolerant substring search in documents or bioinformatics sequences, with control over match direction and early termination.",
-      "description_length": 756,
-      "index": 21,
+      "description": "This module provides array creation, transformation, and manipulation operations such as element-wise mapping, folding, sorting, and slicing, alongside utilities for conversion to and from lists and sequences. It operates on polymorphic arrays (`'a array`), supporting both structural and physical equality checks, and enables use cases like data processing pipelines, in-place memory-efficient modifications, and randomized algorithms via shuffling. Key features include indexed operations, predicate-driven searches, and customizable comparisons for tasks ranging from algorithmic optimizations to sequence interoperation.",
+      "description_length": 624,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wu_Manber.WuManber",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module implements the shift-or variant of the Wu and Manber algorithm for approximate string matching using bitvector operations. It provides core data types such as arrays of 63-bit integers (`Optint.Int63.t`) to represent bitvectors, along with operations to initialize and update these bitvectors based on character matches or mismatches. Key functionality includes efficient error-tolerant substring search, alignment-free sequence comparison, and support for streaming text processing with end-of-input handling. Specific applications include bioinformatics sequence analysis and fast pattern matching with mismatches in large texts.",
-      "description_length": 643,
-      "index": 22,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Wu_Manber.FirstMatch",
-      "library": "wu-manber-fuzzy-search",
-      "description": "This module enables fuzzy searching for the first approximate match of a pattern in a sequence, returning both the error count and end position of the match. It supports sequences of arbitrary elements defined by the `P` module and handles patterns up to length 63. Operations include matching with bounded errors, making it suitable for tasks like approximate string matching in text or bioinformatics data. For example, it can locate a DNA subsequence with up to two mismatches or find a misspelled word in a document.",
-      "description_length": 520,
-      "index": 23,
+      "description": "This module implements the shift-or variant of the Wu and Manber algorithm for approximate string matching using bitvectors. It provides functions to initialize and update bitvector arrays (`Optint.Int63.t array`) to track pattern matching states with up to a specified number of errors. It is used for high-performance multiple pattern matching in large texts, especially with large alphabets and when incremental or streaming processing is required.",
+      "description_length": 451,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wu_Manber.Utils",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module combines low-level integer manipulation and advanced array processing capabilities. It supports precise arithmetic, bitwise, and logical operations on 63-bit signed integers through the `t` type, with conversions to and from standard integer types and string representations. For arrays, it enables creation, transformation, and traversal of single and paired arrays, including matrix operations, element-wise processing, and in-place modifications. Examples include performing 63-bit integer arithmetic for cryptographic routines, converting between `int` and `Int63.t`, mapping over indexed arrays, and efficiently concatenating or slicing arrays for data processing tasks.",
-      "description_length": 687,
-      "index": 24,
+      "description": "This module combines low-level integer manipulation with array processing capabilities. It offers precise 63-bit signed integer arithmetic and bit operations alongside polymorphic array transformations, including mapping, sorting, and slicing. Use it for systems programming tasks requiring strict integer size constraints or for implementing efficient, index-based array algorithms like in-place updates and custom sorting.",
+      "description_length": 424,
+      "index": 13,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wu_Manber.FirstMatch",
+      "library": "wu-manber-fuzzy-search",
+      "description": "This module implements fuzzy searching to find the first matching substring in a sequence using the low-level `WuManber` functions. It operates on strings and byte sequences, providing efficient approximate matching with customizable error thresholds. Concrete use cases include searching for typos in log files, matching user input against command lists, and identifying similar DNA subsequences.",
+      "description_length": 397,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Wu_Manber.Patterns",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module provides interfaces for defining and manipulating patterns through operations like equality, indexing, and directional folding. It supports data structures that allow traversal from left to right or right to left, with functions to compute length, compare elements, and fold over them, enabling efficient processing of sequences like strings or token lists. Submodules extend this with indexed element conversion, bounded integer mappings, and character-level equality checks, facilitating algorithms such as Wu-Manber or substring search that rely on indexed access and directional traversal. Examples include scanning patterns in reverse using `fold_right`, comparing elements during search routines, or encoding characters as integers for optimized pattern matching.",
-      "description_length": 781,
-      "index": 25,
+      "description": "This module defines interfaces for pattern matching and element manipulation, focusing on equality, indexing, and folding operations. It works with patterns composed of elements that support equality checks and index-based access. Concrete use cases include implementing custom pattern matchers, optimizing substring searches, and structuring data for efficient comparison and traversal.",
+      "description_length": 387,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Wu_Manber.StringSearch",
+      "library": "wu-manber-fuzzy-search",
+      "description": "This module implements the Wu and Manber fuzzy string search algorithm, providing `search` and `search_right_leaning` functions that find the first match in a string with up to `k` errors. It works with standard OCaml strings and uses a preprocessed pattern of bounded length to compute matches, returning detailed results including error count, position, and internal state. Concrete use cases include approximate text search in large documents and implementing efficient pattern matching with tolerance for typos or variations.",
+      "description_length": 529,
+      "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wu_Manber.Matcher",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module provides functors for creating matchers that perform approximate string matching using Levenshtein distance, enabling fuzzy text search, spell checking, and pattern matching in sequences, arrays, and hash tables. Its core functionality is extended by modules that implement fast pattern matchers using precomputed mismatch bitvectors in hash tables or arrays, and by modules that compute mismatch data using compact integer representations. The interface module defines core types and operations for pattern matching algorithms, working with patterns and elements to support initialization and scanning, while the simple mismatch-based matcher prioritizes correctness over performance by recalculating bitvectors on each match. Together, these components enable efficient and flexible approximate matching across diverse data structures and use cases.",
-      "description_length": 863,
-      "index": 26,
+      "description": "This module provides functors for creating pattern matchers with support for Levenshtein distance calculations. It works with patterns and target sequences such as strings or arrays, using bitvectors to track mismatches efficiently. Concrete implementations include a slow matcher for low-memory substring search, an array-based matcher for high-speed bioinformatics or intrusion detection, and a hash table-based matcher for fast text filtering in large data streams.",
+      "description_length": 468,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Wu_Manber",
       "library": "wu-manber-fuzzy-search",
-      "description": "This module implements efficient algorithms for approximate string matching, supporting fuzzy searches with bounded error counts over arbitrary sequences. It provides core data types like bitvectors and 63-bit integers to enable fast error-tolerant substring matching, directional pattern traversal, and streaming text processing. Operations include locating the first approximate match with error count and position, performing Levenshtein-distance-based matching, and manipulating patterns using indexed and character-level utilities. Example uses include bioinformatics sequence analysis, misspelling detection in documents, and fast fuzzy search in large texts using optimized bitvector and integer arithmetic techniques.",
-      "description_length": 725,
-      "index": 27,
+      "description": "This module implements the Wu and Manber algorithm for approximate string matching, supporting operations to search for patterns with up to `k` errors using bitvectors and preprocessed pattern data. It works with strings and byte sequences, offering detailed match information such as position and error count. Concrete use cases include fuzzy text search in documents, approximate command matching in interactive shells, and identifying similar DNA sequences in bioinformatics.",
+      "description_length": 478,
+      "index": 18,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 34,
-    "meaningful_modules": 28,
-    "filtered_empty_modules": 6,
-    "retention_rate": 0.8235294117647058
+    "total_modules_in_package": 24,
+    "meaningful_modules": 19,
+    "filtered_empty_modules": 5,
+    "retention_rate": 0.7916666666666666
   },
   "statistics": {
-    "max_description_length": 863,
-    "min_description_length": 229,
-    "avg_description_length": 478.5,
-    "embedding_file_size_mb": 0.10214614868164062
+    "max_description_length": 624,
+    "min_description_length": 358,
+    "avg_description_length": 451.94736842105266,
+    "embedding_file_size_mb": 0.2757844924926758
   }
 }

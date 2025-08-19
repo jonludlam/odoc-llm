@@ -1,149 +1,133 @@
 {
   "package": "cohttp-mirage",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 16,
-  "creation_timestamp": "2025-07-15T23:09:39.210380",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 14,
+  "creation_timestamp": "2025-08-14T23:20:28.696752",
   "modules": [
     {
       "module_path": "Cohttp_mirage.Client.Make.Connection.Net.IO",
       "library": "cohttp-mirage",
-      "description": "This module implements asynchronous I/O operations for handling network connections, specifically for reading from and writing to HTTP streams. It provides functions to read lines or raw data from input channels (`ic`), write data to output channels (`oc`), and manage connection state with error handling. Concrete use cases include parsing HTTP headers line-by-line, streaming request/response bodies, and handling partial reads or writes in network protocols.",
-      "description_length": 462,
+      "description": "This module implements low-level network IO operations for handling HTTP connections using MirageOS. It provides functions for reading from and writing to network channels (`ic` and `oc`), including line-based reading, buffer control, and error handling. Concrete use cases include implementing custom HTTP clients or servers that require direct manipulation of network IO with precise buffer management and error recovery.",
+      "description_length": 423,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_mirage.Client.Make.Connection.Net",
       "library": "cohttp-mirage",
-      "description": "This module handles network connections for HTTP clients using MirageOS IO primitives, supporting URI resolution, transport selection (plaintext or encrypted), and bidirectional communication. It provides core operations to establish connections, tunnel through existing ones, and shut down channels cleanly, while its child module adds asynchronous I/O for reading and writing HTTP streams. Specific uses include initiating HTTPS requests based on URI schemes, parsing HTTP headers line-by-line, and streaming request or response bodies with support for partial reads and writes. Together, they enable robust client-side HTTP communication with fine-grained control over connection and stream management.",
-      "description_length": 705,
+      "description": "This module implements network connection handling for HTTP clients using MirageOS. It provides functions to resolve URIs into endpoints, establish connections over specified protocols, and manage input/output channels for communication. Concrete use cases include initiating HTTPS requests to specific URIs and managing low-level channel operations for custom HTTP client implementations.",
+      "description_length": 389,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Cohttp_mirage.Server.Make.IO",
-      "library": "cohttp-mirage",
-      "description": "This module implements asynchronous input and output operations for handling HTTP connections using MirageOS conduits. It provides functions for reading from and writing to network streams, including line-based input, buffer management, and error handling. Concrete use cases include processing HTTP request headers, streaming request bodies, and sending structured responses over persistent connections.",
-      "description_length": 404,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cohttp_mirage.Server.Flow.IO",
-      "library": "cohttp-mirage",
-      "description": "This module implements low-level input/output operations for handling HTTP connections using MirageOS conduits. It provides functions for reading from and writing to network flows, including line-based input, buffer management, and error handling. Concrete use cases include processing HTTP headers, streaming request bodies, and managing network communication in a Mirage-based HTTP server.",
-      "description_length": 391,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_mirage.Client.Make.Connection",
       "library": "cohttp-mirage",
-      "description": "This module manages HTTP connections in MirageOS, handling connection lifecycle events, request queuing, and tunneling over both plaintext and encrypted transports. It supports creating, connecting, and closing persistent HTTP/1.1 and TLS-secured connections, with direct operations for request submission and response handling. The child module extends this with asynchronous I/O for reading and writing HTTP streams, enabling fine-grained control over header parsing, streaming bodies, and bidirectional communication. Together, they allow initiating HTTPS requests based on URIs, managing unfulfilled requests, and cleanly shutting down channels while supporting partial reads and writes.",
-      "description_length": 691,
-      "index": 4,
+      "description": "This module manages HTTP client connections over network protocols, supporting operations to create, connect, and close connections, as well as queue HTTP requests and monitor connection state. It works with connection handles (`t`), endpoints (`endp`), and I/O promises from `Net.IO`. Concrete use cases include establishing HTTPS connections to specific endpoints, tunneling through existing connections, and managing asynchronous HTTP request/response cycles with precise control over connection lifecycle and request queuing.",
+      "description_length": 529,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cohttp_mirage.Server.Flow.IO",
+      "library": "cohttp-mirage",
+      "description": "This module implements low-level I/O operations for handling HTTP server connections using MirageOS conduits. It provides functions for reading from and writing to input/output channels, including line-based reading, buffer management, and error handling. Concrete use cases include processing HTTP request headers and streaming request/response content over network connections.",
+      "description_length": 379,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cohttp_mirage.Server.S-IO",
+      "module_path": "Cohttp_mirage.Server.Make.IO",
       "library": "cohttp-mirage",
-      "description": "This module implements asynchronous input and output operations for handling HTTP server connections using MirageOS conduits. It provides functions for reading from and writing to network channels (`ic` and `oc`), including line-based input, buffer management, and error handling via monadic binds and result types. Concrete use cases include processing HTTP request headers, streaming request bodies, and sending structured responses over persistent connections.",
-      "description_length": 463,
-      "index": 5,
+      "description": "This module implements low-level I/O operations for handling HTTP server connections using MirageOS conduits. It provides functions for reading from and writing to input/output channels (`ic`, `oc`), including line-based reading, buffer management, and error handling via monadic bind (`>>=`) and `catch`. It is used to process HTTP requests and responses over network flows in a MirageOS-based server.",
+      "description_length": 402,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Cohttp_mirage.Server.Make",
       "library": "cohttp-mirage",
-      "description": "This module builds an HTTP server capable of managing request-response cycles with custom routing, static file serving, and error handling, while leveraging asynchronous IO for efficient network communication. It operates on HTTP connections, requests, and responses, using stream-based input and output to handle headers, body content, and persistent connections. Key operations include defining routes, serving files from disk, crafting custom responses with headers, and managing authentication or redirect workflows. Specific use cases include streaming large request or response bodies, handling keep-alive connections, and integrating with MirageOS-based network stacks.",
-      "description_length": 676,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cohttp_mirage.Server.S",
-      "library": "cohttp-mirage",
-      "description": "This module implements an HTTP server handling request-response cycles with support for custom routing, static file serving, and error responses. It works with HTTP connections, requests, and responses, using IO channels for network communication. Concrete use cases include serving files from a document root, handling redirects, authentication challenges, and generating dynamic responses with custom logic.",
-      "description_length": 409,
-      "index": 7,
+      "description": "This module implements an HTTP server that handles incoming connections using MirageOS conduits and provides functions to construct responses, including sending files, strings, redirects, and error pages. It works with HTTP requests and responses, using conduits for network I/O and handling request bodies via `Cohttp_lwt.Body.t`. Concrete use cases include serving static files from a document root, handling custom HTTP logic via expert mode, and building MirageOS-based web services with fine-grained control over network flows.",
+      "description_length": 532,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_mirage.Client.Make",
       "library": "cohttp-mirage",
-      "description": "This module implements HTTP client operations for MirageOS, supporting standard methods like `get`, `post`, `put`, `delete`, and `patch` with optional headers, body, and chunked transfer encoding. It works with Mirage-compatible IO (`R` and `S` modules) and handles TLS via an authenticator, producing responses paired with lazy-evaluated bodies. The child module extends this by managing connection lifecycles, request queuing, and asynchronous I/O for fine-grained control over HTTP streams, enabling bidirectional communication and partial reads and writes. Together, they support making HTTPS requests in unikernels, interacting with REST APIs, and handling form submissions with `post_form`, while allowing low-level manipulation of HTTP headers and streaming bodies.",
-      "description_length": 772,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cohttp_mirage.Server.Flow",
-      "library": "cohttp-mirage",
-      "description": "This module orchestrates HTTP server operations by processing incoming connections and generating appropriate responses through a combination of routing, response construction, and network communication. It defines core data types such as HTTP requests and responses, and provides operations for handling redirects, authentication challenges, and file-based routing, while leveraging its child module for low-level IO operations like reading headers and streaming bodies over MirageOS conduits. With it, you can serve static files, implement custom request handlers, and manage network interactions using buffered IO and line-based parsing.",
-      "description_length": 640,
-      "index": 9,
+      "description": "This module implements HTTP client operations over MirageOS-compatible network stacks, providing functions to issue standard HTTP methods (`GET`, `POST`, etc.) with support for headers, chunked transfer encoding, and request bodies. It works with `Uri.t` for endpoints, `Http.Response.t` and `Cohttp_lwt.Body.t` for responses, and uses `Lwt` for asynchronous I/O. Concrete use cases include making HTTPS requests to remote APIs, handling authentication via client certificates, and uploading or downloading data with streaming bodies.",
+      "description_length": 534,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_mirage.Static.HTTP",
       "library": "cohttp-mirage",
-      "description": "This module serves static HTTP content from a read-only key-value store, handling incoming requests by mapping URIs to files stored in the provided filesystem module. It allows customizing response headers via an optional request function that receives the URI and default headers, returning modified headers for the response. It is used to deploy static websites in MirageOS applications, where the file content is preloaded into a key-value store at build time.",
-      "description_length": 463,
-      "index": 10,
+      "description": "This module serves static HTTP content from a read-only key-value store, handling incoming HTTP requests by mapping URIs to files stored in the provided filesystem. It allows customizing response headers via an optional `request_fn` that modifies headers based on the requested URI and default MIME type. The server is started on a specified TCP port using Mirage-compatible IO modules for networking and filesystem access.",
+      "description_length": 423,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Cohttp_mirage.Static",
+      "module_path": "Cohttp_mirage.Server.Flow",
       "library": "cohttp-mirage",
-      "description": "This module serves static HTTP content from a read-only key-value store by mapping URIs to files preloaded at build time. It supports customizing response headers through a function that takes the URI and default headers, enabling dynamic header modifications. The main data types include the key-value store and HTTP request/response structures. For example, it can deploy a static website with custom cache-control headers based on file type or path.",
-      "description_length": 452,
-      "index": 11,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Cohttp_mirage.IO",
-      "library": "cohttp-mirage",
-      "description": "This module implements asynchronous input/output operations for handling HTTP connections using a channel-based abstraction. It provides functions for reading from and writing to connections, including line-based input, buffer management, and error handling. Concrete use cases include processing HTTP requests and responses over a network flow, where precise control over input and output channels is required.",
-      "description_length": 411,
-      "index": 12,
+      "description": "This module implements low-level I/O operations for handling HTTP server connections using MirageOS conduits. It provides functions for reading from and writing to input/output channels, including line-based reading, buffer management, and error handling. Concrete use cases include processing HTTP request headers and streaming request/response content over network connections.",
+      "description_length": 379,
+      "index": 8,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_mirage.Client",
       "library": "cohttp-mirage",
-      "description": "This module provides HTTP client functionality for MirageOS, enabling standard request methods with support for headers, streaming bodies, and TLS. It offers data types for requests and responses, including lazy body evaluation, and manages connection lifecycles and asynchronous I/O for precise control over HTTP streams. You can make HTTPS requests, interact with REST APIs, submit forms, and handle bidirectional communication with partial reads and writes. Specific examples include using `get` to fetch resources, `post_form` to submit form data, and streaming large payloads without loading them entirely into memory.",
-      "description_length": 623,
-      "index": 13,
+      "description": "This module implements HTTP client operations for MirageOS, including functions to initiate and handle HTTP requests and responses over various transports like TCP or TLS. It works with Cohttp request and response types, along with Mirage-compatible IO and flow interfaces. Concrete use cases include fetching remote resources, interacting with REST APIs, and handling redirects or authentication challenges in a Mirage-based unikernel.",
+      "description_length": 436,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_mirage.Server",
       "library": "cohttp-mirage",
-      "description": "This module implements an HTTP server that manages request-response cycles over network connections using conduits for transport. It provides core data types for HTTP requests and responses, along with operations for routing, static file serving, and error handling, while leveraging asynchronous IO for efficient network communication. Child modules handle low-level IO operations such as reading from and writing to network channels, streaming request and response bodies, and managing persistent connections. With this module, you can serve web applications, handle authentication workflows, stream large payloads, and route requests to custom handlers or static resources.",
-      "description_length": 676,
-      "index": 14,
+      "description": "This module implements an HTTP server for MirageOS using conduits to manage network I/O. It provides functions to handle incoming HTTP requests, construct responses, and stream content such as files or strings. Use cases include serving static assets, implementing custom HTTP handlers, and building lightweight, standalone web services within MirageOS unikernels.",
+      "description_length": 364,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Cohttp_mirage.IO",
+      "library": "cohttp-mirage",
+      "description": "This module implements asynchronous input/output operations for handling HTTP connections using a channel-based communication model. It provides functions for reading from and writing to input and output channels (`ic` and `oc`), including line-based reading, buffer management, and error handling. Concrete use cases include processing HTTP requests and responses over a network connection using MirageOS channels.",
+      "description_length": 415,
+      "index": 11,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Cohttp_mirage.Static",
+      "library": "cohttp-mirage",
+      "description": "This module maps HTTP requests to static files stored in a Mirage key-value store, supporting operations like file lookup and content-type detection. It works with HTTP request/response types and key-value stores backed by filesystems or memory. Use it to serve HTML, CSS, or JavaScript assets from a read-only store in a MirageOS unikernel.",
+      "description_length": 341,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Cohttp_mirage",
       "library": "cohttp-mirage",
-      "description": "This module provides a comprehensive HTTP stack for MirageOS, integrating static content serving, client and server implementations, and low-level IO operations. It centers around HTTP request and response data types, with operations for routing, streaming, TLS, and asynchronous I/O over network conduits. You can serve static websites with custom headers, make HTTPS requests to REST APIs, stream large payloads, and manage bidirectional communication with fine-grained control over connections. Specific capabilities include form submission, custom routing, lazy body evaluation, and persistent connection handling.",
-      "description_length": 618,
-      "index": 15,
-      "embedding_norm": 1.0
+      "description": "This module implements HTTP client and server functionality for MirageOS, providing asynchronous I/O operations over network connections. It handles HTTP requests and responses, supports static file serving from key-value stores, and integrates with Mirage transports like TCP and TLS. Use it to build unikernels that serve web content, consume APIs, or handle HTTP-based communication.",
+      "description_length": 386,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 16,
-    "meaningful_modules": 16,
+    "total_modules_in_package": 14,
+    "meaningful_modules": 14,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 772,
-    "min_description_length": 391,
-    "avg_description_length": 553.5,
-    "embedding_file_size_mb": 0.058528900146484375
+    "max_description_length": 534,
+    "min_description_length": 341,
+    "avg_description_length": 423.7142857142857,
+    "embedding_file_size_mb": 0.2033519744873047
   }
 }

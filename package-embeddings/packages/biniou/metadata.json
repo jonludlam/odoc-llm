@@ -1,71 +1,71 @@
 {
   "package": "biniou",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 8,
-  "creation_timestamp": "2025-07-15T23:05:45.520198",
+  "creation_timestamp": "2025-08-14T23:01:26.786058",
   "modules": [
+    {
+      "module_path": "Bi_outbuf",
+      "library": "biniou",
+      "description": "This output buffer facilitates efficient byte-level data accumulation through dynamic resizing and customizable flushing strategies, supporting operations to append strings, bytes, and characters while managing memory via reallocation or streaming to external outputs. It combines a resizable buffer structure with a hash table to track shared objects, enabling use cases like incremental data serialization or streaming to channels where memory efficiency and deduplication are critical. The buffer\u2019s state can be fully reset, clearing both content and shared object tracking to restore initial conditions.",
+      "description_length": 607,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bi_vint",
+      "library": "biniou",
+      "description": "This module encodes and decodes variable-length integers (vints) to and from OCaml's `int` type, supporting both signed and unsigned representations. It operates directly on `int` values and strings or buffers for storage and transmission. Use it to efficiently serialize integers in network protocols or binary file formats where compact representation is critical.",
+      "description_length": 366,
+      "index": 1,
+      "embedding_norm": 1.0
+    },
     {
       "module_path": "Bi_dump",
       "library": "biniou",
-      "description": "This module handles string manipulation, file I/O, and dictionary management. It provides operations to split strings, load and save dictionary files, and write unique entries to an output channel. Use cases include processing word lists, managing lookup dictionaries, and ensuring unique output entries during file writes.",
-      "description_length": 323,
-      "index": 0,
+      "description": "This module handles string manipulation, file I/O, and dictionary management. It provides operations to split strings, load and save dictionary files, and write unique entries to an output channel. Use cases include processing word lists, managing configuration dictionaries, and ensuring unique output entries during file writes.",
+      "description_length": 330,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bi_inbuf",
       "library": "biniou",
-      "description": "This module implements an input buffer with operations to efficiently manage and read binary data from strings, bytes, or input channels. It supports reading fixed numbers of bytes, peeking, and character-level access, while maintaining internal state to track position and available data. Concrete use cases include parsing binary file formats, handling network protocols, and streaming data processing where controlled input consumption is critical.",
-      "description_length": 451,
-      "index": 1,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bi_outbuf",
-      "library": "biniou",
-      "description": "This module provides operations for accumulating and serializing byte data, including appending bytes, strings, and characters, dynamic buffer resizing, and flushing to output channels or custom output objects. It utilizes a buffer structure that tracks shared objects for serialization purposes and includes a reset function to clear data and revert the buffer's state, making it suitable for scenarios requiring efficient in-memory data assembly and controlled output, such as network communication or structured data serialization workflows.",
-      "description_length": 544,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bi_util",
-      "library": "biniou",
-      "description": "This module provides a function `error` that raises an exception with a given error message, used for terminating execution with a descriptive error. It works with string messages and can be used in any context where an exception is needed to signal failure. A concrete use case is validating input conditions and immediately failing with a custom message when expectations are not met.",
-      "description_length": 386,
+      "description": "This module implements an input buffer with operations to efficiently manage and read from a stream of bytes. It supports reading fixed-length data, peeking at the next byte, and initializing buffers from strings, bytes, or input channels. Use cases include parsing binary file formats, handling network protocols, and streaming large data inputs where controlled, incremental reading is required.",
+      "description_length": 397,
       "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bi_share",
       "library": "biniou",
-      "description": "This module implements efficient sharing of immutable values through reference counting and structural comparison. It provides functions to intern values, retrieve shared instances, and manage the underlying storage using hash tables. Concrete use cases include optimizing memory usage for repeated strings, trees, or algebraic data structures in compilers and data-processing pipelines.",
-      "description_length": 387,
+      "description": "This module implements efficient sharing of immutable values through hash-consing, using a global hash table to intern values of arbitrary type. It provides functions to hash-cons values, compare interned references for equality, and retrieve the original value. Useful for reducing memory usage and speeding up equality checks in symbolic processing or AST manipulation tasks.",
+      "description_length": 377,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bi_vint",
+      "module_path": "Bi_io",
       "library": "biniou",
-      "description": "This module encodes and decodes signed and unsigned integers to and from variable-length byte strings (vints), supporting efficient serialization and deserialization of integer values. It operates directly on `int` and `uint` types, and interacts with `Bi_outbuf.t` and `Bi_inbuf.t` for buffered I/O operations. Use this module when compact integer representation is needed for binary protocols or storage formats, such as encoding message lengths or numeric fields in a binary file.",
-      "description_length": 483,
+      "description": "This module handles binary serialization and deserialization of structured data using the Biniou format, focusing on low-level buffer manipulation and type-safe encoding. It operates on byte buffers (`Bi_inbuf.t`/`Bi_outbuf.t`) and structured trees representing Biniou values, supporting operations for primitive types (integers, floats, strings), tagged unions, records, arrays, and shared references. Typical use cases include converting OCaml data to compact binary representations for storage or network transmission, parsing binary Biniou streams, and debugging structured data through human-readable views.",
+      "description_length": 612,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bi_stream",
       "library": "biniou",
-      "description": "Handles streaming of large datasets that exceed memory capacity by serializing and deserializing elements in chunks. Works with OCaml streams and standard input/output channels, using custom serialization functions for specific data types. Useful for processing large binary files or network data where elements are read or written incrementally in fixed-size batches.",
-      "description_length": 368,
+      "description": "Handles streaming of large datasets that exceed memory capacity by serializing elements into byte chunks. It provides functions to read from and write to file channels, converting between byte streams and OCaml arrays using user-defined serialization. Useful for processing large binary files or network data where elements are processed incrementally.",
+      "description_length": 352,
       "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bi_io",
+      "module_path": "Bi_util",
       "library": "biniou",
-      "description": "This module provides serialization and deserialization operations for the Biniou format, focusing on low-level tag handling, primitive value conversion, and structured data tree manipulation. It works with buffers (`Bi_inbuf.t`/`Bi_outbuf.t`) to encode/decode basic types (integers, floats, strings) and tagged constructs, while supporting tree-based representations for hierarchical data. Use cases include converting values to compact binary encodings, parsing nested Biniou structures, and validating unsafe serialization logic through internal safety checks.",
-      "description_length": 562,
+      "description": "This module defines a multipurpose exception used for signaling errors, particularly when invalid data is encountered during read or write operations. It provides the `error` function to raise this exception with a custom message. Concrete use cases include validating data formats during parsing or checking invariants in data structures.",
+      "description_length": 339,
       "index": 7,
       "embedding_norm": 1.0
     }
@@ -77,9 +77,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 562,
-    "min_description_length": 323,
-    "avg_description_length": 438.0,
-    "embedding_file_size_mb": 0.029476165771484375
+    "max_description_length": 612,
+    "min_description_length": 330,
+    "avg_description_length": 422.5,
+    "embedding_file_size_mb": 0.11635112762451172
   }
 }

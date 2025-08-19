@@ -1,517 +1,429 @@
 {
   "package": "nocrypto",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 62,
-  "creation_timestamp": "2025-07-15T23:16:51.363154",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 51,
+  "creation_timestamp": "2025-08-15T14:46:40.637141",
   "modules": [
     {
-      "module_path": "Nocrypto_entropy_lwt",
-      "library": "nocrypto.lwt",
-      "description": "This module seeds and reseeds a random number generator using entropy from the Unix kernel RNG, typically `/dev/urandom`. It provides immediate initialization of the default generator and background reseeding at specified intervals. Use cases include ensuring cryptographic RNGs stay well-seeded during long-running processes by periodically mixing in entropy from the system.",
-      "description_length": 376,
+      "module_path": "Nocrypto_entropy_unix",
+      "library": "nocrypto.unix",
+      "description": "This module seeds the default RNG using the Unix kernel RNG, typically reading from `/dev/urandom`. It provides `initialize` to seed the default generator once and `reseed` to mix additional entropy into a specific generator. Use it to ensure cryptographic randomness in command-line applications or system tools requiring secure RNG initialization without asynchronous dependencies.",
+      "description_length": 383,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nocrypto.Rng.Generators.Hmac_drgb.Make",
       "library": "nocrypto",
-      "description": "This module implements an HMAC-based deterministic random bit generator (DRBG) using a specified hash function. It provides operations to create and manage generator instances, generate random bytes, reseed the generator, and accumulate entropy. Use it to produce cryptographically secure random data when implementing protocols requiring HMAC_DRBG as specified by NIST standards.",
-      "description_length": 380,
+      "description": "This module implements the HMAC_DRBG random number generation algorithm specified by NIST, using a provided hash function. It maintains internal generator state and produces random bytes in multiples of a fixed block size. Key operations include seeding, reseeding, and generating cryptographically secure random data, suitable for cryptographic key generation or nonce creation.",
+      "description_length": 379,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto.Cipher_block.S.CTR",
+      "module_path": "Nocrypto.Cipher_block.DES.CBC",
       "library": "nocrypto",
-      "description": "This module implements AES in Counter (CTR) mode for encryption and decryption. It provides functions to generate a keystream from a key and counter, and to encrypt or decrypt data by XORing it with the keystream. It operates on `Cstruct.t` values, using a `key` type derived from a secret key material and a counter. Use this module to securely encrypt or decrypt arbitrary data with AES-CTR, given a unique nonce and key pair.",
-      "description_length": 428,
+      "description": "This module implements the Data Encryption Standard (DES) block cipher in Cipher Block Chaining (CBC) mode. It provides `encrypt` and `decrypt` functions that operate on `Cstruct.t` data, using a key of type `key` and an initialization vector (IV). The module supports key size queries, block size access, and computes the next IV from a ciphertext for protocols requiring inter-message chaining.",
+      "description_length": 396,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Nocrypto.Cipher_block.S.CCM",
+      "module_path": "Nocrypto.Rng.Generators.Hmac_drgb",
       "library": "nocrypto",
-      "description": "Implements AES-CCM encryption and decryption with authenticated data. Uses `Cstruct.t` for keys, nonces, and data, supporting configurable MAC lengths. Suitable for secure communication protocols requiring confidentiality and integrity, like TLS or IoT device messaging.",
-      "description_length": 270,
+      "description": "This module implements the HMAC_DRBG algorithm from NIST, using a specified hash function to generate cryptographically secure random data. It supports operations for seeding, reseeding, and generating random bytes in fixed block sizes, maintaining internal state for deterministic randomness. It is suitable for cryptographic key derivation and nonce generation where HMAC-based randomness is required.",
+      "description_length": 403,
       "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nocrypto.Cipher_block.AES.GCM",
+      "library": "nocrypto",
+      "description": "Implements AES-GCM encryption and decryption with authenticated data. Accepts a key, initialization vector, optional additional data, and plaintext or ciphertext, producing a sealed message with an authentication tag or verifying and decrypting a sealed message. Works with `Cstruct.t` buffers for all inputs and outputs, handling AES block sizes and GCM-specific operations internally.",
+      "description_length": 386,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto.Cipher_block.AES.ECB",
+      "module_path": "Nocrypto.Rng.Generators.Null",
       "library": "nocrypto",
-      "description": "Implements AES encryption and decryption in ECB mode. Operates on `Cstruct.t` data for both input and output, using a key type derived from `of_secret`. Use for direct AES-ECB transformations when working with raw binary data buffers.",
-      "description_length": 234,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.DES.CTR",
-      "library": "nocrypto",
-      "description": "This module implements the DES block cipher in CTR mode, providing symmetric encryption and decryption using a given key and counter. It operates on `Cstruct.t` data for keys, counters, and message inputs, generating keystream blocks by incrementing the counter in big-endian format. Use this module to securely encrypt or decrypt arbitrary byte sequences with DES-CTR, given a pre-shared key and a unique initial counter value.",
-      "description_length": 428,
+      "description": "This module implements a deterministic random number generator that returns pre-seeded byte sequences unchanged. It operates on a stateful generator type `g`, producing random bytes by cycling through the seed data provided via `reseed`. Useful for testing cryptographic components where predictable randomness is required, such as deterministic signature generation or repeatable encryption operations.",
+      "description_length": 403,
       "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.S.ECB",
-      "library": "nocrypto",
-      "description": "This module implements the Electronic Codebook (ECB) mode for block ciphers. It provides functions to create a key from a secret, encrypt and decrypt data blocks using that key, with support for standard key sizes and a fixed block size. It operates directly on `Cstruct.t` buffers, making it suitable for low-level cryptographic operations where ECB is appropriate, such as encrypting small, independent data blocks.",
-      "description_length": 417,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Nocrypto.Rng.Generators.Fortuna",
       "library": "nocrypto",
-      "description": "This module implements Fortuna, a cryptographically secure pseudorandom number generator (CSPRNG) that produces uniformly distributed random bytes. It operates on a generator state type `g`, supporting creation, reseeding, and byte generation, with explicit tracking of whether the generator has been seeded. Concrete use cases include generating cryptographic keys, nonces, and random values where security depends on high-quality randomness.",
-      "description_length": 443,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements the Fortuna cryptographically secure pseudorandom number generator (CSPRNG), providing functions to create generator states, generate random bytes, reseed the generator, and feed entropy incrementally. It operates on a generator state type `g` and uses `Cstruct.t` values for byte input and output. It is suitable for applications requiring high-quality randomness, such as cryptographic key generation or nonce creation, where direct control over seeding and entropy accumulation is needed.",
+      "description_length": 514,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto.Cipher_block.S.CBC",
+      "module_path": "Nocrypto.Cipher_block.DES.ECB",
       "library": "nocrypto",
-      "description": "This module implements cipher-block chaining (CBC) mode for block ciphers, providing encryption and decryption using a given key and initialization vector (IV). It supports key setup from a secret byte sequence, determines valid key sizes, and maintains block size consistency for the cipher. Use this module to securely encrypt or decrypt data streams where each block depends on the previous ciphertext block, ensuring diffusion and message integrity.",
-      "description_length": 453,
+      "description": "This module implements the Data Encryption Standard (DES) block cipher in Electronic Codebook (ECB) mode. It provides functions to encrypt and decrypt fixed-size blocks of data using a key derived from a secret byte sequence. The module operates on `Cstruct.t` values, with a block size of 8 bytes, and supports key sizes of 8 bytes.",
+      "description_length": 333,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Cipher_block.AES.CTR",
+      "library": "nocrypto",
+      "description": "This module implements AES in CTR mode, providing functions to generate a keystream, encrypt, and decrypt data using a given key and counter. It operates on `Cstruct.t` values for keys, counters, and messages, with the counter incremented in big-endian for each block. Use cases include secure message encryption and decryption where a unique counter is used per message.",
+      "description_length": 371,
       "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Nocrypto.Cipher_block.AES.CCM",
       "library": "nocrypto",
-      "description": "This module implements AES encryption in CCM mode, providing authenticated encryption and decryption operations. It works with AES keys derived from secret data, along with nonce and additional authenticated data inputs. It is used to securely encrypt and decrypt data while ensuring integrity, suitable for protocols requiring both confidentiality and authentication.",
-      "description_length": 368,
+      "description": "This module implements AES encryption in CCM (Counter with CBC-MAC) mode, providing authenticated encryption and decryption operations. It works with AES keys derived from secret data, along with nonce and additional authenticated data (AAD) inputs. It is used to securely encrypt and authenticate data in scenarios like secure communications or data storage where both confidentiality and integrity are required.",
+      "description_length": 413,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto.Cipher_block.S.Core",
+      "module_path": "Nocrypto.Cipher_block.DES.CTR",
       "library": "nocrypto",
-      "description": "This module implements raw block cipher operations for encryption and decryption using precomputed encryption and decryption keys. It works directly with low-level buffers and integer arrays, handling fixed-size blocks and multiple blocks in bulk. Concrete use cases include direct manipulation of cryptographic keys and performing cipher operations in environments requiring precise control over memory and performance, such as embedded systems or low-level network protocols.",
-      "description_length": 477,
+      "description": "This module implements the DES block cipher in CTR mode, providing symmetric encryption and decryption using a given key and counter. It operates on `Cstruct.t` values for keys, counters, and message data, producing keystream blocks by incrementing the counter in big-endian format. Use it to securely encrypt or decrypt arbitrary byte sequences with DES-CTR, given a proper key and unique initial counter.",
+      "description_length": 406,
       "index": 10,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto.Rng.S.N",
+      "module_path": "Nocrypto.Cipher_block.AES.ECB",
       "library": "nocrypto",
-      "description": "This module defines operations for generating random values of a specific numeric type, including uniform sampling within intervals and bit-based generation with control over bit length and significant bits. It provides functions to generate random numbers either directly or using a custom random number generator instance. Concrete use cases include generating random integers for cryptographic keys, nonces, or probabilistic algorithms where precise control over randomness is required.",
-      "description_length": 489,
+      "description": "Implements AES encryption and decryption in ECB mode using keys derived from secret byte sequences. Operates on `Cstruct.t` data for both input and output, requiring strict block size alignment. Suitable for low-level cryptographic operations where ECB's simplicity is acceptable, such as in constrained environments or protocol implementations with fixed-size data blocks.",
+      "description_length": 373,
       "index": 11,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto.Rng.Generators.Null",
-      "library": "nocrypto",
-      "description": "This module implements a no-op random number generator that returns bytes directly seeded into it. It provides functions to create, seed, and generate byte sequences from a deterministic generator state, with support for incremental entropy accumulation. Use this when testing or simulating predictable randomness, such as in deterministic cryptographic protocols or controlled fuzzing scenarios.",
-      "description_length": 396,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Rng.Generators.Hmac_drgb",
-      "library": "nocrypto",
-      "description": "This module implements a NIST-specified HMAC-based deterministic random bit generator (DRBG) using a configurable hash function. It provides operations to initialize generator instances, generate cryptographically secure random bytes, reseed with additional entropy, and manage internal state. Users can create and use HMAC_DRBG instances for cryptographic protocols requiring compliant random data generation, such as key derivation or nonce generation. Example usage includes generating a 32-byte random key or reseeding the generator with fresh entropy from an external source.",
-      "description_length": 580,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.AES.GCM",
-      "library": "nocrypto",
-      "description": "Implements AES-GCM encryption and decryption with support for authenticated data. Works with `Cstruct.t` for keys, initialization vectors, and data. Use for secure communication where both confidentiality and integrity are required, such as TLS or encrypted messaging.",
-      "description_length": 268,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.AES.CTR",
-      "library": "nocrypto",
-      "description": "This module implements AES in CTR mode, providing functions to generate a keystream, encrypt, and decrypt data using a given key and counter. It operates on `Cstruct.t` values for keys, counters, and data, with the counter incremented in big-endian for each block. It is suitable for secure, deterministic encryption of arbitrary byte sequences when used with a unique nonce.",
-      "description_length": 375,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.S.GCM",
-      "library": "nocrypto",
-      "description": "This module implements Galois/Counter Mode (GCM) for authenticated encryption and decryption using block ciphers. It operates on `Cstruct.t` values for keys, initialization vectors, additional data, and input/output buffers, producing a combined message and authentication tag result. It is used to securely encrypt and decrypt data while ensuring integrity, suitable for applications like secure communications and data storage.",
-      "description_length": 429,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Rng.S.Generator",
-      "library": "nocrypto",
-      "description": "This module defines a PRNG algorithm with operations to create, seed, and generate cryptographically secure random bytes. It works with a generator state type `g` and uses `Cstruct.t` for entropy input and output. Concrete use cases include generating secure nonces, keys, or random buffers where predictable output must be avoided.",
-      "description_length": 332,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.DES.CBC",
-      "library": "nocrypto",
-      "description": "Implements DES encryption and decryption in CBC mode with support for inter-message IV chaining. Operates on `Cstruct.t` data for keys, initialization vectors, and data blocks, using `of_secret` to derive keys and `next_iv` to compute the next IV from ciphertext. Useful for secure communication protocols requiring stateful encryption with DES-CBC.",
-      "description_length": 349,
-      "index": 18,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.DES.ECB",
-      "library": "nocrypto",
-      "description": "This module implements the Data Encryption Standard (DES) block cipher in Electronic Codebook (ECB) mode. It operates on fixed-size 64-bit blocks using a key derived from a Cstruct.t buffer, supporting standard key sizes. Use it to encrypt or decrypt binary data streams where DES-ECB is required, such as legacy systems or specific protocol implementations.",
-      "description_length": 358,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Nocrypto.Cipher_block.AES.CBC",
       "library": "nocrypto",
-      "description": "This module implements AES encryption and decryption in CBC (Cipher Block Chaining) mode. It operates on fixed-size blocks of data using a key derived from a secret and an initialization vector (IV) that changes with each encryption step. The module is used to securely encode or decode data streams where each block depends on the previous one, ensuring that identical plaintext blocks produce different ciphertext.",
-      "description_length": 416,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Numeric.Int32",
-      "library": "nocrypto",
-      "description": "This module provides bitwise operations (shifts, logical operations), arithmetic operations (addition, subtraction, increment/decrement), and conversion utilities for 32-bit integers, including big-endian binary serialization and deserialization with Cstructs. It handles 32-bit integer values and facilitates their manipulation in low-level data processing tasks such as network protocol implementation or binary file format parsing.",
-      "description_length": 434,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Rng.Z",
-      "library": "nocrypto",
-      "description": "This module generates secure random numbers of type `Z.t` with precise control over ranges and bit patterns. It provides functions to sample uniform values within intervals, generate bit strings with specified lengths and leading bits, and manipulate large integers for cryptographic purposes. Concrete use cases include generating random exponents for cryptographic protocols and creating bit-masked values for secure computations.",
-      "description_length": 432,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.AES",
-      "library": "nocrypto",
-      "description": "This module provides AES encryption and decryption across multiple modes\u2014ECB, CBC, CTR, GCM, and CCM\u2014operating directly on string and Bigstring buffers for in-place transformations. It supports authenticated encryption via GCM and CCM, ensuring both confidentiality and integrity, while modes like CBC and CTR offer secure, stream-based encryption with vector dependencies or deterministic keystreams. The API works with `Cstruct.t` buffers and keys derived from secret data, enabling use cases such as secure communication, disk encryption, and authenticated messaging with nonce or IV management. Submodules expose fine-grained control over each mode\u2019s operations, including encryption, decryption, and keystream generation, with explicit handling of nonces, IVs, and authenticated data.",
-      "description_length": 789,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Rng.Generators",
-      "library": "nocrypto",
-      "description": "This module provides cryptographically secure random number generation through multiple algorithms, each tailored for specific security and predictability requirements. The main data types include generator states like `g` for Fortuna and HMAC_DRBG, which track seeding status and internal entropy, along with functions to create, seed, and generate random bytes. Operations allow generating cryptographic keys, nonces, and deterministic sequences, with examples including creating a 32-byte key using HMAC_DRBG or simulating predictable randomness for testing protocols.",
-      "description_length": 571,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.S",
-      "library": "nocrypto",
-      "description": "This module defines standard interfaces for block cipher operations across multiple modes, enabling encryption, decryption, and authentication with block ciphers like AES. It supports modes such as ECB, CBC, CTR, GCM, and CCM, each exposing operations on `Cstruct.t` values for handling keys, nonces, IVs, and data buffers with precise control over block sizes and memory. Direct APIs allow key setup, bulk encryption, and low-level cipher operations, while child modules provide mode-specific functionality\u2014such as AES-CTR for stream-like encryption, AES-GCM and AES-CCM for authenticated encryption, and ECB/CBC for traditional block ciphering\u2014enabling secure communication, data encryption, and integrity-protected messaging. Example uses include encrypting network payloads with AES-CBC, securing stored data with AES-CTR, or implementing authenticated channels using AES-GCM with associated data.",
-      "description_length": 901,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Hash.S",
-      "library": "nocrypto",
-      "description": "This module implements a cryptographic hash algorithm with support for incremental hashing via state initialization, data feeding, and digest extraction. It operates on `Cstruct.t` values for input data and produces fixed-size hash outputs, along with providing HMAC generation using the algorithm. It is used for tasks like computing message digests, verifying data integrity, and generating authentication codes with a secret key.",
-      "description_length": 432,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Dsa.K_gen",
-      "library": "nocrypto",
-      "description": "Implements deterministic generation of the `k` value used in DSA signing according to RFC6979. Works with a hashing module and a private key to produce a secure, context-specific scalar from a message digest. Useful for producing reproducible, secure signing nonces given a private key and input message.",
-      "description_length": 304,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Rng.Int",
-      "library": "nocrypto",
-      "description": "This module generates secure random integers with precise bounds and bit-level control. It provides functions to sample uniform integers within a range, generate integers with specific bit lengths, and manipulate random bit patterns. Typical uses include cryptographic key generation, randomized algorithms requiring uniform integer distributions, and security-sensitive applications needing controlled randomness.",
-      "description_length": 414,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Hash.SHA384",
-      "library": "nocrypto",
-      "description": "Computes SHA-384 cryptographic hashes for arbitrary binary data. It supports incremental hashing via state initialization, data feeding, and digest extraction, as well as one-shot hashing of single or multiple buffers. The module also provides HMAC-SHA384 generation for message authentication with a secret key.",
-      "description_length": 312,
-      "index": 29,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Hash.SHA1",
-      "library": "nocrypto",
-      "description": "Implements SHA-1 hashing with support for incremental updates and finalization. Works with `Cstruct.t` buffers for input data and produces fixed-size 20-byte digests. Useful for generating message authentication codes via HMAC or computing checksums for data integrity verification.",
-      "description_length": 282,
-      "index": 30,
+      "description": "Implements AES encryption and decryption in CBC mode with support for arbitrary initialization vectors. Works with raw byte sequences (`Cstruct.t`) for keys, IVs, and data. Use to securely encode or decode data streams where each message depends on the previous ciphertext block, such as secure communication protocols requiring chained encryption.",
+      "description_length": 348,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nocrypto.Rng.Make_N",
       "library": "nocrypto",
-      "description": "This module generates random values of a numeric type with uniform distribution across specified intervals or bit patterns. It provides functions to sample within ranges, generate bit strings with specific properties, and supports precise control over randomness sources. Concrete use cases include cryptographic key generation, randomized testing with exact bit-length constraints, and secure parameter selection.",
-      "description_length": 414,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Hash.SHA512",
-      "library": "nocrypto",
-      "description": "Computes SHA-512 cryptographic hashes and HMACs over arbitrary binary data. Operates on `Cstruct.t` values, maintaining incremental state via `t` for streaming input. Useful for verifying data integrity, generating unique identifiers, or authenticating messages with secret keys.",
-      "description_length": 279,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Cipher_block.Counter",
-      "library": "nocrypto",
-      "description": "This module implements counter operations for block ciphers, providing functions to increment or add values to specific-sized blocks within a cstruct buffer. It works directly with `Cstruct.t` buffers, treating sections of them as 1, 2, 4, 8, or 16-byte counters, and handles overflow behavior explicitly. These operations are used in cryptographic modes that require precise counter manipulation, such as CTR mode encryption.",
-      "description_length": 426,
-      "index": 33,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Hash.MD5",
-      "library": "nocrypto",
-      "description": "Computes MD5 message digests and HMAC authenticators. Processes input data through the MD5 algorithm to produce 128-bit hash values, supporting both single and vectorized input via `digest` and `digestv`. Uses `Cstruct.t` for memory-efficient byte buffer handling and includes `init`, `feed`, and `get` for incremental hashing.",
-      "description_length": 327,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Rng.Int32",
-      "library": "nocrypto",
-      "description": "This module generates secure random values of type `int32`. It provides functions to sample uniformly from intervals `[0, n-1]` and `[low, high-1]`, and to generate bit strings with specified bit lengths and most significant bits. It is used for cryptographic operations requiring unpredictable 32-bit integers, such as key generation or nonce creation.",
-      "description_length": 353,
-      "index": 35,
+      "description": "This module generates cryptographically secure random values for a numeric type. It provides functions to sample integers within specified ranges and bit patterns, including uniform selection from intervals and controlled bit-length generation. Concrete use cases include creating random keys, nonces, or bounded integers for cryptographic protocols.",
+      "description_length": 350,
+      "index": 13,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nocrypto.Cipher_block.DES",
       "library": "nocrypto",
-      "description": "This module implements the Data Encryption Standard (DES) in CTR, CBC, and ECB modes, providing symmetric encryption and decryption for arbitrary byte sequences. It operates on `Cstruct.t` values for keys, initialization vectors, counters, and data blocks, supporting common cryptographic operations such as `encrypt`, `decrypt`, `of_secret`, and `next_iv`. Use it to securely process data with DES in different modes\u2014CTR for stateless encryption, CBC for message-chained encryption, or ECB for compatibility with legacy systems. Examples include encrypting network payloads with CTR, maintaining stateful encryption sessions with CBC, or decrypting ECB-encoded files.",
-      "description_length": 668,
+      "description": "This module implements the Data Encryption Standard (DES) block cipher, providing encryption and decryption operations in ECB, CBC, and CTR modes. It works with fixed-size 8-byte blocks using keys derived from 8-byte byte sequences, operating directly on `Cstruct.t` values. Concrete use cases include secure data transmission over constrained channels and legacy system interoperability where DES is required.",
+      "description_length": 410,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nocrypto.Hash.SHA512",
+      "library": "nocrypto",
+      "description": "Computes SHA-512 hashes and HMACs over arbitrary binary data. Operates on `Cstruct.t` values, maintaining incremental state via `t` for streaming input. Suitable for verifying file integrity, generating message authentication codes, or deriving keys from byte sequences.",
+      "description_length": 270,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Rng.Int",
+      "library": "nocrypto",
+      "description": "This module generates secure random integers within specified ranges or bit lengths. It provides functions to produce uniformly random values between 0 and n-1, between low and high-1, and to generate bit-constrained integers with control over the most significant bits. It directly supports cryptographic operations requiring bounded randomness, such as key generation or nonce creation.",
+      "description_length": 388,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Dh.Group",
+      "library": "nocrypto",
+      "description": "This module provides predefined Diffie-Hellman groups standardized in various RFCs and drafts, including OAKLEY and FFDHE parameters. It works with the `group` type from `Nocrypto.Dh`, representing cryptographic groups used for key exchange. These values are used directly to configure secure key agreement protocols in TLS and IPsec implementations.",
+      "description_length": 350,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Rng.Z",
+      "library": "nocrypto",
+      "description": "This module implements secure random number generation for arbitrary-precision integers. It provides functions to generate uniform random values within specified ranges, including bounded integers and bit-length constrained values. Typical use cases include cryptographic key generation and sampling from large integer domains.",
+      "description_length": 327,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Rng.Int64",
+      "library": "nocrypto",
+      "description": "This module generates secure random 64-bit integers. It provides functions to sample values within specified ranges or with specific bit patterns, including uniform selection from intervals and bit-length constrained generation. It is used for cryptographic operations requiring unpredictable 64-bit integer values.",
+      "description_length": 315,
+      "index": 19,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nocrypto.Hash.SHA384",
+      "library": "nocrypto",
+      "description": "Computes SHA-384 cryptographic hashes and HMAC-SHA384 message authentication codes. Works with `Cstruct.t` for input data and produces fixed-size 48-byte digests. Used to verify data integrity or authenticate messages with a secret key.",
+      "description_length": 236,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Cipher_block.Counter",
+      "library": "nocrypto",
+      "description": "This module provides functions to increment or add values to fixed-size blocks within a `Cstruct.t`, treating the block as a big-endian integer. It supports operations on 1, 2, 4, 8, and 16-byte blocks, with variants for incrementing and adding 32- or 64-bit integers. These operations are useful for implementing counter-based cryptographic modes, such as CTR, where precise and efficient manipulation of counter blocks is required.",
+      "description_length": 433,
+      "index": 21,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nocrypto.Rsa.PSS",
+      "library": "nocrypto",
+      "description": "This module implements PSS signing and verification using a specified hash function. It operates on RSA private and public keys, producing and validating PSS-padded signatures with configurable seed length. Concrete use cases include secure digital signature generation and verification in cryptographic protocols.",
+      "description_length": 314,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Numeric.Int",
+      "library": "nocrypto",
+      "description": "This module provides arithmetic and bitwise operations, integer type conversions, and utilities for bit-length determination and formatted output. It operates on a wrapped integer type (`t`) and supports serialization to/from big-endian binary representations in `Cstruct.t` buffers. These capabilities are particularly useful for cryptographic algorithms and network protocols requiring precise control over integer encoding and endianness.",
+      "description_length": 441,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Hash.SHA256",
+      "library": "nocrypto",
+      "description": "Computes SHA-256 hashes and HMAC-SHA256 authenticators over memory buffers. Works with `Cstruct.t` values for input data and produces fixed-size 32-byte digests. Useful for verifying data integrity, generating unique identifiers, or authenticating messages with a secret key.",
+      "description_length": 275,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Hash.MD5",
+      "library": "nocrypto",
+      "description": "Computes MD5 message digests and HMAC authenticators. Processes data through incremental feeding or one-shot digest operations, producing fixed-size 128-bit hash values. Useful for verifying data integrity or generating short-lived authentication tokens with HMAC.",
+      "description_length": 264,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Numeric.Int32",
+      "library": "nocrypto",
+      "description": "This module provides low-level arithmetic and bitwise operations on 32-bit integers, including addition, shifts, and logical operations, alongside utilities for converting between these integers and big-endian binary representations in Cstruct buffers. It supports precise numeric manipulation required for cryptographic algorithms and systems-level tasks, with functions for serializing 32-bit integers to and from binary data structures. Use cases include cryptographic protocol implementations and network packet encoding/decoding where predictable numeric behavior and binary compatibility are critical.",
+      "description_length": 607,
+      "index": 26,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nocrypto.Rng.Generators",
+      "library": "nocrypto",
+      "description": "This module provides cryptographically secure random number generation using algorithms like Fortuna and HMAC_DRBG, along with a deterministic null generator. It works with generator state types and `Cstruct.t` for byte input and output, enabling direct control over entropy and randomness. Concrete use cases include cryptographic key generation, nonce creation, and testing cryptographic operations with predictable randomness.",
+      "description_length": 429,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Cipher_stream.ARC4",
+      "library": "nocrypto",
+      "description": "This module implements the ARC4 stream cipher algorithm for symmetric encryption and decryption of data streams. It operates on `Cstruct.t` buffers, maintaining cipher state in a `key` structure that evolves with each operation. Typical use cases include encrypting network traffic or file contents where streaming processing is required.",
+      "description_length": 338,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Numeric.Int64",
+      "library": "nocrypto",
+      "description": "This module offers arithmetic and bitwise operations for 64-bit integers, including addition, subtraction, shifts, and logical operations, alongside utilities for precise bit-level manipulation. It bridges 64-bit integers and low-level binary representations through conversions to/from Cstruct buffers in big-endian format, supporting fixed-size bit extraction and direct memory writes. These capabilities are particularly useful in cryptographic protocols requiring deterministic integer handling, network byte order serialization, or environments lacking native 64-bit integer support.",
+      "description_length": 588,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Cipher_block.S",
+      "library": "nocrypto",
+      "description": "This module defines standard block cipher modes of operation including ECB, CBC, CTR, GCM, and CCM. It specifies the required interfaces for encryption, decryption, and authentication operations on fixed-size blocks. These modes work directly with byte buffers and keys, enabling secure symmetric encryption for network protocols and data storage formats.",
+      "description_length": 355,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Hash.SHA224",
+      "library": "nocrypto",
+      "description": "Computes SHA-224 cryptographic hashes over arbitrary binary data. It supports incremental hashing via state initialization, data feeding, and finalization to produce a fixed-size 28-byte digest. Useful for generating message authentication codes (HMAC) or verifying data integrity in network protocols and file formats.",
+      "description_length": 319,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Cipher_block.AES",
+      "library": "nocrypto",
+      "description": "Implements AES encryption and decryption across multiple modes (ECB, CBC, CTR, GCM, CCM) using keys derived from secret byte sequences. Operates on `Cstruct.t` data for keys, initialization vectors, plaintext, and ciphertext, with each mode handling block alignment and chaining logic internally. Suitable for secure communication protocols, authenticated encryption, and low-level cryptographic operations requiring precise control over cipher behavior.",
+      "description_length": 454,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Rng.Int32",
+      "library": "nocrypto",
+      "description": "This module generates secure 32-bit integers with uniform distribution. It provides functions to sample values within specified ranges or with specific bit patterns, including arbitrary intervals and bit-length constraints. Use it to produce cryptographic nonces, bounded random indices, or bit-masked values directly in 32-bit integer format.",
+      "description_length": 343,
+      "index": 33,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Numeric.Z",
+      "library": "nocrypto",
+      "description": "This module offers arbitrary-precision integer arithmetic, bitwise operations, and big-endian serialization/deserialization between integers and memory buffers. It primarily manipulates `Z.t` for precise numeric control and `Cstruct.t` for binary encoding, enabling tasks like cryptographic key generation and protocol-specific integer serialization. The functions are designed for scenarios requiring exact bit-level handling, such as encoding ASN.1 structures or implementing cryptographic algorithms with strict integer representation rules.",
+      "description_length": 544,
+      "index": 34,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Dsa.K_gen",
+      "library": "nocrypto",
+      "description": "Implements deterministic generation of the `k` value used in DSA signing according to RFC6979. Works with a hashing module and a private key to produce a suitable `k` from a message digest. Used to ensure secure and reproducible nonce derivation during digital signature creation.",
+      "description_length": 280,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Rng.S",
+      "library": "nocrypto",
+      "description": "This module provides operations for generating cryptographically secure random numbers and bytes. It works with basic data types like integers and byte sequences (`Cstruct.t`). Concrete use cases include generating nonces, keys, or random identifiers directly without needing to manage underlying entropy sources.",
+      "description_length": 313,
       "index": 36,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nocrypto.Rsa.OAEP",
       "library": "nocrypto",
-      "description": "This module implements OAEP padding for RSA encryption and decryption using a specified hash function. It operates on RSA public and private keys with associated message data, ensuring secure encryption and verification. Use cases include encrypting arbitrary data with RSA-OAEP and decrypting such messages with blinding protection.",
-      "description_length": 333,
+      "description": "This module implements OAEP padding for RSA encryption and decryption using a specified hash function. It operates on RSA public and private keys with associated message data, ensuring compatibility with PKCS #1 v2.1 standards. Use this module to securely encrypt and decrypt messages where key size constraints and padding correctness are critical.",
+      "description_length": 349,
       "index": 37,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto.Numeric.Z",
+      "module_path": "Nocrypto.Hash.SHA1",
       "library": "nocrypto",
-      "description": "This module offers arbitrary-precision integer arithmetic, bitwise operations, and bit-level analysis for cryptographic computations requiring precise numeric manipulation. It bridges these integers with memory buffers via big-endian serialization, enabling use cases like key generation, protocol data encoding, and cross-system numeric interoperability.",
-      "description_length": 355,
+      "description": "Computes SHA-1 message digests and HMAC-SHA1 authentication codes. Works with `Cstruct.t` buffers for input data and produces fixed-size 20-byte hash outputs. Used for verifying data integrity or generating cryptographic message authentication codes with a secret key.",
+      "description_length": 268,
       "index": 38,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto.Hash.SHA224",
-      "library": "nocrypto",
-      "description": "Implements SHA-224 hashing with functions to initialize a hash state, update it with input data, and produce a 28-byte digest. Works with `Cstruct.t` values for input and output, supporting both single and multiple input buffers. Useful for generating message authentication codes via HMAC or computing fixed-size digests for data integrity verification.",
-      "description_length": 354,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Cipher_stream.S",
-      "library": "nocrypto",
-      "description": "This module implements stream cipher operations for symmetric encryption and decryption using a provided key type. It works with `Cstruct.t` values for both input data and output results, which include the transformed message and updated key state. Concrete use cases include secure communication protocols requiring per-packet encryption with stateful ciphers like ChaCha20 or RC4.",
-      "description_length": 382,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Cipher_stream.ARC4",
-      "library": "nocrypto",
-      "description": "Implements the ARC4 stream cipher algorithm for symmetric encryption and decryption. Operates on `Cstruct.t` data structures for input and output, using a key type derived from a secret byte sequence. Useful for securing data streams where compatibility with ARC4-based protocols is required.",
-      "description_length": 292,
-      "index": 41,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Nocrypto.Rng.Int64",
-      "library": "nocrypto",
-      "description": "This module generates secure random values of type `int64`. It provides functions to sample uniformly from ranges (`gen`, `gen_r`) and to generate bit patterns with specified properties (`gen_bits`). These operations are useful for cryptographic tasks requiring bounded integers or bitstrings, such as key generation or nonce creation.",
-      "description_length": 335,
-      "index": 42,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Rng.S",
-      "library": "nocrypto",
-      "description": "This module defines the interface for random number generators, supporting integers, 32-bit and 64-bit integers, and arbitrary-precision integers (Z.t), with operations to generate random values within specified ranges. It enables uniform sampling and bit-based generation, allowing control over bit length and significant bits, useful for generating cryptographic keys, nonces, and random primes. A child module provides direct functions for random number generation using either the default or a custom PRNG instance, while another implements a cryptographically secure PRNG algorithm that produces random bytes into `Cstruct.t` buffers. Together, they support use cases such as secure key generation, probabilistic algorithms, and entropy-driven buffer creation.",
-      "description_length": 765,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Hash.SHA256",
-      "library": "nocrypto",
-      "description": "Computes SHA-256 hashes and HMACs over arbitrary binary data. Works with `Cstruct.t` values, maintaining internal state for incremental hashing. Useful for verifying data integrity, generating unique identifiers, or authenticating messages with secret keys.",
-      "description_length": 257,
-      "index": 44,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Numeric.Int",
-      "library": "nocrypto",
-      "description": "This module offers low-level integer arithmetic, bitwise manipulation, and binary serialization. It operates on an abstract integer type `t` (aliased to `int`) and supports conversions to/from `int32`, `int64`, and big-endian binary representations via `Cstruct.t`. Key applications include cryptographic protocols requiring precise bit-level control, efficient serialization of variable-length integers, and cross-format data interchange for network or storage systems.",
-      "description_length": 470,
-      "index": 45,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Numeric.S",
-      "library": "nocrypto",
-      "description": "This module provides low-level arithmetic and bitwise operations on a fixed-size numeric type, including conversions between native integer types and big-endian byte sequences. It supports precise manipulation of numeric representations through operations like shifting, logical masking, and bit-bound calculations, while enabling direct serialization to and from `Cstruct.t` buffers. These capabilities are particularly useful for cryptographic implementations requiring exact control over integer sizes and memory layouts, such as key generation or protocol-specific encoding.",
-      "description_length": 578,
-      "index": 46,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Nocrypto.Rsa.PKCS1",
       "library": "nocrypto",
-      "description": "This module implements PKCS v1.5 padding for RSA signatures and encryption. It provides functions to sign and verify messages using RSA private and public keys, as well as to encrypt and decrypt messages. The operations work directly on `Cstruct.t` values, handling padding (type 1 for signatures, type 2 for encryption) and RSA transformations. Use cases include secure message signing, signature verification, and public-key encryption with PKCS v1.5 padding.",
-      "description_length": 461,
-      "index": 47,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Rsa.PSS",
-      "library": "nocrypto",
-      "description": "This module implements RSA-based digital signing and verification using the Probabilistic Signature Scheme (PSS) padding. It operates on private and public RSA keys, producing and validating PSS-padded signatures with a specified hash function. It is used to securely sign and verify messages in cryptographic protocols requiring PKCS #1 v2.1 compliance.",
-      "description_length": 354,
-      "index": 48,
+      "description": "This module implements PKCS v1.5 padding for RSA signatures and encryption. It provides functions to sign and verify messages using RSA private and public keys, as well as to encrypt and decrypt data. The operations work directly on `Cstruct.t` buffers and require keys of at least `11 + len(message)` bytes.",
+      "description_length": 308,
+      "index": 39,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Dh.Group",
-      "library": "nocrypto",
-      "description": "This module provides predefined Diffie-Hellman group parameters compliant with various RFCs and drafts, including MODP groups of different bit lengths. It works with the `Nocrypto.Dh.group` type, representing cryptographic groups used for key exchange. Concrete use cases include selecting secure, standardized groups for implementing TLS or IPsec key negotiation protocols.",
-      "description_length": 374,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Numeric.Int64",
-      "library": "nocrypto",
-      "description": "This module offers arithmetic and bitwise manipulation of 64-bit integers, featuring shifts, logical operations, and conversions across integer types, alongside utilities for bit-length calculation and formatted output. It integrates with Cstructs to facilitate big-endian binary serialization, deserialization, and in-place buffer updates, ensuring precise control over binary representations. Such functionality is critical in cryptographic systems needing exact bit-level handling of integers and efficient encoding for protocols or data storage.",
-      "description_length": 549,
-      "index": 50,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Dsa",
-      "library": "nocrypto",
-      "description": "This module provides DSA key generation, signing, and verification operations using modular integers for cryptographic security. It supports variable key sizes and includes core operations for creating key pairs, signing messages, and validating signatures. A child module enhances signing security by deterministically deriving the nonce `k` from private keys and message digests per RFC6979. Users can generate DSA key pairs, sign data with deterministic nonces, and verify signatures across distributed systems for authentication.",
-      "description_length": 533,
-      "index": 51,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Hash",
-      "library": "nocrypto",
-      "description": "This module provides cryptographic hash functions for data integrity and authentication, operating on `Cstruct.t` buffers with support for incremental and one-shot hashing. It includes algorithms like MD5, SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512, each exposing functions to initialize state, feed data, and extract digests, along with HMAC generation using secret keys. Use cases include verifying checksums, generating unique identifiers, and producing message authentication codes. Submodules offer algorithm-specific implementations, enabling streaming input handling and vectorized operations across multiple buffers.",
-      "description_length": 627,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Cipher_stream",
-      "library": "nocrypto",
-      "description": "This module enables streaming encryption and decryption with stateful symmetric ciphers, processing byte sequences incrementally for secure communication and real-time data protection. It supports algorithms like ARC4 through dedicated submodules, handling key initialization, per-packet encryption, and state updates using `Cstruct.t` for efficient memory management. Direct API operations allow cipher configuration and data transformation, while child modules provide concrete implementations for specific algorithms and use cases such as network packet encryption. Example usage includes securing a data stream with ARC4 or maintaining cipher state across multiple message fragments in a secure protocol.",
-      "description_length": 708,
-      "index": 53,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Numeric",
-      "library": "nocrypto",
-      "description": "This module supports number-theoretic operations such as primality testing and modular arithmetic, working with both arbitrary-precision and fixed-size integers. It enables cryptographic key generation, random prime selection, and low-level arithmetic for protocols like RSA or Diffie-Hellman, with direct manipulation of integer types and bit-level control. Submodules handle bitwise operations, serialization to and from big-endian binary formats via Cstructs, and arithmetic on 32-bit and 64-bit integers, supporting tasks like network protocol implementation, binary file parsing, and cryptographic encoding. Together, they provide a comprehensive toolkit for precise numeric manipulation, memory buffer interfacing, and cross-system data interchange.",
-      "description_length": 755,
-      "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Nocrypto.Rsa",
-      "library": "nocrypto",
-      "description": "This module provides RSA public-key encryption, decryption, signature, and key generation capabilities, using records to represent keys and `Cstruct.t` for raw message data. It supports encryption and decryption with OAEP padding, signature generation and verification with PKCS v1.5 and PSS padding, and secure key pair creation for cryptographic operations. Use cases include encrypting data with a public key, decrypting with blinding protection, signing messages with PSS, and verifying signatures using PKCS v1.5. The integration of padding schemes enables secure and compliant cryptographic interactions, from key generation to message processing.",
-      "description_length": 653,
-      "index": 55,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Rng",
-      "library": "nocrypto",
-      "description": "This module enables secure random number generation tailored for cryptographic applications, offering functions to generate random bytes, create primes and safe primes, and instantiate generators for numeric types like integers and big numbers (Z.t). It includes submodules for generating secure values of specific types\u2014such as `int`, `int32`, `int64`, and `Z.t`\u2014with precise control over ranges and bit patterns, supporting uniform sampling and bit-based generation. Specialized modules implement cryptographic PRNG algorithms like Fortuna and HMAC_DRBG, allowing creation, seeding, and random byte generation with examples including key derivation and deterministic test sequences. Use cases span cryptographic key and nonce generation, randomized algorithms, and secure parameter selection with exact bit-length constraints.",
-      "description_length": 828,
-      "index": 56,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Nocrypto.Base64",
-      "library": "nocrypto",
-      "description": "This module provides Base64 encoding and decoding operations for raw memory buffers represented as `Cstruct.t`. It includes functions to encode binary data into Base64 format, decode Base64 strings back into binary, and check if a character is valid in Base64 encoding. These functions are useful when handling data transmission over text-based protocols or storage formats that require binary-to-text encoding.",
-      "description_length": 411,
-      "index": 57,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Nocrypto.Dh",
       "library": "nocrypto",
-      "description": "This module implements the Diffie-Hellman key exchange protocol using modular arithmetic over a prime field, supporting group generation, secret derivation, and shared key computation. It works with core types like `group`, `secret`, and `public_key`, enabling operations such as `generate`, `pub_of_priv`, and `common`. The module integrates with its child module that provides standardized MODP group parameters, allowing selection of secure, pre-defined groups for protocols like TLS or IPsec. Example usage includes generating a private/public key pair, selecting an RFC-compliant group, and computing a shared secret for secure communication.",
-      "description_length": 647,
-      "index": 58,
+      "description": "Implements Diffie-Hellman key exchange with support for generating cryptographic groups, key pairs, and shared secrets. Works with modular prime (MODP) groups defined by modulus, generator, and subgroup order. Used to establish secure communication channels in TLS, IPsec, and other cryptographic protocols requiring ephemeral key agreement.",
+      "description_length": 341,
+      "index": 40,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nocrypto.Cipher_block",
       "library": "nocrypto",
-      "description": "This module provides block cipher implementations and mode operations for symmetric encryption, supporting algorithms like AES and DES across modes such as ECB, CBC, CTR, GCM, and CCM. It exposes data types including `Cstruct.t` buffers for keys, IVs, nonces, and data blocks, with operations for encryption, decryption, and counter manipulation. Specific functionality includes AES-GCM for authenticated encryption, AES-CTR for stream-based encryption, and DES-CBC for chained block encryption, enabling secure communication, data storage, and integrity-protected messaging. Examples include in-place encryption of network payloads, counter-based keystream generation, and authenticated encryption with associated data.",
-      "description_length": 720,
-      "index": 59,
+      "description": "This module implements block cipher encryption and decryption operations for symmetric cryptographic algorithms like AES and DES, supporting modes such as ECB, CBC, CTR, GCM, and CCM. It operates directly on `Cstruct.t` buffers for keys, initialization vectors, plaintext, and ciphertext, handling block alignment and chaining internally. It is used for secure communication protocols, authenticated encryption, and interoperability with systems requiring standard block cipher modes.",
+      "description_length": 484,
+      "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Numeric",
+      "library": "nocrypto",
+      "description": "This module implements arithmetic and bitwise operations for fixed-size and arbitrary-precision integers, with support for big-endian binary serialization and deserialization using `Cstruct.t`. It includes modules for 32-bit, 64-bit, and arbitrary-precision integers, offering precise numeric manipulation required for cryptographic algorithms, network protocols, and systems-level tasks. Specific use cases include ASN.1 encoding, key generation, and deterministic handling of integers in cryptographic protocol implementations.",
+      "description_length": 529,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Rsa",
+      "library": "nocrypto",
+      "description": "This module implements RSA public-key cryptography with support for key generation, encryption, decryption, and padding schemes. It operates on RSA public and private keys represented as records of modular components, and works directly with `Cstruct.t` buffers for message data. Concrete use cases include secure message encryption with OAEP, digital signatures using PSS, and interoperability with PKCS#1 v1.5 padded formats for legacy systems.",
+      "description_length": 446,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Rng",
+      "library": "nocrypto",
+      "description": "This module generates cryptographically secure random numbers and bytes, providing direct access to operations like `generate` for producing random `Cstruct.t` buffers, and submodules for sampling integers (`Int`, `Int32`, `Int64`) and arbitrary-precision integers (`Z`) with precise range and bit constraints. It supports concrete use cases such as generating cryptographic keys, nonces, and random identifiers, as well as producing prime numbers and safe primes for cryptographic protocols. The module works with `Cstruct.t` for byte sequences and various integer types, using a generator state (`g`) that is typically managed automatically via a default instance.",
+      "description_length": 666,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Cipher_stream",
+      "library": "nocrypto",
+      "description": "This module implements the ARC4 stream cipher for symmetric encryption and decryption of data streams. It operates on `Cstruct.t` buffers, maintaining and updating cipher state through a `key` structure during each encryption or decryption step. It is used for streaming encryption tasks such as securing network communications or encrypting large files incrementally.",
+      "description_length": 368,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Hash",
+      "library": "nocrypto",
+      "description": "This module provides hash and HMAC computation functions for binary data using various algorithms like MD5, SHA1, and SHA2 variants. It operates on `Cstruct.t` buffers, supporting both one-shot and incremental hashing with fixed-size output digests. Concrete uses include data integrity checks, short-lived token generation, and message authentication with secret keys.",
+      "description_length": 369,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Nocrypto.Dsa",
+      "library": "nocrypto",
+      "description": "Implements the DSA digital signature algorithm with operations for key generation, signing, and signature verification. Works with private and public key types containing modular arithmetic parameters and handles message digests as Cstruct.t values. Used to create and validate digital signatures for messages using DSA key pairs, with support for deterministic nonce generation via RFC6979.",
+      "description_length": 391,
+      "index": 47,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Nocrypto.Base64",
+      "library": "nocrypto",
+      "description": "Converts data between binary and Base64-encoded representations using `Cstruct.t` buffers. Provides direct encoding, decoding, and character validation for Base64 operations. Useful when handling binary data in text-based protocols or storage formats that require Base64 encoding.",
+      "description_length": 280,
+      "index": 48,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Nocrypto",
       "library": "nocrypto",
-      "description": "This library offers cryptographic operations for secure data processing, authentication, and key exchange, built around deterministic algorithms and memory-safe buffer handling via `Cstruct.t`. It supports a wide range of cryptographic primitives including hash functions, block and stream ciphers, public-key encryption (RSA), digital signatures (DSA), and key exchange (Diffie-Hellman), each structured into algorithm-specific modules sharing consistent interfaces. Core data types include modular integers, cryptographic keys, digests, and secure random generators, enabling tasks like signing and verifying messages, encrypting data streams, generating secure primes, and computing shared secrets. Example workflows include signing a message using deterministic DSA, encrypting a stream with AES-GCM, or deriving a shared key via Diffie-Hellman for secure communication.",
-      "description_length": 874,
-      "index": 60,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides cryptographic operations including hashing, symmetric and asymmetric encryption, random number generation, and Base64 encoding/decoding. It works with binary data via `Cstruct.t`, integer types, and cryptographic key structures. It is used for implementing secure communication protocols, generating and verifying digital signatures, encrypting data, and encoding binary content for text-based systems.",
+      "description_length": 423,
+      "index": 49,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Nocrypto_entropy_unix",
-      "library": "nocrypto.unix",
-      "description": "Seeds cryptographic random number generators using the system's entropy source, typically `/dev/urandom`. It provides one-time initialization of the default generator and allows manual reseeding of specific generators with configurable byte lengths and entropy sources. Useful for ensuring cryptographic RNGs have sufficient entropy during startup or periodic reseeding in long-running applications.",
-      "description_length": 399,
-      "index": 61,
+      "module_path": "Nocrypto_entropy_lwt",
+      "library": "nocrypto.lwt",
+      "description": "This module initializes and periodically reseeds a random number generator using entropy from the Unix kernel RNG via Lwt for asynchronous handling. It works with `Nocrypto.Rng.g` generators and provides background reseeding controlled by `attach` and `stop`, triggered by Lwt event loop wakeups at specified intervals. Use it to maintain a secure RNG state in long-running Lwt-based applications without blocking or manual reseeding.",
+      "description_length": 434,
+      "index": 50,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 62,
-    "meaningful_modules": 62,
+    "total_modules_in_package": 51,
+    "meaningful_modules": 51,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 901,
-    "min_description_length": 234,
-    "avg_description_length": 461.5806451612903,
-    "embedding_file_size_mb": 0.2257089614868164
+    "max_description_length": 666,
+    "min_description_length": 236,
+    "avg_description_length": 386.4117647058824,
+    "embedding_file_size_mb": 0.7394647598266602
   }
 }

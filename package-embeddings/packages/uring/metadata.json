@@ -1,157 +1,149 @@
 {
   "package": "uring",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 17,
-  "creation_timestamp": "2025-07-15T23:09:33.592775",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 16,
+  "creation_timestamp": "2025-08-14T23:28:17.136979",
   "modules": [
     {
-      "module_path": "Uring.Statx.Attr",
+      "module_path": "Uring.Statx.Flags",
       "library": "uring",
-      "description": "This module defines bit flags representing file attributes used with the `statx` system call in conjunction with io_uring operations. It provides operations to construct, combine, and test these flags, such as checking whether a file is immutable, compressed, or encrypted. These flags are used to interpret or filter file metadata retrieved asynchronously via io_uring.",
-      "description_length": 370,
+      "description": "This module defines bitwise flags used to control the behavior of `statx` system calls made through the `io_uring` interface. It supports operations to combine flags using union (`+`) and check flag presence (`mem`), with predefined constants representing specific `statx` behaviors such as handling symbolic links, automount points, and synchronization policies. These flags are used when issuing asynchronous file metadata retrieval requests to fine-tune how paths and filesystems are accessed.",
+      "description_length": 496,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Uring.Statx.Mask",
+      "module_path": "Uring.Statx.Attr",
       "library": "uring",
-      "description": "This module defines bitmasked constants to specify which fields to retrieve in a `statx` system call and provides operations to combine and test these masks. It works with `int`-backed bitmask values to represent individual field requests like file size, timestamps, or permissions. Concrete use cases include selecting specific metadata fields when querying file attributes asynchronously via io_uring, ensuring only relevant data is retrieved and validated.",
-      "description_length": 459,
+      "description": "This module represents file attributes used in `statx` system calls, providing bitwise operations to combine and test flags. It works with the private integer type `t` to encode attributes like compression, immutability, and encryption. Concrete use cases include checking if a file is immutable, compressed, or encrypted, and combining attribute flags for system call inputs.",
+      "description_length": 376,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Uring.Private.Heap",
       "library": "uring",
-      "description": "This module implements a fixed-capacity heap for managing entries with associated extra data, supporting allocation, deallocation, and tracking of in-use elements. It works with heap entries containing arbitrary data and provides direct access to entries via stable indices (pointers). Concrete use cases include managing asynchronous I/O operations and associated metadata within the io_uring interface, where efficient allocation and tracking of in-flight operations are critical.",
-      "description_length": 482,
+      "description": "This module implements a fixed-capacity heap for managing entries with associated extra data, supporting allocation, deallocation, and tracking of in-use elements. It works with heap entries containing arbitrary data and exposes direct index-based pointers for efficient access. It is used to manage the lifecycle of io_uring submission and completion queue entries, ensuring safe and controlled resource usage during asynchronous I/O operations.",
+      "description_length": 446,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Uring.Statx.Flags",
-      "library": "uring",
-      "description": "This module defines bit-flag constants and operations for configuring `statx` system call behavior in io_uring asynchronous I/O operations. It works with the private integer type `t` to represent flag sets, supporting union and subset checks for combining and testing flags. Concrete use cases include controlling symlink handling, cache synchronization, and automount behavior when retrieving file metadata asynchronously.",
-      "description_length": 423,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Uring.Sockaddr",
+      "module_path": "Uring.Statx.Mask",
       "library": "uring",
-      "description": "This module provides a type-safe wrapper for handling socket addresses in io_uring operations. It includes functions to create and retrieve socket address structures, specifically for use with the `accept` system call. Directly works with `Unix.sockaddr` to manage client connection endpoints in asynchronous network servers.",
-      "description_length": 325,
-      "index": 4,
+      "description": "This module defines bitmasked constants to specify which fields to retrieve in `statx` system calls via io_uring, supporting precise control over file metadata queries. It works with `t` values representing mask flags, combining them with bitwise operations to select attributes like file size, timestamps, permissions, and inode numbers. Concrete use cases include checking file access times, verifying ownership, and retrieving allocation sizes for disk usage analysis.",
+      "description_length": 471,
+      "index": 3,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Uring.Op",
+      "module_path": "Uring.Region",
       "library": "uring",
-      "description": "This module defines low-level asynchronous I/O operations for file, socket, and timeout handling, including system call equivalents like `readv`, `writev`, `accept`, and `poll_add` with support for advanced features such as fixed buffers and linked operations. It operates on file descriptors, memory regions, I/O buffers, and io_uring submission queues, enabling efficient resource management and inter-process communication. These capabilities are particularly useful for high-performance networking and storage applications requiring scalable, concurrent I/O operations with minimal overhead.",
-      "description_length": 595,
-      "index": 5,
+      "description": "This module implements a slab allocator for carving a contiguous block of external memory into fixed-size chunks, designed for efficient I/O operations using the io_uring interface. It provides functions to allocate and free memory chunks, convert chunks to various views (Cstruct, Bigarray, string), and retrieve offsets for I/O submission. Concrete use cases include managing buffers for asynchronous disk or network I/O where fixed-size memory regions are mapped into kernel space for zero-copy operations.",
+      "description_length": 509,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Uring.Linkat_flags",
       "library": "uring",
-      "description": "This module defines bitflag constants and operations for use with the `linkat` system call in conjunction with io_uring. It supports combining flags using bitwise OR and checking flag presence, working directly with integer-based flag sets. Concrete use cases include controlling symlink behavior and handling empty paths when creating hard links or symbolic links asynchronously.",
-      "description_length": 380,
+      "description": "This module defines bitflag constants and operations for use with the `linkat` system call in conjunction with io_uring. It supports combining and testing flags such as `empty_path` and `symlink_follow` using bitwise logic. These flags control how file paths are interpreted when creating hard links or symbolic links in asynchronous I/O operations.",
+      "description_length": 349,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Uring.Op",
+      "library": "uring",
+      "description": "The module provides operations for asynchronous I/O, networking, and filesystem tasks, including read/write, file manipulation, socket management, and resource coordination. These operations interact with file descriptors, sockets, memory buffers, io_uring submission queues, and extended attributes to enable high-performance asynchronous workflows. Specific use cases include handling concurrent I/O operations, managing file and socket lifecycles, and implementing custom I/O commands or inter-process communication with low-level control.",
+      "description_length": 542,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Uring.Private",
-      "library": "uring",
-      "description": "This module provides a fixed-capacity heap for managing entries with arbitrary associated data, enabling efficient allocation, deallocation, and tracking of active elements. It supports direct access to entries via stable indices, making it suitable for scenarios requiring predictable memory behavior, such as managing in-flight asynchronous I/O operations. Operations include inserting new entries, removing or marking entries as free, and accessing metadata directly through indices. For example, it can track io_uring submission and completion queue entries, ensuring fast lookups and minimal overhead during I/O processing.",
-      "description_length": 628,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Uring.Statx",
-      "library": "uring",
-      "description": "This module enables asynchronous file metadata retrieval using `statx` structures, providing accessors for attributes like size, inode, timestamps, permissions, and file type. It integrates bitmask operations to specify which metadata fields to retrieve, control system call behavior, and interpret file attribute flags, all optimized for io_uring-based I/O scheduling. Users can, for example, asynchronously query only modification times with sync control flags or check for immutable file attributes during security audits. The combined interface allows precise, efficient filesystem introspection without blocking execution.",
-      "description_length": 627,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Uring.Open_flags",
-      "library": "uring",
-      "description": "This module defines bitflags for configuring file open operations in io_uring, primarily used with the `openat2` system call. It supports combining flags using bitwise operations and checking flag presence, enabling precise control over file descriptors, such as setting append mode, enabling direct I/O, or creating temporary files. Specific use cases include opening files with synchronization requirements, handling symbolic links safely, and managing file access permissions in asynchronous I/O workflows.",
-      "description_length": 509,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Uring.FLAGS",
-      "library": "uring",
-      "description": "This module represents bit flags as integers and provides operations to combine and check flag sets. It works with the private integer type `t` to ensure type safety when manipulating bitmasks. Concrete use cases include setting up and testing flags for asynchronous I/O operations, such as specifying operation modes or checking completion statuses in io_uring requests.",
-      "description_length": 371,
-      "index": 10,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Uring.Resolve",
       "library": "uring",
-      "description": "This module defines bit flags used to control path resolution behavior during file opening operations, particularly with `openat2`. It supports combining and testing flags using bitwise operations, and provides specific options like restricting resolution to a directory subtree, treating a directory as the root, disabling symlink and mount traversal, and controlling cache behavior. These flags are used to enforce strict path resolution policies in security-sensitive contexts or container environments.",
-      "description_length": 506,
+      "description": "This module defines bit flags for controlling path resolution during asynchronous file opens with `openat2` in the io_uring interface. It supports operations to combine and test flags, along with predefined constants that restrict path traversal, handle symbolic links, and control cache behavior. Concrete use cases include securely opening files relative to a directory descriptor, preventing symlink-based escapes, and avoiding cross-mountpoint access.",
+      "description_length": 455,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Uring.Open_flags",
+      "library": "uring",
+      "description": "This module defines bitflags for configuring file open operations in io_uring, primarily used with the `openat2` system call. It supports combining and testing flags to control file behavior such as direct I/O, synchronization, and file creation semantics. Use cases include opening files with specific modes like append-only, creating temporary files, or opening directories with strict type checking.",
+      "description_length": 402,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Uring.Sockaddr",
+      "library": "uring",
+      "description": "This module manages socket address storage for handling connections in asynchronous I/O operations. It provides functions to create and retrieve socket address structures used during `accept` calls. Directly works with `Unix.sockaddr` for interfacing with network endpoints in io_uring-based servers.",
+      "description_length": 300,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Uring.Statx",
+      "library": "uring",
+      "description": "This module enables asynchronous retrieval and manipulation of detailed file metadata through the `statx` system call interface, supporting operations to configure request flags, attribute masks, and extract structured data such as timestamps, permissions, and file type information from the resulting buffer. It primarily works with the `Statx.t` structure, which holds low-level metadata fields, alongside helper types for specifying access controls and field selection. It is particularly useful for high-performance applications requiring non-blocking batched access to file attributes, such as filesystem monitoring tools or metadata-intensive services.",
+      "description_length": 658,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Uring.Msghdr",
+      "library": "uring",
+      "description": "This module constructs and manipulates `msghdr` structures for use with `io_uring` operations, primarily for asynchronous networking tasks. It works with `Cstruct.t` lists to manage memory buffers and supports setting socket addresses and file descriptors. Use it to prepare message headers for asynchronous send/recv operations over sockets.",
+      "description_length": 342,
       "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Uring.Private",
+      "library": "uring",
+      "description": "This module implements a fixed-capacity heap for managing io_uring submission and completion queue entries. It supports allocation, deallocation, and tracking of in-use elements using index-based pointers, working directly with heap entries that hold arbitrary data. It ensures safe resource lifecycle management during asynchronous I/O operations.",
+      "description_length": 348,
+      "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Uring.Poll_mask",
       "library": "uring",
-      "description": "This module represents bitmasks for polling events in the `io_uring` interface, used to specify conditions like read readiness, write readiness, or errors on file descriptors. It supports operations to construct, combine, and test masks using bitwise unions and subset checks, with predefined constants for common event types. Concrete use cases include setting up and checking poll events in asynchronous I/O operations such as waiting for data to read or space to write.",
-      "description_length": 472,
-      "index": 12,
-      "embedding_norm": 1.0
+      "description": "This module represents bitmasks for polling events in an io_uring context, supporting operations like union and subset checks. It works with integer bitmasks representing poll events such as read, write, error, and hangup conditions. It is used to specify and check expected I/O events when submitting and completing asynchronous system calls through io_uring.",
+      "description_length": 360,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Uring.Stats",
       "library": "uring",
-      "description": "Tracks internal state and resource usage of asynchronous I/O operations using io_uring. It provides metrics such as the number of pending submission queue entries, active operations, and buffer usage statistics for memory management. Useful for monitoring performance and diagnosing resource bottlenecks in high-throughput network or storage applications.",
-      "description_length": 355,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Uring.Region",
-      "library": "uring",
-      "description": "This module manages memory allocation within a contiguous buffer for efficient I/O operations using fixed-size chunks. It supports initialization of a region from a buffer, allocation and freeing of chunks, and conversion of chunks to various memory views like `Cstruct.t`, `Bigarray`, or OCaml strings. It is used to interface with io_uring's fixed buffer model by providing offset and size information for direct kernel-space I/O.",
-      "description_length": 432,
+      "description": "Tracks internal state and resource usage of asynchronous I/O operations using io_uring. It provides metrics such as the number of pending submission queue entries, active operations, and memory usage of sketch buffers. This module is used to monitor performance and memory footprint in high-throughput network or storage applications.",
+      "description_length": 334,
       "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Uring.Msghdr",
-      "library": "uring",
-      "description": "Handles construction and manipulation of `msghdr` structures for asynchronous socket operations. Works with `Cstruct.t` buffers, optional file descriptors, and socket addresses. Used to prepare batched message headers for `sendmsg` or `recvmsg` operations in io_uring submissions.",
-      "description_length": 280,
-      "index": 15,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Uring",
       "library": "uring",
-      "description": "This module provides an OCaml interface to Linux's io_uring for efficient asynchronous I/O, enabling batching and parallel execution of system calls with type-safe wrappers around structures like `sockaddr`, `statx`, and `msghdr`. It supports direct operations on file descriptors, memory buffers, and submission queues through child modules that handle socket addresses, file metadata, message headers, and bitflags for system calls like `openat2`, `linkat`, and `poll`. Users can build high-performance network servers with asynchronous `accept` and `sendmsg`, manage in-flight I/O with a fixed heap, control file access with resolution flags, and track performance metrics for resource optimization. Memory is efficiently managed through fixed buffer allocation and region-based views compatible with Cstruct and Bigarray for zero-copy I/O.",
-      "description_length": 843,
-      "index": 16,
-      "embedding_norm": 1.0
+      "description": "This interface provides low-level asynchronous I/O operations for file and socket handling, including reads/writes with scatter/gather support, connection management (accept/connect), metadata retrieval (statx), and memory operations via `Region`. It works with file descriptors, `Cstruct.t` buffers, `Unix.sockaddr` structures, and bitflag modules to enable zero-copy, batched I/O workflows. Designed for high-performance systems requiring precise control over asynchronous operations, it supports advanced features like splicing, eventfd notifications, and submission queue management.",
+      "description_length": 587,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 17,
-    "meaningful_modules": 17,
+    "total_modules_in_package": 16,
+    "meaningful_modules": 16,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 843,
-    "min_description_length": 280,
-    "avg_description_length": 473.94117647058823,
-    "embedding_file_size_mb": 0.062224388122558594
+    "max_description_length": 658,
+    "min_description_length": 300,
+    "avg_description_length": 435.9375,
+    "embedding_file_size_mb": 0.23227310180664062
   }
 }

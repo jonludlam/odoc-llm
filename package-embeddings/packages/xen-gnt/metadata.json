@@ -1,39 +1,39 @@
 {
   "package": "xen-gnt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 4,
-  "creation_timestamp": "2025-07-15T23:05:11.940238",
+  "creation_timestamp": "2025-08-14T22:55:20.348320",
   "modules": [
     {
       "module_path": "Gnt.Gnttab.Local_mapping",
       "library": "xen-gnt",
-      "description": "This module manages local mappings of memory regions granted by foreign Xen domains, enabling direct access to shared buffers. It provides a `to_buf` function to retrieve the mapped memory as an `Io_page.t`, supporting efficient data exchange in virtualized device implementations. Use it to process shared disk or network buffers after establishing a grant reference from a remote domain.",
-      "description_length": 389,
+      "description": "Maps and manages local memory regions that correspond to foreign memory grants. It provides direct access to these regions through functions like `to_buf`, which retrieves the local buffer representation of a granted memory area. This enables efficient data exchange between virtual domains by allowing direct manipulation of shared memory buffers, such as reading from or writing to disk or network data structures provided by another domain.",
+      "description_length": 443,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Gnt.Gntshr",
-      "library": "xen-gnt",
-      "description": "This module manages memory sharing between Xen domains by allowing a local domain to export memory pages to foreign domains. It provides functions to share and unmap memory regions using grant references, supporting operations like `share_pages_exn` and `munmap_exn` on types such as `interface` and `share`. Concrete use cases include setting up shared buffers for virtual device communication, such as passing disk or network data between domains securely.",
-      "description_length": 458,
-      "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Gnt.Gnttab",
       "library": "xen-gnt",
-      "description": "This module manages direct memory mappings of foreign domain grants through a device interface, enabling efficient sharing of memory regions like disk buffers or network packets between Xen domains. It supports mapping single or multiple grants into contiguous, read-only or writable memory regions, with explicit unmapping or scoped management for cleanup. The child module extends this by providing `to_buf` to access mapped memory as `Io_page.t`, facilitating low-level data processing in virtualized device implementations. Use it to securely exchange and manipulate shared memory buffers after establishing a grant reference from a remote domain.",
-      "description_length": 651,
+      "description": "This module manages mappings of foreign memory grants by opening connections to the grant device, mapping individual or multiple grants into local memory, and providing safe access to shared buffers. It operates on `grant` records containing foreign domain IDs and reference numbers, and maps them into local memory regions managed by the `Local_mapping` submodule. Concrete use cases include directly accessing disk or network buffers shared by other Xen domains, such as reading incoming network packets or writing disk I/O responses.",
+      "description_length": 536,
+      "index": 1,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Gnt.Gntshr",
+      "library": "xen-gnt",
+      "description": "This module manages memory sharing between Xen domains by granting access to local memory pages via grant table entries. It provides operations to allocate and deallocate grant references, map and unmap shared memory regions, and control access permissions for foreign domains. Concrete use cases include sharing disk or network buffers with virtual devices in guest domains, where precise control over memory access is required.",
+      "description_length": 429,
       "index": 2,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Gnt",
       "library": "xen-gnt",
-      "description": "This module enables secure memory sharing between Xen domains by managing grant references that represent exported memory regions. It coordinates memory access through operations to share, map, and unmap pages, using types like `interface` and `share`, and includes predefined references for console and xenstore communication. The submodules extend this functionality by offering direct memory mappings into contiguous buffers accessible as `Io_page.t`, supporting efficient data exchange for virtual devices. Use it to implement device backends, handle domain suspension, or manage shared disk and network buffers securely.",
-      "description_length": 625,
+      "description": "This module enables secure memory sharing between Xen domains by managing grant table operations for both importing and exporting memory regions. It works with `gntref` identifiers and domain IDs to map or share memory buffers, supporting direct access to virtual device data such as network packets or disk I/O. Specific use cases include reading disk buffers from a virtual disk backend or sharing network buffers with a guest domain's virtual network device.",
+      "description_length": 461,
       "index": 3,
       "embedding_norm": 1.0
     }
@@ -45,9 +45,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 651,
-    "min_description_length": 389,
-    "avg_description_length": 530.75,
-    "embedding_file_size_mb": 0.014948844909667969
+    "max_description_length": 536,
+    "min_description_length": 429,
+    "avg_description_length": 467.25,
+    "embedding_file_size_mb": 0.058380126953125
   }
 }

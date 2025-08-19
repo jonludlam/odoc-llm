@@ -1,23 +1,23 @@
 {
   "package": "ocaml_db_model",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 53,
-  "creation_timestamp": "2025-07-15T23:15:36.642796",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 50,
+  "creation_timestamp": "2025-08-15T14:31:40.038636",
   "modules": [
     {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Tree.Provide_of_sexp",
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Tree.Provide_of_sexp",
       "library": "ocaml_db_model",
-      "description": "This module provides a function `t_of_sexp` that deserializes S-expressions into a map tree structure using a key module `K`. It operates on `Ppx_sexp_conv_lib.Sexp.t` input and constructs values of type `'a Ocaml_db_model.CoreInt64_extended.Map.Tree.t`. A concrete use case is parsing persisted map data from S-expression format into an in-memory tree representation for efficient querying and manipulation.",
-      "description_length": 408,
+      "description": "Converts S-expressions into a tree-based set structure using 32-bit integers as elements. It provides the `t_of_sexp` function to parse S-expressions into sets, ensuring correct deserialization of nested or flat list representations. This module is useful when loading configuration or persisted data stored in S-expression format into a set structure for efficient membership checks and manipulation.",
+      "description_length": 401,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Tree.Provide_of_sexp",
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Tree.Provide_of_sexp",
       "library": "ocaml_db_model",
-      "description": "This module provides a function `t_of_sexp` that parses S-expressions into a set data structure implemented as a binary tree. It works with elements of type `Elt.t`, which must support conversion from S-expressions. A concrete use case is deserializing persisted integer sets stored in S-expression format for database model configurations.",
-      "description_length": 340,
+      "description": "This module provides a function `t_of_sexp` that parses S-expressions into a tree-based set structure, specifically for elements of type `Elt.t`. It works with ordered data types that support S-expression conversion, typically integers or comparable types. A concrete use case is deserializing persisted integer sets from S-expression formats used in configuration files or database schemas.",
+      "description_length": 391,
       "index": 1,
       "embedding_norm": 1.0
     },
@@ -27,150 +27,38 @@
       "description": "This module provides a function `t_of_sexp` that constructs a map tree from S-expression data, using a provided conversion function for values. It operates on S-expressions and produces a typed map tree structure parameterized by key type `K`. A concrete use case is deserializing persisted map data stored in S-expression format into an in-memory map tree for efficient lookups and traversals.",
       "description_length": 394,
       "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Tree.Provide_of_sexp",
+      "library": "ocaml_db_model",
+      "description": "Converts S-expressions into map tree structures using a specified key module. It provides the `t_of_sexp` function to parse S-expressions into typed map trees, where keys are processed using the provided conversion function. This is useful for deserializing nested map data from configuration files or external data sources.",
+      "description_length": 324,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Tree.Named",
       "library": "ocaml_db_model",
-      "description": "This module implements set operations for named tree structures with `Int64` values. It provides `is_subset` to check if one set is a subset of another and `equal` to test for equality between two sets. These functions support precise comparisons in data modeling scenarios where named hierarchical sets of integers are used, such as tracking identifiers in a database schema.",
-      "description_length": 376,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements set operations for named tree structures with `Int64` values, providing `is_subset` to check subset relationships and `equal` to compare structural equality. It works directly with named tree sets where each node contains an `Int64` value. Concrete use cases include validating hierarchical data constraints and verifying equivalence in tree-based access control models.",
+      "description_length": 393,
+      "index": 4,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Tree.Named",
       "library": "ocaml_db_model",
-      "description": "This module implements set operations for named integer sets, specifically checking if one set is a subset of another and comparing sets for equality. It works with tree-based named sets of 32-bit integers. These functions support precise set validation and hierarchical relationship checks in database modeling scenarios.",
-      "description_length": 322,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Tree.Provide_of_sexp",
-      "library": "ocaml_db_model",
-      "description": "Converts S-expressions into a tree-based set structure using 64-bit integers as elements. It provides the `t_of_sexp` function to parse S-expressions into sets, ensuring correct deserialization of nested or flat list representations. This module is useful when loading predefined sets of integers from configuration files or persisted data in S-expression format.",
-      "description_length": 363,
+      "description": "This module implements set operations for named integer sets, specifically checking if one set is a subset of another and comparing sets for equality. It works with tree-based named sets of 32-bit integers. These functions are used to validate hierarchical relationships and enforce constraints between named collections of identifiers in a database model.",
+      "description_length": 356,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Provide_hash",
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Provide_hash",
       "library": "ocaml_db_model",
-      "description": "This module provides hash folding and hashing operations for sets of type `Ocaml_db_model.CoreInt64_extended.Set.t`. It enables efficient computation of hash values for sets containing elements of type `Elt`, which must be hashable. Concrete use cases include hashing sets of CoreInt64 values for equality checks, caching, or use in hash-based data structures like hash tables.",
-      "description_length": 377,
+      "description": "Implements hash folding for maps with `Int64` keys, allowing structural hashing of map values. Works with `Ocaml_db_model.CoreInt64_extended.Map.t` by recursively hashing both keys and values. Useful for generating consistent hash values for maps used in persistent data storage or equality comparisons.",
+      "description_length": 303,
       "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Elt",
-      "library": "ocaml_db_model",
-      "description": "This module defines operations for handling elements within a set structure, specifically for the `CoreInt32_extended.t` type. It provides functions for serializing and deserializing values to and from S-expressions and binary formats, enabling persistent storage and transmission. The module also includes comparison functionality necessary for maintaining ordered sets.",
-      "description_length": 371,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Table.Provide_of_sexp",
-      "library": "ocaml_db_model",
-      "description": "Converts S-expressions into tables mapping keys to values, where keys are of type `Key.t` and values are of a type that can be constructed from an S-expression. Useful for deserializing structured configuration or database schema definitions from S-expressions into typed tables.",
-      "description_length": 279,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Named",
-      "library": "ocaml_db_model",
-      "description": "This module provides operations to check if one named set of 32-bit integers is a subset of another and to compare two named sets for equality. It works with named sets of type `Ocaml_db_model.CoreInt32_extended.Set.named`. These functions are useful for validating hierarchical relationships or equivalence between named collections of integer identifiers in a database model.",
-      "description_length": 377,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Provide_hash",
-      "library": "ocaml_db_model",
-      "description": "Implements hash folding for maps with `CoreInt32` keys, enabling efficient and deterministic hashing of map values. Works directly with `Ocaml_db_model.CoreInt32_extended.Map.t` structures, using the provided `Key` module for key-specific hashing logic. Useful in serialization, caching, or equality-checking scenarios where structural integrity and performance are critical.",
-      "description_length": 375,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Provide_of_sexp",
-      "library": "ocaml_db_model",
-      "description": "This module provides a function `t_of_sexp` that converts S-expressions into maps with `CoreInt64` keys and arbitrary values. It operates on S-expressions and constructs maps using a provided value conversion function. A concrete use case is parsing configuration or data files into typed maps where keys are 64-bit integers.",
-      "description_length": 325,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Tree",
-      "library": "ocaml_db_model",
-      "description": "This module implements ordered sets of 64-bit integers using balanced binary trees, enabling efficient membership checks, insertion, deletion, and set algebra. It supports ordered traversal, element selection, and conversion to and from lists, arrays, and sequences, with optimized performance for size queries and filtering. A child module provides set comparison operations like `is_subset` and `equal` for modeling hierarchical integer sets, while another enables S-expression deserialization via `t_of_sexp`, facilitating configuration-based set loading. Together, they form a cohesive toolkit for managing and transforming ordered integer sets in structured and hierarchical contexts.",
-      "description_length": 689,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Table.Provide_bin_io",
-      "library": "ocaml_db_model",
-      "description": "This module implements binary serialization and deserialization for a table structure keyed by `Key`, where values are stored as `CoreInt32_extended.Table.t`. It provides bin_io operations including size calculation, reading, writing, and full type class support for binary encoding. Concrete use cases include persisting and transmitting typed key-value tables efficiently in binary format.",
-      "description_length": 391,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Provide_of_sexp",
-      "library": "ocaml_db_model",
-      "description": "Converts S-expressions to sets of 32-bit integers. Works with `Ppx_sexp_conv_lib.Sexp.t` and `Ocaml_db_model.CoreInt32_extended.Set.t`. Useful for deserializing integer set data from S-expression representations, such as when loading configuration or persisted state.",
-      "description_length": 267,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Provide_of_sexp",
-      "library": "ocaml_db_model",
-      "description": "This module provides a function `t_of_sexp` that converts S-expressions into maps with `CoreInt32` keys and arbitrary values. It operates on S-expression data structures and produces maps where keys are of type `CoreInt32.t`. A concrete use case is deserializing map data from S-expression representations, such as when loading configuration or persisted state.",
-      "description_length": 361,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Provide_bin_io",
-      "library": "ocaml_db_model",
-      "description": "This module provides binary serialization and deserialization functions for maps with `int64` keys and arbitrary values. It includes operations for computing binary size, reading and writing map data in binary format, and defining bin readers and writers for the map type. Concrete use cases include persisting int64-keyed maps to disk or transmitting them over a network in a binary format.",
-      "description_length": 391,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Elt",
-      "library": "ocaml_db_model",
-      "description": "This module defines operations for handling 64-bit integer elements within a set structure, including serialization, deserialization, and binary encoding/decoding. It works with the `CoreInt64_extended.t` type, providing functions for size calculation, reading, writing, and defining a comparator for ordering. Concrete use cases include persisting sets of large integers to disk, transmitting them over a network, or maintaining ordered collections in memory.",
-      "description_length": 460,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Table.Provide_of_sexp",
-      "library": "ocaml_db_model",
-      "description": "This module provides a function `t_of_sexp` that constructs a table from S-expression data, using a provided conversion function for values. It operates on S-expressions and produces a table structure specialized for 32-bit integers. A concrete use case is parsing persistent storage formats or configuration files into an in-memory table representation keyed by integers.",
-      "description_length": 372,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Provide_bin_io",
-      "library": "ocaml_db_model",
-      "description": "This module provides binary serialization and deserialization functions for sets of 64-bit integers. It supports operations like calculating the size of a set in binary format, writing a set to a binary buffer, and reading a set from binary input. Concrete use cases include persisting integer sets to disk or transmitting them over a network in a compact, efficient format.",
-      "description_length": 374,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Key",
-      "library": "ocaml_db_model",
-      "description": "This module defines a key type for maps based on `CoreInt32_extended.t`, providing serialization and deserialization functions for binary and S-expression formats. It includes comparison functionality and type class instances required for using these keys in map structures. Concrete use cases include building persistent or serializable maps where keys are 32-bit integers with extended functionality.",
-      "description_length": 402,
-      "index": 20,
       "embedding_norm": 1.0
     },
     {
@@ -178,268 +66,356 @@
       "library": "ocaml_db_model",
       "description": "This module implements binary serialization and deserialization for hash sets of 32-bit integers. It provides functions to compute binary size, read and write hash set values, and define binary shape and type classes. Concrete use cases include persisting hash sets to disk or transmitting them over a network in a binary format.",
       "description_length": 329,
-      "index": 21,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Provide_hash",
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Provide_of_sexp",
       "library": "ocaml_db_model",
-      "description": "This module implements hash functions for sets of 32-bit integers, providing `hash_fold_t` and `hash` to generate hash values for set instances. It works specifically with `Ocaml_db_model.CoreInt32_extended.Set.t`, a set structure where elements are of type `CoreInt32.t`. It is used when sets of 32-bit integers need to be hashed for use in hash tables or other data structures requiring hashable keys.",
-      "description_length": 403,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Provide_hash",
-      "library": "ocaml_db_model",
-      "description": "Implements hash folding for maps with `Int64` keys, allowing structural hashing of map values. Works directly with `Ocaml_db_model.CoreInt64_extended.Map.t` by recursively hashing both keys and values. Useful for generating consistent hash values for maps used in persistent data structures or equality comparisons.",
-      "description_length": 315,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Hash_set.Provide_of_sexp",
-      "library": "ocaml_db_model",
-      "description": "This module provides a function `t_of_sexp` that parses S-expressions into hash sets of type `Ocaml_db_model.CoreInt32_extended.Hash_set.t`. It works with S-expression values and hash sets containing 32-bit integers. A concrete use case is deserializing configuration data or persisted sets of integers from S-expression format into efficient hash set structures for fast membership checks and updates.",
-      "description_length": 402,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Tree",
-      "library": "ocaml_db_model",
-      "description": "This module implements balanced trees with 64-bit integer keys for efficient ordered map operations, supporting insertion, deletion, lookup, and advanced transformations like merging with conflict resolution, range queries, and symmetric difference folding. It includes a submodule that deserializes S-expressions into tree structures, enabling the loading of persisted map data for in-memory manipulation. Main data types include the tree itself and S-expression representations, with operations such as `insert`, `find`, `merge`, and `t_of_sexp`. Example uses include maintaining ordered datasets, resolving key collisions across maps, and loading tree data from storage for efficient querying.",
-      "description_length": 696,
-      "index": 25,
+      "description": "Converts S-expressions to sets of `CoreInt64_extended` values. Works with `Ppx_sexp_conv_lib.Sexp.t` input and produces `Ocaml_db_model.CoreInt64_extended.Set.t` output. Useful for deserializing sets of 64-bit integers from S-expression representations, such as when loading configuration or persisted data.",
+      "description_length": 307,
+      "index": 8,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Named",
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Provide_bin_io",
       "library": "ocaml_db_model",
-      "description": "This module provides operations to check if one set is a subset of another and to compare sets for equality. It works with named sets of 64-bit integers. These functions are useful for validating hierarchical relationships or equivalence between named integer sets in database models.",
-      "description_length": 284,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Provide_bin_io",
-      "library": "ocaml_db_model",
-      "description": "This module implements binary serialization and deserialization for maps with `int32` keys and arbitrary values. It provides functions to compute binary size, read and write map data in binary format, and define bin_io type representations. It is used when persisting or transmitting int32-keyed maps in a binary format, such as in storage engines or network protocols.",
-      "description_length": 369,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Key",
-      "library": "ocaml_db_model",
-      "description": "This module defines a key type for maps based on `CoreInt64_extended.t`, including serialization functions for binary and S-expression formats. It provides comparison functionality and bin_prot/sexp converters required for persistent storage and communication. Concrete use cases include using `CoreInt64_extended` values as keys in databases or network protocols where strict serialization and ordering are required.",
-      "description_length": 417,
-      "index": 28,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Hash_set.Provide_bin_io",
-      "library": "ocaml_db_model",
-      "description": "This module provides functions for serializing and deserializing hash sets of 64-bit integers using the Bin_prot protocol. It includes operations for measuring size, writing, and reading hash sets in binary format, along with their shape and version-controlled readers and writers. It is used when persisting or transmitting collections of 64-bit integers efficiently in binary, such as in storage systems or network communication.",
-      "description_length": 431,
-      "index": 29,
+      "description": "This module provides binary serialization and deserialization functions for sets of 32-bit integers. It includes operations to compute the size of a set in binary format, read and write sets to binary streams, and define the binary shape and type class instances. Concrete use cases include persisting integer sets to disk or transmitting them over a network in a compact, efficient format.",
+      "description_length": 390,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ocaml_db_model.CoreInt64_extended.Hash_set.Provide_of_sexp",
       "library": "ocaml_db_model",
-      "description": "This module provides a function `t_of_sexp` that parses S-expressions into hash sets of type `Ocaml_db_model.CoreInt64_extended.Hash_set.t`. It works with S-expressions and hash sets containing `CoreInt64_extended` values. A concrete use case is deserializing persisted hash sets from S-expression format during application startup or configuration loading.",
-      "description_length": 357,
+      "description": "This module provides a function `t_of_sexp` that parses S-expressions into hash sets of type `Ocaml_db_model.CoreInt64_extended.Hash_set.t`. It works with S-expressions and hash sets of a specified element type `X`. A concrete use case is deserializing persisted hash sets from S-expression format during application startup or configuration loading.",
+      "description_length": 350,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Provide_of_sexp",
+      "library": "ocaml_db_model",
+      "description": "This module provides a function `t_of_sexp` that deserializes S-expressions into maps with `int32` keys and values of a generic type. It operates on `Ppx_sexp_conv_lib.Sexp.t` input and constructs values of `Ocaml_db_model.CoreInt32_extended.Map.t`. A concrete use case is parsing configuration or database schema definitions from S-expression formatted data into typed map structures for further processing.",
+      "description_length": 408,
+      "index": 11,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Provide_hash",
+      "library": "ocaml_db_model",
+      "description": "This module provides hash folding and hashing operations for sets of type `Ocaml_db_model.CoreInt32_extended.Set.t`. It enables efficient computation of hash values for sets containing elements of type `Elt`, which must be hashable. Concrete use cases include hashing sets of 32-bit integers for equality checks or as keys in hash tables.",
+      "description_length": 338,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Named",
+      "library": "ocaml_db_model",
+      "description": "This module provides operations to check if one set is a subset of another and to compare sets for equality. It works with named sets of 64-bit integers. These functions are useful for validating hierarchical relationships or equivalence between sets in database models.",
+      "description_length": 270,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Provide_bin_io",
+      "library": "ocaml_db_model",
+      "description": "This module provides binary serialization and deserialization functions for sets of 64-bit integers. It includes operations for measuring size, writing, and reading set values in binary format, supporting direct disk or network I/O. Concrete use cases include persisting integer sets to files or transmitting them over sockets efficiently.",
+      "description_length": 339,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Hash_set.Provide_of_sexp",
+      "library": "ocaml_db_model",
+      "description": "Converts S-expression values to hash sets with Int32 keys using the provided module X for element conversion. Works directly with `Ppx_sexp_conv_lib.Sexp.t` and `Ocaml_db_model.CoreInt32_extended.Hash_set.t` types. Useful for deserializing Int32-based hash sets from S-expressions in configuration or data exchange contexts.",
+      "description_length": 324,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Named",
+      "library": "ocaml_db_model",
+      "description": "This module provides operations to check if one named set is a subset of another and to compare two named sets for equality. It works with named sets of type `Ocaml_db_model.CoreInt32_extended.Set.named`, which represent collections of 32-bit integers with associated names. These functions are useful for validating hierarchical relationships and ensuring consistency in named set data structures used in database models.",
+      "description_length": 422,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Table.Provide_bin_io",
+      "library": "ocaml_db_model",
+      "description": "This module implements binary serialization and deserialization for a table structure where keys are of type `Key.t` and values are stored in a table specific to 64-bit integers. It provides functions to compute the binary shape, size, and perform reading and writing operations for the table type using the Bin_prot framework. Concrete use cases include persisting and transmitting indexed integer data efficiently in binary format, such as storing database records or caching numeric values by key.",
+      "description_length": 500,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Elt",
+      "library": "ocaml_db_model",
+      "description": "This module defines operations for handling elements within a set structure, specifically working with the `Ocaml_db_model.CoreInt32_extended.t` type. It provides functions for serialization to and from S-expressions and binary formats, including size calculation, reading, and writing operations. These capabilities support efficient storage, transmission, and comparison of set elements in persistent and networked systems.",
+      "description_length": 425,
+      "index": 18,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Provide_of_sexp",
+      "library": "ocaml_db_model",
+      "description": "This module provides a function `t_of_sexp` that converts S-expressions into maps with `CoreInt64` keys and arbitrary values. It operates on data structures of type `'a Ocaml_db_model.CoreInt64_extended.Map.t`, where keys are 64-bit integers. A concrete use case is parsing configuration or database schema files encoded in S-expressions into typed map structures for efficient lookup and manipulation.",
+      "description_length": 402,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Hash_set.Provide_bin_io",
+      "library": "ocaml_db_model",
+      "description": "This module provides functions for serializing and deserializing hash sets of 64-bit integers using the Bin_prot binary protocol. It includes operations for measuring size, writing to a buffer, reading from a buffer, and defining the binary shape and type for these hash sets. Concrete use cases include persisting hash sets to disk or transmitting them over a network in a compact, efficient binary format.",
+      "description_length": 407,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Key",
+      "library": "ocaml_db_model",
+      "description": "This module defines a key type for maps based on `CoreInt64_extended.t`, including serialization and deserialization functions for binary and S-expression formats. It provides comparison functionality using a comparator witness, ensuring proper ordering and equality checks. It is used to create and manipulate map keys in persistent or networked data structures where `CoreInt64_extended` values serve as identifiers or indices.",
+      "description_length": 429,
+      "index": 21,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Provide_hash",
+      "library": "ocaml_db_model",
+      "description": "This module provides hash folding and hashing operations for sets of 64-bit integers. It enables efficient computation of hash values for set instances using a provided hash state. Concrete use cases include hashing sets for use in hash tables or as part of larger data structure serialization.",
+      "description_length": 294,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Provide_bin_io",
+      "library": "ocaml_db_model",
+      "description": "This module provides binary serialization and deserialization functions for maps with `int64` keys and arbitrary values. It includes operations for computing binary size, reading and writing map data in binary format, and defining bin readers and writers. Concrete use cases include persisting int64-keyed maps to disk or transmitting them over a network in a binary format.",
+      "description_length": 374,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Provide_bin_io",
+      "library": "ocaml_db_model",
+      "description": "This module provides binary serialization and deserialization functions for maps with `int32` keys and arbitrary values. It includes operations for computing binary size, writing to and reading from binary formats, and defining bin_io type classes for efficient data persistence and transmission. Concrete use cases include storing and retrieving large integer-keyed map data in databases or over network protocols.",
+      "description_length": 415,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Table.Provide_of_sexp",
+      "library": "ocaml_db_model",
+      "description": "Converts S-expressions into a table structure where keys are of type `Key.t` and values are of a specified type, using a provided function to parse the S-expression. It operates on and returns standard OCaml data structures compatible with S-expression parsing. This is useful when deserializing nested S-expressions representing key-value pairs into a typed table format for database models.",
+      "description_length": 392,
+      "index": 25,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Elt",
+      "library": "ocaml_db_model",
+      "description": "This module defines a set element type based on `CoreInt64_extended.t` and includes functions for serialization to and from S-expressions and binary formats. It provides comparison capabilities using a comparator witness, ensuring elements can be efficiently ordered and stored in set structures. It is used when working with sets of extended 64-bit integers that require custom comparison logic and binary encoding.",
+      "description_length": 416,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Table.Provide_of_sexp",
+      "library": "ocaml_db_model",
+      "description": "This module provides a function `t_of_sexp` that constructs a table from S-expression data, using a provided conversion function for values. It operates on S-expressions and produces a table with keys handled by the `Key` module and values of a generic type. A concrete use case is deserializing a persistent integer64-mapped data structure from a configuration or input file.",
+      "description_length": 376,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Key",
+      "library": "ocaml_db_model",
+      "description": "This module defines a key type for maps based on `Ocaml_db_model.CoreInt32_extended.t`, providing serialization and deserialization functions for binary and S-expression formats. It includes comparison functionality and type class instances required for using these keys in map structures. The module is used to ensure correct and consistent handling of map keys in persistent or networked OCaml applications.",
+      "description_length": 409,
+      "index": 28,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Table.Provide_bin_io",
+      "library": "ocaml_db_model",
+      "description": "This module provides binary serialization and deserialization operations for tables with `int32` keys and arbitrary values. It includes functions for computing binary size, reading and writing table data in binary format, and defining bin readers and writers for table types. Concrete use cases include persisting and transmitting table-based data structures in a binary format for efficient storage or network communication.",
+      "description_length": 425,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Tree",
+      "library": "ocaml_db_model",
+      "description": "This module implements a binary tree-based set structure for 32-bit integers, supporting operations like membership testing, insertion, deletion, union, intersection, and ordered traversal. It works with `Int32` values organized in a balanced tree with comparator-based ordering, enabling efficient data processing tasks such as bulk creation from arrays, ordered element selection (e.g., `nth`, `choose_exn`), and property testing with QuickCheck. Key use cases include scenarios requiring fast membership checks, ordered set transformations, and serialization/deserialization workflows.",
+      "description_length": 588,
       "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Map.Tree",
+      "library": "ocaml_db_model",
+      "description": "This module supports creation and manipulation of balanced binary trees mapping `CoreInt64` keys to arbitrary values, with operations for insertion, deletion, multi-value handling, and bulk construction from lists, arrays, or sequences. It provides higher-order transformations like `map`, `fold`, and `filter`, along with range queries, closest-key searches, and serialization to S-expressions, enabling use cases such as transactional data processing, configuration management, or time-series analysis where immutability and efficient ordered lookups are critical. Utilities for validation, invariants checking, and Quickcheck testing further ensure robust handling of large-scale or complex key-value datasets.",
+      "description_length": 713,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Provide_of_sexp",
+      "library": "ocaml_db_model",
+      "description": "Converts S-expression values to sets of 32-bit integers. Works with `Ppx_sexp_conv_lib.Sexp.t` and `Ocaml_db_model.CoreInt32_extended.Set.t` types. Useful for deserializing integer sets from S-expressions during data parsing or configuration loading.",
+      "description_length": 250,
+      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Tree",
       "library": "ocaml_db_model",
-      "description": "This module implements balanced binary trees for managing immutable, ordered maps with `Int32` keys and arbitrary values, supporting operations like insertion, deletion, lookup, and range queries. It enables advanced transformations such as merging, filtering, and structural validation, while handling duplicates and errors during manipulations. The child module adds S-expression deserialization via `t_of_sexp`, converting structured data into a typed map tree for efficient in-memory querying. Together, they support use cases like dataset merging, ordered traversal, and loading persisted tree structures for immediate use.",
-      "description_length": 628,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Provide_bin_io",
-      "library": "ocaml_db_model",
-      "description": "This module provides binary serialization and deserialization functions for sets of 32-bit integers. It includes operations for measuring size, writing, and reading set values in binary format, supporting direct disk or network I/O. Concrete use cases include persisting integer sets to files or transmitting them over sockets.",
-      "description_length": 327,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Table.Provide_bin_io",
-      "library": "ocaml_db_model",
-      "description": "This module implements binary serialization and deserialization for a table structure where keys are of type `Key.t` and values are stored in a table specific to `CoreInt64_extended`. It provides functions to compute the binary shape, size, and perform reading and writing operations for this table type. Concrete use cases include persisting large integer-mapped data to disk or transmitting it over a network in a binary format.",
-      "description_length": 430,
+      "description": "This module implements balanced tree-based ordered maps with `int32`-like keys and polymorphic values, supporting efficient immutable operations like insertion, deletion, lookup, and range queries. It provides functional transformations (folding, mapping, filtering), structural manipulations (merging, partitioning, symmetric difference), and utilities for validation, testing, and S-expression serialization. Designed for scenarios requiring ordered key traversal, bulk data transformation, and robust error handling in persistent data structures.",
+      "description_length": 549,
       "index": 33,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Provide_of_sexp",
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Map.Provide_hash",
       "library": "ocaml_db_model",
-      "description": "Converts S-expressions to sets of `CoreInt64_extended` values. Works with `Set.t` structures where elements are of type `CoreInt64_extended`. Useful for deserializing sets stored in S-expression format, such as reading configuration or persisted data.",
-      "description_length": 251,
+      "description": "Implements hash folding for maps with 32-bit integer keys, enabling efficient hashing of map values. Works directly with `Ocaml_db_model.CoreInt32_extended.Map.t` structures, using the provided `Key` module for key-specific operations. Useful for persisting or comparing map states in a memory-efficient manner.",
+      "description_length": 311,
       "index": 34,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Set.Tree",
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Set.Tree",
       "library": "ocaml_db_model",
-      "description": "This module manages ordered collections of 32-bit integers using a balanced tree structure, enabling efficient membership checks, insertion, deletion, and set-theoretic operations such as union, intersection, and subset checks. It supports ordered traversal, conversion to sequences or maps, and includes S-expression serialization and deserialization through the `t_of_sexp` function, which is useful for loading persisted integer sets in database configurations. The module also provides named set comparison utilities for validating hierarchical relationships and equality in numerical data models, making it suitable for database indexing and persistent ordered data storage.",
-      "description_length": 679,
+      "description": "This module implements a balanced tree-based set structure for ordered `Int64` elements, supporting set-theoretic operations like union, intersection, and difference, along with ordered traversal, element selection, and transformation to sequences or maps. It provides efficient insertion, deletion, and membership checks under type-specific comparison semantics, alongside utilities for converting from arrays, lists, and S-expressions. Typical use cases include managing large integer datasets requiring ordered queries, merging hierarchical data, or serializing structured sets for storage or transmission.",
+      "description_length": 609,
       "index": 35,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Map",
-      "library": "ocaml_db_model",
-      "description": "This module manages immutable maps with 64-bit integer keys, supporting construction from sequences, arrays, and trees, and handles key collisions through customizable strategies. It enables ordered operations like range queries, closest-key searches, and ranked element retrieval, with validation, symmetric diffs, and predicate-driven traversal. Child modules extend functionality with S-expression and binary serialization, structural hashing, and key comparison, enabling use cases such as database indexing, numerical aggregation, and stateful configuration. Specific operations include parsing maps from S-expressions, persisting maps to disk, hashing map structures, and efficiently merging or querying ordered datasets.",
-      "description_length": 727,
-      "index": 36,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Hash_set",
-      "library": "ocaml_db_model",
-      "description": "This module manages sets of 64-bit integers with operations for creation, membership testing, and serialization. It supports direct manipulation of sets using functions like `of_list` and `mem`, while its child modules handle binary and S-expression serialization. The binary submodule enables efficient storage and transmission with size measurement and version-controlled readers and writers, and the S-expression submodule parses hash sets from S-expressions, useful during configuration loading. Example uses include tracking unique identifiers and persisting sets to disk or sending them over a network.",
-      "description_length": 608,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Table",
-      "library": "ocaml_db_model",
-      "description": "This module handles key-value tables with 32-bit integer values, supporting both binary and S-expression serialization. It provides direct access to table operations while integrating bin_io functionality for efficient binary encoding and decoding, including size calculation and type class support. The `t_of_sexp` function allows parsing tables from S-expressions using a custom value converter, enabling flexible configuration and storage workflows. Use cases include persisting tables to disk, transmitting structured data over a network, or loading integer-keyed configurations from text files.",
-      "description_length": 599,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Map",
-      "library": "ocaml_db_model",
-      "description": "This module manages associative containers mapping 32-bit integer keys to arbitrary values, supporting efficient construction from lists, arrays, and hashtables while resolving duplicates through customizable strategies. It provides operations for functional transformations (fold, filter, partition), ordered queries (range, binary search), and error-aware bulk updates, ensuring data integrity through invariant checks and result types. Child modules extend functionality with S-expression and binary serialization, hash folding, and key-specific comparison and serialization logic. Examples include building high-performance data pipelines, persisting maps to disk, validating keyed data structures, and efficiently loading and querying structured, ordered map data from serialized inputs.",
-      "description_length": 792,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Hash_queue",
-      "library": "ocaml_db_model",
-      "description": "This module provides operations to manage a hybrid data structure combining a hash table with a queue, enabling efficient key-based lookups and ordered element traversal. It supports functional and imperative manipulations such as enqueueing/dequeueing at either end, moving elements on access, key-driven removals, and serialization, all while preserving invariants and handling errors explicitly. The structure is particularly suited for scenarios requiring both fast keyed access and strict element ordering, such as priority-aware caches or transaction queues with keyed dependencies.",
-      "description_length": 588,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Set",
-      "library": "ocaml_db_model",
-      "description": "This module manages ordered sets of 64-bit integers with efficient operations for membership, insertion, deletion, and set algebra, using balanced binary trees for performance. It supports serialization, deserialization, and binary encoding via functions that enable persistence, transmission, and in-memory manipulation of integer sets. Submodules provide hashing, S-expression conversion, and comparison operations like subset and equality checks, enabling use cases such as caching, configuration loading, and hierarchical modeling. Specific capabilities include converting sets to and from lists, computing binary sizes, and validating set relationships in database contexts.",
-      "description_length": 679,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Hex",
-      "library": "ocaml_db_model",
-      "description": "This module implements hexadecimal string encoding and decoding for 64-bit integers, supporting operations like conversion to and from strings, binary serialization, and comparison. It works with the `t` type, which represents a 64-bit integer in hexadecimal form. Use this module when handling unique identifiers or binary data that must be stored or transmitted as hexadecimal strings, such as in databases or network protocols.",
-      "description_length": 430,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Set",
-      "library": "ocaml_db_model",
-      "description": "This module implements an ordered, immutable set structure for 32-bit integers, supporting efficient membership queries, functional transformations like union and intersection, and ordered traversal. It includes operations for aggregation (e.g., sum), element retrieval (e.g., max_elt_exn), and binary search, along with serialization to S-expressions and binary formats for storage or transmission. Submodules handle named set comparisons, S-expression conversion, hashing, and binary I/O, enabling use cases such as database configuration loading, property-based testing, and persistent storage of integer collections. Specific functionality includes checking subset relationships, converting S-expressions to sets, and hashing sets for use in key-value structures.",
-      "description_length": 767,
-      "index": 43,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Replace_polymorphic_compare",
-      "library": "ocaml_db_model",
-      "description": "This module defines comparison operators and functions for the `t` type, including equality checks, ordering relations, and min/max selection. It provides concrete implementations of standard comparison operations tailored to work directly with values of type `t`. These functions are used when comparing and ordering values in data processing tasks such as sorting, filtering, and selecting extremal values.",
-      "description_length": 408,
-      "index": 44,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "Ocaml_db_model.CoreInt64_extended.Hash_queue",
       "library": "ocaml_db_model",
-      "description": "This module implements a hybrid data structure combining a hash table with a deque, enabling efficient key-based access and ordered queue operations. It supports Int64-keyed storage of arbitrary elements with operations for insertion, deletion, reordering, traversal, aggregation, and serialization, while maintaining both keyed lookups and sequential processing capabilities. Typical applications include managing caches with temporal ordering, processing event streams requiring both keyed updates and FIFO/LIFO semantics, and handling sequences where elements must be accessed by identifier and manipulated at both ends of the queue.",
-      "description_length": 636,
-      "index": 45,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended.Table",
-      "library": "ocaml_db_model",
-      "description": "This module organizes data into tables with keys of type `Key.t` and typed values, supporting both structured deserialization from S-expressions and efficient binary serialization. It includes operations to build and manipulate tables directly, as well as specialized submodules for parsing configurations or schemas from S-expressions and for serializing integer-mapped data to binary formats. You can, for example, load a database schema from an S-expression or serialize a large dataset of integer keys to disk. The combination of direct table operations and focused submodules enables flexible data handling across structured text and binary formats.",
-      "description_length": 654,
-      "index": 46,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt32_extended.Hash_set",
-      "library": "ocaml_db_model",
-      "description": "This module manages hash sets of 32-bit integers with efficient membership checks and supports creation from lists and serialization via S-expressions and binary formats. It includes core operations like `create`, `of_list`, and conversion functions, while its submodules handle binary I/O and S-expression parsing. You can serialize sets to disk using binary format or load them from S-expressions, enabling flexible data persistence and interchange. These capabilities support use cases such as storing and transmitting compact, efficiently accessible collections of integers.",
-      "description_length": 578,
-      "index": 47,
+      "description": "This module implements a hybrid data structure combining a hash table with a doubly-ended queue, enabling efficient key-based and positional operations on `Int64`-keyed elements. It supports insertion (front/back), in-place updates, membership checks, and atomic moves while maintaining O(1) complexity for core operations like enqueueing, dequeuing, and key lookups. The structure is particularly suited for applications requiring both fast access by identifier (e.g., caching systems) and ordered traversal (e.g., job scheduling pipelines).",
+      "description_length": 542,
+      "index": 36,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ocaml_db_model.CoreInt64_extended.Replace_polymorphic_compare",
       "library": "ocaml_db_model",
-      "description": "This module defines standard comparison operators and helper functions for the `CoreInt64_extended.t` type, including equality, ordering, and min/max selection. It provides concrete implementations of `(=)`, `(<>)`, `(<)`, `(<=)`, `(>)`, `(>=)`, `equal`, `compare`, `min`, and `max` tailored to work directly with `CoreInt64_extended.t` values. These functions are useful when sorting, filtering, or comparing 64-bit integer values in contexts such as database queries or arithmetic logic.",
-      "description_length": 489,
-      "index": 48,
+      "description": "This module defines standard comparison operators and functions for a 64-bit integer type, enabling direct value comparisons, equality checks, and ordering. It works specifically with the `t` type, which represents a 64-bit integer, and includes operations such as `<`, `>`, `=`, `compare`, `min`, and `max`. These functions are useful for sorting, filtering, and validating 64-bit integer values in data processing and database operations.",
+      "description_length": 440,
+      "index": 37,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Set",
+      "library": "ocaml_db_model",
+      "description": "This module offers set-theoretic operations (union, intersection, difference, subset checks) and element-level manipulations (addition, removal, selection) for ordered collections of extended 64-bit integers (`CoreInt64_extended.t`), implemented via balanced trees to ensure efficient comparisons and ordered traversals. It supports advanced transformations like partitioning, grouping, and binary search, alongside serialization mechanisms (Bin_prot, S-expressions, hashing) and named set semantics for validating hierarchical relationships or equivalences in database systems. Use cases include managing large integer domains with strict ordering requirements, optimizing storage/transmission through compact binary formats, and enforcing structural constraints in data modeling contexts.",
+      "description_length": 790,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Replace_polymorphic_compare",
+      "library": "ocaml_db_model",
+      "description": "This module defines standard comparison operators and functions for a specific 32-bit integer type used in a database model. It supports direct comparisons like greater than, less than, and equality, along with utilities to compute minimum and maximum values. Concrete use cases include sorting, filtering, and validating 32-bit integer values within database operations.",
+      "description_length": 371,
+      "index": 39,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Table",
+      "library": "ocaml_db_model",
+      "description": "This module offers hash table operations centered on 64-bit integer keys paired with arbitrary values, supporting transformations, filtering, and atomic manipulations of entries. It includes serialization to S-expressions and binary formats, handles multi-value associations, and provides key-aware mapping or partitioning for complex data workflows. Designed for database or state management scenarios requiring efficient numeric key handling, persistence, and domain-specific operations like atomic counter updates.",
+      "description_length": 517,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Hex",
+      "library": "ocaml_db_model",
+      "description": "This module implements hexadecimal string encoding and decoding for 64-bit integers, supporting operations like conversion to and from strings, binary serialization, and comparison. It works with the `t` type, which represents a 64-bit integer in hexadecimal form. Use this module when handling unique identifiers or binary data that must be stored or transmitted as hexadecimal strings, such as in database keys or network protocols.",
+      "description_length": 434,
+      "index": 41,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Hash_queue",
+      "library": "ocaml_db_model",
+      "description": "This module implements a hybrid data structure combining a hash table with a doubly-ended queue, enabling efficient key-based retrieval and ordered element traversal. It operates on key-value pairs where keys are `CoreInt32.t` and values are polymorphic, supporting operations like insertion (front/back), in-place updates, membership checks, and ordered removals while preserving queue discipline. The structure is suited for scenarios requiring both fast associative access and strict element ordering, such as priority-aware caching, task scheduling with dynamic reordering, or stream processing with keyed lookups.",
+      "description_length": 618,
+      "index": 42,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended.Hash_set",
+      "library": "ocaml_db_model",
+      "description": "This module implements hash sets of 64-bit integers with operations for creation, conversion from lists, and S-expression and binary serialization. It supports data types including CoreInt64_extended.t values, S-expressions, and binary buffers. Concrete use cases include efficiently managing collections of 64-bit identifiers and persisting or transmitting these sets in either S-expression or binary format.",
+      "description_length": 409,
+      "index": 43,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Hash_set",
+      "library": "ocaml_db_model",
+      "description": "This module implements hash sets of 32-bit integers with operations for creation, conversion from lists, and serialization. It supports S-expression and binary input/output for persistence and data exchange, including functions to serialize, deserialize, and compute binary sizes. Concrete use cases include storing and transmitting sets of Int32 values efficiently in binary or S-expression formats.",
+      "description_length": 400,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt32_extended.Table",
+      "library": "ocaml_db_model",
+      "description": "This module offers a comprehensive set of operations for hash tables with `CoreInt32_extended.t` keys, supporting functional transformations (map, filter, partition), in-place modifications (incr, merge, filter_map), and rich querying (find_with, existsi, choose). It works with key-value pairs where keys are 32-bit integers wrapped in a specialized type, and values can be arbitrary, enabling efficient data association and structural manipulation. Designed for database modeling, it facilitates use cases like persistent data storage with binary/S-expression serialization, atomic counter updates, multi-value associations, and complex table transformations with customizable key-value callbacks.",
+      "description_length": 699,
+      "index": 45,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ocaml_db_model.CoreInt32_extended.Hex",
       "library": "ocaml_db_model",
-      "description": "This module implements hexadecimal serialization and comparison for a 32-bit integer type, supporting operations like binary and S-expression encoding/decoding, string conversion, and hashing. It works directly with the `t` type, which is an alias for a 32-bit integer, and provides concrete functions for persisting, transmitting, or transforming integer values in various formats. Use cases include database serialization, network protocol encoding, and structured logging where compact, human-readable hex representations are required.",
-      "description_length": 538,
-      "index": 49,
+      "description": "This module implements hexadecimal serialization and comparison for a 32-bit integer type, supporting operations like binary encoding/decoding, S-expression conversion, string formatting, and hashing. It works directly with the `t` type, which is an alias for a specialized 32-bit integer representation. Use this module when persisting or transmitting 32-bit integer values in a human-readable hex format, such as logging, network protocols, or storage backends.",
+      "description_length": 463,
+      "index": 46,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Ocaml_db_model.CoreInt64_extended",
+      "library": "ocaml_db_model",
+      "description": "This module provides extended 64-bit integer operations including arithmetic, bitwise manipulation, numeric validation, and controlled rounding, with conversions to and from float, int32, int64, and nativeint types. It supports structured data handling through comparison logic, serialization to binary/Yojson formats, and integration with sets, maps, and queues where 64-bit integers serve as keys or elements. Designed for low-level numeric processing, it addresses use cases in database state management, unique identifier generation, and systems requiring precise bit-level operations or property-based testing.",
+      "description_length": 615,
+      "index": 47,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ocaml_db_model.CoreInt32_extended",
       "library": "ocaml_db_model",
-      "description": "This module enhances 32-bit integer handling with arithmetic, bitwise, and conversion operations, including clamping, validation, and serialization. It supports specialized data structures such as maps, sets, and hybrid queue-tables, enabling efficient key-based access, ordered traversal, and functional transformations. You can serialize integer collections to binary or S-expressions, perform property-based testing, or manage priority queues with strict ordering and keyed lookups. Submodules extend these capabilities with hash folding, custom comparison logic, and hexadecimal encoding, supporting use cases from database systems to network protocols.",
-      "description_length": 657,
-      "index": 50,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Ocaml_db_model.CoreInt64_extended",
-      "library": "ocaml_db_model",
-      "description": "This module offers a full suite of 64-bit integer operations, from arithmetic and bitwise manipulation to controlled rounding and cross-type conversion, while integrating data structures like maps, sets, and hybrid queue-tables keyed by these integers. It supports direct numeric processing with functions for validation, clamping, and random generation, alongside child modules that enable ordered set algebra, efficient serialization to JSON and binary, and hexadecimal encoding for identifiers. You can build and query integer-keyed maps with custom collision handling, perform set operations with ordered or hashed structures, or serialize data for storage and transmission using versioned binary formats. Additional utilities include comparison operators, hybrid Int64-indexed deques, and S-expression-based configuration loading for structured datasets.",
-      "description_length": 859,
-      "index": 51,
+      "description": "This module provides safe numeric operations, bitwise manipulations, and validation for a 32-bit integer type, supporting conversions to/from floats, integers, and serialized formats like JSON and S-expressions. It integrates with data structures such as maps, sets, and hash tables for key-based storage and retrieval, while enabling low-level bit reinterpretation, byte swapping, and alignment to multiples. Designed for database modeling and systems programming, it facilitates precise numeric constraints, property-based testing, and efficient binary serialization in contexts requiring strict type safety and interoperability.",
+      "description_length": 631,
+      "index": 48,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Ocaml_db_model",
       "library": "ocaml_db_model",
-      "description": "This module provides robust handling of 32-bit and 64-bit integers with comprehensive arithmetic, bitwise, and conversion operations, including clamping, validation, and serialization. It integrates specialized data structures such as maps, sets, hybrid queue-tables, and deques keyed by integers, supporting efficient lookups, ordered traversal, and functional transformations. You can serialize integer-based collections to binary, JSON, or S-expressions, manage priority queues with strict ordering, or perform set algebra with custom comparison logic. Use cases include building versioned data formats, implementing network protocols, and managing structured datasets with strong numeric semantics.",
-      "description_length": 702,
-      "index": 52,
+      "description": "This module implements precise 32-bit and 64-bit integer abstractions with safe arithmetic, bitwise operations, and serialization to formats like JSON and binary. It supports key-based data structures such as maps and sets, and enables low-level bit reinterpretation, byte swapping, and alignment. It is used for database modeling, unique identifier generation, and systems programming where strict numeric constraints and interoperability are required.",
+      "description_length": 453,
+      "index": 49,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
     "total_modules_in_package": 53,
-    "meaningful_modules": 53,
-    "filtered_empty_modules": 0,
-    "retention_rate": 1.0
+    "meaningful_modules": 50,
+    "filtered_empty_modules": 3,
+    "retention_rate": 0.9433962264150944
   },
   "statistics": {
-    "max_description_length": 859,
-    "min_description_length": 251,
-    "avg_description_length": 472.50943396226415,
-    "embedding_file_size_mb": 0.19286346435546875
+    "max_description_length": 790,
+    "min_description_length": 250,
+    "avg_description_length": 434.1,
+    "embedding_file_size_mb": 0.7249984741210938
   }
 }

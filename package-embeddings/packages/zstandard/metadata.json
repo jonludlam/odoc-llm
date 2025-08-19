@@ -1,176 +1,32 @@
 {
   "package": "zstandard",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 33,
-  "creation_timestamp": "2025-07-15T23:13:25.611961",
+  "creation_timestamp": "2025-08-15T12:28:54.017387",
   "modules": [
     {
-      "module_path": "Zstandard.Dictionary.Training_algorithm.Cover",
-      "library": "zstandard",
-      "description": "This module implements the Cover algorithm for dictionary training in Zstandard compression. It provides parameters and configuration for optimizing dictionary creation using sample data segments, controlling segment size, dmer size, optimization steps, and thread usage. Concrete use cases include tuning compression dictionaries for specific data types like logs or JSON to improve compression ratios and speed.",
-      "description_length": 413,
+      "module_path": "Zstd_bindings.C.Dictionary.Cover_params",
+      "library": "zstandard.bindings",
+      "description": "This module defines a structure for configuring dictionary compression parameters, specifically for the COVER algorithm. It includes fields to set the k, d, and steps values, which control the dictionary learning process, along with the number of threads and a split point for data partitioning. These parameters are used to fine-tune compression efficiency and performance when building dictionaries from sample data.",
+      "description_length": 418,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Zstandard.Dictionary.Training_algorithm.Fast_cover",
-      "library": "zstandard",
-      "description": "This module implements a fast dictionary training algorithm for Zstandard compression, optimizing dictionary parameters through multi-threaded sampling and frequency analysis. It operates on byte sequences and dictionary configurations, tuning segment size, dmer size, and frequency array parameters to improve compression efficiency. It is used to generate optimized dictionaries for real-time compression scenarios where small data samples are available for training.",
-      "description_length": 469,
+      "module_path": "Zstd_bindings.C.Bulk_processing_dictionary.Decompression",
+      "library": "zstandard.bindings",
+      "description": "This module provides functions for creating and managing decompression dictionaries used in bulk processing scenarios. It works with raw memory pointers and size values to handle dictionary allocation, freeing, and decompression operations. Concrete use cases include optimizing repeated decompression tasks by reusing dictionary data, reducing overhead when processing multiple compressed blocks with shared context.",
+      "description_length": 417,
       "index": 1,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Zstandard.Streaming.Decompression",
-      "library": "zstandard",
-      "description": "This module streams decompression of Zstandard-compressed data from input buffers to output buffers, handling partial consumption and production. It works with `Bigstring.t` buffers and a streaming decompression state object. Use it to decompress large data streams incrementally, such as network payloads or disk files, where memory constraints or real-time processing are critical.",
-      "description_length": 383,
+      "module_path": "Zstd_bindings.C.Streaming.Compression",
+      "library": "zstandard.bindings",
+      "description": "This module manages streaming compression using Zstandard. It provides functions to create, initialize, and free compression contexts, compress data incrementally, and flush or end a compression stream. It works directly with input and output buffers, making it suitable for compressing large data streams that do not fit in memory, such as network transmissions or file streaming.",
+      "description_length": 381,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Bulk_processing_dictionary.Compression",
-      "library": "zstandard",
-      "description": "This module implements bulk compression using a precomputed dictionary, enabling efficient compression of multiple inputs that share common data patterns. It works with dictionary-based compression contexts and input/output buffers, specifically optimized for scenarios like compressing many small files or messages with shared content. The `compress` function applies the dictionary to an input buffer using a provided context, writing the compressed result to an output buffer.",
-      "description_length": 479,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Dictionary.Training_algorithm",
-      "library": "zstandard",
-      "description": "This module orchestrates dictionary training for Zstandard compression by combining sample data analysis with algorithmic optimization. It supports two core algorithms: one focusing on precise dictionary construction through segment and dmer tuning, and another accelerating training with multi-threaded frequency analysis for real-time use cases. Key data types include byte sequences, dictionary configurations, and frequency arrays, with operations to adjust segment size, dmer length, and optimization steps. Examples include training a dictionary from log files to boost compression efficiency or optimizing parameters for fast compression of small JSON payloads.",
-      "description_length": 668,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Zstandard.Bulk_processing_dictionary.Decompression",
-      "library": "zstandard",
-      "description": "This module provides a way to decompress data using a preloaded dictionary for improved performance and compression ratio. It works with input and output buffers, a decompression context, and a dictionary-based decompression structure. Use this when repeatedly decompressing small data chunks that share common prefixes or patterns, such as log entries or network payloads.",
-      "description_length": 373,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Streaming.Compression",
-      "library": "zstandard",
-      "description": "This module implements streaming compression using the Zstandard algorithm, allowing incremental compression of data across multiple function calls. It operates on `Bigstring` input and output buffers, managing internal state to handle partial data processing and buffer constraints. Use cases include compressing large data streams that exceed available memory, such as network transmissions or file encoding, where data must be processed in chunks.",
-      "description_length": 450,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Zstandard.Bulk_processing_dictionary",
-      "library": "zstandard",
-      "description": "This module enables efficient compression and decompression of multiple small data chunks that share common content, using precomputed dictionaries to improve performance and compression ratios. It provides dictionary-based contexts, input/output buffers, and functions to compress and decompress data streams, particularly suited for handling repetitive data like logs or network messages. For example, it can compress a series of JSON records with shared keys or decompress a stream of log entries using a shared dictionary. The main data types include buffers, dictionary contexts, and compression/decompression structures that bind inputs and outputs to preloaded dictionaries.",
-      "description_length": 681,
-      "index": 7,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.With_explicit_context",
-      "library": "zstandard",
-      "description": "This module compresses and decompresses data using explicitly managed contexts, allowing efficient reuse of resources across multiple operations. It works with input and output buffers, compression levels, and context types specific to Zstandard. Use this when performing repeated compression or decompression tasks, such as processing streaming data or handling multiple files, to reduce memory overhead and improve performance.",
-      "description_length": 429,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Decompression_context",
-      "library": "zstandard",
-      "description": "This module provides functions to create and manage decompression contexts for processing Zstandard-compressed data in streaming scenarios. It works with the `t` type representing a decompression context state. Concrete use cases include incremental decompression of large data streams where buffer sizes are constrained, such as network transmission or file decompression in chunks.",
-      "description_length": 383,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Streaming",
-      "library": "zstandard",
-      "description": "This module provides streaming compression and decompression capabilities using the Zstandard algorithm, operating on `Bigstring.t` buffers to handle large data incrementally. It maintains internal state across calls, allowing partial input consumption and output production, which is essential for processing data streams that exceed memory limits or require real-time handling. Functions like `compress` and `decompress` must be called repeatedly until input is fully processed, with the caller managing buffer space checks. Examples include compressing network transmissions or decompressing disk files in chunks without loading the entire data into memory.",
-      "description_length": 660,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Input",
-      "library": "zstandard",
-      "description": "This module provides functions to create input sources for compression or decompression operations using the Zstandard library. It supports various data types such as OCaml strings, bytes, bigstrings, and iobufs, allowing efficient handling of input data without unnecessary copies. Use cases include streaming compression or decompression from memory buffers, reading from iobufs for network or file data, and working with large datasets using bigstrings.",
-      "description_length": 456,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Zstandard.Dictionary",
-      "library": "zstandard",
-      "description": "This module trains dictionaries for Zstandard compression using arrays of string samples, producing optimized dictionaries that improve compression ratios for structured data like logs or JSON. It supports both simple and bulk-processing APIs, allowing single-shot dictionary generation or iterative training across large datasets. The core functionality includes configuring segment sizes, dmer lengths, and optimization strategies, with multi-threaded support for accelerating frequency analysis during training. Example uses include building a custom dictionary from a set of log lines to compress similar data more efficiently or tuning parameters for real-time compression of small JSON payloads.",
-      "description_length": 701,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Output",
-      "library": "zstandard",
-      "description": "This module defines output targets for Zstandard compression operations, specifying where compressed data is written. It supports writing into bigstrings, Iobufs, or allocating new strings or bigstrings to hold the result. These outputs are used when invoking compression functions to control buffer management and memory allocation strategies.",
-      "description_length": 344,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Compression_context",
-      "library": "zstandard",
-      "description": "This module manages compression contexts for the Zstandard compression library, enabling efficient multi-step compression operations. It provides functions to create and free contexts, which are required for streaming compression and bulk dictionary processing. Concrete use cases include compressing large data streams in chunks or reusing a dictionary across multiple compression operations to improve ratio and performance.",
-      "description_length": 426,
-      "index": 14,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard.Simple_dictionary",
-      "library": "zstandard",
-      "description": "This module provides single-step compression and decompression functions that incorporate a dictionary to improve compression ratios on small data. It operates on input and output buffers using a provided dictionary, which must be supplied at both compression and decompression stages. It is particularly useful when compressing many small, similar data samples such as log entries or network payloads.",
-      "description_length": 402,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Zstandard.Simple",
-      "library": "zstandard",
-      "description": "This module provides single-step compression and decompression of data using the Zstandard algorithm. It operates on input and output buffers provided via the `Input` and `Output` types, handling exactly one compression or decompression operation per call. It is suitable for compressing or decompressing complete data frames in memory, such as when sending or receiving compressed network payloads or processing compressed files in one pass.",
-      "description_length": 442,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstandard",
-      "library": "zstandard",
-      "description": "This module implements the Zstandard compression algorithm for high-speed, lossless compression and decompression of data in memory and streaming contexts. It supports single-step and multi-step operations, with adjustable compression levels up to ultra settings, and integrates dictionary-based compression for improved efficiency on repetitive data. Core data types include buffers, contexts, and input/output targets, enabling use cases such as real-time network compression, batch processing with shared dictionaries, and streaming operations on large datasets. Submodules handle dictionary training, streaming compression, context management, and input/output integration, allowing fine-grained control over memory usage and performance.",
-      "description_length": 742,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstd_bindings.C.Context.Decompression",
-      "library": "zstandard.bindings",
-      "description": "This module manages decompression contexts for the Zstandard (Zstd) compression algorithm. It provides functions to create and free decompression contexts, as well as perform decompression operations by processing compressed input buffers into output buffers. Direct use cases include streaming or block-based decompression of Zstd-compressed data in applications like file readers or network protocol parsers.",
-      "description_length": 410,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstd_bindings.C.Context.Compression",
-      "library": "zstandard.bindings",
-      "description": "This module provides functions for creating, destroying, and using Zstandard compression contexts. It operates on raw memory pointers and sizes to perform compression operations with configurable parameters like compression level. Concrete use cases include streaming compression and direct buffer compression with fine-grained control over the compression process.",
-      "description_length": 365,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstd_bindings.C.Dictionary.Cover_params",
-      "library": "zstandard.bindings",
-      "description": "This module defines a structure for configuring dictionary compression parameters, specifically for the Zstandard (Zstd) COVER algorithm. It includes fields to set key values like k, d, steps, thread count, and a split point for data partitioning. These parameters control how the dictionary is built and optimized during compression training.",
-      "description_length": 343,
-      "index": 20,
       "embedding_norm": 1.0
     },
     {
@@ -178,96 +34,240 @@
       "library": "zstandard.bindings",
       "description": "This module manages streaming decompression using Zstandard. It provides functions to create, initialize, and free decompression contexts, along with buffer size hints and a `decompress` function that processes input and output buffers. It works directly with Zstandard decompression contexts and buffer structures, suitable for incremental decompression of large data streams.",
       "description_length": 377,
-      "index": 21,
+      "index": 3,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstd_bindings.C.Context.Decompression",
+      "library": "zstandard.bindings",
+      "description": "This module provides functions for creating and managing a decompression context for the Zstandard (Zstd) compression algorithm. It supports operations like initializing a decompression context, decompressing data, and freeing resources. The module works directly with Zstd decompression contexts and raw memory pointers for input and output buffers. A concrete use case is efficiently decompressing Zstd-compressed data streams in systems requiring high-performance decompression with manual memory management.",
+      "description_length": 511,
+      "index": 4,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstd_bindings.C.Context.Compression",
+      "library": "zstandard.bindings",
+      "description": "This module provides functions for creating, destroying, and using Zstandard compression contexts. It operates on raw memory buffers to perform compression with configurable parameters. Concrete use cases include streaming compression and direct buffer compression with explicit context management.",
+      "description_length": 298,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Zstd_bindings.C.Dictionary.FastCover_params",
       "library": "zstandard.bindings",
-      "description": "This module defines parameters for the FastCover dictionary compression algorithm, including fields like k, d, f, steps, and splitPoint. It works with C-style structures and basic numeric types like unsigned integers and floats. Use this to configure compression settings when building dictionaries for efficient data encoding.",
-      "description_length": 327,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstd_bindings.C.Streaming.Compression",
-      "library": "zstandard.bindings",
-      "description": "This module manages streaming compression using Zstandard. It provides functions to create, initialize, and free compression contexts, compress data incrementally, and flush or end a compression stream. It works directly with input and output buffer structures to handle streaming use cases like compressing large files or network data in chunks.",
-      "description_length": 346,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstd_bindings.C.Bulk_processing_dictionary.Decompression",
-      "library": "zstandard.bindings",
-      "description": "This module provides functions for creating and managing decompression dictionaries used in bulk processing scenarios. It works with raw memory pointers and dictionary structures to enable efficient decompression of multiple data segments. Concrete use cases include accelerating the decompression of large datasets using pre-loaded dictionaries, particularly when handling repeated or similar data streams.",
-      "description_length": 407,
-      "index": 24,
+      "description": "This module defines parameters for the Zstd fastCover dictionary compression algorithm, exposing fields like k, d, f, steps, and splitPoint to configure compression behavior. It works with C-style structures and primitive types such as unsigned integers and floats. Concrete use cases include tuning dictionary generation for speed and compression ratio in data encoding pipelines.",
+      "description_length": 381,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Zstd_bindings.C.Bulk_processing_dictionary.Compression",
       "library": "zstandard.bindings",
-      "description": "This module provides functions for creating, managing, and using compression dictionaries in the context of Zstandard compression. It works with raw memory pointers and sizes to perform dictionary-based compression operations. Concrete use cases include building custom compression dictionaries from training data and applying them during compression for improved efficiency and compression ratios.",
-      "description_length": 398,
-      "index": 25,
+      "description": "This module provides functions for creating, compressing, and freeing compression structures that utilize a dictionary for bulk processing. It operates on compression contexts and raw memory buffers, enabling dictionary-based compression of data streams. Concrete use cases include efficient compression of repetitive data such as log files or network payloads using precomputed dictionaries.",
+      "description_length": 392,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Zstd_bindings.C.Context",
       "library": "zstandard.bindings",
-      "description": "This module manages both compression and decompression contexts for the Zstandard (Zstd) algorithm, enabling efficient handling of compressed data streams. It supports key operations such as creating and destroying contexts, processing input and output buffers, and configuring compression parameters like level. Users can perform streaming compression or decompression, compress raw buffers directly, or integrate Zstd into file and network data pipelines with precise control over memory and performance.",
-      "description_length": 506,
-      "index": 26,
+      "description": "This module provides low-level operations for managing Zstandard compression and decompression contexts. It works with raw memory buffers and context structures to enable direct control over compression parameters and streaming behavior. Concrete use cases include implementing custom compression pipelines and high-performance data decompression with precise memory management.",
+      "description_length": 378,
+      "index": 8,
       "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Zstd_bindings.C.Simple_dictionary",
-      "library": "zstandard.bindings",
-      "description": "This module provides low-level compression and decompression functions that utilize a preloaded dictionary. It operates on raw memory pointers and sizes, working directly with compression and decompression contexts along with dictionary data. Use this when implementing custom streaming or block-based compression workflows with dictionary encoding for improved ratio and performance.",
-      "description_length": 384,
-      "index": 27,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Zstd_bindings.C.Streaming",
-      "library": "zstandard.bindings",
-      "description": "This module provides low-level streaming infrastructure for managing input and output buffers during compression and decompression, centered around `Inbuffer`, `Outbuffer`, and associated contexts. Its core functionality coordinates buffer state and streaming operations, enabling efficient processing of large data streams through incremental reads and writes. The decompression submodule supports Zstandard-based streaming decompression with context management and buffer size hints, while the compression submodule handles Zstandard streaming compression with chunked writes and stream termination. Together, they allow processing data from arbitrary sources such as files or network streams by repeatedly feeding or flushing buffers through initialized compression or decompression contexts.",
-      "description_length": 795,
-      "index": 28,
-      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Zstd_bindings.C.Bulk_processing_dictionary",
       "library": "zstandard.bindings",
-      "description": "This module enables efficient compression and decompression using custom dictionaries, particularly for bulk processing of similar or repeated data streams. It provides low-level operations on raw memory pointers and dictionary structures, supporting dictionary creation, application, and management. With it, you can train and apply Zstandard compression dictionaries to improve compression ratios and decompression speed. For example, you can build a dictionary from a sample dataset and use it to compress or decompress multiple data segments more efficiently.",
-      "description_length": 563,
-      "index": 29,
+      "description": "This module implements dictionary-based compression and decompression for bulk data processing. It operates on raw memory buffers and compression contexts, supporting efficient handling of repetitive data streams. Use it to compress or decompress large volumes of data with shared dictionaries, such as in log aggregation or network packet processing.",
+      "description_length": 351,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstd_bindings.C.Streaming",
+      "library": "zstandard.bindings",
+      "description": "This module implements streaming compression and decompression workflows using Zstandard. It defines buffer structures for managing input and output data, along with context types for maintaining compression and decompression state. Direct use cases include processing large files in chunks, handling compressed network streams, and incremental data encoding or decoding where memory constraints prevent loading entire datasets at once.",
+      "description_length": 436,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Zstd_bindings.C.Simple_dictionary",
+      "library": "zstandard.bindings",
+      "description": "This module provides functions for compressing and decompressing data using a dictionary. It operates on raw memory pointers and works with compression and decompression contexts. Use it when you need to leverage dictionary-based compression for efficient encoding and decoding of data streams.",
+      "description_length": 294,
+      "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Zstd_bindings.C.Dictionary",
       "library": "zstandard.bindings",
-      "description": "This module trains Zstandard dictionaries from sample data buffers using algorithms like Cover and FastCover, operating directly on raw memory pointers to generate optimized compression dictionaries. It returns dictionary sizes or error codes, enabling concrete use cases such as improving compression ratios for specific data types. The Cover submodule configures dictionary training with parameters like k, d, steps, thread count, and split point, while the FastCover submodule provides similar controls with additional fields like f and splitPoint, both working with C-style structures and numeric types. Together, they allow fine-grained control over dictionary generation for efficient data encoding.",
-      "description_length": 705,
-      "index": 30,
+      "description": "This module implements dictionary training for Zstd compression using the COVER and fastCover algorithms. It provides functions to generate dictionaries from raw buffers with configurable parameters like k, d, steps, and splitPoint, returning the size of the resulting dictionary or an error code. The module works directly with C-style pointers and structures to train dictionaries from sample data buffers, optimizing compression for specific data distributions in encoding pipelines.",
+      "description_length": 486,
+      "index": 12,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Zstd_bindings.C",
       "library": "zstandard.bindings",
-      "description": "This module provides low-level Zstandard compression and decompression capabilities using direct bindings to the Zstd library, enabling efficient handling of binary data through memory buffers, compression levels, and error management. It supports streaming operations via dedicated compression and decompression contexts, allowing incremental processing of large data from sources like files or network streams using input and output buffers. Custom dictionary workflows are available for improved compression ratios and performance, including dictionary training from sample data using algorithms like Cover and FastCover with fine-grained parameter control. Direct operations on raw memory pointers let users implement custom compression pipelines, while submodules coordinate context management, buffer handling, and dictionary-based encoding for both streaming and bulk data processing.",
-      "description_length": 891,
-      "index": 31,
-      "embedding_norm": 1.0
+      "description": "This module implements low-level Zstandard compression and decompression operations with direct control over memory buffers and compression parameters. It provides functions for compressing and decompressing raw data, querying frame content size, checking error codes, and managing dictionary-based compression. Use it to build high-performance compression pipelines, process large data streams in chunks, or train custom dictionaries for optimized encoding of domain-specific data.",
+      "description_length": 482,
+      "index": 13,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Zstd_bindings",
       "library": "zstandard.bindings",
-      "description": "This module enables efficient compression and decompression using the Zstd library through low-level bindings, supporting both streaming and bulk data operations. It provides memory buffer handling, compression levels, custom dictionary training with Cover and FastCover algorithms, and direct pointer manipulation for advanced use cases. Users can process large data incrementally via streaming contexts or compress entire buffers at once, with fine-grained control over performance and compression ratio. Example workflows include compressing file contents to a buffer, decompressing network streams incrementally, or training and applying custom dictionaries for optimized encoding.",
-      "description_length": 685,
-      "index": 32,
+      "description": "This module implements low-level Zstandard compression and decompression operations with direct control over memory buffers and compression parameters. It provides functions for compressing and decompressing raw data, querying frame content size, checking error codes, and managing dictionary-based compression. Use it to build high-performance compression pipelines, process large data streams in chunks, or train custom dictionaries for optimized encoding of domain-specific data.",
+      "description_length": 482,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Zstandard.Dictionary.Training_algorithm.Cover",
+      "library": "zstandard",
+      "description": "This module implements the Cover algorithm for dictionary training in Zstandard compression, focusing on optimizing parameters like segment size, dmer size, and thread count. It works with collections of sample data to train compression dictionaries, tuning parameters through multiple steps to balance speed and compression efficiency. Concrete use cases include preparing custom dictionaries for compressing similar data streams, such as logs or structured binary data, to achieve better compression ratios and faster decompression.",
+      "description_length": 534,
+      "index": 15,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Dictionary.Training_algorithm.Fast_cover",
+      "library": "zstandard",
+      "description": "This module implements the Fast Cover algorithm for dictionary training in Zstandard compression, focusing on optimizing parameters like segment size, dmer size, and frequency array configuration. It operates on sample data to generate dictionaries that improve compression efficiency for similar data sets. Concrete use cases include training dictionaries for compressing log files, JSON data, or binary payloads with repetitive patterns.",
+      "description_length": 439,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Bulk_processing_dictionary.Decompression",
+      "library": "zstandard",
+      "description": "This module provides a `decompress` function that uses a precomputed dictionary to efficiently decompress data in bulk. It works with input and output buffers, a decompression context, and a dictionary-based decompression structure. It is specifically used to accelerate decompression performance when handling multiple messages compressed with the same dictionary.",
+      "description_length": 365,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Bulk_processing_dictionary.Compression",
+      "library": "zstandard",
+      "description": "This module implements compression using precomputed dictionaries and bulk processing capabilities for the Zstandard algorithm. It works with input and output buffers, compression contexts, and dictionary data structures to enable efficient compression of multiple messages. Concrete use cases include compressing large batches of data with shared redundancy, such as log files or network payloads, where dictionary-based compression improves both speed and ratio.",
+      "description_length": 464,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Streaming.Compression",
+      "library": "zstandard",
+      "description": "This module implements streaming compression using the Zstandard algorithm, allowing incremental processing of large data streams. It supports compression of data chunks using `compress`, finalizing streams with `endstream`, and provides buffer management utilities for optimal performance. Concrete use cases include compressing network data streams or large files in chunks without loading the entire input into memory.",
+      "description_length": 421,
+      "index": 19,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Dictionary.Training_algorithm",
+      "library": "zstandard",
+      "description": "This module defines training algorithms for building compression dictionaries in Zstandard, specifically `Cover` and `Fast_cover`, which optimize parameters like segment size and dmer size. It works with sample data collections to train dictionaries tailored for compressing similar data streams. Concrete use cases include improving compression of structured data such as logs, JSON, or binary payloads by generating custom dictionaries that balance speed and efficiency.",
+      "description_length": 472,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Streaming.Decompression",
+      "library": "zstandard",
+      "description": "This module provides streaming decompression for Zstandard-compressed data, allowing incremental processing of large or chunked input. It operates on `Bigstring.t` buffers with explicit position and length parameters, returning the number of bytes consumed and produced. Use it when decompressing data that exceeds available memory or when working with compressed streams that lack a known decompressed size.",
+      "description_length": 408,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Dictionary",
+      "library": "zstandard",
+      "description": "This module trains compression dictionaries from sample data arrays using algorithms like `Cover` and `Fast_cover`, optimizing for specific data patterns. It operates on arrays of strings as input samples and produces dictionaries that improve compression efficiency for similar data streams. Concrete use cases include generating custom dictionaries for compressing structured data such as logs, JSON, or binary payloads, where tailored compression yields better performance and ratio.",
+      "description_length": 486,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Simple_dictionary",
+      "library": "zstandard",
+      "description": "This module implements compression and decompression functions using a simple dictionary, operating on input and output buffers with support for custom compression levels. It works with compression and decompression contexts, input data, and dictionaries to enable efficient single-pass operations. Use this module when applying dictionary-based compression or decompression in scenarios requiring controlled memory usage and precise buffer handling.",
+      "description_length": 450,
+      "index": 23,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Decompression_context",
+      "library": "zstandard",
+      "description": "Handles decompression of Zstandard-compressed data in a single pass, supporting direct decompression of messages with known decompressed size. Works with compressed data represented as bytes or bigarrays, and requires explicit context management via `create` and `free`. Useful for efficiently decompressing zstd frames where the output size is known ahead of time, such as in file or network protocols that embed size metadata.",
+      "description_length": 428,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Compression_context",
+      "library": "zstandard",
+      "description": "This module provides functions to create and manage a compression context for the Zstandard compression library, enabling efficient setup and teardown of resources. It works with the `t` type representing a compression context. Concrete use cases include initializing a context before performing compression operations and freeing it afterward to release memory.",
+      "description_length": 362,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Input",
+      "library": "zstandard",
+      "description": "This module provides functions to create input sources for compression or decompression operations using the Zstandard library. It supports input from strings, bytes, bigstrings, and iobufs, allowing efficient handling of in-memory data without unnecessary copies when using bigstrings or iobufs. Concrete use cases include preparing data for single-pass compression or decompression, especially when working with large buffers or streaming data from I/O sources.",
+      "description_length": 463,
+      "index": 26,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Zstandard.Bulk_processing_dictionary",
+      "library": "zstandard",
+      "description": "This module implements bulk compression and decompression using precomputed dictionaries for the Zstandard algorithm. It operates on input and output buffers, compression and decompression contexts, and dictionary structures to optimize throughput for multiple messages. It is designed for compressing and decompressing batches of data with shared patterns, such as log files or network payloads, where dictionary-based compression improves both speed and compression ratio.",
+      "description_length": 474,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Output",
+      "library": "zstandard",
+      "description": "This module defines output targets for compression and decompression operations, specifying where the resulting data should be written. It supports writing into Bigstrings, Iobufs, or allocating new strings or bigstrings dynamically. These functions are used directly by compression routines to direct output without intermediate buffering.",
+      "description_length": 340,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.With_explicit_context",
+      "library": "zstandard",
+      "description": "This module compresses or decompresses data using explicitly managed contexts, allowing efficient reuse of resources across multiple operations. It works with input and output buffers wrapped in `Input.t` and `Output.t` types, and requires pre-allocated compression or decompression contexts. Use this when performing repeated compression or decompression to avoid repeated allocation overhead, such as in streaming or batch processing scenarios.",
+      "description_length": 446,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Streaming",
+      "library": "zstandard",
+      "description": "This module implements streaming compression and decompression for Zstandard, handling large data incrementally without requiring the full input in memory. It works directly with `Bigstring.t` buffers, managing input and output positions explicitly, and allows partial processing of data streams. Use it to compress or decompress network streams, large files, or messages missing a decompressed size field.",
+      "description_length": 406,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard.Simple",
+      "library": "zstandard",
+      "description": "This module provides single-pass compression and decompression functions for Zstandard frames, operating on `Input.t` and `Output.t` types. It supports specifying compression levels and handles errors via exceptions, ensuring exact frame processing. Use it to compress or decompress in-memory data buffers in one step, particularly when working with Zstandard's standard frame format.",
+      "description_length": 384,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Zstandard",
+      "library": "zstandard",
+      "description": "This module implements the Zstandard compression algorithm with functions for in-memory compression and decompression at various compression levels. It works with input and output buffers such as Bigstrings, Iobufs, and strings, supporting both single-pass and streaming operations. Concrete use cases include compressing and decompressing large data buffers, handling network streams, and using custom dictionaries to improve compression ratios for structured data like logs or JSON.",
+      "description_length": 484,
+      "index": 32,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -277,9 +277,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 891,
-    "min_description_length": 327,
-    "avg_description_length": 497.06060606060606,
-    "embedding_file_size_mb": 0.1204080581665039
+    "max_description_length": 534,
+    "min_description_length": 294,
+    "avg_description_length": 421.5151515151515,
+    "embedding_file_size_mb": 0.4642372131347656
   }
 }

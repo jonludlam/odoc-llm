@@ -1,501 +1,485 @@
 {
   "package": "bap-c",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 60,
-  "creation_timestamp": "2025-07-15T23:17:15.351917",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 58,
+  "creation_timestamp": "2025-08-15T15:06:08.567817",
   "modules": [
     {
       "module_path": "Bap_c_type_mapper.Search.Collection.Eager",
       "library": "bap-c",
-      "description": "This module provides eager evaluation of collections within a search monad, enabling operations like mapping, folding, filtering, and searching with early termination. It works with generic container types and monadic computations that return values or errors, supporting use cases such as traversing and transforming AST nodes during C type analysis. Concrete functions include `find` for locating the first matching element, `map_reduce` for efficient transformation and aggregation, and `iter` for performing side effects across elements in sequence.",
-      "description_length": 553,
+      "description": "This module provides eager evaluation of collection traversals within a search monad, enabling operations like mapping, filtering, folding, and searching over container structures with early termination capabilities. It supports data types that conform to a collection interface, allowing functions to process elements in unspecified or left-to-right order, and returns results in a search monad that can short-circuit on success. Concrete use cases include scanning through abstract syntax trees to find matching nodes, validating properties across collections, or transforming data structures with effectful operations while preserving evaluation order and control flow.",
+      "description_length": 672,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Let_syntax.Let_syntax",
-      "library": "bap-c",
-      "description": "This module provides a monadic interface for performing early-exit searches over C type structures, allowing computations to terminate as soon as a result is found. It supports core operations like `return`, `bind`, `map`, and `both` to compose search logic that avoids unnecessary traversal once a condition is satisfied. The module is designed to work directly with C types, enabling efficient queries and transformations based on structural properties. While it includes a child module, that module is empty and does not contribute any additional functionality.",
-      "description_length": 564,
-      "index": 1,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Collection.S",
-      "library": "bap-c",
-      "description": "This module provides monadic operations for processing collections of values within the C ABI argument passing DSL. It supports operations like mapping, folding, filtering, and finding elements, as well as combining results using monoidal structures. These functions are used to define complex argument passing logic, such as selecting and transforming function arguments based on ABI rules during binary analysis.",
-      "description_length": 414,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c.Std.C.Type",
-      "library": "bap-c",
-      "description": "This module models C types using polymorphic variants and attributes to capture structural representations of primitives, composites, and qualifiers. It supports operations for serialization, comparison, and traversal of type graphs, enabling tasks like parsing C type information from binaries or analyzing type layouts. Attributes allow attaching metadata such as `attr(args)` to type declarations, facilitating handling of extended type information in program analysis. The module integrates with submodules to provide a unified interface for working with structured C types in contexts such as ABI inspection and compiler toolchains.",
-      "description_length": 637,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Collection.Eager",
-      "library": "bap-c",
-      "description": "This module implements eager evaluation strategies for processing argument collections within the C ABI specification DSL. It provides operations like `map`, `fold`, `iter`, and `filter` that work on containers of monadic argument computations, ensuring all effects are performed in a specified order. Concrete use cases include assembling and traversing lists of function arguments with side effects during ABI reconstruction, such as collecting register or stack-passed parameters in a specific sequence.",
-      "description_length": 506,
-      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_abi.Arg.Collection.Delay",
       "library": "bap-c",
-      "description": "This module implements monadic collection operations for argument processing in C ABI specifications. It provides functions like `map`, `fold`, `filter`, and `find` that work on containers of monadic argument computations, enabling structured traversal and transformation of argument sequences. Concrete use cases include validating argument constraints, collecting and transforming function parameters, and implementing custom argument passing rules with backtracking support.",
-      "description_length": 477,
-      "index": 5,
+      "description": "This module lifts collection operations into a monadic context for C ABI argument processing. It provides functions like `map`, `fold`, `filter`, and `find` that operate on containers within the `Bap_c_abi.Arg` monad, enabling structured traversal and transformation of argument collections during ABI specification. Concrete use cases include defining argument insertion logic that conditionally processes or aggregates function arguments based on target-specific calling conventions.",
+      "description_length": 485,
+      "index": 1,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_c_abi.Arg.Language.V1",
+      "module_path": "Bap_c.Std.C.Type",
       "library": "bap-c",
-      "description": "This module provides a domain-specific language for specifying C ABI argument passing rules using combinators that handle conditional logic, monadic sequencing, and function lifting. It operates on abstract types representing argument passing predicates, statements, and computations, alongside concrete values like `Bap_c_abi.Arg.t`. The DSL enables declarative definition of calling conventions with backtracking support, versioned extensions for future compatibility, and composition of guarded argument passing strategies tailored to specific subroutines.",
-      "description_length": 559,
-      "index": 6,
+      "description": "This module provides serialization, deserialization, and structural comparison operations for C type representations, supporting both binary and S-expression formats. It works with polymorphic variants encoding C's type system, including primitive types (integers, floating-point, complex), composite types (arrays, structures, unions), function prototypes, type qualifiers (const, volatile), and attributes. These capabilities enable use cases like type information persistence, cross-tool communication, and program analysis tasks requiring precise type introspection and manipulation.",
+      "description_length": 587,
+      "index": 2,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_type_mapper.Search.Collection.Delay",
       "library": "bap-c",
-      "description": "This module lifts collection operations into a search monad that supports early termination. It provides functions like `find`, `exists`, and `map` that operate on containers while allowing computations to short-circuit when a result is found. These operations work over any container type `T` and integrate with search-based workflows that require non-local exits.",
-      "description_length": 365,
-      "index": 7,
+      "description": "This module lifts collection operations into a search monad that terminates early when a result is found. It provides functions like `find`, `exists`, and `map` that operate on containers while integrating with the search monad's behavior. These functions work with any collection type `T` and support operations such as filtering, folding, and mapping within the context of a search computation. Use cases include efficiently locating elements in a collection or performing conditional computations where early termination is beneficial.",
+      "description_length": 538,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_c_type_mapper.Search.Collection.S",
+      "module_path": "Bap_c_abi.Arg.Let_syntax.Let_syntax",
       "library": "bap-c",
-      "description": "This module lifts collection operations into a search monad that supports early termination. It provides functions for mapping, folding, filtering, and searching over collections, where each operation integrates with the monadic context to allow short-circuiting upon finding a result. Concrete use cases include traversing abstract syntax trees to locate specific node patterns, performing conditional accumulations over program structures, and executing transformations that may fail or terminate early based on element inspection.",
-      "description_length": 533,
-      "index": 8,
+      "description": "This module provides monadic combinators for defining argument passing semantics in a C ABI specification. It works with BIL expressions and the `Arg.t` monadic type to model how function arguments are read from the program state. Concrete use cases include specifying calling conventions by composing primitive argument placement rules, such as register or stack-based passing, with backtracking support via `reject ()` to handle complex or conditional layouts.",
+      "description_length": 462,
+      "index": 4,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bap_c_abi.Arg.Let",
+      "module_path": "Bap_c_type_mapper.Search.Let_syntax.Let_syntax",
       "library": "bap-c",
-      "description": "This module provides monadic operators for sequencing and combining argument passing computations in a domain-specific language. It works with the `Bap_c_abi.Arg.t` type, representing argument passing actions, and supports building complex argument handling logic through binding and product operations. Concrete use cases include defining the insertion of function arguments according to specific calling conventions, enabling backtracking-based selection of appropriate argument passing strategies.",
-      "description_length": 500,
-      "index": 9,
+      "description": "This module provides monadic operations for performing searches with early termination, using a monad that stops computation once a result is found. It works with generic polymorphic types `'a` and `'e`, representing successful results and errors, respectively. Concrete use cases include traversing abstract syntax trees to locate specific type definitions or expressions, where stopping early upon finding a match improves efficiency.",
+      "description_length": 436,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_c_abi.Arg.Triple",
+      "module_path": "Bap_c_abi.Arg.Collection.Eager",
       "library": "bap-c",
-      "description": "This module provides `fst`, `snd`, and `trd` functions to extract elements from triple values within a monadic DSL for specifying C ABI argument passing semantics. It operates on triple-typed values wrapped in the `Bap_c_abi.Arg.t` monad, enabling structured decomposition of complex argument representations during ABI definition. Use this module when implementing argument passing rules that require unpacking multi-component values, such as when handling register pairs or memory-offset combinations.",
-      "description_length": 503,
-      "index": 10,
+      "description": "This module implements eager evaluation of argument collections in the context of C ABI argument passing semantics. It provides operations like `map`, `fold`, `filter`, and `find` for transforming and inspecting containers of argument computations, with variants that control evaluation order and result handling. Concrete use cases include defining argument processing pipelines that collect, filter, or combine BIL expressions during ABI reconstruction.",
+      "description_length": 455,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_abi.Arg.Let_syntax",
       "library": "bap-c",
-      "description": "This module provides a monadic interface for defining argument passing rules in C ABIs, supporting operations like `bind`, `map`, and `return` to sequence and backtrack through strategies. It works directly with `Bap_c_abi.Arg.t`, allowing composed rules to reject and try alternatives during evaluation. The child module extends this with the `both` combinator and `insert_args` function, enabling structured combination and reification of argument handling strategies. Example uses include defining complex calling conventions by sequencing placement rules, branching with backtracking, and combining strategies to handle multi-register or stack-based arguments.",
-      "description_length": 664,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Exn",
-      "library": "bap-c",
-      "description": "This module integrates exception handling into the argument passing DSL by allowing computations to catch and handle exceptions using the `expect` function. It works with the `Bap_c_abi.Arg.t` monadic type, enabling recovery from failures during argument processing. A concrete use case is handling invalid argument configurations during ABI processing, where `expect` can be used to attempt a complex argument mapping and fall back to an alternative strategy if an exception occurs.",
-      "description_length": 483,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Language",
-      "library": "bap-c",
-      "description": "This module provides a high-level embedded DSL for specifying C ABI argument passing semantics through guarded declarative rules, combining predicates over C types with monadic operations to model argument placement logic. It offers combinators like `select`, `case`, and `choose` to define branching strategies for argument passing, alongside logical operations to compose conditions that determine rule applicability. Child modules extend this core functionality with domain-specific constructs, versioned interfaces, and backtracking mechanisms, enabling the declarative definition of complex calling conventions that adapt to subroutine signature properties such as type classifications and position constraints. Users can define custom rules that, for example, route floating-point arguments to specific registers or apply stack-based fallbacks when register space is exhausted.",
-      "description_length": 883,
-      "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.List",
-      "library": "bap-c",
-      "description": "This module provides list traversal and transformation operations within the argument passing DSL, enabling structured handling of multiple arguments under C ABI rules. It supports operations like mapping, filtering, folding, and checking conditions over lists of values, all while maintaining the monadic context for argument processing. Concrete use cases include defining argument parsing strategies, validating argument sequences, and aggregating results from multiple argument evaluations.",
-      "description_length": 494,
-      "index": 14,
-      "embedding_norm": 1.0000001192092896
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Syntax",
-      "library": "bap-c",
-      "description": "This module provides monadic combinators for composing search computations that terminate early upon finding a result. It works with the `('a, 'e) Bap_c_type_mapper.Search.t` type, representing computations that may fail with an error `'e` or produce a value `'a`. These operators enable chaining and transforming search steps, such as binding results, lifting functions, and combining multiple searches, commonly used when traversing and transforming C type structures with early exit semantics.",
-      "description_length": 496,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Monad_infix",
-      "library": "bap-c",
-      "description": "This module provides monadic bind and map operators for composing search computations that terminate early upon finding a result. It works with the `Search.t` type, which represents a search action that may fail or return a value. These operators enable chaining search operations while handling errors and early exits, such as finding a specific type definition in a complex structure and stopping further traversal.",
-      "description_length": 417,
-      "index": 16,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Exn",
-      "library": "bap-c",
-      "description": "This module provides the `expect` function for handling exceptions within the search monad, allowing computations to catch and handle exceptions during search operations. It works with the `'a Search.t` monadic type, which represents search computations that may terminate early upon finding a result. A concrete use case is safely traversing or transforming C types while handling potential errors or early exits without propagating exceptions beyond the search context.",
-      "description_length": 471,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Pair",
-      "library": "bap-c",
-      "description": "This module provides `fst` and `snd` operations to extract components from a monadic pair structure within the argument passing DSL. It works with tuple values wrapped in the `Bap_c_abi.Arg.t` monad, allowing access to individual elements during ABI semantics definition. Concrete use cases include decomposing complex argument representations into their constituent parts while maintaining the DSL's backtracking behavior.",
-      "description_length": 423,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Fn",
-      "library": "bap-c",
-      "description": "This module provides function combinators for building and transforming monadic search computations that terminate early on success. It operates on functions producing values in the Search monad, enabling composition, negation, and controlled iteration of these functions. Concrete use cases include chaining type analysis steps that stop when a match is found, applying transformations a fixed number of times during type traversal, and constructing complex search predicates from simpler ones.",
-      "description_length": 495,
-      "index": 19,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.List",
-      "library": "bap-c",
-      "description": "This module provides operations for mapping, folding, filtering, and searching over lists within a monadic context that supports early termination. It works with lists of arbitrary types and monadic computations that return either a value or an error. Concrete use cases include processing lists of AST nodes where each element requires a search or validation step, such as type checking or transformation passes in a compiler.",
-      "description_length": 427,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Lift",
-      "library": "bap-c",
-      "description": "This module lifts functions of various arities into the Search monad, enabling them to operate on monadic computations instead of direct values. It supports nullary through quinary functions, transforming them to return monadic results. Use it to integrate pure functions into monadic search workflows, such as mapping intermediate results during type traversal.",
-      "description_length": 362,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Collection",
-      "library": "bap-c",
-      "description": "This module enables monadic traversal and transformation of generic collections with support for early termination. It provides data types and operations for mapping, folding, filtering, and searching within containers, integrating with search workflows that require non-local exits. Functions like `find`, `map_reduce`, and `iter` allow efficient element-wise processing, with concrete applications in AST traversal, conditional accumulation, and error-aware transformations. The interface lifts standard collection operations into a monadic context, enabling short-circuiting based on computation results.",
-      "description_length": 607,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Triple",
-      "library": "bap-c",
-      "description": "This module provides functions to project the first, second, or third element of a triple within a search monad context. It operates on values wrapped in a monadic type representing a search computation over a triple. Use it to extract specific components of a triple result when performing early-exit searches.",
-      "description_length": 311,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Collection",
-      "library": "bap-c",
-      "description": "This module lifts collection operations into a monadic context, enabling structured processing of argument sequences within the C ABI DSL. It provides data types representing containers of monadic argument computations, with operations like `map`, `fold`, `filter`, and `find` that support transformation, traversal, and validation of function arguments. These operations allow defining complex argument passing logic, such as selecting and transforming parameters based on ABI rules, assembling register or stack-passed arguments in sequence, and implementing custom rules with backtracking. Examples include collecting argument values with side effects, validating constraints during ABI reconstruction, and combining results using monoidal structures.",
-      "description_length": 754,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Syntax",
-      "library": "bap-c",
-      "description": "This module provides monadic syntax for composing argument passing semantics in a C ABI specification. It supports operations like bind, map, and function lifting to define complex argument passing rules using a choice monad with backtracking. These functions operate on values of type `Bap_c_abi.Arg.t`, enabling precise control over argument parsing strategies and failure recovery in ABI processor definitions.",
-      "description_length": 413,
-      "index": 25,
+      "description": "This module provides monadic combinators for expressing argument passing rules in C ABI specifications, using BIL expressions to model how function arguments are extracted from program state. It supports composing register-based, stack-based, and hybrid argument placement strategies with backtracking via `reject ()` to handle complex calling conventions. Use it to define precise, low-level `insert_args` implementations for ABI processors.",
+      "description_length": 442,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_abi.Arg.Monad_infix",
       "library": "bap-c",
-      "description": "This module provides monadic composition operators for defining argument passing semantics in a C ABI. It works with the `Bap_c_abi.Arg.t` monadic type, enabling chaining and transformation of argument evaluation computations. Concrete use cases include specifying conditional argument placement strategies with backtracking on failure, such as selecting between register and stack-based argument passing based on target architecture constraints.",
-      "description_length": 446,
-      "index": 26,
+      "description": "This module provides monadic composition operators for defining argument passing semantics in a backtracking-aware DSL. It works with the `Bap_c_abi.Arg.t` type, representing argument passing computations that can be chained or transformed. Concrete use cases include specifying C ABI function call argument layouts where multiple strategies are attempted, such as selecting register or stack-based argument retrieval, with failed attempts automatically rolled back.",
+      "description_length": 466,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Fn",
+      "library": "bap-c",
+      "description": "This module provides function combinators for building and composing monadic search computations that terminate early upon finding a result. It works with functions that return values wrapped in the Search monad, allowing operations like negation, composition, and repeated application of functions. Concrete use cases include constructing complex search strategies from simpler ones, such as applying a function multiple times or combining multiple search steps in sequence.",
+      "description_length": 475,
+      "index": 9,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.List",
+      "library": "bap-c",
+      "description": "This module provides list-specific operations within a search monad context, enabling early termination on success. It supports mapping, filtering, folding, and searching over lists with functions that return search computations. Concrete use cases include traversing abstract syntax trees to find specific nodes, collecting results from recursive searches, and filtering data structures based on conditional search logic.",
+      "description_length": 422,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Let",
+      "library": "bap-c",
+      "description": "This module provides monadic operators for sequencing and combining argument passing computations in a domain-specific language for C ABI specifications. It works with the `Bap_c_abi.Arg.t` type, representing argument passing actions, and supports building complex argument handling logic using constructs like `let*`, `and*`, `let+`, and `and+`. Concrete use cases include defining the `insert_args` function for an ABI processor, where precise control over argument parsing and backtracking behavior is required.",
+      "description_length": 514,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Collection",
+      "library": "bap-c",
+      "description": "This module provides functors that lift collection operations into the `Bap_c_abi.Arg` monad, enabling structured manipulation of argument collections during ABI specification. It supports both eager and delayed evaluation strategies through its `Eager` and `Delay` submodules, which implement standard collection functions like `map`, `fold`, `filter`, and `find` tailored for working with BIL expressions representing function arguments. Concrete use cases include defining argument insertion rules that aggregate, transform, or selectively process function parameters according to specific calling conventions.",
+      "description_length": 613,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Lift",
+      "library": "bap-c",
+      "description": "This module provides functions to lift pure functions of various arities into the search monad, enabling them to operate on monadic computations that may terminate early with a result. It works with the `'a Bap_c_type_mapper.Search.t` monad, which represents computations that search for a value and exit early when found. Concrete use cases include transforming raw values into monadic results, applying functions to intermediate search results, and composing complex searches from simpler ones by lifting multi-argument functions into the monadic context.",
+      "description_length": 557,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c.Std.C",
+      "library": "bap-c",
+      "description": "This module provides operations for working with C values and function prototypes in the context of the BAP framework. It defines attributes for attaching type information, function prototypes, and data layouts to terms, enabling precise modeling of C programs during analysis. Key use cases include tracking type metadata through program transformations, reconstructing function signatures, and analyzing data structures in binary code.",
+      "description_length": 437,
+      "index": 14,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Seq",
+      "library": "bap-c",
+      "description": "This module provides operations for sequencing and transforming collections of argument computations in the C ABI DSL. It works with sequences of values wrapped in the `Bap_c_abi.Arg.t` monad, enabling structured traversal, filtering, folding, and combination of argument processing steps. Concrete use cases include aggregating results from multiple argument parsers, applying transformations to sequences of BIL expressions, and implementing conditional logic based on properties of argument sequences.",
+      "description_length": 504,
+      "index": 15,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Exn",
+      "library": "bap-c",
+      "description": "This module provides the `expect` function for handling exceptions within the search monad, allowing computations to terminate early when an exception occurs. It works with the `'a Search.t` monadic type, which represents search operations that can exit abnormally. Concrete use cases include safely traversing abstract syntax trees where a specific condition may trigger an early exit, such as finding a target type or expression and terminating the search immediately upon discovery.",
+      "description_length": 485,
+      "index": 16,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Pair",
+      "library": "bap-c",
+      "description": "This module provides `fst` and `snd` operations to extract components from a monadic pair value within the argument passing DSL. It works with tuple values in the `Bap_c_abi.Arg.t` monad, allowing structured decomposition of combined argument representations. Use it to define how individual elements of a compound argument are extracted and processed according to the ABI rules.",
+      "description_length": 379,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Seq",
+      "library": "bap-c",
+      "description": "This module provides operations for mapping, folding, filtering, and searching over sequences within a search monad that supports early termination. It works with sequences of values and computations that may produce errors or find results, enabling precise control over evaluation order and result collection. Concrete use cases include traversing and transforming sequences of type definitions while allowing early exits when a desired type is found or a condition is met.",
+      "description_length": 474,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Triple",
+      "library": "bap-c",
+      "description": "This module provides functions to access the first, second, and third elements of a triple within a monadic context, specifically for use in defining argument passing semantics. It operates on triples of arbitrary types wrapped in the `Bap_c_abi.Arg.t` monad, allowing structured decomposition of complex argument representations. Concrete use cases include extracting individual components of multi-part arguments during ABI specification, such as separating register, stack, and immediate values in a custom calling convention.",
+      "description_length": 529,
+      "index": 19,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Exn",
+      "library": "bap-c",
+      "description": "This module integrates exception handling into the argument passing DSL by allowing computations to catch and handle exceptions using the `expect` function. It works with the `Bap_c_abi.Arg.t` monadic type, enabling controlled error recovery during ABI argument processing. Concrete use cases include safely parsing function arguments where malformed input may raise exceptions, ensuring fallback strategies can be applied without side effects.",
+      "description_length": 444,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Triple",
+      "library": "bap-c",
+      "description": "This module provides functions `fst`, `snd`, and `trd` to extract the first, second, and third elements of a triple within a search monad context. It operates on values of type `('a * 'b * 'c, 'e) Bap_c_type_mapper.Search.t`, allowing projection of individual components during search computations. A concrete use case is selectively retrieving elements from a triple result while propagating search-specific effects like early termination.",
+      "description_length": 440,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Fn",
+      "library": "bap-c",
+      "description": "This module provides function combinators for constructing and manipulating argument passing semantics in a monadic DSL. It works with BIL expressions and the `Bap_c_abi.Arg.t` monadic type to define, sequence, and transform argument handling logic. Concrete use cases include building reusable argument parsing strategies, applying transformations a fixed number of times, and composing argument processors for C ABI implementations.",
+      "description_length": 434,
+      "index": 22,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bap_c_abi.Arg.Lift",
       "library": "bap-c",
-      "description": "This module lifts functions of various arities into the argument-passing monad, enabling direct composition of computations that describe how to process function arguments under a specific ABI. It works with functions that take up to five arguments and wraps them to operate within the `Bap_c_abi.Arg` monadic DSL, preserving their behavior while integrating with ABI-specific argument handling logic. Concrete use cases include transforming pure functions into monadic steps that can be used to define `insert_args` processors for C function calling conventions.",
-      "description_length": 563,
+      "description": "This module lifts functions of various arities into the argument passing monad, enabling the use of regular functions within the DSL for ABI semantics. It works with BIL expressions and the `Arg.t` monadic structure to build argument passing rules. Concrete use cases include transforming pure functions into monadic computations that can backtrack and integrate with ABI-specific argument parsing logic.",
+      "description_length": 404,
+      "index": 23,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.List",
+      "library": "bap-c",
+      "description": "This module provides operations for working with lists of values in the `Bap_c_abi.Arg` monad, enabling sequencing, mapping, folding, filtering, and searching over such lists. It supports list-based computations that produce results like filtered lists, aggregated values, or side-effecting iterations, all within the argument passing DSL. Concrete use cases include defining how function arguments are collected, transformed, or selectively processed during ABI specification, such as mapping over a list of argument types to generate corresponding BIL expressions or filtering arguments based on conditions.",
+      "description_length": 609,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Syntax",
+      "library": "bap-c",
+      "description": "This module provides monadic combinators for composing search computations that terminate early upon success. It works with the `('a, 'e) Bap_c_type_mapper.Search.t` type, representing computations that may fail with an error `'e` or produce a result `'a`. Concrete use cases include chaining searches over C type structures where intermediate failures are non-recoverable, and lifting functions into the search monad to operate on values within that context.",
+      "description_length": 459,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Let_syntax",
+      "library": "bap-c",
+      "description": "This module provides monadic operations for composing search computations that terminate early when a result is found. It works with polymorphic types `'a` and `'e`, representing successful outcomes and error conditions, respectively. It is used to implement efficient traversal strategies over C type structures, such as locating specific type definitions during analysis without processing the entire input.",
+      "description_length": 409,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Collection",
+      "library": "bap-c",
+      "description": "This module provides two functors, `Eager` and `Delay`, that lift collection operations into a search monad with early termination. They support data structures conforming to a collection interface, enabling map, filter, fold, and find operations that integrate with the search monad's control flow. Use cases include traversing and searching through ASTs, validating conditions across structured data, and performing effectful transformations with early exit on success.",
+      "description_length": 471,
       "index": 27,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_abi.Arg.Arena",
       "library": "bap-c",
-      "description": "This module manages an ordered set of data locations, typically registers, used for argument passing in C ABIs. It supports creating arenas from register lists, expressions, or roles, and provides predefined arenas for integer and floating-point arguments and return values. It enables precise control over register allocation and consumption during ABI specification.",
-      "description_length": 368,
+      "description": "This module manages an ordered set of data locations used for argument passing, where each location can be consumed and restored upon rejection. It provides operations to create arenas from register lists, expressions, or target roles, and includes predefined arenas for integer and floating-point arguments and returns. Use this module to define how function arguments are allocated and passed on a target architecture, such as selecting registers for integer and floating-point parameters in a C ABI.",
+      "description_length": 502,
       "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c.Std.C",
-      "library": "bap-c",
-      "description": "This module parses and analyzes C code, extracting type information, function prototypes, and data layouts from C abstract syntax trees and mapping them to BAP's intermediate representation. It annotates terms with C-specific metadata, enabling cross-referencing between source and binary code, such as aligning assembly constructs with their original C declarations. The integrated type system models C primitives, composites, and qualifiers using polymorphic variants and attributes, supporting operations like type comparison, traversal, and serialization. These features facilitate tasks like ABI inspection, compiler analysis, and binary type recovery with rich, structured type graphs enriched with source-level details.",
-      "description_length": 726,
-      "index": 29,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Seq",
-      "library": "bap-c",
-      "description": "This module provides operations for sequencing and transforming sequences of ABI argument computations, enabling the composition of complex argument passing logic using monadic constructs. It supports data types like `Core_kernel.Sequence.t` wrapped in the `Bap_c_abi.Arg.t` monad, allowing for mapping, folding, filtering, and combining results in a controlled order. Concrete use cases include defining argument processing pipelines that conditionally select, transform, or aggregate function arguments according to specific calling conventions.",
-      "description_length": 547,
-      "index": 30,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Pair",
-      "library": "bap-c",
-      "description": "This module provides functions to extract the first or second element of a pair within the search monad context. It operates on values of type `('a * 'b, 'e) Bap_c_type_mapper.Search.t`. Use it to selectively retrieve components of paired results during search computations.",
-      "description_length": 274,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Seq",
-      "library": "bap-c",
-      "description": "This module provides operations for mapping, filtering, folding, and searching over sequences within a search monad that supports early termination. It works with sequences of values and search monadic computations that may produce errors or exit early. Concrete use cases include processing sequences of AST nodes to find specific patterns, transforming sequences of values with effectful functions, and aggregating results using monoidal operations.",
-      "description_length": 451,
-      "index": 32,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_type_mapper.Search.Let",
       "library": "bap-c",
-      "description": "This module provides monadic binding and composition operators for the Search monad, enabling concise chaining of search computations that terminate early on success. It works with the `('a, 'e) Bap_c_type_mapper.Search.t` type, representing search results or errors. These operators simplify handling sequential and parallel search operations, such as combining multiple search steps or processing intermediate results directly within the monadic context.",
-      "description_length": 456,
+      "description": "This module provides monadic binding and combination operators for the Search monad, enabling concise expression of search computations that terminate early upon finding a result. It works with the `('a, 'e) Bap_c_type_mapper.Search.t` type, representing computations that may fail or return a value. Concrete use cases include chaining search steps, combining multiple searches in sequence or parallel, and mapping results within the monad.",
+      "description_length": 441,
+      "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Pair",
+      "library": "bap-c",
+      "description": "This module provides `fst` and `snd` operations lifted into the Search monad, allowing extraction of the first or second element of a pair during a search computation. It works with pairs of values within the Search monad context, where computations terminate early upon finding a result. Concrete use cases include selectively processing elements of a paired result when searching through structured data like tuples or key-value representations.",
+      "description_length": 447,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search.Monad_infix",
+      "library": "bap-c",
+      "description": "This module provides monadic bind and map operators for composing search computations that terminate early upon finding a result. It works with the `Search.t` type, which represents a search action that may fail or return a value. Use it to chain search operations where each step depends on the result of the previous, such as traversing abstract syntax trees to locate specific type definitions.",
+      "description_length": 397,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Syntax",
+      "library": "bap-c",
+      "description": "This module provides monadic syntax for composing argument passing specifications in the C ABI DSL. It supports operations like bind, map, and function composition, along with lifting functions over the argument monad. These operations enable concise, imperative-style descriptions of how function arguments are extracted and transformed during ABI processing, directly mapping to BIL expressions.",
+      "description_length": 397,
+      "index": 32,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_abi.Arg.Language",
+      "library": "bap-c",
+      "description": "This module provides a domain-specific language for specifying C ABI argument passing semantics through declarative, guarded statements that operate on C types (`ctype`). It combines monadic and applicative combinators\u2014such as `sequence`, `select`, and `case`\u2014to structure logic that maps subroutine arguments to BIL expressions, using predicates to conditionally apply rules and backtrack upon rejection. Designed for extensibility, it supports versioned language extensions and declarative calling convention definitions, enabling precise modeling of diverse ABIs while isolating breaking changes to explicit version upgrades.",
+      "description_length": 628,
       "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_abi.Arg.Fn",
-      "library": "bap-c",
-      "description": "This module provides function combinators for constructing and manipulating argument passing semantics in a monadic DSL. It works with monadic values of type `'a Bap_c_abi.Arg.t`, enabling composition, transformation, and control flow operations such as `apply_n_times`, `compose`, and `non`. Concrete use cases include defining argument processing logic that can backtrack or repeat based on matching criteria, such as selecting between alternative calling convention rules or handling nested argument structures.",
-      "description_length": 514,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search.Let_syntax",
-      "library": "bap-c",
-      "description": "This module provides a monadic interface for performing early-exit searches over C type structures, supporting operations like `return`, `bind` (`>>=`), `map` (`>>|`), and `both` to compose search logic that terminates as soon as a result is found. It works directly with C types, enabling efficient queries and transformations based on structural properties, such as traversing type definitions to find a specific match or condition. The module's result and error types allow handling success and failure cases cleanly within search computations. While it includes a child module, that module is empty and does not add further functionality.",
-      "description_length": 642,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.State",
-      "library": "bap-c",
-      "description": "Maintains and transforms state during type mapping operations using a lifted state monad. Works directly with C types and associated state values, enabling sequential state updates and computations. Useful for tracking type transformations or accumulating mapping results across recursive traversal steps.",
-      "description_length": 305,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c.Std",
-      "library": "bap-c",
-      "description": "This module processes C code by parsing and analyzing abstract syntax trees to extract type information, function prototypes, and data layouts, mapping them to BAP's intermediate representation. It introduces structured type graphs with polymorphic variants and attributes to model C primitives, composites, and qualifiers, supporting operations like type comparison, traversal, and serialization. Annotations link assembly constructs to their original C declarations, enabling cross-referencing for tasks like ABI inspection and binary type recovery. Example uses include aligning disassembled functions with their C prototypes and reconstructing source-level type information from binaries.",
-      "description_length": 692,
-      "index": 37,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_abi.Arg",
-      "library": "bap-c",
-      "description": "This module defines a monadic DSL for specifying argument passing semantics in C ABIs, using backtracking to explore and select valid layouts based on calling conventions. It centers on the `Bap_c_abi.Arg.t` monad, which supports operations like `bind`, `map`, and `choose`, and integrates with structured data types such as `semantics`, `arena`, and `ctype` to control register allocation, stack alignment, and type handling. Child modules extend this foundation with utilities for tuple and list manipulation, exception handling, and higher-order function composition, enabling precise strategies like hybrid register-stack argument placement, conditional routing based on type predicates, and backtracking when constraints fail. For example, users can define rules that insert floating-point arguments into SIMD registers or fall back to stack-passing when registers are exhausted, all while maintaining the ability to reject and retry alternative layouts.",
-      "description_length": 959,
-      "index": 38,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Search",
-      "library": "bap-c",
-      "description": "This module implements a search monad for computations that terminate immediately upon finding a result, supporting operations like `finished`, `result`, `let*`, `and+`, and combinators for chaining, transforming, and lifting functions. It provides utilities for working with monadic values across lists, sequences, pairs, and triples, enabling early-exit traversal, filtering, and transformation of structured data such as C types and ASTs. Child modules extend this functionality with error handling via `expect`, function lifting for multiple arguments, and traversal strategies that integrate non-local exits and error awareness. Examples include searching for a type definition in a C structure, validating AST nodes with short-circuiting, and composing conditional transformations that stop at the first match.",
-      "description_length": 816,
-      "index": 39,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper.Finder",
-      "library": "bap-c",
-      "description": "Traverses C type structures to locate specific type elements within a search context. It supports operations like finding the first occurrence of a pointer or other type constructs. Useful for analyzing or transforming complex C types during compilation or static analysis tasks.",
-      "description_length": 279,
-      "index": 40,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type.Compound",
-      "library": "bap-c",
-      "description": "This module defines operations for working with compound C types, such as unions and structures, including serialization and deserialization using Bin_prot and Sexp. It provides functions to compare, read, and write compound type values with support for attribute handling and polymorphic variants. Use cases include parsing and manipulating C-like data structures in binary analysis tools and type-aware transformations.",
-      "description_length": 421,
-      "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type.Proto",
-      "library": "bap-c",
-      "description": "This module provides serialization and deserialization functions for C type representations using Bin_prot and Sexp formats. It supports reading, writing, and comparing structured C types extended with attributes. Concrete use cases include persisting C type information to disk, transmitting type data across networks, and enabling type inspection via s-expressions.",
-      "description_length": 367,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type.Spec",
-      "library": "bap-c",
-      "description": "This module defines a structured representation of C types with support for type constructors, attributes, and polymorphic variants. It provides serialization and deserialization functions for binary and S-expression formats, along with comparison operations. It is used to model C type information in a self-contained way, suitable for analysis and transformation tasks in a C compiler or static analysis tool.",
-      "description_length": 411,
-      "index": 43,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_mapper_intf.S",
-      "library": "bap-c",
-      "description": "This module provides operations for transforming and traversing type structures using customizable enter, map, and leave methods for each type element. It works with syntactic elements of a type system, enabling precise control over traversal strategies and structural modifications. Concrete use cases include implementing type-level transformations, analysis passes, or custom visitors for compiler intermediate representations.",
-      "description_length": 430,
-      "index": 44,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_type.Attr",
       "library": "bap-c",
-      "description": "This module defines a data structure for representing attributes attached to C type declarations, with support for serialization and deserialization via binary and S-expression formats. It works with a record type `t` containing a name and a list of string arguments, enabling precise modeling of C type attributes like `aligned` or `packed`. Concrete use cases include parsing and storing compiler-specific type annotations during C program analysis.",
-      "description_length": 451,
-      "index": 45,
+      "description": "This module represents attributes attached to C type declarations, with each attribute having a name and a list of string arguments. It provides functions for serializing and deserializing these attributes using both S-expressions and binary protocols, ensuring data persistence and interchange. It is used to handle metadata like alignment or packing specifications in C types.",
+      "description_length": 378,
+      "index": 34,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Search",
+      "library": "bap-c",
+      "description": "This module provides monadic combinators for constructing search operations that terminate early upon success, using a dedicated monad to handle structured data like C type definitions, abstract syntax trees, and collections. It supports composing search strategies over pairs, triples, lists, sequences, and generic collections, with utilities to chain computations, map functions, and combine results. Typical use cases include traversing hierarchical data structures to locate specific elements or patterns, where avoiding unnecessary traversal after a match improves efficiency.",
+      "description_length": 582,
+      "index": 35,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c.Std",
+      "library": "bap-c",
+      "description": "This module enables working with C values, function prototypes, and type metadata within the BAP framework. It provides attributes for attaching type information, function signatures, and data layouts to terms, supporting precise analysis of C programs and binary code. Concrete use cases include tracking type metadata during program transformations, reconstructing function signatures from assembly, and modeling C data structures in binary representations.",
+      "description_length": 459,
+      "index": 36,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_type.Compound",
+      "library": "bap-c",
+      "description": "This module defines operations for working with compound C types, such as structs and unions, including serialization and deserialization using Bin_prot and Sexp. It provides comparison, reading, and writing functions that handle attributes and nested type structures. Use cases include parsing and manipulating C type definitions in binary analysis tools and compilers.",
+      "description_length": 370,
+      "index": 37,
+      "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bap_c_abi.Stack",
       "library": "bap-c",
-      "description": "This module models stack memory allocation for C language ABI implementations. It provides a `create` function that generates expressions representing stack slots for a given architecture, supporting both upward and downward growing stacks. Used to manage function parameter passing and local variable storage in C compiler backends.",
-      "description_length": 333,
-      "index": 46,
+      "description": "This module models stack memory allocation for C functions, providing a function to create a symbolic representation of a stack slot at a given offset. It works with BAP's architecture descriptions and integer offsets to generate expressions representing memory addresses. Useful for implementing calling conventions where function parameters and local variables are stored on the stack.",
+      "description_length": 387,
+      "index": 38,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type.Spec",
+      "library": "bap-c",
+      "description": "This module defines a structured representation of C types with support for type constructors, attributes, and polymorphic variants. It provides serialization and deserialization functions for binary and S-expression formats, along with comparison operations. It is used to model C type information in a self-contained way, suitable for analysis and transformation tasks in a C-like type system.",
+      "description_length": 395,
+      "index": 39,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bap_c_type_mapper.Finder",
+      "library": "bap-c",
+      "description": "Finder is a visitor that traverses C type expressions in search of specific type patterns, such as pointers or arrays. It operates on C type structures, navigating through composite and base types. Use it to locate the first occurrence of a pointer type or other type constructs within a C type tree.",
+      "description_length": 300,
+      "index": 40,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper.State",
+      "library": "bap-c",
+      "description": "Maintains and transforms state during C type mapping operations using a state monad. It provides functions to get, set, and modify structured type information as it is processed. Enables threading state through a series of type transformation steps without explicit parameter passing.",
+      "description_length": 284,
+      "index": 41,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_type.Array",
       "library": "bap-c",
-      "description": "This module represents C arrays in a type-structured manner, supporting operations like size calculation, binary serialization, and deserialization. It works with polymorphic variant types to model C array constructs and integrates with Bap_c_type for attribute handling. Concrete use cases include parsing and manipulating C array declarations in binary analysis tasks, such as reading array dimensions and element types from binary inputs.",
-      "description_length": 441,
-      "index": 47,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module represents arrays in the C type system, providing operations to construct, compare, and serialize array types with element types and dimensions. It supports binary and S-expression serialization for storage or transmission, and comparison for structural equality. Concrete use cases include modeling C arrays in program analysis, where precise type information is required for memory layout and access pattern analysis.",
+      "description_length": 431,
+      "index": 42,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_type_mapper.Make",
       "library": "bap-c",
-      "description": "Lifts a visitor into a monadic context, enabling effectful traversals over C types. Works with C type definitions and leverages monads for side-effect management during type transformations. Useful for analyzing or modifying C type structures with effects like logging, state tracking, or error handling.",
-      "description_length": 304,
-      "index": 48,
+      "description": "Lifts a visitor into a monad, enabling effectful traversal and transformation of data structures. Works with any data type that can be processed by a visitor, such as ASTs or structured values. Useful for integrating effectful operations like state or error handling into traversal logic.",
+      "description_length": 288,
+      "index": 43,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_c_type_mapper",
+      "module_path": "Bap_c_type.Qualifier",
       "library": "bap-c",
-      "description": "This module enables stateful traversal and transformation of C types with support for early-exit computation and effectful processing. It provides data types for C type structures and monadic operations that allow tracking state, searching for type elements, and lifting visitors into effectful contexts. You can use it to find specific type constructs in C code, apply conditional transformations that stop at the first match, or accumulate results while mapping C types during analysis or compilation tasks.",
-      "description_length": 509,
-      "index": 49,
+      "description": "This module defines qualifiers for C types, such as `const`, `volatile`, and `restrict`, and supports attaching these qualifiers to type expressions. It provides operations for comparing, serializing, and deserializing qualified types, ensuring correct handling during binary and S-expression (de)serialization. Concrete use cases include parsing C declarations with qualifiers and preserving type metadata during analysis or transformation passes in a compiler or static analysis tool.",
+      "description_length": 486,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_abi.Arg",
+      "library": "bap-c",
+      "description": "This module provides a monadic domain-specific language for defining C ABI argument passing semantics, using backtracking-based parsing to handle ambiguous layouts. It operates on abstract argument locations tracked by an arena, alongside BIL expressions and C types, with combinators like `either` and `choice` to model register/stack allocation strategies. The DSL is specifically used to implement ABI processor logic for consuming function arguments according to calling conventions, supporting conditional rejection of invalid layouts and versioned ABI definitions.",
+      "description_length": 570,
+      "index": 45,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type.Proto",
+      "library": "bap-c",
+      "description": "This module provides serialization and deserialization functions for C type representations using both binary and S-expression formats. It supports operations for comparing, reading, and writing structured C types extended with attributes. Concrete use cases include persisting C type information to disk, transmitting type data across networks, and enabling type inspection in debugging tools.",
+      "description_length": 394,
+      "index": 46,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bap_c_type_mapper_intf",
+      "module_path": "Bap_c_type_printer",
       "library": "bap-c",
-      "description": "The module defines an interface for mapping and transforming C-like type representations, primarily working with abstract syntax trees (ASTs) of types. It provides functions to traverse, rewrite, and manipulate structured type definitions such as integers, pointers, arrays, and structs, enabling precise control over traversal strategies and structural modifications. The child module adds support for customizable enter, map, and leave methods, allowing fine-grained traversal and transformation of type elements during analysis or code generation tasks. This combination supports use cases like implementing type-level transformations, custom visitors, or analysis passes in compiler toolchains and binary analysis frameworks.",
-      "description_length": 729,
-      "index": 50,
+      "description": "Prints C types and function prototypes using OCaml's Format module. It handles structured representations of C types and prototypes, rendering them as human-readable strings. Useful for generating C code from internal type representations or debugging type information during compilation tasks.",
+      "description_length": 294,
+      "index": 47,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type",
+      "library": "bap-c",
+      "description": "This module provides structural manipulation of C types with support for binary and S-expression serialization, type inspection (e.g., qualifier checks, category classification), and construction of composite types (arrays, pointers, structs). It operates on polymorphic variant representations of C primitives (integers, floats, enums), aggregates (structs, unions), and function prototypes, enriched with attributes like `const` or `volatile`. The functionality serves use cases such as type analysis in compiler frameworks, metadata-aware C code parsing, and structured type representation for toolchains requiring precise type shape and attribute handling.",
+      "description_length": 660,
+      "index": 48,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_abi",
       "library": "bap-c",
-      "description": "This module models C language calling conventions by defining data layouts, argument passing strategies, and type handling for subroutines, operating on C types and BIR terms to annotate functions with their high-level signatures. It includes a monadic DSL for specifying argument semantics with backtracking, supporting structured operations like register allocation, stack alignment, and conditional routing based on type predicates. The stack allocation submodule generates architecture-specific expressions for parameter and local variable storage, accommodating both upward and downward growing stacks. Example uses include mapping disassembled function calls to C prototypes, defining hybrid register-stack argument placement, and integrating ABI constraints into binary analysis pipelines.",
-      "description_length": 796,
-      "index": 51,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bap_c_parser",
-      "library": "bap-c",
-      "description": "This module defines a parser interface for processing C-like declarations, providing a type `parser` that takes a base size and a file name to produce a mapping from identifiers to their types. It works with C type definitions through the `Bap_c_type.t` structure and uses `Or_error` to handle parsing failures. Concrete use cases include integrating third-party C parsers to extract type information from header files or C source code for further analysis.",
-      "description_length": 457,
-      "index": 52,
+      "description": "This module implements C language ABI handling by defining argument passing conventions, subroutine parameter layouts, and attribute propagation. It operates on C types, BIR terms, and ABI descriptions to annotate subroutines with calling convention details and data model-specific layouts. Concrete uses include inserting function arguments into BIR subroutines, determining argument intent based on C type semantics, and defining target-specific ABI rules using a DSL for argument allocation strategies.",
+      "description_length": 505,
+      "index": 49,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_size",
       "library": "bap-c",
-      "description": "This module provides operations for computing sizes and alignments, including finding the next multiple of a number, calculating padding for alignment, and determining the maximum value in an enum specification. It works with integers and enum definitions to handle low-level size calculations. Concrete use cases include struct field alignment, memory layout padding, and enum value range determination.",
-      "description_length": 404,
-      "index": 53,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides functions for computing sizes and alignments of C types, including calculating the next multiple of a given number, determining padding requirements for a type at a specific offset, and finding the maximum value in an enumeration. It operates on integers and enumeration specifications, returning size and alignment values needed for low-level memory layout. Concrete use cases include struct field alignment, enum value range analysis, and memory-efficient data structure layout.",
+      "description_length": 501,
+      "index": 50,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_c_type",
+      "module_path": "Bap_c_term_attributes",
       "library": "bap-c",
-      "description": "This module provides a structural representation of C types using polymorphic variants, supporting primitives, composites, and attributes with operations for serialization, comparison, and introspection. It enables precise modeling of C type systems through self-contained type representations, handling qualifiers, arrays, structs, unions, and attributes like `aligned` or `packed`. Use cases include binary analysis, compiler tooling, and program verification where structured type representations and format conversions are critical. Submodules handle compound types, array declarations, attribute storage, and serialization in binary and S-expression formats.",
-      "description_length": 663,
-      "index": 54,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module defines attributes for representing C language constructs in BIR (Binary Intermediate Representation), specifically associating terms with C types, function prototypes, data layouts, and data representations. It works with BIR terms to annotate them with semantic information derived from C source code. These attributes are used during the translation of C programs into BAP's intermediate representation, enabling accurate modeling of C constructs like function signatures and memory layouts.",
+      "description_length": 506,
+      "index": 51,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bap_c_attr",
+      "module_path": "Bap_c_type_mapper_intf",
       "library": "bap-c",
-      "description": "This module processes C attributes by associating semantic actions with term transformations. It works with `Bap.Std.sub` terms and supports registering and applying attribute handlers during compilation passes. Concrete use cases include modifying function or variable declarations based on custom C attributes during IR transformation.",
-      "description_length": 337,
-      "index": 55,
+      "description": "The module defines an interface for mapping C types to target-specific representations, primarily used during binary analysis. It includes functions for transforming and resolving C type definitions, such as structs, enums, and pointers, into equivalent low-level types. This interface is essential when integrating C-based type information with binary analysis frameworks or when generating target-specific code from C headers.",
+      "description_length": 428,
+      "index": 52,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c",
       "library": "bap-c",
-      "description": "This module processes C code by parsing and analyzing abstract syntax trees to extract type information, function prototypes, and data layouts, mapping them to BAP's intermediate representation. It introduces structured type graphs using polymorphic variants and attributes to model C primitives, composites, and qualifiers, supporting operations like type comparison, traversal, and serialization. Annotations link assembly constructs to their original C declarations, enabling cross-referencing for tasks like ABI inspection and binary type recovery. Example uses include aligning disassembled functions with their C prototypes and reconstructing source-level type information from binaries.",
-      "description_length": 693,
-      "index": 56,
+      "description": "This module provides operations for representing and manipulating C values, function prototypes, and type metadata within the BAP framework. It works with terms to attach attributes such as type information, data layouts, and function signatures. Use it to track type metadata during analysis, reconstruct function signatures from assembly code, and model C data structures in binary representations.",
+      "description_length": 400,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_parser",
+      "library": "bap-c",
+      "description": "This module defines a parser interface for C-like declarations, supporting the registration and execution of external parsers. It works with C type definitions and identifiers, using the `decls` type to represent parsed results as a list of identifier-type pairs. Concrete use cases include integrating third-party C parsers to extract type information from source files, such as parsing header files to build type mappings for analysis tools.",
+      "description_length": 443,
+      "index": 54,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bap_c_data",
       "library": "bap-c",
-      "description": "This module models C values through bit sequences and structured layouts, supporting operations like serialization to binary or S-expressions, comparison, and size calculation. It handles 32/64-bit integer representations, unknown values (`Top`), and memory layouts, enabling use cases such as binary analysis, data format conversion, and structured output generation for C-derived data. Key operations include reading/writing bit-level data, pretty-printing for diagnostics, and type-safe manipulation of C values in OCaml.",
-      "description_length": 524,
-      "index": 57,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bap_c_type_printer",
-      "library": "bap-c",
-      "description": "This module provides functions for pretty-printing C types and function prototypes. It works with `Bap_c_type.t` and `Bap_c_type.proto` data structures, which represent C language types and function signatures. Use it to generate human-readable output of C type information during analysis or debugging.",
-      "description_length": 303,
-      "index": 58,
+      "description": "This module models C values using bit-accurate integer representations (32/64-bit) and abstract domains like `Top`/`Set`, providing binary/S-expression serialization, structural comparison, and layout-aware pretty-printing. It operates on nested C data structures through types like `obj`, `datum`, and `layout`, which capture memory layouts and typed value hierarchies. These capabilities support tasks like low-level data persistence, cross-language interoperability, and visualization of complex memory arrangements during program analysis.",
+      "description_length": 543,
+      "index": 55,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bap_c_term_attributes",
+      "module_path": "Bap_c_attr",
       "library": "bap-c",
-      "description": "This module defines attributes for terms in the BAP Intermediate Representation (BIR) that carry C-specific metadata. It provides access to data representations, function prototypes, memory layouts, and C types associated with BIR terms. These attributes are used during analysis and transformation of C programs to preserve and propagate type and structure information derived from the source language.",
-      "description_length": 403,
-      "index": 59,
+      "description": "Processes C attributes by registering and applying semantic actions that transform terms during compilation. It works with C attribute syntax and term structures in the BAP framework. Used to implement custom attribute handling logic, such as modifying function or variable declarations based on specific attributes.",
+      "description_length": 316,
+      "index": 56,
       "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bap_c_type_mapper",
+      "library": "bap-c",
+      "description": "This module implements a monadic framework for transforming and analyzing C type structures through visitors. It provides operations for stateful traversal, pattern searching, and effectful mapping over C type definitions, supporting precise manipulation of composite types like pointers and arrays. Concrete use cases include extracting specific type components from C declarations or applying transformations during type processing.",
+      "description_length": 434,
+      "index": 57,
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
-    "total_modules_in_package": 72,
-    "meaningful_modules": 60,
-    "filtered_empty_modules": 12,
-    "retention_rate": 0.8333333333333334
+    "total_modules_in_package": 67,
+    "meaningful_modules": 58,
+    "filtered_empty_modules": 9,
+    "retention_rate": 0.8656716417910447
   },
   "statistics": {
-    "max_description_length": 959,
-    "min_description_length": 274,
-    "avg_description_length": 505.4166666666667,
-    "embedding_file_size_mb": 0.21844863891601562
+    "max_description_length": 672,
+    "min_description_length": 284,
+    "avg_description_length": 461.51724137931035,
+    "embedding_file_size_mb": 0.841059684753418
   }
 }

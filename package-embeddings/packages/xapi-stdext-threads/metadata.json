@@ -1,47 +1,47 @@
 {
   "package": "xapi-stdext-threads",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 5,
-  "creation_timestamp": "2025-07-15T23:05:42.782231",
+  "creation_timestamp": "2025-08-14T23:00:56.795574",
   "modules": [
-    {
-      "module_path": "Xapi_stdext_threads.Threadext.Delay",
-      "library": "xapi-stdext-threads",
-      "description": "This module implements a synchronization primitive for thread delays with optional early signaling. It provides a type `t` representing a delay object, along with functions to block a thread for a specified time (`wait`) and to wake it early (`signal`). It is used to coordinate timing between threads, such as in wait-and-notify patterns where a thread waits for a condition or timeout.",
-      "description_length": 387,
-      "index": 0,
-      "embedding_norm": 0.9999999403953552
-    },
     {
       "module_path": "Xapi_stdext_threads.Threadext.Mutex",
       "library": "xapi-stdext-threads",
-      "description": "This module provides a function `execute` that takes a mutex and a function, acquiring the mutex before running the function and releasing it afterward. It works with `Stdlib.Mutex.t` and arbitrary functions of type `unit -> 'a`. A concrete use case is ensuring thread-safe execution of critical sections, such as updating shared state in a multi-threaded server.",
-      "description_length": 363,
+      "description": "This module provides a function `execute` that takes a mutex and a thunk, acquiring the mutex before executing the thunk and releasing it afterward. It ensures safe, synchronized execution of critical sections by serializing access to shared resources. Use this when protecting mutable state accessed by multiple threads, such as updating a shared counter or modifying a concurrent data structure.",
+      "description_length": 397,
+      "index": 0,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Xapi_stdext_threads.Threadext.Delay",
+      "library": "xapi-stdext-threads",
+      "description": "This module implements a thread delay mechanism that allows a thread to block for a specified duration or be woken early via a signal. It provides `make` to create a delay object, `wait` to block with a timeout and optional early wake, and `signal` to trigger an early wake. It is used to coordinate thread execution, such as implementing cancellable waits or timed synchronization between threads.",
+      "description_length": 398,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Xapi_stdext_threads.Threadext",
       "library": "xapi-stdext-threads",
-      "description": "This module extends thread management by enabling parallel iteration over lists with synchronized execution, exception handling, and delayed operations. It supports running tasks concurrently, such as processing network requests or batch file operations, using mutexes and delay primitives for coordination. The synchronization submodule offers a delay type for timed waits and early wakeups, while the execution submodule ensures thread-safe critical sections via mutex-wrapped function calls. Together, these components allow structured concurrency with controlled timing and safe access to shared resources.",
-      "description_length": 610,
+      "description": "This module provides thread management and synchronization primitives. It includes functions for executing critical sections with mutexes, iterating over lists in parallel while handling exceptions, and managing thread delays with support for timeouts and early wake signals. It works with mutexes, threads, and delay objects to coordinate concurrent operations, such as safely updating shared state or implementing cancellable waits.",
+      "description_length": 434,
       "index": 2,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Xapi_stdext_threads.Semaphore",
       "library": "xapi-stdext-threads",
-      "description": "This module implements a counting semaphore with operations to create, acquire, release, and execute functions under weighted or unit resource constraints. It works with a semaphore type `t` and integer values to control access to shared resources. Concrete use cases include limiting concurrent thread execution, managing resource pools, and ensuring atomic access to finite system resources like network connections or file handles.",
-      "description_length": 434,
+      "description": "This module implements a counting semaphore with operations to create, acquire, and release resources atomically. It supports weighted resource allocation, allowing threads to block until sufficient resources are available. Concrete use cases include controlling concurrent access to limited resources like connection pools or task queues.",
+      "description_length": 339,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Xapi_stdext_threads",
       "library": "xapi-stdext-threads",
-      "description": "This module provides concurrency primitives for managing threads and shared resources with fine-grained control. It includes parallel iteration with synchronized execution, exception handling, and delayable operations, along with counting semaphores for limiting access to resources. The main data types are threads, delays, and semaphores (`t`), supporting operations like parallel map, mutex-protected critical sections, and weighted resource acquisition. You can use it to run batch network requests concurrently, throttle thread counts, or manage access to limited resources like file handles or connection pools.",
-      "description_length": 617,
+      "description": "This module implements concurrency control mechanisms including semaphores for managing resource pools and thread primitives for synchronization. It provides operations for acquiring and releasing weighted resources, executing critical sections, parallel iteration with exception handling, and managing cancellable delays. Concrete use cases include coordinating access to limited network connections, synchronizing shared state updates, and implementing parallel task execution with controlled concurrency.",
+      "description_length": 507,
       "index": 4,
       "embedding_norm": 1.0
     }
@@ -53,9 +53,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 617,
-    "min_description_length": 363,
-    "avg_description_length": 482.2,
-    "embedding_file_size_mb": 0.01859283447265625
+    "max_description_length": 507,
+    "min_description_length": 339,
+    "avg_description_length": 415.0,
+    "embedding_file_size_mb": 0.07286548614501953
   }
 }

@@ -1,97 +1,97 @@
 {
   "package": "async_websocket",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 11,
-  "creation_timestamp": "2025-07-15T23:07:03.042887",
+  "creation_timestamp": "2025-08-14T23:10:28.891374",
   "modules": [
     {
       "module_path": "Websocket.Frame.Frame_reader.Read_result",
       "library": "async_websocket",
-      "description": "This module defines a variant type `t` to represent the possible outcomes of parsing a WebSocket frame, such as incomplete data or successful consumption. It includes functions to convert between the variant and S-expressions for serialization and debugging. Use this module when handling low-level WebSocket frame parsing to track and communicate parsing state and errors.",
-      "description_length": 373,
+      "description": "This module defines a variant type `t` to represent the possible outcomes of reading a WebSocket frame, such as `No_frame`, `Incomplete_frame`, `Consumed_one_frame`, and `Cannot_parse_uint64_length`. It includes functions `t_of_sexp` and `sexp_of_t` for converting between S-expressions and the result type. These conversions are useful when serializing or deserializing frame read results for debugging, logging, or configuration purposes.",
+      "description_length": 440,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Websocket.Frame.Frame_reader.Expert",
       "library": "async_websocket",
-      "description": "This module processes WebSocket frames incrementally, allowing consumption of partial payloads when the full frame isn't available or when downstream buffers are constrained. It works with `Iobuf` for input handling and invokes a custom handler for each frame fragment, providing details like opcode, final flag, payload length, and masking status. It is used in streaming scenarios where frame data arrives in chunks or must be processed under buffer size limitations.",
-      "description_length": 469,
+      "description": "This module processes WebSocket frames by invoking a user-defined handler for each frame fragment, providing the opcode, final flag, total payload length, current position, payload fragment, and masking status. It works with `Iobuf` for efficient buffer management and handles partial frame consumption when the full payload isn't available. It is useful for streaming large WebSocket messages in memory-constrained environments where downstream buffers cannot be resized.",
+      "description_length": 472,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Websocket.Frame.Frame_reader",
       "library": "async_websocket",
-      "description": "This module parses WebSocket frames from a buffer, handling opcodes, final flags, payload content, and mask state, while supporting partial frame processing and buffer advancement. It defines a variant type `t` to represent parsing outcomes and provides functions for S-expression conversion, enabling efficient tracking and communication of parsing state and errors. The incremental processing submodule works with `Iobuf` to consume frame fragments on demand, invoking a handler with frame metadata such as opcode and payload length. Use this module to implement low-level WebSocket message parsing in servers or clients, especially in streaming scenarios with constrained buffers or chunked data arrival.",
-      "description_length": 707,
+      "description": "Processes WebSocket frames by invoking a user-defined handler for each frame, consuming bytes from an `Iobuf` and returning structured results. Handles partial frames, masked content, and variable-length payloads, with support for streaming large messages. Useful for implementing WebSocket endpoints that process messages incrementally without full buffering.",
+      "description_length": 360,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Websocket.Frame.Error",
-      "library": "async_websocket",
-      "description": "This module defines an error type that includes a close reason code and a descriptive message, specifically for handling WebSocket frame errors. It provides a function to convert error values into S-expressions, primarily used for logging or debugging purposes. Concrete use cases include reporting malformed frames or protocol violations during WebSocket communication.",
-      "description_length": 370,
-      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Websocket.Frame.Iobuf_writer",
       "library": "async_websocket",
-      "description": "This module handles the construction of WebSocket frames by managing the writing of headers and content into Iobufs. It provides functions to calculate frame sizes, initiate frame writes with opcode and content length metadata, and finalize writes with validation. It is used when sending WebSocket messages, ensuring frames conform to the protocol's structure and size constraints.",
-      "description_length": 382,
-      "index": 4,
+      "description": "This module handles the construction of WebSocket frames by managing the encoding of frame headers and content into Iobufs. It provides functions to calculate frame size requirements, initiate frame writes with metadata like opcode and final flags, and finalize writes ensuring correctness. It is used when sending WebSocket messages, where precise control over frame layout and buffering is required.",
+      "description_length": 401,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Websocket.Websocket_role",
+      "module_path": "Websocket.Frame.Error",
       "library": "async_websocket",
-      "description": "This module defines a type `t` representing the role of a WebSocket connection, either `Client` or `Server`, and includes a function `sexp_of_t` for converting role values to S-expressions. It is used to distinguish between client and server endpoints in WebSocket communication. Concrete use cases include configuring connection behavior and logging based on role identity.",
-      "description_length": 374,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Websocket.Content_reassembler",
-      "library": "async_websocket",
-      "description": "This module reassembles fragmented WebSocket message content by accumulating and concatenating data from multiple frames into a single contiguous buffer. It works with `Iobuf.t` buffers and handles message boundaries using frame opcodes and the final flag. Use it to reconstruct complete WebSocket messages from a sequence of incoming frames, handling ping, close, and protocol error conditions.",
-      "description_length": 395,
-      "index": 6,
+      "description": "This module defines an error type that includes a close reason code and a message string. It provides a function to convert error values into S-expressions. This module is used to serialize WebSocket frame errors for logging or debugging purposes.",
+      "description_length": 247,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Websocket.Frame",
       "library": "async_websocket",
-      "description": "This module handles WebSocket frame construction, parsing, and error handling, combining direct operations on frame values with support for buffer-based serialization and incremental processing. It defines core types like frame (with opcode, final flag, and content) and error (with close code and message), while offering operations to build, validate, compare, and determine frame sizes. The parsing submodule works with Iobuf to incrementally extract frames from streaming data, tracking state and errors, while the writing submodule manages header and content serialization for transmission. Use this module to implement WebSocket message framing logic, generate test frames, enforce size limits, or handle protocol violations with structured errors.",
-      "description_length": 754,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module implements WebSocket frame construction, serialization, and size calculation for efficient network transmission. It works with string-based content and structured frame metadata including opcode, final flag, and close codes. Concrete use cases include generating correctly formatted WebSocket frames for sending messages over Async connections and determining buffer sizes for frame encoding.",
+      "description_length": 404,
+      "index": 5,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Websocket.Connection_close_reason",
       "library": "async_websocket",
-      "description": "This module defines a polymorphic variant type `t` representing WebSocket connection close reasons, each variant corresponding to a specific numeric status code. It provides functions to convert between the variant and its integer representation, compare values, and serialize them to S-expressions. The module is used to handle and interpret termination reasons in WebSocket connections, such as normal closure, protocol errors, or policy violations.",
-      "description_length": 451,
-      "index": 8,
+      "description": "This module defines a polymorphic variant type `t` representing WebSocket connection close reasons, each corresponding to a specific numeric status code. It provides functions to convert between the variant and its integer representation, compare values, and serialize them to S-expressions. Use cases include handling WebSocket closure events with precise reason codes, validating handshake failures, or inspecting TLS errors during connection termination.",
+      "description_length": 457,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Websocket.Content_reassembler",
+      "library": "async_websocket",
+      "description": "This module reassembles fragmented WebSocket message content from multiple frames into complete messages, handling text and binary data. It works with `Iobuf` buffers and WebSocket frames, maintaining an internal buffer to minimize allocations during reassembly. Use it to process streaming WebSocket data, handling complete messages only once all fragments are received.",
+      "description_length": 371,
+      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Websocket.Opcode",
       "library": "async_websocket",
-      "description": "This module defines an enumerated type representing WebSocket opcodes, including both standard and custom control and non-control codes. It provides functions to convert between integer values and opcode types, classify opcodes into control or non-control categories, and supports serialization, equality checks, and property-based testing. Concrete use cases include handling WebSocket frame types during message parsing and validation in network communication layers.",
-      "description_length": 469,
+      "description": "This module defines an enumerated type representing WebSocket opcodes, including both control and non-control codes, with conversions to and from integers. It provides functions to classify opcodes into control or non-control categories and supports serialization, equality checks, and property-based testing with QuickCheck. Concrete use cases include handling WebSocket frame types like Text, Binary, Ping, and Close during protocol parsing or network communication.",
+      "description_length": 468,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Websocket.Websocket_role",
+      "library": "async_websocket",
+      "description": "This module defines a type `t` representing the role of a WebSocket connection, either `Client` or `Server`, and includes a function `sexp_of_t` to convert role values to S-expressions. It is used to distinguish between client and server endpoints in WebSocket communication. Concrete use cases include configuring connection behavior and logging based on the role.",
+      "description_length": 365,
       "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Websocket",
       "library": "async_websocket",
-      "description": "This module provides a complete WebSocket communication layer with client and server roles, handling frame-based message exchange over asynchronous streams. It supports bidirectional text and binary messaging, connection lifecycle management via close codes, and liveness monitoring through ping/pong frames, enabling real-time applications like chat systems and streaming APIs. The role module distinguishes endpoints for behavior configuration, the reassembly module reconstructs full messages from fragmented frames, and the frame module handles low-level serialization, parsing, and error handling. Use cases include building low-latency data synchronization services, validating WebSocket frames with structured error reporting, and managing connection termination with precise status codes.",
-      "description_length": 796,
+      "description": "This module implements core WebSocket protocol handling, including frame parsing and reassembly, connection lifecycle management, and bidirectional messaging over Async pipes. It works with string-based message content, structured frame metadata, and connection state tracked via `t`, supporting operations like sending text/binary messages, handling pings/pongs, and closing connections with specific reasons. Concrete use cases include building WebSocket servers that stream real-time data updates, implementing chat applications with message framing, and managing keep-alive heartbeats in long-lived connections.",
+      "description_length": 615,
       "index": 10,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     }
   ],
   "filtering": {
@@ -101,9 +101,9 @@
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 796,
-    "min_description_length": 370,
-    "avg_description_length": 503.6363636363636,
-    "embedding_file_size_mb": 0.040393829345703125
+    "max_description_length": 615,
+    "min_description_length": 247,
+    "avg_description_length": 418.1818181818182,
+    "embedding_file_size_mb": 0.15978240966796875
   }
 }

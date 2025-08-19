@@ -1,581 +1,517 @@
 {
   "package": "mc2",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 70,
-  "creation_timestamp": "2025-07-15T23:18:38.489519",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 62,
+  "creation_timestamp": "2025-08-15T15:14:16.927323",
   "modules": [
     {
-      "module_path": "Mc2_core.Term.Map",
-      "library": "mc2.core",
-      "description": "This module implements a map data structure with ordered keys and associated values, offering operations for insertion, deletion, merging, and ordered traversal. It supports transformations with `map` and `fold`, safe value retrieval via `option`-returning functions, and bulk manipulation from sequences, lists, or iterators. Use cases include aggregating term-based data, merging maps with custom conflict resolution, and converting between maps and other collection types while preserving key ordering.",
-      "description_length": 505,
+      "module_path": "Mc2_backend.Dot.Make",
+      "library": "mc2.backend",
+      "description": "This module implements a functor for generating DOT-formatted graph representations of proofs, primarily used for visualization purposes. It takes a parameter module `A` that defines the specific graph structure and node labeling conventions. The resulting module provides a `print` function that outputs the proof graph to a formatter, compatible with Graphviz tools for rendering images.",
+      "description_length": 389,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Clause.Set",
-      "library": "mc2.core",
-      "description": "This module provides ordered sets of clauses with standard set operations like union, intersection, and difference, along with transformations such as `filter_map` and `partition`. It supports efficient membership tests, quantifiers, and safe access to extremal elements, while enabling conversions between sets, sequences, lists, and iterators. Designed for logic-based systems, it facilitates functional manipulation of clause collections through ordered structures with structural sharing, supporting use cases like logical reasoning and set-theoretic transformations.",
-      "description_length": 571,
+      "module_path": "Mc2_backend.Dot.Default",
+      "library": "mc2.backend",
+      "description": "This module provides default implementations for printing proof elements in the DOT graph format, specifically handling atomic formulas and proof tree leaves like hypotheses, lemmas, and assumptions. It works with `Mc2_core.Clause.t` and `Mc2_core.Atom.t` types, producing formatted strings suitable for DOT labels. It is used to generate visual representations of proofs using Graphviz by converting proof structures into labeled graph nodes.",
+      "description_length": 443,
       "index": 1,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Value.TC",
-      "library": "mc2.core",
-      "description": "This module defines a type class for values with customizable printing, equality, and hashing operations. It works with the abstract type `t` representing values equipped with these behaviors. Concrete use cases include defining how values are compared, displayed, and hashed in interpreters or symbolic manipulation systems.",
-      "description_length": 325,
+      "module_path": "Mc2_backend.Backend_intf",
+      "library": "mc2.backend",
+      "description": "This module defines the interface for proof export functionality, specifying operations required to serialize and export proofs in various formats. It works with proof data structures and output targets such as files or streams. Concrete use cases include implementing backends for different proof formats like JSON, XML, or custom binary representations.",
+      "description_length": 355,
       "index": 2,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Type.TY_ALLOC_OPS",
-      "library": "mc2.core",
-      "description": "This module defines operations for managing type representations with a focus on equality, hashing, and initial allocation size. It works with `Mc2_core.Type.view` and `TC.lazy_tc` types, providing concrete functions for comparing views, generating hash values, and setting the initial allocation table size. It is used in type-checking systems to ensure consistent type handling during plugin execution.",
-      "description_length": 404,
+      "module_path": "Mc2_backend.Dot",
+      "library": "mc2.backend",
+      "description": "This module exports proof structures to the DOT graph format for visualization with Graphviz. It includes a functor `Make` that generates graph representations using custom node labeling logic, and a `Default` module that handles atomic formulas and proof tree leaves. It operates on `Mc2_core.Clause.t` and `Mc2_core.Atom.t` types to produce labeled graph nodes for proof visualization.",
+      "description_length": 387,
       "index": 3,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mc2_backend",
+      "library": "mc2.backend",
+      "description": "This module implements proof export backends for serializing proof data to various output formats. It includes an interface module for defining proof serialization operations and a DOT backend that generates graph visualizations of proof structures. The DOT backend specifically works with `Mc2_core.Clause.t` and `Mc2_core.Atom.t` types to produce labeled graph nodes using custom or default labeling logic.",
+      "description_length": 408,
+      "index": 4,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Tseitin.S",
-      "library": "mc2.core",
-      "description": "This module represents boolean formulas using atoms and combinators like `And`, `Or`, and `Not`, and provides constructors for building complex formulas such as `xor`, `imply`, and `equiv`. It supports operations to convert formulas into conjunctive normal form (CNF) using Tseitin's transformation, which introduces fresh atoms to maintain equi-satisfiability. The CNF output is structured as a list of clauses, each being a list of atoms, suitable for input to SAT or SMT solvers.",
-      "description_length": 482,
-      "index": 4,
+      "module_path": "Mc2_unin_sort",
+      "library": "mc2.unin_sort",
+      "description": "This module implements support for uninterpreted sorts in a solver-agnostic way. It provides operations to declare uninterpreted sorts, construct terms of such sorts, and compare terms for equality. These capabilities are essential for modeling abstract data types or symbolic values in formal verification tasks.",
+      "description_length": 313,
+      "index": 5,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mc2_uf",
+      "library": "mc2.uf",
+      "description": "This module supports declaring uninterpreted symbols, applying constants to arguments, and converting constants into terms. It operates on identifiers, types, and terms within the Mc2_core framework. Concrete use cases include building and manipulating symbolic expressions during theorem proving or program analysis tasks.",
+      "description_length": 323,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_dimacs.Plugin_sat",
+      "library": "mc2.dimacs",
+      "description": "This module defines a plugin that maps DIMACS atoms to integers for SAT solving. It provides a service key `k_atom` to convert atoms to integers and a plugin factory to integrate with the core system. It is used to interface with SAT solvers by encoding logical atoms into numeric form.",
+      "description_length": 286,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_dimacs",
+      "library": "mc2.dimacs",
+      "description": "This module parses DIMACS files into logical clauses for SAT solving, converting atoms to integers via a plugin interface. It provides functions to process clauses, solve problems, and print results with options for configuration. Use cases include reading SAT benchmarks, encoding logic problems, and integrating with SAT solvers.",
+      "description_length": 331,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mc2_lra.LE.Infix",
+      "library": "mc2.lra",
+      "description": "This module defines infix operators for arithmetic operations on linear expressions. It supports addition, subtraction, and scalar multiplication of linear expressions represented by the type `Mc2_lra.LE.t`. These operations are useful for constructing and manipulating linear constraints in formal verification or constraint-solving contexts.",
+      "description_length": 343,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_lra.LE",
+      "library": "mc2.lra",
+      "description": "This module supports the construction, transformation, and evaluation of linear expressions composed of numeric coefficients (`Q.t`) and terms (`Mc2_core.term`), enabling arithmetic operations (addition, negation, scaling), term-level inspection, and simplification. It is designed for symbolic manipulation of linear combinations, such as in optimization or constraint-solving contexts, and includes operator-based syntax for intuitive expression building.",
+      "description_length": 457,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_lra",
+      "library": "mc2.lra",
+      "description": "This module implements linear rational arithmetic operations, including the construction and manipulation of linear expressions with rational coefficients and terms. It provides functions to build and evaluate constraints (equality, less-than-or-equal, less-than) over these expressions, supporting symbolic transformations and simplifications. Concrete use cases include constraint solving, optimization problem formulation, and formal verification tasks involving linear inequalities.",
+      "description_length": 486,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_propositional.F",
+      "library": "mc2.propositional",
+      "description": "This module represents and manipulates propositional logic formulas. It supports logical operations such as conjunction, disjunction, negation, implication, and equivalence, and allows conversion of formulas into conjunctive normal form (CNF). The module works with atomic propositions, boolean formulas, and combinators like `And`, `Or`, and `Not`, enabling concrete use cases such as logical reasoning, constraint solving, and formal verification tasks.",
+      "description_length": 455,
+      "index": 12,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_propositional",
+      "library": "mc2.propositional",
+      "description": "This module provides logical operations like conjunction, disjunction, negation, implication, and equivalence for propositional formulas. It supports conversion to conjunctive normal form (CNF) via the `k_cnf` service and generation of fresh atomic propositions via `k_fresh`. Concrete use cases include formal verification, constraint solving, and logical reasoning tasks involving boolean formulas.",
+      "description_length": 400,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_smtlib.Typecheck.Make",
+      "library": "mc2.smtlib",
+      "description": "This module converts terms and statements from the input AST to the internal representation used by the SMT solver. It supports transforming logical expressions into a normalized form suitable for constraint solving. Use it when translating high-level specifications into SMT queries for verification or analysis tasks.",
+      "description_length": 319,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_smtlib.Make",
+      "library": "mc2.smtlib",
+      "description": "Implements parsing and typechecking for SMT-LIB input, converting strings or stdin into typed statement lists. Processes individual statements with configurable options for garbage collection, proof output, model printing, and resource limits. Designed for use in SMT solvers or formal verification tools where SMT-LIB compatibility is required.",
+      "description_length": 345,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_smtlib.Typecheck",
+      "library": "mc2.smtlib",
+      "description": "This module provides functions to convert terms and statements from the input AST into an internal representation suitable for SMT solving. It normalizes logical expressions, preparing them for constraint solving. Use it to translate high-level specifications into SMT queries for verification or analysis tasks.",
+      "description_length": 312,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mc2_smtlib",
+      "library": "mc2.smtlib",
+      "description": "This module processes SMTLib-2 input with functions to parse, type-check, and prepare logical expressions for SMT solving. It works with abstract syntax trees representing SMT statements and terms, converting them into a normalized internal form. Use it to integrate SMTLib-2 compatibility into solvers or verification tools, enabling tasks like constraint solving, model generation, or proof checking.",
+      "description_length": 402,
+      "index": 17,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mc2_core.Term.Watch2",
       "library": "mc2.core",
-      "description": "This module manages watchlists of terms for efficient propagation in a constraint solver. It supports creating and iterating over watchlists, initializing watches on terms, and updating watches when terms are assigned values. Use cases include maintaining dependencies between terms during solving and triggering propagation actions when watched terms change state.",
-      "description_length": 365,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Service.Registry",
-      "library": "mc2.core",
-      "description": "This module implements a service registry for storing and retrieving services by key. It supports operations to create a registry, register services, and look up services either with or without exception handling. The registry holds services of any type, identified by typed keys, and can iterate over all registered services.",
-      "description_length": 326,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Solver.Sat_state",
-      "library": "mc2.core",
-      "description": "This module provides functions to query and manipulate the state of a SAT solver, including evaluating formula valuations, retrieving decision levels, and accessing the assignment trail. It works with propositional atoms and solver states to support operations like model extraction and validation. Concrete use cases include checking the truth value of literals during solving, inspecting the decision trail for debugging, and validating the final model after a solving step.",
-      "description_length": 476,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Type.TC",
-      "library": "mc2.core",
-      "description": "This module defines a typeclass interface with operations for building and manipulating typeclass instances using solver actions, equality checks, and state initialization. It works with terms and values from the solver types module, along with custom printers for views. Concrete use cases include constructing typeclass dictionaries and managing their evaluation state lazily.",
-      "description_length": 378,
-      "index": 8,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.ID.Tbl",
-      "library": "mc2.core",
-      "description": "This module offers imperative hash table operations for key-value pairs with specialized `Mc2_core.ID.t` keys, supporting insertion, lookup, iteration, and in-place transformations like filtering and folding. It facilitates bulk updates from sequences or iterators, numeric counter manipulations (`incr`/`decr`), and list-valued entry management, alongside conversions to and from collections for functional workflows. Typical applications include tracking dynamic data aggregates, implementing memoization caches, and processing pipelines that require efficient key-based updates or sequence-driven transformations.",
-      "description_length": 616,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.ID.Map",
-      "library": "mc2.core",
-      "description": "This module implements ordered maps keyed by `Mc2_core.ID.t` with standard operations like insertion, deletion, and lookup, along with ordered traversal via iterators, folds, and bidirectional sequences. It supports advanced manipulations such as predicate-based filtering, safe value access with optional returns, and customizable merging of maps, including handling of key collisions. Designed for scenarios requiring strict key ordering and deterministic transformations, it is suited for tasks like dependency resolution, configuration composition, or maintaining indexed collections with guaranteed key uniqueness and ordered processing.",
-      "description_length": 642,
-      "index": 10,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Term.Set",
-      "library": "mc2.core",
-      "description": "This module offers operations for managing immutable, sorted collections of elements, supporting set-theoretic operations (union, intersection, difference), transformations (mapping, filtering), and ordered iteration. It works with elements maintained in sorted order according to a comparison function, providing safe element access via optional returns and utilities for converting to sequences, lists, or formatted strings. Typical applications include handling ordered data sets, performing efficient membership tests, and implementing algorithms requiring sorted traversal or set algebra.",
-      "description_length": 593,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Plugin.Factory",
-      "library": "mc2.core",
-      "description": "This module defines a GADT for plugin factories that specify how plugins are constructed, including their dependencies and priority. It supports operations to create factories with custom build logic and compare them based on priority. Factories are used to instantiate plugins with unique IDs and resolved service dependencies at runtime.",
-      "description_length": 339,
-      "index": 12,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Type.Alloc",
-      "library": "mc2.core",
-      "description": "This module provides a function `make` that constructs a type representation from a type view, working with type views and concrete type definitions. It is used to create instances of types based on their structural representation. A typical use case is during type reconstruction or introspection, where a type's structure is dynamically assembled from a view.",
-      "description_length": 361,
-      "index": 13,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Tseitin.Make",
-      "library": "mc2.core",
-      "description": "This module implements Tseitin's algorithm to convert arbitrary boolean formulas into equi-satisfiable CNF (Conjunctive Normal Form) expressions, enabling efficient processing by SAT/SMT solvers. It represents formulas using a custom type with combinators for logical operations (And, Or, Not), and supports construction and manipulation of boolean expressions including atoms, negations, conjunctions, disjunctions, and derived operations like XOR, implication, and equivalence. The core functionality transforms complex boolean structures into CNF via the `cnf` function, which takes a formula and returns a list of clauses suitable for solver input.",
-      "description_length": 652,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Term.Term_allocator",
-      "library": "mc2.core",
-      "description": "This module manages term creation and deletion for a specific theory, providing direct access to term manipulation. It works with terms represented as `Mc2_core.Term.t` and associated views and types. Concrete use cases include allocating new terms during formula construction and cleaning up unused terms to manage memory efficiently.",
-      "description_length": 335,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Term.Watch1",
-      "library": "mc2.core",
-      "description": "This module implements a watchlist data structure for terms in a solver, allowing terms to track dependencies and efficiently manage propagation events. It supports operations to create and initialize watchlists from lists or arrays, iterate over watched terms, and update watches when terms are assigned. Concrete use cases include managing clause dependencies in a SAT solver, where watchlists enable efficient unit propagation and backtracking.",
-      "description_length": 447,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Tseitin.Arg",
-      "library": "mc2.core",
-      "description": "This module defines the core formula type and operations needed for Tseitin's CNF conversion. It supports negation of atomic formulas and provides a way to print formulas for debugging or logging. It is used internally during the transformation of boolean expressions into equi-satisfiable CNF representations.",
-      "description_length": 310,
-      "index": 17,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Term.TERM_ALLOC_OPS",
-      "library": "mc2.core",
-      "description": "This module defines operations for managing term identifiers, equality checks, and hashing within a theory context. It works with term views and theory identifiers to support efficient term comparison and storage. Concrete use cases include initializing term tables, comparing term views for equality, and generating hash values for terms in a specific theory.",
-      "description_length": 360,
+      "description": "This module implements a watchlist data structure for terms in a solver, allowing efficient tracking and updating of dependencies during constraint solving. It supports operations to create and initialize watchlists, iterate over terms, and update watches in response to term assignments. Use cases include managing clause dependencies in a SAT solver, where watchlists help efficiently propagate unit clauses and detect conflicts.",
+      "description_length": 431,
       "index": 18,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mc2_core.ID.Smtlib",
       "library": "mc2.core",
-      "description": "This module provides a function `pp` for pretty-printing identifiers in SMT-LIB format. It works with the `Mc2_core.ID.t` type, which represents identifiers in the core intermediate representation. A concrete use case is generating SMT-LIB output for symbolic analysis tools.",
-      "description_length": 275,
+      "description": "This module provides a function `pp` for pretty-printing identifiers in SMT-LIB format. It works with the abstract identifier type `Mc2_core.ID.t`. A concrete use case is generating SMT-LIB output for formal verification tools.",
+      "description_length": 227,
       "index": 19,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Term.Bool",
+      "module_path": "Mc2_core.Term.Term_allocator",
       "library": "mc2.core",
-      "description": "This module represents boolean terms and provides operations to inspect and manipulate atomic propositions. It includes functions to check if both polarities of a variable appear in the same clause, retrieve assigned atoms, and construct equality and inequality constraints between terms. Use cases include managing boolean variables in a SAT solver, tracking variable assignments, and building logical constraints between terms.",
-      "description_length": 429,
+      "description": "Allocates and manages terms in a theory, providing functions to create (`make`) and delete terms, iterate over all terms, and perform garbage collection (`gc_all`). Works directly with term views, types, and solver-specific term representations. Useful for maintaining term lifetimes and ensuring efficient memory use in SMT solver implementations.",
+      "description_length": 348,
       "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Proof.H",
-      "library": "mc2.core",
-      "description": "This module provides high-performance hash tables specialized for resolution proofs, using clauses as keys and supporting arbitrary value types. It enables efficient mutable operations like insertion, lookup, and bulk updates, along with value aggregation, transformation, and traversal tailored for proof inspection workflows. These tables are designed for temporary use during single proof analyses, as they become invalid after solver restarts, and are particularly suited for tasks like clause frequency counting, iterative value refinement, and proof-specific metadata tracking.",
-      "description_length": 583,
-      "index": 21,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Solver.Unsat_state",
-      "library": "mc2.core",
-      "description": "This module provides operations to retrieve the unsatisfiable clause and generate a proof of contradiction from a solver state indicating unsatisfiability. It works with the solver's state type restricted to the `UNSAT` case and related proof structures. Concrete use cases include extracting conflict clauses for debugging and constructing formal proofs of inconsistency in logical formulas.",
-      "description_length": 392,
-      "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Plugin.S",
-      "library": "mc2.core",
-      "description": "This module defines the core interface for plugins, specifying operations to register services, validate satisfiability, and manage terms. It works with solver actions, terms, and services to enforce theory constraints during solving. Plugins use it to integrate custom logic into the solver, such as handling domain-specific theories or managing term lifecycles during garbage collection.",
-      "description_length": 389,
-      "index": 23,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Mc2_core.Atom.Tbl",
+      "module_path": "Mc2_core.Type.TC",
       "library": "mc2.core",
-      "description": "This module implements imperative hash tables with atomic keys and polymorphic values, supporting operations like atomic counting, sequence conversion, and in-place value transformations. It emphasizes efficient key-value manipulation through safe retrieval, iterative updates, and customizable merging of duplicates, particularly for scenarios involving counter aggregation or iterative data processing. Use cases include tracking frequency counts from sequences, merging key-value pairs with conflict resolution, and lazy value initialization during lookups.",
-      "description_length": 560,
-      "index": 24,
+      "description": "This module defines typeclass instances for solver operations, including `make` to construct a typeclass with decision, equality, and state initialization functions. It works with terms and values from the solver types, supporting lazy initialization through `lazy_make`, `lazy_from_val`, and `lazy_complete`. Concrete use cases include setting up type-specific behavior for constraint solving and term manipulation in a solver context.",
+      "description_length": 436,
+      "index": 21,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mc2_core.Service.Key",
       "library": "mc2.core",
-      "description": "This module provides functions to create and manipulate service keys, which are used to uniquely identify and access services registered by plugins. It operates on string-based identifiers and supports formatted key generation. Concrete use cases include retrieving specific services by name or constructing keys dynamically using format strings.",
-      "description_length": 346,
-      "index": 25,
+      "description": "This module provides functions to create and manipulate service keys, which are used to uniquely identify and access services registered by plugins. It operates on a polymorphic type `t` that represents a service key, primarily working with strings to identify key names. Concrete use cases include generating uniquely named service keys with `make` or formatted names with `makef`, and retrieving the name of a key with `name`.",
+      "description_length": 428,
+      "index": 22,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Mc2_core.ID.Set",
+      "module_path": "Mc2_core.Type.Alloc",
       "library": "mc2.core",
-      "description": "This module provides functions for creating and manipulating immutable ordered sets of identifiers, supporting operations like union, intersection, filtering, and safe element access. It works with `Mc2_core.ID.t` elements, maintaining their order and enabling conversions to sequences, lists, and string representations. These capabilities are useful for scenarios requiring predictable iteration order and safe handling of optional elements, such as managing unique identifiers in structured workflows or dependency tracking.",
-      "description_length": 527,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Term.TERM_ALLOC",
-      "library": "mc2.core",
-      "description": "This module manages term creation and deletion in a theory, operating on term views and types to produce and dispose of terms. It provides direct access to term iteration and garbage collection for all terms. Useful for controlling term lifecycle and memory management in logical solver implementations.",
-      "description_length": 303,
-      "index": 27,
+      "description": "This module implements a type allocation system that maps type views to concrete type representations. It provides the `make` function to construct type instances from views, leveraging the associated `T` module for type-specific behavior. It is used to manage type instantiation in contexts like type checking or compilation pipelines where views dictate how types are resolved and represented.",
+      "description_length": 395,
+      "index": 23,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mc2_core.Clause.Tbl",
       "library": "mc2.core",
-      "description": "This implementation offers imperative hash tables for a specific key type paired with polymorphic values, featuring operations to add, replace, and retrieve entries with support for default values, in-place updates, and iteration. It extends standard functionality with tools to combine duplicate keys using custom logic, filter and transform bindings in-place, and track usage statistics. Designed for scenarios requiring efficient key-based data aggregation, such as managing logical clause metadata, counting key occurrences in sequences, or merging overlapping entries during symbolic computation workflows.",
-      "description_length": 611,
+      "description": "This module implements a mutable hash table for efficient key-value storage and transformation, with keys restricted to a specialized type that supports imperative updates, bulk operations, and functional queries. It enables atomic modifications (increments, decrements), safe value retrieval with defaults, and seamless conversion to sequences or lists, while handling duplicate keys through customizable combination logic. Typical applications include frequency counting, dynamic state management, and scenarios requiring high-performance lookups paired with iterative refinement of key-value pairs.",
+      "description_length": 601,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Atom.Set",
+      "library": "mc2.core",
+      "description": "This module implements ordered set operations for elements of type `Atom.t`, supporting creation, union, intersection, and difference alongside ordered traversal via iterators and sequences. It emphasizes safe access patterns with optional return types, predicate-based searches, and transformations to/from lists and strings, leveraging `Ord.compare` to enforce uniqueness and ordering. Typical use cases include managing sorted collections, performing set algebra, and serializing sets for configuration or analysis tasks.",
+      "description_length": 524,
+      "index": 25,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Clause.Set",
+      "library": "mc2.core",
+      "description": "This module implements immutable ordered collections of elements, supporting set algebra operations like union, intersection, and difference alongside predicate-driven transformations such as `filter_map` and `partition`. It works with sorted sets of homogeneous elements, providing safe accessors via `option`-typed queries and conversion utilities to and from lists, sequences, and string representations. Typical applications include managing logical clauses in formal verification systems, implementing symbolic reasoning algorithms, and handling finite domain constraints with ordered element processing.",
+      "description_length": 609,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Solver.Sat_state",
+      "library": "mc2.core",
+      "description": "This module provides functions to query and manipulate the state of a SAT solver, including evaluating atoms, retrieving assignment levels, iterating through the trail of decisions, and extracting or validating a model. It operates on the solver's state type and works with atoms, terms, and assignments. Concrete use cases include checking the satisfiability of a formula, tracing the decision path, and inspecting variable assignments during or after solving.",
+      "description_length": 461,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Term.Bool",
+      "library": "mc2.core",
+      "description": "This module represents boolean terms and provides operations to inspect and manipulate atomic propositions, including checking polarities, retrieving assigned atoms, and constructing equality and inequality constraints. It works with the `t` type representing boolean expressions and interacts with `atom` and `term` types from the solver's core structures. Concrete use cases include extracting positive or negative atoms from a boolean term, verifying if both polarities appear in the same clause, and creating equality or inequality atoms between terms.",
+      "description_length": 556,
       "index": 28,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Term.Tbl",
+      "module_path": "Mc2_core.Value.TC",
       "library": "mc2.core",
-      "description": "This module implements efficient key-value mappings with term keys, supporting operations like atomic updates, bulk insertion from sequences/iterators, and in-place transformations with value combination logic. It works with hash tables that map keys to arbitrary values, enabling use cases such as frequency counting, dictionary-style accumulations, and bidirectional conversions between associative collections and linear data structures. Specialized features include customizable duplicate key handling during merges, traversal with effectful iteration, and structured serialization for debugging or persistence.",
-      "description_length": 615,
+      "description": "This module defines a type class for values with custom equality, pretty-printing, and hashing operations. It works with the `t` type representing value classifiers, using `Mc2_core.Value.view` as the underlying data structure. Concrete use cases include defining type-specific behaviors for values in interpreters or compilers where standard equality and hashing are insufficient.",
+      "description_length": 381,
       "index": 29,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Service.Registry",
+      "library": "mc2.core",
+      "description": "This module implements a service registry for storing and retrieving services by key. It supports operations to create a registry, register a service with a specific key, and look up services either optionally or with an exception if missing. The registry works with service keys of type `'a Mc2_core.Service.Key.t` and stores services of arbitrary types indexed by these keys. A concrete use case is managing a collection of services in a dependency injection system, where services need to be dynamically registered and accessed by their unique keys.",
+      "description_length": 552,
+      "index": 30,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Proof.H",
+      "library": "mc2.core",
+      "description": "This module provides a high-performance hashtable implementation optimized for resolution proof analysis, using clauses as keys and supporting imperative updates, bulk operations, and value aggregation with custom combinators. It operates on a specialized clause-keyed hashtable type (`t`) designed for temporary use during proof inspection, enabling efficient tracking of clause metadata, frequency counting, and transformation of proof data through folds and iterators. Key applications include aggregating clause statistics, merging values during bulk updates, and interfacing with proof traversal pipelines where temporary key-value mappings are required.",
+      "description_length": 659,
+      "index": 31,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Plugin.Factory",
+      "library": "mc2.core",
+      "description": "This module defines a GADT for plugin factories that specify how plugins are constructed, including their dependencies and priority. It supports operations to create factories with custom build logic and compare them based on priority. Factories are used to instantiate plugins with unique IDs and resolved service dependencies at runtime.",
+      "description_length": 339,
+      "index": 32,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.ID.Set",
+      "library": "mc2.core",
+      "description": "This module implements ordered set operations for elements of type `Mc2_core.ID.t`, maintaining strict ordering via `Ord.compare`. It supports set algebra (union, intersection, difference), ordered traversal (iteration, folding, mapping), and transformations (filtering, partitioning, sequence conversion), with safe access to extremal elements and string formatting. Designed for scenarios requiring ordered data processing, such as filtered set traversal, collection conversion, or ordered element retrieval in analysis pipelines.",
+      "description_length": 532,
+      "index": 33,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mc2_core.Term.Set",
+      "library": "mc2.core",
+      "description": "This module implements immutable sets of ordered elements, supporting functional transformations like union, intersection, and difference, along with ordered iteration, filtering, and safe element access via comparison-based sorting. It works with a concrete set type `t` containing elements of type `elt`, which are organized using a total ordering function `Ord.compare`. Typical applications include managing collections of terms requiring deterministic ordering, such as static analysis data structures or symbolic computation pipelines, where immutability and precise element traversal are critical for correctness.",
+      "description_length": 620,
+      "index": 34,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mc2_core.Lemma.TC",
       "library": "mc2.core",
-      "description": "This module implements a type-checking context for lemmas, providing a `make` function to create a new context with a custom pretty-printer for lemma views. It manages the type `t`, which represents the internal state of the type-checking process. Use this module when constructing and validating lemmas within a formal verification system.",
-      "description_length": 340,
-      "index": 30,
+      "description": "This module defines a type `t` representing a term context used in lemma processing. It provides the `make` function to create a term context with a custom pretty-printer for terms. This context is used to manage and manipulate term representations during proof construction or term rewriting tasks.",
+      "description_length": 299,
+      "index": 35,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Mc2_core.Term.TC",
       "library": "mc2.core",
-      "description": "This module defines typeclass instances for terms in a solver, enabling operations such as initialization, watch updating, deletion, subterm traversal, and evaluation. It works with terms and term views, using callbacks to implement specific behaviors for each operation. Use cases include defining custom term behavior in a constraint solver, such as tracking dependencies or evaluating expressions during solving.",
-      "description_length": 415,
-      "index": 31,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Builtins",
-      "library": "mc2.core",
-      "description": "This module defines built-in boolean terms and a plugin factory for extending core functionality. It works with terms and keys from the solver types module, along with plugin factories for dynamic plugin creation. Concrete use cases include initializing standard boolean values and constructing plugins for term manipulation.",
-      "description_length": 325,
-      "index": 32,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_core.Bound_var",
-      "library": "mc2.core",
-      "description": "This module represents bound variables with identifiers and types, supporting pretty-printing with or without type annotations. It integrates bound variables into terms via a service key and extends the term view to include bound variables. Concrete use cases include managing and manipulating variables in logical expressions and solver interactions.",
-      "description_length": 351,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Statement",
-      "library": "mc2.core",
-      "description": "This module defines a set of statements used to construct and manipulate logical expressions and solver commands. It includes operations for declaring types and variables, setting options and information, defining functions, asserting clauses, and triggering satisfiability checks. These statements work with identifiers, types, terms, and solver-specific structures like atoms and clauses, primarily used in SMT solver interaction and formal verification tasks.",
-      "description_length": 462,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.ID",
-      "library": "mc2.core",
-      "description": "This module manages unique identifiers with state-aware creation, comparison, and formatting, enabling distinct instances even from identical names. It supports key operations like generating IDs from strings or formatted values, retrieving their numeric identifiers, and hashing or comparing them for use in symbol tables, compiler expression tracking, or unique key enforcement. Submodules extend this foundation with imperative hash tables for dynamic aggregates and memoization, ordered maps for deterministic key processing and dependency resolution, pretty-printing for SMT-LIB output, and ordered sets for predictable iteration and safe element handling. Together, they form a cohesive toolkit for identifier-centric data management across functional and imperative workflows.",
-      "description_length": 783,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Error",
-      "library": "mc2.core",
-      "description": "This module provides functions for formatting and raising error messages with dynamic content. It works with string formatting combinators and handles error construction using `format4` type values. Concrete use cases include generating type-specific errors during parsing, validation, or configuration setup, where detailed contextual messages are required.",
-      "description_length": 358,
+      "description": "This module defines typeclasses for terms in a solver, supporting operations like initialization, watch updating, deletion, subterm traversal, and evaluation. It works with terms and their views, enabling concrete behaviors for solver actions such as constraint propagation and term inspection. Use cases include defining custom term behavior in a constraint solver, such as tracking dependencies or evaluating expressions during solving.",
+      "description_length": 438,
       "index": 36,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Plugin",
+      "module_path": "Mc2_core.Solver.Unsat_state",
       "library": "mc2.core",
-      "description": "This module provides the foundation for building and integrating solver plugins, combining core interfaces with factory and service management capabilities. It defines plugins as modular units that contribute custom types, terms, and theory logic, with support for ownership checks, name retrieval, and runtime instantiation via service lists and keys. The GADT-based factory system enables structured plugin creation with dependency resolution and priority-based comparison, while the core plugin interface allows registration of services, term management, and satisfiability checks during solving. Example uses include implementing domain-specific theories, extending solver logic with custom term handlers, and managing plugin dependencies in modular solver configurations.",
-      "description_length": 776,
+      "description": "This module provides operations to retrieve the unsatisfiable clause and generate a proof of contradiction from a solver state indicating unsatisfiability. It works with the solver's state type specialized to the unsat case and related proof structures. Concrete use cases include extracting conflict clauses for debugging and constructing formal proofs of inconsistency in logical formulas.",
+      "description_length": 391,
       "index": 37,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Atom",
+      "module_path": "Mc2_core.Term.Map",
       "library": "mc2.core",
-      "description": "This module manipulates logical atoms with support for comparison, negation, and truth evaluation, centered on the `t` type representing signed logical terms with metadata. It includes sets and maps for managing collections of atoms, along with imperative hash tables for key-value associations using atomic keys, enabling efficient counting, sequence conversion, and in-place updates. Operations allow tracking solver state through decision levels and marks, while submodules handle value aggregation and conflict resolution during iterative processing. Example uses include clause watching in SAT solvers, frequency counting from streams, and debuggable constraint analysis with semantic tracing.",
-      "description_length": 698,
+      "description": "This module supports key-based insertion, deletion, ordered traversal, and bulk transformation of polymorphic map structures ordered by Term keys, with operations like `merge`, `fold`, and `mapi` enabling functional manipulation. It provides safe accessors, conditional merging, and conversion from iterable formats (lists, sequences) to handle Term-keyed associations, including handling duplicates via user-defined logic. Such maps are suited for symbolic computation, structured data processing, or scenarios requiring ordered key-value hierarchies, like managing term-based symbol tables or hierarchical configurations.",
+      "description_length": 623,
       "index": 38,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Mc2_core.Service",
+      "module_path": "Mc2_core.ID.Map",
       "library": "mc2.core",
-      "description": "This module organizes functionality around services\u2014features provided by plugins, such as term building or E-matching\u2014using an existential wrapper to handle values of arbitrary types. It includes a registry system that allows services to be stored, retrieved, and invoked by key, supporting operations like registration, lookup, and iteration over all services. Service keys, managed through a dedicated submodule, are constructed from string identifiers and formatted strings, enabling dynamic key creation and type-safe access. Together, these components allow plugins and consumers to expose, discover, and use typed services across different modules and extensions.",
-      "description_length": 669,
+      "description": "This module provides functional map operations for key-value associations with `Mc2_core.ID.t` keys and arbitrary values, supporting modification, traversal, and transformations with safe variants like optional value retrieval. It enables ordered map traversal, merging with custom combination functions, and conversion between maps, sequences, and lists, making it suitable for managing ID-indexed data structures and resolving hierarchical configurations with duplicate keys.",
+      "description_length": 477,
       "index": 39,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Value",
+      "module_path": "Mc2_core.Tseitin.Make",
       "library": "mc2.core",
-      "description": "This module represents values used in models, supporting boolean checks, negation, and conversions, while its child module introduces a type class for values with customizable printing, equality, and hashing. The core type `t` models values and `view` exposes their internal structure, enabling construction, inspection, and conversion, and the child module extends these with behavioral customization via abstract type `t` equipped with comparison and display logic. Use the main module to manipulate model values and check boolean states, and the child module to define how values are compared, displayed, and hashed in interpreters or symbolic systems. For example, you can construct a boolean value, negate it, and customize its string representation using the child module's interface.",
-      "description_length": 790,
+      "description": "This module implements Tseitin's algorithm to convert boolean formulas into equi-satisfiable CNF representations, working with atomic formulas provided by a parameter module. It supports construction of boolean expressions using logical connectives (And, Or, Not, Xor, Imply, Equiv) and converts them into CNF via the `cnf` function, which is suitable for input to SAT or SMT solvers. Concrete use cases include encoding constraint satisfaction problems and verifying logical equivalences in automated reasoning tools.",
+      "description_length": 518,
       "index": 40,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Mc2_core.Lemma",
+      "module_path": "Mc2_core.Term.Watch1",
       "library": "mc2.core",
-      "description": "This module represents and manipulates lemmas in a theorem proving context, offering functions to construct and print lemmas from views and theory-specific data. It centers around the `t` type, capturing the internal state of lemma management, and supports operations like creation, validation, and display. The child module enhances this by implementing a type-checking context with a `make` function that initializes a custom pretty-printer for lemma views. Together, they enable building and verifying lemmas within formal verification systems, such as generating a lemma from a proof state and validating its structure before use in further proofs.",
-      "description_length": 652,
+      "description": "This module implements a watchlist data structure for terms in a solver, allowing terms to track dependencies and efficiently update their state when watched terms are assigned. It supports operations to create, iterate over, and manage watchlists, with specific handling for initialization and updates triggered by term assignments. Use cases include constraint propagation in SAT or SMT solvers, where terms must react to changes in other terms they depend on.",
+      "description_length": 462,
       "index": 41,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Actions",
-      "library": "mc2.core",
-      "description": "This module provides actions for interacting with a solver during plugin execution, enabling clause propagation, conflict generation, and backtrack handling. It operates on solver-specific data types including terms, atoms, clauses, and lemmas, and allows plugins to assert and explain assignments at specific decision levels. Concrete use cases include propagating evaluated boolean terms, adding non-backtrackable clauses, and raising conflicts with supporting lemmas during theory reasoning.",
-      "description_length": 494,
-      "index": 42,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_core.Tseitin",
-      "library": "mc2.core",
-      "description": "This module transforms arbitrary boolean formulas into equi-satisfiable CNF expressions using Tseitin's algorithm, introducing fresh variables to flatten nested structures. It represents formulas with atoms and combinators like `And`, `Or`, and `Not`, and supports derived operations such as `xor`, `imply`, and `equiv`. The core transformation is performed by the `cnf` function, which outputs a list of clauses\u2014each a list of atoms\u2014suitable for SAT, SMT, or McSat solvers. Submodules define the formula type, handle negation, and provide utilities for construction, manipulation, and debugging output.",
-      "description_length": 603,
-      "index": 43,
       "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Mc2_core.Proof",
+      "module_path": "Mc2_core.Term.Tbl",
       "library": "mc2.core",
-      "description": "This module orchestrates the construction and manipulation of resolution proofs by coordinating proof nodes and steps, enabling the generation of proofs from clauses, extraction of unsat cores, and traversal of proof structures. It integrates high-performance hash tables that map clauses to arbitrary values, supporting efficient insertion, lookup, and aggregation for tasks like clause frequency counting and proof metadata tracking during analysis. Direct operations allow proof validation and conflict clause inspection, while the hash tables facilitate iterative refinement and transformation of values tied to proof elements. Together, these components streamline logical derivation workflows, from creation to detailed inspection.",
-      "description_length": 737,
-      "index": 44,
-      "embedding_norm": 1.0
+      "description": "This module implements imperative hash tables for term-keyed collections with polymorphic values, supporting efficient insertion, lookup, and in-place modification. It offers bulk operations for sequence/iterator integration, atomic counter adjustments, and customizable conflict resolution during merges, while enabling functional transformations through folds, filters, and list conversions. Typical use cases include term frequency counting, dynamic key-value aggregation from streams, and stateful processing of heterogeneous term mappings with controlled value coalescing.",
+      "description_length": 577,
+      "index": 42,
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Mc2_core.Solver",
+      "module_path": "Mc2_core.ID.Tbl",
       "library": "mc2.core",
-      "description": "This module provides a SAT solver interface that supports creating solvers with plugins, adding clauses and terms, and checking satisfiability with configurable parameters. It works with atoms, clauses, and solver states to determine logical consistency, extract unsatisfiable cores, and support formal verification tasks. The state module allows querying and manipulating solver state, enabling model extraction, valuation checks, and decision trail inspection during and after solving. The unsat module enables retrieving unsatisfiable clauses and generating formal proofs of contradiction, supporting debugging and validation of logical inconsistencies.",
-      "description_length": 656,
-      "index": 45,
+      "description": "This module implements a hash table specialized for keys of type `Mc2_core.ID.t`, offering operations for safe value retrieval, bulk updates from sequences, value transformations, and element counting. It supports conversions between hash tables and lists/sequences, along with utilities for key/value inspection, iteration, and customizable pretty-printing. Typical use cases include tracking identifier-to-value mappings with efficient lookups, aggregating counts from iterable sources, and transforming stored values through functional updates.",
+      "description_length": 547,
+      "index": 43,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mc2_core.Term",
       "library": "mc2.core",
-      "description": "This module manages terms and their solver-specific states, enabling operations like identity tracking, decision-level reasoning, and semantic analysis through term traversal and equality checks. It supports key data structures including maps, sets, and watchlists for handling dependencies, propagation, and ordered data manipulation. Users can create, inspect, and delete terms, manage term lifecycles with garbage collection, and define custom behaviors via typeclass instances. Specific tasks include constructing logical constraints, tracking variable assignments, and implementing efficient propagation via watched literals in a SAT solver.",
-      "description_length": 646,
-      "index": 46,
+      "description": "The module provides operations for managing terms within a solver context, including term traversal, constraint propagation, garbage collection, and metadata tracking (e.g., decision levels, ownership). It operates on data structures such as `Term.t`, solver-specific fields, and ordered collections like sets, maps, and tables, enabling use cases in SMT solving, symbolic computation, and static analysis. Key patterns involve solver state management, heuristic-driven term manipulation, and efficient imperative/functional transformations over term-structured data.",
+      "description_length": 567,
+      "index": 44,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Service",
+      "library": "mc2.core",
+      "description": "This module defines services as features provided by plugins, using keys to uniquely identify and access them. It supports creating and manipulating service keys with string-based identifiers and maintaining a registry to store and retrieve services of arbitrary types. Concrete use cases include dynamically registering and accessing services such as term builders or E-matching functions in a plugin-based system.",
+      "description_length": 415,
+      "index": 45,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mc2_core.Type",
       "library": "mc2.core",
-      "description": "This module provides core type representations and operations for manipulating type values with support for equality, comparison, hashing, and pretty-printing. It enables type-driven term transformations and solver interactions through concrete type views and decision procedures. The module works with types like `view` and `TC.lazy_tc`, allowing operations such as comparing type views, generating hashes, and dynamically constructing type instances using structural representations. It is used in type-checking pipelines, plugin execution, and lazy evaluation of typeclass dictionaries.",
-      "description_length": 589,
+      "description": "This module implements type representations and operations for solver-driven type manipulation, including equality, comparison, and hashing for type values, alongside utilities to construct and inspect types using views and identifiers. It supports decision procedures, term equality, and state initialization for non-boolean types, with concrete use in constraint solving and term rewriting systems. The TC submodule defines typeclass instances that specify solver behavior per type, while Alloc handles type instantiation from views, used in type resolution during compilation or analysis pipelines.",
+      "description_length": 601,
+      "index": 46,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Value",
+      "library": "mc2.core",
+      "description": "This module defines a concrete type `t` for values used in models, supporting boolean checks, negation, and structured views into solver-specific representations. It provides operations for equality, hashing, pretty-printing, and conversion to and from booleans, as well as constructing values from solver types. Use cases include representing and manipulating logical values in a solver or interpreter where precise value identity and transformation are required.",
+      "description_length": 464,
       "index": 47,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.ID",
+      "library": "mc2.core",
+      "description": "This module implements a unique identifier system with opaque `t` values, created from strings or formatted inputs, and supports identity checks, comparisons, and string/SMT-LIB representations. It provides direct access to identifier internals via `id` and `to_string`, while ensuring type-safe handling through equality, hashing, and printing functions. Concrete use cases include managing symbol tables, tracking program entities in compilers, and generating solver-friendly output for formal verification tools.",
+      "description_length": 515,
+      "index": 48,
       "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mc2_core.Statement",
+      "library": "mc2.core",
+      "description": "This module represents a variety of SMT solver commands and statements, including logic and option settings, type and function declarations, term definitions, and assertion clauses. It works with solver-specific types like `ty` and `term`, along with identifiers and atoms. Concrete use cases include constructing and printing SMT-LIB compliant statements for interaction with SMT solvers.",
+      "description_length": 389,
+      "index": 49,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mc2_core.Bound_var",
+      "library": "mc2.core",
+      "description": "This module represents bound variables with identifiers and types, supporting pretty-printing with or without type annotations. It integrates bound variables into terms via a service key that converts them into terms. Useful for constructing and manipulating terms in a solver context where typed variables are bound in expressions.",
+      "description_length": 332,
+      "index": 50,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Actions",
+      "library": "mc2.core",
+      "description": "This module provides actions for interacting with a solver during plugin execution, enabling clause propagation, conflict generation, and backtrack handling. It operates on solver terms, atoms, clauses, and lemmas, allowing plugins to assert new constraints, explain assignments, and detect inconsistencies. Concrete use cases include implementing theory solvers that propagate term evaluations, generate conflict clauses during unsatisfiability, and respond to backtracking events.",
+      "description_length": 482,
+      "index": 51,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Proof",
+      "library": "mc2.core",
+      "description": "This module implements resolution proof construction and analysis with operations to build proofs from clauses, extract unsat cores, and traverse proof trees. It works with resolution proofs represented as trees of nodes, each containing a conclusion clause and a step with parent links and explanations. Concrete use cases include verifying proof steps during SAT solving, extracting minimal unsatisfiable subsets of clauses, and debugging resolution proofs through traversal and inspection of individual nodes.",
+      "description_length": 512,
+      "index": 52,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Plugin",
+      "library": "mc2.core",
+      "description": "This module defines plugin factories using a GADT to specify construction logic, dependencies, and priority. It supports creating and comparing factories that build plugins with unique IDs and resolved service dependencies at runtime. Use cases include instantiating solver plugins that contribute custom types or terms based on their declared dependencies and priority.",
+      "description_length": 370,
+      "index": 53,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Builtins",
+      "library": "mc2.core",
+      "description": "This module defines fundamental boolean terms and a plugin factory for extending core functionality. It provides direct access to `k_true` and `k_false`, which represent trivial boolean terms used in solver logic, and `plugin`, which serves as a factory for creating new plugins. These values are used to build and register custom solver components within the system.",
+      "description_length": 367,
+      "index": 54,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Mc2_core.Clause",
       "library": "mc2.core",
-      "description": "This module manages logical clauses with structured components like atoms and premises, supporting construction, access, and state tracking through specialized containers such as Tbl and Set. Its core functionality enables efficient clause lifecycle management and structural comparison, essential for constraint solving and proof search in theorem-proving systems. The ordered set submodule provides functional manipulation of clause collections with set operations, transformations, and ordered access, while the imperative hash table submodule enables key-based aggregation and metadata management with customizable merging and in-place updates. Together, they support tasks like logical reasoning, set-theoretic transformations, and symbolic computation with efficient, structured data handling.",
-      "description_length": 799,
-      "index": 48,
+      "description": "This module provides operations to construct and manage clauses with atomic propositions, tracking states like attachment and deletion while supporting garbage collection. It works with clauses containing atoms, premises, and metadata, alongside optimized mutable hash tables (`Tbl`) and ordered sets (`Set`) for efficient data manipulation. These structures are critical for formal verification tasks like SAT solving, enabling symbolic reasoning and state management in automated theorem proving workflows.",
+      "description_length": 508,
+      "index": 55,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Tseitin",
+      "library": "mc2.core",
+      "description": "This module implements Tseitin's algorithm to convert boolean formulas into equi-satisfiable CNF representations, working with atomic formulas provided by a parameter module. It supports construction of boolean expressions using logical connectives (And, Or, Not, Xor, Imply, Equiv) and converts them into CNF via the `cnf` function, which is suitable for input to SAT or SMT solvers. Concrete use cases include encoding constraint satisfaction problems and verifying logical equivalences in automated reasoning tools.",
+      "description_length": 518,
+      "index": 56,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Atom",
+      "library": "mc2.core",
+      "description": "This module provides operations for manipulating atomic values with metadata like decision levels and truth assignments, enabling stateful tracking during logical reasoning. It works with `Atom.t` values and ordered sets for efficient collection operations, supporting semantic checks such as satisfiability and absurdity. These features are used in SAT solvers for constraint propagation and clause management.",
+      "description_length": 411,
+      "index": 57,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Error",
+      "library": "mc2.core",
+      "description": "This module provides functions for formatting and raising error messages with contextual information. It works with format strings and custom error-handling functions to construct detailed error reports. Concrete use cases include generating type-checking errors with source location details or formatting parser errors with expected token information.",
+      "description_length": 352,
+      "index": 58,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Solver",
+      "library": "mc2.core",
+      "description": "This module manages a SAT solver instance with support for adding clauses, terms, and assumptions, and determining satisfiability. It works with atoms, clauses, and solver states, enabling concrete tasks like checking formula validity, extracting unsatisfiable cores, and inspecting assignments. Use cases include formal verification, constraint solving, and debugging logical inconsistencies.",
+      "description_length": 393,
+      "index": 59,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Mc2_core.Lemma",
+      "library": "mc2.core",
+      "description": "This module represents and manipulates lemmas used in theorem proving, providing a structured view for lemma construction and pretty-printing. It works with term contexts and lemma views to support creating and displaying lemmas during proof processing. A concrete use case is managing intermediate proof statements in a solver that constructs or verifies logical proofs step-by-step.",
+      "description_length": 384,
+      "index": 60,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Mc2_core",
       "library": "mc2.core",
-      "description": "This module orchestrates logical reasoning and solver interaction through a unified framework for terms, types, atoms, and clauses, integrating variable binding, identifier management, and model construction. It centers on core data types like terms with solver states, atoms with metadata, and clauses with structured components, offering operations for CNF transformation, lemma handling, proof construction, and error reporting. Users can define and manipulate logical expressions, register plugins with custom theories, track decision levels during solving, and generate resolution proofs with clause tracking. Submodules enhance this with services for dynamic plugin integration, imperative and ordered collections for efficient data handling, and type-driven value manipulation with customizable semantics.",
-      "description_length": 812,
-      "index": 49,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_lra.LE.Infix",
-      "library": "mc2.lra",
-      "description": "This module defines infix operators for arithmetic operations on linear expressions. It supports addition, subtraction, and scalar multiplication of linear expressions represented by the type `Mc2_lra.LE.t`. These operators enable concise construction of linear expressions from numerical values and existing expressions.",
-      "description_length": 321,
-      "index": 50,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_lra.LE",
-      "library": "mc2.lra",
-      "description": "This module combines core operations for building and manipulating linear arithmetic expressions with rational coefficients, enabling tasks like symbolic simplification, coefficient extraction, and structural analysis. It directly supports arithmetic transformations such as negation, scaling, and term combination, while its child module adds infix operators for intuitive expression construction using types like `Mc2_lra.LE.t`. For example, users can compose expressions via `e1 + e2`, scale with `3 * e`, and analyze components through inspection functions.",
-      "description_length": 561,
-      "index": 51,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_lra",
-      "library": "mc2.lra",
-      "description": "This module provides linear rational arithmetic operations for constructing and manipulating constraints over rational numbers, combining core functionality with its submodules for building and transforming linear expressions. It supports creating rational constants, forming constraints with equality and inequality operators, and performing arithmetic transformations like negation, scaling, and combination using types such as `Q.t` and `LE.t`. The `LE` submodule enables symbolic manipulation and structural analysis of expressions, with added infix operators for intuitive expression construction. For example, users can write `e1 + e2` to combine expressions, apply `3 * e` to scale coefficients, or extract constraint components for formal verification tasks.",
-      "description_length": 766,
-      "index": 52,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_uf",
-      "library": "mc2.uf",
-      "description": "This module supports declaring uninterpreted symbols, creating terms from constants, and applying constants to arguments. It operates on identifiers, types, and terms within the Mc2_core framework. Concrete use cases include building symbolic expressions and defining new function symbols during term rewriting or constraint solving.",
-      "description_length": 333,
-      "index": 53,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_smtlib.Typecheck.Make",
-      "library": "mc2.smtlib",
-      "description": "This module converts terms and statements from the input AST to the internal representation used for SMT solving. It handles logical expressions, boolean terms, and statement structures, ensuring they conform to the expected types and formats. Useful for translating parsed SMT-LIB input into a form suitable for analysis and constraint solving.",
-      "description_length": 345,
-      "index": 54,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_smtlib.Make",
-      "library": "mc2.smtlib",
-      "description": "This module parses SMT-LIB formatted input from a string or standard input, typechecks the parsed statements, and processes individual statements with configurable options for garbage collection, restarts, proof output, model printing, and more. It operates on SMT-LIB statements and core statements, supporting concrete use cases such as verifying logical assertions, generating CNF representations, and exporting proof graphs in dot format. The parameterized module ARG supplies the specific logic and utilities required for processing statements.",
-      "description_length": 549,
-      "index": 55,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_smtlib.Typecheck",
-      "library": "mc2.smtlib",
-      "description": "This module translates parsed SMT-LIB terms and statements into an internal representation suitable for constraint solving. It processes logical expressions, boolean terms, and structured statements, ensuring type correctness and compatibility with SMT solvers. Key operations include term conversion, type checking, and structure validation. For example, it can transform a parsed SMT implication into an internal boolean expression or validate the structure of a let-binding in a statement.",
-      "description_length": 492,
-      "index": 56,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_smtlib",
-      "library": "mc2.smtlib",
-      "description": "This module processes SMT-LIB input by parsing, typechecking, and translating statements into an internal representation suitable for constraint solving. It supports operations such as term conversion, structure validation, and configurable processing with options for garbage collection, proof output, and model printing. Users can verify logical assertions, generate CNF representations, export proof graphs, or transform SMT-LIB expressions into internal boolean terms for solver interaction.",
-      "description_length": 495,
-      "index": 57,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_propositional.F",
-      "library": "mc2.propositional",
-      "description": "This module represents propositional logic formulas with atoms, logical connectives (AND, OR, NOT), and derived operations (XOR, implication, equivalence). It provides constructors for building formulas, constants for true and false, and transformations such as negation, conjunction, and disjunction over these formulas. A key function converts formulas into conjunctive normal form (CNF), useful for SAT solving, using a user-provided source of fresh atoms.",
-      "description_length": 459,
-      "index": 58,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_propositional",
-      "library": "mc2.propositional",
-      "description": "This module processes propositional logic formulas with atoms and connectives like AND, OR, and NOT, offering transformations and normalization. It includes a submodule for formula construction and manipulation, supporting operations such as negation, conjunction, and CNF conversion using fresh atoms. The `k_cnf` function produces CNF representations suitable for SAT solvers, while `k_fresh` ensures unique atom generation during formula manipulation. Users can build complex formulas, normalize them, and prepare them for logical analysis or solver input.",
-      "description_length": 559,
-      "index": 59,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_dimacs.Plugin_sat",
-      "library": "mc2.dimacs",
-      "description": "This module defines a plugin for handling SAT problems in DIMACS format. It provides a service key for mapping integers to atoms and integrates with the plugin system via a factory function. Concrete use cases include parsing and processing SAT formulas in external tools or solvers.",
-      "description_length": 283,
-      "index": 60,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_dimacs",
-      "library": "mc2.dimacs",
-      "description": "This module parses DIMACS files into CNF formulas using atoms and clauses from `Mc2_core`, supporting operations to load, solve, and output results with options for proof logging, model display, and resource limits. It includes a plugin submodule that maps integers to atoms and integrates with external tools via a factory function, enabling standardized parsing and solver interoperability. Use cases include reading SAT benchmarks, evaluating solver performance, and embedding DIMACS processing in larger toolchains. Key data types include CNF formulas, atoms, and clauses, with operations for parsing, solving, and result serialization.",
-      "description_length": 640,
+      "description": "This module provides operations for logical reasoning, including constraint propagation, conflict resolution, and proof construction, with stateful tracking of assignments and theory-specific extensions. It works with generalized algebraic datatypes representing atoms, terms, clauses, and semantic contexts, alongside modular type class patterns to support DPLL(T)-style solving and transformations like Tseitin encoding. Key use cases include SAT/SMT solving, formal verification, and automated theorem proving requiring precise semantic evaluation and extensible theory integration.",
+      "description_length": 585,
       "index": 61,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_unin_sort",
-      "library": "mc2.unin_sort",
-      "description": "This module implements support for uninterpreted sorts in a solver-agnostic way. It provides operations to declare uninterpreted sorts, construct terms of such sorts, and compare terms for equality. It works directly with identifiers, type definitions, and terms, enabling modeling of abstract data types and symbolic reasoning in formal verification tasks.",
-      "description_length": 357,
-      "index": 62,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_backend.Backend_intf.S",
-      "library": "mc2.backend",
-      "description": "This module defines the interface for exporting proofs by printing them to a file in a specific format. It includes a type `t` representing proof data and a `print` function that outputs values of this type using a formatter. Concrete use cases include serializing proof structures to disk for external verification or logging.",
-      "description_length": 327,
-      "index": 63,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_backend.Dot.Default",
-      "library": "mc2.backend",
-      "description": "This module provides default implementations for printing proof components in the DOT graph format, specifically handling atomic formulas and leaf node information for hypotheses, lemmas, and assumptions. It works with proof terms and clauses from the `Mc2_core` module, producing DOT-compatible string representations with proper escaping. Concrete use cases include generating visual proof graphs for theorem verification and exporting proof structures for external analysis with Graphviz.",
-      "description_length": 491,
-      "index": 64,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_backend.Dot.Arg",
-      "library": "mc2.backend",
-      "description": "This module specifies how to print proof elements like atoms, hypotheses, lemmas, and assumptions into the DOT graph format. Each type provides a corresponding print function that formats its content and metadata, such as labels and colors, for visualization. It is used to generate structured input for Graphviz to render proof trees as directed graphs.",
-      "description_length": 354,
-      "index": 65,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_backend.Dot.Make",
-      "library": "mc2.backend",
-      "description": "This module implements a functor for generating DOT-formatted graph representations of proofs, primarily used for visualizing proof structures through Graphviz. It takes a parameter module `A` that defines specific formatting conventions and provides a `print` function to output proof data to a formatter. Concrete use cases include exporting proof trees to files for visualization, aiding in debugging and educational demonstrations.",
-      "description_length": 435,
-      "index": 66,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_backend.Dot",
-      "library": "mc2.backend",
-      "description": "This module converts proof structures into directed graphs using the dot format, enabling visualization with Graphviz. It works with abstract proof data to generate nodes and edges that represent logical steps and their dependencies. The child modules provide default implementations for printing proof components, specify how to format proof elements like atoms and hypotheses, and implement a functor for custom DOT output. Use it to export proof trees to files, generate visual proof graphs for theorem verification, or aid in debugging and educational demonstrations with Graphviz.",
-      "description_length": 585,
-      "index": 67,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mc2_backend.Backend_intf",
-      "library": "mc2.backend",
-      "description": "This module defines the interface for proof export functionality, specifying the required operations that backends must implement to serialize proof data. It introduces core types like proof terms and export configurations, along with operations to process and output them. The child module extends this interface with a `print` function that formats proof data for serialization to file, supporting use cases like external verification or audit logging. Together, they enable consistent proof export across different backends while providing concrete mechanisms for structured output.",
-      "description_length": 585,
-      "index": 68,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mc2_backend",
-      "library": "mc2.backend",
-      "description": "This module handles the conversion and export of proof structures into visual and serializable formats. It provides data types for proof terms, configurations, and graph elements, along with operations to generate DOT-formatted graphs and serialize proof data. You can use it to produce visual proof trees for debugging or education, or to output structured proof logs for external verification and auditing. The module supports customization through functors and includes default implementations for common export and visualization tasks.",
-      "description_length": 539,
-      "index": 69,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 72,
-    "meaningful_modules": 70,
+    "total_modules_in_package": 64,
+    "meaningful_modules": 62,
     "filtered_empty_modules": 2,
-    "retention_rate": 0.9722222222222222
+    "retention_rate": 0.96875
   },
   "statistics": {
-    "max_description_length": 812,
-    "min_description_length": 275,
-    "avg_description_length": 499.25714285714287,
-    "embedding_file_size_mb": 0.25469970703125
+    "max_description_length": 659,
+    "min_description_length": 227,
+    "avg_description_length": 441.1290322580645,
+    "embedding_file_size_mb": 0.8988542556762695
   }
 }

@@ -1,229 +1,213 @@
 {
   "package": "bio_io",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 26,
-  "creation_timestamp": "2025-07-15T23:11:52.668080",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 24,
+  "creation_timestamp": "2025-08-15T12:19:53.336296",
   "modules": [
     {
       "module_path": "Bio_io.Btab.Record.Parsed.Fields.Direct",
       "library": "bio_io",
-      "description": "This module provides direct access to individual fields of a fully parsed Btab record, enabling operations like iteration, mapping, folding, and validation over specific alignment data. It works with the `Bio_io.Btab.Record.Parsed.t` type, which contains typed fields such as strings for query/target names, floats for scores, and optional integers for sequence lengths. Use this module when you need to inspect or transform each component of a parsed Btab record, for example when serializing to structured formats or applying per-field validation rules.",
-      "description_length": 555,
+      "description": "This module provides direct access to individual fields of a fully parsed Btab record through operations like `iter`, `fold`, `map`, and `to_list`, enabling transformations and inspections of specific alignment data. It works with the `Bio_io.Btab.Record.Parsed.t` type, exposing fields such as query, target, percent identity, alignment length, start/end positions, E-value, and bit score. Use this module to process or filter BLAST tabular output programmatically, for example when extracting high-confidence hits or recalculating alignment metrics.",
+      "description_length": 551,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io.Btab.Record.Parsed.Fields",
       "library": "bio_io",
-      "description": "This module provides operations to access, construct, and manipulate fully parsed BLAST tabular records as OCaml records with strongly-typed fields, including query and target names, alignment coordinates, scores, and identity percentages. It supports transformations like `fold`, `map`, and `iter`, along with bulk predicate checks and list conversion, handling both required and optional values with integer and float conversions. The child module enables direct access to individual fields, allowing iteration, mapping, folding, and validation over specific components of a parsed Btab record. Use these capabilities for tasks like serializing to structured formats, applying per-field validation, or performing detailed analysis of alignment metrics.",
-      "description_length": 754,
+      "description": "This module provides type-safe construction, iteration, and transformation of fully parsed BLAST tabular records' fields, including query/target identifiers, alignment metrics (coordinates, scores, identity), and sequence lengths. It operates on records containing structured representations of BLAST hits, enabling programmatic analysis like filtering hits by e-value thresholds or identity percentages, and supports serialization workflows requiring complete pre-parsed data. The field-based API facilitates bulk operations for tasks such as converting alignments to structured formats or validating datasets against custom criteria.",
+      "description_length": 635,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io.Btab_queries.In_channel.T",
       "library": "bio_io",
-      "description": "This module provides functions for reading and processing btab files line by line or as complete records, supporting operations like line iteration, folding, and direct record parsing. It works with input channels and string-based lines, along with structured `record` values representing btab entries. Concrete use cases include parsing large btab files incrementally, filtering or transforming query records, and extracting specific fields or lines based on content.",
-      "description_length": 468,
+      "description": "This module provides functions for reading and processing btab files where each query is treated as a single record. It supports operations like reading lines, parsing records, and iterating over file contents, working with input channels and strings. Use cases include parsing btab data from standard input or files, processing query records, and handling line-based or record-based input with optional Windows EOL fixes.",
+      "description_length": 422,
       "index": 2,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io.Btab.Record.Parsed",
       "library": "bio_io",
-      "description": "This module represents a fully parsed BLAST tabular record as an OCaml record with strongly-typed fields for query, target, alignment length, e-value, bit score, and more. It supports direct access to typed values, transformations via `map`, `fold`, and `iter`, and serialization to and from S-expressions, enabling detailed analysis and structured storage of alignment data. Use it to perform per-field validation, convert records to lists of values, or serialize results for downstream processing. The child module extends this functionality with additional operations for field-specific manipulation and bulk predicate checks.",
-      "description_length": 629,
+      "description": "This module provides a fully parsed OCaml record representation of BLAST tabular (btab) alignment records, including fields for query and target identifiers, alignment coordinates, scores, and sequence lengths. It supports operations like extracting alignment metrics, filtering hits based on criteria such as e-value or percent identity, and serializing records to and from s-expressions. Use this module when you need to work with pre-parsed, structured data for tasks like converting BLAST results into custom formats or applying validation rules across alignment datasets.",
+      "description_length": 576,
       "index": 3,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bio_io.Private.In_channel",
+      "module_path": "Bio_io.Record_in_channel.Make",
       "library": "bio_io",
-      "description": "This module provides low-level input operations for handling both binary and text data from in_channels, including reading raw bytes, integers, characters, and lines with customizable line-ending handling. It supports file positioning via `seek` and `pos`, and offers utilities to read entire files into strings or line lists, while ensuring compatibility with the `Record_in_channel.Make` functor by omitting binary mode flags in file creation. It is designed for scenarios requiring precise control over input parsing, such as processing structured binary formats or text files with specific encoding requirements.",
-      "description_length": 616,
+      "description": "This module creates input channels for reading record-based data from files or standard input, supporting operations like reading individual records, folding over all records with or without indices, iterating over records for side effects, and collecting records into lists or sequences. It works with a parameterized record type `M.record` and manages input channels of type `M.t`, which represent sources of record data. Concrete use cases include parsing structured file formats like FASTA or CSV, processing large datasets without loading all records into memory, and performing aggregate calculations over sequential data entries.",
+      "description_length": 636,
       "index": 4,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bio_io.Fasta.In_channel",
-      "library": "bio_io",
-      "description": "This module provides functions to read FASTA records from input channels, supporting operations like iteration, folding, and conversion to lists or sequences. It works with FASTA record data structures and input channels, enabling concrete tasks such as computing total sequence length, printing sequence metadata, or building record collections. Use cases include processing genomic data files for analysis, filtering records by properties, or transforming sequences into other formats.",
-      "description_length": 487,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bio_io.Record_in_channel.S",
-      "library": "bio_io",
-      "description": "This module provides functions for reading biological records from input channels, supporting operations like folding, iterating, and collecting records into lists or sequences. It works with input channels (`t`) and biological record types (`record`), offering indexed and non-indexed processing. Concrete use cases include parsing FASTA files, counting records, or transforming sequence data during file traversal.",
-      "description_length": 416,
-      "index": 6,
       "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bio_io.Private.Peekable_in_channel",
-      "library": "bio_io",
-      "description": "This module provides peeking capabilities for input channels, supporting both regular files and FIFOs. It extends standard input operations with `peek_char` and `peek_line`, enabling lookahead without consumption, particularly useful when reading compressed streams like gzip. Concrete use cases include parsing bioinformatics file formats that require lookahead, such as FASTA or VCF, from piped or compressed input.",
-      "description_length": 417,
-      "index": 7,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bio_io.Btab_queries.In_channel",
-      "library": "bio_io",
-      "description": "This module provides input operations for parsing Btab files by treating entire queries as atomic records, enabling efficient traversal and aggregation of sequence alignment data. It supports structured `record` values representing btab entries and offers operations like line iteration, folding over hits, and direct record parsing, working with input channels and string-based lines. Concrete use cases include incrementally parsing large Btab files, filtering or transforming query records, and extracting specific fields or lines based on content. It accommodates both sequential and random-access processing while normalizing line endings for bioinformatics workflows.",
-      "description_length": 673,
-      "index": 8,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bio_io.Btab.Record",
-      "library": "bio_io",
-      "description": "This module represents a single homology search hit from a tab-delimited btab file, providing functions to create, convert, and access specific fields such as query, target, percent identity, alignment length, start and end positions, e-value, and bit-score. It supports typed access to values, transformations via `map`, `fold`, and `iter`, and serialization to and from S-expressions for structured storage and analysis. The child module adds field-specific manipulation and bulk predicate checks, enabling validation, filtering, and conversion of records to lists of values for downstream processing. Use this module to parse and transform individual BLAST or MMseqs2 alignment records with strong typing and flexible data handling.",
-      "description_length": 735,
-      "index": 9,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bio_io.Fasta.Record",
-      "library": "bio_io",
-      "description": "This module defines a record type for representing FASTA file entries, with operations to access and modify the identifier, description, and sequence fields. It supports sequence manipulation such as reversing, complementing, and reverse-complementing, following IUPAC conventions. Use cases include parsing FASTA files, transforming sequences for bioinformatics analysis, and generating correctly formatted FASTA output with optional newlines.",
-      "description_length": 444,
-      "index": 10,
-      "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io.Fastq.Record",
       "library": "bio_io",
-      "description": "This module provides operations for constructing, modifying, and converting FASTQ records, including computing sequence complements and reverse complements while preserving associated metadata. It works with a record type `t` containing sequence data, quality scores, identifiers, and optional annotations, supporting transformations that maintain alignment with IUPAC conventions. These capabilities are used in genomic data processing pipelines for tasks like sequence alignment, variant detection, and quality score normalization.",
-      "description_length": 533,
-      "index": 11,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bio_io.Record_in_channel.In_channel_input_record",
-      "library": "bio_io",
-      "description": "This module provides functions for reading structured records from input channels, including opening and closing channels, reading records, and comparing channel states. It works with input channels and record types, enabling precise handling of sequential data formats like FASTA or BED. Concrete use cases include parsing genomic data files one record at a time for memory-efficient processing.",
-      "description_length": 396,
-      "index": 12,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bio_io.Btab_queries.Record",
-      "library": "bio_io",
-      "description": "This module represents Btab homology search records grouped by query sequence, providing structured access to query names and their associated hit lists. It works with strings for query identifiers and lists of `Bio_io.Btab.Record.t` values for hit data. Use this module to process and analyze homology search results where each query sequence has multiple target hits.",
-      "description_length": 369,
-      "index": 13,
+      "description": "This module enables creation, modification, and serialization of FASTQ records containing sequence data, with core fields like identifier, description, sequence, and quality scores. It supports in-place updates, sequence reversal, and IUPAC-based complement operations that produce new records with transformed sequences and adjusted quality values. These capabilities are particularly useful for processing high-throughput DNA sequencing data where operations like reverse-complementing reads or normalizing base representations are required.",
+      "description_length": 543,
+      "index": 5,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io.Fastq.In_channel",
       "library": "bio_io",
-      "description": "This module provides functions to read FASTQ records from input channels, supporting operations like iterating over records for side effects, folding records into aggregated values, and collecting records into lists or sequences. It works with FASTQ record data structures and handles file input through channel management, including opening, closing, and exception-safe resource handling. Concrete use cases include calculating total sequence lengths, printing sequence metadata, and building processing pipelines for FASTQ data.",
-      "description_length": 530,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module reads FASTQ records from input channels, supporting operations like iteration, folding, and conversion to lists or sequences. It works with FASTQ files by parsing each record into a `Record.t` type, handling standard input or named files. Use cases include processing sequence data for analysis, such as computing total sequence length or extracting record metadata.",
+      "description_length": 378,
+      "index": 6,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Bio_io.Record_in_channel.Make",
+      "module_path": "Bio_io.Btab_queries.In_channel",
       "library": "bio_io",
-      "description": "This module creates input channels for reading record-based data from files or standard input, supporting operations like reading individual records, folding over all records with or without indices, iterating with side effects, and collecting records into lists or sequences. It works with a polymorphic record type defined by the parameter module M, handling input parsing and resource management. Concrete use cases include processing structured text files like FASTA or CSV by mapping each line or block to a typed record and performing aggregations, transformations, or analyses on the fly.",
-      "description_length": 595,
-      "index": 15,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module provides functions for reading and processing btab files by treating each query as a single record, supporting line-based and record-based input operations from channels, files, or strings. It works with Btab query records, offering folding, iteration, and index-tracking capabilities to handle scenarios like bioinformatics data aggregation where hits are grouped per query. Specific use cases include parsing files with mixed line endings, processing large datasets via streaming, and analyzing query-centric btab formats without requiring per-hit record management.",
+      "description_length": 580,
+      "index": 7,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io.Btab.In_channel",
       "library": "bio_io",
-      "description": "This module reads btab-formatted files record by record, supporting operations like folding, iterating, and collecting records into lists or sequences. It works directly with `Bio_io.Btab.Record.t` values, parsing input line by line and handling standard input or file paths. Use cases include processing BLAST tabular output to aggregate alignment statistics, filter hits by criteria, or transform records into other formats without loading the entire file into memory.",
-      "description_length": 470,
+      "description": "This module reads btab-formatted files record by record, providing functions to open, close, and iterate over input channels. It works directly with `Bio_io.Btab.Record.t` values, parsing each line of the file into a structured record. Use it to process BLAST tabular output files by folding over results, applying side-effecting functions, or collecting records into lists.",
+      "description_length": 374,
+      "index": 8,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bio_io.Private.In_channel",
+      "library": "bio_io",
+      "description": "This module provides low-level input operations for binary and text data, including reading raw bytes, integers, characters, and lines with optional line-ending normalization, alongside utilities for file positioning and length determination. It operates on in_channels and file paths, enabling efficient workflows like reading entire files into strings or lists and managing binary/text mode transitions. Its design particularly supports scenarios requiring compatibility with functors that expect non-binary channels, such as parsing structured binary records or line-oriented text formats with strict formatting constraints.",
+      "description_length": 627,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bio_io.Fasta.In_channel",
+      "library": "bio_io",
+      "description": "This module reads FASTA records from input channels, supporting operations like iteration, folding, and list conversion. It works with FASTA files via the `t` type and handles individual `Record.t` entries. Use it to process sequence data, compute aggregate statistics (e.g., total sequence length), or extract records directly.",
+      "description_length": 328,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bio_io.Btab.Record",
+      "library": "bio_io",
+      "description": "This module represents a single homology search hit from a tab-delimited input, providing access to alignment metrics such as percent identity, e-value, bit-score, and positional data. It operates on strings for input parsing and record serialization, with optional integer fields for sequence lengths. Use this module to extract and manipulate specific alignment data from BLAST or MMseqs2 output files, particularly when filtering or transforming individual hits based on alignment quality or position ranges.",
+      "description_length": 511,
+      "index": 11,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bio_io.Fasta.Record",
+      "library": "bio_io",
+      "description": "This module defines a record type for representing entries in FASTA files, with fields for sequence identifier, description, and the sequence itself. It provides functions to create, modify, and manipulate these records, including operations to reverse or complement sequences according to IUPAC conventions. Use cases include parsing, transforming, and writing FASTA data in bioinformatics workflows.",
+      "description_length": 401,
+      "index": 12,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bio_io.Btab_queries.Record",
+      "library": "bio_io",
+      "description": "This module represents btab records grouped by query sequence, providing operations to create and access query-specific hit lists. It works with strings for query identifiers and lists of `Btab.Record.t` for associated hits. Use this module to process homology search results where each query may have multiple target hits, such as analyzing BLAST output structured by query sequence.",
+      "description_length": 384,
+      "index": 13,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bio_io.Private.Peekable_in_channel",
+      "library": "bio_io",
+      "description": "This module wraps `Stdio.In_channel` with added `peek_char` and `peek_line` functions, enabling lookahead operations on input channels, including FIFOs and compressed streams. It supports standard input operations like reading lines, folding over lines, and reading entire contents, while allowing non-destructive inspection of upcoming characters or lines. It is used internally to handle bioinformatics input formats that require peeking, such as parsing sequence files from pipes or compressed sources.",
+      "description_length": 505,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bio_io.Btab",
+      "library": "bio_io",
+      "description": "This module parses tab-delimited homology search results, such as BLAST or MMseqs2 output, into structured records representing individual alignment hits. It provides operations to read and process these records from files, supporting filtering and transformation based on alignment metrics like e-value, percent identity, and positional data. Use it to analyze or convert btab-formatted outputs into custom workflows without relying on external parsing logic.",
+      "description_length": 460,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Bio_io.Btab_queries",
+      "library": "bio_io",
+      "description": "Handles btab file parsing with query-centric record grouping. Provides data structures for query identifiers paired with hit lists and supports streaming input processing with indexed record access. Useful for analyzing BLAST-like homology search results where each query spans multiple hits.",
+      "description_length": 292,
       "index": 16,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io.Utils",
       "library": "bio_io",
-      "description": "Handles DNA sequence transformations and error-tolerant function execution. Provides sequence complement and reverse-complement operations, along with wrappers for catching exceptions in unary and nullary functions. Works directly with string-encoded DNA sequences and function values. Useful for bioinformatics pipelines where sequence manipulation and robust error handling are required.",
-      "description_length": 389,
+      "description": "Handles DNA sequence transformations and error-tolerant function execution. Provides sequence complement and reverse-complement operations, along with wrappers for catching exceptions in unary and nullary functions. Works directly with strings representing DNA sequences and function values. Useful for bioinformatics pipelines where sequence manipulation and robust error handling are required.",
+      "description_length": 395,
       "index": 17,
-      "embedding_norm": 1.0
+      "embedding_norm": 0.9999999403953552
     },
     {
-      "module_path": "Bio_io.Btab_queries",
+      "module_path": "Bio_io.Cigar",
       "library": "bio_io",
-      "description": "This module processes Btab files by organizing data into query-centric records, each containing a query identifier and a list of associated hits. It provides structured access to query names and their corresponding alignment hits, supporting operations like filtering, transforming, and aggregating records based on query or hit properties. The module enables efficient traversal and analysis of homology search results, such as computing summary statistics or extracting specific queries and their matches. Example uses include parsing large Btab files line by line, grouping hits by query, and selectively processing records that meet certain alignment criteria.",
-      "description_length": 664,
+      "description": "This module parses CIGAR strings into an internal representation and provides operations to analyze and visualize alignments. It supports Match (M), Insertion (I), and Deletion (D) operations, allowing computation of alignment length, gap count, match count, query length, and target length. It can convert CIGAR strings to structured data, render alignment diagrams, and handle parsing errors gracefully.",
+      "description_length": 405,
       "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bio_io.Private",
-      "library": "bio_io",
-      "description": "This module offers low-level input handling with support for binary and text data, enabling precise parsing through operations like reading raw bytes, integers, characters, and lines with customizable line endings. It includes utilities for file positioning and reading entire files into strings or line lists, while accommodating structured formats like FASTA or VCF through non-consuming lookahead functions such as `peek_char` and `peek_line`. Specific capabilities include processing compressed streams, piped input, and custom binary formats with strict control over encoding and file access.",
-      "description_length": 597,
-      "index": 19,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bio_io.Fasta",
       "library": "bio_io",
-      "description": "This module processes FASTA files by parsing and manipulating sequence data, supporting iteration, transformation, and analysis. It defines a FASTA record type with identifier, description, and sequence fields, and provides operations to read records from input channels, compute sequence properties, and convert sequences using IUPAC conventions like reverse-complement. You can use it to filter records, calculate total sequence lengths, or transform genomic data for downstream analysis. Example tasks include parsing a FASTA file, modifying sequence headers, or generating reverse-complemented sequences for bioinformatics workflows.",
-      "description_length": 637,
-      "index": 20,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module parses FASTA files using a `Record` type that holds sequence identifiers, descriptions, and sequence data, supporting transformations like reverse and complement operations. It includes an `In_channel` module for reading and processing FASTA records from input streams through iteration, folding, and list conversion. Use it to analyze sequence data, calculate aggregate metrics such as total length, or filter and convert FASTA entries during bioinformatics pipelines.",
+      "description_length": 481,
+      "index": 19,
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io.Record_in_channel",
       "library": "bio_io",
-      "description": "This module enables reading structured records from input channels using customizable parsers, supporting precise extraction of data from line-oriented formats like CSV or log files. It works with user-defined record types and provides operations for reading, folding, and transforming records during traversal, with support for indexed or non-indexed processing. Child modules extend this functionality to specific domains such as genomic data parsing, offering memory-efficient sequential access and resource-managed file processing. Examples include counting FASTA records, converting BED entries into typed structures, or aggregating CSV data on the fly.",
-      "description_length": 658,
+      "description": "This module creates input channels for reading record-based data from files or standard input, supporting operations like reading individual records, folding over all records with or without indices, iterating over records for side effects, and collecting records into lists or sequences. It works with a parameterized record type `M.record` and manages input channels of type `M.t`, which represent sources of record data. Concrete use cases include parsing structured file formats like FASTA or CSV, processing large datasets without loading all records into memory, and performing aggregate calculations over sequential data entries.",
+      "description_length": 636,
+      "index": 20,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Bio_io.Private",
+      "library": "bio_io",
+      "description": "This module includes low-level input handling for binary and text data through `In_channel`, supporting operations like reading raw bytes, integers, and lines with precise control over file positioning and mode transitions. It also provides `Peekable_in_channel` for lookahead capabilities on input streams, enabling non-destructive inspection of characters and lines. These components are used for parsing structured bioinformatics formats from files, pipes, or compressed sources where strict formatting and lookahead are required.",
+      "description_length": 533,
       "index": 21,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Bio_io.Fastq",
       "library": "bio_io",
-      "description": "This module processes FASTQ data by combining record manipulation and input handling. It supports reading records from files using channels and applying transformations like iteration, folding, and collection, while preserving sequence metadata. Key data types include FASTQ records with sequence, quality, and identifier fields, enabling operations such as reverse complementation and quality normalization. Examples include computing total sequence length across a file, filtering records by quality scores, and generating processed sequence data for downstream analysis.",
-      "description_length": 573,
+      "description": "This module processes FASTQ files by parsing records and providing operations to manipulate sequence data. It works with FASTQ records containing identifier, description, sequence, and quality fields, supporting transformations like reverse-complement and in-place updates. Concrete use cases include analyzing high-throughput sequencing data, computing sequence statistics, and converting raw reads into structured formats for downstream processing.",
+      "description_length": 450,
       "index": 22,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Bio_io.Cigar",
-      "library": "bio_io",
-      "description": "This module parses CIGAR strings into an internal representation and provides operations to analyze and visualize alignments. It supports Match (M), Insertion (I), and Deletion (D) operations, computing alignment length, gap count, match count, and lengths of query and target sequences. It also includes functions to draw a string-based representation of the alignment for debugging or educational purposes.",
-      "description_length": 408,
-      "index": 23,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Bio_io.Btab",
-      "library": "bio_io",
-      "description": "This module processes tab-delimited homology search results by parsing and manipulating individual alignment records and entire files. It provides typed access to fields such as query, target, percent identity, e-value, and bit-score, supporting operations like `map`, `fold`, and `iter` for transformation and analysis. The module enables line-by-line reading of btab files, allowing memory-efficient filtering, aggregation, and conversion to other formats. Examples include extracting high-confidence hits, computing alignment statistics, or transforming records into custom data structures for downstream analysis.",
-      "description_length": 617,
-      "index": 24,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Bio_io",
       "library": "bio_io",
-      "description": "This module handles DNA sequence manipulation, file parsing, and alignment analysis for bioinformatics applications. It provides data types for FASTA, FASTQ, and alignment records, along with operations for sequence transformation, error handling, and structured input processing. You can parse sequence files, compute reverse complements, extract alignment statistics, and process tabular homology search results with custom filters and aggregations. Specific tasks include reading FASTA records with lookahead, transforming Btab data into typed structures, and analyzing CIGAR strings for alignment properties.",
-      "description_length": 612,
-      "index": 25,
+      "description": "This module provides precise parsing and manipulation of bioinformatics file formats including FASTA, FASTQ, BLAST-like tabular output, and CIGAR strings. It supports structured data transformations, alignment analysis, and streaming input processing for large datasets. Concrete use cases include sequence manipulation, homology search result filtering, alignment diagram rendering, and custom pipeline development without reliance on external parsing tools.",
+      "description_length": 459,
+      "index": 23,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 26,
-    "meaningful_modules": 26,
+    "total_modules_in_package": 24,
+    "meaningful_modules": 24,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 754,
-    "min_description_length": 369,
-    "avg_description_length": 547.7692307692307,
-    "embedding_file_size_mb": 0.09488105773925781
+    "max_description_length": 636,
+    "min_description_length": 292,
+    "avg_description_length": 481.75,
+    "embedding_file_size_mb": 0.34808826446533203
   }
 }

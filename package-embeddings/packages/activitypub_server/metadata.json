@@ -1,357 +1,269 @@
 {
   "package": "activitypub_server",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 42,
-  "creation_timestamp": "2025-07-15T23:14:42.848379",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 31,
+  "creation_timestamp": "2025-08-15T14:15:03.692742",
   "modules": [
     {
       "module_path": "Activitypub_server.Machine.Make.POut",
       "library": "activitypub_server",
-      "description": "Implements activity processing logic for outgoing federated activities, handling delivery to remote actors. Accepts an actor and activity pair, with an optional public flag, and returns an Lwt result indicating success or failure with status code and message. Used to manage side effects and validation when pushing activities to the federation layer.",
-      "description_length": 351,
+      "description": "Implements activity processing logic for outgoing messages, handling side effects like delivery and persistence. Works with actor and activity types defined in the ActivityPub specification. Used to dispatch activities to remote servers or local stores, returning success or error results.",
+      "description_length": 289,
       "index": 0,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub_server.Machine.Make.D",
       "library": "activitypub_server",
-      "description": "This module initializes and manages the delivery of ActivityPub activities, handling local graph updates and remote deliveries. It operates on ActivityPub actors, activities, RDF graphs, and IRIs, providing functions to initialize the delivery system, deliver activities to actors, and post graph data locally. Concrete use cases include dispatching follow requests, delivering activity streams, and updating local RDF graph state for an actor.",
-      "description_length": 444,
+      "description": "This module initializes the delivery system for handling ActivityPub interactions and processes local graph updates. It provides functions to start the delivery machinery, send activities to actors, and post RDF graph data with associated identifiers. These operations support federated social networking actions like activity delivery and linked data updates.",
+      "description_length": 360,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub_server.Machine.Make.PIn",
       "library": "activitypub_server",
-      "description": "Implements activity processing logic for server-side actor interactions, handling inbox deliveries and public visibility flags. Operates on actor and activity types defined in the ActivityPub specification. Used to validate, store, and route incoming activities like follows, likes, and shares.",
-      "description_length": 294,
+      "description": "Implements activity processing logic for server actors, handling inbox operations and activity validation. Works with actor and activity data types from the ActivityPub specification. Processes incoming activities, checks permissions, and returns success or error results with status codes and messages.",
+      "description_length": 303,
       "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Delivery.T",
-      "library": "activitypub_server",
-      "description": "This module handles activity delivery and graph posting for ActivityPub actors. It initializes delivery systems, sends activities to actors, and posts RDF graphs with local actor context. Used to manage federated activity distribution and RDF data interaction in a server.",
-      "description_length": 272,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub_server.Collection.T",
-      "library": "activitypub_server",
-      "description": "This module manages ActivityPub collections, handling creation, deletion, and manipulation of both ordered and unordered collections with support for access control via owner and public flags. It operates on internal collection representations (`t`) backed by RDF graphs, providing functions to add, remove, and query items, as well as serialize or inspect collection metadata. Concrete use cases include implementing ActivityPub endpoints that serve or modify collections such as followers, outbox entries, or custom ordered lists with optional privacy settings.",
-      "description_length": 563,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub_server.Process.T",
-      "library": "activitypub_server",
-      "description": "Implements activity processing logic for ActivityPub actors, handling side effects and validation. Accepts an actor, an activity, and an optional public flag, returning an Lwt result indicating success or failure with status code and message. Used to handle incoming activities like follows, likes, or shares in a server implementation.",
-      "description_length": 336,
-      "index": 5,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Machine.Wm",
-      "library": "activitypub_server",
-      "description": "This module implements HTTP request routing and response handling logic using a decision diagram approach. It processes Cohttp requests against defined routes, matching paths and dispatching to appropriate resources while supporting authentication mechanisms like basic auth and challenge responses. Key data types include `auth` for handling authorization states and `www_authenticate` for challenge parameters, with operations to continue processing, respond with status codes, or route requests through configured paths.",
-      "description_length": 523,
-      "index": 6,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Process.Qspec",
-      "library": "activitypub_server",
-      "description": "This module processes ActivityPub activities by serializing and deserializing actor-activity pairs to and from channels. It works with lists of tuples containing actors and activities, using Lwt for asynchronous I/O operations. Concrete use cases include persisting received activities to disk and reading them back for later processing.",
-      "description_length": 337,
-      "index": 7,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub_server.Machine.Make",
       "library": "activitypub_server",
-      "description": "This module orchestrates ActivityPub server interactions through a state machine that processes incoming requests and generates responses using the `PIn` and `POut` protocols, coordinating with actors based on key IDs. It defines core operations for handling federation, inbox processing, and actor authentication, leveraging child modules to manage outgoing activity delivery, local graph updates, and inbox validation. The first child module processes outgoing activities with delivery side effects, the second handles delivery initialization and RDF graph updates, and the third validates and routes incoming inbox activities like follows and likes. Together, they enable building a conformant ActivityPub endpoint that dispatches follow requests, stores federated activities, and maintains actor state across local and remote systems.",
-      "description_length": 838,
-      "index": 8,
+      "description": "This module implements a state machine for ActivityPub servers, handling inbox and outbox operations for federated social networking. It processes incoming activities with validation and permission checks, and sends outgoing activities to remote servers or local stores with delivery and persistence side effects. Concrete use cases include delivering posts between actors, updating linked data graphs, and managing inbox interactions with status reporting.",
+      "description_length": 457,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "Activitypub_server.Qfile.S",
+      "module_path": "Activitypub_server.Process_out.Make",
       "library": "activitypub_server",
-      "description": "This module manages a queue of elements stored in a file-based structure, allowing asynchronous processing of items. It supports creating a queue with a specified directory and prefix, and pushing elements to the queue for later consumption. Each element is processed by a provided handler function when the queue is active.",
-      "description_length": 324,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
+      "description": "This module processes ActivityPub protocol events to manage social interactions like follows, likes, and blocks, alongside handling operations such as Undo, Update, and Reject. It operates on ActivityPub entities including actors, objects, and activities, applying state changes or generating protocol-compliant responses. Designed for federated social network implementations, it ensures proper handling of inbound activities to maintain consistency across distributed systems.",
+      "description_length": 478,
+      "index": 4,
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Activitypub_server.Delivery.Make",
+      "module_path": "Activitypub_server.Object.Make",
       "library": "activitypub_server",
-      "description": "This module handles activity delivery and graph posting for a server implementation. It works with actors, activities, and RDF graphs, using IRIs to identify resources. It initializes delivery systems, sends activities to actors, and posts RDF graph data to local endpoints.",
-      "description_length": 274,
-      "index": 10,
+      "description": "This module supports storage, transformation, and distribution of ActivityPub objects through JSON-LD serialization and RDF graph manipulation. It operates on structured data types like RDF graphs, internationalized resource identifiers (IRIs), and actor/object definitions to handle social networking primitives such as activity streams, visibility rules, and federated collections. Key use cases include serving dereferenceable object endpoints, managing social interactions (likes/announces), and converting between RDF and JSON-LD representations for web federation.",
+      "description_length": 570,
+      "index": 5,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Process.Make",
+      "library": "activitypub_server",
+      "description": "Handles processing of ActivityPub activities, including validation and side effects like delivering activities to followers. Works with ActivityPub actors and activities, returning whether processing succeeded or an error code and message. Used to handle incoming activities such as follows, likes, and shares, determining if they should be accepted and acted upon.",
+      "description_length": 365,
+      "index": 6,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Process_in.Make",
+      "library": "activitypub_server",
+      "description": "This module provides functions to handle incoming ActivityPub protocol events, dispatching actions like follows, likes, blocks, and object creation. It operates on ActivityPub entities and activity streams, processing them to update server state via actor inboxes and outboxes. Specific use cases include routing social interactions, managing object lifecycle events, and maintaining protocol-compliant activity flows between actors.",
+      "description_length": 433,
+      "index": 7,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Activitypub_server.Qfile.Make",
       "library": "activitypub_server",
-      "description": "This module implements a queue-backed file handler for processing elements asynchronously. It works with a parameter type `P.t` and provides operations to create a queue with a specified directory and prefix, and to push elements into the queue for later handling. Concrete use cases include batching and persisting activity streams or event data to disk before processing.",
-      "description_length": 373,
+      "description": "This module implements a queue-backed file handler for processing elements asynchronously. It works with a parameter type `P.t` and provides operations to create a queue with a specified directory and prefix, and to push elements into the queue for later processing. Concrete use cases include handling incoming ActivityPub messages or queued file operations where elements are processed in batches or at a later time.",
+      "description_length": 418,
+      "index": 8,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Activitypub_server.Process.Qspec",
+      "library": "activitypub_server",
+      "description": "This module processes ActivityPub actor-activity pairs, providing functions to serialize and deserialize them to and from channels. It works with lists of tuples containing `AP.Types.actor` and `AP.Types.activity` values. Concrete use cases include persisting processed activity data to disk or transmitting it over a network connection.",
+      "description_length": 337,
+      "index": 9,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Collection.Make",
+      "library": "activitypub_server",
+      "description": "This module implements a collection management system for ActivityPub entities, supporting operations to create, delete, and manipulate collections with options for ordering, visibility, and ownership. It works with `Iri.t` identifiers and `Rdf.Graph.graph` structures to store and retrieve collection data, and provides functions to add, remove, and query items within collections. Concrete use cases include managing follower lists, activity streams, and shared content repositories in a federated social network.",
+      "description_length": 515,
+      "index": 10,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Activitypub_server.Machine.MimeSet",
+      "library": "activitypub_server",
+      "description": "This module implements a functional set abstraction for handling MIME types, offering operations like union, intersection, and membership checks alongside transformations such as mapping and filtering. It operates on immutable collections of MIME type elements, supporting conversions to and from lists and ordered sequences for integration with external data processing pipelines. Typical applications include content negotiation in HTTP APIs and validation of media type constraints within ActivityPub workflows.",
+      "description_length": 514,
       "index": 11,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub_server.Actor.Make",
       "library": "activitypub_server",
-      "description": "This module manages actor creation, storage, and interaction for a server implementing the ActivityPub protocol. It handles local and foreign actor data through file system paths for actors, inboxes, outboxes, and objects, supporting operations like token management, actor dereferencing, and follower checks. It is used to create and retrieve actors, manage authentication tokens, and maintain actor relationships in a federated social network.",
-      "description_length": 445,
+      "description": "This module implements an actor management system for an ActivityPub server, handling local and remote actor data through file-based storage. It provides operations to create actors, manage authentication tokens, follow users, and retrieve or dereference actor and object data via IRI. Concrete use cases include storing actor inboxes and outboxes, authenticating actor actions, and managing follower relationships in a decentralized social network.",
+      "description_length": 449,
       "index": 12,
-      "embedding_norm": 0.9999999403953552
+      "embedding_norm": 1.0
     },
     {
-      "module_path": "Activitypub_server.Object.Make",
+      "module_path": "Activitypub_server.Delivery.Make",
       "library": "activitypub_server",
-      "description": "This module provides primitives for managing ActivityPub objects through filesystem and HTTP operations, including IRI resolution, JSON-LD serialization of RDF graphs, and collection management. It works with identifiers (IRIs), file paths, RDF graph structures, and federated collections like likes or replies, supporting both local and remote object graphs. These capabilities enable use cases such as federated social networking interactions, content federation via ActivityStreams, and semantic data conversion between RDF and JSON-LD formats.",
-      "description_length": 547,
+      "description": "Implements activity delivery and local graph posting for ActivityPub actors. Uses RDF graphs and IRIs to construct and send activities, handling errors with result types. Useful for federated social network interactions like sharing posts or following users.",
+      "description_length": 258,
       "index": 13,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Object.T",
-      "library": "activitypub_server",
-      "description": "This module facilitates the manipulation of semantic web data and social activity streams through operations like IRI-path conversion, RDF graph storage/retrieval, and HTTP-based object dereferencing. It works with RDF graphs, ActivityPub actors/objects, and collections (e.g., likes, replies) to manage both local and remote data with access control and pruning mechanisms. Designed for federated social networking scenarios, it enables resolving distributed content, handling JSON-LD serialization, and maintaining synchronized activity graphs across servers.",
-      "description_length": 561,
-      "index": 14,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub_server.Actor.T",
-      "library": "activitypub_server",
-      "description": "This module manages actor creation, storage, and interaction in a decentralized social networking context. It handles local and remote actor data through file paths, cryptographic keys, and tokens, supporting operations like actor lookup, token management, and follow checks. Concrete use cases include storing actor inboxes, dereferencing remote actors, and managing authentication tokens for API access.",
-      "description_length": 405,
-      "index": 15,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Process.P",
-      "library": "activitypub_server",
-      "description": "This interface provides handlers for processing incoming ActivityPub activities such as follows, deletions, likes, blocks, and content updates, along with operations for managing activity states like undoing, rejecting, or tentatively accepting them. It operates on ActivityPub entities using a consistent handler pattern to validate, route, and execute protocol-defined behaviors. Specific use cases include social media interactions, content moderation, and federated network operations where ActivityPub-compliant event handling is required.",
-      "description_length": 544,
-      "index": 16,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Process_in.Make",
-      "library": "activitypub_server",
-      "description": "This module processes incoming ActivityPub events such as follows, likes, and deletions through event-specific handlers conforming to a predefined type. It operates on ActivityPub messages within a server context, supporting protocol operations like move, offer, question, and undo to manage federated social interactions. These handlers enable implementing a compliant ActivityPub server for scenarios like cross-server user engagement, content moderation, and dynamic object updates.",
-      "description_length": 485,
-      "index": 17,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub_server.Process_out.Make",
-      "library": "activitypub_server",
-      "description": "This module processes social interactions and activity management operations via a suite of handlers for ActivityPub events, including actions like following, liking, content creation, and activity updates. It operates on ActivityPub objects and events using a structured handler interface, enabling server-side processing of incoming activities such as user interactions, relationship changes, and content modifications. Specific use cases include handling follower requests, managing social graph updates, and processing activity streams for decentralized social networking.",
-      "description_length": 576,
-      "index": 18,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Qfile.P",
-      "library": "activitypub_server",
-      "description": "This module handles serialization and deserialization of a custom data type `t` for file-based persistence. It provides functions to store a list of values to an output channel, read them back from an input channel, and convert individual values to strings. It is suitable for saving and loading structured data to and from files or network streams.",
-      "description_length": 349,
-      "index": 19,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Collection.P",
-      "library": "activitypub_server",
-      "description": "This module defines configuration settings and a function to convert directory paths into IRI identifiers. It works with string paths and Iri.t types. Used to map local directories to globally addressable IRIs within an ActivityPub server context.",
-      "description_length": 247,
-      "index": 20,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Machine.MimeSet",
-      "library": "activitypub_server",
-      "description": "This module offers set-theoretic operations (union, intersection, difference, subset checks) and transformations (filtering, mapping, folding) for managing collections of MIME types (`Ldp.Ct.mime` values). It works with sets of MIME identifiers and supports conversions between sets and sequences or lists, enabling efficient membership queries, iterative processing, and structured data ingestion. Typical applications include validating acceptable content types in HTTP requests, aggregating supported MIME types from multiple sources, and safely extracting elements from constrained sets (e.g., prioritizing preferred media formats).",
-      "description_length": 636,
-      "index": 21,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub_server.Collection.Make",
-      "library": "activitypub_server",
-      "description": "This module implements a collection management system for ActivityPub objects, providing operations to create, delete, and manipulate collections with support for ordering, visibility, and ownership. It works with `Iri.t` identifiers and `Rdf.Term.term` elements, maintaining internal state in a graph structure. Concrete use cases include managing followers, ordered activity streams, and shared collections in a federated social network.",
-      "description_length": 439,
-      "index": 22,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub_server.Http.T",
-      "library": "activitypub_server",
-      "description": "This implementation offers HTTP client operations for interacting with Linked Data Platform resources, supporting CRUD actions and content negotiation for RDF and non-RDF data formats. It operates on IRIs, RDF graphs, strings, and content-type-specific payloads, incorporating authentication, error handling, and format-aware parsing. These capabilities enable building clients that manage decentralized data stores, synchronize semantic web resources, or handle media-type-agnostic content exchange with LDP-compliant servers.",
-      "description_length": 527,
-      "index": 23,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Process.Make",
-      "library": "activitypub_server",
-      "description": "Implements activity processing logic for server-side handling of ActivityPub activities. It validates and applies incoming activities to actors and objects, using the provided actor, object, and protocol modules. Useful for processing Follow, Like, and Create activities with side effects like updating follower lists or content visibility.",
-      "description_length": 340,
-      "index": 24,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Html",
-      "library": "activitypub_server",
-      "description": "This module provides HTML and XML generation capabilities, templating with Xtmpl, and pagination logic for rendering ActivityPub data models\u2014such as actors, activities, collections, and media attachments\u2014into structured web content. It specializes in server-side rendering of actor profiles, activity streams, and paginated collections, handling dereferencing of remote resources and media type negotiation to produce browser-friendly output.",
-      "description_length": 442,
-      "index": 25,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Collection",
-      "library": "activitypub_server",
-      "description": "This module provides server-side handling of ActivityPub collections, enabling parsing, validation, and generation of ordered and unordered collections backed by RDF graphs. It supports key operations such as adding, removing, and querying items, as well as managing metadata, access control, and serialization, working with types like `Iri.t` and `Rdf.Term.term`. The module facilitates implementing ActivityPub endpoints for resources like paginated followers lists, ordered outbox entries, and shared collections with customizable visibility and ownership. Configuration utilities map local directories to IRIs, integrating with the collection management system for federated social network use cases.",
-      "description_length": 704,
-      "index": 26,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Lwt_getdents",
-      "library": "activitypub_server",
-      "description": "This module provides functions to asynchronously read directory contents using `getdents` system calls. It works with file paths and returns lists of directory entries. Use it to efficiently list files in directories without blocking the main thread.",
-      "description_length": 250,
-      "index": 27,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Process_in",
-      "library": "activitypub_server",
-      "description": "This module processes incoming ActivityPub events\u2014such as follows, likes, and deletions\u2014using event-specific handlers that support protocol operations like move, offer, question, and undo. It enables federated social interactions by managing server-side responses to ActivityPub messages, allowing for cross-server engagement, content moderation, and dynamic object updates. The main data types include ActivityPub messages and event handlers, while core operations involve routing and processing events within a server context. For example, it can handle a remote follow request, process an undo action for a like, or apply a move operation to relocate content between servers.",
-      "description_length": 678,
-      "index": 28,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Media",
-      "library": "activitypub_server",
-      "description": "This module manages media file operations including storage, retrieval, and metadata handling. It works with media files stored on disk, using MIME types, IRI identifiers, and timestamped metadata. Concrete use cases include uploading user media, reading stored media metadata, and fetching media files by filename.",
-      "description_length": 315,
-      "index": 29,
-      "embedding_norm": 0.9999998807907104
-    },
-    {
-      "module_path": "Activitypub_server.Actor",
-      "library": "activitypub_server",
-      "description": "This module constructs and manages ActivityPub actor identities, providing IRIs for templates, announcement handling, and manual follower approval. It generates standardized actor endpoints and configuration flags for server implementations, supporting operations like token management, actor dereferencing, and follower checks. Local and remote actors are stored and interacted with through file paths, cryptographic keys, and tokens, enabling use cases such as inbox management, remote actor dereferencing, and API authentication. It supports both local actor creation and interaction with foreign actors in a federated social network.",
-      "description_length": 637,
-      "index": 30,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub_server.Process_out",
-      "library": "activitypub_server",
-      "description": "This module performs partial updates on RDF graphs by applying changes relative to a base graph, using a specified term to resolve relative references, and directly works with RDF graphs and terms from the `Rdf` module. It supports handling ActivityPub object mutations where only specific parts of a resource change, enabling efficient updates to decentralized social data. The child module processes social interactions and activity management operations via structured handlers for ActivityPub events such as following, liking, content creation, and activity updates. Together, they allow operations like applying a patch to a user\u2019s profile based on a previous version, or updating a social graph in response to incoming activities like new followers or edited posts.",
-      "description_length": 771,
-      "index": 31,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Machine",
-      "library": "activitypub_server",
-      "description": "This module processes HTTP requests for RDF-based APIs, combining content negotiation with data streaming capabilities to handle large payloads and signed JSON-LD documents. It works with MIME type sets for request validation, resolves IRIs, and streams RDF graphs, enabling the construction of ActivityPub-compatible endpoints that parse and route federated activities. Submodules handle request routing with authentication, ActivityPub server state transitions using actor keys, and MIME type set operations for content negotiation. Examples include dispatching follow requests, validating inbox activities, negotiating media types, and streaming binary RDF payloads incrementally.",
-      "description_length": 683,
-      "index": 32,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Object",
-      "library": "activitypub_server",
-      "description": "This module orchestrates the handling of ActivityPub objects by integrating dereferencing logic with filesystem and HTTP backends, enabling seamless resolution and construction of RDF-based entities. It centers around IRIs, RDF graphs, and federated collections, offering operations like IRI resolution, JSON-LD serialization, and storage/retrieval of local or remote object graphs. With support for access control, pruning, and semantic data conversion, it facilitates federated social interactions such as fetching remote posts, managing likes or replies, and synchronizing distributed activity streams across servers.",
-      "description_length": 620,
-      "index": 33,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Delivery",
-      "library": "activitypub_server",
-      "description": "This module coordinates ActivityPub object delivery with robust error handling, capturing failed objects, target IRIs, and descriptive messages, and converting them into readable strings. It manages delivery failures for remote servers and logs detailed error data, supporting debugging and reliability. The module integrates delivery systems that send activities to actors and post RDF graphs using local actor context or server endpoints. It enables federated activity distribution, resource identification via IRIs, and structured interaction with RDF data across local and remote services.",
-      "description_length": 593,
-      "index": 34,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Main",
-      "library": "activitypub_server",
-      "description": "This module initializes and runs a server application with command-line configuration handling, logging setup, and asynchronous execution. It manages server configuration through command-line arguments, environment variables, and a configuration file, supporting structured logging via `Logs` and Lwt for asynchronous operations. Concrete use cases include starting a server instance with custom configuration, loading actor and object implementations, and handling command-line interface interactions.",
-      "description_length": 502,
-      "index": 35,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Conf",
-      "library": "activitypub_server",
-      "description": "This module defines configuration structures for an ActivityPub server, including HTTPS settings and file paths for storage, caching, and logging. It provides functions to manipulate and validate configuration values, such as checking URL prefixes and resolving file paths relative to the server root. Concrete use cases include setting up secure server connections, managing RDF graph storage, and configuring media and cache directories for efficient content delivery.",
-      "description_length": 470,
-      "index": 36,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Activitypub_server.Http",
-      "library": "activitypub_server",
-      "description": "This module provides an HTTP client interface tailored for ActivityPub and Linked Data Platform interactions, enabling authenticated requests, content negotiation, and format-aware processing of JSON, RDF, and other payloads. It supports operations such as federating with remote servers, fetching actors, delivering activities, and performing CRUD actions on LDP resources using IRIs or URIs. Key data types include HTTP requests and responses, JSON and RDF graphs, content-type-specific payloads, and configuration options for timeouts, headers, and authentication. Specific uses include synchronizing decentralized data stores, exchanging media-type-agnostic content, and managing semantic web resources with format-aware parsing and error handling.",
-      "description_length": 752,
-      "index": 37,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Activitypub_server.Process",
-      "library": "activitypub_server",
-      "description": "This module processes ActivityPub activities by validating authors, extracting objects, and producing standardized error responses, using RDF graphs for data representation. It supports handling, serializing, and applying activities like Follow, Like, and Create, with side effects such as updating follower lists or content visibility. Submodules manage activity validation and routing, actor-activity I/O, and protocol-defined behaviors including undoing or accepting activities. Examples include persisting received activities to disk, handling social interactions, and enforcing content moderation across a federated network.",
-      "description_length": 629,
-      "index": 38,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub_server.Qfile",
       "library": "activitypub_server",
-      "description": "This module provides a comprehensive system for managing file-based data storage and asynchronous processing in distributed environments. It supports defining custom storage backends, serializing structured data, and handling queued operations for deferred processing. Key data types include file queues, serializable structures, and backend configurations, with operations for pushing items to queues, persisting data to disk, and transforming values for storage. Examples include caching remote resources, batching activity streams, and serving static assets using pluggable persistence layers.",
-      "description_length": 596,
-      "index": 39,
+      "description": "This module implements a queue-backed file handler for asynchronous processing of elements. It works with a parameter type `P.t` and provides operations to create a queue with a specified directory and prefix, and to push elements into the queue for later processing. Concrete use cases include handling incoming ActivityPub messages or queued file operations where elements are processed in batches or at a later time.",
+      "description_length": 419,
+      "index": 14,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Conf",
+      "library": "activitypub_server",
+      "description": "This module defines server configuration structures for HTTPS settings and application paths, including certificates, ports, storage directories, and caching options. It provides functions to construct and manipulate these configurations, as well as utilities for file path resolution and reading/writing RDF graphs relative to configured directories. Concrete use cases include setting up secure server endpoints, managing JSON-LD and media storage paths, and handling graph data for ActivityPub operations.",
+      "description_length": 508,
+      "index": 15,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Html",
+      "library": "activitypub_server",
+      "description": "This module offers HTML generation and templating tools tailored for rendering ActivityPub data, including XML tree construction from media types, web page formatting, and extraction of collection items from ActivityPub objects. It operates on structured data like ActivityPub actors, objects, and IRIs, transforming them into paginated HTML representations through asynchronous template rewriting. A key use case involves generating dynamic, paginated views of actor-associated content (e.g., posts or activities) while preserving semantic relationships in server-side rendered interfaces.",
+      "description_length": 590,
+      "index": 16,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Activitypub_server.Process_in",
+      "library": "activitypub_server",
+      "description": "Handles incoming ActivityPub requests by parsing, validating, and routing them to the appropriate handlers. It works with HTTP request data and ActivityPub message structures, ensuring proper processing of federated activities. Used to manage inbox operations and event dispatching in a federated social networking server.",
+      "description_length": 322,
+      "index": 17,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Media",
+      "library": "activitypub_server",
+      "description": "This module handles media file operations including storage, retrieval, and metadata management. It works with media files represented as byte strings, metadata records containing MIME type, actor IRI, and upload timestamp, and file paths. Concrete use cases include storing uploaded media files with associated metadata, reading and writing metadata to disk, and retrieving media files or their metadata by path.",
+      "description_length": 413,
+      "index": 18,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Lwt_getdents",
+      "library": "activitypub_server",
+      "description": "This module provides functions to asynchronously read directory contents using `getdents` system calls. It works with file paths and returns lists of directory entries as strings. Use it to efficiently list files in large directories without blocking the event loop.",
+      "description_length": 266,
+      "index": 19,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub_server.Http_tls",
       "library": "activitypub_server",
-      "description": "This module implements a TLS HTTP server for handling ActivityPub requests. It takes HTTPS configuration and a request handler that processes incoming requests and returns responses asynchronously. It works with Cohttp and Lwt types for handling HTTP messages and asynchronous operations. A concrete use case is serving ActivityPub API endpoints over HTTPS with proper TLS configuration.",
-      "description_length": 387,
-      "index": 40,
+      "description": "This module implements a TLS HTTP server for handling ActivityPub requests. It takes an HTTPS configuration and a request handler function that processes incoming requests and returns responses asynchronously. It works directly with CoHTTP and Lwt types for handling encrypted HTTP traffic in ActivityPub services.",
+      "description_length": 314,
+      "index": 20,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Delivery",
+      "library": "activitypub_server",
+      "description": "This module defines error handling specific to ActivityPub object delivery, including a custom error type that captures failed objects, target IRIs, and error messages. It provides a function to convert these errors into human-readable strings. Concrete use cases include reporting delivery failures for ActivityPub objects to remote servers and logging detailed error information for debugging failed deliveries.",
+      "description_length": 413,
+      "index": 21,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Object",
+      "library": "activitypub_server",
+      "description": "This module provides functions for storing, transforming, and distributing ActivityPub objects using JSON-LD and RDF graph operations. It handles structured data such as RDF graphs, IRIs, and actor definitions to support social networking features like activity streams, visibility controls, and federated collections. Concrete use cases include serving dereferenceable object endpoints, processing social interactions (e.g., likes and announces), and converting between RDF and JSON-LD for federation.",
+      "description_length": 502,
+      "index": 22,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Main",
+      "library": "activitypub_server",
+      "description": "This module initializes and runs a server application with command-line configuration handling, logging setup, and dependency injection for core components. It manages configuration parsing, logging initialization, and orchestrates the main application loop using Lwt for asynchronous execution. Concrete use cases include starting a server instance with custom command-line arguments, setting up structured logging, and injecting implementations for object and actor modules.",
+      "description_length": 476,
+      "index": 23,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Activitypub_server.Collection",
+      "library": "activitypub_server",
+      "description": "Implements a collection management system for ActivityPub entities with operations to create, delete, and manipulate ordered, visible, and owner-controlled collections. Works with `Iri.t` identifiers and `Rdf.Graph.graph` structures to store and query collection data. Used for managing follower lists, activity streams, and shared content repositories in federated social networks.",
+      "description_length": 382,
+      "index": 24,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Machine",
+      "library": "activitypub_server",
+      "description": "This module orchestrates HTTP request routing, MIME type negotiation, and asynchronous RDF payload processing for ActivityPub interactions. It manipulates HTTP requests and responses using functional sets to track supported RDF MIME types, while converting request bodies into RDF graphs or streaming raw content. Key workflows include parsing RDF-formatted payloads with IRI resolution, negotiating content types during server responses, and handling asynchronous I/O for scalable request streaming.",
+      "description_length": 500,
+      "index": 25,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Activitypub_server.Process",
+      "library": "activitypub_server",
+      "description": "This module defines handlers for processing ActivityPub activities and extracting key elements like authors and objects. It works with ActivityPub actors, activities, and RDF graphs, using Lwt for asynchronous handling. Functions support validating activity authors, converting activity objects, and returning error responses for HTTP interactions.",
+      "description_length": 348,
+      "index": 26,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Http",
+      "library": "activitypub_server",
+      "description": "This module defines an HTTP client interface for handling ActivityPub protocol requests. It includes functions for making authenticated HTTP calls, processing JSON responses, and managing request configurations such as timeouts and headers. It works directly with ActivityPub data structures like JSON payloads and URIs, supporting operations such as delivering activities to remote servers and fetching remote resources.",
+      "description_length": 421,
+      "index": 27,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Process_out",
+      "library": "activitypub_server",
+      "description": "Performs partial updates on an RDF graph by applying a delta graph of changes to a base graph, using a specified term to resolve relative references. Works directly with RDF graph and term structures to enable efficient graph merging and patching. Useful for implementing ActivityPub object state synchronization where incremental updates are required.",
+      "description_length": 352,
+      "index": 28,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "Activitypub_server.Actor",
+      "library": "activitypub_server",
+      "description": "This module implements an actor management system for an ActivityPub server, handling local and remote actor data through file-based storage. It provides operations to create actors, manage authentication tokens, follow users, and retrieve or dereference actor and object data via IRI. Concrete use cases include storing actor inboxes and outboxes, authenticating actor actions, and managing follower relationships in a decentralized social network.",
+      "description_length": 449,
+      "index": 29,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Activitypub_server",
       "library": "activitypub_server",
-      "description": "This system provides a full-stack ActivityPub server implementation with capabilities spanning RDF graph management, actor identity handling, HTTP request processing, and federated social interaction support. Core data types include IRIs, RDF graphs, ActivityPub activities, and media objects, with operations for server-side rendering, partial updates, collection management, and asynchronous delivery of federated content. It enables concrete use cases such as rendering paginated activity streams, handling follow requests across servers, storing and serving user media, and managing actor identities with cryptographic keys. The system integrates filesystem and HTTP backends for decentralized data resolution, supports content negotiation and JSON-LD processing, and runs as a secure, configurable TLS server with structured logging and error handling.",
-      "description_length": 857,
-      "index": 41,
+      "description": "This module implements core components for building an ActivityPub server, handling actor management, HTTP communication, data storage, and federation workflows. It works with ActivityPub data structures such as actors, objects, collections, and IRIs, along with RDF graphs, JSON-LD, and HTTP payloads. Concrete use cases include managing user inboxes and outboxes, handling follower relationships, delivering activities to remote servers, rendering HTML views of social content, and processing incoming federated requests.",
+      "description_length": 523,
+      "index": 30,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 59,
-    "meaningful_modules": 42,
-    "filtered_empty_modules": 17,
-    "retention_rate": 0.711864406779661
+    "total_modules_in_package": 43,
+    "meaningful_modules": 31,
+    "filtered_empty_modules": 12,
+    "retention_rate": 0.7209302325581395
   },
   "statistics": {
-    "max_description_length": 857,
-    "min_description_length": 247,
-    "avg_description_length": 498.0,
-    "embedding_file_size_mb": 0.15304279327392578
+    "max_description_length": 590,
+    "min_description_length": 258,
+    "avg_description_length": 417.5483870967742,
+    "embedding_file_size_mb": 0.4496421813964844
   }
 }

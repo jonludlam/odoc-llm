@@ -1,93 +1,61 @@
 {
   "package": "mirage-flow-lwt",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
-  "total_modules": 9,
-  "creation_timestamp": "2025-07-15T23:05:59.740841",
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
+  "total_modules": 5,
+  "creation_timestamp": "2025-08-14T23:08:05.944936",
   "modules": [
     {
-      "module_path": "Mirage_flow_lwt.S",
+      "module_path": "Mirage_flow_lwt.Proxy",
       "library": "mirage-flow-lwt",
-      "description": "This module defines asynchronous network flow operations for reading and writing data using Lwt. It supports handling of buffers, sequential data transmission with `write` and `writev`, and proper connection termination with `close`. It is used for implementing network protocols over transport layers like TCP or TLS.",
-      "description_length": 318,
+      "description": "Mirage_flow_lwt.Proxy connects two flow endpoints, transferring data bidirectionally between them until both close. It tracks I/O statistics during the transfer and returns them on success or an error if either direction fails. This module is useful for implementing network proxies or tunneling connections between clients and servers.",
+      "description_length": 336,
       "index": 0,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_flow_lwt.SHUTDOWNABLE",
-      "library": "mirage-flow-lwt",
-      "description": "This module defines operations for bidirectional data flows with support for reading, writing, and gracefully shutting down either direction of the communication. It works with byte buffers (`Cstruct.t`) and abstract flow handles, providing precise error handling for I/O operations. Concrete use cases include implementing network protocols where partial writes, EOF handling, and controlled connection termination are required, such as in HTTP servers or streaming applications.",
-      "description_length": 480,
-      "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_flow_lwt.Copy",
       "library": "mirage-flow-lwt",
-      "description": "Implements efficient data transfer between two flow endpoints, measuring throughput using a provided clock. It handles errors from both source and destination flows, returning descriptive statistics on success or combined error information on failure. Useful for benchmarking network or file I/O performance with precise timing and error diagnostics.",
-      "description_length": 350,
-      "index": 2,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_flow_lwt.ABSTRACT",
-      "library": "mirage-flow-lwt",
-      "description": "This module defines a low-level networking interface for asynchronous data transmission using Lwt. It supports reading from and writing to a flow with functions like `read`, `write`, and `writev`, handling errors through dedicated types and pretty-printers. It is used to implement network protocols where precise control over data transmission is required, such as TCP-based communication or custom packet streaming.",
-      "description_length": 417,
-      "index": 3,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "Mirage_flow_lwt.Concrete",
-      "library": "mirage-flow-lwt",
-      "description": "This module implements concrete I/O operations for network flows using Lwt for asynchronous execution. It provides functions for reading from and writing to a flow, handling buffers, and closing connections, with detailed error reporting via pretty-printers. It is used for low-level network communication where precise control over data transmission and error handling is required.",
-      "description_length": 382,
-      "index": 4,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_flow_lwt.Proxy",
-      "library": "mirage-flow-lwt",
-      "description": "This module implements a bidirectional data proxy between two flow endpoints, transferring data until both ends close. It tracks and returns I/O statistics upon successful completion or propagates errors encountered during transfer. It works with Lwt threads and MirageOS flow implementations, requiring a clock module for timing operations.",
-      "description_length": 341,
-      "index": 5,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "Mirage_flow_lwt.CONCRETE",
-      "library": "mirage-flow-lwt",
-      "description": "This module implements network flow operations for Lwt-based MirageOS applications. It provides functions to read from and write to a flow using Cstruct buffers, supporting both single-buffer and vectorized writes. Typical use cases include implementing network protocols like HTTP or TCP-based services where precise control over data transmission is required.",
-      "description_length": 361,
-      "index": 6,
+      "description": "This module copies data from one flow to another, measuring transfer rate using a provided clock. It handles errors from both source and destination flows, returning statistics on success or a descriptive error on failure. Useful for implementing reliable data transfer between network or file descriptors with performance monitoring.",
+      "description_length": 334,
+      "index": 1,
       "embedding_norm": 0.9999999403953552
     },
     {
       "module_path": "Mirage_flow_lwt.F",
       "library": "mirage-flow-lwt",
-      "description": "This module enables in-memory flow operations for I/O simulation and structured binary data processing, supporting creation, read/write operations (including vectorized writes), and lifecycle management. It works with string, bytes, and Cstruct.t buffers, as well as lists of Cstruct.t for handling complex binary data layouts. Typical use cases include protocol testing without external I/O, implementing memory-backed network stacks, and manipulating structured binary streams with precise buffer control.",
-      "description_length": 507,
-      "index": 7,
+      "description": "This module enables bidirectional in-memory byte flow manipulation using `Cstruct.t`, `string`, and `bytes` buffers, offering operations to read, write, and close flows with support for single or fragmented buffer input/output. It provides utilities to construct flows from refill functions that dynamically source or sink data from fixed or list-based buffer collections, enabling efficient simulation of network protocols, in-memory data streaming, or testing scenarios requiring controlled data flow behavior.",
+      "description_length": 512,
+      "index": 2,
+      "embedding_norm": 0.9999999403953552
+    },
+    {
+      "module_path": "Mirage_flow_lwt.Concrete",
+      "library": "mirage-flow-lwt",
+      "description": "This module implements Lwt-based I/O operations for reading from and writing to network flows using buffers. It provides functions to read a buffer from a flow, write a single buffer or a list of buffers to a flow, and close a flow after flushing pending writes. The module handles errors during reading and writing with detailed error types and pretty-printers, making it suitable for network protocols requiring precise buffer management and flow control.",
+      "description_length": 457,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "Mirage_flow_lwt",
       "library": "mirage-flow-lwt",
-      "description": "This module implements asynchronous network flow operations for MirageOS using Lwt, enabling bidirectional data transmission with support for buffers, vectorized writes, and precise error handling. It provides core functionality for reading, writing, and closing flows, along with utilities for proxying, forwarding, and benchmarking data between endpoints. Submodules enhance this with flow forwarding that tracks statistics, in-memory flow simulation for testing, and throughput measurement with timing diagnostics. Concrete applications include implementing network protocols like HTTP, building custom proxies, tunneling traffic, and simulating network I/O without external dependencies.",
-      "description_length": 691,
-      "index": 8,
+      "description": "This module implements Lwt-based I/O operations for managing network and in-memory flows with precise buffer handling. It supports reading from and writing to flows using `Cstruct.t`, `string`, and `bytes` buffers, with functions for single or vectorized writes, flow closure, and bidirectional data forwarding. Concrete use cases include implementing network protocols, simulating data streams, and testing communication logic with controlled buffer behavior.",
+      "description_length": 460,
+      "index": 4,
       "embedding_norm": 1.0
     }
   ],
   "filtering": {
-    "total_modules_in_package": 9,
-    "meaningful_modules": 9,
+    "total_modules_in_package": 5,
+    "meaningful_modules": 5,
     "filtered_empty_modules": 0,
     "retention_rate": 1.0
   },
   "statistics": {
-    "max_description_length": 691,
-    "min_description_length": 318,
-    "avg_description_length": 427.44444444444446,
-    "embedding_file_size_mb": 0.0331268310546875
+    "max_description_length": 512,
+    "min_description_length": 334,
+    "avg_description_length": 419.8,
+    "embedding_file_size_mb": 0.07287406921386719
   }
 }

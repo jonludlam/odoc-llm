@@ -1,121 +1,121 @@
 {
   "package": "SZXX",
-  "embedding_model": "Qwen/Qwen3-Embedding-0.6B",
-  "embedding_dimension": 1024,
+  "embedding_model": "Qwen/Qwen3-Embedding-8B",
+  "embedding_dimension": 4096,
   "total_modules": 14,
-  "creation_timestamp": "2025-07-15T23:08:56.536642",
+  "creation_timestamp": "2025-08-14T23:19:33.882962",
   "modules": [
     {
       "module_path": "SZXX.Xml.SAX.Expert.Stream.Hash_state",
       "library": "SZXX",
-      "description": "This module provides hash state management for streaming XML parsing, enabling efficient comparison and equality checks on hash states during SAX event processing. It works with `Base.Hash.state` values, which capture intermediate hashing information as the parser processes document fragments. Concrete use cases include tracking and comparing hash values of XML elements or attributes in real-time while parsing large documents, ensuring memory-efficient validation or deduplication workflows.",
-      "description_length": 495,
+      "description": "This module provides hash state management for streaming XML parsing, enabling efficient tracking and comparison of parsing states during SAX event processing. It works with `SAX.node` events and hash state values to support custom folding logic over XML streams. Concrete use cases include incremental parsing of large XML files with selective DOM construction, where state consistency and efficient equality checks are required.",
+      "description_length": 430,
       "index": 0,
       "embedding_norm": 1.0
     },
     {
       "module_path": "SZXX.Xml.SAX.Expert.Stream",
       "library": "SZXX",
-      "description": "This module processes a stream of XML SAX events to build a shallow DOM structure while selectively extracting and emitting child elements that match a specified path, enabling efficient parsing of large documents without constructing a full tree. It combines stateful traversal with user-defined filters and actions, using a `folder` function to manage context transitions and element selection during streaming. The hash state management submodule enhances this process by tracking and comparing hash values of document fragments in real time, supporting validation and deduplication. For example, you can extract all `<item>` elements under `<list>` while computing their hash values on the fly for integrity checks.",
-      "description_length": 719,
+      "description": "Processes a stream of XML SAX events into a shallow DOM structure while filtering and extracting child elements matching a specified path. Uses a state type tracking element stacks, path components, and optional element attributes, with `folder` applying a custom filter and callback to handle matching elements during streaming. Designed for efficient parsing of large XML files where only specific subtrees are needed and full DOM construction is impractical.",
+      "description_length": 461,
       "index": 1,
       "embedding_norm": 1.0
     },
     {
       "module_path": "SZXX.Xml.SAX.Expert.To_DOM",
       "library": "SZXX",
-      "description": "This module folds a stream of SAX XML events into a DOM structure using a stateful accumulator. It processes nodes through a `folder` function that builds elements incrementally, handling open and close tags, attributes, and optionally lenient HTML-style tag handling. The resulting DOM can be extracted from the `top` field of the final state.",
-      "description_length": 344,
+      "description": "This module folds a sequence of SAX XML events into a DOM tree using a stateful accumulator. It processes `SAX.node` values through the `folder` function to build structured XML elements, handling nested tags and attributes. Use it to construct valid XML documents from streamed input, with support for lenient parsing of self-closing tags.",
+      "description_length": 340,
       "index": 2,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "SZXX.Xlsx.Expert.SST",
+      "library": "SZXX",
+      "description": "This module extracts and resolves shared strings tables (SST) from XLSX documents using either a file or a feed input. It provides direct access to SST entries through index resolution and supports efficient, minimal-byte reading from file sources. Use cases include parsing large XLSX files without loading the entire document and retrieving localized string values referenced in spreadsheet cells.",
+      "description_length": 399,
+      "index": 3,
       "embedding_norm": 1.0
     },
     {
       "module_path": "SZXX.Xml.SAX.Expert",
       "library": "SZXX",
-      "description": "This module enables fine-grained control over XML parsing and transformation by combining low-level SAX event processing with structured DOM construction. It operates on `partial_text` and `partial` records, allowing incremental handling of tags, attributes, and text content while supporting custom parsing logic through stateful folder functions. With its submodules, it can selectively extract elements by path during streaming, compute hashes of document fragments in real time, and fold SAX events into a DOM with optional leniency for HTML-style tags. For example, it can parse a large XML document, extract specific elements like `<item>` under `<list>`, and compute their hashes on the fly for validation or deduplication.",
-      "description_length": 730,
-      "index": 3,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
-      "module_path": "SZXX.Xlsx.Expert.SST",
-      "library": "SZXX",
-      "description": "This module handles extraction and resolution of the Shared Strings Table (SST) from XLSX documents. It provides functions to retrieve the SST from a feed or file, and to resolve specific string references by index. The module works directly with XLSX file structures and string-indexed data, enabling efficient access to shared strings without full document parsing.",
-      "description_length": 367,
+      "description": "Handles XML SAX event folding with custom state management through two submodules. `To_DOM` incrementally builds XML DOM trees from SAX events, while `Stream` filters and extracts specific XML subtrees during parsing. Works directly with XML element stacks, attribute lists, and path-based selectors for efficient, memory-conscious processing of large XML files.",
+      "description_length": 362,
       "index": 4,
       "embedding_norm": 1.0
     },
     {
       "module_path": "SZXX.Zip.Data",
       "library": "SZXX",
-      "description": "This module defines data structures and operations for parsing and comparing zipper-based data representations. It provides functions to convert parser states and zipper structures to S-expressions, compare and check equality of these structures, and extract results from parser states. Concrete use cases include implementing custom parsers that track position in a stream and enabling serialization of parser state for debugging or checkpointing.",
-      "description_length": 448,
+      "description": "This module defines operations for converting and comparing parser states and data structures to S-expressions, comparing their values, and extracting results from parser states. It works with generic data types `'a` and structured types like `parser_state` and `t` that encapsulate parsing information. Concrete use cases include serializing parser states for debugging, comparing parsed data for consistency checks, and extracting final results or error messages from parsing processes.",
+      "description_length": 488,
       "index": 5,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "SZXX.Xml.DOM",
-      "library": "SZXX",
-      "description": "This module defines core XML data structures like `element` and `attr_list`, along with utilities to access and manipulate XML nodes. It includes functions to retrieve attributes, child elements, and text content, as well as helpers for common XML operations such as unescaping entities and checking `xml:space` attributes. Use cases include parsing and querying XML documents, extracting structured data from XML trees, and building custom XML processing pipelines.",
-      "description_length": 466,
-      "index": 6,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "SZXX.Xml.SAX",
       "library": "SZXX",
-      "description": "This module provides low-level XML parsing with customizable handling of malformed or HTML-like documents, processing input into structured `node` values while supporting streaming of large files through batched parsing. It enables fine-grained control over parsing and transformation by combining SAX event processing with DOM construction, using `partial_text` and `partial` records to handle tags, attributes, and text incrementally. Operations include extracting elements by path during streaming, computing hashes of document fragments in real time, and folding events into a DOM with lenient HTML-style tag handling. For example, it can parse oversized XML files, selectively extract `<item>` elements under `<list>`, and compute their hashes on the fly for validation or deduplication.",
-      "description_length": 792,
-      "index": 7,
+      "description": "Processes XML documents using a SAX-based parser with customizable options for handling malformed HTML-like syntax. It supports streaming large XML files by parsing into a sequence of `node` values, including elements, text, CDATA, and prologues. Concrete use cases include incremental parsing of XML logs, extracting specific subtrees from large documents, and transforming XML into DOM structures with controlled memory usage.",
+      "description_length": 428,
+      "index": 6,
       "embedding_norm": 1.0
     },
     {
       "module_path": "SZXX.Xlsx.Expert",
       "library": "SZXX",
-      "description": "This module processes Excel XML rows by resolving shared string table references into actual values, transforming raw cell data into structured rows using custom parsers. It integrates with the Shared Strings Table module to extract and resolve string indices from XLSX files, enabling efficient access to referenced strings without full document parsing. Key operations include parsing XML rows, resolving cell values via SST lookups, and applying custom transformations to cell data. For example, it can convert a row of XML cells containing shared string indices into a list of resolved strings or typed values using user-defined parsing logic.",
-      "description_length": 647,
+      "description": "This module processes XLSX spreadsheet rows by parsing and resolving cell data using shared string tables (SST). It handles delayed string references through index resolution and efficiently converts raw XML row elements into structured data with or without SST context. It is used to parse and unwrap spreadsheet rows incrementally, particularly when working with large files where full document loading is impractical.",
+      "description_length": 420,
+      "index": 7,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "SZXX.Xml.DOM",
+      "library": "SZXX",
+      "description": "This module defines core XML data structures like `element` and `attr_list`, along with utilities for attribute lookup, text unescaping, and navigating element hierarchies. It supports operations such as `get_attr` for retrieving named attributes, `dot` and `at` for accessing child elements by tag or index, and `filter_map` for extracting and transforming specific child elements. Concrete use cases include parsing and querying XML documents, extracting structured data from XML trees, and manipulating XML elements with precise attribute and text handling.",
+      "description_length": 560,
       "index": 8,
       "embedding_norm": 1.0
     },
     {
-      "module_path": "SZXX.Xlsx",
-      "library": "SZXX",
-      "description": "This module parses and processes XLSX files by converting cells to typed values, streaming rows in constant memory, and handling date and column indexing. It works directly with sheets, rows, and cells, supporting operations like filtering sheets, parsing dates, and converting to JSON or S-expressions. The XML row processor resolves shared string table references into actual values, transforming raw cell data into structured rows using custom parsers, such as converting XML cells with string indices into typed records. Together, they enable efficient extraction and transformation of structured data from large spreadsheets, with direct access to cell values, rows, and metadata.",
-      "description_length": 685,
-      "index": 9,
-      "embedding_norm": 0.9999999403953552
-    },
-    {
       "module_path": "SZXX.Xml",
       "library": "SZXX",
-      "description": "This module enables efficient XML parsing and manipulation, supporting both full DOM construction and event-driven processing for large documents. It centers around `document`, `element`, and `attr_list` types, offering operations to parse XML from strings or streams, extract specific elements by path, and process nodes incrementally without building the entire DOM. Child modules provide core data structures and utilities for querying and building XML trees, along with low-level parsers that allow custom handling of malformed input and streaming processing with real-time aggregation. Example uses include validating XML structure on ingest, extracting and hashing specific elements from a large feed, or building custom XML transformations with selective node handling.",
-      "description_length": 776,
-      "index": 10,
-      "embedding_norm": 1.0
-    },
-    {
-      "module_path": "SZXX.Zip",
-      "library": "SZXX",
-      "description": "This module represents ZIP file entries with metadata such as compression methods and version info, supporting serialization, structural comparison, and indexed access for efficient streaming and selective extraction. It includes a submodule that defines data structures and operations for parsing and comparing zipper-based representations, enabling custom parsers that track stream positions and support serialization of parser state for debugging. The main module allows working with ZIP archives directly, such as extracting specific files without full decompression, while the submodule enhances parsing workflows by capturing and manipulating structured state. Together, they support both archive manipulation and complex stream parsing tasks.",
-      "description_length": 749,
-      "index": 11,
+      "description": "This module implements XML parsing and manipulation with a focus on structured data extraction and transformation. It provides DOM-based tree navigation and mutation, attribute and text handling, and SAX-driven streaming parsing for large documents. Use cases include processing XML logs, extracting specific subtrees from large XML files, and parsing malformed HTML-like content with precise control over memory usage and error handling.",
+      "description_length": 438,
+      "index": 9,
       "embedding_norm": 1.0
     },
     {
       "module_path": "SZXX.Feed",
       "library": "SZXX",
-      "description": "This module provides functions to create and manipulate data feeds that produce chunks of input as strings, bigstrings, or end-of-file markers. It supports reading from Eio streams, seekable file sources, and string or bigstring dispensers, enabling efficient processing of large data sources without loading everything into memory at once. Concrete use cases include streaming file contents, handling incremental network data, and parsing large text or binary inputs in a memory-efficient way.",
-      "description_length": 494,
+      "description": "This module provides functions to create and manipulate data feeds that produce chunks of input as strings, bigstrings, or end-of-file markers. It supports reading from Eio flows, seekable file sources, string and bigstring dispensers, and direct string inputs. Use cases include streaming data from files or network sources in a controlled manner, handling large inputs efficiently, and simulating input streams with custom data providers.",
+      "description_length": 440,
+      "index": 10,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "SZXX.Xlsx",
+      "library": "SZXX",
+      "description": "This module parses XLSX files into structured rows of typed data using memory-efficient streaming. It supports parsing cells into strings or JSON values, converting date and datetime floats to time types, and resolving column references. It is used to process large spreadsheets without loading the entire document into memory, enabling efficient data extraction from files or feeds.",
+      "description_length": 383,
+      "index": 11,
+      "embedding_norm": 1.0
+    },
+    {
+      "module_path": "SZXX.Zip",
+      "library": "SZXX",
+      "description": "This module provides type-safe data structures like `descriptor`, `extra_field`, and `entry` to model ZIP file metadata, compression methods (`Stored`, `Deflated`), and archive versions (`Zip_2_0`, `Zip_4_5`). It enables efficient ZIP archive processing through streaming-based file extraction, single-pass indexing, and precise file retrieval from indexed entries, ideal for handling large archives without requiring full in-memory decompression.",
+      "description_length": 447,
       "index": 12,
       "embedding_norm": 1.0
     },
     {
       "module_path": "SZXX",
       "library": "SZXX",
-      "description": "This module processes structured data from spreadsheets, XML, ZIP archives, and streaming sources, enabling efficient parsing, transformation, and extraction with minimal memory usage. It provides typed access to spreadsheet cells, rows, and sheets, supports event-driven and DOM-based XML processing, and allows selective ZIP archive traversal and extraction. Key data types include structured rows, XML elements with attributes, ZIP entry metadata, and streaming data sources, all supporting custom parsing and incremental processing. Examples include converting spreadsheet data to typed records, extracting specific XML elements from large documents, streaming ZIP file contents without full decompression, and handling large text or binary feeds in memory-efficient chunks.",
-      "description_length": 778,
+      "description": "This module provides precise handling of ZIP archives, XML documents, XLSX spreadsheets, and input data feeds. It supports structured parsing, streaming extraction, and memory-efficient processing of large files, enabling tasks like selective XML subtree extraction, ZIP entry indexing, spreadsheet cell parsing, and controlled input stream consumption.",
+      "description_length": 353,
       "index": 13,
-      "embedding_norm": 1.0000001192092896
+      "embedding_norm": 1.0
     }
   ],
   "filtering": {
@@ -125,9 +125,9 @@
     "retention_rate": 0.9333333333333333
   },
   "statistics": {
-    "max_description_length": 792,
-    "min_description_length": 344,
-    "avg_description_length": 606.4285714285714,
-    "embedding_file_size_mb": 0.05128002166748047
+    "max_description_length": 560,
+    "min_description_length": 340,
+    "avg_description_length": 424.92857142857144,
+    "embedding_file_size_mb": 0.20328426361083984
   }
 }
